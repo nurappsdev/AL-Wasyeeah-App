@@ -1,0 +1,1 @@
+export 'spalsh_screen.dart';
