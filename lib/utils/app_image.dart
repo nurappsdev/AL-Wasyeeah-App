@@ -4,10 +4,10 @@ class AppImages {
   static const String path = "assets/images";
 
 
-
+  static const String backImg = "$path/background_img.png";
   static const String splashImg1 = "$path/splash_img.png";
-  static const String splashImg2 = "$path/home_icons.png";
-  static const String backImg = "$path/back_img.png";
+  static const String splashImg2 = "$path/slpash_img.png";
+
   static const String pmoji = "$path/pmoji.png";
   static const String profileImg = "$path/profile.png";
   static const String dropdwonArrow = "$path/drop_down_images.png";

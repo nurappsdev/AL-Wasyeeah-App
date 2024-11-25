@@ -2,8 +2,10 @@
 class AppIcons {
   static const String path = "assets/icons";
 
-  static const String logo = "$path/Logo.svg";
-  static const String profile = "$path/profile.svg";
+  static const String logo = "$path/logo.svg";
+  static const String profileIcon = "$path/profile_icon.svg";
+  static const String financeIcon = "$path/finance_icon.svg";
+  static const String applicationIcon = "$path/application_icon.svg";
   static const String email = "$path/email.svg";
   static const String passIcon = "$path/pass.svg";
   static const String homeNoticeIcon = "$path/notice.svg";

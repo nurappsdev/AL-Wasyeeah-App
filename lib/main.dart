@@ -4,8 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'routes/app_routes.dart';
+import 'helpers/app_routes.dart';
 import 'themes/theme.dart';
+import 'view/screen/screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Service App',
-       //   home: SplashScreen(),
+          home: const SplashScreen(),
           getPages: AppRoutes.routes,
           theme: light(),
           themeMode: ThemeMode.light,
