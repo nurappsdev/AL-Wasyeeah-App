@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../utils/utils.dart';
 
@@ -24,13 +26,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+
    body: Container(
         padding: EdgeInsets.only(right: 10.w,left: 10.w),
         width: double.infinity,
         decoration: const BoxDecoration(
             color: Colors.white
         ),
-        child: Center(child:  Image.asset(AppImages.splashImg2)),
+        child: InkWell(
+            onTap: (){
+              Get.toNamed(AppRoutes.loginScreen,preventDuplicates: false);
+            },
+            child: Center(child:Image.asset(AppImages.splashImg2))),
       ),
     );
   }
