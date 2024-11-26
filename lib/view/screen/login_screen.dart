@@ -12,6 +12,7 @@ import '../widgets/widgets.dart';
 class LoginScreen extends StatelessWidget {
    LoginScreen({super.key});
 TextEditingController emailController = TextEditingController();
+TextEditingController passController = TextEditingController();
    final GlobalKey<FormState> _logKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -105,7 +106,8 @@ TextEditingController emailController = TextEditingController();
                   Padding(
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
-                      controller:  emailController,
+                      controller:  passController,
+                      isPassword: true,
                       hintText: AppString.enterYourPass,
                       borderColor: AppColors.secondaryPrimaryColor,
                       prefixIcon: Padding(
