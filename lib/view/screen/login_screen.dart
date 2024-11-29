@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../helpers/helpers.dart';
 import '../../utils/utils.dart';
 import '../widgets/widgets.dart';
 
@@ -131,11 +132,11 @@ TextEditingController passController = TextEditingController();
                   ///=============Forgot====================
                   InkWell(
                       onTap: (){
-                        // Get.toNamed(AppRoutes.forgotPassScreen,
-                        //     parameters: {
-                        //       'email': emailController.text
-                        //     }
-                        // );
+                        Get.toNamed(AppRoutes.forgotPassScreen,
+                            parameters: {
+                              'email': emailController.text
+                            }
+                        );
 
                       },
                       child: Padding(
@@ -173,7 +174,7 @@ TextEditingController passController = TextEditingController();
                           child: CustomText(text: AppString.dontHaveAccount, fontsize: 20.sp,)),
                       InkWell(
                           onTap: (){
-                       //     Get.toNamed(AppRoutes.signUpScreen);
+                           Get.toNamed(AppRoutes.registrationScreen,preventDuplicates: false);
                           },
                           child: CustomText(text: AppString.signUpButton, fontsize: 20.sp,color: AppColors.primaryColor,)),
                     ],

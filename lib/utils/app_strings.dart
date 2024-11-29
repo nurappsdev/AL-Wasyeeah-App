@@ -3,12 +3,13 @@ class AppString {
   ///===================Waseeyah String==============
   static const String forgotPass = "Forget Password?";
   static const String enterYourPass = "Password";
-
-
-
-
-
   static const String enterYourEmail = "Email";
+  static const String signUpButton = "Sign Up";
+  static const String signIn = " Sign In";
+  static const String oTPVerify  = "Verify Email";
+
+
+
   static const String serviceText = "Choose Your Best & Affordable\n Service Provider Your Way";
   static const String homeSearch = "Search Service Name";
 
@@ -18,10 +19,9 @@ class AppString {
   static const String enterYourName = "User Name";
 
   static const String enterYourPassCon = "Confirm Password";
-  static const String signUpButton = "Sign Up";
+
   static const String allReadyAccount = "Already have an account?";
-  static const String signIn = " Sign In";
-  static const String oTPVerify  = "Verify Email";
+
   static const String verifyButton  = "Verify";
   static const String checkVerifyEmail  = "We have sent a verification code to your email.\n Please check your email and enter the code. ";
   static const String checkVerifyEmail1  = "We have sent a verification code to your email. \nPlease check your email and enter the code. ";
