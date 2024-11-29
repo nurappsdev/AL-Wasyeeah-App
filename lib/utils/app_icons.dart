@@ -3,6 +3,11 @@ class AppIcons {
   static const String path = "assets/icons";
 
   static const String logo = "$path/logo.svg";
+  static const String otpIcon = "$path/otp_icon.svg";
+
+
+
+
   static const String profileIcon = "$path/profile_icon.svg";
   static const String financeIcon = "$path/finance_icon.svg";
   static const String applicationIcon = "$path/application_icon.svg";
@@ -44,7 +49,7 @@ class AppIcons {
   static const String profileSelectIcon = "$path/profileselected.svg";
   static const String profileUnSelectIcon = "$path/profileunselected.svg";
   ///================bottombar icon===========================
-  static const String otpIcon = "$path/otp_icon.svg";
+  // static const String otpIcon = "$path/otp_icon.svg";
   static const String forgotIcon = "$path/forgot_icon.svg";
   static const String resetIcon = "$path/reset_icon.svg";
   static const String chevronIcon = "$path/chevronIcon.svg";
