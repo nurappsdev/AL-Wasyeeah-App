@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import 'helpers/app_routes.dart';
 import 'themes/theme.dart';
+import 'utils/utils.dart';
 import 'view/screen/screen.dart';
 
 void main() {
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
+          translations: Languages(), // Use your Languages class here
+          locale: Locale('bn', 'US'), // Default locale
+          fallbackLocale: Locale('en', 'US'),
           title: 'Service App',
           home: const SplashScreen(),
           getPages: AppRoutes.routes,

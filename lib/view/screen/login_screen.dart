@@ -151,7 +151,7 @@ TextEditingController passController = TextEditingController();
                   ///=============Sign In Button====================
                   CustomButtonCommon(
                // loading: authController.loadingLoading.value == true,
-                title: AppString.signIn,
+                title: AppString.signIn.tr,
                 onpress: () {
                   if (_logKey.currentState!.validate()) {
                     // authController.loginHandle(
