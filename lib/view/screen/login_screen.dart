@@ -45,7 +45,7 @@ TextEditingController passController = TextEditingController();
                           children: [
                             SvgPicture.asset(AppIcons.profileIcon, height: 60.h, width: 60.w),
                             SizedBox(height: 4.h,),
-                            CustomText(text: "Nominee Log in",)
+                            CustomText(text: "Nominee Log in".tr,)
                           ],
                         ),
                         Column(
@@ -53,7 +53,7 @@ TextEditingController passController = TextEditingController();
                           children: [
                             SvgPicture.asset(AppIcons.financeIcon, height: 60.h, width: 60.w),
                             SizedBox(height: 4.h,),
-                            CustomText(text: "Finance",)
+                            CustomText(text: "Finance".tr,)
                           ],
                         ),
                         Column(
@@ -61,7 +61,7 @@ TextEditingController passController = TextEditingController();
                           children: [
                             SvgPicture.asset(AppIcons.applicationIcon, height: 60.h, width: 60.w),
                             SizedBox(height: 4.h,),
-                            CustomText(text: "Application",)
+                            CustomText(text: "Application".tr,)
                           ],
                         ),
                       ],
@@ -72,13 +72,13 @@ TextEditingController passController = TextEditingController();
 
                   ///=============Email====================
                   SizedBox(height: 20.h,),
-                  CustomText(text: "Email",color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                  CustomText(text: "email".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
                   SizedBox(height: 10.h,),
                   Padding(
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
-                      controller:  emailController,
-                      hintText: AppString.enterYourEmail,
+                      controller: emailController,
+                      hintText: "email".tr,
                       borderColor: AppColors.secondaryPrimaryColor,
                       prefixIcon: Padding(
                         padding: EdgeInsets.only(left: 16.w, right: 12.w),
@@ -87,9 +87,9 @@ TextEditingController passController = TextEditingController();
                       ),
                       validator: (value){
                         if(value == null || value.isEmpty){
-                          return 'Please enter your Email';
+                          return 'Please enter your Email'.tr;
                         }else if(!AppConstants.emailValidate.hasMatch(value)){
-                          return "Invalid Email";
+                          return "Invalid Email".tr;
                         }
                         return null;
 
@@ -102,14 +102,14 @@ TextEditingController passController = TextEditingController();
 
                   ///=============Password====================
                   SizedBox(height: 20.h,),
-                  CustomText(text: "Password",color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                  CustomText(text: "Password".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
                   SizedBox(height: 10.h,),
                   Padding(
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
                       controller:  passController,
                       isPassword: true,
-                      hintText: AppString.enterYourPass,
+                      hintText: AppString.enterYourPass.tr,
                       borderColor: AppColors.secondaryPrimaryColor,
                       prefixIcon: Padding(
                         padding: EdgeInsets.only(left: 16.w, right: 12.w),
@@ -117,9 +117,9 @@ TextEditingController passController = TextEditingController();
                       ),
                       validator: (value){
                         if(value == null || value.isEmpty){
-                          return 'Please enter your Password';
+                          return 'Please enter your Password'.tr;
                         }else if(value.length < 8 || !AppConstants.validatePassword(value)){
-                          return "Password: 8 characters min, letters & digits \nrequired";
+                          return "Password: 8 characters min, letters & digits \nrequired".tr;
                         }
                         return null;
 
@@ -141,7 +141,7 @@ TextEditingController passController = TextEditingController();
                       },
                       child: Padding(
                         padding:  EdgeInsets.only(left: 190.w ),
-                        child: CustomText(text: AppString.forgotPass, fontsize:16.sp,color: AppColors.primaryColor,textAlign: TextAlign.right,fontWeight: FontWeight.w500,),
+                        child: CustomText(text: AppString.forgotPass.tr, fontsize:16.sp,color: AppColors.primaryColor,textAlign: TextAlign.right,fontWeight: FontWeight.w500,),
                       )),
                   SizedBox(height: 20.h,),
 
@@ -171,12 +171,12 @@ TextEditingController passController = TextEditingController();
                           onTap: (){
                           //  Get.toNamed(AppRoutes.otpVirifyScreen,preventDuplicates: false);
                           },
-                          child: CustomText(text: AppString.dontHaveAccount, fontsize: 20.sp,)),
+                          child: CustomText(text: AppString.dontHaveAccount.tr, fontsize: 20.sp,)),
                       InkWell(
                           onTap: (){
                            Get.toNamed(AppRoutes.registrationScreen,preventDuplicates: false);
                           },
-                          child: CustomText(text: AppString.signUpButton, fontsize: 20.sp,color: AppColors.primaryColor,)),
+                          child: CustomText(text: AppString.registerButton.tr, fontsize: 20.sp,color: AppColors.primaryColor,)),
                     ],
                   ),
 
