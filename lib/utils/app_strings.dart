@@ -3,10 +3,11 @@ class AppString {
   ///===================Waseeyah String==============
   static const String forgotPass = "Forget Password?";
   static const String enterYourPass = "Password";
-  static const String enterYourEmail = "Email";
-  static const String signUpButton = "Sign Up";
-  static const String signIn = " Sign In";
+  static const String enterYourEmail = "email";
+  static const String registerButton = "Register now";
+  static const String signIn = "Sign In";
   static const String oTPVerify  = "Verify Email";
+  static const String dontHaveAccount = "Don’t have an account?";
 
 
 
@@ -27,9 +28,6 @@ class AppString {
   static const String checkVerifyEmail1  = "We have sent a verification code to your email. \nPlease check your email and enter the code. ";
   static const String dontGetCode = "Didn’t get the code?";
   static const String signInContinue = "Sign In to Continue";
-
-  static const String forgotPass1 = "Forget Password";
-  static const String dontHaveAccount = "Don’t have an account? ";
   static const String enterForgotEmail = "Please enter your email to reset your \npassword";
   static const String sendOTP = "Send OTP";
   static const String setNewPass = "Set New Password";

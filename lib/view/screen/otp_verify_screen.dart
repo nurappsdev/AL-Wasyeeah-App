@@ -13,7 +13,7 @@ class OtpVerifyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: AppString.oTPVerify,fontsize: 18.sp,),),
+      appBar: AppBar(title: CustomText(text: AppString.oTPVerify.tr,fontsize: 18.sp,),),
       body: Container(
         width: double.infinity,
         height: Get.height,
@@ -25,9 +25,9 @@ class OtpVerifyScreen extends StatelessWidget {
                 SizedBox(height: 16.h,),
                 Center(child: SvgPicture.asset(AppIcons.otpIcon, height: 270.h, width: double.infinity)),
                 SizedBox(height: 16.h,),
-                Center(child: CustomText(text: "Enter OTP",fontsize: 24.sp,textAlign: TextAlign.center,fontWeight: FontWeight.w500,)),
+                Center(child: CustomText(text: "Enter OTP".tr,fontsize: 24.sp,textAlign: TextAlign.center,fontWeight: FontWeight.w500,)),
                 SizedBox(height: 16.h,),
-                Center(child: CustomText(text: "An 6 digit code sent to your mail****ain96@gmail.com",fontsize: 16.sp, maxline: 2, textAlign: TextAlign.center,)),
+                Center(child: CustomText(text: "An 5 digit code sent to your".tr,fontsize: 16.sp, maxline: 2, textAlign: TextAlign.center,)),
                 SizedBox(height: 16.h,),
                 CustomPinCodeTextField(textEditingController: picController,),
                 SizedBox(height: 16.h,),
@@ -37,7 +37,7 @@ class OtpVerifyScreen extends StatelessWidget {
                 ///=============Sign In Button====================
                 CustomButtonCommon(
                   // loading: authController.loadingLoading.value == true,
-                  title: "Submit",
+                  title: "Submit".tr,
                   onpress: () {
                     // if (_forRegKey.currentState!.validate()) {
                     //   // authController.loginHandle(
@@ -49,8 +49,8 @@ class OtpVerifyScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CustomText(text: "Didn’t receive code?",fontsize: 18.sp,),
-                    CustomText(text: " Resent Code",fontsize: 18.sp,color: AppColors.primaryColor,),
+                    CustomText(text: "Didn’t receive code?".tr,fontsize: 18.sp,),
+                    CustomText(text: "Resent Code".tr,fontsize: 18.sp,color: AppColors.primaryColor,),
                   ],
                 ),
               ],
