@@ -13,6 +13,7 @@ class AppRoutes {
   static const String registrationScreen = "/registrationScreen.dart";
   static const String forgotPassScreen = "/forgotPassScreen.dart";
   static const String otpScreen = "/otpScreen.dart";
+  static const String propertyDistributionScreen = "/propertyDistributionScreen.dart";
 
   static List<GetPage> get routes => [
    GetPage(name: splashScreen, page: () =>  SplashScreen()),
@@ -20,6 +21,7 @@ class AppRoutes {
    GetPage(name: registrationScreen, page: () =>  RegistrationScreen()),
    GetPage(name: forgotPassScreen, page: () =>  ForgotPassScreen()),
    GetPage(name: otpScreen, page: () =>  OtpVerifyScreen()),
+   GetPage(name: propertyDistributionScreen, page: () => PropertyDistributionScreen()),
 
   ];
 }

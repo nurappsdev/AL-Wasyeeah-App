@@ -47,6 +47,9 @@ class Languages extends Translations {
       "Didn’t receive code?": "Didn’t receive code?",
       "Resent Code": "Resent Code",
       "Verify Email": "Verify Email",
+      "Skip":"Skip",
+      "Property Distribution":"Property Distribution",
+      "List of relatives":"List of relatives"
 
     },
 
@@ -93,6 +96,11 @@ class Languages extends Translations {
       "Resent Code": "কোড পুনরায় পাঠান",
       "Verify Email": "ইমেল যাচাই করুন",
 
+
+
+      "List of relatives": "আত্মীয় স্বজনের তালিক",
+      "Skip":"স্কিপ",
+      "Property Distribution":"সম্পত্তি বন্টন"
 
     }
   };
