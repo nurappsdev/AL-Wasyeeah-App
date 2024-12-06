@@ -110,7 +110,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       onChanged: widget.onChange,
       cursorColor: Color(0xff4A8D74),
       obscureText: widget.isPassword ? obscureText : false,
-      style: TextStyle(color: widget.textColor ?? Colors.black, fontSize: widget.hintextSize ?? 12.h),
+      style: TextStyle(color: widget.textColor ?? Colors.black, fontSize: widget.hintextSize ?? 16.h),
 
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(
@@ -130,7 +130,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         prefixIconConstraints: BoxConstraints(minHeight: 24.w, minWidth: 24.w),
         labelText: widget.labelText,
         hintText: widget.hintText,
-        hintStyle: TextStyle(color: widget.hintextColor ?? Colors.black54, fontSize: widget.hintextSize ?? 16.h,fontWeight: FontWeight.w400,fontFamily: "ComicNeue-Light"),
+        hintStyle: TextStyle(color: widget.hintextColor ?? Colors.black54, fontSize: widget.hintextSize ?? 14.h,fontWeight: FontWeight.w400,fontFamily: "ComicNeue-Light"),
         focusedBorder: focusedBorder(),
         enabledBorder: enabledBorder(),
         errorBorder: errorBorder(),

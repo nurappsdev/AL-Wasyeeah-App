@@ -49,8 +49,45 @@ class Languages extends Translations {
       "Verify Email": "Verify Email",
       "Skip":"Skip",
       "Property Distribution":"Property Distribution",
-      "List of relatives":"List of relatives"
+      "List of relatives":"List of relatives",
 
+
+
+
+      "Husband":"Husband",
+      "Wife":"Wife",
+      "Son":"Son", "Daughter":"Daughter",
+      "Dead son":"Dead son",
+      "Son of a dead son":"Son of a dead son",
+      "Dead daughter":"Dead daughter",
+      "Daughter of a deceased son":"Daughter of a deceased son",
+
+
+
+      "Son of the deceased daughter":"Son of the deceased daughter",
+      "The daughter of the deceased daughter":"The daughter of the deceased daughter",
+      "Father":"Father",
+      "Mother":"Mother",
+      "Grandfather": "Grandfather",
+      "Grandma": "Grandma",
+      "Granny": "Granny",
+      "Brother": "Brother",
+      "Half-brother (bipartite)": "Half-brother (bipartite)",
+      "Half-sister (bilateral)": "Half-sister (bilateral)",
+      "Stepbrother (half-brother)": "Stepbrother (half-brother)",
+      "Half-sister (step-sister)": "Half-sister (step-sister)",
+      "Brother's son": "Brother's son",
+      "Son of half-brother (uncle)": "Son of half-brother (uncle)",
+      "Brother's son's son": "Brother's son's son",
+      "Son of half-brother's son": "Son of half-brother's son",
+      "Uncle": "Uncle",
+      "Uncle (bilingual)": "Uncle (bilingual)",
+      "Cousin": "Cousin",
+      "Cousin (bipartite)": "Cousin (bipartite)",
+      "Cousin's son": "Cousin's son",
+      "Cousin's son (Baimatreya).": "Cousin's son (Baimatreya).",
+      "Cousin's son's son's son": "Cousin's son's son's son",
+      "Cousin's (Vaimatreya's) son's son": "Cousin's (Vaimatreya's) son's son",
     },
 
 
@@ -98,9 +135,42 @@ class Languages extends Translations {
 
 
 
-      "List of relatives": "আত্মীয় স্বজনের তালিক",
+      "List of relatives": "আত্মীয় স্বজনের তালিকা",
       "Skip":"স্কিপ",
-      "Property Distribution":"সম্পত্তি বন্টন"
+      "Property Distribution":"সম্পত্তি বন্টন",
+
+      "Husband": "স্বামী",
+      "Wife": "স্ত্রী",
+      "Son": "পুত্র",
+      "Daughter": "কন্যা",
+      "Dead son": "মৃত পুত্র",
+      "Son of a dead son": "মৃত পুত্রের পুত্র",
+      "Dead daughter": "মৃত কন্যা",
+      "Daughter of a deceased son": "মৃত পুত্রের কন্যা",
+      "Son of the deceased daughter":"মৃত কন্যা এর পুত্র",
+      "The daughter of the deceased daughter":"মৃত কন্যা এর কন্যা",
+      "Father":"পিতা",
+      "Mother":"মা",
+      "Grandfather":"দাদা",
+      "Grandma":"দাদি",
+      "Granny":"নানি",
+      "Brother":"সহোদর ভাই",
+      "Half-brother (bipartite)":"সৎ ভাই (বৈমাত্রেয়)",
+      "Half-sister (bilateral)":"সৎ বোন (বৈমাত্রেয়)",
+      "Stepbrother (half-brother)":"সৎ ভাই (বৈপিত্রেয়)",
+      "Half-sister (step-sister)":"সৎ বোন (বৈপিত্রেয়)",
+      "Brother's son":"সহোদর ভাইয়ের পুত্র",
+      "Son of half-brother (uncle)":"সৎ ভাই(বৈমাত্রেয়)-এর পুত্র",
+      "Brother's son's son":"সহোদর ভাইয়ের পুত্রের পুত্র",
+      "Son of half-brother's son":"সৎ ভাই(বৈমাত্রেয়)-এর পুত্রের পুত্র",
+      "Uncle":"চাচা",
+      "Uncle (bilingual)":"চাচা (বৈমাত্রেয়)",
+      "Cousin":"চাচাতো ভাই",
+      "Cousin (bipartite)":"চাচাতো ভাই (বৈমাত্রেয়)",
+      "Cousin's son":"চাচাতো ভাইয়ের পুত্র",
+      "Cousin's son (Baimatreya).":"চাচাতো ভাই (বৈমাত্রেয়) এর পুত্র",
+      "Cousin's son's son's son":"চাচাতো ভাইয়ের পুত্রের পুত্র",
+      "Cousin's (Vaimatreya's) son's son":"চাচাতো ভাই (বৈমাত্রেয়)এর পুত্রের পুত্র",
 
     }
   };
