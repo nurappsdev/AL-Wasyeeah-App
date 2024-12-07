@@ -88,6 +88,16 @@ class Languages extends Translations {
       "Cousin's son (Baimatreya).": "Cousin's son (Baimatreya).",
       "Cousin's son's son's son": "Cousin's son's son's son",
       "Cousin's (Vaimatreya's) son's son": "Cousin's (Vaimatreya's) son's son",
+
+      "Asset Description":"Asset Description",
+      "'Land' Measurement Unit Percentage":"'Land' Measurement Unit Percentage",
+      "'Gold' Measurement Unit Bhari":"'Gold' Measurement Unit Bhari",
+      "'Silver' Measurement Unit Bhari":"'Silver' Measurement Unit Bhari",
+      "'Money' Measurement Unit Taka":"'Money' Measurement Unit Taka",
+      "Reset":"Reset",
+      "Result":"Result",
+      "Property Distribution Result":"Property Distribution Result"
+
     },
 
 
@@ -172,6 +182,15 @@ class Languages extends Translations {
       "Cousin's son's son's son":"চাচাতো ভাইয়ের পুত্রের পুত্র",
       "Cousin's (Vaimatreya's) son's son":"চাচাতো ভাই (বৈমাত্রেয়)এর পুত্রের পুত্র",
 
+
+      "Asset Description":"সম্পদের বিবরণ",
+      "'Land' Measurement Unit Percentage":"জমি (পরিমাপের একক শতাংশ)",
+      "'Gold' Measurement Unit Bhari":"স্বর্ণ (পরিমাপের একক ভরি)",
+      "'Silver' Measurement Unit Bhari":"রৌপ্য (পরিমাপের একক ভরি)",
+      "'Money' Measurement Unit Taka":"অর্থ (পরিমাপের একক টাকা)",
+      "Reset":"রিসেট",
+      "Result":"ফলাফল",
+      "Property Distribution Result":"সম্পত্তি বন্টন ফলাফল",
     }
   };
 }
