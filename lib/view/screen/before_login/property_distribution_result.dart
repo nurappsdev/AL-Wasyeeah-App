@@ -71,7 +71,7 @@ class PropertyDistributionResultScreen extends StatelessWidget {
          child: Container(
            width: double.infinity,
            child: Padding(
-             padding:  EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+             padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
              child: Column(
                children: [
        
