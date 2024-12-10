@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/controllers.dart';
 import '../../utils/utils.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
+final LocalizationController _localizationController = Get.find<LocalizationController>(); //
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
@@ -75,25 +77,33 @@ class _SplashScreenState extends State<SplashScreen> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  isEnglish = false;
-                                  Get.updateLocale(const Locale('bd', 'BD'));
+                                  // isEnglish = false;
+                                  // Get.updateLocale(const Locale('bd', 'BD'));
                                 });
                               },
                               child: Text(
                                 'Eng',
                                 style: TextStyle(
-                                  color: isEnglish ? Colors.grey : Colors.white,
+                                  // color: isEnglish ? Colors.grey : Colors.white,
+                                  color: _localizationController.isLtr
+                                      ? Colors.grey
+                                      : Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                             Switch(
 
-                              value: isEnglish,
+                              value:  _localizationController.isLtr,
                               onChanged: (value) {
                                 setState(() {
-                                  isEnglish = value;
-                                  Get.updateLocale(value ? const Locale('en', 'US') : const Locale('bd', 'BD'));
+                                  // isEnglish = value;
+                                  // Get.updateLocale(value ? const Locale('en', 'US') : const Locale('bd', 'BD'));
+                                  _localizationController.isLtr
+                                      ? _localizationController
+                                      .setLanguage(const Locale('bd', "BD"))
+                                      : _localizationController
+                                      .setLanguage(const Locale('en', "US"));
                                 });
                               },
                               activeColor: AppColors.primaryColor,
@@ -102,15 +112,17 @@ class _SplashScreenState extends State<SplashScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                setState(() {
-                                  isEnglish = true;
-                                  Get.updateLocale(const Locale('en', 'US'));
-                                });
+                                // setState(() {
+                                //   isEnglish = true;
+                                //   Get.updateLocale(const Locale('en', 'US'));
+                                // });
                               },
                               child: Text(
                                 'বাং',
                                 style: TextStyle(
-                                  color: isEnglish ? Colors.white : Colors.grey,
+                                  color: _localizationController.isLtr
+                                      ? Colors.white
+                                      : Colors.grey,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
