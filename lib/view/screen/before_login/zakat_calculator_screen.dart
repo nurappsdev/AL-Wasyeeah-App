@@ -126,7 +126,7 @@ class ZakatCalculatorScreen extends StatelessWidget {
                   // loading: authController.loadingLoading.value == true,
                   title: "Result".tr,
                   onpress: () {
-                    Get.toNamed(AppRoutes.propertyDistributionResultScreen,preventDuplicates: false);
+                    _showDialog(context, assetsAccount:"৳ 16,05,790".tr,zakatAccount:"৳ 16,05,790".tr );
                     // if (_forRegKey.currentState!.validate()) {
                     //   // authController.loginHandle(
                     //   //     emailController.text, passController.text);
@@ -143,4 +143,38 @@ class ZakatCalculatorScreen extends StatelessWidget {
     );
 
   }
+   void _showDialog(BuildContext context, {required String assetsAccount, required  String zakatAccount}) {
+     showDialog(
+       context: context,
+       builder: (BuildContext context) {
+         return AlertDialog(
+           title: CustomText(text:  "Result".tr,fontsize: 20.sp,fontWeight: FontWeight.w600,),
+           content: Container(
+             width: double.infinity,
+             height: 200.h,
+             child: Column(
+               children: [
+                 Divider(),
+                 CustomText(text:  "Total Assets".tr,fontsize: 20.sp,fontWeight: FontWeight.w600,color: AppColors.primaryColor,),
+                 SizedBox(height: 12.h,),
+                 CustomText(text:  assetsAccount,fontsize: 22.sp,fontWeight: FontWeight.w600,color: AppColors.primaryColor,),
+                 Divider(color: AppColors.primaryColor,),
+                 CustomText(text:  "PAYABLE ZAKAT".tr,fontsize: 20.sp,fontWeight: FontWeight.w600,color: AppColors.primaryColor,),
+                 SizedBox(height: 12.h,),
+                 CustomText(text:  zakatAccount,fontsize: 22.sp,fontWeight: FontWeight.w600,color: AppColors.primaryColor,),
+               ],
+             ),
+           ),
+           // actions: <Widget>[
+           //   TextButton(
+           //     child: CustomText(text:  "Result".tr,),
+           //     onPressed: () {
+           //       Navigator.of(context).pop(); // Close the dialog
+           //     },
+           //   ),
+           // ],
+         );
+       },
+     );
+   }
 }
