@@ -97,6 +97,8 @@
   "Value of Silver":"Value of Silver (\\$)",
   "Cash In hand and in bank accounts":"Cash In hand and in bank accounts(\\$)",
   "Deposited for some future purpose":"Deposited for some future purpose(\\$)",
-  "Given out in loans":"Given out in loans(\\$)"
+  "Given out in loans":"Given out in loans(\\$)",
+ "Total Assets":"Total Assets",
+ "PAYABLE ZAKAT":"PAYABLE ZAKAT"
 
 }
