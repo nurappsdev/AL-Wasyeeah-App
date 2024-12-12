@@ -154,7 +154,7 @@ class ZakatCalculatorScreen extends StatelessWidget {
              height: 200.h,
              child: Column(
                children: [
-                 Divider(),
+                 Divider(), 
                  CustomText(text:  "Total Assets".tr,fontsize: 20.sp,fontWeight: FontWeight.w600,color: AppColors.primaryColor,),
                  SizedBox(height: 12.h,),
                  CustomText(text:  assetsAccount,fontsize: 22.sp,fontWeight: FontWeight.w600,color: AppColors.primaryColor,),
