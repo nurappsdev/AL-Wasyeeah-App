@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../utils/utils.dart';
 import '../widgets/widgets.dart';
+import 'profile_setting/profile_setting1.dart';
 
 class OtpVerifyScreen extends StatelessWidget {
    OtpVerifyScreen({super.key});
@@ -39,6 +40,7 @@ class OtpVerifyScreen extends StatelessWidget {
                   // loading: authController.loadingLoading.value == true,
                   title: "Submit".tr,
                   onpress: () {
+                    Get.off(()=>StepNavigationWithPageView());
                     // if (_forRegKey.currentState!.validate()) {
                     //   // authController.loginHandle(
                     //   //     emailController.text, passController.text);
