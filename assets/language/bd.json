@@ -93,5 +93,18 @@
 "Deposited for some future purpose":"কিছু ভবিষ্যৎ উদ্দেশ্যে জমা (৳)",
 "Given out in loans":"কঋণে দেওয়া হয়েছে(৳)",
 "Total Assets":"মোট সম্পদ",
-"PAYABLE ZAKAT":"প্রদেয় যাকাত"
+"PAYABLE ZAKAT":"প্রদেয় যাকাত",
+"Married":"বিবাহিত",
+"Un Married":"অবিবাহিত",
+"Marital Status":"বৈবাহিক অবস্থা",
+"Profession":"পেশা",
+  "Business": "ব্যবসা",
+  "Doctor": "ডাক্তার",
+  "Engineers": "ইঞ্জিনিয়ার",
+  "Others": "অন্যান্য",
+  "Place of birth": "জন্মস্থান",
+  "Male": "পুরুষ",
+  "FeMale": "মহিলা",
+  "District/State":"জেলা/রাজ্য",
+  "NID/Passport No":"এনআইডি/পাসপোর্ট নম্বর"
 }

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import '../../utils/utils.dart';
 import '../widgets/widgets.dart';
-import 'profile_setting/profile_setting1.dart';
+import 'profile_setting/profile_setting.dart';
 
 class OtpVerifyScreen extends StatelessWidget {
    OtpVerifyScreen({super.key});

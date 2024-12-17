@@ -1,6 +1,8 @@
+import 'package:al_wasyeah/view/screen/profile_setting/profile_screen1.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import 'profile_screen2.dart';
 
@@ -94,11 +96,12 @@ class _StepNavigationWithPageViewState
                   });
                 },
                 children: [
-                  StepScreen(content: "Step 1 Content"),
+                  ProfileScreen1(),
+                  ProfileScreen1(),
+                  ProfileScreen1(),
+                  ProfileScreen1(),
                   ProfileScreen2(),
-                  StepScreen(content: "Step 3 Content"),
-                  StepScreen(content: "Step 4 Content"),
-                  StepScreen(content: "Step 5 Content"),
+
                 ],
               ),
             ),
@@ -109,22 +112,8 @@ class _StepNavigationWithPageViewState
   }
 }
 
-// Example step content screen
-class StepScreen extends StatelessWidget {
-  final String content;
 
-  StepScreen({required this.content});
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        content,
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-}
 
 void main() {
   runApp(MaterialApp(
