@@ -106,5 +106,16 @@
   "Male": "পুরুষ",
   "FeMale": "মহিলা",
   "District/State":"জেলা/রাজ্য",
-  "NID/Passport No":"এনআইডি/পাসপোর্ট নম্বর"
+  "NID/Passport No":"এনআইডি/পাসপোর্ট নম্বর",
+
+  "Take Your Photo": "আপনার ছবি তুলুন",
+  "Photo": "ছবি",
+  "TIN (Tax Identification Number)": "টিআইএন (কর শনাক্তকরণ নম্বর)",
+  "Present Address": "বর্তমান ঠিকানা",
+  "ZIP Code": "জিপ কোড",
+  "Village/House": "গ্রাম/বাড়ি",
+  "Permanent Address": "স্থায়ী ঠিকানা",
+  "Overseas Address": "বিদেশি ঠিকানা",
+  "Road/Block/Sector": "রাস্তা/ব্লক/সেক্টর"
+
 }

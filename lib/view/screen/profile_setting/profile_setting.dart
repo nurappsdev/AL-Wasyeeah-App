@@ -1,9 +1,9 @@
-import 'package:al_wasyeah/view/screen/profile_setting/profile_screen1.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../screen.dart';
 import 'profile_screen2.dart';
 
 class StepNavigationWithPageView extends StatefulWidget {
@@ -97,7 +97,7 @@ class _StepNavigationWithPageViewState
                 },
                 children: [
                   ProfileScreen1(),
-                  ProfileScreen1(),
+                  PresentAddressScreen(),
                   ProfileScreen1(),
                   ProfileScreen1(),
                   ProfileScreen2(),

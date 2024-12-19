@@ -112,7 +112,19 @@
  "Male":"Male",
  "FeMale":"FeMale",
  "District/State":"District/State",
- "NID/Passport No":"NID/Passport No"
+ "NID/Passport No":"NID/Passport No",
+
+ "Take Your Photo":"Take Your Photo",
+ "Photo":"Photo",
+ "TIN (Tax Identification Number)":"TIN (Tax Identification Number)",
+ "Present Address":"Present Address",
+ "ZIP Code":"ZIP Code",
+ "Village/House":"Village/House",
+ "Permanent Address":"Permanent Address",
+ "Overseas Address":"Overseas Address",
+ "Road/Block/Sector":"Road/Block/Sector"
+
+
 
 
 }

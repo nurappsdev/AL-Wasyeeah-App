@@ -1,13 +1,18 @@
 
+import 'dart:io';
+
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
+import 'dart:typed_data';
+
 
 class ProfileScreen1 extends StatefulWidget {
 
@@ -69,6 +74,9 @@ final List<Map<String, String>> muslimCountriesInWorld = [
 String _selectedCountry = 'Bangladesh';
 TextEditingController districtController = TextEditingController();
 TextEditingController passOrNIDController = TextEditingController();
+Uint8List? _image;
+File? selectedIMage;
+
   @override
   Widget build(BuildContext context) {
 
@@ -115,22 +123,126 @@ TextEditingController passOrNIDController = TextEditingController();
               ///============NID/PASSPORT No*====================
               CustomText(text: "NID/Passport No".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
               SizedBox(height: 10.h,),
-              Padding(
-                padding: EdgeInsets.only(bottom: 16.h),
-                child: CustomTextField(
-                  controller:  passOrNIDController,
-                  hintText: "NID/Passport No".tr,
-                  borderColor: AppColors.secondaryPrimaryColor,
-                  validator: (value){
-                    if(value == null || value.isEmpty){
-                      return 'NID/Passport No'.tr;
-                    }
-                    return null;
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+               Expanded(
+                  child: CustomTextField(
+                    controller:  passOrNIDController,
+                    hintText: "NID/Passport No".tr,
+                    borderColor: AppColors.secondaryPrimaryColor,
+                    onChange: (value){},
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return 'NID/Passport No'.tr;
+                      }
+                      return null;
 
-                  },
+                    },
+                  ),
                 ),
+                SizedBox(width: 6.w,),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 6.w),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(16.r),
+                  ),
+                  child: IconButton(
+                    icon:Icon(Icons.attach_file_outlined,color: AppColors.primaryColor,),
+                    onPressed: () {
+                      // Add your action here
+                    },
+                  ),
+                ),
+              ],
+            ),
+              SizedBox(height: 16.h),
+              ///============TIN (Tax Identification Number)====================
+              CustomText(text: "  ".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+              SizedBox(height: 10.h,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: CustomTextField(
+                      controller:  passOrNIDController,
+                      hintText: "TIN (Tax Identification Number)".tr,
+                      borderColor: AppColors.secondaryPrimaryColor,
+                    ),
+                  ),
+                  SizedBox(width: 6.w,),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 6.w),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    child: IconButton(
+                      icon:Icon(Icons.attach_file_outlined,color: AppColors.primaryColor,),
+                      onPressed: () {
+                        // Add your action here
+                      },
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 16.h),
+
+              ///============Photo====================
+              CustomText(text: "Photo".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+              SizedBox(height: 10.h,),
+              GestureDetector(
+                onTap: (){
+                  showImagePickerOption(context);
+
+                },
+                child: Container(
+                  width: double.infinity, // Set your desired width here
+                  height: 160.h, // Set your desired height here
+                  decoration: BoxDecoration(
+                    color: Colors.green.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12.dm),
+                    border: Border.all(color: Colors.green.shade200),
+                  ),
+                  child: selectedIMage == null
+                      ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.camera_alt,
+                        color: Colors.green,
+                        size: 40,
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        "Take Your Photo".tr,
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  )
+                      :
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12.dm),
+                    child: selectedIMage!.path.isNotEmpty
+                        ? Image.file(
+                      selectedIMage!,
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    )
+                        :   CustomNetworkImage(
+                      boxShape: BoxShape.rectangle,
+                      imageUrl: "",
+                      height: 180.h,
+                      width: 345.w,
+                    ) ,
+                  ),
+                ),
+              ),
 
               ///=============Place of birth====================
               CustomText(text: "Place of birth".tr,fontsize: 16.sp,),
@@ -208,4 +320,91 @@ TextEditingController passOrNIDController = TextEditingController();
     ),
     );
   }
+//==================================> ShowImagePickerOption Function <===============================
+void showImagePickerOption(BuildContext context) {
+  showModalBottomSheet(
+      backgroundColor: Colors.white,
+      context: context,
+      builder: (builder) {
+        return Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 6.2,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      _pickImageFromGallery();
+
+                      // _pickImageFromGallery();
+                    },
+                    child: SizedBox(
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.image,
+                            size: 50.w,
+                          ),
+                          CustomText(text: 'Gallery')
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      _pickImageFromCamera();
+
+                      // _pickImageFromCamera();
+                    },
+                    child: SizedBox(
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.camera_alt,
+                            size: 50.w,
+                          ),
+                          CustomText(text: 'Camera')
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+}
+
+
+//==================================> Gallery <===============================
+Future _pickImageFromGallery() async {
+  final returnImage =
+  await ImagePicker().pickImage(source: ImageSource.gallery);
+  if (returnImage == null) return;
+  setState(() {
+    selectedIMage = File(returnImage.path);
+    _image = File(returnImage.path).readAsBytesSync();
+  });
+  Get.back();
+}
+
+//==================================> Camera <===============================
+  Future _pickImageFromCamera() async {
+    final returnImage =
+    await ImagePicker().pickImage(source: ImageSource.camera);
+    if (returnImage == null) return;
+    setState(() {
+      selectedIMage = File(returnImage.path);
+      _image = File(returnImage.path).readAsBytesSync();
+    });
+    Get.back();
+  }
+
+
 }
