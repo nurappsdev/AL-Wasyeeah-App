@@ -16,6 +16,7 @@ class AppRoutes {
   static const String propertyDistributionScreen = "/propertyDistributionScreen.dart";
   static const String propertyDistributionResultScreen = "/propertyDistributionResultScreen.dart";
   static const String zakatCalculatorScreen = "/zakatCalculatorScreen.dart";
+  static const String profileSetting1 = "/profileSetting1.dart";
 
   static List<GetPage> get routes => [
    GetPage(name: splashScreen, page: () =>  SplashScreen()),
@@ -26,6 +27,7 @@ class AppRoutes {
    GetPage(name: propertyDistributionScreen, page: () => PropertyDistributionScreen()),
    GetPage(name: propertyDistributionResultScreen, page: () => PropertyDistributionResultScreen()),
    GetPage(name: zakatCalculatorScreen, page: () => ZakatCalculatorScreen()),
+   GetPage(name: profileSetting1, page: () => ProfileScreen1()),
 
   ];
 }

@@ -99,6 +99,32 @@
   "Deposited for some future purpose":"Deposited for some future purpose(\\$)",
   "Given out in loans":"Given out in loans(\\$)",
  "Total Assets":"Total Assets",
- "PAYABLE ZAKAT":"PAYABLE ZAKAT"
+ "PAYABLE ZAKAT":"PAYABLE ZAKAT",
+ "Married":"Married",
+ "Un Married":"Un Married",
+ "Marital Status":"Marital Status",
+ "Profession":"Profession",
+ "Business":"Business",
+ "Doctor":"Doctor",
+ "Engineers":"Engineers",
+ "Others":"Others",
+ "Place of birth":"Place of birth",
+ "Male":"Male",
+ "FeMale":"FeMale",
+ "District/State":"District/State",
+ "NID/Passport No":"NID/Passport No",
+
+ "Take Your Photo":"Take Your Photo",
+ "Photo":"Photo",
+ "TIN (Tax Identification Number)":"TIN (Tax Identification Number)",
+ "Present Address":"Present Address",
+ "ZIP Code":"ZIP Code",
+ "Village/House":"Village/House",
+ "Permanent Address":"Permanent Address",
+ "Overseas Address":"Overseas Address",
+ "Road/Block/Sector":"Road/Block/Sector"
+
+
+
 
 }

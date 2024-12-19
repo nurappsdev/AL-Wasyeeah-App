@@ -38,25 +38,6 @@ class RegistrationScreen extends StatelessWidget {
                     // Center(child: CustomText(text: "Enter your details to register Al Wasyyah",fontsize: 16.sp,textAlign: TextAlign.center,)),
 
 
-                    ///=============First Name====================
-                    SizedBox(height: 20.h,),
-                    CustomText(text: "First Name".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
-                    SizedBox(height: 10.h,),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
-                      child: CustomTextField(
-                        controller:  firstNameController,
-                        hintText: "First Name".tr,
-                        borderColor: AppColors.secondaryPrimaryColor,
-                        validator: (value){
-                          if(value == null || value.isEmpty){
-                            return 'Please enter your First Name'.tr;
-                          }
-                          return null;
-
-                        },
-                      ),
-                    ),
 
 
                     ///=============Last Name====================
