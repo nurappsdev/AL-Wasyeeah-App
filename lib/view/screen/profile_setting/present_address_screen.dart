@@ -39,7 +39,7 @@ TextEditingController mobileController = TextEditingController();
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 20.h,),
-                Center(child: CustomText(text: "Present Address".tr,fontsize: 20,)),
+
                 ///=============ZIP Code====================
                 SizedBox(height: 16.h,),
                 CustomText(text: "ZIP Code".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),

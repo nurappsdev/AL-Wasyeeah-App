@@ -11,7 +11,7 @@ class ProfileController extends GetxController{
 
   final List<String> gender = ['Male'.tr, 'FeMale'.tr, 'Others'.tr];
   final List<String> maritalStatus = ['Married'.tr, 'Un Married'.tr,];
-  final List<String> profession = ['Business'.tr, 'Doctor'.tr, "Engineers".tr, "Others".tr];
+  final List<String> profession = ['Business'.tr, 'Doctor'.tr, "Engineers".tr,"Housewife".tr, "Others".tr];
 
 
   final List<Map<String, String>> muslimCountriesInWorld = [

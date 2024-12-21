@@ -98,8 +98,8 @@ class _StepNavigationWithPageViewState
                 children: [
                   ProfileScreen1(),
                   PresentAddressScreen(),
-                  ProfileScreen1(),
-                  ProfileScreen1(),
+                  FatherInfoScreen(),
+                  FamilyInfoScreen(),
                   ProfileScreen2(),
 
                 ],

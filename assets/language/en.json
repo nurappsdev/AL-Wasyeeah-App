@@ -122,7 +122,23 @@
  "Village/House":"Village/House",
  "Permanent Address":"Permanent Address",
  "Overseas Address":"Overseas Address",
- "Road/Block/Sector":"Road/Block/Sector"
+ "Road/Block/Sector":"Road/Block/Sector",
+
+
+ "Father’s Information":"Father’s Information",
+ "Father’s Name":"Father’s Name",
+ "Mother’s Information":"Mother’s Information",
+ "Mother’s Name":"Mother’s Name",
+ "Nationality":"Nationality",
+ "Next":"Next",
+
+ "Family Information":"Family Information",
+ "Spouse Name":"Spouse Name",
+ "Alive":"Alive",
+ "Death":"Death"
+
+
+
 
 
 
