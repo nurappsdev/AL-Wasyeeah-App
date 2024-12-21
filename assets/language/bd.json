@@ -116,6 +116,17 @@
   "Village/House": "গ্রাম/বাড়ি",
   "Permanent Address": "স্থায়ী ঠিকানা",
   "Overseas Address": "বিদেশি ঠিকানা",
-  "Road/Block/Sector": "রাস্তা/ব্লক/সেক্টর"
+  "Road/Block/Sector": "রাস্তা/ব্লক/সেক্টর",
+
+  "Father’s Information": "বাবার তথ্য",
+  "Father’s Name": "বাবার নাম",
+  "Mother’s Information": "মায়ের তথ্য",
+  "Mother’s Name": "মায়ের নাম",
+  "Nationality": "জাতীয়তা",
+  "Next": "পরবর্তী",
+  "Family Information": "পরিবারের তথ্য",
+  "Spouse Name": "সঙ্গীর নাম",
+  "Alive": "জীবিত",
+  "Death": "মৃত্যু"
 
 }
