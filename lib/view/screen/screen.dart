@@ -10,3 +10,4 @@ export 'profile_setting/profile_screen1.dart';
 export 'profile_setting/present_address_screen.dart';
 export 'profile_setting/father_info_screen.dart';
 export 'profile_setting/family_info_screen.dart';
+export 'profile_setting/bank_info_screen.dart';
