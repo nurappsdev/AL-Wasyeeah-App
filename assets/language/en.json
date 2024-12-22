@@ -135,7 +135,18 @@
  "Family Information":"Family Information",
  "Spouse Name":"Spouse Name",
  "Alive":"Alive",
- "Death":"Death"
+ "Death":"Death",
+
+
+ "Gender":"Gender",
+ "Bank Information":"Bank Information",
+ "Bank":"Bank",
+ "Islami Bank":"Islami Bank",
+ "Islami Bank":"Islami Bank",
+ "Account Name":"Account Name",
+ "Account Number":"Account Number"
+
+
 
 
 

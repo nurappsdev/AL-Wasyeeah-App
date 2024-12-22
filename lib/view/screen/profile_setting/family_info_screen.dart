@@ -19,6 +19,7 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
   TextEditingController passOrNIDController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   ProfileController profileController = Get.put(ProfileController());
+  TextEditingController emailController = TextEditingController();
   List<bool> isSelected = [true, false];
   @override
   Widget build(BuildContext context) {
@@ -110,6 +111,27 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                       },
                     ),
                     SizedBox(height: 16.h),
+                    ///=============Email====================
+                    CustomText(text: "email".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                    SizedBox(height: 10.h,),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16.h),
+                      child: CustomTextField(
+                        controller: emailController,
+                        hintText: "email".tr,
+                        borderColor: AppColors.secondaryPrimaryColor,
+                        validator: (value){
+                          if(value == null || value.isEmpty){
+                            return 'Please enter your Email'.tr;
+                          }else if(!AppConstants.emailValidate.hasMatch(value)){
+                            return "Invalid Email".tr;
+                          }
+                          return null;
+
+                        },
+                      ),
+                    ),
+
                     Center(
                       child: ToggleButtons(
                         isSelected: isSelected,
@@ -146,6 +168,7 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                     CustomDropdown(label: "Profession".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
                     SizedBox(height: 20.h),
                     CustomDropdown(label: "Nationality".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
+
                     ///============NID/PASSPORT No*====================
                     SizedBox(height: 20.h),
                     CustomText(text: "NID/Passport No".tr,color: AppColors.hitTextColor000000,fontsize: 16.sp,),
@@ -214,6 +237,7 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                     ),
                     SizedBox(height: 16.h),
                     ///=============Button====================
+
                     CustomButtonCommon(
                       // loading: authController.loadingLoading.value == true,
                       title: "Next".tr,

@@ -24,6 +24,7 @@ TextEditingController permanentVillageController = TextEditingController();
 TextEditingController permanentRoadController = TextEditingController();
 TextEditingController mobileController = TextEditingController();
 
+
    ProfileController profileController = Get.put(ProfileController());
 
   @override
@@ -39,6 +40,8 @@ TextEditingController mobileController = TextEditingController();
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 20.h,),
+                ///=============="Present Address================================
+                Center(child: CustomText(text: "Present Address".tr,fontsize: 20,)),
 
                 ///=============ZIP Code====================
                 SizedBox(height: 16.h,),
@@ -161,9 +164,8 @@ TextEditingController mobileController = TextEditingController();
 
                   },
                 ),
+                ///=============Mobile====================
                 SizedBox(height: 20.h),
-
-
                 Center(
                   child: Container(
                     height: 50.h, // Adjust the height here

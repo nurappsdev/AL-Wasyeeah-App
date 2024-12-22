@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../screen.dart';
-import 'profile_screen2.dart';
+
 
 class StepNavigationWithPageView extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class _StepNavigationWithPageViewState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:CustomText(text: "Profile Settings",fontWeight: FontWeight.w600,fontsize: 20.sp,),),
+      appBar: AppBar(title:CustomText(text: "Profile Settings".tr,fontWeight: FontWeight.w600,fontsize: 20.sp,),),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.h),
         child: Column(
@@ -100,7 +100,7 @@ class _StepNavigationWithPageViewState
                   PresentAddressScreen(),
                   FatherInfoScreen(),
                   FamilyInfoScreen(),
-                  ProfileScreen2(),
+                  BankInfoScreen(),
 
                 ],
               ),
