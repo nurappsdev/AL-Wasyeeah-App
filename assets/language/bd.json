@@ -128,6 +128,11 @@
   "Spouse Name": "সঙ্গীর নাম",
   "Alive": "জীবিত",
   "Death": "মৃত্যু",
-  "Gender": "লিঙ্গ"
+  "Gender": "লিঙ্গ",
+  "Bank Information": "ব্যাংক তথ্য",
+  "Bank": "ব্যাংক",
+  "Islami Bank": "ইসলামী ব্যাংক",
+  "Account Name": "অ্যাকাউন্টের নাম",
+  "Account Number": "অ্যাকাউন্ট নম্বর"
 
 }
