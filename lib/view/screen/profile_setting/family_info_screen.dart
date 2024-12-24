@@ -172,7 +172,7 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                       children: [
                         ElevatedButton(
                           onPressed: _toggleContainer,
-                          child: Text('+ Add more spouse'),
+                          child: Text('+ Add more spouse'.tr),
                         ),
                         if (_isContainerVisible)
                           Container(
@@ -195,7 +195,7 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                     "Children's Information",
+                                     "Children's Information".tr,
                                       style: TextStyle(fontSize: 16),
                                     ),
                                     IconButton(

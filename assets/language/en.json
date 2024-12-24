@@ -142,11 +142,18 @@
  "Bank Information":"Bank Information",
  "Bank":"Bank",
  "Islami Bank":"Islami Bank",
- "Islami Bank":"Islami Bank",
  "Account Name":"Account Name",
  "Account Number":"Account Number",
 
- "+ Add more spouse":"+ Add more spouse"
+ "+ Add more spouse":"+ Add more spouse",
+ "+ Add more Bank":"+ Add more Bank",
+ "Wealth":"Wealth",
+ "Note":"Note",
+ "Documents Type":"Documents Type",
+ "Witness":"Witness",
+ "Nominee":"Nominee",
+ "Prayer Time":"Prayer Time",
+ "Explore your \\n Wasyyah":"Explore your \n Wasyyah"
 
 
 

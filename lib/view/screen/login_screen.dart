@@ -150,12 +150,15 @@ TextEditingController passController = TextEditingController();
 
                   ///=============Sign In Button====================
                   CustomButtonCommon(
+
                // loading: authController.loadingLoading.value == true,
                 title: AppString.signIn.tr,
                 onpress: () {
+                  Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
                   if (_logKey.currentState!.validate()) {
                     // authController.loginHandle(
                     //     emailController.text, passController.text);
+                    Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
                   }
                 },),
 
