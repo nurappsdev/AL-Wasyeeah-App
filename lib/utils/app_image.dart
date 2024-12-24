@@ -7,6 +7,10 @@ class AppImages {
   static const String backImg = "$path/background_img.png";
   static const String splashImg1 = "$path/splash_img1.png";
   static const String splashImg2 = "$path/slpash_img.png";
+  static const String zakatImg = "$path/zakatImg.png";
+
+
+
 
   static const String pmoji = "$path/pmoji.png";
   static const String profileImg = "$path/profile.png";

@@ -4,6 +4,11 @@ class AppIcons {
 
   static const String logo = "$path/logo.svg";
   static const String otpIcon = "$path/otp_icon.svg";
+  static const String exploreWasyea = "$path/explore_wasyea.svg";
+  static const String witness = "$path/witness.svg";
+  static const String nominee = "$path/nominee.svg";
+  static const String mosjid = "$path/mosjid.svg";
+  static const String zakatHomeIcon = "$path/zakat_home.svg";
 
 
 
