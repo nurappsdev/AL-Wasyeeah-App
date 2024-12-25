@@ -1,4 +1,5 @@
 
+import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:al_wasyeah/utils/app_image.dart';
@@ -91,19 +92,24 @@ class HomeScreen extends StatelessWidget {
         
         
         
-                  Container(
-                    height: 150.h,
-                    width: double.infinity,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        border: Border.all(color: AppColors.primaryColor),
-                        ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        SvgPicture.asset(AppIcons.exploreWasyea, width: 80.w,height: 80.h,),
-                        CustomText(text: "Explore your \n Wasyyah".tr,fontsize: 18.sp,color: AppColors.primaryColor,)
-                      ],
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(AppRoutes.wasyyahScreen,preventDuplicates: false);
+                    },
+                    child: Container(
+                      height: 150.h,
+                      width: double.infinity,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          border: Border.all(color: AppColors.primaryColor),
+                          ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SvgPicture.asset(AppIcons.exploreWasyea, width: 80.w,height: 80.h,),
+                          CustomText(text: "Explore your \n Wasyyah".tr,fontsize: 18.sp,color: AppColors.primaryColor,)
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20.h),
@@ -252,9 +258,6 @@ class CustomCard extends StatelessWidget {
                 ),
               ],
             ),
-
-
-
           ],
         ),
       ),

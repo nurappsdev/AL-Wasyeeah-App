@@ -12,3 +12,4 @@ export 'profile_setting/father_info_screen.dart';
 export 'profile_setting/family_info_screen.dart';
 export 'profile_setting/bank_info_screen.dart';
 export 'home_screen.dart';
+export 'wasyyah/wasyyah_screen.dart';
