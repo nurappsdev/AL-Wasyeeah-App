@@ -1,4 +1,5 @@
 
+import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/view/widgets/custom_button.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -77,7 +78,11 @@ class WasyyahScreen extends StatelessWidget {
                            Row(
                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                              children: [
-                               _iconTextCon(Icons.edit_calendar_outlined,"Edit"),
+                               GestureDetector(
+                                   onTap: (){
+                                     Get.toNamed(AppRoutes.wasyyahEditScreen,preventDuplicates: false);
+                                   },
+                                   child: _iconTextCon(Icons.edit_calendar_outlined,"Edit")),
             
                                _iconTextCon(Icons.remove_red_eye_outlined,"View"),
                              ],
@@ -123,7 +128,11 @@ class WasyyahScreen extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                _iconTextCon(Icons.edit_calendar_outlined,"Edit"),
+                                GestureDetector(
+                                    onTap: (){
+
+                                    },
+                                    child: _iconTextCon(Icons.edit_calendar_outlined,"Edit")),
 
                                 _iconTextCon(Icons.remove_red_eye_outlined,"View"),
                               ],
@@ -141,7 +150,7 @@ class WasyyahScreen extends StatelessWidget {
       ),
     );
   }
-Widget _iconTextCon( IconData icon, String text){
+Widget _iconTextCon(IconData icon, String text){
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(

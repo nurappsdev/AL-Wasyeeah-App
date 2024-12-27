@@ -20,6 +20,7 @@ class AppRoutes {
   static const String fatherInfoScreen = "/fatherInfoScreen.dart";
   static const String homeScreen = "/homeScreen.dart";
   static const String wasyyahScreen = "/wasyyahScreen.dart";
+  static const String wasyyahEditScreen = "/wasyyahEditScreen.dart";
 
   static List<GetPage> get routes => [
    GetPage(name: splashScreen, page: () =>  SplashScreen()),
@@ -34,6 +35,7 @@ class AppRoutes {
    GetPage(name: fatherInfoScreen, page: () => FatherInfoScreen()),
    GetPage(name: homeScreen, page: () => HomeScreen()),
    GetPage(name: wasyyahScreen, page: () => WasyyahScreen()),
+   GetPage(name: wasyyahEditScreen, page: () => WasiyahEditScreen()),
 
   ];
 }
