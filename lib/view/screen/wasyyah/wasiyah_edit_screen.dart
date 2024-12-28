@@ -121,7 +121,7 @@ class WasiyahEditScreen extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: CustomButton(title: "Cancel".tr, onpress: (){},width: 100.w,height: 40.h,color: Colors.red,),
+                        child: CustomButton(title: "Cancel".tr, onpress: () {},width: 100.w,height: 40.h,color: Colors.red,),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
