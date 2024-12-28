@@ -14,3 +14,5 @@ export 'profile_setting/bank_info_screen.dart';
 export 'home_screen.dart';
 export 'wasyyah/wasyyah_screen.dart';
 export 'wasyyah/wasiyah_edit_screen.dart';
+export 'witnessess/witness_screen.dart';
+export 'witnessess/mominee_details_screen.dart';
