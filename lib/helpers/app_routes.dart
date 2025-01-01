@@ -3,6 +3,7 @@
 
 
 
+import 'package:al_wasyeah/view/screen/witnessess/add_witness_screen.dart';
 import 'package:get/get.dart';
 
 import '../view/screen/screen.dart';
@@ -22,7 +23,10 @@ class AppRoutes {
   static const String wasyyahScreen = "/wasyyahScreen.dart";
   static const String wasyyahEditScreen = "/wasyyahEditScreen.dart";
   static const String witnessesScreen = "/witnessesScreen.dart";
+  static const String addWitnessesScreen = "/addWitnessesScreen.dart";
   static const String nomineeDetailsScreen = "/nomineeDetailsScreen.dart";
+  static const String nomineeScreen = "/nomineeScreen.dart";
+  static const String witnessDetailsScreen = "/witnessDetailsScreen.dart";
 
   static List<GetPage> get routes => [
    GetPage(name: splashScreen, page: () =>  SplashScreen()),
@@ -38,8 +42,11 @@ class AppRoutes {
    GetPage(name: homeScreen, page: () => HomeScreen()),
    GetPage(name: wasyyahScreen, page: () => WasyyahScreen()),
    GetPage(name: wasyyahEditScreen, page: () => WasiyahEditScreen()),
+   GetPage(name: nomineeScreen, page: () => NomineeScreen()),
    GetPage(name: witnessesScreen, page: () => WitnessScreen()),
+   GetPage(name: addWitnessesScreen, page: () => AddWitnessScreen()),
    GetPage(name: nomineeDetailsScreen, page: () => NomineeDetailsScreen()),
+   GetPage(name: witnessDetailsScreen, page: () => WitnessDetailsScreen()),
 
   ];
 }

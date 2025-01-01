@@ -136,6 +136,15 @@
   "Account Number": "অ্যাকাউন্ট নম্বর",
 
 
-  "Bismillahir Rahmanir Raheem": "বিসমিল্লাহির রহমানির রাহিম"
+  "Bismillahir Rahmanir Raheem": "বিসমিল্লাহির রহমানির রাহিম",
+
+
+  "Add Witness": "সাক্ষী যোগ করুন",
+  "Your Witness": "আপনার সাক্ষী",
+  "I’m the witness": "আমি সাক্ষী",
+  "Witness Profile Details": "সাক্ষীর প্রোফাইলের বিস্তারিত",
+  "+ Add more witness": "+ আরও সাক্ষী যোগ করুন",
+  " - Remove Witness": " - সাক্ষী সরান",
+  "+ Add outside witness": "+ বাহিরের সাক্ষী যোগ করুন"
 
 }

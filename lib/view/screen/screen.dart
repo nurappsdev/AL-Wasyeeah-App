@@ -15,4 +15,6 @@ export 'home_screen.dart';
 export 'wasyyah/wasyyah_screen.dart';
 export 'wasyyah/wasiyah_edit_screen.dart';
 export 'witnessess/witness_screen.dart';
-export 'witnessess/mominee_details_screen.dart';
+export 'nominee/mominee_details_screen.dart';
+export 'nominee/nominee_screen.dart';
+export 'witnessess/witness_details_screen.dart';
