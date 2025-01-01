@@ -143,19 +143,24 @@ class HomeScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 6.w,),
                       Expanded(
-                        child: Container(
-                          height: 100.h,
-                          width: double.infinity,
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            border: Border.all(color: AppColors.primaryColor),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              SvgPicture.asset(AppIcons.nominee, width: 40.w,height: 40.h,),
-                              CustomText(text: "Nominee".tr,fontsize: 18.sp,color: AppColors.textColor4E4E4E,)
-                            ],
+                        child: GestureDetector(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.nomineeScreen,preventDuplicates: false);
+                          },
+                          child: Container(
+                            height: 100.h,
+                            width: double.infinity,
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              border: Border.all(color: AppColors.primaryColor),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                SvgPicture.asset(AppIcons.nominee, width: 40.w,height: 40.h,),
+                                CustomText(text: "Nominee".tr,fontsize: 18.sp,color: AppColors.textColor4E4E4E,)
+                              ],
+                            ),
                           ),
                         ),
                       ),
