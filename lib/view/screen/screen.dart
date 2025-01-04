@@ -18,3 +18,5 @@ export 'witnessess/witness_screen.dart';
 export 'nominee/mominee_details_screen.dart';
 export 'nominee/nominee_screen.dart';
 export 'witnessess/witness_details_screen.dart';
+export 'nominee/add_nominee_screen.dart';
+export 'witnessess/add_outside_witness.dart';
