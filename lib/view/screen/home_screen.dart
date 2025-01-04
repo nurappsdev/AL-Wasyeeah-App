@@ -113,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20.h),
-        
+
         
         
                   ///=======================Witness \n Nominee==========================
@@ -141,6 +141,8 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+
+                      ///======================Nominee====================
                       SizedBox(width: 6.w,),
                       Expanded(
                         child: GestureDetector(
@@ -166,6 +168,8 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  ///========================"Prayer Time"======================
+
                   SizedBox(height: 20.h),
                   CustomText(text: "Prayer Time".tr,fontsize: 20.sp,fontWeight: FontWeight.w700,),
                   SizedBox(height: 10.h),
@@ -194,12 +198,33 @@ class HomeScreen extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                 ),
               ),
+
+                  ///==========================Zakat distribute======================
                   SizedBox(height: 20.h,),
-                  SizedBox(height: 200.h,
-                    child: Image.asset(AppImages.zakatImg),
-        
-                  )
-        
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(AppRoutes.zakatCalculatorScreen,preventDuplicates: false);
+                    },
+                    child: SizedBox(height: 200.h,
+                      child: Image.asset(AppImages.zakatImg),
+
+                    ),
+                  ),
+
+                  ///==========================property distribute======================
+                  SizedBox(height: 20.h,),
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(AppRoutes.propertyDistributionScreen,preventDuplicates: false);
+                    },
+                    child: SizedBox(height: 200.h,
+                      child: Image.asset(AppImages.profirtyImg),
+
+                    ),
+                  ),
+
+                  SizedBox(height: 40.h,),
+
               ],
               ),
             ),

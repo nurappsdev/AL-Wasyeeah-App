@@ -148,7 +148,9 @@ class _NomineeScreenState extends State<NomineeScreen> {
                   CustomButton(
                     title: "+ Add more nominees".tr,
                     titlecolor: AppColors.primaryColor,
-                    onpress: () {},
+                    onpress: () {
+                      Get.toNamed(AppRoutes.addNomineeScreen,preventDuplicates: false);
+                    },
                   ),
                   SizedBox(height: 10.h),
                 ],

@@ -1,3 +1,6 @@
+
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,25 +9,25 @@ import '../../../helpers/helpers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
-class AddWitnessScreen extends StatelessWidget {
-   AddWitnessScreen({super.key});
-   List<bool> isSelected = [true, false];
-   final List<Map<String, String>> user= [
-     {
-       "name": "Khadijah",
-       "image": "https://via.placeholder.com/150",
-     },
-     {
-       "name": "Shahriar Hasan",
-       "image": "https://via.placeholder.com/150",
-     },
-   ];
+class AddNomineeScreen extends StatelessWidget {
+  AddNomineeScreen({super.key});
+  List<bool> isSelected = [true, false];
+  final List<Map<String, String>> user= [
+    {
+      "name": "Khadijah",
+      "image": "https://via.placeholder.com/150",
+    },
+    {
+      "name": "Shahriar Hasan",
+      "image": "https://via.placeholder.com/150",
+    },
+  ];
   @override
   Widget build(BuildContext context) {
 
     TextEditingController searchController = TextEditingController();
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Add Witness".tr,fontsize: 18. sp,),),
+      appBar: AppBar(title: CustomText(text: "Add Nominee".tr,fontsize: 18. sp,),),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -91,10 +94,10 @@ class AddWitnessScreen extends StatelessWidget {
 
                   SizedBox(height: 10.h),
                   CustomButton(
-                    title: "+ Add outside witness".tr,
+                    title: "+ Add outside Nominee".tr,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
-                      Get.toNamed(AppRoutes.addOutsideWitnessScreen,preventDuplicates: false);
+                      Get.toNamed(AppRoutes.addWitnessesScreen,preventDuplicates: false);
                     },
                   ),
                   SizedBox(height: 10.h),
