@@ -29,6 +29,9 @@ class AppRoutes {
   static const String witnessDetailsScreen = "/witnessDetailsScreen.dart";
   static const String addNomineeScreen = "/addNomineeScreen.dart";
   static const String addOutsideWitnessScreen = "/addOutsideWitnessScreen.dart";
+  static const String addOutsideNomineeScreen = "/addOutsideNomineeScreen.dart";
+  static const String notificationsScreen = "/notificationsScreen.dart";
+  static const String profileInfo = "/profileInfo.dart";
 
   static List<GetPage> get routes => [
    GetPage(name: splashScreen, page: () =>  SplashScreen()),
@@ -51,6 +54,9 @@ class AppRoutes {
    GetPage(name: witnessDetailsScreen, page: () => WitnessDetailsScreen()),
    GetPage(name: addNomineeScreen, page: () => AddNomineeScreen()),
    GetPage(name: addOutsideWitnessScreen, page: () => AddOutsideWitness()),
+   GetPage(name: addOutsideNomineeScreen, page: () => AddOutsideNominee()),
+   GetPage(name: notificationsScreen, page: () => NotificationCard()),
+   GetPage(name: profileInfo, page: () => ProfileInfo()),
 
   ];
 }

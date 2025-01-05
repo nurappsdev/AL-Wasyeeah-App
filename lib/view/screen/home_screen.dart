@@ -16,41 +16,50 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:  AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min, // Ensures the Row takes only the space it needs
-              children: [
-                CustomNetworkImage(
+      appBar: AppBar(
+        leadingWidth: 200, // Adjust this width to fit your content
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Row(
+            children: [
+              InkWell(
+                onTap: (){
+                  Get.toNamed(AppRoutes.profileInfo,preventDuplicates: false);
+                },
+                child: CustomNetworkImage(
                   boxShape: BoxShape.circle,
                   imageUrl: AppImages.profileImage,
                   height: 40,
                   width: 40,
-                  boxFit: BoxFit.cover,
+                  boxFit: BoxFit.contain,
                 ),
-                SizedBox(width: 8.h),
-
-              ],
-            ),
-          ),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomText(
-                text: "Abdullah".tr,
-                fontsize: 16.sp, // Adjust font size if needed
-                textAlign: TextAlign.start,
               ),
-              CustomText(
-                text: "Welcome back!".tr,
-                fontsize: 14.sp,
-                textAlign: TextAlign.start,
+              SizedBox(width: 8), // Space between the image and text
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomText(
+                    text: "Abdullah".tr,
+                    fontsize: 16.sp,
+                    textAlign: TextAlign.start,
+                  ),
+                  CustomText(
+                    text: "Welcome back!".tr,
+                    fontsize: 14.sp,
+                    textAlign: TextAlign.start,
+                  ),
+                ],
               ),
             ],
           ),
-          actions: [
-            Padding(
+        ),
+        actions: [
+          InkWell(
+            onTap: (){
+              Get.toNamed(AppRoutes.notificationsScreen,preventDuplicates: false);
+            },
+            child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Stack(
                 children: [
@@ -75,9 +84,9 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-          ],
-        ),
-
+          ),
+        ],
+      ),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -190,7 +199,7 @@ class HomeScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return CustomCard(
                       title: "Now Time is",
-                      imageUrl: AppIcons.exploreWasyea,
+                      imageUrl: AppImages.mosjidIcon,
                       isCurrent: true,
                       time: "07:23 PM", // Pass index or other data if needed
                     );
@@ -271,7 +280,8 @@ class CustomCard extends StatelessWidget {
             SizedBox(height: 8.h,),
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                SvgPicture.asset(imageUrl, height: 80.h),
+                // SvgPicture.asset(imageUrl, height: 80.h),
+                Image.asset(imageUrl,height: 80.h,width: 80,),
                 Column(
                   children: [
                     Text(
