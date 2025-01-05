@@ -97,7 +97,7 @@ class AddNomineeScreen extends StatelessWidget {
                     title: "+ Add outside Nominee".tr,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
-                      Get.toNamed(AppRoutes.addWitnessesScreen,preventDuplicates: false);
+                      Get.toNamed(AppRoutes.addOutsideNomineeScreen,preventDuplicates: false);
                     },
                   ),
                   SizedBox(height: 10.h),

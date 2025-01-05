@@ -9,7 +9,11 @@ class AppIcons {
   static const String nominee = "$path/nominee.svg";
   static const String mosjid = "$path/mosjid.svg";
   static const String zakatHomeIcon = "$path/zakat_home.svg";
-
+  static const String proIcon = "$path/profile_icons.svg";
+  static const String chevronIcon = "$path/chevronIcon.svg";
+  static const String userSettingIcon = "$path/userSetting.svg";
+  static const String languageIcon = "$path/languageIcon.svg";
+  static const String logOutIcons = "$path/logout_icon.svg";
 
 
 
@@ -38,7 +42,7 @@ class AppIcons {
   static const String locationIcon = "$path/location_icon.svg";
  // static const String editIcons = "$path/edit_icons.svg";
   static const String editIcons = "$path/editIcon.svg";
-  static const String logOutIcons = "$path/logout_icon.svg";
+
 ///================service bottomBar icon===========================
   static const String homeSelectIcons = "$path/homeselected.svg";
   static const String homeUnSelectIcons = "$path/homeunselected.svg";
@@ -57,7 +61,6 @@ class AppIcons {
   // static const String otpIcon = "$path/otp_icon.svg";
   static const String forgotIcon = "$path/forgot_icon.svg";
   static const String resetIcon = "$path/reset_icon.svg";
-  static const String chevronIcon = "$path/chevronIcon.svg";
   static const String settingIcon = "$path/setteing_icon.svg";
   static const String logoutIcon = "$path/logoutIcon.svg";
   static const String logServiceIcon = "$path/logo_service.svg";

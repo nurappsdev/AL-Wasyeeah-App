@@ -9,6 +9,7 @@ class AppImages {
   static const String splashImg2 = "$path/slpash_img.png";
   static const String zakatImg = "$path/zakatImg.png";
   static const String profirtyImg = "$path/profirty_icon.png";
+  static const String mosjidIcon = "$path/mosqe_icons.png";
 
 
 

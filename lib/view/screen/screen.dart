@@ -20,3 +20,6 @@ export 'nominee/nominee_screen.dart';
 export 'witnessess/witness_details_screen.dart';
 export 'nominee/add_nominee_screen.dart';
 export 'witnessess/add_outside_witness.dart';
+export 'nominee/add_outside_nominee.dart';
+export 'notifications_screen.dart';
+export 'profile/profile_info.dart';
