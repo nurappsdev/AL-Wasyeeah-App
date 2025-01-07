@@ -9,6 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../widgets/widgets.dart';
+import 'before_login/profirty_Distribute_screen2.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -224,7 +225,7 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(height: 20.h,),
                   InkWell(
                     onTap: (){
-                      Get.toNamed(AppRoutes.propertyDistributionScreen,preventDuplicates: false);
+                      Get.off(()=>PropertyDistributionScreen2(),preventDuplicates: false);
                     },
                     child: SizedBox(height: 200.h,
                       child: Image.asset(AppImages.profirtyImg),
