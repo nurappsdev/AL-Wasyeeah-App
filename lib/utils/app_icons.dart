@@ -62,7 +62,7 @@ class AppIcons {
   static const String forgotIcon = "$path/forgot_icon.svg";
   static const String resetIcon = "$path/reset_icon.svg";
   static const String settingIcon = "$path/setteing_icon.svg";
-  static const String logoutIcon = "$path/logoutIcon.svg";
+  static const String logoutIcon = "$path/logout_icon.svg";
   static const String logServiceIcon = "$path/logo_service.svg";
 
 
