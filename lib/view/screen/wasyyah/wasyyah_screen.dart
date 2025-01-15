@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'wasiyah_preview_screen.dart';
+
 class WasyyahScreen extends StatelessWidget {
   const WasyyahScreen({super.key});
 
@@ -21,7 +23,9 @@ class WasyyahScreen extends StatelessWidget {
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: CustomButton(title: "Preview".tr, onpress: (){},width: 100.w,height: 40.h,color: AppColors.primaryColor,),
+          child: CustomButton(title: "Preview".tr, onpress: (){
+            Get.off(()=>VerticalScrollablePDFScreen(),preventDuplicates: false);
+          },width: 100.w,height: 40.h,color: AppColors.primaryColor,),
         )
       ],
       ),
