@@ -9,12 +9,50 @@ import 'package:flutter_svg/svg.dart';
 import '../../helpers/helpers.dart';
 import '../../utils/utils.dart';
 import '../widgets/widgets.dart';
+import 'before_login/profirty_Distribute_screen2.dart';
+import 'profile_setting/profile_setting.dart';
 
 class LoginScreen extends StatelessWidget {
    LoginScreen({super.key});
 TextEditingController emailController = TextEditingController();
 TextEditingController passController = TextEditingController();
    final GlobalKey<FormState> _logKey = GlobalKey<FormState>();
+   final List<GridItem> items = [
+     GridItem(
+       icon: AppIcons.profileIcon,
+       text: "Nominee Log in".tr,
+       onTap: null,
+     ),
+     GridItem(
+       icon: AppIcons.propertyIcons,
+       text: "Property Distribution".tr,
+       onTap: () {
+         Get.to(()=>PropertyDistributionScreen2(), preventDuplicates: false);
+       },
+     ),
+     GridItem(
+       icon: AppIcons.zakatIcons,
+       text: "Zakat Calculation".tr,
+       onTap: () {
+         Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
+       },
+     ),
+     GridItem(
+       icon: AppIcons.contactIcons,
+       text: "Contact Us".tr,
+       onTap: () {
+        // Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
+       },
+     ),
+     GridItem(
+       icon: AppIcons.helpsIcons,
+       text: "Helps".tr,
+       onTap: () {
+       //  Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
+       },
+     ),
+
+   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,51 +72,43 @@ TextEditingController passController = TextEditingController();
                   SizedBox(height: 24.h,),
 
                   ///================3 Icon ==== Nominee === Finance === Application=================
-                  SizedBox(
-                    width: double.infinity,
-                    height: 100.h,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(AppIcons.profileIcon, height: 60.h, width: 60.w),
-                            SizedBox(height: 4.h,),
-                            CustomText(text: "Nominee Log in".tr,)
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(AppIcons.financeIcon, height: 60.h, width: 60.w),
-                            SizedBox(height: 4.h,),
-                            CustomText(text: "Finance".tr,)
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(AppIcons.applicationIcon, height: 60.h, width: 60.w),
-                            SizedBox(height: 4.h,),
-                            CustomText(text: "Application".tr,)
-                          ],
-                        ),
-                      ],
-                    ),
+              SizedBox(
+                width: double.infinity,
+                height: 120.h, // Increased height to accommodate content
+                child: GridView.builder(
+                  scrollDirection: Axis.horizontal, // Enables horizontal scrolling
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1, // Only one row
+                    mainAxisSpacing: 4, // Spacing between items horizontally
+                    childAspectRatio: 1 / 1.1, // Aspect ratio for each item
                   ),
-
-
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    final item = items[index];
+                    return GestureDetector(
+                      onTap: item.onTap,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(item.icon, height: 60.h, width: 60.w),
+                          SizedBox(height: 4.h),
+                          CustomText(text: item.text),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
 
                   ///=============Email====================
                   SizedBox(height: 20.h,),
-                  CustomText(text: "email".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                  CustomText(text: "User Name".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
                   SizedBox(height: 10.h,),
                   Padding(
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
                       controller: emailController,
-                      hintText: "email".tr,
+                      hintText: "User Name".tr,
                       borderColor: AppColors.secondaryPrimaryColor,
                       prefixIcon: Padding(
                         padding: EdgeInsets.only(left: 16.w, right: 12.w),
@@ -154,11 +184,12 @@ TextEditingController passController = TextEditingController();
                // loading: authController.loadingLoading.value == true,
                 title: AppString.signIn.tr,
                 onpress: () {
-                  Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
+                  Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
                   if (_logKey.currentState!.validate()) {
                     // authController.loginHandle(
                     //     emailController.text, passController.text);
-                    Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
+                    Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
+                 //   Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
                   }
                 },),
 
@@ -194,4 +225,12 @@ TextEditingController passController = TextEditingController();
       ),
     );
   }
+}
+
+class GridItem {
+  final String icon;
+  final String text;
+  final VoidCallback? onTap;
+
+  GridItem({required this.icon, required this.text, this.onTap});
 }

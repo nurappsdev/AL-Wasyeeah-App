@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'add_new_washyia_screen.dart';
 import 'wasiyah_preview_screen.dart';
 
 class WasyyahScreen extends StatelessWidget {
@@ -24,7 +25,7 @@ class WasyyahScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: CustomButton(title: "Preview".tr, onpress: (){
-            Get.off(()=>VerticalScrollablePDFScreen(),preventDuplicates: false);
+            Get.off(()=>WasyyahPreviewScreen(),preventDuplicates: false);
           },width: 100.w,height: 40.h,color: AppColors.primaryColor,),
         )
       ],
@@ -146,7 +147,16 @@ class WasyyahScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
+                ),
+                SizedBox(height: 20.h,),
+                CustomButton(
+                  title: "Add more content".tr,
+                  titlecolor: AppColors.primaryColor,
+                  onpress: () {
+                    Get.to(()=>AddNewWashyiaScreen(),preventDuplicates: false);
+                  },
+                ),
+                SizedBox(height: 20.h,),
               ],
             ),
           ),

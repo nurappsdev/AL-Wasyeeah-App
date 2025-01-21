@@ -14,6 +14,10 @@ class AppIcons {
   static const String userSettingIcon = "$path/userSetting.svg";
   static const String languageIcon = "$path/languageIcon.svg";
   static const String logOutIcons = "$path/logout_icon.svg";
+  static const String contactIcons = "$path/contact.svg";
+  static const String helpsIcons = "$path/helps.svg";
+  static const String propertyIcons = "$path/propertiy_icon.svg";
+  static const String zakatIcons = "$path/zakat_icon.svg";
 
 
 

@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
         child: InkWell(
             onTap: (){
-              Get.toNamed(AppRoutes.propertyDistributionScreen,preventDuplicates: false);
+              Get.toNamed(AppRoutes.loginScreen,preventDuplicates: false);
             },
             child: Stack(
               children: [

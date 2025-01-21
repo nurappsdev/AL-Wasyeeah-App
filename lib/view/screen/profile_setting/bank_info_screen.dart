@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
+import '../../../helpers/helpers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
@@ -214,7 +215,7 @@ class _BankInfoScreenState extends State<BankInfoScreen> {
                   // loading: authController.loadingLoading.value == true,
                   title: "Submit".tr,
                   onpress: () {
-                    //    Get.toNamed(AppRoutes.otpScreen,preventDuplicates: false);
+                        Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
                     // if (_forRegKey.currentState!.validate()) {
                     //   // authController.loginHandle(
                     //   //     emailController.text, passController.text);
