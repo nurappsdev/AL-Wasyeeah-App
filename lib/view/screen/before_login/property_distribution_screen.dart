@@ -215,7 +215,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                           child: Padding(
                             padding:  EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
-                              controller:  wifeCNTR,
+                              controller:wifeCNTR,
                               hintText: "Father".tr,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
@@ -571,7 +571,8 @@ class PropertyDistributionScreen extends StatelessWidget {
 
                         },
                       ),
-                    ),   Padding(
+                    ),
+                    Padding(
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller:  landCNTR,
@@ -606,7 +607,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                     SizedBox(height: 12.h,),
                     ///=============Sign In Button====================
                     CustomButtonCommon(
-                                              // loading: authController.loadingLoading.value == true,
+                      // loading: authController.loadingLoading.value == true,
                                               title: "Result".tr,
                                               onpress: () {
                                                 Get.toNamed(AppRoutes.propertyDistributionResultScreen,preventDuplicates: false);

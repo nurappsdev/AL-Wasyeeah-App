@@ -56,34 +56,30 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          InkWell(
-            onTap: (){
-              Get.toNamed(AppRoutes.notificationsScreen,preventDuplicates: false);
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Stack(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.notifications_none_sharp),
-                    onPressed: () {
-                      // Handle notification click
-                    },
-                  ),
-                  Positioned(
-                    right: 14,
-                    top: 10,
-                    child: Container(
-                      height: 10,
-                      width: 10,
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.notifications_none_sharp),
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.notificationsScreen,preventDuplicates: false);
+                    // Handle notification click
+                  },
+                ),
+                Positioned(
+                  right: 14,
+                  top: 10,
+                  child: Container(
+                    height: 10,
+                    width: 10,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

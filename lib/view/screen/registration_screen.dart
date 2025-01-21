@@ -152,6 +152,25 @@ class RegistrationScreen extends StatelessWidget {
                         // }
                       },),
                     SizedBox(height: 20.h,),
+
+                    ///=============SignUp====================
+                    SizedBox(height: 20.h,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                            onTap: (){
+                              //  Get.toNamed(AppRoutes.otpVirifyScreen,preventDuplicates: false);
+                            },
+                            child: CustomText(text: "Already have an account? ".tr, fontsize: 18.sp,)),
+                        InkWell(
+                            onTap: (){
+                              Get.toNamed(AppRoutes.loginScreen,preventDuplicates: false);
+                            },
+                            child: CustomText(text:AppString.signIn.tr, fontsize: 18.sp,color: AppColors.primaryColor,)),
+                      ],
+                    ),
+
                   ],
                 ),
               ),
