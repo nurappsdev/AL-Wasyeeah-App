@@ -27,13 +27,18 @@ class HomeScreen extends StatelessWidget {
                 onTap: (){
                   Get.toNamed(AppRoutes.profileInfo,preventDuplicates: false);
                 },
-                child: CustomNetworkImage(
-                  boxShape: BoxShape.circle,
-                  imageUrl: AppImages.profileImage,
-                  height: 40,
-                  width: 40,
-                  boxFit: BoxFit.contain,
-                ),
+                child: CircleAvatar(
+                  radius: 18, // Radius of the CircleAvatar
+                  backgroundImage: AssetImage(AppImages.profileIcon),
+                  backgroundColor: Colors.grey[200], // Optional background color
+                )
+                // CustomNetworkImage(
+                //   boxShape: BoxShape.circle,
+                //   imageUrl: AppImages.profileImage,
+                //   height: 40,
+                //   width: 40,
+                //   boxFit: BoxFit.contain,
+                // ),
               ),
               SizedBox(width: 8), // Space between the image and text
               Column(

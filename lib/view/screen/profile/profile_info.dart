@@ -8,6 +8,7 @@ import '../../../helpers/helpers.dart';
 import '../../../helpers/prefs_helper.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
+import '../profile_setting/profile_setting.dart';
 
 class ProfileInfo extends StatelessWidget {
   const ProfileInfo({super.key});
@@ -26,56 +27,68 @@ class ProfileInfo extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height: 40.h,),
-                  CustomNetworkImage(
-                    boxShape: BoxShape.circle,
-                    imageUrl: "",
-                    height: 120.h,
-                    width: 120.w,
+              Center(
+                child: CircleAvatar(
+                  radius: 50, // Radius of the CircleAvatar
+                  backgroundImage: AssetImage(AppImages.profileIcon),
+                  backgroundColor: Colors.grey[200], // Optional background color
+                )
                   ),
+                  // CustomNetworkImage(
+                  //   boxShape: BoxShape.circle,
+                  //   imageUrl: "assets/profile_icon.png",
+                  //   height: 120.h,
+                  //   width: 120.w,
+                  // ),
                   SizedBox(height: 10.h,),
                   CustomText(text: "Abdullah".tr,fontsize: 18,fontWeight: FontWeight.w700,),
                   SizedBox(height: 40.h,),
 ///=====================Personal Details====================================
-                  Container(
-                    width: 360.w,
-                    height: 60.h,
-                    margin: EdgeInsets.only(left: 2.w),
-                    decoration: BoxDecoration(
-                      color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                      border: Border.all(
-                        color: Color(0xffB0E3D3),
-                        width: 2.w,
+                  GestureDetector(
+                    onTap: (){
+                      Get.off(()=>StepNavigationWithPageView(),preventDuplicates: false);
+                    },
+                    child: Container(
+                      width: 360.w,
+                      height: 60.h,
+                      margin: EdgeInsets.only(left: 2.w),
+                      decoration: BoxDecoration(
+                        color: AppColors.whiteColor,
+                        borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                        border: Border.all(
+                          color: Color(0xffB0E3D3),
+                          width: 2.w,
+                        ),
                       ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.proIcon,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AppIcons.proIcon,
 
-                              ),
-                              SizedBox(width: 16.w),
-                              CustomText(text: "Personal Details".tr,
-                                fontsize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textColor4E4E4E,
-                              )
-                            ],
+                                ),
+                                SizedBox(width: 16.w),
+                                CustomText(text: "Personal Details".tr,
+                                  fontsize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.textColor4E4E4E,
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
-                          child: SvgPicture.asset(
-                            AppIcons.chevronIcon,
-                            color: AppColors.primaryColor,
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            child: SvgPicture.asset(
+                              AppIcons.chevronIcon,
+                              color: AppColors.primaryColor,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 20.h,),

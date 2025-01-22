@@ -43,7 +43,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:  CustomText(text: "Forgot Password",fontsize: 18.sp,),),
+      appBar: AppBar(title:  CustomText(text: "Forgot Password".tr,fontsize: 18.sp,),),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -59,19 +59,19 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     SizedBox(height: 40.h,),
                     Center(child: SvgPicture.asset(AppIcons.logo, height: 100.h, width: 140.w)),
                     SizedBox(height: 30.h,),
-                    Center(child: CustomText(text: "Forgot Password",fontsize: 20.sp,textAlign: TextAlign.center,fontWeight: FontWeight.w600,)),
+                    Center(child: CustomText(text: "Forgot Password".tr,fontsize: 20.sp,textAlign: TextAlign.center,fontWeight: FontWeight.w600,)),
                     SizedBox(height: 16.h,),
-                    Center(child: CustomText(text: "Don’t worry! it happens Please enter the address associate with your account.",maxline: 2, fontsize: 14.sp,textAlign: TextAlign.center,)),
+                    Center(child: CustomText(text: "Don’t worry! it happens Please enter the address associate with your account.".tr,maxline: 2, fontsize: 14.sp,textAlign: TextAlign.center,)),
 
                     ///=============Mobile====================
                     SizedBox(height: 16.h,),
-                    CustomText(text: "Mobile*",color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                    CustomText(text: "Mobile".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
                     SizedBox(height: 10.h,),
                     Padding(
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller:  mobileController,
-                        hintText: "Mobile",
+                        hintText: "Mobile".tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value){
                           if(value == null || value.isEmpty){
@@ -87,7 +87,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
 
                     ///=============Email====================
                     SizedBox(height: 20.h,),
-                    CustomText(text: "Email*",color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                    CustomText(text: "email".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
                     SizedBox(height: 10.h,),
                     Padding(
                       padding: EdgeInsets.only(bottom: 16.h),
@@ -102,9 +102,9 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                         // ),
                         validator: (value){
                           if(value == null || value.isEmpty){
-                            return 'Please enter your Email';
+                            return 'Please enter your Email'.tr;
                           }else if(!AppConstants.emailValidate.hasMatch(value)){
-                            return "Invalid Email";
+                            return "Invalid Email".tr;
                           }
                           return null;
 
@@ -113,7 +113,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     ),
 
                     ///==========================Date of birth*==========================
-                    CustomText(text: "Date of birth*",
+                    CustomText(text: "Date of birth".tr,
                       fontsize: 16.sp,
                       color: AppColors.hitTextColor000000,
                       textAlign: TextAlign.left,
@@ -125,7 +125,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       child: CustomTextField(
                         controller: startDateController,
                         readOnly: true,
-                        hintText: "Start Date",
+                        hintText: "Date of birth".tr,
                         hintextColor: Colors.black54,
                         borderColor: AppColors.secondaryPrimaryColor,
                         onTap: () => _selectDate(context, startDateController),
@@ -143,7 +143,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     ///=============Sign In Button====================
                     CustomButtonCommon(
                       // loading: authController.loadingLoading.value == true,
-                      title: AppString.registerButton,
+                      title: "Submit".tr,
                       onpress: () {
 
                         // if (_logRegKey.currentState!.validate()) {
