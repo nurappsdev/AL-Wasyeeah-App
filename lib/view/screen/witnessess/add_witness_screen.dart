@@ -12,11 +12,11 @@ class AddWitnessScreen extends StatelessWidget {
    final List<Map<String, String>> user= [
      {
        "name": "Khadijah",
-       "image": "https://via.placeholder.com/150",
+       "image": "${AppImages.profileIcon}",
      },
      {
        "name": "Shahriar Hasan",
-       "image": "https://via.placeholder.com/150",
+       "image": "${AppImages.profileIcon}",
      },
    ];
   @override
@@ -62,7 +62,7 @@ class AddWitnessScreen extends StatelessWidget {
                           margin: EdgeInsets.symmetric(vertical: 8.0),
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundImage: NetworkImage(users["image"]!),
+                              backgroundImage: AssetImage(users["image"]!),
                               radius: 30,
                             ),
                             title: Text(

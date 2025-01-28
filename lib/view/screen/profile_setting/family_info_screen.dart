@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
@@ -27,6 +30,26 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
     setState(() {
       _isContainerVisible = !_isContainerVisible;
     });
+  }
+
+  ///----------------NID image=============================
+  File? nIDImages;
+  String? nidImagePath; // Variable to store the image path
+  String get displayImageNIDPath {
+    if (nidImagePath == null || nidImagePath!.length <= 30) {
+      return nidImagePath ?? 'No image selected';
+    }
+    return nidImagePath!.substring(nidImagePath!.length - 30); // Get the last 18 characters
+  }
+  Future<void> _NIDImageFromGallery() async {
+    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedImage == null) return;
+
+    setState(() {
+      nIDImages = File(pickedImage.path);
+      nidImagePath = pickedImage.path; // Save the image path
+    });
+
   }
   @override
   Widget build(BuildContext context) {
@@ -96,12 +119,18 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                           child: IconButton(
                             icon:Icon(Icons.attach_file_outlined,color: AppColors.primaryColor,),
                             onPressed: () {
+                              _NIDImageFromGallery();
                               // Add your action here
                             },
                           ),
                         ),
                       ],
                     ),
+                    if (nIDImages != null)
+                      Text(
+                        'Image Path: ${displayImageNIDPath.toString()}',
+                        style: TextStyle(color: Colors.grey),
+                      ),
                     SizedBox(height: 20.h),
                     CustomText(text: "Mobile".tr,color: AppColors.hitTextColor000000,fontsize: 16 .sp,),
                     SizedBox(height: 10.h),

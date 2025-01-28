@@ -77,11 +77,51 @@ TextEditingController passOrNIDController = TextEditingController();
 Uint8List? _image;
 File? selectedIMage;
 
+///----------------TN image=============================
+File? selectedImages;
+String? imagePath; // Variable to store the image path
+String get displayImagePath {
+  if (imagePath == null || imagePath!.length <= 30) {
+    return imagePath ?? 'No image selected';
+  }
+  return imagePath!.substring(imagePath!.length - 30); // Get the last 18 characters
+}
+Future<void> _TNImageFromGallery() async {
+  final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+  if (pickedImage == null) return;
+
+  setState(() {
+    selectedImages = File(pickedImage.path);
+    imagePath = pickedImage.path; // Save the image path
+  });
+
+}
+
+
+///----------------NID image=============================
+File? nIDImages;
+String? nidImagePath; // Variable to store the image path
+String get displayImageNIDPath {
+  if (nidImagePath == null || nidImagePath!.length <= 30) {
+    return nidImagePath ?? 'No image selected';
+  }
+  return nidImagePath!.substring(nidImagePath!.length - 30); // Get the last 18 characters
+}
+Future<void> _NIDImageFromGallery() async {
+  final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+  if (pickedImage == null) return;
+
+  setState(() {
+    nIDImages = File(pickedImage.path);
+    nidImagePath = pickedImage.path; // Save the image path
+  });
+
+}
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-    body: Container(
+      body: Container(
       height: Get.height,
       width: double.infinity,
       child: Padding(
@@ -151,42 +191,61 @@ File? selectedIMage;
                   child: IconButton(
                     icon:Icon(Icons.attach_file_outlined,color: AppColors.primaryColor,),
                     onPressed: () {
+                      _NIDImageFromGallery();
                       // Add your action here
                     },
                   ),
                 ),
               ],
             ),
+              SizedBox(height: 6.w,),
+              if (nIDImages != null)
+                Text(
+                  'Image Path: ${displayImageNIDPath.toString()}',
+                  style: TextStyle(color: Colors.grey),
+                ),
               SizedBox(height: 16.h),
               ///============TIN (Tax Identification Number)====================
-              CustomText(text: "  ".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+              CustomText(text: "TIN (Tax Identification Number)".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
               SizedBox(height: 10.h,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: CustomTextField(
-                      controller:  passOrNIDController,
-                      hintText: "TIN (Tax Identification Number)".tr,
-                      borderColor: AppColors.secondaryPrimaryColor,
-                    ),
+                    child:
+                    Column(children: [
+                      CustomTextField(
+                        controller:  passOrNIDController,
+                        hintText: "TIN (Tax Identification Number)".tr,
+                        borderColor: AppColors.secondaryPrimaryColor,
+                      ),
+                    ],)
+
                   ),
                   SizedBox(width: 6.w,),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 6.w),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(16.r),
-                    ),
-                    child: IconButton(
-                      icon:Icon(Icons.attach_file_outlined,color: AppColors.primaryColor,),
-                      onPressed: () {
-                        // Add your action here
-                      },
-                    ),
+                Container(
+                      padding: EdgeInsets.symmetric(horizontal: 6.w),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      child: IconButton(
+                        icon:Icon(Icons.attach_file_outlined,color: AppColors.primaryColor,),
+                        onPressed: () {
+                          _TNImageFromGallery();
+                          // Add your action here
+                        },
+                      ),
+
                   ),
                 ],
               ),
+              SizedBox(height: 6.w,),
+              if (selectedImages != null)
+                Text(
+                  'Image Path: ${displayImagePath.toString()}',
+                  style: TextStyle(color: Colors.grey),
+                ),
               SizedBox(height: 16.h),
 
               ///============Photo====================
