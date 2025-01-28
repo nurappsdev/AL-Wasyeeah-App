@@ -150,10 +150,9 @@
  "Wealth":"Wealth",
  "Note":"Note",
  "Documents Type":"Documents Type",
- "Witness":"Witness",
- "Nominee":"Nominee",
- "Prayer Time":"Prayer Time",
- "Explore your \\n Wasyyah":"Explore your \n Wasyyah",
+
+
+ "Explore your \n Wasyyah":"Explore your \n Wasyyah",
 
  "Bismillahir Rahmanir Raheem": "Bismillahir Rahmanir Raheem",
 
@@ -187,11 +186,8 @@
  "+ Add more witness": "+ Add more witness",
  " - Remove Witness": " - Remove Witness",
  "+ Add outside witness": "+ Add outside witness",
-
  "Add Nominee": "Add Nominee",
  "+ Add outside Nominee": "+ Add outside Nominee",
- "Outside Witness": "Outside Witness",
- "Notifications": "Notifications",
  "User Profile": "User Profile",
  "User Setting": "User Setting",
  "Personal Details": "Personal Details",
@@ -207,7 +203,16 @@
  "Forgot Password": "Forgot Password",
  "add your washiya content": "add your washiya content",
  "add your washiya content title": "add your washiya content title",
- "Don’t worry! it happens Please enter the address associate with your account.": "Don’t worry! it happens Please enter the address associate with your account."
+ "Don’t worry! it happens Please enter the address associate with your account.": "Don’t worry! it happens Please enter the address associate with your account.",
+
+
+ "Relation with nominee": "Relation with nominee",
+ "Relation with Witness": "Relation with Witness",
+ "Witness":"Witness",
+ "Nominee":"Nominee",
+ "Prayer Time":"Prayer Time",
+ "Notifications": "Notifications",
+ "Name": "Name"
 
 
 

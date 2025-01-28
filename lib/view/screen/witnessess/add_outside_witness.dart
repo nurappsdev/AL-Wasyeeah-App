@@ -33,24 +33,43 @@ class AddOutsideWitness extends StatelessWidget {
             
                   ///=============Last Name====================
                   SizedBox(height: 16.h,),
-                  CustomText(text: "Last Name".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                  CustomText(text: "Relation with Witness".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
                   SizedBox(height: 10.h,),
                   Padding(
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
                       controller:  secondNameController,
-                      hintText: "Last Name".tr,
+                      hintText: "Relation with Witness".tr,
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value){
                         if(value == null || value.isEmpty){
-                          return 'Please enter your Last Name'.tr;
+                          return 'Relation with Witness'.tr;
                         }
                         return null;
             
                       },
                     ),
                   ),
-            
+             ///=============Last Name====================
+                  SizedBox(height: 16.h,),
+                  CustomText(text: "Name".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                  SizedBox(height: 10.h,),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 16.h),
+                    child: CustomTextField(
+                      controller:  secondNameController,
+                      hintText: "Name".tr,
+                      borderColor: AppColors.secondaryPrimaryColor,
+                      validator: (value){
+                        if(value == null || value.isEmpty){
+                          return 'Please enter your Name'.tr;
+                        }
+                        return null;
+
+                      },
+                    ),
+                  ),
+
             
                   ///=============Mobile====================
                   SizedBox(height: 16.h,),

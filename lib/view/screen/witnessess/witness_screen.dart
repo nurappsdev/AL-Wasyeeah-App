@@ -18,41 +18,41 @@ class _WitnessScreenState extends State<WitnessScreen> {
   final List<Map<String, String>> users = [
     {
       "name": "Mahmudul Hasan Rabbi",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },
     {
       "name": "Shahriar Hasan",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },
     {
       "name": "Nilufa Yeasmin",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },
     {
       "name": "Jannatul Maowa",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },
     {
       "name": "Mosharaf Kashem Khan",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },    {
       "name": "Mosharaf Kashem Khan",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },    {
       "name": "Mosharaf Kashem Khan",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },    {
       "name": "Mosharaf Kashem Khan",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },    {
       "name": "Mosharaf Kashem Khan",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Witnesses".tr,fontsize: 18.sp,),),
+      appBar: AppBar(title: CustomText(text: "Witness".tr,fontsize: 18.sp,),),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -118,7 +118,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
                           margin: EdgeInsets.symmetric(vertical: 8.0),
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundImage: NetworkImage(user["image"]!),
+                              backgroundImage: AssetImage(user["image"]!),
                               radius: 30,
                             ),
                             title: Text(

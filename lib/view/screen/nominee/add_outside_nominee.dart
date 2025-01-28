@@ -31,19 +31,39 @@ class AddOutsideNominee extends StatelessWidget {
                   children: [
                     SizedBox(height: 20.h,),
 
-                    ///=============Last Name====================
+
+                    ///=============Relation with nominee====================
                     SizedBox(height: 16.h,),
-                    CustomText(text: "Last Name".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                    CustomText(text: "Relation with nominee".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
                     SizedBox(height: 10.h,),
                     Padding(
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller:  secondNameController,
-                        hintText: "Last Name".tr,
+                        hintText: "Relation with nominee".tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value){
                           if(value == null || value.isEmpty){
-                            return 'Please enter your Last Name'.tr;
+                            return 'Relation with nominee'.tr;
+                          }
+                          return null;
+
+                        },
+                      ),
+                    ),
+                    ///=============Last Name====================
+                    SizedBox(height: 16.h,),
+                    CustomText(text: "Name".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                    SizedBox(height: 10.h,),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16.h),
+                      child: CustomTextField(
+                        controller:  secondNameController,
+                        hintText: "Name".tr,
+                        borderColor: AppColors.secondaryPrimaryColor,
+                        validator: (value){
+                          if(value == null || value.isEmpty){
+                            return 'Please enter your Name'.tr;
                           }
                           return null;
 

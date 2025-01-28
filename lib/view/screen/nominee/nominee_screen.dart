@@ -18,35 +18,35 @@ class _NomineeScreenState extends State<NomineeScreen> {
   final List<Map<String, String>> users = [
     {
       "name": "Mahmudul Hasan Rabbi",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },
     {
       "name": "Shahriar Hasan",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },
     {
       "name": "Nilufa Yeasmin",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },
     {
       "name": "Jannatul Maowa",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },
     {
       "name": "Mosharaf Kashem Khan",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },    {
       "name": "Mosharaf Kashem Khan",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },    {
       "name": "Mosharaf Kashem Khan",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },    {
       "name": "Mosharaf Kashem Khan",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },    {
       "name": "Mosharaf Kashem Khan",
-      "image": "https://via.placeholder.com/150",
+      "image": "${AppImages.profileIcon}",
     },
   ];
   @override
@@ -118,7 +118,7 @@ class _NomineeScreenState extends State<NomineeScreen> {
                           margin: EdgeInsets.symmetric(vertical: 8.0),
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundImage: NetworkImage(user["image"]!),
+                              backgroundImage: AssetImage(user["image"]!),
                               radius: 30,
                             ),
                             title: Text(
