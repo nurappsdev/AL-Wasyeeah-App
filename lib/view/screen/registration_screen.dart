@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import '../../controllers/controllers.dart';
 import '../../helpers/helpers.dart';
 import '../../utils/utils.dart';
 
@@ -14,9 +16,15 @@ class RegistrationScreen extends StatelessWidget {
    TextEditingController secondNameController = TextEditingController();
    TextEditingController mobileController = TextEditingController();
    TextEditingController emailController = TextEditingController();
-   TextEditingController startDateController = TextEditingController();
+   TextEditingController dateOfBirthController = TextEditingController();
+   TextEditingController securityController = TextEditingController();
+   AuthController  authController = Get.put(AuthController());
+  String? _selectedQuestionId;
+  DateTime? birthDate;
   @override
   Widget build(BuildContext context) {
+    authController.getSecurityQuestion();
+    print(authController.securityQuestionResponseModel.length);
     return Scaffold(
       body: BackgroundImageContainer(
         child: Container(
@@ -37,6 +45,24 @@ class RegistrationScreen extends StatelessWidget {
                     // SizedBox(height: 16.h,),
                     // Center(child: CustomText(text: "Enter your details to register Al Wasyyah",fontsize: 16.sp,textAlign: TextAlign.center,)),
 
+                    SizedBox(height: 16.h,),
+                    CustomText(text: "First Name".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                    SizedBox(height: 10.h,),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16.h),
+                      child: CustomTextField(
+                        controller:  firstNameController,
+                        hintText: "First Name".tr,
+                        borderColor: AppColors.secondaryPrimaryColor,
+                        validator: (value){
+                          if(value == null || value.isEmpty){
+                            return 'Please enter your First Name'.tr;
+                          }
+                          return null;
+
+                        },
+                      ),
+                    ),
 
 
 
@@ -69,6 +95,7 @@ class RegistrationScreen extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller:  mobileController,
+                        keyboardType: TextInputType.number,
                         hintText: "Mobile".tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value){
@@ -113,7 +140,7 @@ class RegistrationScreen extends StatelessWidget {
 
 
                     ///==========================Date of birth*==========================
-                    CustomText(text: "Date of birth",
+                    CustomText(text: "Date of birth".tr,
                       fontsize: 16.sp,
                       color: AppColors.hitTextColor000000,
                       textAlign: TextAlign.left,
@@ -123,12 +150,25 @@ class RegistrationScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
-                        controller: startDateController,
+                        controller: dateOfBirthController,
                         readOnly: true,
                         hintText: "Date of birth".tr,
                         hintextColor: Colors.black54,
                         borderColor: AppColors.secondaryPrimaryColor,
-                        // onTap: () => _selectDate(context, startDateController),
+                        onTap: () async{
+                          DateTime? selectedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1930),
+                            lastDate: DateTime.now(),
+                          );
+
+                          if (selectedDate != null) {
+                            birthDate = selectedDate;
+                              dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(birthDate!);
+                          }
+                          print(dateOfBirthController.text);
+                        },
                         suffixIcon: Icon(Icons.calendar_month,color: AppColors.primaryColor,),
                         validator: (value){
                           if(value == null || value.isEmpty){
@@ -139,18 +179,85 @@ class RegistrationScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 10.h),
+                    CustomText(text: "Security Question".tr,
+                      fontsize: 16.sp,
+                      color: AppColors.hitTextColor000000,
+                      textAlign: TextAlign.left,
+
+                    ),
+                    SizedBox(height: 10.h),
+                    Obx(() => authController.isQuestion.value
+                        ? Center(child: CustomLoader())
+                        : DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryPrimaryColor),borderRadius: BorderRadius.circular(14.r)),
+                        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color:  AppColors.secondaryPrimaryColor,),borderRadius: BorderRadius.circular(14.r)),
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.primaryColor),
+                          borderRadius: BorderRadius.circular(16.r)
+                        ),
+
+                      ),
+                      isExpanded: true,
+                      value: _selectedQuestionId,
+                      items: authController.securityQuestionResponseModel
+                          .map((model) => DropdownMenuItem<String>(
+                        value: model.questionId.toString(),
+                        child: Text(model.questionText.toString()),
+
+                      ))
+                          .toList(),
+                      onChanged: (value) {
+                         _selectedQuestionId = value;
+                         print(_selectedQuestionId);
+                      },
+                    )),
+                    SizedBox(height: 10.h),
+                    ///=============Last Name====================
+                    SizedBox(height: 16.h,),
+                    CustomText(text: "Answer".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                    SizedBox(height: 10.h,),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16.h),
+                      child: CustomTextField(
+                        controller:  securityController,
+                        hintText: "Answer".tr,
+                        borderColor: AppColors.secondaryPrimaryColor,
+                        validator: (value){
+                          if(value == null || value.isEmpty){
+                            return 'Please enter your Answer'.tr;
+                          }
+                          return null;
+
+                        },
+                      ),
+                    ),
+
+
 
                     ///=============Sign In Button====================
-                    CustomButtonCommon(
-                      // loading: authController.loadingLoading.value == true,
-                      title: AppString.registerButton.tr,
-                      onpress: () {
-                        Get.toNamed(AppRoutes.otpScreen,preventDuplicates: false);
-                        // if (_forRegKey.currentState!.validate()) {
-                        //   // authController.loginHandle(
-                        //   //     emailController.text, passController.text);
-                        // }
-                      },),
+                    Obx(()=>
+                 CustomButtonCommon(
+                         loading: authController.signUpLoading.value == true,
+                        title: AppString.registerButton.tr,
+                        onpress: () {
+                         // Get.toNamed(AppRoutes.otpScreen,preventDuplicates: false);
+                          if (_forRegKey.currentState!.validate()) {
+                            authController.signUpHandle(
+                              firstName: firstNameController.text,
+                                lastName: secondNameController.text,
+                                email: emailController.text,
+                                mobile: mobileController.text,
+                                dob: dateOfBirthController.text,
+                                securityAnswer: securityController.text,
+                                source: "mobile",
+                                securityCode: _selectedQuestionId.toString(),
+                                userTypeId: "2"
+
+                            );
+                          }
+                        },),
+                    ),
                     SizedBox(height: 20.h,),
 
                     ///=============SignUp====================
@@ -180,4 +287,20 @@ class RegistrationScreen extends StatelessWidget {
       ),
     );
   }
+
+  // void _selectDate(BuildContext context,) async {
+  //   DateTime? selectedDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime.now(),
+  //     lastDate: DateTime(2099),
+  //   );
+  //
+  //   if (selectedDate != null) {
+  //     setState(() {
+  //       _startDate = selectedDate;
+  //       _startDateController.text = DateFormat('MM/dd/yy').format(_startDate!);
+  //     });
+  //   }
+  // }
 }

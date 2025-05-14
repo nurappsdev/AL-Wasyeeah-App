@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../controllers/controllers.dart';
 import '../../helpers/helpers.dart';
 import '../../utils/utils.dart';
 import '../widgets/widgets.dart';
@@ -16,6 +17,8 @@ class LoginScreen extends StatelessWidget {
    LoginScreen({super.key});
 TextEditingController emailController = TextEditingController();
 TextEditingController passController = TextEditingController();
+   AuthController  authController = Get.put(AuthController());
+
    final GlobalKey<FormState> _logKey = GlobalKey<FormState>();
    final List<GridItem> items = [
      GridItem(
@@ -117,9 +120,7 @@ TextEditingController passController = TextEditingController();
                       ),
                       validator: (value){
                         if(value == null || value.isEmpty){
-                          return 'Please enter your Email'.tr;
-                        }else if(!AppConstants.emailValidate.hasMatch(value)){
-                          return "Invalid Email".tr;
+                          return 'Please enter User Name'.tr;
                         }
                         return null;
 
@@ -179,19 +180,19 @@ TextEditingController passController = TextEditingController();
 
 
                   ///=============Sign In Button====================
-                  CustomButtonCommon(
+                  Obx(()=>
+               CustomButtonCommon(
+                 loading: authController.signInLoading.value == true,
+                 title: AppString.signIn.tr,
+                 onpress: () {
+                    if (_logKey.currentState!.validate()) {
+                      authController.signInHandle(
+                      userName: emailController.text,password: passController.text);
 
-               // loading: authController.loadingLoading.value == true,
-                title: AppString.signIn.tr,
-                onpress: () {
-                  Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
-                  if (_logKey.currentState!.validate()) {
-                    // authController.loginHandle(
-                    //     emailController.text, passController.text);
-                    Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
-                 //   Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
-                  }
-                },),
+                                     //   Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
+                    }
+                                    },),
+                  ),
 
 
 
