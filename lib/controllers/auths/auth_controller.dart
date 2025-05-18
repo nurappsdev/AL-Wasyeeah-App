@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:al_wasyeah/view/screen/otp_verify_screen.dart';
 import 'package:get/get.dart';
 
 import '../../helpers/helpers.dart';
@@ -13,6 +14,11 @@ import '../../view/screen/profile_setting/profile_setting.dart';
 
 class AuthController  extends GetxController{
 
+  @override
+  void onInit() {
+    super.onInit();
+    getSecurityQuestion();
+  }
   ///==================get Question===========================
   RxBool isQuestion= false.obs;
   RxList<SecurityQuestionResponseModel> securityQuestionResponseModel = <SecurityQuestionResponseModel>[].obs;
@@ -101,12 +107,52 @@ class AuthController  extends GetxController{
       ToastMessageHelper.successMessageShowToster("${response.body["message"]}");
        Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
       signInLoading(false);
-    } else if(response.statusCode == 1){
-      signInLoading(false);
-      ToastMessageHelper.errorMessageShowToster("Server error! \n Please try later");
+
     } else {
       ToastMessageHelper.errorMessageShowToster("${response.body["message"]}");
       signInLoading(false);
     }
   }
+
+
+  ///==================Save Sign Up===========================
+  RxBool forgotLoading = false.obs;
+  Future<void> forgotHandle({
+    required String email,
+    required String mobile,
+    required String dob,
+    required String securityAnswer,
+    required String securityCode,
+
+  }) async {
+    forgotLoading(true);
+    var headers = {'Content-Type': 'application/json'};
+    var body = {
+      "email": email,
+      "mobile": mobile,
+      "dob": dob,
+      "securityAnswer": securityAnswer,
+      "securityCode": securityCode
+    };
+    var response = await ApiClient.postData(
+      ApiConstants.forgotEndPoint,
+      jsonEncode(body),
+      headers: headers,
+    );
+    print("log in-----------------${response.body}");
+    if (response.statusCode == 200 || response.statusCode == 201) {
+    //  await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
+      //ToastMessageHelper.successMessageShowToster("${response.body["message"]}");
+      ToastMessageHelper.successMessageShowToster("VERIFICATION OTP SEND SUCCESSFULLY!!");
+      Get.off(() => OtpVerifyScreen(), preventDuplicates: false);
+      forgotLoading(false);
+    } else {
+      forgotLoading(false);
+     ToastMessageHelper.errorMessageShowToster("Unable Data");
+
+    }
+  }
+
+
+
 }

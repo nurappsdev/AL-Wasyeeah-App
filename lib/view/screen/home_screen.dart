@@ -158,7 +158,7 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         child: GestureDetector(
                           onTap: (){
-                            Get.toNamed(AppRoutes.nomineeScreen,preventDuplicates: false);
+                            Get.toNamed(AppRoutes.nomineeTabScreen,preventDuplicates: false);
                           },
                           child: Container(
                             height: 100.h,

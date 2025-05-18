@@ -1,19 +1,20 @@
+
+import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../../../utils/utils.dart';
+import '../../../widgets/widgets.dart';
 
-import '../../../helpers/helpers.dart';
-import '../../../utils/utils.dart';
-import '../../widgets/widgets.dart';
 
-class NomineeScreen extends StatefulWidget {
-  const NomineeScreen({super.key});
+class WitnessScreen extends StatefulWidget {
+   WitnessScreen({super.key});
 
   @override
-  State<NomineeScreen> createState() => _NomineeScreenState();
+  State<WitnessScreen> createState() => _WitnessScreenState();
 }
 
-class _NomineeScreenState extends State<NomineeScreen> {
+class _WitnessScreenState extends State<WitnessScreen> {
   List<bool> isSelected = [true, false];
   final List<Map<String, String>> users = [
     {
@@ -52,7 +53,7 @@ class _NomineeScreenState extends State<NomineeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Nominee".tr,fontsize: 18.sp,),),
+      appBar: AppBar(title: CustomText(text: "Witness".tr,fontsize: 18.sp,),),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -87,14 +88,14 @@ class _NomineeScreenState extends State<NomineeScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              'Your Nominee'.tr,
+                              'Your Witness"'.tr,
                               textAlign: TextAlign.center,
                             ),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              'Nominated You'.tr,
+                              'I’m the witness'.tr,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -136,7 +137,7 @@ class _NomineeScreenState extends State<NomineeScreen> {
                               ],
                             ),
                             onTap: () {
-                              Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
+                              Get.toNamed(AppRoutes.witnessDetailsScreen, preventDuplicates: false);
                               print("Tapped on ${user['name']}");
                             },
                           ),
@@ -146,10 +147,10 @@ class _NomineeScreenState extends State<NomineeScreen> {
                   ),
                   SizedBox(height: 10.h),
                   CustomButton(
-                    title: "+ Add more nominees".tr,
+                    title: "+ Add more witness".tr,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
-                      Get.toNamed(AppRoutes.addNomineeScreen,preventDuplicates: false);
+                      Get.toNamed(AppRoutes.addWitnessesScreen,preventDuplicates: false);
                     },
                   ),
                   SizedBox(height: 10.h),

@@ -2,17 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../../../utils/utils.dart';
+import '../../../widgets/widgets.dart';
 
-import '../../../utils/utils.dart';
-import '../../widgets/widgets.dart';
-
-class WitnessDetailsScreen extends StatelessWidget {
-  const WitnessDetailsScreen({super.key});
+class NomineeDetailsScreen extends StatelessWidget {
+  const NomineeDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Witness Profile Details".tr,fontsize: 18.sp,),),
+      appBar: AppBar(title: CustomText(text: "Nominee Profile Details".tr,fontsize: 18.sp,),),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -123,7 +122,7 @@ class WitnessDetailsScreen extends StatelessWidget {
                           /// Buttons
                           SizedBox(height: 30.h),
                           CustomButton(
-                            title: " - Remove Witness".tr,
+                            title: " - Remove Nominee".tr,
                             titlecolor: AppColors.redColor,
                             onpress: () {},
                           ),

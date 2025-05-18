@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../../controllers/controllers.dart';
 import '../../utils/utils.dart';
 import '../widgets/widgets.dart';
 class ForgotPassScreen extends StatefulWidget {
@@ -17,16 +18,18 @@ class ForgotPassScreen extends StatefulWidget {
 class _ForgotPassScreenState extends State<ForgotPassScreen> {
   final GlobalKey<FormState> _logRegKey = GlobalKey<FormState>();
 
-   TextEditingController firstNameController = TextEditingController();
-
-   TextEditingController secondNameController = TextEditingController();
+   TextEditingController securityController = TextEditingController();
 
    TextEditingController mobileController = TextEditingController();
-
    TextEditingController emailController = TextEditingController();
-  final TextEditingController startDateController = TextEditingController();
+  final TextEditingController dateOfBirthController = TextEditingController();
+  DateTime? birthDate;
+  AuthController  authController = Get.put(AuthController());
 
-   Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
+  String? _selectedQuestionId;
+
+
+  Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
      DateTime? pickedDate = await showDatePicker(
        context: context,
        initialDate: DateTime.now(),
@@ -35,7 +38,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
      );
      if (pickedDate != null) {
        setState(() {
-         controller.text = DateFormat('MM/dd/yyyy').format(pickedDate);
+         controller.text = DateFormat('yyyy-MM-dd').format(pickedDate);
        });
      }
    }
@@ -123,12 +126,25 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     Padding(
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
-                        controller: startDateController,
+                        controller: dateOfBirthController,
                         readOnly: true,
                         hintText: "Date of birth".tr,
                         hintextColor: Colors.black54,
                         borderColor: AppColors.secondaryPrimaryColor,
-                        onTap: () => _selectDate(context, startDateController),
+                        onTap: () async{
+                          DateTime? selectedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(1930),
+                            lastDate: DateTime.now(),
+                          );
+
+                          if (selectedDate != null) {
+                            birthDate = selectedDate;
+                            dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(birthDate!);
+                          }
+                          print(dateOfBirthController.text);
+                        },
                         suffixIcon: Icon(Icons.calendar_month,color: AppColors.primaryColor,),
                         validator: (value){
                           // if(value == null || value.isEmpty){
@@ -140,18 +156,77 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     ),
                     SizedBox(height: 10.h),
 
-                    ///=============Sign In Button====================
-                    CustomButtonCommon(
-                      // loading: authController.loadingLoading.value == true,
-                      title: "Submit".tr,
-                      onpress: () {
+                    SizedBox(height: 10.h),
+                    CustomText(text: "Security Question".tr,
+                      fontsize: 16.sp,
+                      color: AppColors.hitTextColor000000,
+                      textAlign: TextAlign.left,
 
-                        // if (_logRegKey.currentState!.validate()) {
-                        //
-                        //   // authController.loginHandle(
-                        //   //     emailController.text, passController.text);
-                        // }
-                      },),
+                    ),
+                    SizedBox(height: 10.h),
+                    DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryPrimaryColor),borderRadius: BorderRadius.circular(14.r)),
+                        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color:  AppColors.secondaryPrimaryColor,),borderRadius: BorderRadius.circular(14.r)),
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.primaryColor),
+                            borderRadius: BorderRadius.circular(16.r)
+                        ),
+
+                      ),
+                      isExpanded: true,
+                      hint: CustomText(text: "select Your Question"),
+                      value: _selectedQuestionId,
+                      items: authController.securityQuestionResponseModel
+                          .map((model) => DropdownMenuItem<String>(
+                        value: model.questionId.toString(),
+                        child: Text(model.questionText.toString()),
+
+                      ))
+                          .toList(),
+                      onChanged: (value) {
+                        _selectedQuestionId = value;
+                        print(_selectedQuestionId);
+                      },
+                    ),
+                    SizedBox(height: 10.h),
+                    ///=============Answer====================
+                    SizedBox(height: 16.h,),
+                    CustomText(text: "Answer".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
+                    SizedBox(height: 10.h,),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16.h),
+                      child: CustomTextField(
+                        controller:  securityController,
+                        hintText: "Answer".tr,
+                        borderColor: AppColors.secondaryPrimaryColor,
+                        validator: (value){
+                          if(value == null || value.isEmpty){
+                            return 'Please enter your Answer'.tr;
+                          }
+                          return null;
+
+                        },
+                      ),
+                    ),
+
+                    ///=============Sign In Button====================
+                    Obx(()=>
+                    CustomButtonCommon(
+                         loading: authController.forgotLoading.value == true,
+                        title: "Submit".tr,
+                        onpress: () {
+                          if (_logRegKey.currentState!.validate()) {
+                            authController.forgotHandle(
+                              mobile: mobileController.text,
+                               email: emailController.text,
+                                dob: dateOfBirthController.text,
+                                securityAnswer:  securityController.text,
+                                securityCode: _selectedQuestionId.toString()
+                            );
+                          }
+                        },),
+                    ),
 
                     SizedBox(height: 20.h,),
                   ],

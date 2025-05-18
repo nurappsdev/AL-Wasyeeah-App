@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../utils/app_colors.dart';
-import '../../../utils/utils.dart';
-import '../../widgets/custom_text.dart';
-import '../../widgets/widgets.dart';
+import '../../../../utils/utils.dart';
+
+import '../../../widgets/widgets.dart';
+
 
 class AddOutsideWitness extends StatelessWidget {
    AddOutsideWitness({super.key});

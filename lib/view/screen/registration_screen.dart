@@ -9,21 +9,54 @@ import '../../utils/utils.dart';
 
 import '../widgets/widgets.dart';
 
-class RegistrationScreen extends StatelessWidget {
+class RegistrationScreen extends StatefulWidget {
   RegistrationScreen({super.key});
-   final GlobalKey<FormState> _forRegKey = GlobalKey<FormState>();
-   TextEditingController firstNameController = TextEditingController();
-   TextEditingController secondNameController = TextEditingController();
-   TextEditingController mobileController = TextEditingController();
-   TextEditingController emailController = TextEditingController();
-   TextEditingController dateOfBirthController = TextEditingController();
-   TextEditingController securityController = TextEditingController();
-   AuthController  authController = Get.put(AuthController());
-  String? _selectedQuestionId;
-  DateTime? birthDate;
+
   @override
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
+   final GlobalKey<FormState> _forRegKey = GlobalKey<FormState>();
+
+   TextEditingController firstNameController = TextEditingController();
+
+   TextEditingController secondNameController = TextEditingController();
+
+   TextEditingController mobileController = TextEditingController();
+
+   TextEditingController emailController = TextEditingController();
+
+   TextEditingController dateOfBirthController = TextEditingController();
+
+   TextEditingController securityController = TextEditingController();
+
+   AuthController  authController = Get.put(AuthController());
+
+  String? _selectedQuestionId;
+
+  DateTime? birthDate;
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    secondNameController.dispose();
+    mobileController.dispose();
+    emailController.dispose();
+    dateOfBirthController.dispose();
+    securityController.dispose();
+    super.dispose();
+  }
+   @override
+   void initState() {
+     super.initState();
+     authController.getSecurityQuestion();
+   }
+
+
+   @override
   Widget build(BuildContext context) {
-    authController.getSecurityQuestion();
+
     print(authController.securityQuestionResponseModel.length);
     return Scaffold(
       body: BackgroundImageContainer(
@@ -186,9 +219,7 @@ class RegistrationScreen extends StatelessWidget {
 
                     ),
                     SizedBox(height: 10.h),
-                    Obx(() => authController.isQuestion.value
-                        ? Center(child: CustomLoader())
-                        : DropdownButtonFormField<String>(
+                    DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryPrimaryColor),borderRadius: BorderRadius.circular(14.r)),
                         focusedBorder: OutlineInputBorder(borderSide: BorderSide(color:  AppColors.secondaryPrimaryColor,),borderRadius: BorderRadius.circular(14.r)),
@@ -199,6 +230,7 @@ class RegistrationScreen extends StatelessWidget {
 
                       ),
                       isExpanded: true,
+                      hint: CustomText(text: "select Your Question"),
                       value: _selectedQuestionId,
                       items: authController.securityQuestionResponseModel
                           .map((model) => DropdownMenuItem<String>(
@@ -211,9 +243,9 @@ class RegistrationScreen extends StatelessWidget {
                          _selectedQuestionId = value;
                          print(_selectedQuestionId);
                       },
-                    )),
+                    ),
                     SizedBox(height: 10.h),
-                    ///=============Last Name====================
+                    ///=============Answer====================
                     SizedBox(height: 16.h,),
                     CustomText(text: "Answer".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
                     SizedBox(height: 10.h,),
@@ -261,7 +293,7 @@ class RegistrationScreen extends StatelessWidget {
                     SizedBox(height: 20.h,),
 
                     ///=============SignUp====================
-                    SizedBox(height: 20.h,),
+                    SizedBox(height: 16.h,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -277,6 +309,7 @@ class RegistrationScreen extends StatelessWidget {
                             child: CustomText(text:AppString.signIn.tr, fontsize: 18.sp,color: AppColors.primaryColor,)),
                       ],
                     ),
+                    SizedBox(height: 20.h,),
 
                   ],
                 ),
@@ -287,20 +320,4 @@ class RegistrationScreen extends StatelessWidget {
       ),
     );
   }
-
-  // void _selectDate(BuildContext context,) async {
-  //   DateTime? selectedDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: DateTime.now(),
-  //     firstDate: DateTime.now(),
-  //     lastDate: DateTime(2099),
-  //   );
-  //
-  //   if (selectedDate != null) {
-  //     setState(() {
-  //       _startDate = selectedDate;
-  //       _startDateController.text = DateFormat('MM/dd/yy').format(_startDate!);
-  //     });
-  //   }
-  // }
 }
