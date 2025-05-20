@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:al_wasyeah/view/screen/home_screen.dart';
 import 'package:al_wasyeah/view/screen/otp_verify_screen.dart';
 import 'package:get/get.dart';
 
@@ -104,8 +105,11 @@ class AuthController  extends GetxController{
     print("log in-----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
        await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
-      ToastMessageHelper.successMessageShowToster("${response.body["message"]}");
-       Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
+
+       print("token---------->${PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString())}");
+       ToastMessageHelper.successMessageShowToster("${response.body["message"]}");
+      // Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
+       Get.off(() => HomeScreen(), preventDuplicates: false);
       signInLoading(false);
 
     } else {
