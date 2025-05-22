@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/controllers.dart';
 import '../../../helpers/helpers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
@@ -9,10 +11,16 @@ import '../../widgets/widgets.dart';
 class ZakatCalculatorScreen extends StatelessWidget {
    ZakatCalculatorScreen({super.key});
   final GlobalKey<FormState> _forProKey = GlobalKey<FormState>();
-  TextEditingController nisabController = TextEditingController();
+  TextEditingController cashAndBankController = TextEditingController();
   TextEditingController valueGoldController = TextEditingController();
   TextEditingController silverGoldController = TextEditingController();
-  TextEditingController futureGoldController = TextEditingController();
+  TextEditingController futureDepositsController = TextEditingController();
+
+  TextEditingController loanGivenController = TextEditingController();
+  TextEditingController investmentValueController = TextEditingController();
+  TextEditingController rentalIncomeController = TextEditingController();
+  TextEditingController immediateLiabilitieseController = TextEditingController();
+  ZakatController zakatController = Get.put(ZakatController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +43,7 @@ class ZakatCalculatorScreen extends StatelessWidget {
                 ElevatedButton(onPressed: (){
                   Get.toNamed(AppRoutes.loginScreen,preventDuplicates: false);
                 },child:  CustomText(text: "Skip".tr,fontsize: 18.sp,))
-
+          
               ],
             ),
                 SizedBox(height: 12.h,),
@@ -51,13 +59,14 @@ class ZakatCalculatorScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 4.h,),
-                        CustomText(text: "Nisab(updated 07/03/2024)",),
+                        CustomText(text: "Cash In hand and in bank accounts".tr,),
                         Padding(
                           padding:  EdgeInsets.all(4.r),
                           child: CustomTextField(
-                            controller: nisabController,
-                          hintText: "57,000 ৳",
-
+                            keyboardType: TextInputType.number,
+                            controller: cashAndBankController,
+                          hintText: "Cash In hand and in bank accounts".tr,
+          
                           ),
                         ),
                       ],
@@ -73,65 +82,121 @@ class ZakatCalculatorScreen extends StatelessWidget {
                     border: Border.all(color: AppColors.primaryColor),),
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 10.h),
-                        CustomText(text: "Value of Gold".tr,),
-                        Padding(
-                          padding:  EdgeInsets.all(4.r),
-                          child: CustomTextField(
-                            controller: valueGoldController,
-                            hintText: "Value of Gold".tr,
-
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10.h),
+                          CustomText(text: "Value of Gold".tr,),
+                          Padding(
+                            padding:  EdgeInsets.all(4.r),
+                            child: CustomTextField(
+                              keyboardType: TextInputType.number,
+                              controller: valueGoldController,
+                              hintText: "Value of Gold".tr,
+                              
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 20.h,),
-                        CustomText(text: "Value of Silver".tr,),
-                        Padding(
-                          padding:  EdgeInsets.all(4.r),
-                          child: CustomTextField(
-                            controller: silverGoldController,
-                            hintText: "Value of Silver".tr,
-
+                          SizedBox(height: 20.h,),
+                          CustomText(text: "Value of Silver".tr,),
+                          Padding(
+                            padding:  EdgeInsets.all(4.r),
+                            child: CustomTextField(
+                              keyboardType: TextInputType.number,
+                              controller: silverGoldController,
+                              hintText: "Value of Silver".tr,
+                              
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 20.h,),
-                        CustomText(text: "Cash In hand and in bank accounts".tr,),
-                        Padding(
-                          padding:  EdgeInsets.all(4.r),
-                          child: CustomTextField(
-                            controller: silverGoldController,
-                            hintText: "Cash In hand and in bank accounts".tr,
 
+                          SizedBox(height: 20.h,),
+                          CustomText(text: "Future deposits".tr,),
+                          Padding(
+                            padding:  EdgeInsets.all(4.r),
+                            child: CustomTextField(
+                              keyboardType: TextInputType.number,
+                              controller: futureDepositsController,
+                              hintText: "Future deposits".tr,
+                              
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 20.h,),
-                        CustomText(text: "Given out in loans".tr,),
-                        Padding(
-                          padding:  EdgeInsets.all(4.r),
-                          child: CustomTextField(
-                            controller: futureGoldController,
-                            hintText: "Given out in loans".tr,
-
+                          SizedBox(height: 20.h,),
+                          CustomText(text: "Given out in loans".tr,),
+                          Padding(
+                            padding:  EdgeInsets.all(4.r),
+                            child: CustomTextField(
+                              keyboardType: TextInputType.number,
+                              controller: loanGivenController,
+                              hintText: "Given out in loans".tr,
+                              
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 20.h,),
+                          CustomText(text: "Investment value".tr,),
+                          Padding(
+                            padding:  EdgeInsets.all(4.r),
+                            child: CustomTextField(
+                              keyboardType: TextInputType.number,
+                              controller: investmentValueController,
+                              hintText: "Investment value".tr,
+          
+                            ),
+                          ),
+          
+                          SizedBox(height: 20.h,),
+                          CustomText(text: "Rental income".tr,),
+                          Padding(
+                            padding:  EdgeInsets.all(4.r),
+                            child: CustomTextField(
+                              keyboardType: TextInputType.number,
+                              controller: rentalIncomeController,
+                              hintText: "Rental income".tr,
+          
+                            ),
+                          ),
+                          SizedBox(height: 20.h,),
+                          CustomText(text: "Immediate liabilities".tr,),
+                          Padding(
+                            padding:  EdgeInsets.all(4.r),
+                            child: CustomTextField(
+                              keyboardType: TextInputType.number,
+                              controller: immediateLiabilitieseController,
+                              hintText: "Immediate liabilities".tr,
+          
+                            ),
+                          ),
+          
+                        ],
+                      ),
                     ),
                   ),
-
+          
                 ),
                 SizedBox(height: 12.h,),
+                Obx(()=>
                 CustomButtonCommon(
-                  // loading: authController.loadingLoading.value == true,
-                  title: "Result".tr,
-                  onpress: () {
-                    _showDialog(context, assetsAccount:"৳ 16,05,790".tr,zakatAccount:"৳ 16,05,790".tr );
-                    // if (_forRegKey.currentState!.validate()) {
-                    //   // authController.loginHandle(
-                    //   //     emailController.text, passController.text);
-                    // }
-                  },),
+                     loading: zakatController.zakatLoading.value == true,
+                    title: "Result".tr,
+                    onpress: () {
+                      // if (_forRegKey.currentState!.validate()) {
+          
+                      if(cashAndBankController.text.isEmpty){
+                        ToastMessageHelper.errorMessageShowToster("At least Enter Nisab");
+                      }else{
+                        zakatController.zakatHandle(
+                          cashAndBank: cashAndBankController.text,
+                          goldValue: valueGoldController.text,
+                          futureDeposits: futureDepositsController.text,
+                          immediateLiabilities: immediateLiabilitieseController.text,
+                          investmentValue: investmentValueController.text,
+                          loanGiven: loanGivenController.text,
+                          rentalIncome: rentalIncomeController.text,
+                          silverValue: silverGoldController.text
+                        );
+                      }
+          
+                    },),
+                ),
                 SizedBox(height: 10.h),
               ],
             )

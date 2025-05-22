@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 
+import '../../../../controllers/controllers.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
@@ -25,7 +26,7 @@ class AddNomineeScreen extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-
+    final controller = Get.put(NomineeController());
     TextEditingController searchController = TextEditingController();
     return Scaffold(
       appBar: AppBar(title: CustomText(text: "Add Nominee".tr,fontsize: 18. sp,),),
@@ -45,53 +46,94 @@ class AddNomineeScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
-                      controller: searchController,
+                      controller: controller.searchController,
                       hintText: "Search".tr,
                       borderColor: AppColors.secondaryPrimaryColor,
-                      suffixIcon: Icon(Icons.search_rounded,color: AppColors.primaryColor,),
+                      suffixIcon: IconButton(onPressed:
+                      controller.searchNominee,
+                          icon: Icon(Icons.search_rounded,color: AppColors.primaryColor,)),
                     ),
                   ),
-                  SizedBox(
-                    height: 500.0, // Adjust height as per your needs
-                    child: ListView.builder(
-                      padding: EdgeInsets.all(8.0),
-                      itemCount: user.length,
-                      itemBuilder: (context, index) {
-                        final users = user[index];
-                        return Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                  Obx(() {
+                    if (controller.isLoading.value) {
+                      return CustomLoader();
+                    } else if (controller.nominessData.isEmpty) {
+                      return Center(child: Text("No Nominee Added Here"));
+                    } else {
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        elevation: 3.0,
+                        margin: EdgeInsets.symmetric(vertical: 8.0),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: AssetImage(AppImages.profileIcon),
+                            radius: 30,
                           ),
-                          elevation: 3.0,
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundImage: NetworkImage(users["image"]!),
-                              radius: 30,
-                            ),
-                            title: Text(
-                              users["name"]!,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Row(
-                              children: [
-                                Icon(Icons.visibility, size: 16.0, color: Colors.grey),
-                                SizedBox(width: 4.0),
-                                Text(
-                                  "View Details".tr,
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                              ],
-                            ),
-                            onTap: () {
-                              Get.toNamed(AppRoutes.witnessDetailsScreen, preventDuplicates: false);
-                              print("Tapped on ${users['name']}");
-                            },
+                          title: Text(
+                            controller.nominessData['name'] ?? 'Name not found',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                        );
-                      },
-                    ),
-                  ),
+                          subtitle: Row(
+                            children: [
+                              Icon(Icons.visibility, size: 16.0, color: Colors.grey),
+                              SizedBox(width: 4.0),
+                              Text(
+                                "View Details".tr,
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                          onTap: () {
+                            Get.toNamed('/witnessDetailsScreen', preventDuplicates: false);
+                          },
+                        ),
+                      );
+                    }
+                  }),
+                  SizedBox(height: 400.h,),
+                  // SizedBox(
+                  //   height: 500.0, // Adjust height as per your needs
+                  //   child: ListView.builder(
+                  //     padding: EdgeInsets.all(8.0),
+                  //     itemCount: user.length,
+                  //     itemBuilder: (context, index) {
+                  //       final users = user[index];
+                  //       return Card(
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(15.0),
+                  //         ),
+                  //         elevation: 3.0,
+                  //         margin: EdgeInsets.symmetric(vertical: 8.0),
+                  //         child: ListTile(
+                  //           leading: CircleAvatar(
+                  //             backgroundImage: NetworkImage(users["image"]!),
+                  //             radius: 30,
+                  //           ),
+                  //           title: Text(
+                  //             users["name"]!,
+                  //             style: TextStyle(fontWeight: FontWeight.bold),
+                  //           ),
+                  //           subtitle: Row(
+                  //             children: [
+                  //               Icon(Icons.visibility, size: 16.0, color: Colors.grey),
+                  //               SizedBox(width: 4.0),
+                  //               Text(
+                  //                 "View Details".tr,
+                  //                 style: TextStyle(color: Colors.grey),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //           onTap: () {
+                  //             Get.toNamed(AppRoutes.witnessDetailsScreen, preventDuplicates: false);
+                  //             print("Tapped on ${users['name']}");
+                  //           },
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
 
                   SizedBox(height: 10.h),
                   CustomButton(

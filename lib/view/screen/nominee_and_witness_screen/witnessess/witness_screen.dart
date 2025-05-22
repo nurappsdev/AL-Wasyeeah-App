@@ -88,7 +88,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              'Your Witness"'.tr,
+                              'Your Witness'.tr,
                               textAlign: TextAlign.center,
                             ),
                           ),

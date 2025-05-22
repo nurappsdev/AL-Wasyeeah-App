@@ -17,6 +17,7 @@ class AppRoutes {
   static const String wasyyahScreen = "/wasyyahScreen.dart";
   static const String wasyyahEditScreen = "/wasyyahEditScreen.dart";
   static const String witnessesScreen = "/witnessesScreen.dart";
+  static const String witnessTabScreen = "/witnessTabScreen.dart";
   static const String addWitnessesScreen = "/addWitnessesScreen.dart";
   static const String nomineeDetailsScreen = "/nomineeDetailsScreen.dart";
   static const String nomineeTabScreen = "/nomineeTabScreen.dart";
@@ -43,6 +44,7 @@ class AppRoutes {
    GetPage(name: wasyyahEditScreen, page: () => WasiyahEditScreen()),
    GetPage(name: nomineeTabScreen, page: () => NomineeTabScreen()),
    GetPage(name: witnessesScreen, page: () => WitnessScreen()),
+   GetPage(name: witnessTabScreen, page: () => WitnessTabScreen()),
    GetPage(name: addWitnessesScreen, page: () => AddWitnessScreen()),
    GetPage(name: nomineeDetailsScreen, page: () => NomineeDetailsScreen()),
    GetPage(name: witnessDetailsScreen, page: () => WitnessDetailsScreen()),

@@ -8,10 +8,13 @@ class ApiConstants{
   static const String securityQuestionEndPoint = "/user/securityQuestionList";
   static const String nomineeEndPoint = "/user/get-nominees";
   static const String nomineetedYouPoint = "/get-nomineeByAnotherUser";
+  static const String witnessEndPoint = "/user/get-witness";
+  static const String witnessesYouEndPoint = "/get-witnessByAnotherUser";
 
   static const String signUpEndPoint = "/user/register";
   static const String signInEndPoint = "/user/login";
   static const String forgotEndPoint = "/user/forget-password";
+  static const String zakatEndPoint = "/zakatCalculator?lang=en";
   static String allPostCodeEndPoint(String postCode) => "/suburbs?limit=50&postcode=$postCode";
   static String singleBusinessEndPoint(String id) => "/businesses/$id";
   static String singlePortfolioEndPoint(String page, String id) => "/portfolios?page=$page&businessId=$id";
