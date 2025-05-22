@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/utils.dart';
 
-import '../../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
 import '../../screen.dart';
 
@@ -83,9 +82,10 @@ class _NomineeTabScreenState extends State<NomineeTabScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: CustomText(text: "Nominee".tr,fontsize: 20.sp,),),
       body: Column(
         children: [
-          const SizedBox(height: 50),
+          const SizedBox(height: 10),
           _buildCustomTabBar(),
           Expanded(
             child: TabBarView(

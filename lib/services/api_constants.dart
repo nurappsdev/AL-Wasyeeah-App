@@ -8,6 +8,8 @@ class ApiConstants{
   static const String securityQuestionEndPoint = "/user/securityQuestionList";
   static const String nomineeEndPoint = "/user/get-nominees";
   static const String nomineetedYouPoint = "/get-nomineeByAnotherUser";
+  static const String witnessEndPoint = "/user/get-witness";
+  static const String witnessesYouEndPoint = "/get-witnessByAnotherUser";
 
   static const String signUpEndPoint = "/user/register";
   static const String signInEndPoint = "/user/login";
