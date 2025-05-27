@@ -78,6 +78,9 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
                               ],
                             ),
                             onTap: () {
+                              Get.toNamed(AppRoutes.witnessDetailsScreen,
+                                  arguments: user,
+                                  preventDuplicates: false);
                               //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
                               print("Tapped on");
                             },

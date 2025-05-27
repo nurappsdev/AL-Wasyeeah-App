@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../helpers/helpers.dart';
 import '../../helpers/prefs_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
@@ -48,6 +49,7 @@ class NomineeController extends GetxController{
 
 
   final TextEditingController searchController = TextEditingController();
+
   var isLoading = false.obs;
   var nominessData = {}.obs;
 
@@ -86,5 +88,104 @@ class NomineeController extends GetxController{
   }
 
 
+  ///==================Save nominee Up===========================
+  // bool isNomineeTrue = true;
+  // RxBool addNomineeLoading = false.obs;
+  // Future<void> addNominee({
+  //   required String userName,
+  //   required String mobileNo,
+  //   required String email,
+  //   required String relationWithUser,
+  //   required String dob,
+  //   required String presentAddress,
+  //   required String permanentAddress,
+  //
+  // }) async {
+  //   addNomineeLoading(true);
+  //   String token = await PrefsHelper.getString(AppConstants.bearerToken);
+  //   var headers = {
+  //     'Authorization': 'Bearer $token',
+  //     'Content-Type': 'application/json',};
+  //   var body = {
+  //     "name": userName,
+  //     "mobile": mobileNo,
+  //     "email": email,
+  //     "relationWithUser": relationWithUser,
+  //     "dob": dob,
+  //     "presentAddress": presentAddress,
+  //     "permanentAddress": permanentAddress
+  //   };
+  //   var response = await ApiClient.postData(
+  //  isNomineeTrue ? ApiConstants.addNomineePoint: ApiConstants.addWitnessEndPoint,
+  //     jsonEncode(body),
+  //     headers: headers,
+  //   );
+  //   print("log in-----------------${response.body}");
+  //   if (response.statusCode == 200 || response.statusCode == 201) {
+  //     ToastMessageHelper.successMessageShowToster("Nominee Add Successfully");
+  //     Get.toNamed(AppRoutes.addNomineeScreen,preventDuplicates: false);
+  //     // Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
+  //     //Get.off(() => HomeScreen(), preventDuplicates: false);
+  //     addNomineeLoading(false);
+  //
+  //   } else {
+  //     addNomineeLoading(false);
+  //    ToastMessageHelper.errorMessageShowToster('Added failed. Please try again.');
+  //
+  //   }
+  // }
+
+  RxBool addNomineeLoading = false.obs;
+
+  Future<void> addNomineeAndWitness({
+    required String userName,
+    required String mobileNo,
+    required String email,
+    required String relationWithUser,
+    required String dob,
+    required String presentAddress,
+    required String permanentAddress,
+    bool isNomineeTrue = true,
+  }) async {
+    addNomineeLoading(true);
+    try {
+      final token = await PrefsHelper.getString(AppConstants.bearerToken);
+      final headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      };
+
+      final body = jsonEncode({
+        "name": userName,
+        "mobile": mobileNo,
+        "email": email,
+        "relationWithUser": relationWithUser,
+        "dob": dob,
+        "presentAddress": presentAddress,
+        "permanentAddress": permanentAddress,
+      });
+
+      final endpoint = isNomineeTrue
+          ? ApiConstants.addNomineePoint
+          : ApiConstants.addWitnessEndPoint;
+
+      final response = await ApiClient.postData(endpoint, body, headers: headers);
+
+      print("Response: ${response.body}");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ToastMessageHelper.successMessageShowToster(
+          isNomineeTrue ? "Nominee Added Successfully" : "Witness Added Successfully",
+        );
+        isNomineeTrue ? Get.toNamed(AppRoutes.addNomineeScreen, preventDuplicates: false):Get.toNamed(AppRoutes.addWitnessesScreen, preventDuplicates: false);
+      } else {
+        ToastMessageHelper.errorMessageShowToster('Add failed. Please try again.');
+      }
+    } catch (e) {
+      ToastMessageHelper.errorMessageShowToster('An error occurred: $e');
+    } finally {
+      addNomineeLoading(false);
+    }
+  }
 
 }

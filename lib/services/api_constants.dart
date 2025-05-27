@@ -1,7 +1,7 @@
 
 class ApiConstants{
   //static const String baseUrl = "https://45b4-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
-  static const String baseUrl = "https://e596-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
+  static const String baseUrl = "https://9d31-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
   static const String imageBaseUrl = "http://192.168.10.187:9000";
 
 
@@ -15,6 +15,8 @@ class ApiConstants{
   static const String signInEndPoint = "/user/login";
   static const String forgotEndPoint = "/user/forget-password";
   static const String zakatEndPoint = "/zakatCalculator?lang=en";
+  static const String addNomineePoint = "/user/save-nominee";
+  static const String addWitnessEndPoint = "/user/save-nominee";
   static String allPostCodeEndPoint(String postCode) => "/suburbs?limit=50&postcode=$postCode";
   static String singleBusinessEndPoint(String id) => "/businesses/$id";
   static String singlePortfolioEndPoint(String page, String id) => "/portfolios?page=$page&businessId=$id";
