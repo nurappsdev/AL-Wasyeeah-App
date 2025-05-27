@@ -3,15 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../../models/models.dart';
 import '../../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
 
 
-class WitnessDetailsScreen extends StatelessWidget {
+class WitnessDetailsScreen extends StatefulWidget {
   const WitnessDetailsScreen({super.key});
 
   @override
+  State<WitnessDetailsScreen> createState() => _WitnessDetailsScreenState();
+}
+
+class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
+final getData = Get.arguments;
+
+  @override
   Widget build(BuildContext context) {
+    print("kdklg ${getData}");
     return Scaffold(
       appBar: AppBar(title: CustomText(text: "Witness Profile Details".tr,fontsize: 18.sp,),),
       body: BackgroundImageContainer(
@@ -143,6 +152,7 @@ class WitnessDetailsScreen extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildRow(String label, String value) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.h),
@@ -171,6 +181,4 @@ class WitnessDetailsScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

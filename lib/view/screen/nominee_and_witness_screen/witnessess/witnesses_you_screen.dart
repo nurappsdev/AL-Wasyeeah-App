@@ -78,6 +78,8 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                               ],
                             ),
                             onTap: () {
+                              Get.toNamed(AppRoutes.witnessDetailsScreen,preventDuplicates: false);
+
                               //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
                               print("Tapped on");
                             },

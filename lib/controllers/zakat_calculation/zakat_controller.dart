@@ -54,7 +54,8 @@ class ZakatController extends GetxController{
     );
     print("----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
-     //ToastMessageHelper.successMessageShowToster("${response.body["message"]}");
+   ToastMessageHelper.successMessageShowToster("RECORD INSERTED SUCCESSFULLY!!");
+      print("zakat netAssets${response.body}");
       showZakatDialog( assetsAccount:"${response.body["netAssets"]}".tr,zakatAccount:"${response.body["zakatAmount"]}".tr );
 
       // Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
