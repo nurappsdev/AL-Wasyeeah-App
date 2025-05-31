@@ -28,3 +28,4 @@ export 'nominee_and_witness_screen/witnessess/witness_screen.dart';
 export 'nominee_and_witness_screen/witnessess/witness_tab_screen.dart';
 export 'nominee_and_witness_screen/witnessess/your_witness_screen.dart';
 export 'nominee_and_witness_screen/witnessess/witnesses_you_screen.dart';
+export 'first_splash_screen.dart';

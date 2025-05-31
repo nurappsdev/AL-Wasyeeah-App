@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../controllers/controllers.dart';
 import '../../../../helpers/helpers.dart';
+import '../../../../models/models.dart';
 import '../../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
 
@@ -78,8 +80,8 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                               ],
                             ),
                             onTap: () {
-                              Get.toNamed(AppRoutes.witnessDetailsScreen,preventDuplicates: false);
-
+                              // Get.toNamed(AppRoutes.witnessDetailsScreen,preventDuplicates: false);
+                              showWitnessDetailsDialog(context,user);
                               //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
                               print("Tapped on");
                             },
@@ -96,6 +98,81 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void showWitnessDetailsDialog(BuildContext context, GetWitnessResponseModel user) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.all(16),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SingleChildScrollView(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey[900],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            user.name ?? "N/A",
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.close, color: Colors.white),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ],
+                    ),
+                    Divider(color: Colors.white70),
+                    _buildDialogRow(Icons.people, "Relation", user.relation ?? "N/A"),
+                    _buildDialogRow(Icons.email, "Email", user.email ?? "N/A"),
+                    _buildDialogRow(Icons.person, "Father Name", user.fatherName ?? "N/A"),
+                    _buildDialogRow(Icons.phone, "Mobile", user.mobile ?? "N/A"),
+                    _buildDialogRow(Icons.favorite, "Marital Status", user.maritalStatus ?? "N/A"),
+                    _buildDialogRow(Icons.work, "Profession", user.profession ?? "N/A"),
+                    _buildDialogRow(Icons.calendar_today, "Date", "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ?? "N/A"),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                      onPressed: () {
+                        // Implement remove witness logic
+                        Navigator.pop(context);
+                      },
+                      child: Text("Remove Witness"),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildDialogRow(IconData icon, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.orange, size: 18),
+          SizedBox(width: 10),
+          Text("$label: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          Expanded(child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
+        ],
       ),
     );
   }

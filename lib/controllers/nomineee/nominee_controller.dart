@@ -17,13 +17,13 @@ class NomineeController extends GetxController{
 
   ///==================get nominee===========================
   RxBool isNominee= false.obs;
-  RxList<NomineeResponseModel> nomineeData = <NomineeResponseModel>[].obs;
+  RxList<NomineetedResponseModel> nomineeData = <NomineetedResponseModel>[].obs;
   getNomineeData() async{
     isNominee(true);
     var response = await ApiClient.getData(ApiConstants.nomineeEndPoint);
     print("nomineeData data ------------${response.body}");
     if(response.statusCode == 200 || response.statusCode == 201){
-      nomineeData.value = List<NomineeResponseModel>.from(response.body.map((x)=> NomineeResponseModel.fromJson(x)));
+      nomineeData.value = List<NomineetedResponseModel>.from(response.body.map((x)=> NomineetedResponseModel.fromJson(x)));
       isNominee(false);
     }else{
       isNominee(false);

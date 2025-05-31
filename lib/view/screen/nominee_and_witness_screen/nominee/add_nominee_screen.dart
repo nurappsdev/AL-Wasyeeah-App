@@ -87,6 +87,7 @@ class AddNomineeScreen extends StatelessWidget {
                           ),
                           onTap: () {
                             Get.toNamed('/witnessDetailsScreen', preventDuplicates: false);
+                            print("dfkjld");
                           },
                         ),
                       );

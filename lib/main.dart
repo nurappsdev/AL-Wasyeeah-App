@@ -101,7 +101,7 @@ class MyApp extends StatelessWidget {
               navigatorKey: Get.key,
               theme: light(),
               getPages: AppRoutes.routes,
-              initialRoute: AppRoutes.splashScreen,
+              initialRoute: AppRoutes.firstSplashScreen,
               initialBinding: ControllerBindings(),
               // theme: themeController.darkTheme ? dark(): light(),
 
