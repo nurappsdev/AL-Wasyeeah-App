@@ -1,7 +1,7 @@
 
 class ApiConstants{
   //static const String baseUrl = "https://45b4-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
-  static const String baseUrl = "https://9d31-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
+  static const String baseUrl = "https://728d-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
   static const String imageBaseUrl = "http://192.168.10.187:9000";
 
 

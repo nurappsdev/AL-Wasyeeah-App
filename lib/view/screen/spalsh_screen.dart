@@ -21,19 +21,6 @@ class SplashScreen extends StatefulWidget {
 final LocalizationController _localizationController = Get.find<LocalizationController>(); //
 class _SplashScreenState extends State<SplashScreen> {
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    Timer(Duration(seconds: 3), () async{
-      String token = await PrefsHelper.getString(AppConstants.bearerToken);
-      if(token.isNotEmpty){
-        Get.offAllNamed(AppRoutes.homeScreen);
-      }else{
-        Get.toNamed(AppRoutes.loginScreen,preventDuplicates: false);
-      }
-    });
-  }
 
   bool isEnglish = true;
   @override
