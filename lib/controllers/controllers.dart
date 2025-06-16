@@ -5,3 +5,5 @@ export 'auths/auth_controller.dart';
 export 'nomineee/nominee_controller.dart';
 export 'zakat_calculation/zakat_controller.dart';
 export 'witness_controller/witness_controller.dart';
+export 'profile/user_controller.dart';
+export 'wasyyah/wasyyah_controller.dart';

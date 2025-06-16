@@ -8,14 +8,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/controllers.dart';
 import '../widgets/widgets.dart';
 import 'before_login/profirty_Distribute_screen2.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final userController = Get.put(UserController());
+  @override
   Widget build(BuildContext context) {
+    userController.getUserProfileData();
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 200, // Adjust this width to fit your content
@@ -45,10 +53,12 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Obx(()=> userController.isLoadingUserProfile.value ? CustomLoader():
                   CustomText(
-                    text: "Abdullah".tr,
-                    fontsize: 16.sp,
-                    textAlign: TextAlign.start,
+                      text: userController.userProfile.value?.firstName ?? "N/A",
+                      fontsize: 16.sp,
+                      textAlign: TextAlign.start,
+                    ),
                   ),
                   CustomText(
                     text: "Welcome back!".tr,
@@ -100,9 +110,9 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: 20.h,),
                   ///=======================Explore your \n Wasyyah==========================
-        
-        
-        
+
+
+
                   InkWell(
                     onTap: (){
                       Get.toNamed(AppRoutes.wasyyahScreen,preventDuplicates: false);
@@ -125,8 +135,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 20.h),
 
-        
-        
+
+
                   ///=======================Witness \n Nominee==========================
                   Row(mainAxisAlignment: MainAxisAlignment.start,
                     children: [

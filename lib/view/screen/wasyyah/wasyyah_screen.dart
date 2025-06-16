@@ -7,14 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/controllers.dart';
 import 'add_new_washyia_screen.dart';
 import 'wasiyah_preview_screen.dart';
 
 class WasyyahScreen extends StatelessWidget {
-  const WasyyahScreen({super.key});
+   WasyyahScreen({super.key});
+
+  WasyyahController wasyyahController  = Get.put(WasyyahController());
 
   @override
   Widget build(BuildContext context) {
+ print(   "wasyyah data${wasyyahController.wasyyahYouData.length}");
     return Scaffold(
       appBar: AppBar(title: CustomText(
         text: "Wasyyah",
@@ -102,51 +106,72 @@ class WasyyahScreen extends StatelessWidget {
                 SizedBox(
                   height: 440.h,
                   width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10), // Rounded corners
-                        color: Colors.white, // Background color
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5), // Shadow color with opacity
-                            spreadRadius: 2, // How much the shadow spreads
-                            blurRadius: 5, // Softness of the shadow
-                            offset: Offset(0, 3), // Offset in x and y (horizontal, vertical)
+                  child: Obx(() => wasyyahController.isWasyyah.value
+                      ? Center(child: CircularProgressIndicator())
+                      : ListView.builder(
+                    padding: EdgeInsets.all(8.0),
+                    itemCount: wasyyahController.wasyyahYouData.length,
+                    itemBuilder: (context, index) {
+                      final data = wasyyahController.wasyyahYouData[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 5.h,),
-                            CustomText(text: "পরিবারের প্রতি দ্বীন বিষয়ক ওয়াসিয়াহ".tr,fontsize: 16.sp,),
-                            Padding(
-                              padding:  EdgeInsets.only(left: 20,right: 20),
-                              child: Divider(color: AppColors.primaryColor,endIndent: 2.2,thickness: 1.2,),
-                            ),
-                            SizedBox(height: 6.h,),
-                            CustomText(textAlign: TextAlign.start,fontWeight:FontWeight.w500,text: "আমার মৃত্যুর সংবাদ শোনামাত্র সকলেই আমার জন্য \nআল্লাহর কাছে ক্ষমা ও রহমত কামনা করে দোয়া করবেন। \nআমার মৃত্যুর পর মরদেহ যেন কোন প্রকার কাটাছেড়া \nবা Post mortem না করা হয়। আমি আমার পরিবারের \nসকল সদস্য, আত্মীয়স্বজন ও শুভাকাঙ্ক্ষীদের বলছি, \nআমার মৃত্যুর পর যেন অতি শোকে wail বা উচ্চস্বরে \nকান্নাকাটি না করা হয়। \nকেননা মৃত্যু একটি স্বাভাবিক ব্যপার। আল্লাহ্ বলেন : \n“প্রত্যেককে মৃত্যুর স্বাদ আস্বাদন করতে হবে। \nআমি তোমাদেরকে মন্দ ও ভাল  দ্বারা পরীক্ষা করে থাকি \nএবং আমারই কাছে তোমরা প্রত্যাবর্তিত হবে”। \n(সুরা  আনবিয়া:৩৫)।",),
-                            SizedBox(height: 10.h,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
                               children: [
-                                GestureDetector(
-                                    onTap: (){
-
-                                    },
-                                    child: _iconTextCon(Icons.edit_calendar_outlined,"Edit")),
-
-                                _iconTextCon(Icons.remove_red_eye_outlined,"View"),
+                                SizedBox(height: 5.h),
+                                CustomText(
+                                  text: "পরিবারের প্রতি দ্বীন বিষয়ক ওয়াসিয়াহ".tr,
+                                  fontsize: 16.sp,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Divider(
+                                    color: AppColors.primaryColor,
+                                    endIndent: 2.2,
+                                    thickness: 1.2,
+                                  ),
+                                ),
+                                SizedBox(height: 6.h),
+                                CustomText(
+                                  textAlign: TextAlign.start,
+                                  fontWeight: FontWeight.w500,
+                                  maxline: 100,
+                                  text: data.content ?? "",
+                                ),
+                                SizedBox(height: 10.h),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        // implement your logic here
+                                      },
+                                      child: _iconTextCon(Icons.edit_calendar_outlined, "Edit"),
+                                    ),
+                                    _iconTextCon(Icons.remove_red_eye_outlined, "View"),
+                                  ],
+                                ),
                               ],
-                            )
-                          ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
+                      );
+                    },
+                  )),
                 ),
                 SizedBox(height: 20.h,),
                 CustomButton(
