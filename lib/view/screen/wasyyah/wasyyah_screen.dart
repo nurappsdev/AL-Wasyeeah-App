@@ -18,6 +18,7 @@ class WasyyahScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    wasyyahController.getWasyyahData();
  print(   "wasyyah data${wasyyahController.wasyyahYouData.length}");
     return Scaffold(
       appBar: AppBar(title: CustomText(
@@ -55,52 +56,52 @@ class WasyyahScreen extends StatelessWidget {
                 SizedBox(height: 20.h,),
             
                 ///====================================নিজের পরিচিতি================================
-                SizedBox(
-                  height: 340.h,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10), // Rounded corners
-                        color: Colors.white, // Background color
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5), // Shadow color with opacity
-                            spreadRadius: 2, // How much the shadow spreads
-                            blurRadius: 5, // Softness of the shadow
-                            offset: Offset(0, 3), // Offset in x and y (horizontal, vertical)
-                          ),
-                        ],
-                      ),
-                       child: Column(
-                         children: [
-                           SizedBox(height: 5.h,),
-                           CustomText(text: "নিজের পরিচিতি",fontsize: 16.sp,),
-                           Padding(
-                             padding:  EdgeInsets.only(left: 80,right: 80),
-                             child: Divider(color: AppColors.primaryColor,endIndent: 2.2,thickness: 1.2,),
-                           ),
-                           SizedBox(height: 6.h,),
-                           CustomText(fontWeight:FontWeight.w500,text: "আমি বাড়ী নং রোড নং বাংলাদেশ- পিতাঃ তাঁর এই বলে \nস্বাক্ষ্য দিচ্ছি যে, আল্লাহ্ ছাড়া কোন ইলাহ নেই, তিনি একক \nকোন শরীক নেই। আমি আরও স্বাক্ষ্য দিচ্ছি যে মুহাম্মদ \n(সাল্লাল্লাহু আলাইহিসসালাম) তাঁর বান্দা ও রাসুল।\n আমি সম্পূর্ণ শারীরিক ও মানসিকভাবে সূস্থ অবস্থায়, \nকোন প্রকার বাহ্যিক চাপ বা প্রভাব ব্যতীত স্বপ্রনোদিত \nহয়ে এই ওয়াসিয়াহ (ইচ্ছা নাম ) প্রকাশ করছি। \nএই ওয়াসিয়াহ (ইচ্ছানামা) আমার মা, স্ত্রী, সন্তান, \nআত্মীয় স্বজন এবং প্রিয় মুসলিমদের উদেশ্যে লিখছি",textAlign: TextAlign.start,),
-                           SizedBox(height: 10.h,),
-                           Row(
-                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                             children: [
-                               GestureDetector(
-                                   onTap: (){
-                                     Get.toNamed(AppRoutes.wasyyahEditScreen,preventDuplicates: false);
-                                   },
-                                   child: _iconTextCon(Icons.edit_calendar_outlined,"Edit")),
-            
-                               _iconTextCon(Icons.remove_red_eye_outlined,"View"),
-                             ],
-                           )
-                         ],
-                       ),
-                    ),
-                  ),
-                ),
+                // SizedBox(
+                //   height: 340.h,
+                //   width: double.infinity,
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: Container(
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(10), // Rounded corners
+                //         color: Colors.white, // Background color
+                //         boxShadow: [
+                //           BoxShadow(
+                //             color: Colors.grey.withOpacity(0.5), // Shadow color with opacity
+                //             spreadRadius: 2, // How much the shadow spreads
+                //             blurRadius: 5, // Softness of the shadow
+                //             offset: Offset(0, 3), // Offset in x and y (horizontal, vertical)
+                //           ),
+                //         ],
+                //       ),
+                //        child: Column(
+                //          children: [
+                //            SizedBox(height: 5.h,),
+                //            CustomText(text: "নিজের পরিচিতি",fontsize: 16.sp,),
+                //            Padding(
+                //              padding:  EdgeInsets.only(left: 80,right: 80),
+                //              child: Divider(color: AppColors.primaryColor,endIndent: 2.2,thickness: 1.2,),
+                //            ),
+                //            SizedBox(height: 6.h,),
+                //            CustomText(fontWeight:FontWeight.w500,text: "আমি বাড়ী নং রোড নং বাংলাদেশ- পিতাঃ তাঁর এই বলে \nস্বাক্ষ্য দিচ্ছি যে, আল্লাহ্ ছাড়া কোন ইলাহ নেই, তিনি একক \nকোন শরীক নেই। আমি আরও স্বাক্ষ্য দিচ্ছি যে মুহাম্মদ \n(সাল্লাল্লাহু আলাইহিসসালাম) তাঁর বান্দা ও রাসুল।\n আমি সম্পূর্ণ শারীরিক ও মানসিকভাবে সূস্থ অবস্থায়, \nকোন প্রকার বাহ্যিক চাপ বা প্রভাব ব্যতীত স্বপ্রনোদিত \nহয়ে এই ওয়াসিয়াহ (ইচ্ছা নাম ) প্রকাশ করছি। \nএই ওয়াসিয়াহ (ইচ্ছানামা) আমার মা, স্ত্রী, সন্তান, \nআত্মীয় স্বজন এবং প্রিয় মুসলিমদের উদেশ্যে লিখছি",textAlign: TextAlign.start,),
+                //            SizedBox(height: 10.h,),
+                //            Row(
+                //              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //              children: [
+                //                GestureDetector(
+                //                    onTap: (){
+                //                      Get.toNamed(AppRoutes.wasyyahEditScreen,preventDuplicates: false);
+                //                    },
+                //                    child: _iconTextCon(Icons.edit_calendar_outlined,"Edit")),
+                //
+                //                _iconTextCon(Icons.remove_red_eye_outlined,"View"),
+                //              ],
+                //            )
+                //          ],
+                //        ),
+                //     ),
+                //   ),
+                // ),
                 ///====================================নিজের পরিচিতি================================
                 SizedBox(height: 20.h,),
                 SizedBox(
@@ -134,7 +135,7 @@ class WasyyahScreen extends StatelessWidget {
                               children: [
                                 SizedBox(height: 5.h),
                                 CustomText(
-                                  text: "পরিবারের প্রতি দ্বীন বিষয়ক ওয়াসিয়াহ".tr,
+                                  text: "${data.title ?? "N/A"}".tr,
                                   fontsize: 16.sp,
                                 ),
                                 Padding(
@@ -158,6 +159,8 @@ class WasyyahScreen extends StatelessWidget {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
+                                                         Get.toNamed(AppRoutes.wasyyahEditScreen,preventDuplicates: false);
+
                                         // implement your logic here
                                       },
                                       child: _iconTextCon(Icons.edit_calendar_outlined, "Edit"),
