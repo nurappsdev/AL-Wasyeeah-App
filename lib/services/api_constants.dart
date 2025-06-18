@@ -1,7 +1,7 @@
 
 class ApiConstants{
   //static const String baseUrl = "https://45b4-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
-  static const String baseUrl = "https://728d-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
+  static const String baseUrl = "https://8b2f-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
   static const String imageBaseUrl = "http://192.168.10.187:9000";
 
 
@@ -10,6 +10,7 @@ class ApiConstants{
   static const String nomineetedYouPoint = "/get-nomineeByAnotherUser";
   static const String witnessEndPoint = "/user/get-witness";
   static const String witnessesYouEndPoint = "/get-witnessByAnotherUser";
+  static const String wasyyahYouDataYouEndPoint = "/user/getWasiyyah";
 
   static const String signUpEndPoint = "/user/register";
   static const String signInEndPoint = "/user/login";
@@ -17,6 +18,7 @@ class ApiConstants{
   static const String zakatEndPoint = "/zakatCalculator?lang=en";
   static const String addNomineePoint = "/user/save-nominee";
   static const String addWitnessEndPoint = "/user/save-nominee";
+  static const String userProfileEndPoint = "/user/getProfileData";
   static String allPostCodeEndPoint(String postCode) => "/suburbs?limit=50&postcode=$postCode";
   static String singleBusinessEndPoint(String id) => "/businesses/$id";
   static String singlePortfolioEndPoint(String page, String id) => "/portfolios?page=$page&businessId=$id";

@@ -1,4 +1,5 @@
 
+import 'package:al_wasyeah/view/screen/no_internet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -95,7 +96,9 @@ class AddNewWashyiaScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: CustomButton(
                         title: "Save".tr,
-                        onpress: () {},
+                        onpress: () {
+                          Get.to(()=>NoInternetScreen());
+                        },
                         width: 100.w,
                         height: 40.h,
                         color: AppColors.primaryColor,

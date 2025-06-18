@@ -1,4 +1,5 @@
 
+import 'package:al_wasyeah/view/screen/no_internet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -96,22 +97,23 @@ class MyApp extends StatelessWidget {
           splitScreenMode: true,
           builder: (_, child) {
             return GetMaterialApp(
-              title: "App Name",
-              debugShowCheckedModeBanner: false,
-              navigatorKey: Get.key,
-              theme: light(),
-              getPages: AppRoutes.routes,
-              initialRoute: AppRoutes.firstSplashScreen,
-              initialBinding: ControllerBindings(),
-              // theme: themeController.darkTheme ? dark(): light(),
+                title: "App Name",
+                debugShowCheckedModeBanner: false,
+                navigatorKey: Get.key,
+                theme: light(),
+                getPages: AppRoutes.routes,
+                initialRoute: AppRoutes.firstSplashScreen,
+                initialBinding: ControllerBindings(),
+                // theme: themeController.darkTheme ? dark(): light(),
+              
+                defaultTransition: Transition.topLevel,
+                locale: localizeController.locale,
+                translations: Messages(languages: languages),
+                fallbackLocale: Locale(AppConstants.languages[0].languageCode,
+                    AppConstants.languages[0].countryCode),
+                transitionDuration: const Duration(milliseconds: 500),
+              );
 
-              defaultTransition: Transition.topLevel,
-              locale: localizeController.locale,
-              translations: Messages(languages: languages),
-              fallbackLocale: Locale(AppConstants.languages[0].languageCode,
-                  AppConstants.languages[0].countryCode),
-              transitionDuration: const Duration(milliseconds: 500),
-            );
           });
     });
   }

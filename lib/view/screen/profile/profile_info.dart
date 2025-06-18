@@ -4,17 +4,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/controllers.dart';
 import '../../../helpers/helpers.dart';
 import '../../../helpers/prefs_helper.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 import '../profile_setting/profile_setting.dart';
 
-class ProfileInfo extends StatelessWidget {
+class ProfileInfo extends StatefulWidget {
   const ProfileInfo({super.key});
 
   @override
+  State<ProfileInfo> createState() => _ProfileInfoState();
+}
+
+class _ProfileInfoState extends State<ProfileInfo> {
+  final userController = Get.put(UserController());
+
+  @override
   Widget build(BuildContext context) {
+    userController.getUserProfileData();
+   print("user data ${ userController.userProfile.value?.firstName}");
     return Scaffold(
       appBar: AppBar(title: CustomText(text: "User Profile".tr,fontsize: 18. sp,),),
       body: BackgroundImageContainer(
@@ -41,7 +51,7 @@ class ProfileInfo extends StatelessWidget {
                   //   width: 120.w,
                   // ),
                   SizedBox(height: 10.h,),
-                  CustomText(text: "Abdullah".tr,fontsize: 18,fontWeight: FontWeight.w700,),
+                  Obx(()=> CustomText(text: userController.userProfile.value?.firstName ?? "N/A",fontsize: 18,fontWeight: FontWeight.w700,)),
                   SizedBox(height: 40.h,),
 ///=====================Personal Details====================================
                   GestureDetector(
@@ -275,6 +285,7 @@ class ProfileInfo extends StatelessWidget {
       ),
     );
   }
+
   ///==============log out =======================
   void _showLogoutDialog(BuildContext context) {
     showDialog(
@@ -429,6 +440,4 @@ class ProfileInfo extends StatelessWidget {
     //   ),
     // );
   }
-
-
 }
