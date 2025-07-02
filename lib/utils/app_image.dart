@@ -11,6 +11,7 @@ class AppImages {
   static const String profirtyImg = "$path/profirty_icon.png";
   static const String mosjidIcon = "$path/mosqe_icons.png";
   static const String wasyyahIcon = "$path/priview_img.png";
+  static const String scanImg = "$path/scanImg.png";
   static const String profileIcon = "$path/profile_icon.png";
 
 

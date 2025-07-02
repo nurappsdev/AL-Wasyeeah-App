@@ -25,7 +25,7 @@ class _FirstSplashScreenState extends State<FirstSplashScreen> {
     super.initState();
     Timer(Duration(seconds: 3), () async{
       String token = await PrefsHelper.getString(AppConstants.bearerToken);
-      if(token.trim().isNotEmpty){
+      if(token.isNotEmpty){
         Get.offAllNamed(AppRoutes.homeScreen);
       }else{
         Get.toNamed(AppRoutes.splashScreen,preventDuplicates: false);

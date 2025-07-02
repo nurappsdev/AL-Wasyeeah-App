@@ -3,6 +3,7 @@ import 'package:al_wasyeah/utils/app_image.dart';
 import 'package:al_wasyeah/view/screen/otp_verify_screen.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
@@ -192,6 +193,7 @@ TextEditingController passController = TextEditingController();
                      title: AppString.signIn.tr,
                      onpress: () {
                         if (_logKey.currentState!.validate()) {
+                          TextInput.finishAutofillContext();
                           authController.signInHandle(
                               userName: emailController.text,
                               password: passController.text);

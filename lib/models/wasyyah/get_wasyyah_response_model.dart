@@ -1,9 +1,9 @@
 
 class GetWasyyahResponseModel {
-  final int? orderSeq;
+   int? orderSeq;
   final String? title;
-  final String? visible;
-  final String? requestKey;
+   String? visible;
+   String? requestKey;
   final String? content;
 
   GetWasyyahResponseModel({

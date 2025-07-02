@@ -121,6 +121,49 @@ class AuthController  extends GetxController{
   }
 
 
+  Future<void> signInHandles({
+    required String userName,
+    required String password,
+  }) async {
+    signInLoading(true);
+    try {
+      var headers = {'Content-Type': 'application/json'};
+      var body = {
+        "username": userName,
+        "password": password,
+      };
+
+      var response = await ApiClient.postData(
+        ApiConstants.signInEndPoint,
+        jsonEncode(body),
+        headers: headers,
+      );
+
+      final responseData = jsonDecode(response.body);
+
+      print("log in-----------------${responseData}");
+
+      if (response.statusCode == 200) {
+        await PrefsHelper.setString(AppConstants.bearerToken, responseData['data']['token'].toString());
+
+        ToastMessageHelper.successMessageShowToster("${responseData["message"]}");
+
+        Get.off(() => HomeScreen(), preventDuplicates: false);
+      } else {
+        // Show error toast
+        ToastMessageHelper.errorMessageShowToster(
+          responseData['message'] ?? 'Login failed. Please try again.',
+        );
+      }
+    } catch (e) {
+      ToastMessageHelper.errorMessageShowToster("Something went wrong. Please try again.");
+      print("Error in signInHandle: $e");
+    } finally {
+      signInLoading(false);
+    }
+  }
+
+
   ///==================Save Sign Up===========================
   RxBool forgotLoading = false.obs;
   Future<void> forgotHandle({
