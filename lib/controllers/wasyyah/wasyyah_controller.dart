@@ -309,6 +309,55 @@ class WasyyahController extends GetxController {
     isWasyyah(false);
   }
 
+ var addWaseeyea = false.obs;
+  Future<void> addWasyyahData({
+    // required int orderSeq,
+   // required String visible,
+    required String title,
+  //  required String requestKey,
+    required String content,
+  }) async {
+    addWaseeyea(true);
+
+    try {
+      final url = Uri.parse("${ApiConstants.baseUrl}/user/saveWasiyyah");
+      String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $bearerToken',
+      };
+
+      final body = jsonEncode({
+        // "orderSeq": orderSeq,
+        "visible": "Y",
+        "title": title,
+        // "requestKey": requestKey,
+        "content": content,
+      });
+
+      final response = await http.post(
+          url,
+          headers: headers,
+          body: body
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        getWasyyahData();
+        ToastMessageHelper.successMessageShowToster("RECORD INSERTED SUCCESSFULLY!!");
+        update();
+        addWaseeyea(false);
+      } else {
+        ToastMessageHelper.errorMessageShowToster("error, try again");
+      }
+    } catch (e) {
+      print("❗ Exception: $e");
+      ToastMessageHelper.errorMessageShowToster("Network error occurred");
+    } finally {
+      addWaseeyea(false);
+    }
+  }
+
+
   Future<void> updateWasyyahData({
     required int orderSeq,
     required String visible,

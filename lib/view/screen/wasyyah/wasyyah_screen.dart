@@ -33,7 +33,12 @@ class WasyyahScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: CustomButton(title: "Preview".tr, onpress: (){
-              Get.off(()=>WasyyahPreviewScreen(),preventDuplicates: false);
+              Get.toNamed(
+                AppRoutes.wasyyahPriviewScreen,
+                preventDuplicates: false,
+                 arguments: wasyyahController.wasyyahYouData,
+              );
+              // Get.off(()=>WasyyahPreviewScreen(),preventDuplicates: false);
             },width: 100.w,height: 40.h,color: AppColors.primaryColor,),
           )
         ],

@@ -17,6 +17,7 @@ class AppRoutes {
   static const String homeScreen = "/homeScreen.dart";
   static const String wasyyahScreen = "/wasyyahScreen.dart";
   static const String wasyyahEditScreen = "/wasyyahEditScreen.dart";
+  static const String wasyyahPriviewScreen = "/wasyyahPriviewScreen";
   static const String witnessesScreen = "/witnessesScreen.dart";
   static const String witnessTabScreen = "/witnessTabScreen.dart";
   static const String addWitnessesScreen = "/addWitnessesScreen.dart";
@@ -55,6 +56,7 @@ class AppRoutes {
    GetPage(name: addOutsideNomineeScreen, page: () => AddOutsideNominee()),
    GetPage(name: notificationsScreen, page: () => NotificationCard()),
    GetPage(name: profileInfo, page: () => ProfileInfo()),
+   GetPage(name: wasyyahPriviewScreen, page: () => WasyyahPreviewScreen()),
 
   ];
 }

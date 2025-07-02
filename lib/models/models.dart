@@ -5,3 +5,4 @@ export 'nominee/nomineeted_response_model.dart';
 export 'witness/get_witness_response_model.dart';
 export 'user_response_model.dart';
 export 'wasyyah/get_wasyyah_response_model.dart';
+export 'salat_time_response_model.dart';

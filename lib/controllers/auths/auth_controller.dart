@@ -69,7 +69,7 @@ class AuthController  extends GetxController{
       headers: headers,
     );
     print("regggggggggggggggggggggggggggg${response.body}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 200 ) {
       // await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
       ToastMessageHelper.successMessageShowToster("Account create successful.\n \nNow you have a user name and password your email");
       Get.toNamed(AppRoutes.loginScreen, preventDuplicates: false,);
@@ -114,7 +114,7 @@ class AuthController  extends GetxController{
 
     } else {
       signInLoading(false);
-      print(response.body['message']);
+      // print(response.body['message']);
       //ToastMessageHelper.errorMessageShowToster(response.body['message'] ?? 'Login failed. Please try again.');
 
     }
