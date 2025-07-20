@@ -12,6 +12,7 @@ import '../../controllers/controllers.dart';
 import '../widgets/widgets.dart';
 import 'before_login/profirty_Distribute_screen2.dart';
 import 'no_internet_screen.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,6 +22,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   final userController = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
