@@ -16,7 +16,7 @@ class ApiConstants{
   static const String signInEndPoint = "/user/login";
   static const String forgotEndPoint = "/user/forget-password";
   static const String zakatEndPoint = "/zakatCalculator?lang=en";
-  static  String salatTimeAPI(String lat, long ) => "/mobile/getSalahTime?latitude=$lat&longitude=$long";
+  static  String salatTimeAPI(String lat, String long ) => "/mobile/getSalahTime?latitude=$lat&longitude=$long";
   static const String addNomineePoint = "/user/save-nominee";
   static const String addWitnessEndPoint = "/user/save-nominee";
   static const String userProfileEndPoint = "/user/getProfileData";

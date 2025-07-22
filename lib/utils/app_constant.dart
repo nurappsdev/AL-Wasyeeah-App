@@ -16,6 +16,8 @@ class AppConstants{
   static String lastname = 'lastName';
   static String image = '';
   static String phone = '';
+  static String latitude = 'latitude';
+  static String longitude = 'longitude';
   // static String promoCode = '';
   static String stribeUrl = '';
 

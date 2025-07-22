@@ -1,8 +1,9 @@
 
+import 'dart:async';
 import 'dart:convert';
 
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../helpers/helpers.dart';
 import '../../helpers/prefs_helper.dart';
@@ -14,9 +15,8 @@ class UserController extends GetxController{
   @override
   onInit(){
     super.onInit();
-    getUserProfileData();
-    getLocation();
     getsalatTimeHandle();
+    getUserProfileData();
   }
   RxBool isLoadingUserProfile = false.obs;
   Rxn<GetUserResponseModel> userProfile = Rxn<GetUserResponseModel>();
@@ -41,49 +41,6 @@ class UserController extends GetxController{
   }
 
 
-  RxString location = 'Getting location...'.obs;
-  RxString longitude = ''.obs;
-  RxString latitude = ''.obs;
-  void getLocation() async {
-    try {
-      Position position = await determinePosition();
-      latitude.value = position.latitude.toString();
-      longitude.value = position.longitude.toString();
-        location.value = 'Lat: ${position.latitude}, Lng: ${position.longitude}';
-    } catch (e) {
-        location.value = 'Error: ${e.toString()}';
-    }
-  }
-
-
-  Future<Position> determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Check if location services are enabled
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      throw Exception('Location services are disabled.');
-    }
-
-    // Check for permission
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        throw Exception('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      throw Exception('Location permissions are permanently denied.');
-    }
-
-    // Get current location
-    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  }
-
-
 
   RxBool salatTimeLoading = false.obs;
   Rxn<GetSalatTimeResponseModel> getSalatTimeResponseModel = Rxn<GetSalatTimeResponseModel>();
@@ -92,13 +49,27 @@ class UserController extends GetxController{
     salatTimeLoading(true);
 
     try {
-      var response = await ApiClient.getData(ApiConstants.salatTimeAPI(longitude.value, latitude.value),);
+
+     String lat = await PrefsHelper.getString(AppConstants.latitude);
+     String long = await PrefsHelper.getString(AppConstants.longitude);
+      var response = await ApiClient.getData(ApiConstants.salatTimeAPI(lat, long),);
       print("UserProfile Response: ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        print("long ${long}");
         if (response.body != null) {
           getSalatTimeResponseModel.value = GetSalatTimeResponseModel.fromJson(response.body);
         }
+        prayerTimes.value = {
+          'Fajr': getSalatTimeResponseModel.value?.fajr ?? '',
+          'Sunrise': getSalatTimeResponseModel.value?.sunrise ?? '',
+          'Dhuhr': getSalatTimeResponseModel.value?.dhuhr ?? '',
+          'Asr': getSalatTimeResponseModel.value?.asr ?? '',
+          'Maghrib': getSalatTimeResponseModel.value?.maghrib ?? '',
+          'Isha': getSalatTimeResponseModel.value?.isha ?? '',
+        };
+
+        _calculateNextPrayer();
       }
     } catch (e) {
       print("Error loading user profile: $e");
@@ -106,5 +77,74 @@ class UserController extends GetxController{
       salatTimeLoading(false);
     }
   }
+
+  var upcomingPrayer = ''.obs;
+  var timeLeft = Rxn<Duration>();
+  var prayerTimes = <String, String>{}.obs;
+
+  // void _calculateNextPrayer() {
+  //   final now = DateTime.now();
+  //   final today = DateFormat('yyyy-MM-dd').format(now);
+  //
+  //   for (var entry in prayerTimes.entries) {
+  //     if (entry.value.isEmpty) continue;
+  //
+  //     try {
+  //       final time = DateTime.parse("$today ${entry.value}:00");
+  //       if (time.isAfter(now)) {
+  //         timeLeft.value = time.difference(now);
+  //         upcomingPrayer.value = entry.key;
+  //         return;
+  //       }
+  //     } catch (_) {}
+  //   }
+  // }
+
+  void _calculateNextPrayer() {
+    final now = DateTime.now();
+    final today = DateFormat('yyyy-MM-dd').format(now);
+    final tomorrow = DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 1)));
+
+    bool found = false;
+
+    for (var entry in prayerTimes.entries) {
+      if (entry.value.isEmpty) continue;
+
+      try {
+        final time = DateTime.parse("$today ${entry.value}:00");
+        if (time.isAfter(now)) {
+          timeLeft.value = time.difference(now);
+          upcomingPrayer.value = entry.key;
+          found = true;
+          return;
+        }
+      } catch (_) {}
+    }
+
+    // If nothing left today, fallback to first prayer tomorrow
+    if (!found) {
+      for (var entry in prayerTimes.entries) {
+        if (entry.value.isEmpty) continue;
+
+        try {
+          final time = DateTime.parse("$tomorrow ${entry.value}:00");
+          timeLeft.value = time.difference(now);
+          upcomingPrayer.value = entry.key;
+          return;
+        } catch (_) {}
+      }
+    }
+  }
+
+
+  void startPrayerTimer() {
+    Timer.periodic(Duration(seconds: 1), (_) {
+      _calculateNextPrayer();
+      upcomingPrayer.refresh();
+    });
+  }
+
+
+
 
 }
