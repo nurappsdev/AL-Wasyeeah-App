@@ -60,7 +60,8 @@ dependencies:
   flutter_launcher_icons: ^0.14.3
   connectivity_plus: ^5.0.2
   fluttertoast: ^8.2.12
-  geolocator: 13.0.3
+  hijri: ^3.0.0
+
 
 dev_dependencies:
   flutter_test:

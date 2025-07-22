@@ -13,32 +13,39 @@ import '../../services/services.dart';
 import '../../utils/utils.dart';
 import '../../view/screen/profile_setting/profile_setting.dart';
 
-class AuthController  extends GetxController{
+
+class AuthController  extends GetxController {
 
   @override
   void onInit() {
     super.onInit();
     getSecurityQuestion();
   }
+
   ///==================get Question===========================
-  RxBool isQuestion= false.obs;
-  RxList<SecurityQuestionResponseModel> securityQuestionResponseModel = <SecurityQuestionResponseModel>[].obs;
-  getSecurityQuestion() async{
+  RxBool isQuestion = false.obs;
+  RxList<SecurityQuestionResponseModel> securityQuestionResponseModel = <
+      SecurityQuestionResponseModel>[].obs;
+
+  getSecurityQuestion() async {
     isQuestion(true);
-    var response = await ApiClient.getData(ApiConstants.securityQuestionEndPoint);
+    var response = await ApiClient.getData(
+        ApiConstants.securityQuestionEndPoint);
     print("getSecurityQuestion data ------------${response.body}");
-    if(response.statusCode == 200 || response.statusCode == 201){
-      securityQuestionResponseModel.value = List<SecurityQuestionResponseModel>.from(response.body.map((x)=> SecurityQuestionResponseModel.fromJson(x)));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      securityQuestionResponseModel.value =
+      List<SecurityQuestionResponseModel>.from(
+          response.body.map((x) => SecurityQuestionResponseModel.fromJson(x)));
       isQuestion(false);
-    }else{
+    } else {
       isQuestion(false);
     }
   }
 
 
-
   ///==================Save Sign Up===========================
   RxBool signUpLoading = false.obs;
+
   Future<void> signUpHandle({
     required String firstName,
     required String lastName,
@@ -69,14 +76,16 @@ class AuthController  extends GetxController{
       headers: headers,
     );
     print("regggggggggggggggggggggggggggg${response.body}");
-    if (response.statusCode == 200 ) {
+    if (response.statusCode == 200) {
       // await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
-      ToastMessageHelper.successMessageShowToster("Account create successful.\n \nNow you have a user name and password your email");
+      ToastMessageHelper.successMessageShowToster(
+          "Account create successful.\n \nNow you have a user name and password your email");
       Get.toNamed(AppRoutes.loginScreen, preventDuplicates: false,);
       signUpLoading(false);
-    } else if(response.statusCode == 1){
+    } else if (response.statusCode == 1) {
       signUpLoading(false);
-      ToastMessageHelper.errorMessageShowToster("Server error! \n Please try later");
+      ToastMessageHelper.errorMessageShowToster(
+          "Server error! \n Please try later");
     } else {
       ToastMessageHelper.errorMessageShowToster("${response.body["message"]}");
       signUpLoading(false);
@@ -86,6 +95,7 @@ class AuthController  extends GetxController{
 
   ///==================Save Sign Up===========================
   RxBool signInLoading = false.obs;
+
   Future<void> signInHandle({
     required String userName,
     required String password,
@@ -104,14 +114,16 @@ class AuthController  extends GetxController{
     );
     print("log in-----------------${response.body}");
     if (response.statusCode == 200) {
-       await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
+      await PrefsHelper.setString(
+          AppConstants.bearerToken, response.body['data']['token'].toString());
 
-       print("token---------->${PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString())}");
-       ToastMessageHelper.successMessageShowToster("${response.body["message"]}");
+      print("token---------->${PrefsHelper.setString(AppConstants.bearerToken,
+          response.body['data']['token'].toString())}");
+      ToastMessageHelper.successMessageShowToster(
+          "${response.body["message"]}");
       // Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
-       Get.off(() => HomeScreen(), preventDuplicates: false);
+      Get.off(() => HomeScreen(), preventDuplicates: false);
       signInLoading(false);
-
     } else {
       signInLoading(false);
       // print(response.body['message']);
@@ -121,51 +133,9 @@ class AuthController  extends GetxController{
   }
 
 
-  Future<void> signInHandles({
-    required String userName,
-    required String password,
-  }) async {
-    signInLoading(true);
-    try {
-      var headers = {'Content-Type': 'application/json'};
-      var body = {
-        "username": userName,
-        "password": password,
-      };
-
-      var response = await ApiClient.postData(
-        ApiConstants.signInEndPoint,
-        jsonEncode(body),
-        headers: headers,
-      );
-
-      final responseData = jsonDecode(response.body);
-
-      print("log in-----------------${responseData}");
-
-      if (response.statusCode == 200) {
-        await PrefsHelper.setString(AppConstants.bearerToken, responseData['data']['token'].toString());
-
-        ToastMessageHelper.successMessageShowToster("${responseData["message"]}");
-
-        Get.off(() => HomeScreen(), preventDuplicates: false);
-      } else {
-        // Show error toast
-        ToastMessageHelper.errorMessageShowToster(
-          responseData['message'] ?? 'Login failed. Please try again.',
-        );
-      }
-    } catch (e) {
-      ToastMessageHelper.errorMessageShowToster("Something went wrong. Please try again.");
-      print("Error in signInHandle: $e");
-    } finally {
-      signInLoading(false);
-    }
-  }
-
-
   ///==================Save Sign Up===========================
   RxBool forgotLoading = false.obs;
+
   Future<void> forgotHandle({
     required String email,
     required String mobile,
@@ -190,18 +160,18 @@ class AuthController  extends GetxController{
     );
     print("log in-----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
-    //  await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
+      //  await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
       //ToastMessageHelper.successMessageShowToster("${response.body["message"]}");
-      ToastMessageHelper.successMessageShowToster("VERIFICATION OTP SEND SUCCESSFULLY!!");
+      ToastMessageHelper.successMessageShowToster(
+          "VERIFICATION OTP SEND SUCCESSFULLY!!");
+
       Get.off(() => OtpVerifyScreen(), preventDuplicates: false);
       forgotLoading(false);
     } else {
       forgotLoading(false);
-     ToastMessageHelper.errorMessageShowToster("Unable Data");
-
+      ToastMessageHelper.errorMessageShowToster("Unable Data");
     }
   }
-
 
 
 }

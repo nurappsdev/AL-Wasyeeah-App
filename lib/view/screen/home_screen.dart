@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
@@ -7,12 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../controllers/controllers.dart';
 import '../widgets/widgets.dart';
 import 'before_login/profirty_Distribute_screen2.dart';
 import 'no_internet_screen.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:hijri/hijri_calendar.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,17 +28,98 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  late Timer timer;
+  Duration? timeLeft;
+  String upcomingPrayer = "";
+  Map<String, String> prayerTimes = {};
 
-@override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  void _calculateNextPrayer() {
+    if (prayerTimes.isEmpty) return;
+    final now = DateTime.now();
+    final today = DateFormat('yyyy-MM-dd').format(now);
+    DateTime? nextTime;
+    String? nextName;
+
+    for (var entry in prayerTimes.entries) {
+      if (entry.value.isEmpty) continue;
+      try {
+        final time = DateTime.parse("$today ${entry.value}:00");
+        if (time.isAfter(now)) {
+          nextTime = time;
+          nextName = entry.key;
+          break;
+        }
+      } catch (_) {}
+    }
+
+    if (nextTime != null && nextName != null) {
+      setState(() {
+        timeLeft = nextTime!.difference(now);
+        upcomingPrayer = nextName!;
+      });
+    }
   }
 
+
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   userController.getsalatTimeHandle().then((_) {
+  //     final model = userController.getSalatTimeResponseModel.value;
+  //     if (model != null) {
+  //       prayerTimes = {
+  //         'Fajr': model.fajr ?? '',
+  //         'Sunrise': model.sunrise ?? '',
+  //         'Dhuhr': model.dhuhr ?? '',
+  //         'Asr': model.asr ?? '',
+  //         'Maghrib': model.maghrib ?? '',
+  //         'Isha': model.isha ?? '',
+  //       };
+  //       _calculateNextPrayer();
+  //       timer = Timer.periodic(Duration(seconds: 1), (_) => _calculateNextPrayer());
+  //       setState(() {});
+  //     }
+  //   });
+  //   userController.getUserProfileData();
+  // }
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+
+    userController.getsalatTimeHandle().then((_) {
+      Future.delayed(Duration(milliseconds: 500), () {
+        final index = userController.prayerTimes.keys.toList().indexOf(userController.upcomingPrayer.value);
+        if (index != -1) {
+          _scrollController.animateTo(
+            index * 250.h,
+            duration: Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+        }
+      });
+      userController.startPrayerTimer();
+    });
+
+    userController.getUserProfileData();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  final todayHijri = HijriCalendar.now();
   final userController = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
-    userController.getUserProfileData();
+    print("magrib ${userController.getSalatTimeResponseModel.value?.maghrib}");
+
     return ConnectivityWrapper(
       child: Scaffold(
         appBar: AppBar(
@@ -59,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   //   boxFit: BoxFit.contain,
                   // ),
                 ),
-                SizedBox(width: 8), // Space between the image and text
+                SizedBox(width: 8.h), // Space between the image and text
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -121,9 +207,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     SizedBox(height: 20.h,),
                     ///=======================Explore your \n Wasyyah==========================
-      
-      
-      
+
+
+
                     InkWell(
                       onTap: (){
                         Get.toNamed(AppRoutes.wasyyahScreen,preventDuplicates: false);
@@ -145,9 +231,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SizedBox(height: 20.h),
-      
-      
-      
+
+
+
                     ///=======================Witness \n Nominee==========================
                     Row(mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -173,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-      
+
                         ///======================Nominee====================
                         SizedBox(width: 6.w,),
                         Expanded(
@@ -200,37 +286,327 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    ///========================"Prayer Time"======================
-      
-                    SizedBox(height: 20.h),
-                    CustomText(text: "Prayer Time".tr,fontsize: 20.sp,fontWeight: FontWeight.w700,),
-                    SizedBox(height: 10.h),
-                    CustomText(text: "15 Sep, 2024 - 10 Rabi al-Awwal, 1146 Hijri".tr,fontsize: 14.sp,),
+
+                          SizedBox(height: 10.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Prayer Times", style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold, color: Colors.green[700])),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                   SizedBox(height: 12.h),
+                                  Text(DateFormat('d MMM, yyyy').format(DateTime.now()), style: TextStyle(fontSize: 14.sp, color: Colors.black)),
+                                   SizedBox(height: 4.h),
+                                  Text(
+                                    todayHijri.toFormat("dd MMMM, yyyy"), // Example: 26 Muharram, 1447
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      color: Colors.green[800],
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+
+
                     SizedBox(height: 20.h,),
-                     SizedBox(
-                  height: 170,
-                  width: double.infinity,
-                  child: GridView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    scrollDirection: Axis.horizontal,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      mainAxisSpacing: 16.0,
-                      childAspectRatio: 0.8, // Adjust to match your card's aspect ratio
-                    ),
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return CustomCard(
-                        title: "Now Time is",
-                        imageUrl: AppImages.mosjidIcon,
-                        isCurrent: true,
-                        time: "07:23 PM", // Pass index or other data if needed
+                    Obx(() {
+                      final prayers = userController.prayerTimes;
+                      final current = userController.upcomingPrayer.value;
+                      final left = userController.timeLeft.value;
+
+                      if (prayers.isEmpty) {
+                        return  SizedBox(
+                          height: 200.h,
+                          child: GridView.builder(
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 2,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 1,
+                              mainAxisSpacing: 16.0,
+                              childAspectRatio: 0.8,
+                            ),
+                            itemBuilder: (context, index) {
+                              return  Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(height: 20, width: 120, color: Colors.grey.shade300),
+                                      SizedBox(height: 8.h),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Container(height: 80.h, width: 80, color: Colors.grey.shade300),
+                                          Column(
+                                            children: List.generate(4, (index) => Padding(
+                                              padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                              child: Container(height: 20, width: 60 + index * 10, color: Colors.grey.shade300),
+                                            )),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+
+                      return SizedBox(
+                        height: 200.h,
+                        width: double.infinity,
+                        child: GridView.builder(
+                          controller: _scrollController,
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          scrollDirection: Axis.horizontal,
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 1,
+                            mainAxisSpacing: 16.0,
+                            childAspectRatio: 0.8,
+                          ),
+                          itemCount: prayers.length,
+                          itemBuilder: (context, index) {
+                            final name = prayers.keys.elementAt(index);
+                            final time = prayers[name]!;
+                            final isCurrent = name == current;
+
+                            return Card(
+                              color: isCurrent
+                                  ? Color(0xffFFF0E2)
+                                  : Colors.grey[200],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0, ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      isCurrent ? "Upcoming Prayers" : "Prayer Time",
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: isCurrent ? Colors.green : Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(height: 8.h),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Image.asset(AppImages.mosjidIcon, height: 80.h, width: 80),
+                                        Column(
+                                          children: [
+                                            Text(
+                                              name,
+                                              style:  TextStyle(fontSize: 20.sp, color: isCurrent? Colors.green: Colors.red),
+                                            ),
+                                            if (isCurrent && left != null)
+                                              Text(
+                                                left.toString().split(".")[0],
+                                                style: TextStyle(fontSize: 18.sp, color: Colors.black87),
+                                              ),
+                                            Text(
+                                              formatTime(time),
+                                              style: TextStyle(fontSize: 14.h),
+                                            ),
+                                            Switch(
+                                              value: isCurrent,
+                                              activeColor: AppColors.primaryColor,
+                                              onChanged: (value) {
+                                                // handle toggle
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       );
-                    },
-                    physics: const BouncingScrollPhysics(),
-                  ),
-                ),
-      
+                    }),
+
+                    // Padding(
+                    //   padding: const EdgeInsets.all(16.0),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       const SizedBox(height: 50),
+                    //       Text("Prayer Times ", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green[700])),
+                    //       const SizedBox(height: 8),
+                    //       Text(DateFormat('d MMM, yyyy').format(DateTime.now()), style: TextStyle(fontSize: 14, color: Colors.black)),
+                    //       const SizedBox(height: 4),
+                    //       Text(
+                    //         todayHijri.toFormat("dd MMMM, yyyy"), // Example: 26 Muharram, 1447
+                    //         style: TextStyle(
+                    //           fontSize: 14,
+                    //           color: Colors.green[800],
+                    //           fontWeight: FontWeight.bold,
+                    //         ),
+                    //       ),
+                    //       const SizedBox(height: 24),
+                    //       if (prayerTimes.isNotEmpty)
+                    //         SizedBox(
+                    //           height: 160,
+                    //           child: ListView.separated(
+                    //             scrollDirection: Axis.horizontal,
+                    //             itemCount: prayerTimes.length,
+                    //             separatorBuilder: (_, __) => SizedBox(width: 12),
+                    //             itemBuilder: (context, index) {
+                    //               String name = prayerTimes.keys.elementAt(index);
+                    //               String time = prayerTimes[name]!;
+                    //
+                    //               bool isActive = name == upcomingPrayer;
+                    //
+                    //               return AnimatedContainer(
+                    //                 duration: Duration(milliseconds: 300),
+                    //                 width: 130,
+                    //                 padding: EdgeInsets.all(12),
+                    //                 decoration: BoxDecoration(
+                    //                   color: isActive ? Colors.black87 : Colors.grey[200],
+                    //                   borderRadius: BorderRadius.circular(12),
+                    //                 ),
+                    //                 child: Column(
+                    //                   mainAxisAlignment: MainAxisAlignment.center,
+                    //                   children: [
+                    //                     Text(
+                    //                       name,
+                    //                       style: TextStyle(
+                    //                         fontSize: 18,
+                    //                         fontWeight: FontWeight.bold,
+                    //                         color: isActive ? Colors.white : Colors.black,
+                    //                       ),
+                    //                     ),
+                    //                     const SizedBox(height: 6),
+                    //                     if (isActive && timeLeft != null)
+                    //                       Column(
+                    //                         children: [
+                    //                           Text(
+                    //                             "Upcoming Prayers",
+                    //                             style: TextStyle(fontSize: 12, color: Colors.white),
+                    //                           ),
+                    //                           Text(
+                    //                             timeLeft!.toString().split(".")[0],
+                    //                             style: TextStyle(fontSize: 18, color: Colors.white),
+                    //                           ),
+                    //                           const SizedBox(height: 4),
+                    //                           Text(
+                    //                             formatTime(time),
+                    //                             style: TextStyle(fontSize: 14, color: Colors.white),
+                    //                           ),
+                    //                         ],
+                    //                       )
+                    //                     else
+                    //                       Text(
+                    //                         formatTime(time),
+                    //                         style: TextStyle(fontSize: 16, color: Colors.black),
+                    //                       ),
+                    //                   ],
+                    //                 ),
+                    //               );
+                    //             },
+                    //           ),
+                    //         )
+                    //       else
+                    //         Center(child: CustomLoader()),
+                    //
+                    //
+                    //
+                    //
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 200.h,
+                    //   width: double.infinity,
+                    //   child: prayerTimes.isNotEmpty
+                    //       ? GridView.builder(
+                    //     controller: _scrollController, // 👉 attach controller here
+                    //     padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    //     scrollDirection: Axis.horizontal,
+                    //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    //       crossAxisCount: 1,
+                    //       mainAxisSpacing: 16.0,
+                    //       childAspectRatio: 0.8,
+                    //     ),
+                    //     itemCount: prayerTimes.length,
+                    //     physics: const BouncingScrollPhysics(),
+                    //     itemBuilder: (context, index) {
+                    //       final name = prayerTimes.keys.elementAt(index);
+                    //       final time = prayerTimes[name]!;
+                    //       final isCurrent = name == upcomingPrayer;
+                    //
+                    //       return Card(
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(12.0),
+                    //         ),
+                    //         child: Padding(
+                    //           padding: const EdgeInsets.all(8.0),
+                    //           child: Column(
+                    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //             children: [
+                    //               Text(
+                    //                 isCurrent ? "Upcoming Prayers" : "Prayer Time",
+                    //                 style: TextStyle(
+                    //                   fontSize: 16.0,
+                    //                   fontWeight: FontWeight.bold,
+                    //                   color: isCurrent ? Colors.green : Colors.orange,
+                    //                 ),
+                    //               ),
+                    //               SizedBox(height: 8.h),
+                    //               Row(
+                    //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //                 children: [
+                    //                   Image.asset(AppImages.mosjidIcon, height: 80.h, width: 80),
+                    //                   Column(
+                    //                     children: [
+                    //                       Text(
+                    //                         name,
+                    //                         style: const TextStyle(fontSize: 18.0, color: Colors.red),
+                    //                       ),
+                    //                       if (isCurrent && timeLeft != null)
+                    //                         Text(
+                    //                           timeLeft!.toString().split(".")[0],
+                    //                           style: TextStyle(fontSize: 18.sp, color: Colors.black87),
+                    //                         ),
+                    //                       Text(
+                    //                         formatTime(time),
+                    //                         style: TextStyle(fontSize: 14.h),
+                    //                       ),
+                    //                       Switch(
+                    //                         value: isCurrent ? true : false,
+                    //                         activeColor: AppColors.primaryColor,
+                    //                         onChanged: (value) {
+                    //                           // notification toggle logic
+                    //                         },
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //       );
+                    //     },
+                    //   )
+                    //       : const Center(child: CircularProgressIndicator()),
+                    // ),
                     ///==========================Zakat distribute======================
                     SizedBox(height: 20.h,),
                     InkWell(
@@ -239,10 +615,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: SizedBox(height: 200.h,
                         child: Image.asset(AppImages.zakatImg),
-      
+
                       ),
                     ),
-      
+
                     ///==========================property distribute======================
                     SizedBox(height: 20.h,),
                     InkWell(
@@ -251,12 +627,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: SizedBox(height: 200.h,
                         child: Image.asset(AppImages.profirtyImg),
-      
+
                       ),
                     ),
-      
+
                     SizedBox(height: 40.h,),
-      
+
                 ],
                 ),
               ),
@@ -265,6 +641,20 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+
+
+
+  }
+
+
+
+  String formatTime(String time24) {
+    try {
+      final dt = DateFormat("HH:mm").parse(time24);
+      return DateFormat("hh:mm a").format(dt);
+    } catch (e) {
+      return time24;
+    }
   }
 }
 
@@ -332,5 +722,6 @@ class CustomCard extends StatelessWidget {
       ),
     );
   }
+
 }
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
@@ -11,6 +12,7 @@ import '../../controllers/controllers.dart';
 import '../../helpers/prefs_helper.dart';
 import '../../utils/utils.dart';
 
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -21,8 +23,6 @@ class SplashScreen extends StatefulWidget {
 final LocalizationController _localizationController = Get.find<LocalizationController>(); //
 class _SplashScreenState extends State<SplashScreen> {
 
-
-  bool isEnglish = true;
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -129,10 +129,19 @@ class _SplashScreenState extends State<SplashScreen> {
                 bottom: 12,
                 child: Padding(
                   padding:  EdgeInsets.all(8.r),
-                  child: CustomButtonCommon(title: "Get Start".tr, onpress: (){
-                    Get.toNamed(AppRoutes.loginScreen,preventDuplicates: false);
-                  }),
-                ))
+                  child:
+                  CustomButtonCommon(
+
+                      title: "Get Start".tr,
+                      onpress: () {
+                        Get.toNamed(AppRoutes.loginScreen,preventDuplicates: false);
+                      },
+                    ),
+                  ),
+
+
+                ),
+
           ],
         ),
       ),
