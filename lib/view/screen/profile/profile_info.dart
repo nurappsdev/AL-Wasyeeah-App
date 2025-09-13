@@ -9,6 +9,7 @@ import '../../../helpers/helpers.dart';
 import '../../../helpers/prefs_helper.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
+import '../profile_setting/5_screen_navigate_test.dart';
 import '../profile_setting/profile_setting.dart';
 
 class ProfileInfo extends StatefulWidget {
@@ -57,6 +58,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   GestureDetector(
                     onTap: (){
                       Get.off(()=>StepNavigationWithPageView(),preventDuplicates: false);
+                     // Get.off(()=>MultiStepFormScreen(),preventDuplicates: false);
                     },
                     child: Container(
                       width: 360.w,

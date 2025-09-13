@@ -213,7 +213,7 @@ class _BankInfoScreenState extends State<BankInfoScreen> {
 
                 CustomButtonCommon(
                   // loading: authController.loadingLoading.value == true,
-                  title: "Submit".tr,
+                  title: "Finish".tr,
                   onpress: () {
                         Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
                     // if (_forRegKey.currentState!.validate()) {

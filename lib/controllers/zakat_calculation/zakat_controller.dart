@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 import '../../helpers/helpers.dart';
 import '../../helpers/prefs_helper.dart';
+import '../../models/models.dart';
 import '../../services/services.dart';
 import '../../utils/utils.dart';
 import '../../view/widgets/widgets.dart';
@@ -14,6 +15,46 @@ import '../../view/widgets/widgets.dart';
 class ZakatController extends GetxController{
 
 
+  ///==================get Witness===========================
+  final cashAndBankController = TextEditingController();
+
+  RxBool isNisabLoading = false.obs;
+  RxList<GetNisabRatesResponseModel> nisabRates = <GetNisabRatesResponseModel>[].obs;
+
+  Rx<GetNisabRatesResponseModel?> selectedCurrency = Rx<GetNisabRatesResponseModel?>(null);
+
+  @override
+  void onInit() {
+    super.onInit();
+    getNisabRates();
+  }
+
+  void getNisabRates() async {
+    isNisabLoading(true);
+    var response = await ApiClient.getData(ApiConstants.nisabEndPoint);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      nisabRates.value = List<GetNisabRatesResponseModel>.from(
+        response.body.map((x) => GetNisabRatesResponseModel.fromJson(x)),
+      );
+      if (nisabRates.isNotEmpty) {
+        selectedCurrency(nisabRates.first); // Set default
+
+        // Delay updating controller until widget tree is built
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          cashAndBankController.text = nisabRates.first.nisabAmount.toString();
+        });
+      }
+    }
+    isNisabLoading(false);
+  }
+
+  void onCurrencySelected(GetNisabRatesResponseModel value) {
+    selectedCurrency(value);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      cashAndBankController.text = value.nisabAmount.toString();
+    });
+
+  }
   ///==================Save Sign Up===========================
   RxBool zakatLoading = false.obs;
   Future<void> zakatHandle({
