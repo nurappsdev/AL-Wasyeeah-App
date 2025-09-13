@@ -9,6 +9,7 @@ class ApiConstants{
   static const String nomineeEndPoint = "/user/get-nominees";
   static const String nomineetedYouPoint = "/get-nomineeByAnotherUser";
   static const String witnessEndPoint = "/user/get-witness";
+  static const String nisabEndPoint = "/user/getNisabRates";
   static const String witnessesYouEndPoint = "/get-witnessByAnotherUser";
   static const String wasyyahYouDataYouEndPoint = "/user/getWasiyyah";
 

@@ -362,7 +362,7 @@ Future<void> _NIDImageFromGallery() async {
               ///=============Button====================
               CustomButtonCommon(
                 // loading: authController.loadingLoading.value == true,
-                title: "Submit".tr,
+                title: "Next".tr,
                 onpress: () {
               //    Get.toNamed(AppRoutes.otpScreen,preventDuplicates: false);
                   // if (_forRegKey.currentState!.validate()) {
