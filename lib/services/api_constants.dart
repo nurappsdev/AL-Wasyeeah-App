@@ -1,12 +1,13 @@
 
 class ApiConstants{
   //static const String baseUrl = "https://45b4-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
-  static const String baseUrl = "http://192.168.1.76:8080/WASIYYAH/api/v1";
-  static const String imageBaseUrl = "http://192.168.10.187:9000";
+  static const String baseUrl = "http://129.212.209.54:8080/WASIYYAH/api/v1";
+  static const String imageBaseUrl = "http://129.212.209.54:8080";
 
 
   static const String securityQuestionEndPoint = "/user/securityQuestionList";
   static const String nomineeEndPoint = "/user/get-nominees";
+  static const String accessControlEndPoint = "/getUsersByRole?isWitness=";
   static const String nomineetedYouPoint = "/get-nomineeByAnotherUser";
   static const String witnessEndPoint = "/user/get-witness";
   static const String nisabEndPoint = "/user/getNisabRates";
