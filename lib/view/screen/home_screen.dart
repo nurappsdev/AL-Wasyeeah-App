@@ -296,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                    SizedBox(height: 12.h),
-                                  Text(DateFormat('d MMM, yyyy').format(DateTime.now()), style: TextStyle(fontSize: 14.sp, color: Colors.black)),
+                                  Text(DateFormat('dd MMM, yyyy').format(DateTime.now()), style: TextStyle(fontSize: 14.sp, color: Colors.black)),
                                    SizedBox(height: 4.h),
                                   Text(
                                     todayHijri.toFormat("dd MMMM, yyyy"), // Example: 26 Muharram, 1447

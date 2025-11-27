@@ -11,6 +11,7 @@ class AppIcons {
   static const String zakatHomeIcon = "$path/zakat_home.svg";
   static const String proIcon = "$path/profile_icons.svg";
   static const String chevronIcon = "$path/chevronIcon.svg";
+  static const String accessIcon = "$path/accessIcon.svg";
   static const String userSettingIcon = "$path/userSetting.svg";
   static const String languageIcon = "$path/languageIcon.svg";
   static const String logOutIcons = "$path/logout_icon.svg";

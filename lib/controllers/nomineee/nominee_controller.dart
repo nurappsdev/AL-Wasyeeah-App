@@ -32,6 +32,23 @@ class NomineeController extends GetxController{
 
 
 
+  ///==================get nominee access control===========================
+  RxBool isNomineeAccess= false.obs;
+  RxList<AccessControllResponseModel> accessControllResponseModel = <AccessControllResponseModel>[].obs;
+  getNomineeAccessData({String? nominee1Witness2}) async{
+    isNominee(true);
+    var response = await ApiClient.getData("${ApiConstants.accessControlEndPoint}${nominee1Witness2}");
+    print("nomineeData data ------------${response.body}");
+    if(response.statusCode == 200 || response.statusCode == 201){
+      accessControllResponseModel.value = List<AccessControllResponseModel>.from(response.body.map((x)=> AccessControllResponseModel.fromJson(x)));
+      isNomineeAccess(false);
+    }else{
+      isNomineeAccess(false);
+    }
+  }
+
+
+
   ///==================get Question===========================
   RxBool isNomineeYou= false.obs;
   RxList<NomineetedResponseModel> nomineetedYouData = <NomineetedResponseModel>[].obs;

@@ -1,5 +1,6 @@
 
 import 'package:get/get.dart';
+import '../view/screen/access_control/acceess_control_tab_screen.dart';
 import '../view/screen/screen.dart';
 
 class AppRoutes {
@@ -29,6 +30,7 @@ class AppRoutes {
   static const String addOutsideNomineeScreen = "/addOutsideNomineeScreen.dart";
   static const String notificationsScreen = "/notificationsScreen.dart";
   static const String profileInfo = "/profileInfo.dart";
+  static const String accessControlTabScreen = "/accessControlTabScreen.dart";
 
   static List<GetPage> get routes => [
    GetPage(name: firstSplashScreen, page: () =>  FirstSplashScreen()),
@@ -57,6 +59,7 @@ class AppRoutes {
    GetPage(name: notificationsScreen, page: () => NotificationCard()),
    GetPage(name: profileInfo, page: () => ProfileInfo()),
    GetPage(name: wasyyahPriviewScreen, page: () => WasyyahPreviewScreen()),
+   GetPage(name: accessControlTabScreen, page: () => AccessControlTabScreen()),
 
   ];
 }
