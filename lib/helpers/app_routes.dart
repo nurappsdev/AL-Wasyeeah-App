@@ -31,6 +31,7 @@ class AppRoutes {
   static const String notificationsScreen = "/notificationsScreen.dart";
   static const String profileInfo = "/profileInfo.dart";
   static const String accessControlTabScreen = "/accessControlTabScreen.dart";
+  static const String featureScreen = "/featureScreen.dart";
 
   static List<GetPage> get routes => [
    GetPage(name: firstSplashScreen, page: () =>  FirstSplashScreen()),
@@ -60,6 +61,7 @@ class AppRoutes {
    GetPage(name: profileInfo, page: () => ProfileInfo()),
    GetPage(name: wasyyahPriviewScreen, page: () => WasyyahPreviewScreen()),
    GetPage(name: accessControlTabScreen, page: () => AccessControlTabScreen()),
+   GetPage(name: featureScreen, page: () => FeatureScreen()),
 
   ];
 }
