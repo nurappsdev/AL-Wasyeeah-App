@@ -8,6 +8,7 @@ export 'wasyyah/get_wasyyah_response_model.dart';
 export 'salat_time_response_model.dart';
 export 'zakat_cal/get_nisab_response_model.dart';
 export 'profile_info_model/children_info.dart';
-export 'access_controll_model.dart';
-export 'get_access_feature_model.dart';
+export 'access_control_model/access_controll_model.dart';
+export 'access_control_model/get_access_feature_model.dart';
+export 'access_control_model/select_feature_model.dart';
 

@@ -74,7 +74,13 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                             ),
                             trailing: TextButton(
                               onPressed: () {
-                                Get.toNamed(AppRoutes.featureScreen,preventDuplicates: false);
+                                Get.toNamed(
+                                  AppRoutes.featureScreen,
+                                  arguments: {
+                                    "requestKey": user.requestKey,
+                                  },
+                                  preventDuplicates: false,
+                                );
                                 // Example:
                                 // Get.toNamed(AppRoutes.nomineeDetailsScreen);
                               },

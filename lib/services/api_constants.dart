@@ -9,6 +9,7 @@ class ApiConstants{
   static const String nomineeEndPoint = "/user/get-nominees";
   static const String accessControlEndPoint = "/getUsersByRole?isWitness=";
   static const String accessFeatureEndPoint = "/getContexts";
+  static const String accessSelectEndPoint = "/getUserContexts";
   static const String nomineetedYouPoint = "/get-nomineeByAnotherUser";
   static const String witnessEndPoint = "/user/get-witness";
   static const String nisabEndPoint = "/user/getNisabRates";
