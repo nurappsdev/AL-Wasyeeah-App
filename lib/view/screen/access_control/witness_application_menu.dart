@@ -27,6 +27,7 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
   @override
   Widget build(BuildContext context) {
     nomineeController.getNomineeAccessData(nominee1Witness2: "2");
+    nomineeController.getAccessFeatureData();
     print(nomineeController.nomineeData.length);
     return Scaffold(
       body: BackgroundImageContainer(
@@ -57,10 +58,6 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                           elevation: 3.0,
                           margin: EdgeInsets.symmetric(vertical: 8.0),
                           child: ListTile(
-                            // leading: CircleAvatar(
-                            //   backgroundImage: AssetImage(user["image"]!),
-                            //   radius: 30,
-                            // ),
                             title: Text(
                               user.name ?? "N/A",
                               style: TextStyle(fontWeight: FontWeight.bold),
@@ -75,10 +72,30 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                                 ),
                               ],
                             ),
+                            trailing: TextButton(
+                              onPressed: () {
+                                Get.toNamed(
+                                  AppRoutes.featureScreen,
+                                  arguments: {
+                                    "requestKey": user.requestKey,
+                                  },
+                                  preventDuplicates: false,
+                                );
+                                // Example:
+                                // Get.toNamed(AppRoutes.nomineeDetailsScreen);
+                              },
+                              child: Text(
+                                "Go Access",
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
                             onTap: () {
-                              // showWitnessDetailsDialog(context, user);
-                              //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
-                              print("Tapped on");
+                              Get.toNamed(AppRoutes.featureScreen,preventDuplicates: false);
+
+                              print("Card tapped");
                             },
                           ),
                         );

@@ -49,6 +49,40 @@ class NomineeController extends GetxController{
 
 
 
+
+
+  ///==================get access Feature List ===========================
+  RxBool isAccessFeature= false.obs;
+  RxList<GetAccessFeatureModel> getAccessFeatureModel = <GetAccessFeatureModel>[].obs;
+  getAccessFeatureData() async{
+    isAccessFeature(true);
+    var response = await ApiClient.getData("${ApiConstants.accessFeatureEndPoint}");
+    print("feature list data  ------------${response.body}");
+    if(response.statusCode == 200 || response.statusCode == 201){
+      getAccessFeatureModel.value = List<GetAccessFeatureModel>.from(response.body.map((x)=> GetAccessFeatureModel.fromJson(x)));
+      isAccessFeature(false);
+    }else{
+      isAccessFeature(false);
+    }
+  }
+
+
+
+  ///==================get select Feature List ===========================
+  RxBool isSelectFeature= false.obs;
+  RxList<SelectFeatureModel> selectFeatureModel = <SelectFeatureModel>[].obs;
+  getSelectFeatureData({String? requestKey}) async{
+    isAccessFeature(true);
+    var response = await ApiClient.getData("${ApiConstants.accessSelectEndPoint}?requestKey=${requestKey}&trace=false");
+    print("select list data  ------------${response.body}");
+    if(response.statusCode == 200 || response.statusCode == 201){
+      selectFeatureModel.value = List<SelectFeatureModel>.from(response.body.map((x)=> SelectFeatureModel.fromJson(x)));
+      isAccessFeature(false);
+    }else{
+      isAccessFeature(false);
+    }
+  }
+
   ///==================get Question===========================
   RxBool isNomineeYou= false.obs;
   RxList<NomineetedResponseModel> nomineetedYouData = <NomineetedResponseModel>[].obs;
