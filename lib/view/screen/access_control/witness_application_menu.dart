@@ -67,7 +67,7 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                                 Icon(Icons.man, size: 16.0, color: Colors.grey),
                                 SizedBox(width: 4.0),
                                 Text(
-                                  "Select Witness".tr,
+                                  "Select Nominee".tr,
                                   style: TextStyle(color: Colors.grey),
                                 ),
                               ],

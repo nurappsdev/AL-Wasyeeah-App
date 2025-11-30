@@ -23,6 +23,7 @@ class ApiConstants{
   static  String salatTimeAPI(String lat, String long ) => "/mobile/getSalahTime?latitude=$lat&longitude=$long";
   static const String addNomineePoint = "/user/save-nominee";
   static const String addWitnessEndPoint = "/user/save-nominee";
+  static const String addFeatureNomineeWitnessPoint = "/assignContext?isWitness=";
   static const String userProfileEndPoint = "/user/getProfileData";
   static String allPostCodeEndPoint(String postCode) => "/suburbs?limit=50&postcode=$postCode";
   static String singleBusinessEndPoint(String id) => "/businesses/$id";

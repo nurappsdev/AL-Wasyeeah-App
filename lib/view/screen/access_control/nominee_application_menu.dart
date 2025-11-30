@@ -63,6 +63,26 @@ class _NomineeApplicationMenuState extends State<NomineeApplicationMenu> {
                               user.name ?? "N/A",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
+                            trailing: TextButton(
+                              onPressed: () {
+                                Get.toNamed(
+                                  AppRoutes.featureScreen,
+                                  arguments: {
+                                    "requestKey": user.requestKey,
+                                  },
+                                  preventDuplicates: false,
+                                );
+                                // Example:
+                                // Get.toNamed(AppRoutes.nomineeDetailsScreen);
+                              },
+                              child: Text(
+                                "Go Access",
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
                             subtitle: Row(
                               children: [
                                 Icon(Icons.man, size: 16.0, color: Colors.grey),

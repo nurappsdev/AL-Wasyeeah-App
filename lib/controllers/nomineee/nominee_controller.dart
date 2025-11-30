@@ -83,6 +83,61 @@ class NomineeController extends GetxController{
     }
   }
 
+
+
+
+
+
+///----------save Access Feature------------------------
+  RxBool addFeatureLoading = false.obs;
+
+  Future<void> addFeatureNomineeAndWitness({
+    required String? requestKey,
+    required List contextIds,
+    required String? isWitness,
+  }) async {
+    addFeatureLoading(true);
+    try {
+      final token = await PrefsHelper.getString(AppConstants.bearerToken);
+      final headers = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      };
+
+      final body = jsonEncode({
+        "requestKey": requestKey ?? '',
+        "contextIds": contextIds.toList(),
+
+      });
+
+      final endpoint = "${ApiConstants.addFeatureNomineeWitnessPoint}${isWitness}";
+
+      final response = await ApiClient.postData(endpoint, body, headers: headers);
+
+      print("Response: ${response.body}");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ToastMessageHelper.successMessageShowToster("RECORD UPDATED SUCCESSFULLY!!");
+        getNomineeAccessData();
+        update();
+        Get.back();
+      } else {
+        ToastMessageHelper.errorMessageShowToster('Mandatory fields cannot be null or empty!');
+      }
+    } catch (e) {
+      ToastMessageHelper.errorMessageShowToster('An error occurred: $e');
+    } finally {
+      addFeatureLoading(false);
+    }
+  }
+
+
+
+
+
+
+
+
   ///==================get Question===========================
   RxBool isNomineeYou= false.obs;
   RxList<NomineetedResponseModel> nomineetedYouData = <NomineetedResponseModel>[].obs;

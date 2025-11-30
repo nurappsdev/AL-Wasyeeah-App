@@ -122,8 +122,8 @@ class _AccessControlTabScreenState extends State<AccessControlTabScreen>
         unselectedLabelColor: Colors.black87,
         indicatorSize: TabBarIndicatorSize.tab,
         tabs:  [
-          Tab(text: 'Nominee'.tr),
           Tab(text: 'Witness'.tr),
+          Tab(text: 'Nominee'.tr),
         ],
       ),
     );
