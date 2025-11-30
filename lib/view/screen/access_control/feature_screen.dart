@@ -135,35 +135,61 @@ class FeatureScreen extends StatefulWidget {
 
 class _FeatureScreenState extends State<FeatureScreen> {
   List<bool> isChecked = [];
+  List<int> selectedIds = [];
 
   NomineeController nomineeController = Get.put(NomineeController());
-
+String reqKey = "";
   @override
   void initState() {
     super.initState();
 
     final args = Get.arguments;
     final requestKey = args["requestKey"];
-
+    reqKey = requestKey;
     // Load data only once
     loadData(requestKey);
   }
-
   Future<void> loadData(requestKey) async {
     await nomineeController.getAccessFeatureData();
     await nomineeController.getSelectFeatureData(requestKey: requestKey);
 
-    // Prepare isChecked list based on matching id and key
     isChecked = nomineeController.getAccessFeatureModel.map((item) {
-      return nomineeController.selectFeatureModel
+      bool matched = nomineeController.selectFeatureModel
           .any((selected) => selected.key == item.id);
+
+      if (matched) selectedIds.add(item.id!);
+
+      return matched;
     }).toList();
 
     setState(() {});
   }
+  @override
+  void dispose() {
+    // dispose controller if needed
+    if (Get.isRegistered<NomineeController>()) {
+      Get.delete<NomineeController>();
+    }
+    reqKey = "";
+
+    super.dispose();
+  }
+  // Future<void> loadData(requestKey) async {
+  //   await nomineeController.getAccessFeatureData();
+  //   await nomineeController.getSelectFeatureData(requestKey: requestKey);
+  //
+  //   // Prepare isChecked list based on matching id and key
+  //   isChecked = nomineeController.getAccessFeatureModel.map((item) {
+  //     return nomineeController.selectFeatureModel
+  //         .any((selected) => selected.key == item.id);
+  //   }).toList();
+  //
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
+    print(reqKey);
     return Scaffold(
       appBar: AppBar(title: const Text("Access Feature")),
 
@@ -204,9 +230,28 @@ class _FeatureScreenState extends State<FeatureScreen> {
                                 value: isChecked[index],
                                 activeColor: Colors.green,
                                 checkColor: Colors.white,
+                                // onChanged: (value) {
+                                //   setState(() => isChecked[index] = value!);
+                                //   print(isChecked[index]);
+                                // },
+
                                 onChanged: (value) {
-                                  setState(() => isChecked[index] = value!);
+                                  setState(() {
+                                    isChecked[index] = value!;
+
+                                    if (value) {
+                                      // add id
+                                      selectedIds.add(item.id!);
+                                    } else {
+                                      // remove id
+                                      selectedIds.remove(item.id);
+                                    }
+
+                                    print("Selected IDs: $selectedIds");
+                                  });
                                 },
+
+
                                 side: const BorderSide(color: Colors.transparent),
                                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
@@ -229,22 +274,16 @@ class _FeatureScreenState extends State<FeatureScreen> {
             }),
 
             SizedBox(height: 30.h,),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6),
-                ),
-              ),
-              onPressed: () {
-                print("Save clicked");
-                print(isChecked);
-              },
-              child: const Text(
-                "Save",
-                style: TextStyle(color: Colors.white),
-              ),
+            Obx(()=>
+           CustomButtonCommon(title: "Save",
+                  loading: nomineeController.addFeatureLoading.value == true,
+                  onpress: (){
+                nomineeController.addFeatureNomineeAndWitness(
+                    requestKey: reqKey,
+                    contextIds: selectedIds,
+                    isWitness: "2"
+                );
+              }),
             ),
             SizedBox(height: 30.h,),
           ],
