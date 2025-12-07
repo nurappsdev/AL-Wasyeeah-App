@@ -294,4 +294,25 @@ class NomineeController extends GetxController{
     }
   }
 
+
+
+  ///==================get Question===========================
+  RxBool isDelNomineeYou= false.obs;
+  getNomineeDeleteData({String? requestKey}) async{
+    isDelNomineeYou(true);
+    var response = await ApiClient.getData("${ApiConstants.nomineeDeletePoint}?requestKey=${requestKey}");
+    print("deleteData data ------------${response.body}");
+    if(response.statusCode == 200 || response.statusCode == 201){
+      ToastMessageHelper.successMessageShowToster(
+      "Nominee Delete Successfully",
+      );
+      getNomineeData();
+      isDelNomineeYou(false);
+    }else{
+      isDelNomineeYou(false);
+      ToastMessageHelper.errorMessageShowToster("Try Again");
+    }
+  }
+
+
 }

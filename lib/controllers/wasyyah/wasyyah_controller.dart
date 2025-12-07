@@ -438,65 +438,100 @@ class WasyyahController extends GetxController {
     wasyyahYouData.refresh();
   }
 
-  // MAIN DRAG DROP METHOD - Use this in your ReorderableListView
-  Future<void> onReorderItems(int oldIndex, int newIndex) async {
-    // Prevent multiple simultaneous reorders
-    if (isDragDropLoading.value) return;
+  // // MAIN DRAG DROP METHOD - Use this in your ReorderableListView
+  // Future<void> onReorderItems(int oldIndex, int newIndex) async {
+  //   // Prevent multiple simultaneous reorders
+  //   if (isDragDropLoading.value) return;
+  //
+  //   print("🔄 Reordering from $oldIndex to $newIndex");
+  //
+  //   // Step 1: Perform UI swap first
+  //   if (newIndex > oldIndex) {
+  //     newIndex -= 1; // ReorderableListView এর জন্য adjustment
+  //   }
+  //
+  //   if (oldIndex == newIndex) return;
+  //
+  //   // Store original state for rollback
+  //   final originalList = wasyyahYouData.toList();
+  //
+  //   // Step 2: Update UI immediately
+  //   final item = wasyyahYouData.removeAt(oldIndex);
+  //   wasyyahYouData.insert(newIndex, item);
+  //   wasyyahYouData.refresh();
+  //
+  //   // Step 3: Update backend
+  //   isDragDropLoading.value = true;
+  //
+  //   try {
+  //     final success = await updateAllOrderSeqHttp();
+  //
+  //     if (success) {
+  //       print("✅ Drag drop completed successfully");
+  //       ToastMessageHelper.successMessageShowToster("Order updated!");
+  //     } else {
+  //       // Rollback UI on backend failure
+  //       wasyyahYouData.clear();
+  //       wasyyahYouData.addAll(originalList);
+  //       wasyyahYouData.refresh();
+  //       print("❌ Backend update failed, UI rolled back");
+  //     }
+  //   } catch (e) {
+  //     // Rollback UI on exception
+  //     wasyyahYouData.clear();
+  //     wasyyahYouData.addAll(originalList);
+  //     wasyyahYouData.refresh();
+  //     print("❌ Exception during drag drop: $e");
+  //   } finally {
+  //     isDragDropLoading.value = false;
+  //   }
+  // }
 
-    print("🔄 Reordering from $oldIndex to $newIndex");
+  Future<bool> sendFullOrderListToBackend() async {
+    final url = "${ApiConstants.baseUrl}/user/changeOrder";
+    final token = await PrefsHelper.getString(AppConstants.bearerToken);
 
-    // Step 1: Perform UI swap first
-    if (newIndex > oldIndex) {
-      newIndex -= 1; // ReorderableListView এর জন্য adjustment
+    final payload = wasyyahYouData.asMap().entries.map((e) {
+      return {
+        "requestKey": e.value.requestKey,
+        "order": e.key + 1,
+      };
+    }).toList();
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+        body: jsonEncode(payload),
+      );
+
+      return response.statusCode == 200;
+    } catch (e) {
+      print("Error sending full order: $e");
+      return false;
     }
+  }
 
-    if (oldIndex == newIndex) return;
+  Future<void> onReorderItems(int oldIndex, int newIndex) async {
+    if (newIndex > oldIndex) newIndex -= 1;
 
-    // Store original state for rollback
     final originalList = wasyyahYouData.toList();
-
-    // Step 2: Update UI immediately
     final item = wasyyahYouData.removeAt(oldIndex);
     wasyyahYouData.insert(newIndex, item);
     wasyyahYouData.refresh();
 
-    // Step 3: Update backend
-    isDragDropLoading.value = true;
+    final success = await sendFullOrderListToBackend();
 
-    try {
-      final success = await updateAllOrderSeqHttp();
-
-      if (success) {
-        print("✅ Drag drop completed successfully");
-        ToastMessageHelper.successMessageShowToster("Order updated!");
-      } else {
-        // Rollback UI on backend failure
-        wasyyahYouData.clear();
-        wasyyahYouData.addAll(originalList);
-        wasyyahYouData.refresh();
-        print("❌ Backend update failed, UI rolled back");
-      }
-    } catch (e) {
-      // Rollback UI on exception
+    if (!success) {
       wasyyahYouData.clear();
       wasyyahYouData.addAll(originalList);
       wasyyahYouData.refresh();
-      print("❌ Exception during drag drop: $e");
-    } finally {
-      isDragDropLoading.value = false;
     }
   }
 
-  // Alternative method for manual reorder (button-based)
-  Future<void> moveItemUp(int index) async {
-    if (index <= 0) return;
-    await onReorderItems(index, index - 1);
-  }
-
-  Future<void> moveItemDown(int index) async {
-    if (index >= wasyyahYouData.length - 1) return;
-    await onReorderItems(index, index + 1);
-  }
 
   // Main method for updating order sequence
   Future<bool> updateAllOrderSeqHttp() async {

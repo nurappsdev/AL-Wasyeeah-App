@@ -81,7 +81,7 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                             ),
                             onTap: () {
                               // Get.toNamed(AppRoutes.witnessDetailsScreen,preventDuplicates: false);
-                              showWitnessDetailsDialog(context,user);
+                              showWitnessDetailsDialog(context,user,witnessController);
                               //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
                               print("Tapped on");
                             },
@@ -102,7 +102,7 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
     );
   }
 
-  void showWitnessDetailsDialog(BuildContext context, GetWitnessResponseModel user) {
+  void showWitnessDetailsDialog(BuildContext context, GetWitnessResponseModel user, WitnessController witnessController) {
     showDialog(
       context: context,
       builder: (context) {
@@ -145,14 +145,16 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                     _buildDialogRow(Icons.work, "Profession", user.profession ?? "N/A"),
                     _buildDialogRow(Icons.calendar_today, "Date", "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ?? "N/A"),
                     SizedBox(height: 20),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                      onPressed: () {
-                        // Implement remove witness logic
-                        Navigator.pop(context);
-                      },
-                      child: Text("Remove Witness"),
-                    ),
+            Obx(()=>
+
+                CustomButtonCommon(title: "Remove Witness",
+                    color: AppColors.redColor,
+                    loading: witnessController.isDelNomineeYou.value == true,
+                    onpress: (){
+                      print(user.requestKey);
+                      witnessController.getWitnessDeleteData(requestKey: user.requestKey);
+                      Get.back();
+                    }))
                   ],
                 ),
               ),

@@ -81,7 +81,7 @@ class _NomineeScreenState extends State<NomineeScreen> {
                                   ],
                                 ),
                                 onTap: () {
-                                  showWitnessDetailsDialog(context, user);
+                                  showWitnessDetailsDialog(context, user, nomineeController);
                                //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
                                   print("Tapped on");
                                 },
@@ -101,7 +101,7 @@ class _NomineeScreenState extends State<NomineeScreen> {
       ),
     );
   }
-  void showWitnessDetailsDialog(BuildContext context, NomineetedResponseModel user) {
+  void showWitnessDetailsDialog(BuildContext context, NomineetedResponseModel user,  NomineeController nomineeController,) {
     showDialog(
       context: context,
       builder: (context) {
@@ -144,14 +144,18 @@ class _NomineeScreenState extends State<NomineeScreen> {
                     _buildDialogRow(Icons.work, "Profession", user.profession ?? "N/A"),
                     _buildDialogRow(Icons.calendar_today, "Date", "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ?? "N/A"),
                     SizedBox(height: 20),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                      onPressed: () {
-                        // Implement remove witness logic
-                        Navigator.pop(context);
-                      },
-                      child: Text("Remove Witness"),
-                    ),
+
+                  Obx(()=>
+                  CustomButtonCommon(title: "Remove Nominee",
+                      color: AppColors.redColor,
+                      loading: nomineeController.isDelNomineeYou.value == true,
+                      onpress: (){
+                    print(user.requestKey);
+        nomineeController.getNomineeDeleteData(requestKey: user.requestKey);
+        Get.back();
+      })
+               ,
+                  ),
                   ],
                 ),
               ),

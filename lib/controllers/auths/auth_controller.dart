@@ -113,7 +113,7 @@ class AuthController  extends GetxController {
       headers: headers,
     );
     print("log in-----------------${response.body}");
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       await PrefsHelper.setString(
           AppConstants.bearerToken, response.body['data']['token'].toString());
 
@@ -127,7 +127,7 @@ class AuthController  extends GetxController {
     } else {
       signInLoading(false);
       // print(response.body['message']);
-      //ToastMessageHelper.errorMessageShowToster(response.body['message'] ?? 'Login failed. Please try again.');
+      ToastMessageHelper.errorMessageShowToster(response.body['message'] ?? 'Login failed. Please try again.');
 
     }
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../helpers/prefs_helper.dart';
+import '../../helpers/toast_message_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
 import 'package:http/http.dart' as http;
@@ -86,5 +87,28 @@ class WitnessController extends GetxController{
       isLoading.value = false;
     }
   }
+
+
+///==================get Question===========================
+RxBool isDelNomineeYou= false.obs;
+getWitnessDeleteData({String? requestKey}) async{
+  isDelNomineeYou(true);
+  var response = await ApiClient.getData("${ApiConstants.witnessDeletePoint}?requestKey=${requestKey}");
+  print("deleteData data ------------${response.body}");
+  if(response.statusCode == 200 || response.statusCode == 201){
+
+    ToastMessageHelper.successMessageShowToster(
+      "REMOVE THIS WITNESS FROM YOUR SIDE SUCCESSFULLY!!",
+    );
+    getWitnessData();
+    isDelNomineeYou(false);
+  } else if(response.body == 500){
+    ToastMessageHelper.errorMessageShowToster("500 Internal Server Error");
+  }else{
+    isDelNomineeYou(false);
+    ToastMessageHelper.errorMessageShowToster("Try Again");
+  }
+}
+
 
 }

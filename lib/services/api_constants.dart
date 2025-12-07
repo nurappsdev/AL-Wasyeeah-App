@@ -11,10 +11,12 @@ class ApiConstants{
   static const String accessFeatureEndPoint = "/getContexts";
   static const String accessSelectEndPoint = "/getUserContexts";
   static const String nomineetedYouPoint = "/get-nomineeByAnotherUser";
+  static const String nomineeDeletePoint = "/user/remove-nominee";
   static const String witnessEndPoint = "/user/get-witness";
   static const String nisabEndPoint = "/user/getNisabRates";
   static const String witnessesYouEndPoint = "/get-witnessByAnotherUser";
   static const String wasyyahYouDataYouEndPoint = "/user/getWasiyyah";
+  static const String witnessDeletePoint = "/user/remove-witness";
 
   static const String signUpEndPoint = "/user/register";
   static const String signInEndPoint = "/user/login";
