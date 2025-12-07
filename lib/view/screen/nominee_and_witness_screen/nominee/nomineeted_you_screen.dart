@@ -78,7 +78,7 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
                               ],
                             ),
                             onTap: () {
-                              showWitnessDetailsDialog(context,user);
+                              showWitnessDetailsDialog(context,user,nomineeController);
                               //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
                               print("Tapped on");
                             },
@@ -98,7 +98,7 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
       ),
     );
   }
-  void showWitnessDetailsDialog(BuildContext context, NomineetedResponseModel user) {
+  void showWitnessDetailsDialog(BuildContext context, NomineetedResponseModel user, NomineeController nomineeController) {
     showDialog(
       context: context,
       builder: (context) {
@@ -142,12 +142,12 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
                     _buildDialogRow(Icons.calendar_today, "Date", "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ?? "N/A"),
                     SizedBox(height: 20.h),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                       onPressed: () {
                         // Implement remove witness logic
                         Navigator.pop(context);
                       },
-                      child: Text("Remove Witness"),
+                      child: Text("Ok",style: TextStyle(color: AppColors.whiteColor),),
                     ),
                   ],
                 ),

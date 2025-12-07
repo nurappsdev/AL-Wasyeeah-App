@@ -1,5 +1,6 @@
 
 class NomineetedResponseModel {
+  final dynamic requestKey;
   final dynamic relation;
   final dynamic wnDate;
   final String? name;
@@ -11,6 +12,7 @@ class NomineetedResponseModel {
   final String? motherName;
 
   NomineetedResponseModel({
+    this.requestKey,
     this.relation,
     this.wnDate,
     this.name,
@@ -23,6 +25,7 @@ class NomineetedResponseModel {
   });
 
   factory NomineetedResponseModel.fromJson(Map<String, dynamic> json) => NomineetedResponseModel(
+    requestKey: json["requestKey"],
     relation: json["relation"],
     wnDate: json["wnDate"],
     name: json["name"],
@@ -35,6 +38,7 @@ class NomineetedResponseModel {
   );
 
   Map<String, dynamic> toJson() => {
+    "requestKey": requestKey,
     "relation": relation,
     "wnDate": wnDate,
     "name": name,

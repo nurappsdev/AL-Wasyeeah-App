@@ -62,54 +62,8 @@ class WasyyahScreen extends StatelessWidget {
                   SizedBox(height: 10.h,),
                   CustomText(text: "আসসালামু আলাইকুম ওয়া রাহমাতুল্লা ইন্নালহামদালিল্লাহি রাব্বিল আ'লামীন \n ওয়াসসালাতু ওয়াসসালামু আলা রাসুলিল্লাহ \n (সাল্লাল্লাহু আলাইহিসসালাম)।",maxline: 4),
                   SizedBox(height: 20.h,),
-              
-                  ///====================================নিজের পরিচিতি================================
-                  // SizedBox(
-                  //   height: 340.h,
-                  //   width: double.infinity,
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(8.0),
-                  //     child: Container(
-                  //       decoration: BoxDecoration(
-                  //         borderRadius: BorderRadius.circular(10), // Rounded corners
-                  //         color: Colors.white, // Background color
-                  //         boxShadow: [
-                  //           BoxShadow(
-                  //             color: Colors.grey.withOpacity(0.5), // Shadow color with opacity
-                  //             spreadRadius: 2, // How much the shadow spreads
-                  //             blurRadius: 5, // Softness of the shadow
-                  //             offset: Offset(0, 3), // Offset in x and y (horizontal, vertical)
-                  //           ),
-                  //         ],
-                  //       ),
-                  //        child: Column(
-                  //          children: [
-                  //            SizedBox(height: 5.h,),
-                  //            CustomText(text: "নিজের পরিচিতি",fontsize: 16.sp,),
-                  //            Padding(
-                  //              padding:  EdgeInsets.only(left: 80,right: 80),
-                  //              child: Divider(color: AppColors.primaryColor,endIndent: 2.2,thickness: 1.2,),
-                  //            ),
-                  //            SizedBox(height: 6.h,),
-                  //            CustomText(fontWeight:FontWeight.w500,text: "আমি বাড়ী নং রোড নং বাংলাদেশ- পিতাঃ তাঁর এই বলে \nস্বাক্ষ্য দিচ্ছি যে, আল্লাহ্ ছাড়া কোন ইলাহ নেই, তিনি একক \nকোন শরীক নেই। আমি আরও স্বাক্ষ্য দিচ্ছি যে মুহাম্মদ \n(সাল্লাল্লাহু আলাইহিসসালাম) তাঁর বান্দা ও রাসুল।\n আমি সম্পূর্ণ শারীরিক ও মানসিকভাবে সূস্থ অবস্থায়, \nকোন প্রকার বাহ্যিক চাপ বা প্রভাব ব্যতীত স্বপ্রনোদিত \nহয়ে এই ওয়াসিয়াহ (ইচ্ছা নাম ) প্রকাশ করছি। \nএই ওয়াসিয়াহ (ইচ্ছানামা) আমার মা, স্ত্রী, সন্তান, \nআত্মীয় স্বজন এবং প্রিয় মুসলিমদের উদেশ্যে লিখছি",textAlign: TextAlign.start,),
-                  //            SizedBox(height: 10.h,),
-                  //            Row(
-                  //              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //              children: [
-                  //                GestureDetector(
-                  //                    onTap: (){
-                  //                      Get.toNamed(AppRoutes.wasyyahEditScreen,preventDuplicates: false);
-                  //                    },
-                  //                    child: _iconTextCon(Icons.edit_calendar_outlined,"Edit")),
-                  //
-                  //                _iconTextCon(Icons.remove_red_eye_outlined,"View"),
-                  //              ],
-                  //            )
-                  //          ],
-                  //        ),
-                  //     ),
-                  //   ),
-                  // ),
+
+
                   ///====================================নিজের পরিচিতি================================
                   SizedBox(height: 20.h,),
                   // SizedBox(
@@ -306,9 +260,17 @@ class WasyyahScreen extends StatelessWidget {
                         itemCount: wasyyahController.wasyyahYouData.length,
                         padding: EdgeInsets.all(8.0),
 
+                        // onReorder: (int oldIndex, int newIndex) {
+                        //   wasyyahController.changeOrderApi(requestKey: oldIndex.toString(), order: newIndex); // এই method call করুন
+                        //
+                        //  // wasyyahController.onReorderItems(oldIndex, newIndex); // এই method call করুন
+                        // },
                         onReorder: (int oldIndex, int newIndex) {
-                          wasyyahController.onReorderItems(oldIndex, newIndex); // এই method call করুন
+
+                          /// Update local list visually
+                          wasyyahController.onReorderItems(oldIndex, newIndex);
                         },
+
                         buildDefaultDragHandles: true,
 
                         itemBuilder: (context, index) {
@@ -400,7 +362,7 @@ class WasyyahScreen extends StatelessWidget {
                       Get.to(()=>AddNewWashyiaScreen(),preventDuplicates: false);
                     },
                   ),
-                  SizedBox(height: 20.h,),
+                  SizedBox(height: 30.h,),
                 ],
               ),
             ),
