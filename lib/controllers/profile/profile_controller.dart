@@ -1,7 +1,8 @@
-
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:al_wasyeah/models/profile_info_model/marital_list_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,23 +13,34 @@ import '../../services/services.dart';
 import '../../utils/utils.dart';
 import '../../view/screen/screen.dart';
 
-class ProfileController extends GetxController{
-
-
-///+========================1st Profile=====================
+class ProfileController extends GetxController {
+  ///+========================1st Profile=====================
   RxString selectedGender = ''.obs;
-  RxString selectedMarried = ''.obs;
+  Rx<MaritalListModel> selectedMarried = MaritalListModel().obs;
   RxString selectedProfession = ''.obs;
   RxString selectedNationality = ''.obs;
   RxString selectedBank = ''.obs;
 
   final List<String> gender = ['Male'.tr, 'FeMale'.tr, 'Others'.tr];
-  final List<String> maritalStatus = ['Married'.tr, 'Un Married'.tr,];
-  final List<String> profession = ['Business'.tr, 'Doctor'.tr, "Engineers".tr,"Housewife".tr, "Others".tr];
-  final List<String> nationality = ['Bangaldeshi'.tr, 'Pakisthani'.tr, "Indian".tr,];
+  RxList<MaritalListModel> maritalList = <MaritalListModel>[].obs;
+  final List<String> profession = [
+    'Business'.tr,
+    'Doctor'.tr,
+    "Engineers".tr,
+    "Housewife".tr,
+    "Others".tr
+  ];
+  final List<String> nationality = [
+    'Bangaldeshi'.tr,
+    'Pakisthani'.tr,
+    "Indian".tr,
+  ];
 
-
-  final List<String> banks = ['Islami Bank'.tr, 'Al Arafa Bank'.tr,'Sonali Bank'.tr,];
+  final List<String> banks = [
+    'Islami Bank'.tr,
+    'Al Arafa Bank'.tr,
+    'Sonali Bank'.tr,
+  ];
 
   final List<Map<String, String>> muslimCountriesInWorld = [
     {'name': 'Palestine', 'flag': 'PS'}, // Palestine
@@ -74,14 +86,12 @@ class ProfileController extends GetxController{
     {'name': 'Bangladesh', 'flag': 'BD'}, // Bangladesh
     {'name': 'India', 'flag': 'IN'}, // India (significant Muslim population)
     {'name': 'Russia', 'flag': 'RU'}, // Russia (significant Muslim population)
-    {'name': 'Philippines', 'flag': 'PH'}, // Philippines (significant Muslim population)
+    {
+      'name': 'Philippines',
+      'flag': 'PH'
+    }, // Philippines (significant Muslim population)
   ];
   String selectedCountry = 'Bangladesh';
-
-
-
-
-
 
   List<SpouseItemS> addSpouseList = [];
   List<ChildrenInfo> addChildrenInfoList = [];
@@ -226,98 +236,114 @@ class ProfileController extends GetxController{
         "motherWhatsAppNumber": motherWhatsAppNumber,
         "motherExisting": motherExisting,
       },
-      "spouseInfo": spouses.map((s) => {
-        "spouseId": s.spouseId,
-        "spouseName": s.spouseName,
-        "professionId": s.professionId,
-        "nationalityId": s.nationalityId,
-        "nid": s.nid,
-        "nidPaperUrl": fileUrl(s.nidPaperPath),
-        "passport": s.passport,
-        "passportPaperUrl": fileUrl(s.passportPaperPath),
-        "mobile": s.mobile,
-        "email": s.email,
-        "existing": s.existing,
-        "userId": s.userId,
-      }).toList(),
+      "spouseInfo": spouses
+          .map((s) => {
+                "spouseId": s.spouseId,
+                "spouseName": s.spouseName,
+                "professionId": s.professionId,
+                "nationalityId": s.nationalityId,
+                "nid": s.nid,
+                "nidPaperUrl": fileUrl(s.nidPaperPath),
+                "passport": s.passport,
+                "passportPaperUrl": fileUrl(s.passportPaperPath),
+                "mobile": s.mobile,
+                "email": s.email,
+                "existing": s.existing,
+                "userId": s.userId,
+              })
+          .toList(),
 
-      "childInfo": children.map((c) => {
-        "childId": c.childId,
-        "childName": c.childName,
-        "genderId": c.genderId,
-        "professionId": c.professionId,
-        "nationalityId": c.nationalityId,
-        "dob": c.dob,
-        "nid": c.nid,
-        "nidPaperUrl": fileUrl(c.nidPaperPath),
-        "mobile": c.mobile,
-        "email": c.email,
-        "existing": c.existing,
-        "userId": c.userId,
-      }).toList(),
+      "childInfo": children
+          .map((c) => {
+                "childId": c.childId,
+                "childName": c.childName,
+                "genderId": c.genderId,
+                "professionId": c.professionId,
+                "nationalityId": c.nationalityId,
+                "dob": c.dob,
+                "nid": c.nid,
+                "nidPaperUrl": fileUrl(c.nidPaperPath),
+                "mobile": c.mobile,
+                "email": c.email,
+                "existing": c.existing,
+                "userId": c.userId,
+              })
+          .toList(),
 
-      "siblingInfo": siblings.map((s) => {
-        "siblingId": s.siblingId,
-        "siblingName": s.siblingName,
-        "genderId": s.genderId,
-        "professionId": s.professionId,
-        "nationalityId": s.nationalityId,
-        "nid": s.nid,
-        "dob": s.dob,
-        "existing": s.existing,
-        "nidPaperUrl": fileUrl(s.nidPaperPath),
-        "whatsAppNumber": s.whatsAppNumber,
-        "email": s.email,
-        "mobile": s.mobile,
-        "socialMediaLink": s.socialMediaLink,
-        "userId": s.userId,
-      }).toList(),
+      "siblingInfo": siblings
+          .map((s) => {
+                "siblingId": s.siblingId,
+                "siblingName": s.siblingName,
+                "genderId": s.genderId,
+                "professionId": s.professionId,
+                "nationalityId": s.nationalityId,
+                "nid": s.nid,
+                "dob": s.dob,
+                "existing": s.existing,
+                "nidPaperUrl": fileUrl(s.nidPaperPath),
+                "whatsAppNumber": s.whatsAppNumber,
+                "email": s.email,
+                "mobile": s.mobile,
+                "socialMediaLink": s.socialMediaLink,
+                "userId": s.userId,
+              })
+          .toList(),
 
-      "bankInfo": banks.map((b) => {
-        "userBankInfoId": b.userBankInfoId,
-        "userId": b.userId,
-        "bankId": b.bankId,
-        "branchId": b.branchId,
-        "bankAccNo": b.bankAccNo,
-        "accBalance": b.accBalance,
-      }).toList(),
+      "bankInfo": banks
+          .map((b) => {
+                "userBankInfoId": b.userBankInfoId,
+                "userId": b.userId,
+                "bankId": b.bankId,
+                "branchId": b.branchId,
+                "bankAccNo": b.bankAccNo,
+                "accBalance": b.accBalance,
+              })
+          .toList(),
 
-      "wealthInfo": wealths.map((w) => {
-        "userId": w.userId,
-        "wealthId": w.wealthId,
-        "documentTypeId": w.documentTypeId,
-        "documentPaperUrl": fileUrl(w.documentPaperPath),
-        "amount": w.amount,
-        "location": w.location,
-        "note": w.note,
-      }).toList(),
+      "wealthInfo": wealths
+          .map((w) => {
+                "userId": w.userId,
+                "wealthId": w.wealthId,
+                "documentTypeId": w.documentTypeId,
+                "documentPaperUrl": fileUrl(w.documentPaperPath),
+                "amount": w.amount,
+                "location": w.location,
+                "note": w.note,
+              })
+          .toList(),
 
-      "shareMarketInfo": shares.map((s) => {
-        "userShareMarketId": s.userShareMarketId,
-        "userId": s.userId,
-        "brokerHouseName": s.brokerHouseName,
-        "accName": s.accName,
-        "accNumber": s.accNumber,
-        "shareCompanyName": s.shareCompanyName,
-        "shareQuality": s.shareQuality,
-        "buyingAmount": s.buyingAmount,
-      }).toList(),
+      "shareMarketInfo": shares
+          .map((s) => {
+                "userShareMarketId": s.userShareMarketId,
+                "userId": s.userId,
+                "brokerHouseName": s.brokerHouseName,
+                "accName": s.accName,
+                "accNumber": s.accNumber,
+                "shareCompanyName": s.shareCompanyName,
+                "shareQuality": s.shareQuality,
+                "buyingAmount": s.buyingAmount,
+              })
+          .toList(),
 
-      "receivableInfo": receivables.map((r) => {
-        "recId": r.recId,
-        "userId": r.userId,
-        "receivableAmount": r.receivableAmount,
-        "receivablePerson": r.receivablePerson,
-        "receivablePersonMobile": r.receivablePersonMobile,
-      }).toList(),
+      "receivableInfo": receivables
+          .map((r) => {
+                "recId": r.recId,
+                "userId": r.userId,
+                "receivableAmount": r.receivableAmount,
+                "receivablePerson": r.receivablePerson,
+                "receivablePersonMobile": r.receivablePersonMobile,
+              })
+          .toList(),
 
-      "payableInfo": payables.map((p) => {
-        "payId": p.payId,
-        "userId": p.userId,
-        "payableAmount": p.payableAmount,
-        "payablePerson": p.payablePerson,
-        "payablePersonMobile": p.payablePersonMobile,
-      }).toList(),
+      "payableInfo": payables
+          .map((p) => {
+                "payId": p.payId,
+                "userId": p.userId,
+                "payableAmount": p.payableAmount,
+                "payablePerson": p.payablePerson,
+                "payablePersonMobile": p.payablePersonMobile,
+              })
+          .toList(),
       // Similarly for siblings, bankInfo, wealthInfo, shareMarketInfo, receivableInfo, payableInfo
     };
 
@@ -347,10 +373,21 @@ class ProfileController extends GetxController{
     }
   }
 
+  Future<void> getMaritalList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.maritalList,
+      );
+     maritalList(maritalListModelFromJson(jsonEncode(response.body)));
+    } catch (e) {}
+  }
 
-
+  @override
+  void onInit() {
+    getMaritalList();
+    super.onInit();
+  }
 }
-
 
 class SpouseItem {
   final int spouseId;
@@ -491,6 +528,7 @@ class ChildItem {
     };
   }
 }
+
 class SiblingItem {
   final int siblingId;
   final String siblingName;
@@ -566,6 +604,7 @@ class SiblingItem {
     };
   }
 }
+
 class BankInfoItem {
   final int userBankInfoId;
   final int userId;
@@ -605,6 +644,7 @@ class BankInfoItem {
     };
   }
 }
+
 class WealthItem {
   final int userId;
   final int wealthId;
@@ -652,6 +692,7 @@ class WealthItem {
     };
   }
 }
+
 class ShareMarketItem {
   final int userShareMarketId;
   final int userId;
@@ -699,6 +740,7 @@ class ShareMarketItem {
     };
   }
 }
+
 class ReceivableItem {
   final int recId;
   final int userId;
@@ -734,6 +776,7 @@ class ReceivableItem {
     };
   }
 }
+
 class PayableItem {
   final int payId;
   final int userId;

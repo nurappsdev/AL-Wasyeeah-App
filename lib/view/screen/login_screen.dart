@@ -17,8 +17,8 @@ import 'profile_setting/profile_setting.dart';
 
 class LoginScreen extends StatelessWidget {
    LoginScreen({super.key});
-TextEditingController emailController = TextEditingController();
-TextEditingController passController = TextEditingController();
+TextEditingController emailController = TextEditingController(text:"WASY100003" );
+TextEditingController passController = TextEditingController(text: "Asdf.1234");
    AuthController  authController = Get.put(AuthController());
 
    final GlobalKey<FormState> _logKey = GlobalKey<FormState>();

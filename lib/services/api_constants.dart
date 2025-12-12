@@ -1,7 +1,7 @@
 
 class ApiConstants{
   //static const String baseUrl = "https://45b4-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
-  static const String baseUrl = "http://129.212.209.54:8080/WASIYYAH/api/v1";
+  static const String baseUrl = "https://api.wasiyyat.com/api/v1";
   static const String imageBaseUrl = "http://129.212.209.54:8080";
 
 
@@ -38,6 +38,7 @@ class ApiConstants{
   static const String getUserEndPoint = "/auth/session";
   static const String getAboutAndPrivacyTermsEndPoint = "/app-data";
   static String reviews(String id) => "/reviews?businessId=$id";
+  static String maritalList = "/lookup/maritalList";
 
 
 
