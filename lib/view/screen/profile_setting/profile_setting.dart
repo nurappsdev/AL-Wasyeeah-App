@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 
 import '../screen.dart';
 
-
 class StepNavigationWithPageView extends StatefulWidget {
   @override
   _StepNavigationWithPageViewState createState() =>
@@ -32,7 +31,13 @@ class _StepNavigationWithPageViewState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:CustomText(text: "Profile Settings".tr,fontWeight: FontWeight.w600,fontsize: 20.sp,),),
+      appBar: AppBar(
+        title: CustomText(
+          text: "Profile Settings".tr,
+          fontWeight: FontWeight.w600,
+          fontsize: 20.sp,
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.h),
         child: Column(
@@ -40,7 +45,11 @@ class _StepNavigationWithPageViewState
           children: [
             // Step Indicator
             Padding(
-              padding: const EdgeInsets.only(left: 26.0,top: 20,bottom: 20,),
+              padding: const EdgeInsets.only(
+                left: 26.0,
+                top: 20,
+                bottom: 20,
+              ),
               child: Row(
                 children: List.generate(5, (index) {
                   bool isCompleted = index < _currentStep;
@@ -101,7 +110,6 @@ class _StepNavigationWithPageViewState
                   FatherInfoScreen(),
                   FamilyInfoScreen(),
                   BankInfoScreen(),
-
                 ],
               ),
             ),
@@ -110,13 +118,4 @@ class _StepNavigationWithPageViewState
       ),
     );
   }
-}
-
-
-
-
-void main() {
-  runApp(MaterialApp(
-    home: StepNavigationWithPageView(),
-  ));
 }

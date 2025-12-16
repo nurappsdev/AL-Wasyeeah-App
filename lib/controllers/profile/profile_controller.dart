@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:al_wasyeah/models/profile_info_model/marital_list_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,19 +18,13 @@ class ProfileController extends GetxController {
   ///+========================1st Profile=====================
   RxString selectedGender = ''.obs;
   Rx<MaritalListModel> selectedMarried = MaritalListModel().obs;
-  RxString selectedProfession = ''.obs;
+  Rx<ProfessionListModel> selectedProfession = ProfessionListModel().obs;
   RxString selectedNationality = ''.obs;
   RxString selectedBank = ''.obs;
 
   final List<String> gender = ['Male'.tr, 'FeMale'.tr, 'Others'.tr];
   RxList<MaritalListModel> maritalList = <MaritalListModel>[].obs;
-  final List<String> profession = [
-    'Business'.tr,
-    'Doctor'.tr,
-    "Engineers".tr,
-    "Housewife".tr,
-    "Others".tr
-  ];
+  RxList<ProfessionListModel> professionList = <ProfessionListModel>[].obs;
   final List<String> nationality = [
     'Bangaldeshi'.tr,
     'Pakisthani'.tr,
@@ -378,13 +373,23 @@ class ProfileController extends GetxController {
       var response = await ApiClient.getData(
         ApiConstants.maritalList,
       );
-     maritalList(maritalListModelFromJson(jsonEncode(response.body)));
+      maritalList(maritalListModelFromJson(jsonEncode(response.body)));
+    } catch (e) {}
+  }
+
+  Future<void> getProfessionList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.professionList,
+      );
+      professionList(professionListFromJson(jsonEncode(response.body)));
     } catch (e) {}
   }
 
   @override
   void onInit() {
     getMaritalList();
+    getProfessionList();
     super.onInit();
   }
 }

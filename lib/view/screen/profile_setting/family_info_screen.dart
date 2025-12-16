@@ -41,19 +41,20 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
     if (nidImagePath == null || nidImagePath!.length <= 30) {
       return nidImagePath ?? 'No image selected';
     }
-    return nidImagePath!.substring(nidImagePath!.length - 30); // Get the last 18 characters
+    return nidImagePath!
+        .substring(nidImagePath!.length - 30); // Get the last 18 characters
   }
+
   Future<void> _NIDImageFromGallery() async {
-    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage == null) return;
 
     setState(() {
       nIDImages = File(pickedImage.path);
       nidImagePath = pickedImage.path; // Save the image path
     });
-
   }
-
 
   TextEditingController medicineNameCtrl = TextEditingController();
   TextEditingController dosageCtrl = TextEditingController();
@@ -64,7 +65,6 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
   ProfileController profileController = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         body: Container(
             height: Get.height,
@@ -75,10 +75,13 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     ///=============="Father’s Information================================
                     SizedBox(height: 20.h),
-                    Center(child: CustomText(text: "Family Information".tr,fontsize: 20,)),
+                    Center(
+                        child: CustomText(
+                      text: "Family Information".tr,
+                      fontsize: 20,
+                    )),
                     SizedBox(height: 20.h),
 
                     Container(
@@ -90,240 +93,81 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: 10.h),
-                          ...profileController.addSpouseList.asMap().entries.map((entry) {
+                          ...profileController.addSpouseList
+                              .asMap()
+                              .entries
+                              .map((entry) {
                             int index = entry.key;
                             SpouseItemS doc = entry.value;
                             return Column(
-          key: ValueKey(index),
-          children: [
-            CustomText(text: "Spouse Name".tr,color: AppColors.hitTextColor000000,fontsize: 16 .sp,),
-            SizedBox(height: 10.h),
-            CustomTextField(
-              controller: doc.spouseNameController,
-              hintText: "Father’s Name".tr,
-              borderColor: AppColors.secondaryPrimaryColor,
-              validator: (value){
-                if(value == null || value.isEmpty){
-                  return 'Spouse Name'.tr;
-                }
-                return null;
-
-              },
-            ),
-            SizedBox(height: 20.h),
-            CustomDropdown(label: "Profession".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
-            SizedBox(height: 20.h),
-            CustomDropdown(label: "Nationality".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
-            ///============NID/PASSPORT No*====================
-            SizedBox(height: 20.h),
-            CustomText(text: "NID/Passport No".tr,color: AppColors.hitTextColor000000,fontsize: 16.sp,),
-            SizedBox(height: 10.h,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: CustomTextField(
-                    controller:  passOrNIDController,
-                    hintText: "NID/Passport No".tr,
-                    borderColor: AppColors.secondaryPrimaryColor,
-                    onChange: (value){},
-                    validator: (value){
-                      if(value == null || value.isEmpty){
-                        return 'NID/Passport No'.tr;
-                      }
-                      return null;
-
-                    },
-                  ),
-                ),
-                SizedBox(width: 6.w,),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6.w),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(16.r),
-                  ),
-                  child: IconButton(
-                    icon:Icon(Icons.attach_file_outlined,color: AppColors.primaryColor,),
-                    onPressed: () {
-                      _NIDImageFromGallery();
-                      // Add your action here
-                    },
-                  ),
-                ),
-              ],
-            ),
-            if (nIDImages != null)
-              Text(
-                'Image Path: ${displayImageNIDPath.toString()}',
-                style: TextStyle(color: Colors.grey),
-              ),
-            SizedBox(height: 20.h),
-            CustomText(text: "Mobile".tr,color: AppColors.hitTextColor000000,fontsize: 16 .sp,),
-            SizedBox(height: 10.h),
-            CustomTextField(
-              controller: mobileController,
-              hintText: "Mobile".tr,
-              borderColor: AppColors.secondaryPrimaryColor,
-              validator: (value){
-                if(value == null || value.isEmpty){
-                  return 'Mobile'.tr;
-                }
-                return null;
-
-              },
-            ),
-            SizedBox(height: 16.h),
-            ///=============Email====================
-            CustomText(text: "email".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
-            SizedBox(height: 10.h,),
-            Padding(
-              padding: EdgeInsets.only(bottom: 16.h),
-              child: CustomTextField(
-                controller: emailController,
-                hintText: "email".tr,
-                borderColor: AppColors.secondaryPrimaryColor,
-                validator: (value){
-                  if(value == null || value.isEmpty){
-                    return 'Please enter your Email'.tr;
-                  }else if(!AppConstants.emailValidate.hasMatch(value)){
-                    return "Invalid Email".tr;
-                  }
-                  return null;
-
-                },
-              ),
-            ),
-
-            Center(
-              child: ToggleButtons(
-                isSelected: isSelected,
-                onPressed: (index) {
-                  setState(() {
-                    // Allow only one button to be selected at a time
-                    for (int i = 0; i < isSelected.length; i++) {
-                      isSelected[i] = i == index;
-                    }
-                  });
-                },
-                borderRadius: BorderRadius.circular(8),
-                selectedColor: Colors.white,
-                fillColor: isSelected[1] ? Colors.red : Colors.green,
-                color: Colors.black,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50),
-                    child: Text('Alive'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50),
-                    child: Text('Death'),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 24.h,),
-            SizedBox(width: 10.w),
-            if (index != 0) // First item fixed, no delete button
-              IconButton(
-                color:Colors.grey,
-                icon: Icon(Icons.delete_forever, color: Colors.red),
-                onPressed: () {
-                  setState(() {
-                    profileController.addSpouseList.removeAt(index);
-                  });
-                },
-              ),
-          ],
-        );
-                          }).toList(),
-
-                          ///================================= + Add more spouse  =======================================
-
-                          Padding(
-                            padding: EdgeInsets.only(left: 50.w, right: 10),
-                            child: CustomButton(
-                              title: "+ Add More spouse",
-                              titlecolor: AppColors.primaryColor,
-                              onpress: () {
-                                setState(() {
-                                  profileController.addSpouseList.add(SpouseItemS());
-                                });
-                              },
-                            ),
-                          ),
-
-                        ],
-    ),),
-
-                    SizedBox(height: 20.h),
-                    Center(child: CustomText(text: "Children's Information".tr,fontsize: 20,)),
-                    SizedBox(height: 20.h),
-
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.r),
-                        color: AppColors.whiteColor,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 10.h),
-                          ...profileController.addChildrenInfoList.asMap().entries.map((entry) {
-                            int index = entry.key;
-                            ChildrenInfo doc = entry.value;
-                            return Column(
                               key: ValueKey(index),
                               children: [
-                                CustomText(text: "Spouse Name".tr,color: AppColors.hitTextColor000000,fontsize: 16 .sp,),
+                                CustomText(
+                                  text: "Spouse Name".tr,
+                                  color: AppColors.hitTextColor000000,
+                                  fontsize: 16.sp,
+                                ),
                                 SizedBox(height: 10.h),
                                 CustomTextField(
-                                  controller: doc.childNameController,
+                                  controller: doc.spouseNameController,
                                   hintText: "Father’s Name".tr,
                                   borderColor: AppColors.secondaryPrimaryColor,
-                                  validator: (value){
-                                    if(value == null || value.isEmpty){
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
                                       return 'Spouse Name'.tr;
                                     }
                                     return null;
-
                                   },
                                 ),
                                 SizedBox(height: 20.h),
-                                CustomDropdown(label: "Profession".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
+                                // CustomDropdown(label: "Profession".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
                                 SizedBox(height: 20.h),
-                                CustomDropdown(label: "Nationality".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
+                                //  CustomDropdown(label: "Nationality".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
                                 ///============NID/PASSPORT No*====================
                                 SizedBox(height: 20.h),
-                                CustomText(text: "NID/Passport No".tr,color: AppColors.hitTextColor000000,fontsize: 16.sp,),
-                                SizedBox(height: 10.h,),
+                                CustomText(
+                                  text: "NID/Passport No".tr,
+                                  color: AppColors.hitTextColor000000,
+                                  fontsize: 16.sp,
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: CustomTextField(
-                                        controller:  passOrNIDController,
+                                        controller: passOrNIDController,
                                         hintText: "NID/Passport No".tr,
-                                        borderColor: AppColors.secondaryPrimaryColor,
-                                        onChange: (value){},
-                                        validator: (value){
-                                          if(value == null || value.isEmpty){
+                                        borderColor:
+                                            AppColors.secondaryPrimaryColor,
+                                        onChange: (value) {},
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
                                             return 'NID/Passport No'.tr;
                                           }
                                           return null;
-
                                         },
                                       ),
                                     ),
-                                    SizedBox(width: 6.w,),
+                                    SizedBox(
+                                      width: 6.w,
+                                    ),
                                     Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 6.w),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 6.w),
                                       decoration: BoxDecoration(
                                         border: Border.all(color: Colors.grey),
-                                        borderRadius: BorderRadius.circular(16.r),
+                                        borderRadius:
+                                            BorderRadius.circular(16.r),
                                       ),
                                       child: IconButton(
-                                        icon:Icon(Icons.attach_file_outlined,color: AppColors.primaryColor,),
+                                        icon: Icon(
+                                          Icons.attach_file_outlined,
+                                          color: AppColors.primaryColor,
+                                        ),
                                         onPressed: () {
                                           _NIDImageFromGallery();
                                           // Add your action here
@@ -338,38 +182,49 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 SizedBox(height: 20.h),
-                                CustomText(text: "Mobile".tr,color: AppColors.hitTextColor000000,fontsize: 16 .sp,),
+                                CustomText(
+                                  text: "Mobile".tr,
+                                  color: AppColors.hitTextColor000000,
+                                  fontsize: 16.sp,
+                                ),
                                 SizedBox(height: 10.h),
                                 CustomTextField(
                                   controller: mobileController,
                                   hintText: "Mobile".tr,
                                   borderColor: AppColors.secondaryPrimaryColor,
-                                  validator: (value){
-                                    if(value == null || value.isEmpty){
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
                                       return 'Mobile'.tr;
                                     }
                                     return null;
-
                                   },
                                 ),
                                 SizedBox(height: 16.h),
+
                                 ///=============Email====================
-                                CustomText(text: "email".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
-                                SizedBox(height: 10.h,),
+                                CustomText(
+                                  text: "email".tr,
+                                  color: AppColors.hitTextColor000000,
+                                  fontsize: 20.sp,
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
                                 Padding(
                                   padding: EdgeInsets.only(bottom: 16.h),
                                   child: CustomTextField(
                                     controller: emailController,
                                     hintText: "email".tr,
-                                    borderColor: AppColors.secondaryPrimaryColor,
-                                    validator: (value){
-                                      if(value == null || value.isEmpty){
+                                    borderColor:
+                                        AppColors.secondaryPrimaryColor,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
                                         return 'Please enter your Email'.tr;
-                                      }else if(!AppConstants.emailValidate.hasMatch(value)){
+                                      } else if (!AppConstants.emailValidate
+                                          .hasMatch(value)) {
                                         return "Invalid Email".tr;
                                       }
                                       return null;
-
                                     },
                                   ),
                                 ),
@@ -380,36 +235,47 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                                     onPressed: (index) {
                                       setState(() {
                                         // Allow only one button to be selected at a time
-                                        for (int i = 0; i < isSelected.length; i++) {
+                                        for (int i = 0;
+                                            i < isSelected.length;
+                                            i++) {
                                           isSelected[i] = i == index;
                                         }
                                       });
                                     },
                                     borderRadius: BorderRadius.circular(8),
                                     selectedColor: Colors.white,
-                                    fillColor: isSelected[1] ? Colors.red : Colors.green,
+                                    fillColor: isSelected[1]
+                                        ? Colors.red
+                                        : Colors.green,
                                     color: Colors.black,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 50),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 50),
                                         child: Text('Alive'),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 50),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 50),
                                         child: Text('Death'),
                                       ),
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 24.h,),
+                                SizedBox(
+                                  height: 24.h,
+                                ),
                                 SizedBox(width: 10.w),
-                                if (index != 0) // First item fixed, no delete button
+                                if (index !=
+                                    0) // First item fixed, no delete button
                                   IconButton(
-                                    color:Colors.grey,
-                                    icon: Icon(Icons.delete_forever, color: Colors.red),
+                                    color: Colors.grey,
+                                    icon: Icon(Icons.delete_forever,
+                                        color: Colors.red),
                                     onPressed: () {
                                       setState(() {
-                                        profileController.addChildrenInfoList.removeAt(index);
+                                        profileController.addSpouseList
+                                            .removeAt(index);
                                       });
                                     },
                                   ),
@@ -426,14 +292,241 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                               titlecolor: AppColors.primaryColor,
                               onpress: () {
                                 setState(() {
-                                  profileController.addChildrenInfoList.add(ChildrenInfo());
+                                  profileController.addSpouseList
+                                      .add(SpouseItemS());
                                 });
                               },
                             ),
                           ),
-
                         ],
-                      ),),
+                      ),
+                    ),
+
+                    SizedBox(height: 20.h),
+                    Center(
+                        child: CustomText(
+                      text: "Children's Information".tr,
+                      fontsize: 20,
+                    )),
+                    SizedBox(height: 20.h),
+
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.r),
+                        color: AppColors.whiteColor,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10.h),
+                          ...profileController.addChildrenInfoList
+                              .asMap()
+                              .entries
+                              .map((entry) {
+                            int index = entry.key;
+                            ChildrenInfo doc = entry.value;
+                            return Column(
+                              key: ValueKey(index),
+                              children: [
+                                CustomText(
+                                  text: "Spouse Name".tr,
+                                  color: AppColors.hitTextColor000000,
+                                  fontsize: 16.sp,
+                                ),
+                                SizedBox(height: 10.h),
+                                CustomTextField(
+                                  controller: doc.childNameController,
+                                  hintText: "Father’s Name".tr,
+                                  borderColor: AppColors.secondaryPrimaryColor,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Spouse Name'.tr;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(height: 20.h),
+                                // CustomDropdown(label: "Profession".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
+                                SizedBox(height: 20.h),
+                                //  CustomDropdown(label: "Nationality".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
+                                ///============NID/PASSPORT No*====================
+                                SizedBox(height: 20.h),
+                                CustomText(
+                                  text: "NID/Passport No".tr,
+                                  color: AppColors.hitTextColor000000,
+                                  fontsize: 16.sp,
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: CustomTextField(
+                                        controller: passOrNIDController,
+                                        hintText: "NID/Passport No".tr,
+                                        borderColor:
+                                            AppColors.secondaryPrimaryColor,
+                                        onChange: (value) {},
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'NID/Passport No'.tr;
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 6.w,
+                                    ),
+                                    Container(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 6.w),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey),
+                                        borderRadius:
+                                            BorderRadius.circular(16.r),
+                                      ),
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.attach_file_outlined,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                        onPressed: () {
+                                          _NIDImageFromGallery();
+                                          // Add your action here
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                if (nIDImages != null)
+                                  Text(
+                                    'Image Path: ${displayImageNIDPath.toString()}',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                SizedBox(height: 20.h),
+                                CustomText(
+                                  text: "Mobile".tr,
+                                  color: AppColors.hitTextColor000000,
+                                  fontsize: 16.sp,
+                                ),
+                                SizedBox(height: 10.h),
+                                CustomTextField(
+                                  controller: mobileController,
+                                  hintText: "Mobile".tr,
+                                  borderColor: AppColors.secondaryPrimaryColor,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Mobile'.tr;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(height: 16.h),
+
+                                ///=============Email====================
+                                CustomText(
+                                  text: "email".tr,
+                                  color: AppColors.hitTextColor000000,
+                                  fontsize: 20.sp,
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 16.h),
+                                  child: CustomTextField(
+                                    controller: emailController,
+                                    hintText: "email".tr,
+                                    borderColor:
+                                        AppColors.secondaryPrimaryColor,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter your Email'.tr;
+                                      } else if (!AppConstants.emailValidate
+                                          .hasMatch(value)) {
+                                        return "Invalid Email".tr;
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+
+                                Center(
+                                  child: ToggleButtons(
+                                    isSelected: isSelected,
+                                    onPressed: (index) {
+                                      setState(() {
+                                        // Allow only one button to be selected at a time
+                                        for (int i = 0;
+                                            i < isSelected.length;
+                                            i++) {
+                                          isSelected[i] = i == index;
+                                        }
+                                      });
+                                    },
+                                    borderRadius: BorderRadius.circular(8),
+                                    selectedColor: Colors.white,
+                                    fillColor: isSelected[1]
+                                        ? Colors.red
+                                        : Colors.green,
+                                    color: Colors.black,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 50),
+                                        child: Text('Alive'),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 50),
+                                        child: Text('Death'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 24.h,
+                                ),
+                                SizedBox(width: 10.w),
+                                if (index !=
+                                    0) // First item fixed, no delete button
+                                  IconButton(
+                                    color: Colors.grey,
+                                    icon: Icon(Icons.delete_forever,
+                                        color: Colors.red),
+                                    onPressed: () {
+                                      setState(() {
+                                        profileController.addChildrenInfoList
+                                            .removeAt(index);
+                                      });
+                                    },
+                                  ),
+                              ],
+                            );
+                          }).toList(),
+
+                          ///================================= + Add more spouse  =======================================
+
+                          Padding(
+                            padding: EdgeInsets.only(left: 50.w, right: 10),
+                            child: CustomButton(
+                              title: "+ Add More spouse",
+                              titlecolor: AppColors.primaryColor,
+                              onpress: () {
+                                setState(() {
+                                  profileController.addChildrenInfoList
+                                      .add(ChildrenInfo());
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
                     ///================================= + Add more spouse  =======================================
                     // Column(
@@ -592,10 +685,11 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                     //   ],
                     // ),
                     // _buildBodySection(),
-                    SizedBox(height: 24.h,),
+                    SizedBox(
+                      height: 24.h,
+                    ),
                     CustomButtonCommon(
                       // loading: authController.loadingLoading.value == true,
-
 
                       title: "Next".tr,
                       onpress: () {
@@ -604,17 +698,15 @@ class _FamilyInfoScreenState extends State<FamilyInfoScreen> {
                         //   // authController.loginHandle(
                         //   //     emailController.text, passController.text);
                         // }
-                      },),
+                      },
+                    ),
                     SizedBox(height: 16.h),
                   ],
                 ),
               ),
             )));
   }
-
 }
-
-
 
 class SpouseItemS {
   int? spouseId;
@@ -659,5 +751,4 @@ class SpouseItemS {
         emailController = TextEditingController(text: email ?? ''),
         nidController = TextEditingController(text: nid ?? ''),
         passportController = TextEditingController(text: passport ?? '');
-
 }

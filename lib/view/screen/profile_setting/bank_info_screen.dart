@@ -8,27 +8,27 @@ import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
 class BankInfoScreen extends StatefulWidget {
-   BankInfoScreen({super.key});
+  BankInfoScreen({super.key});
 
   @override
   State<BankInfoScreen> createState() => _BankInfoScreenState();
 }
 
 class _BankInfoScreenState extends State<BankInfoScreen> {
-   ProfileController profileController = Get.put(ProfileController());
+  ProfileController profileController = Get.put(ProfileController());
 
-   TextEditingController accountController = TextEditingController();
-   TextEditingController documentsTypeController = TextEditingController();
-   TextEditingController noteController = TextEditingController();
-   TextEditingController addressController = TextEditingController();
+  TextEditingController accountController = TextEditingController();
+  TextEditingController documentsTypeController = TextEditingController();
+  TextEditingController noteController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
 
-   bool _isContainerVisible = false;
+  bool _isContainerVisible = false;
 
-   void _toggleContainer() {
-     setState(() {
-       _isContainerVisible = !_isContainerVisible;
-     });
-   }
+  void _toggleContainer() {
+    setState(() {
+      _isContainerVisible = !_isContainerVisible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,43 +44,56 @@ class _BankInfoScreenState extends State<BankInfoScreen> {
               children: [
                 ///=============="bank’s Information================================
                 SizedBox(height: 20.h),
-                Center(child: CustomText(text: "Bank Information".tr,fontsize: 20,)),
+                Center(
+                    child: CustomText(
+                  text: "Bank Information".tr,
+                  fontsize: 20,
+                )),
                 SizedBox(height: 20.h),
-                CustomDropdown(label: "Bank".tr,items: profileController.banks,selectedValue: profileController.selectedBank,),
-                CustomDropdown(label: "Branch".tr,items: profileController.banks,selectedValue: profileController.selectedBank,),
+                //  CustomDropdown(label: "Bank".tr,items: profileController.banks,selectedValue: profileController.selectedBank,),
+                //  CustomDropdown(label: "Branch".tr,items: profileController.banks,selectedValue: profileController.selectedBank,),
                 SizedBox(height: 20.h),
+
                 ///======================Account Name=========================
-                CustomText(text: "Account Name".tr,color: AppColors.hitTextColor000000,fontsize: 16 .sp,),
+                CustomText(
+                  text: "Account Name".tr,
+                  color: AppColors.hitTextColor000000,
+                  fontsize: 16.sp,
+                ),
                 SizedBox(height: 10.h),
                 CustomTextField(
                   controller: accountController,
                   hintText: "Account Name".tr,
                   borderColor: AppColors.secondaryPrimaryColor,
-                  validator: (value){
-                    if(value == null || value.isEmpty){
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
                       return 'Account Name'.tr;
                     }
                     return null;
-
                   },
                 ),
                 SizedBox(height: 16.h),
+
                 ///======================Account Number=========================
-                CustomText(text: "Account Number".tr,color: AppColors.hitTextColor000000,fontsize: 16 .sp,),
+                CustomText(
+                  text: "Account Number".tr,
+                  color: AppColors.hitTextColor000000,
+                  fontsize: 16.sp,
+                ),
                 SizedBox(height: 10.h),
                 CustomTextField(
                   controller: accountController,
                   hintText: "Account Number".tr,
                   borderColor: AppColors.secondaryPrimaryColor,
-                  validator: (value){
-                    if(value == null || value.isEmpty){
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
                       return 'Account Number '.tr;
                     }
                     return null;
-
                   },
                 ),
                 SizedBox(height: 20.h),
+
                 ///================================= + Add more spouse  =======================================
                 Column(
                   children: [
@@ -121,81 +134,107 @@ class _BankInfoScreenState extends State<BankInfoScreen> {
                             SizedBox(height: 10.h),
 
                             SizedBox(height: 20.h),
-                            CustomDropdown(label: "Select Wealth".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
+                            //  CustomDropdown(label: "Select Wealth".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
 
                             ///=============Note====================
-                            SizedBox(height: 16.h,),
-                            CustomText(text: "Note".tr,color: AppColors.hitTextColor000000,fontsize: 16 .sp,),
-                            SizedBox(height: 10.h,),
+                            SizedBox(
+                              height: 16.h,
+                            ),
+                            CustomText(
+                              text: "Note".tr,
+                              color: AppColors.hitTextColor000000,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                             Padding(
                               padding: EdgeInsets.only(bottom: 16.h),
                               child: CustomTextField(
-                                controller:  noteController,
+                                controller: noteController,
                                 hintText: "Note".tr,
                                 maxLine: 3,
                                 borderColor: AppColors.secondaryPrimaryColor,
-                                validator: (value){
-                                  if(value == null || value.isEmpty){
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
                                     return 'Note'.tr;
                                   }
                                   return null;
-
                                 },
                               ),
                             ),
+
                             ///=============Note====================
-                            SizedBox(height: 16.h,),
-                            CustomText(text: "Address".tr,color: AppColors.hitTextColor000000,fontsize: 16 .sp,),
-                            SizedBox(height: 10.h,),
+                            SizedBox(
+                              height: 16.h,
+                            ),
+                            CustomText(
+                              text: "Address".tr,
+                              color: AppColors.hitTextColor000000,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                             Padding(
                               padding: EdgeInsets.only(bottom: 16.h),
                               child: CustomTextField(
-                                controller:  addressController,
+                                controller: addressController,
                                 hintText: "Address".tr,
                                 maxLine: 1,
                                 borderColor: AppColors.secondaryPrimaryColor,
-                                validator: (value){
-                                  if(value == null || value.isEmpty){
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
                                     return 'Address'.tr;
                                   }
                                   return null;
-
                                 },
                               ),
                             ),
 
-
                             ///============NID/PASSPORT No*====================
                             SizedBox(height: 20.h),
-                            CustomText(text: "Documents Type".tr,color: AppColors.hitTextColor000000,fontsize: 16.sp,),
-                            SizedBox(height: 10.h,),
+                            CustomText(
+                              text: "Documents Type".tr,
+                              color: AppColors.hitTextColor000000,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
                                   child: CustomTextField(
-                                    controller:  documentsTypeController,
+                                    controller: documentsTypeController,
                                     hintText: "Documents Type".tr,
-                                    borderColor: AppColors.secondaryPrimaryColor,
-                                    onChange: (value){},
-                                    validator: (value){
-                                      if(value == null || value.isEmpty){
+                                    borderColor:
+                                        AppColors.secondaryPrimaryColor,
+                                    onChange: (value) {},
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
                                         return 'Documents Type'.tr;
                                       }
                                       return null;
-
                                     },
                                   ),
                                 ),
-                                SizedBox(width: 6.w,),
+                                SizedBox(
+                                  width: 6.w,
+                                ),
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 6.w),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 6.w),
                                   decoration: BoxDecoration(
                                     border: Border.all(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(16.r),
                                   ),
                                   child: IconButton(
-                                    icon:Icon(Icons.attach_file_outlined,color: AppColors.primaryColor,),
+                                    icon: Icon(
+                                      Icons.attach_file_outlined,
+                                      color: AppColors.primaryColor,
+                                    ),
                                     onPressed: () {
                                       // Add your action here
                                     },
@@ -204,7 +243,6 @@ class _BankInfoScreenState extends State<BankInfoScreen> {
                               ],
                             ),
                             SizedBox(height: 16.h),
-
                           ],
                         ),
                       ),
@@ -215,12 +253,13 @@ class _BankInfoScreenState extends State<BankInfoScreen> {
                   // loading: authController.loadingLoading.value == true,
                   title: "Finish".tr,
                   onpress: () {
-                        Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
+                    Get.toNamed(AppRoutes.homeScreen, preventDuplicates: false);
                     // if (_forRegKey.currentState!.validate()) {
                     //   // authController.loginHandle(
                     //   //     emailController.text, passController.text);
                     // }
-                  },),
+                  },
+                ),
                 SizedBox(height: 16.h),
               ],
             ),

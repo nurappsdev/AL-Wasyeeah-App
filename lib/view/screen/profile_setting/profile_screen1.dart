@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:al_wasyeah/main.dart';
 import 'package:al_wasyeah/models/profile_info_model/marital_list_model.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:country_flags/country_flags.dart';
@@ -143,11 +144,11 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                 ),
 
                 ///=============Gender====================
-                CustomDropdown(
-                  label: "Gender".tr,
-                  items: profileController.gender,
-                  selectedValue: profileController.selectedGender,
-                ),
+                // CustomDropdown(
+                //   label: "Gender".tr,
+                //   items: profileController.gender,
+                //   selectedValue: profileController.selectedGender,
+                // ),
 
                 ///=============Marital Status====================
                 Obx(
@@ -157,41 +158,30 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                       return SizedBox.shrink();
                     else
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Marital Status"),
-                          // DropdownSearch<MaritalListModel>(
-                          //   items: (f, cs) => profileController.maritalList,
-
-                          //   itemAsString: (m) => m.maritalType ?? '',
-
-                          //   compareFn: (a, b) => a.maritalId == b.maritalId,
-                          //   decoratorProps: DropDownDecoratorProps(
-                          //     decoration: InputDecoration(border: OutlineInputBorder(borderSide: BorderSide(color: Color(0xFF4A8D74))))
-                          //   ),
-                          //   popupProps: const PopupProps.menu(
-                          //     menuProps: MenuProps(color: Colors.amber),
-                          //     fit: FlexFit.loose,
-                          //     showSearchBox: true,
-                          //   ),
-
-                          //   // 🎨 Control text color
-                          //   dropdownBuilder: (context, selectedItem) {
-                          //     return Text(
-                          //       selectedItem?.maritalType ?? 'Marital Status',
-                          //       style: TextStyle(
-                          //         color: selectedItem == null
-                          //             ? Colors.grey
-                          //             : Colors.black,
-                          //         fontSize: 16,
-                          //       ),
-                          //     );
-                          //   },
-
-                          //   onChanged: (value) {
-                          //     profileController.selectedMarried(value);
-                          //   },
-                          // ),
-                        //  MaritalStatusDropdown()
+                          CustomText(
+                            text: "Marital Status".tr,
+                            color: AppColors.hitTextColor000000,
+                            fontsize: 20.sp,
+                          ),
+                          CustomDropdown<MaritalListModel>(
+                            label: "Marital Status",
+                            hint: "Select Marital Status",
+                            items: profileController.maritalList,
+                            value: profileController.selectedMarried.value,
+                            // MaritalListModel(
+                            //     maritalId: 3, maritalType: "Single"),
+                            isValueSelected: (value) =>
+                                value != null &&
+                                value.maritalType != null &&
+                                value.maritalType!.isNotEmpty,
+                            onChanged: (value) {
+                              profileController.selectedMarried(value);
+                            },
+                            itemToString: (MaritalListModel item) =>
+                                item.maritalType ?? "Select Marital Status",
+                          ),
                         ],
                       );
                   },
@@ -201,11 +191,11 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                 ),
 
                 ///=============Profession====================
-                CustomDropdown(
-                  label: "Profession".tr,
-                  items: profileController.profession,
-                  selectedValue: profileController.selectedProfession,
-                ),
+                // CustomDropdown(
+                //   label: "Profession".tr,
+                //   items: profileController.profession,
+                //   selectedValue: profileController.selectedProfession,
+                // ),
 
                 ///=============District/State====================
                 SizedBox(
