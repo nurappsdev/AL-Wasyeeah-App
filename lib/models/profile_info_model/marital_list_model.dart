@@ -1,25 +1,28 @@
 import 'dart:convert';
 
-List<MaritalListModel> maritalListModelFromJson(String str) => List<MaritalListModel>.from(json.decode(str).map((x) => MaritalListModel.fromJson(x)));
+List<MaritalModel> maritalListModelFromJson(String str) =>
+    List<MaritalModel>.from(
+        json.decode(str).map((x) => MaritalModel.fromJson(x)));
 
-String maritalListModelToJson(List<MaritalListModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String maritalListModelToJson(List<MaritalModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class MaritalListModel {
-    String? maritalType;
-    int? maritalId;
+class MaritalModel {
+  String? maritalType;
+  int? maritalId;
 
-    MaritalListModel({
-        this.maritalType,
-        this.maritalId,
-    });
+  MaritalModel({
+    this.maritalType,
+    this.maritalId,
+  });
 
-    factory MaritalListModel.fromJson(Map<String, dynamic> json) => MaritalListModel(
+  factory MaritalModel.fromJson(Map<String, dynamic> json) => MaritalModel(
         maritalType: json["maritalType"],
         maritalId: json["maritalId"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "maritalType": maritalType,
         "maritalId": maritalId,
-    };
+      };
 }

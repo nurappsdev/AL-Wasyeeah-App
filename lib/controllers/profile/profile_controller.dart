@@ -2,8 +2,14 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/marital_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/profile_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
+import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,15 +22,23 @@ import '../../view/screen/screen.dart';
 
 class ProfileController extends GetxController {
   ///+========================1st Profile=====================
-  RxString selectedGender = ''.obs;
-  Rx<MaritalListModel> selectedMarried = MaritalListModel().obs;
-  Rx<ProfessionListModel> selectedProfession = ProfessionListModel().obs;
-  RxString selectedNationality = ''.obs;
-  RxString selectedBank = ''.obs;
 
-  final List<String> gender = ['Male'.tr, 'FeMale'.tr, 'Others'.tr];
-  RxList<MaritalListModel> maritalList = <MaritalListModel>[].obs;
-  RxList<ProfessionListModel> professionList = <ProfessionListModel>[].obs;
+  Rx<RxStatus> status = RxStatus.loading().obs;
+  Rxn<MaritalModel> selectedMarried = Rxn();
+  Rxn<ProfessionModel> selectedProfession = Rxn();
+  Rxn<CountryModel> selectedCountry = Rxn();
+  Rxn<GenderModel> selectedGender = Rxn();
+  Rxn<BankModel> selectedBank = Rxn();
+  Rxn<WealthModel> selectedWealth = Rxn();
+
+  RxList<MaritalModel> maritalList = <MaritalModel>[].obs;
+  RxList<ProfessionModel> professionList = <ProfessionModel>[].obs;
+  RxList<GenderModel> genderList = <GenderModel>[].obs;
+  RxList<CountryModel> countryList = <CountryModel>[].obs;
+  RxList<BankModel> bankList = <BankModel>[].obs;
+  RxList<WealthModel> wealthList = <WealthModel>[].obs;
+  Rx<ProfileModel> profileModel = ProfileModel().obs;
+
   final List<String> nationality = [
     'Bangaldeshi'.tr,
     'Pakisthani'.tr,
@@ -86,10 +100,15 @@ class ProfileController extends GetxController {
       'flag': 'PH'
     }, // Philippines (significant Muslim population)
   ];
-  String selectedCountry = 'Bangladesh';
 
   List<SpouseItemS> addSpouseList = [];
   List<ChildrenInfo> addChildrenInfoList = [];
+
+  Rx<TextEditingController> firstNameController = TextEditingController().obs;
+
+  Rx<TextEditingController> lastNameController = TextEditingController().obs;
+
+  Rx<TextEditingController> districtController = TextEditingController().obs;
 
   Future<void> submitUserProfile({
     // User Profile
@@ -377,6 +396,19 @@ class ProfileController extends GetxController {
     } catch (e) {}
   }
 
+  Future<void> getGenderList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.genderList,
+      );
+
+      genderList(genderListModelFromJson(jsonEncode(response.body)));
+      log("Gender list: ${genderList.toJson()}");
+    } catch (e, s) {
+      log("Gender List Error: $e\nStacktrace: $s");
+    }
+  }
+
   Future<void> getProfessionList() async {
     try {
       var response = await ApiClient.getData(
@@ -386,10 +418,98 @@ class ProfileController extends GetxController {
     } catch (e) {}
   }
 
+  Future<void> getCountryList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.countryList,
+      );
+      countryList(countryListModelFromJson(jsonEncode(response.body)));
+    } catch (e) {}
+  }
+
+  Future<void> getBankList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.bankList,
+      );
+      bankList(bankListModelFromJson(jsonEncode(response.body)));
+    } catch (e) {}
+  }
+
+  Future<void> getWealthList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.wealthList,
+      );
+      wealthList(wealthListModelFromJson(jsonEncode(response.body)));
+    } catch (e) {}
+  }
+
+  Future<void> getProfile() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.getProfile,
+      );
+
+      profileModel(profileModelFromJson(jsonEncode(response.body)));
+      selectedMarried(maritalList.firstWhere((element) =>
+          element.maritalId ==
+          profileModel.value.userProfile!.maritalStatusId));
+      firstNameController.value.text =
+          profileModel.value.userProfile!.firstName ?? "";
+      lastNameController.value.text =
+          profileModel.value.userProfile!.lastName ?? "";
+      selectedCountry.value = countryList.firstWhere((element) =>
+          element.countryId == profileModel.value.userProfile!.countryCode);
+      districtController.value.text =
+          profileModel.value.userProfile!.district ?? "";
+      selectedProfession.value = professionList.firstWhere((element) =>
+          element.professionId == profileModel.value.userProfile!.professionId);
+      selectedCountry.value = countryList.firstWhere((element) =>
+          element.countryId == profileModel.value.userProfile!.countryCode);
+      selectedGender.value = genderList.firstWhere((element) =>
+          element.genderId ==
+          int.parse(profileModel.value.userProfile!.gender.toString()));
+
+      selectedBank(
+        bankList.firstWhere(
+          (element) => profileModel.value.bankInfo!.any(
+            (bank) => bank.bankId == element.bankId,
+          ),
+        ),
+      );
+
+      selectedWealth(
+        wealthList.firstWhere(
+          (element) => profileModel.value.wealthInfo!.any(
+            (wealth) => wealth.wealthId == element.wealthId,
+          ),
+        ),
+      );
+    } catch (e, s) {
+      log("Error: $e\nStacktrace: $s");
+    }
+  }
+
+  getProfilePageData() async {
+    try {
+      status(RxStatus.loading());
+      await getMaritalList();
+      await getProfessionList();
+      await getCountryList();
+      await getGenderList();
+      await getBankList();
+      await getWealthList();
+      await getProfile();
+      status(RxStatus.success());
+    } catch (e) {
+      status(RxStatus.error());
+    }
+  }
+
   @override
-  void onInit() {
-    getMaritalList();
-    getProfessionList();
+  void onInit() async {
+    getProfilePageData();
     super.onInit();
   }
 }

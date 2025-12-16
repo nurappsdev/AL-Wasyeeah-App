@@ -2,7 +2,10 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:al_wasyeah/main.dart';
+import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/marital_list_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -24,7 +27,7 @@ class ProfileScreen1 extends StatefulWidget {
 }
 
 class _ProfileScreen1State extends State<ProfileScreen1> {
-  ProfileController profileController = Get.put(ProfileController());
+  ProfileController controller = Get.put(ProfileController());
   final List<Map<String, String>> muslimCountriesInWorld = [
     {'name': 'Palestine', 'flag': 'PS'}, // Palestine
     {'name': 'Lebanon', 'flag': 'LB'}, // Lebanon
@@ -127,362 +130,454 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: Get.height,
-        width: double.infinity,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 14.h),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 10.h,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-
-                ///=============Gender====================
-                // CustomDropdown(
-                //   label: "Gender".tr,
-                //   items: profileController.gender,
-                //   selectedValue: profileController.selectedGender,
-                // ),
-
-                ///=============Marital Status====================
-                Obx(
-                  () {
-                    log("message: ${profileController.maritalList}");
-                    if (profileController.maritalList.isEmpty)
-                      return SizedBox.shrink();
-                    else
-                      return Column(
+      body: Obx(() {
+        return Container(
+          height: Get.height,
+          width: double.infinity,
+          child: controller.status.value.isLoading
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.hitTextColor000000,
+                  ),
+                )
+              : Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 14.h),
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      await controller.getProfilePageData();
+                    },
+                    child: SingleChildScrollView(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomText(
-                            text: "Marital Status".tr,
+                            text: "First Name".tr,
+                            color: AppColors.hitTextColor000000,
+                            fontsize: 16.sp,
+                          ),
+                          SizedBox(
+                            height: 4.h,
+                          ),
+
+                          /// =============First Name====================
+                          CustomTextFormField(
+                            controller: controller.firstNameController.value,
+                            hint: "First Name".tr,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "First Name is required";
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+
+                          /// =============Last Name====================
+                          CustomText(
+                            text: "Last Name".tr,
+                            color: AppColors.hitTextColor000000,
+                            fontsize: 16.sp,
+                          ),
+                          SizedBox(
+                            height: 4.h,
+                          ),
+                          CustomTextFormField(
+                            controller: controller.lastNameController.value,
+                            hint: "Last Name".tr,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Last Name is required";
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+
+                          ///=============Marital Status====================
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: "Marital Status".tr,
+                                color: AppColors.hitTextColor000000,
+                                fontsize: 16.sp,
+                              ),
+                              SizedBox(
+                                height: 4.h,
+                              ),
+                              CustomDropdown<MaritalModel>(
+                                hint: "Select Marital Status",
+                                items: controller.maritalList,
+                                value: controller.selectedMarried.value,
+                                itemToString: (item) => item.maritalType ?? "",
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(
+                            height: 16.h,
+                          ),
+
+                          ///=============Profession====================
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: "Profession".tr,
+                                color: AppColors.hitTextColor000000,
+                                fontsize: 16.sp,
+                              ),
+                              SizedBox(
+                                height: 4.h,
+                              ),
+                              CustomDropdown<ProfessionModel>(
+                                hint: "Select Profession",
+                                items: controller.professionList,
+                                value: controller.selectedProfession.value,
+                                itemToString: (item) => item.profession ?? "",
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+
+                          ///=============Place of Birth====================
+                          CustomText(
+                            text: "Place of Birth".tr,
                             color: AppColors.hitTextColor000000,
                             fontsize: 20.sp,
                           ),
-                          CustomDropdown<MaritalListModel>(
-                            label: "Marital Status",
-                            hint: "Select Marital Status",
-                            items: profileController.maritalList,
-                            value: profileController.selectedMarried.value,
-                            // MaritalListModel(
-                            //     maritalId: 3, maritalType: "Single"),
-                            isValueSelected: (value) =>
-                                value != null &&
-                                value.maritalType != null &&
-                                value.maritalType!.isNotEmpty,
-                            onChanged: (value) {
-                              profileController.selectedMarried(value);
-                            },
-                            itemToString: (MaritalListModel item) =>
-                                item.maritalType ?? "Select Marital Status",
+                          SizedBox(
+                            height: 4.h,
                           ),
-                        ],
-                      );
-                  },
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
+                          CustomDropdown<CountryModel>(
+                            hint: "Select Country",
+                            items: controller.countryList,
+                            value: controller.selectedCountry.value,
+                            itemToString: (item) => item.country ?? "",
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
 
-                ///=============Profession====================
-                // CustomDropdown(
-                //   label: "Profession".tr,
-                //   items: profileController.profession,
-                //   selectedValue: profileController.selectedProfession,
-                // ),
+                          /// =============District/State====================
+                          CustomText(
+                            text: "District/State".tr,
+                            color: AppColors.hitTextColor000000,
+                            fontsize: 16.sp,
+                          ),
+                          SizedBox(
+                            height: 4.h,
+                          ),
+                          CustomTextFormField(
+                            controller: controller.districtController.value,
+                            hint: "District/State".tr,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "District/State is required";
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
 
-                ///=============District/State====================
-                SizedBox(
-                  height: 16.h,
-                ),
-                CustomText(
-                  text: "District/State".tr,
-                  color: AppColors.hitTextColor000000,
-                  fontsize: 20.sp,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 16.h),
-                  child: CustomTextField(
-                    controller: districtController,
-                    hintText: "District/State".tr,
-                    borderColor: AppColors.secondaryPrimaryColor,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'District/State'.tr;
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                SizedBox(height: 16.h),
+                          ///=============Gender====================
+                          CustomText(
+                            text: "Gender".tr,
+                            color: AppColors.hitTextColor000000,
+                            fontsize: 20.sp,
+                          ),
+                          SizedBox(
+                            height: 4.h,
+                          ),
+                          CustomDropdown<GenderModel>(
+                            hint: "Select Gender",
+                            items: controller.genderList,
+                            value: controller.selectedGender.value,
+                            itemToString: (item) => item.gender ?? "",
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
 
-                ///============NID/PASSPORT No*====================
-                CustomText(
-                  text: "NID/Passport No".tr,
-                  color: AppColors.hitTextColor000000,
-                  fontsize: 20.sp,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: CustomTextField(
-                        controller: passOrNIDController,
-                        hintText: "NID/Passport No".tr,
-                        borderColor: AppColors.secondaryPrimaryColor,
-                        onChange: (value) {},
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'NID/Passport No'.tr;
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      width: 6.w,
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 6.w),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.attach_file_outlined,
-                          color: AppColors.primaryColor,
-                        ),
-                        onPressed: () {
-                          _NIDImageFromGallery();
-                          // Add your action here
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 6.w,
-                ),
-                if (nIDImages != null)
-                  Text(
-                    'Image Path: ${displayImageNIDPath.toString()}',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                SizedBox(height: 16.h),
-
-                ///============TIN (Tax Identification Number)====================
-                CustomText(
-                  text: "TIN (Tax Identification Number)".tr,
-                  color: AppColors.hitTextColor000000,
-                  fontsize: 20.sp,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                        child: Column(
-                      children: [
-                        CustomTextField(
-                          controller: passOrNIDController,
-                          hintText: "TIN (Tax Identification Number)".tr,
-                          borderColor: AppColors.secondaryPrimaryColor,
-                        ),
-                      ],
-                    )),
-                    SizedBox(
-                      width: 6.w,
-                    ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 6.w),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.attach_file_outlined,
-                          color: AppColors.primaryColor,
-                        ),
-                        onPressed: () {
-                          _TNImageFromGallery();
-                          // Add your action here
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 6.w,
-                ),
-                if (selectedImages != null)
-                  Text(
-                    'Image Path: ${displayImagePath.toString()}',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                SizedBox(height: 16.h),
-
-                ///============Photo====================
-                CustomText(
-                  text: "Photo".tr,
-                  color: AppColors.hitTextColor000000,
-                  fontsize: 20.sp,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    showImagePickerOption(context);
-                  },
-                  child: Container(
-                    width: double.infinity, // Set your desired width here
-                    height: 160.h, // Set your desired height here
-                    decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(12.dm),
-                      border: Border.all(color: Colors.green.shade200),
-                    ),
-                    child: selectedIMage == null
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          ///============NID/PASSPORT No*====================
+                          CustomText(
+                            text: "NID/Passport No".tr,
+                            color: AppColors.hitTextColor000000,
+                            fontsize: 20.sp,
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(
-                                Icons.camera_alt,
-                                color: Colors.green,
-                                size: 40,
+                              Expanded(
+                                child: CustomTextField(
+                                  controller: passOrNIDController,
+                                  hintText: "NID/Passport No".tr,
+                                  borderColor: AppColors.secondaryPrimaryColor,
+                                  onChange: (value) {},
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'NID/Passport No'.tr;
+                                    }
+                                    return null;
+                                  },
+                                ),
                               ),
-                              SizedBox(height: 8),
-                              Text(
-                                "Take Your Photo".tr,
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 16,
+                              SizedBox(
+                                width: 6.w,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 6.w),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(16.r),
+                                ),
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.attach_file_outlined,
+                                    color: AppColors.primaryColor,
+                                  ),
+                                  onPressed: () {
+                                    _NIDImageFromGallery();
+                                    // Add your action here
+                                  },
                                 ),
                               ),
                             ],
-                          )
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(12.dm),
-                            child: selectedIMage!.path.isNotEmpty
-                                ? Image.file(
-                                    selectedIMage!,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    fit: BoxFit.cover,
-                                  )
-                                : CustomNetworkImage(
-                                    boxShape: BoxShape.rectangle,
-                                    imageUrl: "",
-                                    height: 180.h,
-                                    width: 345.w,
-                                  ),
                           ),
-                  ),
-                ),
+                          SizedBox(
+                            height: 6.w,
+                          ),
+                          if (nIDImages != null)
+                            Text(
+                              'Image Path: ${displayImageNIDPath.toString()}',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          SizedBox(height: 16.h),
 
-                ///=============Place of birth====================
-                CustomText(
-                  text: "Place of birth".tr,
-                  fontsize: 16.sp,
-                ),
-                SizedBox(height: 10.h),
+                          ///============TIN (Tax Identification Number)====================
+                          CustomText(
+                            text: "TIN (Tax Identification Number)".tr,
+                            color: AppColors.hitTextColor000000,
+                            fontsize: 20.sp,
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                  child: Column(
+                                children: [
+                                  CustomTextField(
+                                    controller: passOrNIDController,
+                                    hintText:
+                                        "TIN (Tax Identification Number)".tr,
+                                    borderColor:
+                                        AppColors.secondaryPrimaryColor,
+                                  ),
+                                ],
+                              )),
+                              SizedBox(
+                                width: 6.w,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 6.w),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(16.r),
+                                ),
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.attach_file_outlined,
+                                    color: AppColors.primaryColor,
+                                  ),
+                                  onPressed: () {
+                                    _TNImageFromGallery();
+                                    // Add your action here
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 6.w,
+                          ),
+                          if (selectedImages != null)
+                            Text(
+                              'Image Path: ${displayImagePath.toString()}',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          SizedBox(height: 16.h),
 
-                Center(
-                  child: Container(
-                    height: 50.h, // Adjust the height here
-                    width: 250.w, // Full width
-                    padding: EdgeInsets.symmetric(horizontal: 12.w),
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(50.r), // Rounded corners
-                      border: Border.all(color: Colors.grey), // Border styling
-                      color: Colors.white, // Background color
-                    ),
-                    child: DropdownButton<String>(
-                      value: _selectedCountry,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedCountry = newValue!;
-                        });
-                      },
-                      underline:
-                          SizedBox.shrink(), // Remove the default underline
-                      items: muslimCountriesInWorld
-                          .map<DropdownMenuItem<String>>((country) {
-                        return DropdownMenuItem<String>(
-                          value: country['name'],
-                          child: SingleChildScrollView(
-                            // Make the content scrollable if needed
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisSize: MainAxisSize
-                                  .min, // Ensure it only takes up needed space
-                              mainAxisAlignment: MainAxisAlignment
-                                  .spaceBetween, // Properly space elements
-                              crossAxisAlignment: CrossAxisAlignment
-                                  .center, // Align items centrally
-                              children: [
-                                // Country name
-                                Text(
-                                  country['name']!,
-                                  overflow: TextOverflow
-                                      .ellipsis, // Prevent overflow of text
-                                ),
-                                SizedBox(
-                                    width: 10.w), // Space between text and flag
-                                // Country flag
-                                CountryFlag.fromCountryCode(
-                                  country['flag']!,
-                                  width: 24.w, // Adjust the width of the flag
-                                  height: 24.h, // Adjust the height of the flag
-                                ),
-                              ],
+                          ///============Photo====================
+                          CustomText(
+                            text: "Photo".tr,
+                            color: AppColors.hitTextColor000000,
+                            fontsize: 20.sp,
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              showImagePickerOption(context);
+                            },
+                            child: Container(
+                              width: double
+                                  .infinity, // Set your desired width here
+                              height: 160.h, // Set your desired height here
+                              decoration: BoxDecoration(
+                                color: Colors.green.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(12.dm),
+                                border:
+                                    Border.all(color: Colors.green.shade200),
+                              ),
+                              child: selectedIMage == null
+                                  ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.green,
+                                          size: 40,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Text(
+                                          "Take Your Photo".tr,
+                                          style: TextStyle(
+                                            color: Colors.green,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(12.dm),
+                                      child: selectedIMage!.path.isNotEmpty
+                                          ? Image.file(
+                                              selectedIMage!,
+                                              width: double.infinity,
+                                              height: double.infinity,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : CustomNetworkImage(
+                                              boxShape: BoxShape.rectangle,
+                                              imageUrl: "",
+                                              height: 180.h,
+                                              width: 345.w,
+                                            ),
+                                    ),
                             ),
                           ),
-                        );
-                      }).toList(),
+
+                          ///=============Place of birth====================
+                          CustomText(
+                            text: "Place of birth".tr,
+                            fontsize: 16.sp,
+                          ),
+                          SizedBox(height: 10.h),
+
+                          Center(
+                            child: Container(
+                              height: 50.h, // Adjust the height here
+                              width: 250.w, // Full width
+                              padding: EdgeInsets.symmetric(horizontal: 12.w),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    50.r), // Rounded corners
+                                border: Border.all(
+                                    color: Colors.grey), // Border styling
+                                color: Colors.white, // Background color
+                              ),
+                              child: DropdownButton<String>(
+                                value: _selectedCountry,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    _selectedCountry = newValue!;
+                                  });
+                                },
+                                underline: SizedBox
+                                    .shrink(), // Remove the default underline
+                                items: muslimCountriesInWorld
+                                    .map<DropdownMenuItem<String>>((country) {
+                                  return DropdownMenuItem<String>(
+                                    value: country['name'],
+                                    child: SingleChildScrollView(
+                                      // Make the content scrollable if needed
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize
+                                            .min, // Ensure it only takes up needed space
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .spaceBetween, // Properly space elements
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .center, // Align items centrally
+                                        children: [
+                                          // Country name
+                                          Text(
+                                            country['name']!,
+                                            overflow: TextOverflow
+                                                .ellipsis, // Prevent overflow of text
+                                          ),
+                                          SizedBox(
+                                              width: 10
+                                                  .w), // Space between text and flag
+                                          // Country flag
+                                          CountryFlag.fromCountryCode(
+                                            country['flag']!,
+                                            width: 24
+                                                .w, // Adjust the width of the flag
+                                            height: 24
+                                                .h, // Adjust the height of the flag
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ),
+
+                          SizedBox(height: 10.h),
+
+                          ///=============Button====================
+                          CustomButtonCommon(
+                            // loading: authController.loadingLoading.value == true,
+                            title: "Next".tr,
+                            onpress: () {
+                              //    Get.toNamed(AppRoutes.otpScreen,preventDuplicates: false);
+                              // if (_forRegKey.currentState!.validate()) {
+                              //   // authController.loginHandle(
+                              //   //     emailController.text, passController.text);
+                              // }
+                            },
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-
-                SizedBox(height: 10.h),
-
-                ///=============Button====================
-                CustomButtonCommon(
-                  // loading: authController.loadingLoading.value == true,
-                  title: "Next".tr,
-                  onpress: () {
-                    //    Get.toNamed(AppRoutes.otpScreen,preventDuplicates: false);
-                    // if (_forRegKey.currentState!.validate()) {
-                    //   // authController.loginHandle(
-                    //   //     emailController.text, passController.text);
-                    // }
-                  },
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+        );
+      }),
     );
   }
 

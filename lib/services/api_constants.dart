@@ -41,7 +41,6 @@ class ApiConstants {
   static const String getUserEndPoint = "/auth/session";
   static const String getAboutAndPrivacyTermsEndPoint = "/app-data";
   static String reviews(String id) => "/reviews?businessId=$id";
-;
 
   static const String verifyEmailEndPoint = "/user/verify-otp";
   static String getResendOTPEndPoint(String userId) =>
@@ -81,10 +80,11 @@ class ApiConstants {
   static String providerJobsApplicationEndPoint(String page, String jobId) =>
       "/job-applications?page=$page&jobId=$jobId";
 
-
-
-
-
-        static String maritalList = "/lookup/maritalList";
-  static String professionList = "/lookup/professionList?lang=en"
+  static String maritalList = "/lookup/maritalList";
+  static String professionList = "/lookup/professionList?lang=en";
+  static String countryList = "/lookup/countryList";
+  static String genderList = "/lookup/gender";
+  static String bankList = "/lookup/bankList";
+  static String wealthList = "/lookup/wealthList?lang=en";
+  static String getProfile = "/user/getProfileData";
 }
