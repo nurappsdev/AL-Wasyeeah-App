@@ -509,7 +509,7 @@ class UserProfile {
   final int? professionId;
   final int? countryCode;
   final int? multipleCitizenCode;
-  final int? multipleCitizenPassportNo;
+  final String? multipleCitizenPassportNo;
   final String? tin;
   final String? tinPaperUrl;
   final String? nationality;
@@ -588,7 +588,8 @@ class UserProfile {
         professionId: json["professionId"],
         countryCode: json["countryCode"],
         multipleCitizenCode: json["multipleCitizenCode"],
-        multipleCitizenPassportNo: json["multipleCitizenPassportNo"],
+        multipleCitizenPassportNo:
+            json["multipleCitizenPassportNo"]?.toString(),
         tin: json["tin"],
         tinPaperUrl: json["tinPaperUrl"],
         nationality: json["nationality"],

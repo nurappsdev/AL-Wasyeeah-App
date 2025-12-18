@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-class DownloadUtil {
+class FileDownloadUtil {
   Future<void> downloadFile(
       String url, String fileName, Function(double) onProgress) async {
     final client = http.Client();

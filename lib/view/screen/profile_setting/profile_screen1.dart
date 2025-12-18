@@ -351,41 +351,59 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                                               style: BorderStyle.solid,
                                             ),
                                           ),
-                                          onPressed: () {},
-                                          child: Text("Choose file"))),
+                                          onPressed: () {
+                                            controller.pickNidFile();
+                                          },
+                                          child:
+                                              controller.pickedNIDFile.value !=
+                                                      null
+                                                  ? Text(controller
+                                                      .pickedNIDFile
+                                                      .value!
+                                                      .fileName)
+                                                  : Text("Choose file"))),
                                 ),
                                 SizedBox(width: 6.w),
-                                InkWell(
-                                  onTap: controller.isDownloadingNid.value
-                                      ? null
-                                      : () => controller.downloadNidFile(),
-                                  child: Container(
-                                    width: 48.w,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
-                                      borderRadius: BorderRadius.circular(8.r),
-                                    ),
-                                    child: controller.isDownloadingNid.value
-                                        ? Center(
-                                            child: SizedBox(
-                                              width: 22.w,
-                                              height: 22.w,
-                                              child: CircularProgressIndicator(
-                                                value: controller
-                                                        .nidDownloadProgress
-                                                        .value /
-                                                    100,
-                                                strokeWidth: 2,
-                                                color: AppColors.whiteColor,
-                                              ),
-                                            ),
-                                          )
-                                        : Icon(
-                                            Icons.download,
-                                            color: AppColors.whiteColor,
+                                controller.profileModel.value.userProfile
+                                            ?.nidPaperUrl !=
+                                        null
+                                    ? InkWell(
+                                        onTap: controller.isDownloadingNid.value
+                                            ? null
+                                            : () =>
+                                                controller.downloadNidFile(),
+                                        child: Container(
+                                          width: 48.w,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.primaryColor,
+                                            borderRadius:
+                                                BorderRadius.circular(8.r),
                                           ),
-                                  ),
-                                ),
+                                          child: controller
+                                                  .isDownloadingNid.value
+                                              ? Center(
+                                                  child: SizedBox(
+                                                    width: 22.w,
+                                                    height: 22.w,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      value: controller
+                                                              .nidDownloadProgress
+                                                              .value /
+                                                          100,
+                                                      strokeWidth: 2,
+                                                      color:
+                                                          AppColors.whiteColor,
+                                                    ),
+                                                  ),
+                                                )
+                                              : Icon(
+                                                  Icons.download,
+                                                  color: AppColors.whiteColor,
+                                                ),
+                                        ),
+                                      )
+                                    : SizedBox.fromSize(),
                               ],
                             ),
                           ),
@@ -395,14 +413,6 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                             fontsize: 12.sp,
                           ),
 
-                          SizedBox(
-                            height: 6.w,
-                          ),
-                          if (nIDImages != null)
-                            Text(
-                              'Image Path: ${displayImageNIDPath.toString()}',
-                              style: TextStyle(color: Colors.grey),
-                            ),
                           SizedBox(height: 16.h),
 
                           ///============TIN (Tax Identification Number)====================
@@ -414,51 +424,223 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                  child: Column(
-                                children: [
-                                  CustomTextField(
-                                    controller: passOrNIDController,
-                                    hintText:
-                                        "TIN (Tax Identification Number)".tr,
-                                    borderColor:
-                                        AppColors.secondaryPrimaryColor,
-                                  ),
-                                ],
-                              )),
-                              SizedBox(
-                                width: 6.w,
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(16.r),
+
+                          CustomTextFormField(
+                            controller: controller.tinController.value,
+                            hint: "TIN".tr,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "TIN is required";
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+
+                          IntrinsicHeight(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                      child: OutlinedButton(
+                                          style: OutlinedButton.styleFrom(
+                                            foregroundColor:
+                                                AppColors.hitTextColor000000,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.r),
+                                            ),
+                                            side: BorderSide(
+                                              color: AppColors.primaryColor,
+                                              style: BorderStyle.solid,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            controller.pickTinFile();
+                                          },
+                                          child:
+                                              controller.pickedTinFile.value !=
+                                                      null
+                                                  ? Text(controller
+                                                      .pickedTinFile
+                                                      .value!
+                                                      .fileName)
+                                                  : Text("Choose file"))),
                                 ),
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.attach_file_outlined,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                  onPressed: () {
-                                    _TNImageFromGallery();
-                                    // Add your action here
-                                  },
+                                SizedBox(width: 6.w),
+                                controller.profileModel.value.userProfile
+                                            ?.tinPaperUrl !=
+                                        null
+                                    ? InkWell(
+                                        onTap: controller.isDownloadingTin.value
+                                            ? null
+                                            : () =>
+                                                controller.downloadTinFile(),
+                                        child: Container(
+                                          width: 48.w,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.primaryColor,
+                                            borderRadius:
+                                                BorderRadius.circular(8.r),
+                                          ),
+                                          child: controller
+                                                  .isDownloadingTin.value
+                                              ? Center(
+                                                  child: SizedBox(
+                                                    width: 22.w,
+                                                    height: 22.w,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      value: controller
+                                                              .tinDownloadProgress
+                                                              .value /
+                                                          100,
+                                                      strokeWidth: 2,
+                                                      color:
+                                                          AppColors.whiteColor,
+                                                    ),
+                                                  ),
+                                                )
+                                              : Icon(
+                                                  Icons.download,
+                                                  color: AppColors.whiteColor,
+                                                ),
+                                        ),
+                                      )
+                                    : SizedBox.fromSize(),
+                              ],
+                            ),
+                          ),
+                          CustomText(
+                            text: "* Only Pdf,JPEG,PNG file are allowed".tr,
+                            color: AppColors.redColor,
+                            fontsize: 12.sp,
+                          ),
+
+                          SizedBox(height: 16.h),
+
+                          ///============Multi Citizenship====================
+                          CustomText(
+                            text: "Multi Citizenship".tr,
+                            color: AppColors.hitTextColor000000,
+                            fontsize: 20.sp,
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomDropdown<CountryModel>(
+                                hint: "Select Country",
+                                items: controller.countryList,
+                                value: controller
+                                    .selectedMultiCitizenCountry.value,
+                                itemToString: (item) => item.country ?? "",
+                                onChanged: (val) {
+                                  controller.selectedMultiCitizenCountry.value =
+                                      val;
+                                },
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              CustomTextFormField(
+                                controller: controller
+                                    .multiCitizenPassportController.value,
+                                hint: "Passport No".tr,
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              IntrinsicHeight(
+                                child: Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                          child: OutlinedButton(
+                                              style: OutlinedButton.styleFrom(
+                                                foregroundColor: AppColors
+                                                    .hitTextColor000000,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.r),
+                                                ),
+                                                side: BorderSide(
+                                                  color: AppColors.primaryColor,
+                                                  style: BorderStyle.solid,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                controller
+                                                    .pickMultiCitizenFile();
+                                              },
+                                              child: controller
+                                                          .pickedMultiCitizenFile
+                                                          .value !=
+                                                      null
+                                                  ? Text(controller
+                                                      .pickedMultiCitizenFile
+                                                      .value!
+                                                      .fileName)
+                                                  : Text("Choose file"))),
+                                    ),
+                                    SizedBox(width: 6.w),
+                                    controller.profileModel.value.userProfile
+                                                ?.passportPaperUrl !=
+                                            null
+                                        ? InkWell(
+                                            onTap: controller
+                                                    .isDownloadingMultiCitizen
+                                                    .value
+                                                ? null
+                                                : () => controller
+                                                    .downloadMultiCitizenFile(),
+                                            child: Container(
+                                              width: 48.w,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.primaryColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.r),
+                                              ),
+                                              child: controller
+                                                      .isDownloadingMultiCitizen
+                                                      .value
+                                                  ? Center(
+                                                      child: SizedBox(
+                                                        width: 22.w,
+                                                        height: 22.w,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          value: controller
+                                                                  .multiCitizenDownloadProgress
+                                                                  .value /
+                                                              100,
+                                                          strokeWidth: 2,
+                                                          color: AppColors
+                                                              .whiteColor,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Icon(
+                                                      Icons.download,
+                                                      color:
+                                                          AppColors.whiteColor,
+                                                    ),
+                                            ),
+                                          )
+                                        : SizedBox.fromSize(),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 6.w,
-                          ),
-                          if (selectedImages != null)
-                            Text(
-                              'Image Path: ${displayImagePath.toString()}',
-                              style: TextStyle(color: Colors.grey),
-                            ),
                           SizedBox(height: 16.h),
 
                           ///============Photo====================
