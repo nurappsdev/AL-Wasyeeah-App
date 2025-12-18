@@ -31,6 +31,7 @@ class ProfileController extends GetxController {
   Rxn<GenderModel> selectedGender = Rxn();
   Rxn<BankModel> selectedBank = Rxn();
   Rxn<WealthModel> selectedWealth = Rxn();
+  Rxn<CountryModel> selectedOverseasCountry = Rxn();
 
   RxList<MaritalModel> maritalList = <MaritalModel>[].obs;
   RxList<ProfessionModel> professionList = <ProfessionModel>[].obs;
@@ -46,7 +47,23 @@ class ProfileController extends GetxController {
   Rx<TextEditingController> nidController = TextEditingController().obs;
   Rx<TextEditingController> passportController = TextEditingController().obs;
   Rx<TextEditingController> tinController = TextEditingController().obs;
+
   Rx<TextEditingController> multiCitizenPassportController =
+      TextEditingController().obs;
+
+  Rx<TextEditingController> presentZipCodeController =
+      TextEditingController().obs;
+  Rx<TextEditingController> presentVillageController =
+      TextEditingController().obs;
+  Rx<TextEditingController> presentRoadController = TextEditingController().obs;
+
+  Rx<TextEditingController> permanentZipCodeController =
+      TextEditingController().obs;
+  Rx<TextEditingController> permanentVillageController =
+      TextEditingController().obs;
+  Rx<TextEditingController> permanentRoadController =
+      TextEditingController().obs;
+  Rx<TextEditingController> overseasVillageController =
       TextEditingController().obs;
 
   RxBool isDownloadingNid = false.obs;
@@ -61,7 +78,10 @@ class ProfileController extends GetxController {
   RxBool isDownloadingMultiCitizen = false.obs;
   RxDouble multiCitizenDownloadProgress = 0.0.obs;
 
+  RxBool isPresentAddressAsPermanentAddress = false.obs;
+
   final step1formKey = GlobalKey<FormState>();
+  final step2formKey = GlobalKey<FormState>();
   @override
   void onInit() async {
     getProfilePageData();
@@ -96,8 +116,7 @@ class ProfileController extends GetxController {
         'NID_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
 
     FileDownloadUtil().downloadFile(
-      //'${ApiConstants.imageUrl}${profileModel.value.userProfile?.nidFile}',
-      'https://research.nhm.org/pdfs/10840/10840-002.pdf',
+      '${ApiConstants.imageUrl}${profileModel.value.userProfile?.nidFile}',
       fileName,
       (progress) {
         nidDownloadProgress(progress);
@@ -129,8 +148,8 @@ class ProfileController extends GetxController {
         'TIN_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf'; // Adjust extension if needed
 
     FileDownloadUtil().downloadFile(
-      // '${ApiConstants.imageUrl}${profileModel.value.userProfile?.tinPaperUrl}', // Use correct URL path
-      'https://research.nhm.org/pdfs/10840/10840-002.pdf',
+      '${ApiConstants.imageUrl}${profileModel.value.userProfile?.tinPaperUrl}', // Use correct URL path
+
       fileName,
       (progress) {
         tinDownloadProgress(progress);
@@ -162,8 +181,7 @@ class ProfileController extends GetxController {
         'MultiCitizen_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
 
     FileDownloadUtil().downloadFile(
-      //'${ApiConstants.imageUrl}${profileModel.value.userProfile?.passportPaperUrl}',
-      'https://research.nhm.org/pdfs/10840/10840-002.pdf',
+      '${ApiConstants.imageUrl}${profileModel.value.userProfile?.passportPaperUrl}',
       fileName,
       (progress) {
         multiCitizenDownloadProgress(progress);
@@ -245,32 +263,68 @@ class ProfileController extends GetxController {
       );
 
       profileModel(profileModelFromJson(jsonEncode(response.body)));
-      // selectedMarried(maritalList.firstWhere((element) =>
-      //     element.maritalId ==
-      //     profileModel.value.userProfile!.maritalStatusId));
-      // firstNameController.value.text =
-      //     profileModel.value.userProfile!.firstName ?? "";
-      // lastNameController.value.text =
-      //     profileModel.value.userProfile!.lastName ?? "";
+      // first name
+      firstNameController.value.text =
+          profileModel.value.userProfile!.firstName ?? "";
+      // last name
+      lastNameController.value.text =
+          profileModel.value.userProfile!.lastName ?? "";
+      // marital status
+      selectedMarried.value = maritalList.firstWhere((element) =>
+          element.maritalId == profileModel.value.userProfile!.maritalStatusId);
+      // country
       selectedCountry.value = countryList.firstWhere((element) =>
           element.countryId == profileModel.value.userProfile!.countryCode);
+      // district
       districtController.value.text =
           profileModel.value.userProfile!.district ?? "";
-      log("----****${profileModel.value.userProfile!.nid.toString()}");
+      // nid
       nidController.value.text = profileModel.value.userProfile!.nid.toString();
+      // passport
       passportController.value.text =
           profileModel.value.userProfile!.passportNo ?? "";
       selectedProfession.value = professionList.firstWhere((element) =>
           element.professionId == profileModel.value.userProfile!.professionId);
+      // country
       selectedCountry.value = countryList.firstWhere((element) =>
           element.countryId == profileModel.value.userProfile!.countryCode);
+      // gender
       selectedGender.value = genderList.firstWhere((element) =>
           element.genderId ==
           int.parse(profileModel.value.userProfile!.gender.toString()));
-
+      // tin number
       tinController.value.text = profileModel.value.userProfile!.tin ?? "";
+      // multi citizen passport
       multiCitizenPassportController.value.text =
           profileModel.value.userProfile!.multipleCitizenPassportNo ?? "";
+      // present zip code
+      presentZipCodeController.value.text =
+          profileModel.value.userProfile!.presentAddress?.split(',')[0] ?? "";
+      // present village
+      presentVillageController.value.text =
+          profileModel.value.userProfile!.presentAddress?.split(',')[1] ?? "";
+      presentRoadController.value.text =
+          profileModel.value.userProfile!.presentAddress?.split(',')[2] ?? "";
+      // permanent zip code
+      permanentZipCodeController.value.text =
+          profileModel.value.userProfile!.permanentAddress?.split(',')[0] ?? "";
+
+      // permanent village
+      permanentVillageController.value.text =
+          profileModel.value.userProfile!.permanentAddress?.split(',')[1] ?? "";
+
+      // permanent road
+      permanentRoadController.value.text =
+          profileModel.value.userProfile!.permanentAddress?.split(',')[2] ?? "";
+
+      // overseas country
+      selectedOverseasCountry.value = countryList.firstWhere((element) =>
+          element.countryId ==
+          profileModel.value.userProfile!.overseasCountryCode);
+
+      // overseas village
+      overseasVillageController.value.text =
+          profileModel.value.userProfile!.overseasVillage ?? "";
 
       try {
         if (profileModel.value.userProfile!.multipleCitizenCode != null) {
@@ -279,8 +333,8 @@ class ProfileController extends GetxController {
                   element.countryId ==
                   profileModel.value.userProfile!.multipleCitizenCode);
         }
-      } catch (e) {
-        log("Multi citizen country not found in list");
+      } catch (e, s) {
+        log("Error: $e\nStacktrace: $s");
       }
 
       selectedBank(
