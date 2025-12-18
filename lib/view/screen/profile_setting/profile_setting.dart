@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,20 +14,7 @@ class StepNavigationWithPageView extends StatefulWidget {
 
 class _StepNavigationWithPageViewState
     extends State<StepNavigationWithPageView> {
-  final PageController _pageController = PageController();
-  int _currentStep = 0;
-
-  // Navigate to a specific page based on step
-  void _onStepTapped(int step) {
-    setState(() {
-      _currentStep = step;
-    });
-    _pageController.animateToPage(
-      step,
-      duration: Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  }
+  final ProfileController controller = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -44,68 +32,68 @@ class _StepNavigationWithPageViewState
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Step Indicator
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 26.0,
-                top: 20,
-                bottom: 20,
-              ),
-              child: Row(
-                children: List.generate(5, (index) {
-                  bool isCompleted = index < _currentStep;
-                  bool isActive = index == _currentStep;
+            Obx(
+              () => Padding(
+                padding: const EdgeInsets.only(
+                  left: 26.0,
+                  top: 20,
+                  bottom: 20,
+                ),
+                child: Row(
+                  children: List.generate(5, (index) {
+                    bool isCompleted = index < controller.currentStep.value;
+                    bool isActive = index == controller.currentStep.value;
 
-                  return Expanded(
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () => _onStepTapped(index),
-                          child: Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              color: isCompleted || isActive
-                                  ? Colors.green
-                                  : Colors.grey.shade300,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.black26,
+                    return Expanded(
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () => controller.onStepTapped(index),
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: isCompleted || isActive
+                                    ? Colors.green
+                                    : Colors.grey.shade300,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.black26,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 20,
                               ),
                             ),
-                            child: Icon(
-                              Icons.check,
-                              color: Colors.white,
-                              size: 20,
-                            ),
                           ),
-                        ),
-                        if (index < 4)
-                          Expanded(
-                            child: Container(
-                              height: 2,
-                              color: isCompleted
-                                  ? Colors.green
-                                  : Colors.grey.shade300,
+                          if (index < 4)
+                            Expanded(
+                              child: Container(
+                                height: 2,
+                                color: isCompleted
+                                    ? Colors.green
+                                    : Colors.grey.shade300,
+                              ),
                             ),
-                          ),
-                      ],
-                    ),
-                  );
-                }),
+                        ],
+                      ),
+                    );
+                  }),
+                ),
               ),
             ),
 
             // PageView for the screens
             Expanded(
               child: PageView(
-                controller: _pageController,
+                controller: controller.pageController,
                 onPageChanged: (index) {
-                  setState(() {
-                    _currentStep = index;
-                  });
+                  controller.currentStep.value = index;
                 },
                 children: [
-                  ProfileScreen1(),
+                  ProfileSetupStepOneScreen(),
                   PresentAddressScreen(),
                   FatherInfoScreen(),
                   FamilyInfoScreen(),

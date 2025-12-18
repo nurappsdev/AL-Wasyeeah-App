@@ -1,6 +1,5 @@
-
-
-import 'package:al_wasyeah/view/screen/profile_setting/father_info_screen.dart' show FatherInfoScreen;
+import 'package:al_wasyeah/view/screen/profile_setting/father_info_screen.dart'
+    show FatherInfoScreen;
 import 'package:flutter/material.dart';
 
 import 'bank_info_screen.dart';
@@ -22,7 +21,7 @@ class _MultiStepFormScreenState extends State<MultiStepFormScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _steps = [
-    ProfileScreen1(),
+    ProfileSetupStepOneScreen(),
     PresentAddressScreen(),
     FatherInfoScreen(),
     FamilyInfoScreen(),
@@ -92,7 +91,8 @@ class _MultiStepFormScreenState extends State<MultiStepFormScreen> {
                   ),
                 ElevatedButton(
                   onPressed: _nextPage,
-                  child: Text(_currentIndex == _steps.length - 1 ? "Finish" : "Next"),
+                  child: Text(
+                      _currentIndex == _steps.length - 1 ? "Finish" : "Next"),
                 ),
               ],
             ),

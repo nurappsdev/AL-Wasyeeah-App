@@ -16,11 +16,9 @@ class CustomDropdown<T> extends StatefulWidget {
     this.value,
     this.onChanged,
     this.isValueSelected,
-
+    this.validator,
     // STATE
     this.enabled = true,
-    this.hasError = false,
-    this.errorText,
 
     // DIMENSIONS
     this.borderRadius = 8,
@@ -39,11 +37,10 @@ class CustomDropdown<T> extends StatefulWidget {
   final T? value;
   final String Function(T) itemToString;
   final ValueChanged<T?>? onChanged;
+  final FormFieldValidator<T>? validator;
   final bool Function(T?)? isValueSelected;
 
   final bool enabled;
-  final bool hasError;
-  final String? errorText;
 
   final double borderRadius;
   final double maxMenuHeight;
@@ -77,6 +74,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
       compareFn: (a, b) => a == b,
       onChanged: widget.onChanged,
       itemAsString: (item) => item == null ? "" : widget.itemToString(item),
+      validator: widget.validator,
       dropdownBuilder: (context, selectedItem) {
         final bool hasValue = selectedItem != null;
 
@@ -97,7 +95,6 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
           focusedBorder: _border(Colors.blue),
           errorBorder: _border(Colors.red),
           focusedErrorBorder: _border(Colors.red),
-          errorText: widget.hasError ? widget.errorText : null,
           labelStyle: TextStyle(color: Colors.grey[200]),
         ),
       ),

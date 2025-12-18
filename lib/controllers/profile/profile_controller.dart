@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
@@ -14,17 +15,14 @@ import 'package:al_wasyeah/models/profile_info_model/profile_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
 import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-
-import '../../helpers/helpers.dart';
-import '../../helpers/prefs_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
-import '../../utils/utils.dart';
 import 'package:al_wasyeah/helpers/file_download_util.dart'; // Import DownloadUtil explicitly if not in utils.dart
 import '../../view/screen/screen.dart';
 
 class ProfileController extends GetxController {
+  final PageController pageController = PageController();
+  RxInt currentStep = 0.obs;
   Rx<RxStatus> status = RxStatus.loading().obs;
   Rxn<MaritalModel> selectedMarried = Rxn();
   Rxn<ProfessionModel> selectedProfession = Rxn();
@@ -63,10 +61,20 @@ class ProfileController extends GetxController {
   RxBool isDownloadingMultiCitizen = false.obs;
   RxDouble multiCitizenDownloadProgress = 0.0.obs;
 
+  final step1formKey = GlobalKey<FormState>();
   @override
   void onInit() async {
     getProfilePageData();
     super.onInit();
+  }
+
+  void onStepTapped(int step) {
+    currentStep(step);
+    pageController.animateToPage(
+      step,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   void pickNidFile() async {
@@ -88,7 +96,8 @@ class ProfileController extends GetxController {
         'NID_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
 
     FileDownloadUtil().downloadFile(
-      '${ApiConstants.imageUrl}${profileModel.value.userProfile?.nidFile}',
+      //'${ApiConstants.imageUrl}${profileModel.value.userProfile?.nidFile}',
+      'https://research.nhm.org/pdfs/10840/10840-002.pdf',
       fileName,
       (progress) {
         nidDownloadProgress(progress);
@@ -120,8 +129,8 @@ class ProfileController extends GetxController {
         'TIN_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf'; // Adjust extension if needed
 
     FileDownloadUtil().downloadFile(
-      '${ApiConstants.imageUrl}${profileModel.value.userProfile?.tinPaperUrl}', // Use correct URL path
-
+      // '${ApiConstants.imageUrl}${profileModel.value.userProfile?.tinPaperUrl}', // Use correct URL path
+      'https://research.nhm.org/pdfs/10840/10840-002.pdf',
       fileName,
       (progress) {
         tinDownloadProgress(progress);
@@ -153,7 +162,8 @@ class ProfileController extends GetxController {
         'MultiCitizen_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
 
     FileDownloadUtil().downloadFile(
-      '${ApiConstants.imageUrl}${profileModel.value.userProfile?.passportPaperUrl}',
+      //'${ApiConstants.imageUrl}${profileModel.value.userProfile?.passportPaperUrl}',
+      'https://research.nhm.org/pdfs/10840/10840-002.pdf',
       fileName,
       (progress) {
         multiCitizenDownloadProgress(progress);
@@ -235,13 +245,13 @@ class ProfileController extends GetxController {
       );
 
       profileModel(profileModelFromJson(jsonEncode(response.body)));
-      selectedMarried(maritalList.firstWhere((element) =>
-          element.maritalId ==
-          profileModel.value.userProfile!.maritalStatusId));
-      firstNameController.value.text =
-          profileModel.value.userProfile!.firstName ?? "";
-      lastNameController.value.text =
-          profileModel.value.userProfile!.lastName ?? "";
+      // selectedMarried(maritalList.firstWhere((element) =>
+      //     element.maritalId ==
+      //     profileModel.value.userProfile!.maritalStatusId));
+      // firstNameController.value.text =
+      //     profileModel.value.userProfile!.firstName ?? "";
+      // lastNameController.value.text =
+      //     profileModel.value.userProfile!.lastName ?? "";
       selectedCountry.value = countryList.firstWhere((element) =>
           element.countryId == profileModel.value.userProfile!.countryCode);
       districtController.value.text =
