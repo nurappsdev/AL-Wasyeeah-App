@@ -96,7 +96,7 @@ class _StepNavigationWithPageViewState
                 children: [
                   ProfileSetupStepOneScreen(),
                   ProfileSetupsStepTwoScreen(),
-                  FatherInfoScreen(),
+                  ProfileSetupStepThreeScreen(),
                   FamilyInfoScreen(),
                   BankInfoScreen(),
                 ],

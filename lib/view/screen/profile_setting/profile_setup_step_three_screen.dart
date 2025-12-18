@@ -9,45 +9,17 @@ import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
-class FatherInfoScreen extends StatefulWidget {
-  FatherInfoScreen({super.key});
+class ProfileSetupStepThreeScreen extends StatefulWidget {
+  ProfileSetupStepThreeScreen({super.key});
 
   @override
-  State<FatherInfoScreen> createState() => _FatherInfoScreenState();
+  State<ProfileSetupStepThreeScreen> createState() =>
+      _ProfileSetupStepThreeScreenState();
 }
 
-class _FatherInfoScreenState extends State<FatherInfoScreen> {
-  TextEditingController fatherController = TextEditingController();
-  TextEditingController motherNameController = TextEditingController();
-  TextEditingController motherPassOrNIDController = TextEditingController();
-
-  TextEditingController passOrNIDController = TextEditingController();
-
-  ProfileController profileController = Get.put(ProfileController());
-
-  List<bool> isSelected = [true, false];
-
-  ///----------------NID image=============================
-  File? nIDImages;
-  String? nidImagePath; // Variable to store the image path
-  String get displayImageNIDPath {
-    if (nidImagePath == null || nidImagePath!.length <= 30) {
-      return nidImagePath ?? 'No image selected';
-    }
-    return nidImagePath!
-        .substring(nidImagePath!.length - 30); // Get the last 18 characters
-  }
-
-  Future<void> _NIDImageFromGallery() async {
-    final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedImage == null) return;
-
-    setState(() {
-      nIDImages = File(pickedImage.path);
-      nidImagePath = pickedImage.path; // Save the image path
-    });
-  }
+class _ProfileSetupStepThreeScreenState
+    extends State<ProfileSetupStepThreeScreen> {
+  final ProfileController controller = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +34,7 @@ class _FatherInfoScreenState extends State<FatherInfoScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ///=============="Father’s Information================================
-                    SizedBox(height: 20.h),
+                    SizedBox(height: 16.h),
                     Center(
                         child: CustomText(
                       text: "Father’s Information".tr,

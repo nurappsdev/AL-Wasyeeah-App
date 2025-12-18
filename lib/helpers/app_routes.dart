@@ -50,7 +50,8 @@ class AppRoutes {
         GetPage(
             name: zakatCalculatorScreen, page: () => ZakatCalculatorScreen()),
         GetPage(name: profileSetting1, page: () => ProfileSetupStepOneScreen()),
-        GetPage(name: fatherInfoScreen, page: () => FatherInfoScreen()),
+        GetPage(
+            name: fatherInfoScreen, page: () => ProfileSetupStepThreeScreen()),
         GetPage(name: homeScreen, page: () => HomeScreen()),
         GetPage(name: wasyyahScreen, page: () => WasyyahScreen()),
         GetPage(name: wasyyahEditScreen, page: () => WasiyahEditScreen()),
