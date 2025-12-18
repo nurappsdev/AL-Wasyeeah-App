@@ -317,45 +317,84 @@ class _ProfileScreen1State extends State<ProfileScreen1> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: CustomTextField(
-                                  controller: passOrNIDController,
-                                  hintText: "NID/Passport No".tr,
-                                  borderColor: AppColors.secondaryPrimaryColor,
-                                  onChange: (value) {},
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'NID/Passport No'.tr;
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                width: 6.w,
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(16.r),
-                                ),
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.attach_file_outlined,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                  onPressed: () {
-                                    _NIDImageFromGallery();
-                                    // Add your action here
-                                  },
-                                ),
-                              ),
-                            ],
+
+                          CustomTextFormField(
+                            controller: controller.nidController.value,
+                            hint: "NID/Passport No".tr,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "NID/Passport No is required";
+                              }
+                              return null;
+                            },
                           ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+
+                          IntrinsicHeight(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                      child: OutlinedButton(
+                                          style: OutlinedButton.styleFrom(
+                                            foregroundColor:
+                                                AppColors.hitTextColor000000,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.r),
+                                            ),
+                                            side: BorderSide(
+                                              color: AppColors.primaryColor,
+                                              style: BorderStyle.solid,
+                                            ),
+                                          ),
+                                          onPressed: () {},
+                                          child: Text("Choose file"))),
+                                ),
+                                SizedBox(width: 6.w),
+                                InkWell(
+                                  onTap: controller.isDownloadingNid.value
+                                      ? null
+                                      : () => controller.downloadNidFile(),
+                                  child: Container(
+                                    width: 48.w,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryColor,
+                                      borderRadius: BorderRadius.circular(8.r),
+                                    ),
+                                    child: controller.isDownloadingNid.value
+                                        ? Center(
+                                            child: SizedBox(
+                                              width: 22.w,
+                                              height: 22.w,
+                                              child: CircularProgressIndicator(
+                                                value: controller
+                                                        .nidDownloadProgress
+                                                        .value /
+                                                    100,
+                                                strokeWidth: 2,
+                                                color: AppColors.whiteColor,
+                                              ),
+                                            ),
+                                          )
+                                        : Icon(
+                                            Icons.download,
+                                            color: AppColors.whiteColor,
+                                          ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          CustomText(
+                            text: "* Only Pdf,JPEG,PNG file are allowed".tr,
+                            color: AppColors.redColor,
+                            fontsize: 12.sp,
+                          ),
+
                           SizedBox(
                             height: 6.w,
                           ),

@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:intl/intl.dart';
+
 import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
@@ -18,6 +20,7 @@ import '../../helpers/prefs_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
 import '../../utils/utils.dart';
+import 'package:al_wasyeah/utils/download_util.dart'; // Import DownloadUtil explicitly if not in utils.dart
 import '../../view/screen/screen.dart';
 
 class ProfileController extends GetxController {
@@ -38,6 +41,42 @@ class ProfileController extends GetxController {
   RxList<BankModel> bankList = <BankModel>[].obs;
   RxList<WealthModel> wealthList = <WealthModel>[].obs;
   Rx<ProfileModel> profileModel = ProfileModel().obs;
+
+  Rx<TextEditingController> firstNameController = TextEditingController().obs;
+  Rx<TextEditingController> lastNameController = TextEditingController().obs;
+  Rx<TextEditingController> districtController = TextEditingController().obs;
+  Rx<TextEditingController> nidController = TextEditingController().obs;
+  Rx<TextEditingController> passportController = TextEditingController().obs;
+
+  RxBool isDownloadingNid = false.obs;
+  RxDouble nidDownloadProgress = 0.0.obs;
+
+  Future<void> downloadNidFile() async {
+    log(profileModel.value.userProfile?.nidPaperUrl ?? '');
+    if (profileModel.value.userProfile?.nidPaperUrl == null) {
+      return;
+    }
+    isDownloadingNid(true);
+    nidDownloadProgress(0.0);
+
+    final String fileName =
+        'NID_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
+
+    DownloadUtil().downloadFile(
+      //'${ApiConstants.imageUrl}${profileModel.value.userProfile?.nidFile}',
+      'https://research.nhm.org/pdfs/10840/10840-002.pdf',
+      fileName,
+      (progress) {
+        nidDownloadProgress(progress);
+        if (progress >= 100) {
+          isDownloadingNid(false);
+        }
+      },
+    ).catchError((e) {
+      isDownloadingNid(false);
+      print('Download failed: $e');
+    });
+  }
 
   final List<String> nationality = [
     'Bangaldeshi'.tr,
@@ -103,12 +142,6 @@ class ProfileController extends GetxController {
 
   List<SpouseItemS> addSpouseList = [];
   List<ChildrenInfo> addChildrenInfoList = [];
-
-  Rx<TextEditingController> firstNameController = TextEditingController().obs;
-
-  Rx<TextEditingController> lastNameController = TextEditingController().obs;
-
-  Rx<TextEditingController> districtController = TextEditingController().obs;
 
   Future<void> submitUserProfile({
     // User Profile
@@ -463,6 +496,10 @@ class ProfileController extends GetxController {
           element.countryId == profileModel.value.userProfile!.countryCode);
       districtController.value.text =
           profileModel.value.userProfile!.district ?? "";
+      log("----****${profileModel.value.userProfile!.nid.toString()}");
+      nidController.value.text = profileModel.value.userProfile!.nid.toString();
+      passportController.value.text =
+          profileModel.value.userProfile!.passportNo ?? "";
       selectedProfession.value = professionList.firstWhere((element) =>
           element.professionId == profileModel.value.userProfile!.professionId);
       selectedCountry.value = countryList.firstWhere((element) =>

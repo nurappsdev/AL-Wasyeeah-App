@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:al_wasyeah/helpers/app_routes.dart';
@@ -18,7 +17,6 @@ import 'before_login/profirty_Distribute_screen2.dart';
 import 'no_internet_screen.dart';
 import 'package:hijri/hijri_calendar.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -27,7 +25,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   late Timer timer;
   Duration? timeLeft;
   String upcomingPrayer = "";
@@ -60,8 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-
-
   // @override
   // void initState() {
   //   super.initState();
@@ -92,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     userController.getsalatTimeHandle().then((_) {
       Future.delayed(Duration(milliseconds: 500), () {
-        final index = userController.prayerTimes.keys.toList().indexOf(userController.upcomingPrayer.value);
+        final index = userController.prayerTimes.keys
+            .toList()
+            .indexOf(userController.upcomingPrayer.value);
         if (index != -1) {
           _scrollController.animateTo(
             index * 250.h,
@@ -122,79 +119,89 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return ConnectivityWrapper(
       child: Scaffold(
-        appBar: AppBar(
-          leadingWidth: 200, // Adjust this width to fit your content
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Row(
-              children: [
-                InkWell(
-                  onTap: (){
-                    Get.toNamed(AppRoutes.profileInfo,preventDuplicates: false);
-                  },
-                  child: CircleAvatar(
-                    radius: 18, // Radius of the CircleAvatar
-                    backgroundImage: AssetImage(AppImages.profileIcon),
-                    backgroundColor: Colors.grey[200], // Optional background color
-                  )
-                  // CustomNetworkImage(
-                  //   boxShape: BoxShape.circle,
-                  //   imageUrl: AppImages.profileImage,
-                  //   height: 40,
-                  //   width: 40,
-                  //   boxFit: BoxFit.contain,
-                  // ),
-                ),
-                SizedBox(width: 8.h), // Space between the image and text
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Obx(()=> userController.isLoadingUserProfile.value ? CustomLoader():
-                    CustomText(
-                        text: userController.userProfile.value?.firstName ?? "N/A",
-                        fontsize: 16.sp,
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    CustomText(
-                      text: "Welcome back!".tr,
-                      fontsize: 14.sp,
-                      textAlign: TextAlign.start,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Stack(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70.h),
+          child: AppBar(
+            leadingWidth: 200, // Adjust this width to fit your content
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Row(
                 children: [
-                  IconButton(
-                    icon: Icon(Icons.notifications_none_sharp),
-                    onPressed: () {
-                      Get.toNamed(AppRoutes.notificationsScreen,preventDuplicates: false);
-                      // Handle notification click
-                    },
-                  ),
-                  Positioned(
-                    right: 14,
-                    top: 10,
-                    child: Container(
-                      height: 10,
-                      width: 10,
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
+                  InkWell(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.profileInfo,
+                            preventDuplicates: false);
+                      },
+                      child: CircleAvatar(
+                        radius: 18, // Radius of the CircleAvatar
+                        backgroundImage: AssetImage(AppImages.profileIcon),
+                        backgroundColor:
+                            Colors.grey[200], // Optional background color
+                      )
+                      // CustomNetworkImage(
+                      //   boxShape: BoxShape.circle,
+                      //   imageUrl: AppImages.profileImage,
+                      //   height: 40,
+                      //   width: 40,
+                      //   boxFit: BoxFit.contain,
+                      // ),
                       ),
-                    ),
-                  ),
+                  SizedBox(width: 8.h), // Space between the image and text
+                  // Column(
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Obx(
+                  //       () => userController.isLoadingUserProfile.value
+                  //           ? CustomLoader()
+                  //           : CustomText(
+                  //               text: userController
+                  //                       .userProfile.value?.firstName ??
+                  //                   "N/A",
+                  //               fontsize: 16.sp,
+                  //               textAlign: TextAlign.start,
+                  //             ),
+                  //     ),
+                  //     CustomText(
+                  //       text: "Welcome back!".tr,
+                  //       fontsize: 14.sp,
+                  //       textAlign: TextAlign.start,
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
-          ],
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Stack(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.notifications_none_sharp),
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.notificationsScreen,
+                            preventDuplicates: false);
+                        // Handle notification click
+                      },
+                    ),
+                    Positioned(
+                      right: 14,
+                      top: 10,
+                      child: Container(
+                        height: 16,
+                        width: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
         body: BackgroundImageContainer(
           child: Container(
@@ -202,58 +209,80 @@ class _HomeScreenState extends State<HomeScreen> {
             width: double.infinity,
             child: SingleChildScrollView(
               child: Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 20.w),
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: Column(
                   children: [
-                    SizedBox(height: 20.h,),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+
                     ///=======================Explore your \n Wasyyah==========================
 
-
-
                     InkWell(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.wasyyahScreen,preventDuplicates: false);
+                      onTap: () {
+                        Get.toNamed(AppRoutes.wasyyahScreen,
+                            preventDuplicates: false);
                       },
                       child: Container(
                         height: 150.h,
                         width: double.infinity,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            border: Border.all(color: AppColors.primaryColor),
-                            ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          border: Border.all(color: AppColors.primaryColor),
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            SvgPicture.asset(AppIcons.exploreWasyea, width: 80.w,height: 80.h,),
-                            CustomText(text: "Explore your \n Wasyyah".tr,fontsize: 18.sp,color: AppColors.primaryColor,)
+                            SvgPicture.asset(
+                              AppIcons.exploreWasyea,
+                              width: 80.w,
+                              height: 80.h,
+                            ),
+                            CustomText(
+                              text: "Explore your \n Wasyyah".tr,
+                              fontsize: 18.sp,
+                              color: AppColors.primaryColor,
+                            )
                           ],
                         ),
                       ),
                     ),
                     SizedBox(height: 20.h),
 
-
-
                     ///=======================Witness \n Nominee==========================
-                    Row(mainAxisAlignment: MainAxisAlignment.start,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
-                          child:  GestureDetector(
-                            onTap: (){
-                              Get.toNamed(AppRoutes.witnessTabScreen,preventDuplicates: false);
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.toNamed(AppRoutes.witnessTabScreen,
+                                  preventDuplicates: false);
                             },
                             child: Container(
                               height: 100.h,
                               width: double.infinity,
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
-                                border: Border.all(color: AppColors.primaryColor),
+                                border:
+                                    Border.all(color: AppColors.primaryColor),
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  SvgPicture.asset(AppIcons.witness, width: 50.w,height: 50.h,),
-                                  CustomText(text: "Witness".tr,fontsize: 18.sp,color: AppColors.textColor4E4E4E,)
+                                  SvgPicture.asset(
+                                    AppIcons.witness,
+                                    width: 50.w,
+                                    height: 50.h,
+                                  ),
+                                  CustomText(
+                                    text: "Witness".tr,
+                                    fontsize: 18.sp,
+                                    color: AppColors.textColor4E4E4E,
+                                  )
                                 ],
                               ),
                             ),
@@ -261,24 +290,38 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
 
                         ///======================Nominee====================
-                        SizedBox(width: 6.w,),
+                        SizedBox(
+                          width: 6.w,
+                        ),
                         Expanded(
                           child: GestureDetector(
-                            onTap: (){
-                              Get.toNamed(AppRoutes.nomineeTabScreen,preventDuplicates: false);
+                            onTap: () {
+                              Get.toNamed(AppRoutes.nomineeTabScreen,
+                                  preventDuplicates: false);
                             },
                             child: Container(
                               height: 100.h,
                               width: double.infinity,
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
-                                border: Border.all(color: AppColors.primaryColor),
+                                border:
+                                    Border.all(color: AppColors.primaryColor),
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
-                                  SvgPicture.asset(AppIcons.nominee, width: 40.w,height: 40.h,),
-                                  CustomText(text: "Nominee".tr,fontsize: 18.sp,color: AppColors.textColor4E4E4E,)
+                                  SvgPicture.asset(
+                                    AppIcons.nominee,
+                                    width: 40.w,
+                                    height: 40.h,
+                                  ),
+                                  CustomText(
+                                    text: "Nominee".tr,
+                                    fontsize: 18.sp,
+                                    color: AppColors.textColor4E4E4E,
+                                  )
                                 ],
                               ),
                             ),
@@ -287,70 +330,101 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
 
-                          SizedBox(height: 10.h,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Prayer Times", style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold, color: Colors.green[700])),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                   SizedBox(height: 12.h),
-                                  Text(DateFormat('dd MMM, yyyy').format(DateTime.now()), style: TextStyle(fontSize: 14.sp, color: Colors.black)),
-                                   SizedBox(height: 4.h),
-                                  Text(
-                                    todayHijri.toFormat("dd MMMM, yyyy"), // Example: 26 Muharram, 1447
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      color: Colors.green[800],
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Prayer Times",
+                            style: TextStyle(
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green[700])),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            SizedBox(height: 12.h),
+                            Text(
+                                DateFormat('dd MMM, yyyy')
+                                    .format(DateTime.now()),
+                                style: TextStyle(
+                                    fontSize: 14.sp, color: Colors.black)),
+                            SizedBox(height: 4.h),
+                            Text(
+                              todayHijri.toFormat(
+                                  "dd MMMM, yyyy"), // Example: 26 Muharram, 1447
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: Colors.green[800],
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
 
-
-                    SizedBox(height: 20.h,),
+                    SizedBox(
+                      height: 20.h,
+                    ),
                     Obx(() {
                       final prayers = userController.prayerTimes;
                       final current = userController.upcomingPrayer.value;
                       final left = userController.timeLeft.value;
 
                       if (prayers.isEmpty) {
-                        return  SizedBox(
+                        return SizedBox(
                           height: 200.h,
                           child: GridView.builder(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             scrollDirection: Axis.horizontal,
                             itemCount: 2,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1,
                               mainAxisSpacing: 16.0,
                               childAspectRatio: 0.8,
                             ),
                             itemBuilder: (context, index) {
-                              return  Card(
+                              return Card(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Container(height: 20, width: 120, color: Colors.grey.shade300),
+                                      Container(
+                                          height: 20,
+                                          width: 120,
+                                          color: Colors.grey.shade300),
                                       SizedBox(height: 8.h),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
                                         children: [
-                                          Container(height: 80.h, width: 80, color: Colors.grey.shade300),
+                                          Container(
+                                              height: 80.h,
+                                              width: 80,
+                                              color: Colors.grey.shade300),
                                           Column(
-                                            children: List.generate(4, (index) => Padding(
-                                              padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                              child: Container(height: 20, width: 60 + index * 10, color: Colors.grey.shade300),
-                                            )),
+                                            children: List.generate(
+                                                4,
+                                                (index) => Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 4.0),
+                                                      child: Container(
+                                                          height: 20,
+                                                          width:
+                                                              60 + index * 10,
+                                                          color: Colors
+                                                              .grey.shade300),
+                                                    )),
                                           ),
                                         ],
                                       ),
@@ -370,7 +444,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           controller: _scrollController,
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           scrollDirection: Axis.horizontal,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 1,
                             mainAxisSpacing: 16.0,
                             childAspectRatio: 0.8,
@@ -386,36 +461,51 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ? Color(0xffFFF0E2)
                                   : Colors.grey[200],
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0, ),
+                                borderRadius: BorderRadius.circular(
+                                  12.0,
+                                ),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      isCurrent ? "Upcoming Prayers" : "Prayer Time",
+                                      isCurrent
+                                          ? "Upcoming Prayers"
+                                          : "Prayer Time",
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.bold,
-                                        color: isCurrent ? Colors.green : Colors.black,
+                                        color: isCurrent
+                                            ? Colors.green
+                                            : Colors.black,
                                       ),
                                     ),
                                     SizedBox(height: 8.h),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
                                       children: [
-                                        Image.asset(AppImages.mosjidIcon, height: 80.h, width: 80),
+                                        Image.asset(AppImages.mosjidIcon,
+                                            height: 80.h, width: 80),
                                         Column(
                                           children: [
                                             Text(
                                               name,
-                                              style:  TextStyle(fontSize: 20.sp, color: isCurrent? Colors.green: Colors.red),
+                                              style: TextStyle(
+                                                  fontSize: 20.sp,
+                                                  color: isCurrent
+                                                      ? Colors.green
+                                                      : Colors.red),
                                             ),
                                             if (isCurrent && left != null)
                                               Text(
                                                 left.toString().split(".")[0],
-                                                style: TextStyle(fontSize: 18.sp, color: Colors.black87),
+                                                style: TextStyle(
+                                                    fontSize: 18.sp,
+                                                    color: Colors.black87),
                                               ),
                                             Text(
                                               formatTime(time),
@@ -423,7 +513,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             Switch(
                                               value: isCurrent,
-                                              activeColor: AppColors.primaryColor,
+                                              activeColor:
+                                                  AppColors.primaryColor,
                                               onChanged: (value) {
                                                 // handle toggle
                                               },
@@ -608,32 +699,39 @@ class _HomeScreenState extends State<HomeScreen> {
                     //       : const Center(child: CircularProgressIndicator()),
                     // ),
                     ///==========================Zakat distribute======================
-                    SizedBox(height: 20.h,),
+                    SizedBox(
+                      height: 20.h,
+                    ),
                     InkWell(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.zakatCalculatorScreen,preventDuplicates: false);
+                      onTap: () {
+                        Get.toNamed(AppRoutes.zakatCalculatorScreen,
+                            preventDuplicates: false);
                       },
-                      child: SizedBox(height: 200.h,
+                      child: SizedBox(
+                        height: 200.h,
                         child: Image.asset(AppImages.zakatImg),
-
                       ),
                     ),
 
                     ///==========================property distribute======================
-                    SizedBox(height: 20.h,),
+                    SizedBox(
+                      height: 20.h,
+                    ),
                     InkWell(
-                      onTap: (){
-                        Get.off(()=>PropertyDistributionScreen2(),preventDuplicates: false);
+                      onTap: () {
+                        Get.off(() => PropertyDistributionScreen2(),
+                            preventDuplicates: false);
                       },
-                      child: SizedBox(height: 200.h,
+                      child: SizedBox(
+                        height: 200.h,
                         child: Image.asset(AppImages.profirtyImg),
-
                       ),
                     ),
 
-                    SizedBox(height: 40.h,),
-
-                ],
+                    SizedBox(
+                      height: 40.h,
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -641,12 +739,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-
-
-
   }
-
-
 
   String formatTime(String time24) {
     try {
@@ -691,16 +784,23 @@ class CustomCard extends StatelessWidget {
                 color: isCurrent ? Colors.green : Colors.orange,
               ),
             ),
-            SizedBox(height: 8.h,),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+            SizedBox(
+              height: 8.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 // SvgPicture.asset(imageUrl, height: 80.h),
-                Image.asset(imageUrl,height: 80.h,width: 80,),
+                Image.asset(
+                  imageUrl,
+                  height: 80.h,
+                  width: 80,
+                ),
                 Column(
                   children: [
                     Text(
                       "Isha".tr,
-                      style: const TextStyle(fontSize: 18.0,color: Colors.red),
+                      style: const TextStyle(fontSize: 18.0, color: Colors.red),
                     ),
                     Text(
                       time,
@@ -722,6 +822,4 @@ class CustomCard extends StatelessWidget {
       ),
     );
   }
-
 }
-

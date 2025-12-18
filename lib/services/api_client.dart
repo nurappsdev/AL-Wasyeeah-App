@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -388,8 +389,9 @@ class ApiClient extends GetxService {
       final decodedBody = utf8.decode(response.bodyBytes);
       body = jsonDecode(decodedBody);
     } catch (e) {
-      debugPrint(e.toString());
+      log("Exception : " + e.toString());
     }
+
     Response response0 = Response(
       body: body ?? response.body,
       bodyString: response.body.toString(),
@@ -413,8 +415,7 @@ class ApiClient extends GetxService {
       response0 = const Response(statusCode: 0, statusText: noInternetMessage);
     }
 
-    debugPrint(
-        '====> API Response: [${response0.statusCode}] $uri\n${response0.body}');
+    log('====> API Response: [${response0.statusCode}] $uri\n${response0.body}');
     return response0;
   }
 }

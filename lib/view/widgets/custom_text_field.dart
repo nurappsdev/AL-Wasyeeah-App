@@ -287,7 +287,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       decoration: InputDecoration(
         labelText: widget.label,
         hintText: widget.hint,
-        isDense: true,
+        //isDense: true,
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
         labelStyle: TextStyle(color: Colors.grey[500]),
