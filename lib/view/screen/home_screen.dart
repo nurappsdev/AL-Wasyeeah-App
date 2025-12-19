@@ -25,7 +25,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Timer timer;
+  Timer? timer;
   Duration? timeLeft;
   String upcomingPrayer = "";
   Map<String, String> prayerTimes = {};
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //   });
   //   userController.getUserProfileData();
   // }
-  late ScrollController _scrollController;
+  ScrollController? _scrollController;
 
   @override
   void initState() {
@@ -106,8 +106,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    timer.cancel();
-    _scrollController.dispose();
+    timer?.cancel();
+    _scrollController?.dispose();
     super.dispose();
   }
 

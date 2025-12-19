@@ -13,11 +13,10 @@ import 'package:al_wasyeah/models/profile_info_model/marital_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/profile_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
-import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:get/get.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
-import 'package:al_wasyeah/helpers/file_download_util.dart'; // Import DownloadUtil explicitly if not in utils.dart
+import 'package:al_wasyeah/helpers/file_download_util.dart';
 import '../../view/screen/screen.dart';
 
 class ProfileController extends GetxController {
@@ -204,7 +203,9 @@ class ProfileController extends GetxController {
         ApiConstants.maritalList,
       );
       maritalList(maritalListModelFromJson(jsonEncode(response.body)));
-    } catch (e) {}
+    } catch (e, s) {
+      log("Marital List Error: $e\nStacktrace: $s");
+    }
   }
 
   Future<void> getGenderList() async {
