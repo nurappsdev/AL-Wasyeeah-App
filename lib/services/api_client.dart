@@ -49,7 +49,7 @@ class ApiClient extends GetxService {
         ? body['message'].toString()
         : response.reasonPhrase;
 
-    log('====> API Response: [${response.statusCode}] $uri\n$body');
+    log('====> API Response: [${response.statusCode}] ${ApiConstants.baseUrl + uri}\n$body');
 
     // 🔴 GLOBAL 401 HANDLING
     if (response.statusCode == 401) {
@@ -78,7 +78,6 @@ class ApiClient extends GetxService {
   }
 
   // ========================== GET ==========================
-
   static Future<Response> getData(
     String uri, {
     Map<String, String>? headers,
@@ -106,9 +105,10 @@ class ApiClient extends GetxService {
 
   static Future<Response> postData(
     String uri,
-    dynamic body, {
+    Map<String, dynamic> body, {
     Map<String, String>? headers,
   }) async {
+    log('====> API Request: [POST] ${ApiConstants.baseUrl + uri}\n$headers\n$body');
     try {
       final response = await _client
           .post(

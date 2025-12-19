@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
             .toList()
             .indexOf(userController.upcomingPrayer.value);
         if (index != -1) {
-          _scrollController.animateTo(
+          _scrollController?.animateTo(
             index * 250.h,
             duration: Duration(milliseconds: 500),
             curve: Curves.easeInOut,
