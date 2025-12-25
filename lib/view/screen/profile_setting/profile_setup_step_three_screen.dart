@@ -87,7 +87,8 @@ class _ProfileSetupStepThreeScreenState
                         null)
                       Obx(() {
                         return FileChooseAndDownloadButton(
-                          pickedFile: controller.pickedNIDFile,
+                          pickedFile: Rxn(
+                              controller.pickedFileMap[ProfilePickerType.nid]),
                           isDownloading: (controller.isDownloadingMap[
                                       ProfileDownloadType.nid] ??
                                   false)
@@ -96,7 +97,8 @@ class _ProfileSetupStepThreeScreenState
                                       ProfileDownloadType.nid] ??
                                   0.0)
                               .obs,
-                          onPickFile: controller.pickNidFile,
+                          onPickFile: () =>
+                              controller.pickFile(ProfilePickerType.nid),
                           onDownload: () async {
                             final isComplete =
                                 await controller.downloadNidFile();

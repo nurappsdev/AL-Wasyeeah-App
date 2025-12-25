@@ -76,14 +76,14 @@ class ProfileController extends GetxController {
       TextEditingController().obs;
 
   // Enum for download types
+  // Enum for download types
   RxMap<ProfileDownloadType, bool> isDownloadingMap =
       <ProfileDownloadType, bool>{}.obs;
   RxMap<ProfileDownloadType, double> downloadProgressMap =
       <ProfileDownloadType, double>{}.obs;
 
-  Rxn<PickedFileResult> pickedNIDFile = Rxn();
-  Rxn<PickedFileResult> pickedTinFile = Rxn();
-  Rxn<PickedFileResult> pickedMultiCitizenFile = Rxn();
+  RxMap<ProfilePickerType, PickedFileResult> pickedFileMap =
+      <ProfilePickerType, PickedFileResult>{}.obs;
 
   RxBool isPresentAddressAsPermanentAddress = false.obs;
 
@@ -104,10 +104,10 @@ class ProfileController extends GetxController {
     );
   }
 
-  void pickNidFile() async {
+  void pickFile(ProfilePickerType type) async {
     var result = await FilePickerUtil.pickSingleFile();
     if (result != null) {
-      pickedNIDFile(result);
+      pickedFileMap[type] = result;
     }
   }
 
@@ -164,26 +164,12 @@ class ProfileController extends GetxController {
     );
   }
 
-  void pickTinFile() async {
-    var result = await FilePickerUtil.pickSingleFile();
-    if (result != null) {
-      pickedTinFile(result);
-    }
-  }
-
   Future<bool> downloadTinFile() async {
     return _downloadGenericFile(
       urlPath: profileModel.value.userProfile?.tinPaperUrl,
       filePrefix: 'TIN',
       type: ProfileDownloadType.tin,
     );
-  }
-
-  void pickMultiCitizenFile() async {
-    var result = await FilePickerUtil.pickSingleFile();
-    if (result != null) {
-      pickedMultiCitizenFile(result);
-    }
   }
 
   Future<bool> downloadMultiCitizenFile() async {

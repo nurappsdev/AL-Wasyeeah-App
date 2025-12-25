@@ -159,7 +159,8 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                         null)
                       Obx(() {
                         return _buildFileRow(
-                          pickedFile: controller.pickedNIDFile,
+                          pickedFile: Rxn(
+                              controller.pickedFileMap[ProfilePickerType.nid]),
                           isDownloading: (controller.isDownloadingMap[
                                       ProfileDownloadType.nid] ??
                                   false)
@@ -168,7 +169,8 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                                       ProfileDownloadType.nid] ??
                                   0.0)
                               .obs,
-                          onPickFile: controller.pickNidFile,
+                          onPickFile: () =>
+                              controller.pickFile(ProfilePickerType.nid),
                           onDownload: () async {
                             final isComplete =
                                 await controller.downloadNidFile();
@@ -208,7 +210,8 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                             .profileModel.value.userProfile?.tinPaperUrl !=
                         null)
                       Obx(() => _buildFileRow(
-                            pickedFile: controller.pickedTinFile,
+                            pickedFile: Rxn(controller
+                                .pickedFileMap[ProfilePickerType.tin]),
                             isDownloading: (controller.isDownloadingMap[
                                         ProfileDownloadType.tin] ??
                                     false)
@@ -217,7 +220,8 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                                         ProfileDownloadType.tin] ??
                                     0.0)
                                 .obs,
-                            onPickFile: controller.pickTinFile,
+                            onPickFile: () =>
+                                controller.pickFile(ProfilePickerType.tin),
                             onDownload: () async {
                               final isComplete =
                                   await controller.downloadTinFile();
@@ -268,7 +272,8 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                                     ?.passportPaperUrl !=
                                 null)
                               _buildFileRow(
-                                pickedFile: controller.pickedMultiCitizenFile,
+                                pickedFile: Rxn(controller.pickedFileMap[
+                                    ProfilePickerType.multiCitizen]),
                                 isDownloading: (controller.isDownloadingMap[
                                             ProfileDownloadType.multiCitizen] ??
                                         false)
@@ -277,7 +282,8 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                                             ProfileDownloadType.multiCitizen] ??
                                         0.0)
                                     .obs,
-                                onPickFile: controller.pickMultiCitizenFile,
+                                onPickFile: () => controller
+                                    .pickFile(ProfilePickerType.multiCitizen),
                                 onDownload: () async {
                                   final isComplete = await controller
                                       .downloadMultiCitizenFile();
