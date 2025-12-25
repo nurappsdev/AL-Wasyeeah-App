@@ -159,24 +159,24 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                         null)
                       Obx(() {
                         return _buildFileRow(
-                          pickedFile: Rxn(
-                              controller.pickedFileMap[ProfilePickerType.nid]),
+                          pickedFile: Rxn(controller.pickedFileMap[
+                              ProfilePickerType.userNidOrPassport]),
                           isDownloading: (controller.isDownloadingMap[
-                                      ProfileDownloadType.nid] ??
+                                      ProfileDownloadType.userNidOrPassport] ??
                                   false)
                               .obs,
                           progress: (controller.downloadProgressMap[
-                                      ProfileDownloadType.nid] ??
+                                      ProfileDownloadType.userNidOrPassport] ??
                                   0.0)
                               .obs,
-                          onPickFile: () =>
-                              controller.pickFile(ProfilePickerType.nid),
+                          onPickFile: () => controller
+                              .pickFile(ProfilePickerType.userNidOrPassport),
                           onDownload: () async {
                             final isComplete = await controller.downloadFile(
                               urlPath: controller
                                   .profileModel.value.userProfile?.nidPaperUrl,
                               filePrefix: 'NID',
-                              type: ProfileDownloadType.nid,
+                              type: ProfileDownloadType.userNidOrPassport,
                             );
                             if (isComplete) {
                               Fluttertoast.showToast(
@@ -214,24 +214,26 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                             .profileModel.value.userProfile?.tinPaperUrl !=
                         null)
                       Obx(() => _buildFileRow(
-                            pickedFile: Rxn(controller
-                                .pickedFileMap[ProfilePickerType.tin]),
+                            pickedFile: Rxn(controller.pickedFileMap[
+                                ProfilePickerType.userTinOrPassport]),
                             isDownloading: (controller.isDownloadingMap[
-                                        ProfileDownloadType.tin] ??
+                                        ProfileDownloadType
+                                            .userTinOrPassport] ??
                                     false)
                                 .obs,
                             progress: (controller.downloadProgressMap[
-                                        ProfileDownloadType.tin] ??
+                                        ProfileDownloadType
+                                            .userTinOrPassport] ??
                                     0.0)
                                 .obs,
-                            onPickFile: () =>
-                                controller.pickFile(ProfilePickerType.tin),
+                            onPickFile: () => controller
+                                .pickFile(ProfilePickerType.userTinOrPassport),
                             onDownload: () async {
                               final isComplete = await controller.downloadFile(
                                 urlPath: controller.profileModel.value
                                     .userProfile?.tinPaperUrl,
                                 filePrefix: 'TIN',
-                                type: ProfileDownloadType.tin,
+                                type: ProfileDownloadType.userTinOrPassport,
                               );
                               if (isComplete) {
                                 Fluttertoast.showToast(
@@ -281,24 +283,29 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                                 null)
                               _buildFileRow(
                                 pickedFile: Rxn(controller.pickedFileMap[
-                                    ProfilePickerType.multiCitizen]),
+                                    ProfilePickerType
+                                        .userMultiCitizenOrPassport]),
                                 isDownloading: (controller.isDownloadingMap[
-                                            ProfileDownloadType.multiCitizen] ??
+                                            ProfileDownloadType
+                                                .userMultiCitizenOrPassport] ??
                                         false)
                                     .obs,
                                 progress: (controller.downloadProgressMap[
-                                            ProfileDownloadType.multiCitizen] ??
+                                            ProfileDownloadType
+                                                .userMultiCitizenOrPassport] ??
                                         0.0)
                                     .obs,
-                                onPickFile: () => controller
-                                    .pickFile(ProfilePickerType.multiCitizen),
+                                onPickFile: () => controller.pickFile(
+                                    ProfilePickerType
+                                        .userMultiCitizenOrPassport),
                                 onDownload: () async {
                                   final isComplete =
                                       await controller.downloadFile(
                                     urlPath: controller.profileModel.value
                                         .userProfile?.passportPaperUrl,
                                     filePrefix: 'MultiCitizen',
-                                    type: ProfileDownloadType.multiCitizen,
+                                    type: ProfileDownloadType
+                                        .userMultiCitizenOrPassport,
                                   );
                                   if (isComplete) {
                                     Fluttertoast.showToast(

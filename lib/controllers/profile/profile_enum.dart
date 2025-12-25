@@ -1,7 +1,7 @@
 enum ProfileDownloadType {
-  nid,
-  tin,
-  multiCitizen,
+  userNidOrPassport,
+  userTinOrPassport,
+  userMultiCitizenOrPassport,
   fatherNidOrPassport,
   motherNidOrPassport,
   spouseNidOrPassport,
@@ -9,9 +9,9 @@ enum ProfileDownloadType {
 }
 
 enum ProfilePickerType {
-  nid,
-  tin,
-  multiCitizen,
+  userNidOrPassport,
+  userTinOrPassport,
+  userMultiCitizenOrPassport,
   fatherNidOrPassport,
   motherNidOrPassport,
   spouseNidOrPassport,
