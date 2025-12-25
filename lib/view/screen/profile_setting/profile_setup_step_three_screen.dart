@@ -87,18 +87,20 @@ class _ProfileSetupStepThreeScreenState
                         null)
                       Obx(() {
                         return FileChooseAndDownloadButton(
-                          pickedFile: Rxn(controller
-                              .pickedFileMap[ProfilePickerType.fatherNid]),
+                          pickedFile: Rxn(controller.pickedFileMap[
+                              ProfilePickerType.fatherNidOrPassport]),
                           isDownloading: (controller.isDownloadingMap[
-                                      ProfileDownloadType.fatherNid] ??
+                                      ProfileDownloadType
+                                          .fatherNidOrPassport] ??
                                   false)
                               .obs,
                           progress: (controller.downloadProgressMap[
-                                      ProfileDownloadType.fatherNid] ??
+                                      ProfileDownloadType
+                                          .fatherNidOrPassport] ??
                                   0.0)
                               .obs,
-                          onPickFile: () =>
-                              controller.pickFile(ProfilePickerType.fatherNid),
+                          onPickFile: () => controller
+                              .pickFile(ProfilePickerType.fatherNidOrPassport),
                           onDownload: () async {
                             final isComplete =
                                 await controller.downloadNidFile();
@@ -175,18 +177,20 @@ class _ProfileSetupStepThreeScreenState
                         null)
                       Obx(() {
                         return FileChooseAndDownloadButton(
-                          pickedFile: Rxn(controller
-                              .pickedFileMap[ProfilePickerType.motherNid]),
+                          pickedFile: Rxn(controller.pickedFileMap[
+                              ProfilePickerType.motherNidOrPassport]),
                           isDownloading: (controller.isDownloadingMap[
-                                      ProfileDownloadType.motherNid] ??
+                                      ProfileDownloadType
+                                          .motherNidOrPassport] ??
                                   false)
                               .obs,
                           progress: (controller.downloadProgressMap[
-                                      ProfileDownloadType.motherNid] ??
+                                      ProfileDownloadType
+                                          .motherNidOrPassport] ??
                                   0.0)
                               .obs,
-                          onPickFile: () =>
-                              controller.pickFile(ProfilePickerType.motherNid),
+                          onPickFile: () => controller
+                              .pickFile(ProfilePickerType.motherNidOrPassport),
                           onDownload: () async {
                             final isComplete =
                                 await controller.downloadNidFile();

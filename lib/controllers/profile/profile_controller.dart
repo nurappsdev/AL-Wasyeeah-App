@@ -12,11 +12,12 @@ import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart'
 import 'package:al_wasyeah/models/profile_info_model/profile_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
 import 'package:get/get.dart';
-import '../../models/models.dart';
+
 import '../../services/services.dart';
 import 'package:al_wasyeah/helpers/file_download_util.dart';
 import 'profile_enum.dart';
 import 'spouse_form.dart';
+import 'child_form.dart';
 
 class ProfileController extends GetxController {
   final PageController pageController = PageController();
@@ -182,19 +183,16 @@ class ProfileController extends GetxController {
   }
 
   // Spouse File Logic
-  void pickSpouseFile(SpouseForm form, {required bool isNid}) async {
+  // Spouse File Logic
+  void pickSpouseFile(SpouseForm form,
+      {required ProfilePickerType type}) async {
     var result = await FilePickerUtil.pickSingleFile();
-    if (result != null) {
-      if (isNid) {
-        form.selectedNidFile.value = result;
-      } else {
-        form.selectedPassportFile.value = result;
-      }
-    }
+    if (result != null) {}
   }
 
   Future<void> downloadSpouseFile(SpouseForm form,
-      {required bool isNid}) async {
+      {required ProfileDownloadType type}) async {
+    bool isNid = type == ProfileDownloadType.spouseNidOrPassport;
     String? urlPath = isNid ? form.nidUrl : form.passportUrl;
     if (urlPath == null) return;
 
@@ -225,13 +223,62 @@ class ProfileController extends GetxController {
     });
   }
 
+  // Child File Logic
+  void pickChildFile(ChildForm form, {required ProfilePickerType type}) async {
+    var result = await FilePickerUtil.pickSingleFile();
+    if (result != null) {
+      if (type == ProfilePickerType.childNidOrPassport) {
+        form.selectedNidFile.value = result;
+      }
+    }
+  }
+
+  Future<void> downloadChildFile(ChildForm form,
+      {required ProfileDownloadType type}) async {
+    if (type != ProfileDownloadType.childNidOrPassport) return;
+    String? urlPath = form.nidUrl;
+    if (urlPath == null) return;
+
+    form.isDownloadingNid.value = true;
+    form.nidDownloadProgress.value = 0.0;
+
+    final String fileName =
+        'Child_NID_${form.name.text}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
+    final String filePath = '${ApiConstants.imageUrl}$urlPath';
+
+    await FileDownloadUtil.downloadFile(
+      filePath,
+      fileName,
+      (prog) {
+        form.nidDownloadProgress.value = prog;
+        if (prog >= 100) {
+          form.isDownloadingNid.value = false;
+        }
+      },
+    ).catchError((e) {
+      form.isDownloadingNid.value = false;
+    });
+  }
+
   // Spouse List Management
   RxList<SpouseForm> spouseList = <SpouseForm>[].obs;
 
   // Children List Management
   // Keeping original list for now as user only requested Spouse refactor,
   // but logically this should also be refactored later.
-  List<ChildrenInfo> addChildrenInfoList = [];
+  // Children List Management
+  RxList<ChildForm> childrenList = <ChildForm>[].obs;
+
+  void addChild() {
+    childrenList.add(ChildForm());
+  }
+
+  void removeChild(int index) {
+    if (index >= 0 && index < childrenList.length) {
+      childrenList[index].dispose();
+      childrenList.removeAt(index);
+    }
+  }
 
   void addSpouse() {
     spouseList.add(SpouseForm());
@@ -417,11 +464,10 @@ class ProfileController extends GetxController {
             nidUrl: spouse.nidPaperUrl,
             passportUrl: spouse.passportPaperUrl != null
                 ? spouse.passportPaperUrl.toString()
-                : null, // Assuming this is dynamic
-            isAliveVal:
-                true, // Assuming alive by default or need a field for it
+                : null,
+            isAliveVal: true,
           ));
-          // Set selection models
+
           if (spouseList.last.profession.value == null &&
               spouse.professionId != null) {
             spouseList.last.profession.value = professionList
@@ -433,18 +479,48 @@ class ProfileController extends GetxController {
                 .firstWhereOrNull((c) => c.countryId == spouse.nationalityId);
           }
         }
+      } else {
+        spouseList.add(SpouseForm());
       }
 
-      // 1st
-      try {
-        if (profileModel.value.userProfile!.multipleCitizenCode != null) {
-          selectedMultiCitizenCountry.value = countryList.firstWhere(
-              (element) =>
-                  element.countryId ==
-                  profileModel.value.userProfile!.multipleCitizenCode);
+      // Populate Children List
+      childrenList.clear();
+      if (profileModel.value.childInfo != null) {
+        for (var child in profileModel.value.childInfo!) {
+          ChildForm form = ChildForm();
+          form.name.text = child.childName ?? "";
+          form.nid.text = child.nid ?? "";
+          form.mobile.text = child.mobile ?? "";
+          form.email.text = child.email ?? "";
+          if (child.dob != null) {
+            form.selectedDob.value = child.dob;
+          }
+          form.nidUrl = child.nidPaperUrl;
+          form.isAlive.value = child.existing ?? true;
+
+          if (child.professionId != null) {
+            form.profession.value = professionList
+                .firstWhereOrNull((e) => e.professionId == child.professionId);
+          }
+          if (child.nationalityId != null) {
+            form.nationality.value = countryList
+                .firstWhereOrNull((e) => e.countryId == child.nationalityId);
+          }
+          if (child.genderId != null) {
+            form.gender.value = genderList
+                .firstWhereOrNull((e) => e.genderId == child.genderId);
+          }
+
+          childrenList.add(form);
         }
-      } catch (e, s) {
-        log("Error: $e\nStacktrace: $s");
+      } else {
+        childrenList.add(ChildForm());
+      }
+
+      if (profileModel.value.userProfile!.multipleCitizenCode != null) {
+        selectedMultiCitizenCountry.value = countryList.firstWhere((element) =>
+            element.countryId ==
+            profileModel.value.userProfile!.multipleCitizenCode);
       }
 
       selectedBank(
