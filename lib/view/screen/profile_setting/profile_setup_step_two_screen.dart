@@ -94,55 +94,56 @@ class _ProfileSetupsStepTwoScreenState
                   ),
 
                   // /==============Permanent Address================================
-                  Obx(
-                    () => CheckboxListTile(
-                      value:
-                          controller.isPresentAddressAsPermanentAddress.value,
-                      onChanged: (value) {
-                        controller.isPresentAddressAsPermanentAddress.value =
-                            value!;
-
-                        if (controller
-                            .isPresentAddressAsPermanentAddress.value) {
-                          // permanent zip code
-                          controller.permanentZipCodeController.value.text =
-                              controller.profileModel.value.userProfile!
-                                      .permanentAddress
-                                      ?.split(',')[0] ??
-                                  "";
-
-                          // permanent village
-                          controller.permanentVillageController.value.text =
-                              controller.profileModel.value.userProfile!
-                                      .permanentAddress
-                                      ?.split(',')[1] ??
-                                  "";
-
-                          // permanent road
-                          controller.permanentRoadController.value.text =
-                              controller.profileModel.value.userProfile!
-                                      .permanentAddress
-                                      ?.split(',')[2] ??
-                                  "";
-                        } else {
-                          controller.permanentZipCodeController.value.text = "";
-
-                          // permanent village
-                          controller.permanentVillageController.value.text = "";
-
-                          // permanent road
-                          controller.permanentRoadController.value.text = "";
-                        }
-                      },
-                      title:
-                          Text("Mark Present Address as Permanent Address".tr),
-                    ),
-                  ),
 
                   Obx(
                     () => Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        CheckboxListTile(
+                          value: controller
+                              .isPresentAddressAsPermanentAddress.value,
+                          onChanged: (value) {
+                            controller.isPresentAddressAsPermanentAddress
+                                .value = value!;
+
+                            if (controller
+                                .isPresentAddressAsPermanentAddress.value) {
+                              // permanent zip code
+                              controller.permanentZipCodeController.value.text =
+                                  controller.profileModel.value.userProfile!
+                                          .permanentAddress
+                                          ?.split(',')[0] ??
+                                      "";
+
+                              // permanent village
+                              controller.permanentVillageController.value.text =
+                                  controller.profileModel.value.userProfile!
+                                          .permanentAddress
+                                          ?.split(',')[1] ??
+                                      "";
+
+                              // permanent road
+                              controller.permanentRoadController.value.text =
+                                  controller.profileModel.value.userProfile!
+                                          .permanentAddress
+                                          ?.split(',')[2] ??
+                                      "";
+                            } else {
+                              controller.permanentZipCodeController.value.text =
+                                  "";
+
+                              // permanent village
+                              controller.permanentVillageController.value.text =
+                                  "";
+
+                              // permanent road
+                              controller.permanentRoadController.value.text =
+                                  "";
+                            }
+                          },
+                          title: Text(
+                              "Mark Present Address as Permanent Address".tr),
+                        ),
                         SizedBox(height: 16.h),
                         Container(
                           height: 48.h,

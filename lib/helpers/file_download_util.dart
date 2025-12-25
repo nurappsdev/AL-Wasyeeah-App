@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 class FileDownloadUtil {
-  Future<void> downloadFile(
+  static Future<void> downloadFile(
       String url, String fileName, Function(double) onProgress) async {
     final client = http.Client();
     final request = http.Request('GET', Uri.parse(url));
@@ -40,49 +40,3 @@ class FileDownloadUtil {
     );
   }
 }
-
-// import 'dart:io';
-// import 'dart:math';
-// import 'package:http/http.dart' as http;
-// import 'package:path_provider/path_provider.dart';
-// import 'package:pool/pool.dart';
-
-// class FileDownloadUtil {
-//   Future<void> downloadFile(
-//     String url,
-//     String fileName,
-//     Function(double) onProgress,
-//   ) async {
-//     try {
-//       final directory = await getApplicationDocumentsDirectory();
-//       final filePath = '${directory.path}/$fileName';
-
-//       final request = http.Request('GET', Uri.parse(url));
-//       final response = await http.Client().send(request);
-
-//       final totalBytes = response.contentLength ?? 0;
-//       int received = 0;
-
-//       final file = File(filePath);
-//       final sink = file.openWrite();
-
-//       await response.stream.listen(
-//         (chunk) {
-//           received += chunk.length;
-//           sink.add(chunk);
-
-//           if (totalBytes > 0) {
-//             onProgress((received / totalBytes) * 100);
-//           }
-//         },
-//         onDone: () async {
-//           await sink.close();
-//           onProgress(100);
-//         },
-//         cancelOnError: true,
-//       ).asFuture();
-//     } catch (e) {
-//       log("Download Error: ${e.toString()}");
-//     }
-//   }
-// }

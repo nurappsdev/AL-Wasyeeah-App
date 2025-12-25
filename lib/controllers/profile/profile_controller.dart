@@ -31,6 +31,8 @@ class ProfileController extends GetxController {
   Rxn<CountryModel> selectedOverseasCountry = Rxn();
   Rxn<ProfessionModel> selectedFatherProfession = Rxn();
   Rxn<CountryModel> selectedFatherCountry = Rxn();
+  Rxn<ProfessionModel> selectedMotherProfession = Rxn();
+  Rxn<CountryModel> selectedMotherCountry = Rxn();
 
   RxList<MaritalModel> maritalList = <MaritalModel>[].obs;
   RxList<ProfessionModel> professionList = <ProfessionModel>[].obs;
@@ -130,7 +132,7 @@ class ProfileController extends GetxController {
     final String filePath =
         '${ApiConstants.imageUrl}${profileModel.value.userProfile?.nidPaperUrl}';
 
-    FileDownloadUtil().downloadFile(
+    FileDownloadUtil.downloadFile(
       filePath,
       fileName,
       (progress) {
@@ -173,7 +175,7 @@ class ProfileController extends GetxController {
         '${ApiConstants.imageUrl}${profileModel.value.userProfile?.tinPaperUrl}';
     log("TIN File Path: " + filePath);
     final completer = Completer<bool>();
-    FileDownloadUtil().downloadFile(
+    FileDownloadUtil.downloadFile(
       filePath,
       fileName,
       (progress) {
@@ -215,7 +217,7 @@ class ProfileController extends GetxController {
         'MultiCitizen_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
 
     final completer = Completer<bool>();
-    FileDownloadUtil().downloadFile(
+    FileDownloadUtil.downloadFile(
       '${ApiConstants.imageUrl}${profileModel.value.userProfile?.passportPaperUrl}',
       fileName,
       (progress) {
@@ -347,17 +349,6 @@ class ProfileController extends GetxController {
           profileModel.value.userProfile!.presentAddress?.split(',')[1] ?? "";
       presentRoadController.value.text =
           profileModel.value.userProfile!.presentAddress?.split(',')[2] ?? "";
-      // permanent zip code
-      permanentZipCodeController.value.text =
-          profileModel.value.userProfile!.permanentAddress?.split(',')[0] ?? "";
-
-      // permanent village
-      permanentVillageController.value.text =
-          profileModel.value.userProfile!.permanentAddress?.split(',')[1] ?? "";
-
-      // permanent road
-      permanentRoadController.value.text =
-          profileModel.value.userProfile!.permanentAddress?.split(',')[2] ?? "";
 
       // overseas country
       selectedOverseasCountry.value = countryList.firstWhere((element) =>
@@ -367,6 +358,37 @@ class ProfileController extends GetxController {
       // overseas village
       overseasVillageController.value.text =
           profileModel.value.userProfile!.overseasVillage ?? "";
+
+      // father name
+      fatherNameController.value.text =
+          profileModel.value.parentInfo?.fatherName ?? "";
+
+      // father profession
+      selectedFatherProfession.value = professionList.firstWhere((element) =>
+          element.professionId ==
+          profileModel.value.parentInfo?.fatherProfessionId);
+      // father country
+      selectedFatherCountry.value = countryList.firstWhere((element) =>
+          element.countryId ==
+          profileModel.value.parentInfo?.fatherNationalityId);
+      // father passport or nid
+      fatherPassOrNIDController.value.text =
+          profileModel.value.parentInfo?.fatherProfessionId.toString() ?? "";
+      // mother name
+      motherNameController.value.text =
+          profileModel.value.parentInfo?.motherName ?? "";
+
+      // mother profession
+      selectedMotherProfession.value = professionList.firstWhere((element) =>
+          element.professionId ==
+          profileModel.value.parentInfo?.motherProfessionId);
+      // mother country
+      selectedMotherCountry.value = countryList.firstWhere((element) =>
+          element.countryId ==
+          profileModel.value.parentInfo?.motherNationalityId);
+      // mother passport or nid
+      motherPassOrNIDController.value.text =
+          profileModel.value.parentInfo?.motherProfessionId.toString() ?? "";
 
       try {
         if (profileModel.value.userProfile!.multipleCitizenCode != null) {

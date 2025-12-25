@@ -193,13 +193,11 @@ class CustomTextFormField extends StatefulWidget {
 
     // VALUE
     this.controller,
-    this.initialValue,
     this.onChanged,
     this.validator,
 
     // STATE
     this.enabled = true,
-    this.hasError = false,
 
     // TEXT INPUT
     this.keyboardType,
@@ -209,7 +207,6 @@ class CustomTextFormField extends StatefulWidget {
     this.minLines,
 
     // DIMENSIONS
-    this.borderRadius = 8,
 
     // ICONS
     this.prefixIcon,
@@ -222,13 +219,12 @@ class CustomTextFormField extends StatefulWidget {
 
   // VALUE
   final TextEditingController? controller;
-  final String? initialValue;
+
   final ValueChanged<String>? onChanged;
   final FormFieldValidator<String>? validator;
 
   // STATE
   final bool enabled;
-  final bool hasError;
 
   // TEXT INPUT
   final TextInputType? keyboardType;
@@ -236,9 +232,6 @@ class CustomTextFormField extends StatefulWidget {
   final bool obscureText;
   final int maxLines;
   final int? minLines;
-
-  // DIMENSIONS
-  final double borderRadius;
 
   // ICONS
   final Widget? prefixIcon;
@@ -253,7 +246,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   OutlineInputBorder _border(Color color) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(widget.borderRadius),
+      borderRadius: BorderRadius.circular(8),
       borderSide: BorderSide(color: color, width: 2),
     );
   }
@@ -261,17 +254,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   void initState() {
     super.initState();
-    _hasValue = widget.controller?.text.isNotEmpty ??
-        (widget.initialValue?.isNotEmpty ?? false);
   }
 
   @override
   Widget build(BuildContext context) {
+    _hasValue = widget.controller?.text.isNotEmpty ?? false;
+    log("----${widget.controller?.text}");
     final Color enabledColor = _hasValue ? Colors.green : Colors.grey[300]!;
 
     return TextFormField(
       controller: widget.controller,
-      initialValue: widget.controller == null ? widget.initialValue : null,
+      //initialValue: widget.controller == null ? null : widget.controller?.text,
       enabled: widget.enabled,
       obscureText: widget.obscureText,
       keyboardType: widget.keyboardType,

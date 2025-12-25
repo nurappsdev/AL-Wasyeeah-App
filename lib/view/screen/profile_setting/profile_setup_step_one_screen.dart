@@ -151,7 +151,7 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                       validator: (value) =>
                           value!.isEmpty ? "NID/Passport No is required" : null,
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 16.h),
                     if (controller
                             .profileModel.value.userProfile?.nidPaperUrl !=
                         null)
