@@ -7,7 +7,7 @@ export 'before_login/property_distribution_screen.dart';
 export 'before_login/property_distribution_result.dart';
 export 'before_login/zakat_calculator_screen.dart';
 export 'profile_setting/profile_setup_step_one_screen.dart';
-export 'profile_setting/father_info_screen.dart';
+export 'profile_setting/profile_setup_step_three_screen.dart';
 export 'profile_setting/family_info_screen.dart';
 export 'profile_setting/bank_info_screen.dart';
 export 'home_screen.dart';

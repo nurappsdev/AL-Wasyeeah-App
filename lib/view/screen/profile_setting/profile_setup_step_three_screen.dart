@@ -48,7 +48,7 @@ class _ProfileSetupStepThreeScreenState
                     ),
                     SizedBox(height: 10.h),
                     CustomTextField(
-                      controller: fatherController,
+                      controller: controller.fatherNameController.value,
                       hintText: "Father’s Name".tr,
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
@@ -77,7 +77,8 @@ class _ProfileSetupStepThreeScreenState
                       children: [
                         Expanded(
                           child: CustomTextField(
-                            controller: passOrNIDController,
+                            controller:
+                                controller.fatherPassOrNIDController.value,
                             hintText: "NID/Passport No".tr,
                             borderColor: AppColors.secondaryPrimaryColor,
                             onChange: (value) {},
@@ -104,46 +105,41 @@ class _ProfileSetupStepThreeScreenState
                               color: AppColors.primaryColor,
                             ),
                             onPressed: () {
-                              _NIDImageFromGallery();
+                              //  _NIDImageFromGallery();
                               // Add your action here
                             },
                           ),
                         ),
                       ],
                     ),
-                    if (nIDImages != null)
-                      Text(
-                        'Image Path: ${displayImageNIDPath.toString()}',
-                        style: TextStyle(color: Colors.grey),
-                      ),
                     SizedBox(height: 16.h),
-                    Center(
-                      child: ToggleButtons(
-                        isSelected: isSelected,
-                        onPressed: (index) {
-                          setState(() {
-                            // Allow only one button to be selected at a time
-                            for (int i = 0; i < isSelected.length; i++) {
-                              isSelected[i] = i == index;
-                            }
-                          });
-                        },
-                        borderRadius: BorderRadius.circular(8),
-                        selectedColor: Colors.white,
-                        fillColor: isSelected[1] ? Colors.red : Colors.green,
-                        color: Colors.black,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Text('Alive'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Text('Death'),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Center(
+                    //   child: ToggleButtons(
+                    //     isSelected: isSelected,
+                    //     onPressed: (index) {
+                    //       setState(() {
+                    //         // Allow only one button to be selected at a time
+                    //         for (int i = 0; i < isSelected.length; i++) {
+                    //           isSelected[i] = i == index;
+                    //         }
+                    //       });
+                    //     },
+                    //     borderRadius: BorderRadius.circular(8),
+                    //     selectedColor: Colors.white,
+                    //     fillColor: isSelected[1] ? Colors.red : Colors.green,
+                    //     color: Colors.black,
+                    //     children: [
+                    //       Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 50),
+                    //         child: Text('Alive'),
+                    //       ),
+                    //       Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 50),
+                    //         child: Text('Death'),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 24.h,
                     ),
@@ -163,7 +159,7 @@ class _ProfileSetupStepThreeScreenState
                     ),
                     SizedBox(height: 10.h),
                     CustomTextField(
-                      controller: motherNameController,
+                      controller: controller.motherNameController.value,
                       hintText: "Mother’s Name".tr,
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
@@ -192,7 +188,8 @@ class _ProfileSetupStepThreeScreenState
                       children: [
                         Expanded(
                           child: CustomTextField(
-                            controller: motherPassOrNIDController,
+                            controller:
+                                controller.motherPassOrNIDController.value,
                             hintText: "NID/Passport No".tr,
                             borderColor: AppColors.secondaryPrimaryColor,
                             onChange: (value) {},
@@ -219,7 +216,7 @@ class _ProfileSetupStepThreeScreenState
                               color: AppColors.primaryColor,
                             ),
                             onPressed: () {
-                              _NIDImageFromGallery();
+                              // _NIDImageFromGallery();
                               // Add your action here
                             },
                           ),
@@ -229,39 +226,35 @@ class _ProfileSetupStepThreeScreenState
                     SizedBox(
                       height: 6.w,
                     ),
-                    if (nIDImages != null)
-                      Text(
-                        'Image Path: ${displayImageNIDPath.toString()}',
-                        style: TextStyle(color: Colors.grey),
-                      ),
+
                     SizedBox(height: 16.h),
-                    Center(
-                      child: ToggleButtons(
-                        isSelected: isSelected,
-                        onPressed: (index) {
-                          setState(() {
-                            // Allow only one button to be selected at a time
-                            for (int i = 0; i < isSelected.length; i++) {
-                              isSelected[i] = i == index;
-                            }
-                          });
-                        },
-                        borderRadius: BorderRadius.circular(8),
-                        selectedColor: Colors.white,
-                        fillColor: isSelected[1] ? Colors.red : Colors.green,
-                        color: Colors.black,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Text('Alive'.tr),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50),
-                            child: Text('Death'),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Center(
+                    //   child: ToggleButtons(
+                    //     isSelected: isSelected,
+                    //     onPressed: (index) {
+                    //       setState(() {
+                    //         // Allow only one button to be selected at a time
+                    //         for (int i = 0; i < isSelected.length; i++) {
+                    //           isSelected[i] = i == index;
+                    //         }
+                    //       });
+                    //     },
+                    //     borderRadius: BorderRadius.circular(8),
+                    //     selectedColor: Colors.white,
+                    //     fillColor: isSelected[1] ? Colors.red : Colors.green,
+                    //     color: Colors.black,
+                    //     children: [
+                    //       Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 50),
+                    //         child: Text('Alive'.tr),
+                    //       ),
+                    //       Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 50),
+                    //         child: Text('Death'),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     SizedBox(height: 16.h),
 
                     ///=============Button====================

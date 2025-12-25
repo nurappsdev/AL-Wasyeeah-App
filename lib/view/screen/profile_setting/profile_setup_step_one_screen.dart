@@ -1,24 +1,17 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
-import 'package:al_wasyeah/main.dart';
 import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/marital_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
-import 'package:country_flags/country_flags.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-
 import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
-import 'dart:typed_data';
 
 class ProfileSetupStepOneScreen extends StatefulWidget {
   @override
@@ -162,15 +155,30 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                     if (controller
                             .profileModel.value.userProfile?.nidPaperUrl !=
                         null)
-                      Obx(() => _buildFileRow(
-                            pickedFile: controller.pickedNIDFile,
-                            isDownloading: controller.isDownloadingNid,
-                            progress: controller.nidDownloadProgress,
-                            onPickFile: controller.pickNidFile,
-                            onDownload: controller.downloadNidFile,
-                            fileUrl: controller
-                                .profileModel.value.userProfile?.nidPaperUrl,
-                          )),
+                      Obx(() {
+                        return _buildFileRow(
+                          pickedFile: controller.pickedNIDFile,
+                          isDownloading: controller.isDownloadingNid,
+                          progress: controller.nidDownloadProgress,
+                          onPickFile: controller.pickNidFile,
+                          onDownload: () async {
+                            final isComplete =
+                                await controller.downloadNidFile();
+                            if (isComplete) {
+                              Fluttertoast.showToast(
+                                msg: "NID File downloaded successfully".tr,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.TOP,
+                                timeInSecForIosWeb: 2,
+                                backgroundColor: AppColors.primaryColor,
+                                textColor: AppColors.whiteColor,
+                              );
+                            }
+                          },
+                          fileUrl: controller
+                              .profileModel.value.userProfile?.nidPaperUrl,
+                        );
+                      }),
                     CustomText(
                       text: "* Only Pdf,JPEG,PNG file are allowed".tr,
                       color: AppColors.redColor,
@@ -196,7 +204,20 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                             isDownloading: controller.isDownloadingTin,
                             progress: controller.tinDownloadProgress,
                             onPickFile: controller.pickTinFile,
-                            onDownload: controller.downloadTinFile,
+                            onDownload: () async {
+                              final isComplete =
+                                  await controller.downloadTinFile();
+                              if (isComplete) {
+                                Fluttertoast.showToast(
+                                  msg: "TIN File downloaded successfully".tr,
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.TOP,
+                                  timeInSecForIosWeb: 2,
+                                  backgroundColor: AppColors.primaryColor,
+                                  textColor: AppColors.whiteColor,
+                                );
+                              }
+                            },
                             fileUrl: controller
                                 .profileModel.value.userProfile?.tinPaperUrl,
                           )),
@@ -239,7 +260,22 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                                 progress:
                                     controller.multiCitizenDownloadProgress,
                                 onPickFile: controller.pickMultiCitizenFile,
-                                onDownload: controller.downloadMultiCitizenFile,
+                                onDownload: () async {
+                                  final isComplete = await controller
+                                      .downloadMultiCitizenFile();
+                                  if (isComplete) {
+                                    Fluttertoast.showToast(
+                                      msg:
+                                          "MultiCitizen File downloaded successfully"
+                                              .tr,
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.TOP,
+                                      timeInSecForIosWeb: 2,
+                                      backgroundColor: AppColors.primaryColor,
+                                      textColor: AppColors.whiteColor,
+                                    );
+                                  }
+                                },
                                 fileUrl: controller.profileModel.value
                                     .userProfile?.passportPaperUrl,
                               ),
@@ -313,31 +349,33 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                       ),
                     ),
 
-                    SizedBox(width: 12.w),
+                    ...[
+                      SizedBox(width: 12.w),
 
-                    // Divider
-                    Container(
-                      height: 18.h,
-                      width: 1,
-                      color: AppColors.primaryColor.withOpacity(0.4),
-                    ),
+                      // Divider
+                      Container(
+                        height: 18.h,
+                        width: 1,
+                        color: AppColors.primaryColor.withOpacity(0.4),
+                      ),
 
-                    SizedBox(width: 12.w),
+                      SizedBox(width: 12.w),
 
-                    // File name or placeholder
-                    Expanded(
-                      child: Text(
-                        pickedFile.value?.fileName ?? "No file chosen",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          color: pickedFile.value == null
-                              ? Colors.grey
-                              : AppColors.hitTextColor000000,
+                      // File name or placeholder
+                      Expanded(
+                        child: Text(
+                          pickedFile.value?.fileName ?? "No file chosen",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            color: pickedFile.value == null
+                                ? Colors.grey
+                                : AppColors.hitTextColor000000,
+                          ),
                         ),
                       ),
-                    ),
+                    ]
                   ],
                 ),
               ),

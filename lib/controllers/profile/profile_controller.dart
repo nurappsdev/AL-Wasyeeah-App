@@ -1,11 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
@@ -13,11 +11,10 @@ import 'package:al_wasyeah/models/profile_info_model/marital_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/profile_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
-import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:get/get.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
-import 'package:al_wasyeah/helpers/file_download_util.dart'; // Import DownloadUtil explicitly if not in utils.dart
+import 'package:al_wasyeah/helpers/file_download_util.dart';
 import '../../view/screen/screen.dart';
 
 class ProfileController extends GetxController {
@@ -32,6 +29,8 @@ class ProfileController extends GetxController {
   Rxn<BankModel> selectedBank = Rxn();
   Rxn<WealthModel> selectedWealth = Rxn();
   Rxn<CountryModel> selectedOverseasCountry = Rxn();
+  Rxn<ProfessionModel> selectedFatherProfession = Rxn();
+  Rxn<CountryModel> selectedFatherCountry = Rxn();
 
   RxList<MaritalModel> maritalList = <MaritalModel>[].obs;
   RxList<ProfessionModel> professionList = <ProfessionModel>[].obs;
@@ -45,8 +44,15 @@ class ProfileController extends GetxController {
   Rx<TextEditingController> lastNameController = TextEditingController().obs;
   Rx<TextEditingController> districtController = TextEditingController().obs;
   Rx<TextEditingController> nidController = TextEditingController().obs;
-  Rx<TextEditingController> passportController = TextEditingController().obs;
+  Rx<TextEditingController> citizenshipPassportOrNIDController =
+      TextEditingController().obs;
   Rx<TextEditingController> tinController = TextEditingController().obs;
+  Rx<TextEditingController> fatherNameController = TextEditingController().obs;
+  Rx<TextEditingController> motherNameController = TextEditingController().obs;
+  Rx<TextEditingController> fatherPassOrNIDController =
+      TextEditingController().obs;
+  Rx<TextEditingController> motherPassOrNIDController =
+      TextEditingController().obs;
 
   Rx<TextEditingController> multiCitizenPassportController =
       TextEditingController().obs;
@@ -104,30 +110,47 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<void> downloadNidFile() async {
+  Future<bool> downloadNidFile() async {
     log(profileModel.value.userProfile?.nidPaperUrl ?? '');
+
     if (profileModel.value.userProfile?.nidPaperUrl == null) {
-      return;
+      return false;
     }
+
     isDownloadingNid(true);
     nidDownloadProgress(0.0);
 
+    final completer = Completer<bool>();
+
     final String fileName =
-        'NID_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
+        'NID_${profileModel.value.userProfile?.firstName ?? "User"}_'
+        '${profileModel.value.userProfile?.lastName ?? ""}_'
+        '${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
+
+    final String filePath =
+        '${ApiConstants.imageUrl}${profileModel.value.userProfile?.nidPaperUrl}';
 
     FileDownloadUtil().downloadFile(
-      '${ApiConstants.imageUrl}${profileModel.value.userProfile?.nidFile}',
+      filePath,
       fileName,
       (progress) {
         nidDownloadProgress(progress);
+
         if (progress >= 100) {
           isDownloadingNid(false);
+          log("Download NID Successful");
+          completer.complete(true);
         }
       },
     ).catchError((e) {
       isDownloadingNid(false);
-      print('Download failed: $e');
+      log('Download failed: $e');
+      if (!completer.isCompleted) {
+        completer.complete(false);
+      }
     });
+
+    return completer.future; // ✅ wait until complete
   }
 
   void pickTinFile() async {
@@ -137,30 +160,41 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<void> downloadTinFile() async {
+  Future<bool> downloadTinFile() async {
     if (profileModel.value.userProfile?.tinPaperUrl == null) {
-      return;
+      return false;
     }
     isDownloadingTin(true);
     tinDownloadProgress(0.0);
 
     final String fileName =
         'TIN_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf'; // Adjust extension if needed
-
+    final String filePath =
+        '${ApiConstants.imageUrl}${profileModel.value.userProfile?.tinPaperUrl}';
+    log("TIN File Path: " + filePath);
+    final completer = Completer<bool>();
     FileDownloadUtil().downloadFile(
-      '${ApiConstants.imageUrl}${profileModel.value.userProfile?.tinPaperUrl}', // Use correct URL path
-
+      filePath,
       fileName,
       (progress) {
         tinDownloadProgress(progress);
         if (progress >= 100) {
           isDownloadingTin(false);
+          completer.complete(true);
+        }
+
+        if (progress == 100) {
+          log("Download TIN Successfull");
         }
       },
     ).catchError((e) {
       isDownloadingTin(false);
       print('Download failed: $e');
+      if (!completer.isCompleted) {
+        completer.complete(false);
+      }
     });
+    return completer.future;
   }
 
   void pickMultiCitizenFile() async {
@@ -170,9 +204,9 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<void> downloadMultiCitizenFile() async {
+  Future<bool> downloadMultiCitizenFile() async {
     if (profileModel.value.userProfile?.passportPaperUrl == null) {
-      return;
+      return false;
     }
     isDownloadingMultiCitizen(true);
     multiCitizenDownloadProgress(0.0);
@@ -180,6 +214,7 @@ class ProfileController extends GetxController {
     final String fileName =
         'MultiCitizen_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
 
+    final completer = Completer<bool>();
     FileDownloadUtil().downloadFile(
       '${ApiConstants.imageUrl}${profileModel.value.userProfile?.passportPaperUrl}',
       fileName,
@@ -187,12 +222,17 @@ class ProfileController extends GetxController {
         multiCitizenDownloadProgress(progress);
         if (progress >= 100) {
           isDownloadingMultiCitizen(false);
+          completer.complete(true);
         }
       },
     ).catchError((e) {
       isDownloadingMultiCitizen(false);
       print('Download failed: $e');
+      if (!completer.isCompleted) {
+        completer.complete(false);
+      }
     });
+    return completer.future;
   }
 
   List<SpouseItemS> addSpouseList = [];
@@ -281,7 +321,7 @@ class ProfileController extends GetxController {
       // nid
       nidController.value.text = profileModel.value.userProfile!.nid.toString();
       // passport
-      passportController.value.text =
+      citizenshipPassportOrNIDController.value.text =
           profileModel.value.userProfile!.passportNo ?? "";
       selectedProfession.value = professionList.firstWhere((element) =>
           element.professionId == profileModel.value.userProfile!.professionId);
