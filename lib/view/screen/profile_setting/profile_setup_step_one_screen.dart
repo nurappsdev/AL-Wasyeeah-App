@@ -172,8 +172,12 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                           onPickFile: () =>
                               controller.pickFile(ProfilePickerType.nid),
                           onDownload: () async {
-                            final isComplete =
-                                await controller.downloadNidFile();
+                            final isComplete = await controller.downloadFile(
+                              urlPath: controller
+                                  .profileModel.value.userProfile?.nidPaperUrl,
+                              filePrefix: 'NID',
+                              type: ProfileDownloadType.nid,
+                            );
                             if (isComplete) {
                               Fluttertoast.showToast(
                                 msg: "NID File downloaded successfully".tr,
@@ -223,8 +227,12 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                             onPickFile: () =>
                                 controller.pickFile(ProfilePickerType.tin),
                             onDownload: () async {
-                              final isComplete =
-                                  await controller.downloadTinFile();
+                              final isComplete = await controller.downloadFile(
+                                urlPath: controller.profileModel.value
+                                    .userProfile?.tinPaperUrl,
+                                filePrefix: 'TIN',
+                                type: ProfileDownloadType.tin,
+                              );
                               if (isComplete) {
                                 Fluttertoast.showToast(
                                   msg: "TIN File downloaded successfully".tr,
@@ -285,8 +293,13 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                                 onPickFile: () => controller
                                     .pickFile(ProfilePickerType.multiCitizen),
                                 onDownload: () async {
-                                  final isComplete = await controller
-                                      .downloadMultiCitizenFile();
+                                  final isComplete =
+                                      await controller.downloadFile(
+                                    urlPath: controller.profileModel.value
+                                        .userProfile?.passportPaperUrl,
+                                    filePrefix: 'MultiCitizen',
+                                    type: ProfileDownloadType.multiCitizen,
+                                  );
                                   if (isComplete) {
                                     Fluttertoast.showToast(
                                       msg:

@@ -102,8 +102,12 @@ class _ProfileSetupStepThreeScreenState
                           onPickFile: () => controller
                               .pickFile(ProfilePickerType.fatherNidOrPassport),
                           onDownload: () async {
-                            final isComplete =
-                                await controller.downloadNidFile();
+                            final isComplete = await controller.downloadFile(
+                              urlPath: controller
+                                  .profileModel.value.parentInfo?.fatherNidUrl,
+                              filePrefix: 'FatherNidOrPassport',
+                              type: ProfileDownloadType.fatherNidOrPassport,
+                            );
                             if (isComplete) {
                               Fluttertoast.showToast(
                                 msg: "NID/Passport File downloaded successfully"
@@ -192,8 +196,12 @@ class _ProfileSetupStepThreeScreenState
                           onPickFile: () => controller
                               .pickFile(ProfilePickerType.motherNidOrPassport),
                           onDownload: () async {
-                            final isComplete =
-                                await controller.downloadNidFile();
+                            final isComplete = await controller.downloadFile(
+                              urlPath: controller
+                                  .profileModel.value.parentInfo?.motherNidUrl,
+                              filePrefix: 'MotherNidOrPassport',
+                              type: ProfileDownloadType.motherNidOrPassport,
+                            );
                             if (isComplete) {
                               Fluttertoast.showToast(
                                 msg: "NID/Passport File downloaded successfully"
