@@ -86,6 +86,7 @@ class ProfileController extends GetxController {
       <ProfilePickerType, PickedFileResult>{}.obs;
 
   RxBool isPresentAddressAsPermanentAddress = false.obs;
+  RxBool isFatherAlive = false.obs, isMotherAlive = false.obs;
 
   final step1formKey = GlobalKey<FormState>();
   final step2formKey = GlobalKey<FormState>();
@@ -305,7 +306,6 @@ class ProfileController extends GetxController {
       // father name
       fatherNameController.value.text =
           profileModel.value.parentInfo?.fatherName ?? "";
-
       // father profession
       selectedFatherProfession.value = professionList.firstWhere((element) =>
           element.professionId ==
@@ -316,7 +316,10 @@ class ProfileController extends GetxController {
           profileModel.value.parentInfo?.fatherNationalityId);
       // father passport or nid
       fatherPassOrNIDController.value.text =
-          profileModel.value.parentInfo?.fatherProfessionId.toString() ?? "";
+          profileModel.value.parentInfo?.fatherNid.toString() ?? "";
+      // father alive dead
+      isFatherAlive.value =
+          profileModel.value.parentInfo?.fatherExisting ?? false;
       // mother name
       motherNameController.value.text =
           profileModel.value.parentInfo?.motherName ?? "";
@@ -332,7 +335,9 @@ class ProfileController extends GetxController {
       // mother passport or nid
       motherPassOrNIDController.value.text =
           profileModel.value.parentInfo?.motherProfessionId.toString() ?? "";
-
+      // mother alive dead
+      isMotherAlive.value =
+          profileModel.value.parentInfo?.motherExisting ?? false;
       try {
         if (profileModel.value.userProfile!.multipleCitizenCode != null) {
           selectedMultiCitizenCountry.value = countryList.firstWhere(

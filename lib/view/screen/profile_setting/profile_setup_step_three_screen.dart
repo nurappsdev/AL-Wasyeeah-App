@@ -83,22 +83,22 @@ class _ProfileSetupStepThreeScreenState
                     ),
                     SizedBox(height: 16.h),
                     if (controller
-                            .profileModel.value.userProfile?.nidPaperUrl !=
+                            .profileModel.value.parentInfo?.fatherNidUrl !=
                         null)
                       Obx(() {
                         return FileChooseAndDownloadButton(
-                          pickedFile: Rxn(
-                              controller.pickedFileMap[ProfilePickerType.nid]),
+                          pickedFile: Rxn(controller
+                              .pickedFileMap[ProfilePickerType.fatherNid]),
                           isDownloading: (controller.isDownloadingMap[
-                                      ProfileDownloadType.nid] ??
+                                      ProfileDownloadType.fatherNid] ??
                                   false)
                               .obs,
                           progress: (controller.downloadProgressMap[
-                                      ProfileDownloadType.nid] ??
+                                      ProfileDownloadType.fatherNid] ??
                                   0.0)
                               .obs,
                           onPickFile: () =>
-                              controller.pickFile(ProfilePickerType.nid),
+                              controller.pickFile(ProfilePickerType.fatherNid),
                           onDownload: () async {
                             final isComplete =
                                 await controller.downloadNidFile();
@@ -115,7 +115,7 @@ class _ProfileSetupStepThreeScreenState
                             }
                           },
                           fileUrl: controller
-                              .profileModel.value.userProfile?.nidPaperUrl,
+                              .profileModel.value.parentInfo?.fatherNidUrl,
                         );
                       }),
                     CustomText(
@@ -124,136 +124,163 @@ class _ProfileSetupStepThreeScreenState
                       fontsize: 12.sp,
                     ),
                     SizedBox(height: 16.h),
+                    AliveDeadToggle(isAlive: controller.isFatherAlive),
 
-                    ///=============="Father’s Information================================
-                    SizedBox(height: 20.h),
-                    Center(
-                        child: CustomText(
-                      text: "Mother’s Information".tr,
-                      fontsize: 20,
-                    )),
-                    SizedBox(height: 20.h),
+                    ///=============="Mother's Information================================
+                    SizedBox(height: 16.h),
                     CustomText(
-                      text: "Mother’s Name".tr,
-                      color: AppColors.hitTextColor000000,
+                      text: "Mother's Name".tr,
                       fontsize: 16.sp,
                     ),
-                    SizedBox(height: 10.h),
-                    CustomTextField(
+                    SizedBox(height: 4.h),
+                    CustomTextFormField(
                       controller: controller.motherNameController.value,
-                      hintText: "Mother’s Name".tr,
-                      borderColor: AppColors.secondaryPrimaryColor,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Mother’s Name'.tr;
-                        }
-                        return null;
-                      },
+                      hint: "Mother's Name".tr,
+                      validator: (value) =>
+                          value!.isEmpty ? "Mother's Name is required" : null,
                     ),
-                    SizedBox(height: 20.h),
-                    //   CustomDropdown(label: "Profession".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
-                    SizedBox(height: 20.h),
-                    //   CustomDropdown(label: "Nationality".tr,items: profileController.profession,selectedValue: profileController.selectedProfession,),
-                    ///============NID/PASSPORT No*====================
-                    SizedBox(height: 20.h),
+                    SizedBox(height: 16.h),
+                    //================== Mother Profession ====================
                     CustomText(
-                      text: "NID/Passport No".tr,
-                      color: AppColors.hitTextColor000000,
+                      text: "Mother's Profession".tr,
                       fontsize: 16.sp,
                     ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: CustomTextField(
-                            controller:
-                                controller.motherPassOrNIDController.value,
-                            hintText: "NID/Passport No".tr,
-                            borderColor: AppColors.secondaryPrimaryColor,
-                            onChange: (value) {},
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'NID/Passport No'.tr;
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          width: 6.w,
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 6.w),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(16.r),
-                          ),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.attach_file_outlined,
-                              color: AppColors.primaryColor,
-                            ),
-                            onPressed: () {
-                              // _NIDImageFromGallery();
-                              // Add your action here
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 6.w,
-                    ),
 
-                    SizedBox(height: 16.h),
-                    // Center(
-                    //   child: ToggleButtons(
-                    //     isSelected: isSelected,
-                    //     onPressed: (index) {
-                    //       setState(() {
-                    //         // Allow only one button to be selected at a time
-                    //         for (int i = 0; i < isSelected.length; i++) {
-                    //           isSelected[i] = i == index;
-                    //         }
-                    //       });
-                    //     },
-                    //     borderRadius: BorderRadius.circular(8),
-                    //     selectedColor: Colors.white,
-                    //     fillColor: isSelected[1] ? Colors.red : Colors.green,
-                    //     color: Colors.black,
-                    //     children: [
-                    //       Padding(
-                    //         padding: const EdgeInsets.symmetric(horizontal: 50),
-                    //         child: Text('Alive'.tr),
-                    //       ),
-                    //       Padding(
-                    //         padding: const EdgeInsets.symmetric(horizontal: 50),
-                    //         child: Text('Death'),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
+                    SizedBox(height: 4.h),
+                    CustomDropdown<ProfessionModel>(
+                      hint: "Profession".tr,
+                      items: controller.professionList,
+                      value: controller.selectedMotherProfession.value,
+                      itemToString: (item) => item.profession ?? "",
+                      onChanged: (val) =>
+                          controller.selectedMotherProfession.value = val,
+                    ),
                     SizedBox(height: 16.h),
 
-                    // ///=============Button====================
-                    // CustomButtonCommon(
-                    //   // loading: authController.loadingLoading.value == true,
-                    //   title: "Next".tr,
-                    //   onpress: () {
-                    //     //    Get.toNamed(AppRoutes.otpScreen,preventDuplicates: false);
-                    //     // if (_forRegKey.currentState!.validate()) {
-                    //     //   // authController.loginHandle(
-                    //     //   //     emailController.text, passController.text);
-                    //     // }
-                    //   },
-                    // ),
-                    // SizedBox(height: 16.h),
+                    ///============Mother NID/PASSPORT No*====================
+
+                    CustomText(
+                        text: "Mother's NID/Passport No".tr, fontsize: 16.sp),
+                    SizedBox(height: 4.h),
+                    CustomTextFormField(
+                      controller: controller.motherPassOrNIDController.value,
+                      hint: "NID/Passport No".tr,
+                      validator: (value) => value!.isEmpty
+                          ? "Mother's NID/Passport No is required"
+                          : null,
+                    ),
+                    SizedBox(height: 16.h),
+                    if (controller
+                            .profileModel.value.parentInfo?.motherNidUrl !=
+                        null)
+                      Obx(() {
+                        return FileChooseAndDownloadButton(
+                          pickedFile: Rxn(controller
+                              .pickedFileMap[ProfilePickerType.motherNid]),
+                          isDownloading: (controller.isDownloadingMap[
+                                      ProfileDownloadType.motherNid] ??
+                                  false)
+                              .obs,
+                          progress: (controller.downloadProgressMap[
+                                      ProfileDownloadType.motherNid] ??
+                                  0.0)
+                              .obs,
+                          onPickFile: () =>
+                              controller.pickFile(ProfilePickerType.motherNid),
+                          onDownload: () async {
+                            final isComplete =
+                                await controller.downloadNidFile();
+                            if (isComplete) {
+                              Fluttertoast.showToast(
+                                msg: "NID/Passport File downloaded successfully"
+                                    .tr,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.TOP,
+                                timeInSecForIosWeb: 2,
+                                backgroundColor: AppColors.primaryColor,
+                                textColor: AppColors.whiteColor,
+                              );
+                            }
+                          },
+                          fileUrl: controller
+                              .profileModel.value.parentInfo?.motherNidUrl,
+                        );
+                      }),
+                    CustomText(
+                      text: "* Only Pdf,JPEG,PNG file are allowed".tr,
+                      color: AppColors.redColor,
+                      fontsize: 12.sp,
+                    ),
+                    SizedBox(height: 16.h),
+                    AliveDeadToggle(isAlive: controller.isMotherAlive),
                   ],
                 ),
               ),
             )));
+  }
+}
+
+class AliveDeadToggle extends StatelessWidget {
+  final RxBool isAlive;
+  AliveDeadToggle({required this.isAlive});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(6),
+      child: Obx(() => Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () => isAlive(true),
+                  borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    height: 42,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: isAlive.value ? Colors.green : Colors.transparent,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: isAlive.value ? Colors.green : Colors.grey,
+                      ),
+                    ),
+                    child: Text(
+                      'Alive',
+                      style: TextStyle(
+                        color: isAlive.value ? Colors.white : Colors.black,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: InkWell(
+                  onTap: () => isAlive(false),
+                  borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    height: 42,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: !isAlive.value ? Colors.green : Colors.transparent,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: !isAlive.value ? Colors.green : Colors.grey,
+                      ),
+                    ),
+                    child: Text(
+                      'Dead',
+                      style: TextStyle(
+                        color: !isAlive.value ? Colors.white : Colors.black,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )),
+    );
   }
 }
