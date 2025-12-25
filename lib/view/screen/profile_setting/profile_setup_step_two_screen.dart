@@ -101,6 +101,38 @@ class _ProfileSetupsStepTwoScreenState
                       onChanged: (value) {
                         controller.isPresentAddressAsPermanentAddress.value =
                             value!;
+
+                        if (controller
+                            .isPresentAddressAsPermanentAddress.value) {
+                          // permanent zip code
+                          controller.permanentZipCodeController.value.text =
+                              controller.profileModel.value.userProfile!
+                                      .permanentAddress
+                                      ?.split(',')[0] ??
+                                  "";
+
+                          // permanent village
+                          controller.permanentVillageController.value.text =
+                              controller.profileModel.value.userProfile!
+                                      .permanentAddress
+                                      ?.split(',')[1] ??
+                                  "";
+
+                          // permanent road
+                          controller.permanentRoadController.value.text =
+                              controller.profileModel.value.userProfile!
+                                      .permanentAddress
+                                      ?.split(',')[2] ??
+                                  "";
+                        } else {
+                          controller.permanentZipCodeController.value.text = "";
+
+                          // permanent village
+                          controller.permanentVillageController.value.text = "";
+
+                          // permanent road
+                          controller.permanentRoadController.value.text = "";
+                        }
                       },
                       title:
                           Text("Mark Present Address as Permanent Address".tr),
@@ -108,73 +140,70 @@ class _ProfileSetupsStepTwoScreenState
                   ),
 
                   Obx(
-                    () => !controller.isPresentAddressAsPermanentAddress.value
-                        ? SizedBox.shrink()
-                        : Column(
-                            children: [
-                              SizedBox(height: 16.h),
-                              Container(
-                                height: 48.h,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  borderRadius: BorderRadius.circular(8.r),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0.h),
-                                  child: Text(
-                                    "Permanent Address".tr,
-                                    style: TextStyle(
-                                      color: AppColors.whiteColor,
-                                      fontSize: 24.sp,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 16.h),
-                              CustomText(
-                                text: "Zip code".tr,
-                                fontsize: 16.sp,
-                              ),
-                              SizedBox(height: 4.h),
-                              CustomTextFormField(
-                                controller:
-                                    controller.permanentZipCodeController.value,
-                                hint: "Zip Code".tr,
-                                validator: (value) => value!.isEmpty
-                                    ? "Zip code is required"
-                                    : null,
-                              ),
-                              SizedBox(height: 16.h),
-                              CustomText(
-                                text: "Village/House".tr,
-                                fontsize: 16.sp,
-                              ),
-                              SizedBox(height: 4.h),
-                              CustomTextFormField(
-                                controller:
-                                    controller.permanentVillageController.value,
-                                hint: "Village/House".tr,
-                                validator: (value) => value!.isEmpty
-                                    ? "Village/House is required"
-                                    : null,
-                              ),
-                              SizedBox(height: 16.h),
-                              CustomText(
-                                text: "Road/Block/Section".tr,
-                                fontsize: 16.sp,
-                              ),
-                              SizedBox(height: 4.h),
-                              CustomTextFormField(
-                                controller:
-                                    controller.permanentRoadController.value,
-                                hint: "Road/Block/Section".tr,
-                                validator: (value) => value!.isEmpty
-                                    ? "Road/Block/Section is required"
-                                    : null,
-                              ),
-                            ],
+                    () => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 16.h),
+                        Container(
+                          height: 48.h,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0.h),
+                            child: Text(
+                              "Permanent Address".tr,
+                              style: TextStyle(
+                                color: AppColors.whiteColor,
+                                fontSize: 24.sp,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16.h),
+                        CustomText(
+                          text: "Zip code".tr,
+                          fontsize: 16.sp,
+                        ),
+                        SizedBox(height: 4.h),
+                        CustomTextFormField(
+                          controller:
+                              controller.permanentZipCodeController.value,
+                          hint: "Zip Code".tr,
+                          validator: (value) =>
+                              value!.isEmpty ? "Zip code is required" : null,
+                        ),
+                        SizedBox(height: 16.h),
+                        CustomText(
+                          text: "Village/House".tr,
+                          fontsize: 16.sp,
+                        ),
+                        SizedBox(height: 4.h),
+                        CustomTextFormField(
+                          controller:
+                              controller.permanentVillageController.value,
+                          hint: "Village/House".tr,
+                          validator: (value) => value!.isEmpty
+                              ? "Village/House is required"
+                              : null,
+                        ),
+                        SizedBox(height: 16.h),
+                        CustomText(
+                          text: "Road/Block/Section".tr,
+                          fontsize: 16.sp,
+                        ),
+                        SizedBox(height: 4.h),
+                        CustomTextFormField(
+                          controller: controller.permanentRoadController.value,
+                          hint: "Road/Block/Section".tr,
+                          validator: (value) => value!.isEmpty
+                              ? "Road/Block/Section is required"
+                              : null,
+                        ),
+                      ],
+                    ),
                   ),
 
                   // =====Overseas Address=====
