@@ -15,8 +15,8 @@ import 'package:get/get.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
 import 'package:al_wasyeah/helpers/file_download_util.dart';
-import '../../view/screen/screen.dart';
 import 'profile_enum.dart';
+import 'spouse_form.dart';
 
 class ProfileController extends GetxController {
   final PageController pageController = PageController();
@@ -181,8 +181,70 @@ class ProfileController extends GetxController {
     );
   }
 
-  List<SpouseItemS> addSpouseList = [];
+  // Spouse File Logic
+  void pickSpouseFile(SpouseForm form, {required bool isNid}) async {
+    var result = await FilePickerUtil.pickSingleFile();
+    if (result != null) {
+      if (isNid) {
+        form.selectedNidFile.value = result;
+      } else {
+        form.selectedPassportFile.value = result;
+      }
+    }
+  }
+
+  Future<void> downloadSpouseFile(SpouseForm form,
+      {required bool isNid}) async {
+    String? urlPath = isNid ? form.nidUrl : form.passportUrl;
+    if (urlPath == null) return;
+
+    RxBool isDownloading =
+        isNid ? form.isDownloadingNid : form.isDownloadingPassport;
+    RxDouble progress =
+        isNid ? form.nidDownloadProgress : form.passportDownloadProgress;
+    String prefix = isNid ? "Spouse_NID" : "Spouse_Passport";
+
+    isDownloading.value = true;
+    progress.value = 0.0;
+
+    final String fileName =
+        '${prefix}_${form.name.text}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
+    final String filePath = '${ApiConstants.imageUrl}$urlPath';
+
+    await FileDownloadUtil.downloadFile(
+      filePath,
+      fileName,
+      (prog) {
+        progress.value = prog;
+        if (prog >= 100) {
+          isDownloading.value = false;
+        }
+      },
+    ).catchError((e) {
+      isDownloading.value = false;
+    });
+  }
+
+  // Spouse List Management
+  RxList<SpouseForm> spouseList = <SpouseForm>[].obs;
+
+  // Children List Management
+  // Keeping original list for now as user only requested Spouse refactor,
+  // but logically this should also be refactored later.
   List<ChildrenInfo> addChildrenInfoList = [];
+
+  void addSpouse() {
+    spouseList.add(SpouseForm());
+  }
+
+  void removeSpouse(int index) {
+    if (index >= 0 && index < spouseList.length) {
+      final item = spouseList[index];
+      // If needed we can call API to delete if it's an existing item
+      item.dispose();
+      spouseList.removeAt(index);
+    }
+  }
 
   Future<void> getMaritalList() async {
     try {
@@ -338,6 +400,42 @@ class ProfileController extends GetxController {
       // mother alive dead
       isMotherAlive.value =
           profileModel.value.parentInfo?.motherExisting ?? false;
+      // Spouse
+      spouseList.clear();
+      if (profileModel.value.spouseInfo != null) {
+        for (var spouse in profileModel.value.spouseInfo!) {
+          spouseList.add(SpouseForm(
+            spouseId: spouse.spouseId,
+            userId: spouse.userId,
+            existing: spouse.existing,
+            nameVal: spouse.spouseName,
+            nidVal: spouse.nid,
+            passportVal:
+                spouse.passport != null ? spouse.passport.toString() : '',
+            mobileVal: spouse.mobile,
+            emailVal: spouse.email,
+            nidUrl: spouse.nidPaperUrl,
+            passportUrl: spouse.passportPaperUrl != null
+                ? spouse.passportPaperUrl.toString()
+                : null, // Assuming this is dynamic
+            isAliveVal:
+                true, // Assuming alive by default or need a field for it
+          ));
+          // Set selection models
+          if (spouseList.last.profession.value == null &&
+              spouse.professionId != null) {
+            spouseList.last.profession.value = professionList
+                .firstWhereOrNull((p) => p.professionId == spouse.professionId);
+          }
+          if (spouseList.last.nationality.value == null &&
+              spouse.nationalityId != null) {
+            spouseList.last.nationality.value = countryList
+                .firstWhereOrNull((c) => c.countryId == spouse.nationalityId);
+          }
+        }
+      }
+
+      // 1st
       try {
         if (profileModel.value.userProfile!.multipleCitizenCode != null) {
           selectedMultiCitizenCountry.value = countryList.firstWhere(
