@@ -13,6 +13,8 @@ import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
+import '../../../controllers/profile/profile_enum.dart';
+
 class ProfileSetupStepOneScreen extends StatefulWidget {
   @override
   State<ProfileSetupStepOneScreen> createState() =>
@@ -158,8 +160,14 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                       Obx(() {
                         return _buildFileRow(
                           pickedFile: controller.pickedNIDFile,
-                          isDownloading: controller.isDownloadingNid,
-                          progress: controller.nidDownloadProgress,
+                          isDownloading: (controller.isDownloadingMap[
+                                      ProfileDownloadType.nid] ??
+                                  false)
+                              .obs,
+                          progress: (controller.downloadProgressMap[
+                                      ProfileDownloadType.nid] ??
+                                  0.0)
+                              .obs,
                           onPickFile: controller.pickNidFile,
                           onDownload: () async {
                             final isComplete =
@@ -201,8 +209,14 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                         null)
                       Obx(() => _buildFileRow(
                             pickedFile: controller.pickedTinFile,
-                            isDownloading: controller.isDownloadingTin,
-                            progress: controller.tinDownloadProgress,
+                            isDownloading: (controller.isDownloadingMap[
+                                        ProfileDownloadType.tin] ??
+                                    false)
+                                .obs,
+                            progress: (controller.downloadProgressMap[
+                                        ProfileDownloadType.tin] ??
+                                    0.0)
+                                .obs,
                             onPickFile: controller.pickTinFile,
                             onDownload: () async {
                               final isComplete =
@@ -255,10 +269,14 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                                 null)
                               _buildFileRow(
                                 pickedFile: controller.pickedMultiCitizenFile,
-                                isDownloading:
-                                    controller.isDownloadingMultiCitizen,
-                                progress:
-                                    controller.multiCitizenDownloadProgress,
+                                isDownloading: (controller.isDownloadingMap[
+                                            ProfileDownloadType.multiCitizen] ??
+                                        false)
+                                    .obs,
+                                progress: (controller.downloadProgressMap[
+                                            ProfileDownloadType.multiCitizen] ??
+                                        0.0)
+                                    .obs,
                                 onPickFile: controller.pickMultiCitizenFile,
                                 onDownload: () async {
                                   final isComplete = await controller

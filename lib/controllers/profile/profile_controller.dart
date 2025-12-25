@@ -16,6 +16,7 @@ import '../../models/models.dart';
 import '../../services/services.dart';
 import 'package:al_wasyeah/helpers/file_download_util.dart';
 import '../../view/screen/screen.dart';
+import 'profile_enum.dart';
 
 class ProfileController extends GetxController {
   final PageController pageController = PageController();
@@ -74,17 +75,15 @@ class ProfileController extends GetxController {
   Rx<TextEditingController> overseasVillageController =
       TextEditingController().obs;
 
-  RxBool isDownloadingNid = false.obs;
-  RxDouble nidDownloadProgress = 0.0.obs;
+  // Enum for download types
+  RxMap<ProfileDownloadType, bool> isDownloadingMap =
+      <ProfileDownloadType, bool>{}.obs;
+  RxMap<ProfileDownloadType, double> downloadProgressMap =
+      <ProfileDownloadType, double>{}.obs;
+
   Rxn<PickedFileResult> pickedNIDFile = Rxn();
   Rxn<PickedFileResult> pickedTinFile = Rxn();
   Rxn<PickedFileResult> pickedMultiCitizenFile = Rxn();
-
-  RxBool isDownloadingTin = false.obs;
-  RxDouble tinDownloadProgress = 0.0.obs;
-
-  RxBool isDownloadingMultiCitizen = false.obs;
-  RxDouble multiCitizenDownloadProgress = 0.0.obs;
 
   RxBool isPresentAddressAsPermanentAddress = false.obs;
 
@@ -112,47 +111,57 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<bool> downloadNidFile() async {
-    log(profileModel.value.userProfile?.nidPaperUrl ?? '');
-
-    if (profileModel.value.userProfile?.nidPaperUrl == null) {
+  Future<bool> _downloadGenericFile({
+    required String? urlPath,
+    required String filePrefix,
+    required ProfileDownloadType type,
+  }) async {
+    if (urlPath == null) {
       return false;
     }
 
-    isDownloadingNid(true);
-    nidDownloadProgress(0.0);
+    isDownloadingMap[type] = true;
+    downloadProgressMap[type] = 0.0;
 
     final completer = Completer<bool>();
 
     final String fileName =
-        'NID_${profileModel.value.userProfile?.firstName ?? "User"}_'
+        '${filePrefix}_${profileModel.value.userProfile?.firstName ?? "User"}_'
         '${profileModel.value.userProfile?.lastName ?? ""}_'
         '${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
 
-    final String filePath =
-        '${ApiConstants.imageUrl}${profileModel.value.userProfile?.nidPaperUrl}';
+    final String filePath = '${ApiConstants.imageUrl}$urlPath';
+    log("$filePrefix File Path: $filePath");
 
     FileDownloadUtil.downloadFile(
       filePath,
       fileName,
       (progress) {
-        nidDownloadProgress(progress);
+        downloadProgressMap[type] = progress;
 
         if (progress >= 100) {
-          isDownloadingNid(false);
-          log("Download NID Successful");
+          isDownloadingMap[type] = false;
+          log("Download $filePrefix Successful");
           completer.complete(true);
         }
       },
     ).catchError((e) {
-      isDownloadingNid(false);
-      log('Download failed: $e');
+      isDownloadingMap[type] = false;
+      log('Download $filePrefix failed: $e');
       if (!completer.isCompleted) {
         completer.complete(false);
       }
     });
 
-    return completer.future; // ✅ wait until complete
+    return completer.future;
+  }
+
+  Future<bool> downloadNidFile() async {
+    return _downloadGenericFile(
+      urlPath: profileModel.value.userProfile?.nidPaperUrl,
+      filePrefix: 'NID',
+      type: ProfileDownloadType.nid,
+    );
   }
 
   void pickTinFile() async {
@@ -163,40 +172,11 @@ class ProfileController extends GetxController {
   }
 
   Future<bool> downloadTinFile() async {
-    if (profileModel.value.userProfile?.tinPaperUrl == null) {
-      return false;
-    }
-    isDownloadingTin(true);
-    tinDownloadProgress(0.0);
-
-    final String fileName =
-        'TIN_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf'; // Adjust extension if needed
-    final String filePath =
-        '${ApiConstants.imageUrl}${profileModel.value.userProfile?.tinPaperUrl}';
-    log("TIN File Path: " + filePath);
-    final completer = Completer<bool>();
-    FileDownloadUtil.downloadFile(
-      filePath,
-      fileName,
-      (progress) {
-        tinDownloadProgress(progress);
-        if (progress >= 100) {
-          isDownloadingTin(false);
-          completer.complete(true);
-        }
-
-        if (progress == 100) {
-          log("Download TIN Successfull");
-        }
-      },
-    ).catchError((e) {
-      isDownloadingTin(false);
-      print('Download failed: $e');
-      if (!completer.isCompleted) {
-        completer.complete(false);
-      }
-    });
-    return completer.future;
+    return _downloadGenericFile(
+      urlPath: profileModel.value.userProfile?.tinPaperUrl,
+      filePrefix: 'TIN',
+      type: ProfileDownloadType.tin,
+    );
   }
 
   void pickMultiCitizenFile() async {
@@ -207,34 +187,11 @@ class ProfileController extends GetxController {
   }
 
   Future<bool> downloadMultiCitizenFile() async {
-    if (profileModel.value.userProfile?.passportPaperUrl == null) {
-      return false;
-    }
-    isDownloadingMultiCitizen(true);
-    multiCitizenDownloadProgress(0.0);
-
-    final String fileName =
-        'MultiCitizen_${profileModel.value.userProfile?.firstName ?? "User"}_${profileModel.value.userProfile?.lastName ?? ""}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
-
-    final completer = Completer<bool>();
-    FileDownloadUtil.downloadFile(
-      '${ApiConstants.imageUrl}${profileModel.value.userProfile?.passportPaperUrl}',
-      fileName,
-      (progress) {
-        multiCitizenDownloadProgress(progress);
-        if (progress >= 100) {
-          isDownloadingMultiCitizen(false);
-          completer.complete(true);
-        }
-      },
-    ).catchError((e) {
-      isDownloadingMultiCitizen(false);
-      print('Download failed: $e');
-      if (!completer.isCompleted) {
-        completer.complete(false);
-      }
-    });
-    return completer.future;
+    return _downloadGenericFile(
+      urlPath: profileModel.value.userProfile?.passportPaperUrl,
+      filePrefix: 'MultiCitizen',
+      type: ProfileDownloadType.multiCitizen,
+    );
   }
 
   List<SpouseItemS> addSpouseList = [];

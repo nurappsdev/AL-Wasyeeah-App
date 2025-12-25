@@ -12,6 +12,8 @@ import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
+import '../../../controllers/profile/profile_enum.dart';
+
 class ProfileSetupStepThreeScreen extends StatefulWidget {
   ProfileSetupStepThreeScreen({super.key});
 
@@ -86,8 +88,14 @@ class _ProfileSetupStepThreeScreenState
                       Obx(() {
                         return FileChooseAndDownloadButton(
                           pickedFile: controller.pickedNIDFile,
-                          isDownloading: controller.isDownloadingNid,
-                          progress: controller.nidDownloadProgress,
+                          isDownloading: (controller.isDownloadingMap[
+                                      ProfileDownloadType.nid] ??
+                                  false)
+                              .obs,
+                          progress: (controller.downloadProgressMap[
+                                      ProfileDownloadType.nid] ??
+                                  0.0)
+                              .obs,
                           onPickFile: controller.pickNidFile,
                           onDownload: () async {
                             final isComplete =
