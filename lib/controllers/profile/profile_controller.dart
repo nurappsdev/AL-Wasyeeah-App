@@ -334,7 +334,7 @@ class ProfileController extends GetxController {
           profileModel.value.parentInfo?.motherNationalityId);
       // mother passport or nid
       motherPassOrNIDController.value.text =
-          profileModel.value.parentInfo?.motherProfessionId.toString() ?? "";
+          profileModel.value.parentInfo?.motherNid.toString() ?? "";
       // mother alive dead
       isMotherAlive.value =
           profileModel.value.parentInfo?.motherExisting ?? false;
