@@ -244,7 +244,9 @@ class ProfileController extends GetxController {
         ApiConstants.maritalList,
       );
       maritalList(maritalListModelFromJson(jsonEncode(response.body)));
-    } catch (e) {}
+    } catch (e, s) {
+      log("Marital List Error: $e\nStacktrace: $s");
+    }
   }
 
   Future<void> getGenderList() async {

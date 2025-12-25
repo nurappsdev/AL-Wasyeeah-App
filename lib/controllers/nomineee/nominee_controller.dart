@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -12,83 +11,78 @@ import 'package:http/http.dart' as http;
 
 import '../../utils/app_constant.dart';
 
-class NomineeController extends GetxController{
-
-
+class NomineeController extends GetxController {
   ///==================get nominee===========================
-  RxBool isNominee= false.obs;
+  RxBool isNominee = false.obs;
   RxList<NomineetedResponseModel> nomineeData = <NomineetedResponseModel>[].obs;
-  getNomineeData() async{
+  getNomineeData() async {
     isNominee(true);
     var response = await ApiClient.getData(ApiConstants.nomineeEndPoint);
     print("nomineeData data ------------${response.body}");
-    if(response.statusCode == 200 || response.statusCode == 201){
-      nomineeData.value = List<NomineetedResponseModel>.from(response.body.map((x)=> NomineetedResponseModel.fromJson(x)));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      nomineeData.value = List<NomineetedResponseModel>.from(
+          response.body.map((x) => NomineetedResponseModel.fromJson(x)));
       isNominee(false);
-    }else{
+    } else {
       isNominee(false);
     }
   }
-
-
 
   ///==================get nominee access control===========================
-  RxBool isNomineeAccess= false.obs;
-  RxList<AccessControllResponseModel> accessControllResponseModel = <AccessControllResponseModel>[].obs;
-  getNomineeAccessData({String? nominee1Witness2}) async{
+  RxBool isNomineeAccess = false.obs;
+  RxList<AccessControllResponseModel> accessControllResponseModel =
+      <AccessControllResponseModel>[].obs;
+  getNomineeAccessData({String? nominee1Witness2}) async {
     isNominee(true);
-    var response = await ApiClient.getData("${ApiConstants.accessControlEndPoint}${nominee1Witness2}");
+    var response = await ApiClient.getData(
+        "${ApiConstants.accessControlEndPoint}${nominee1Witness2}");
     print("nomineeData data ------------${response.body}");
-    if(response.statusCode == 200 || response.statusCode == 201){
-      accessControllResponseModel.value = List<AccessControllResponseModel>.from(response.body.map((x)=> AccessControllResponseModel.fromJson(x)));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      accessControllResponseModel.value =
+          List<AccessControllResponseModel>.from(response.body
+              .map((x) => AccessControllResponseModel.fromJson(x)));
       isNomineeAccess(false);
-    }else{
+    } else {
       isNomineeAccess(false);
     }
   }
-
-
-
-
 
   ///==================get access Feature List ===========================
-  RxBool isAccessFeature= false.obs;
-  RxList<GetAccessFeatureModel> getAccessFeatureModel = <GetAccessFeatureModel>[].obs;
-  getAccessFeatureData() async{
+  RxBool isAccessFeature = false.obs;
+  RxList<GetAccessFeatureModel> getAccessFeatureModel =
+      <GetAccessFeatureModel>[].obs;
+  getAccessFeatureData() async {
     isAccessFeature(true);
-    var response = await ApiClient.getData("${ApiConstants.accessFeatureEndPoint}");
+    var response =
+        await ApiClient.getData("${ApiConstants.accessFeatureEndPoint}");
     print("feature list data  ------------${response.body}");
-    if(response.statusCode == 200 || response.statusCode == 201){
-      getAccessFeatureModel.value = List<GetAccessFeatureModel>.from(response.body.map((x)=> GetAccessFeatureModel.fromJson(x)));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      getAccessFeatureModel.value = List<GetAccessFeatureModel>.from(
+          response.body.map((x) => GetAccessFeatureModel.fromJson(x)));
       isAccessFeature(false);
-    }else{
+    } else {
       isAccessFeature(false);
     }
   }
-
-
 
   ///==================get select Feature List ===========================
-  RxBool isSelectFeature= false.obs;
+  RxBool isSelectFeature = false.obs;
   RxList<SelectFeatureModel> selectFeatureModel = <SelectFeatureModel>[].obs;
-  getSelectFeatureData({String? requestKey}) async{
+  getSelectFeatureData({String? requestKey}) async {
     isAccessFeature(true);
-    var response = await ApiClient.getData("${ApiConstants.accessSelectEndPoint}?requestKey=${requestKey}&trace=false");
+    var response = await ApiClient.getData(
+        "${ApiConstants.accessSelectEndPoint}?requestKey=${requestKey}&trace=false");
     print("select list data  ------------${response.body}");
-    if(response.statusCode == 200 || response.statusCode == 201){
-      selectFeatureModel.value = List<SelectFeatureModel>.from(response.body.map((x)=> SelectFeatureModel.fromJson(x)));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      selectFeatureModel.value = List<SelectFeatureModel>.from(
+          response.body.map((x) => SelectFeatureModel.fromJson(x)));
       isAccessFeature(false);
-    }else{
+    } else {
       isAccessFeature(false);
     }
   }
 
-
-
-
-
-
-///----------save Access Feature------------------------
+  ///----------save Access Feature------------------------
   RxBool addFeatureLoading = false.obs;
 
   Future<void> addFeatureNomineeAndWitness({
@@ -104,25 +98,28 @@ class NomineeController extends GetxController{
         'Content-Type': 'application/json',
       };
 
-      final body = jsonEncode({
+      final Map<String, dynamic> body = {
         "requestKey": requestKey ?? '',
         "contextIds": contextIds.toList(),
+      };
 
-      });
+      final endpoint =
+          "${ApiConstants.addFeatureNomineeWitnessPoint}${isWitness}";
 
-      final endpoint = "${ApiConstants.addFeatureNomineeWitnessPoint}${isWitness}";
-
-      final response = await ApiClient.postData(endpoint, body, headers: headers);
+      final response =
+          await ApiClient.postData(endpoint, body, headers: headers);
 
       print("Response: ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        ToastMessageHelper.successMessageShowToster("RECORD UPDATED SUCCESSFULLY!!");
+        ToastMessageHelper.successMessageShowToster(
+            "RECORD UPDATED SUCCESSFULLY!!");
         getNomineeAccessData();
         update();
         Get.back();
       } else {
-        ToastMessageHelper.errorMessageShowToster('Mandatory fields cannot be null or empty!');
+        ToastMessageHelper.errorMessageShowToster(
+            'Mandatory fields cannot be null or empty!');
       }
     } catch (e) {
       ToastMessageHelper.errorMessageShowToster('An error occurred: $e');
@@ -131,28 +128,22 @@ class NomineeController extends GetxController{
     }
   }
 
-
-
-
-
-
-
-
   ///==================get Question===========================
-  RxBool isNomineeYou= false.obs;
-  RxList<NomineetedResponseModel> nomineetedYouData = <NomineetedResponseModel>[].obs;
-  getNomineetedData() async{
+  RxBool isNomineeYou = false.obs;
+  RxList<NomineetedResponseModel> nomineetedYouData =
+      <NomineetedResponseModel>[].obs;
+  getNomineetedData() async {
     isNomineeYou(true);
     var response = await ApiClient.getData(ApiConstants.nomineetedYouPoint);
     print("nomineetedYouData data ------------${response.body}");
-    if(response.statusCode == 200 || response.statusCode == 201){
-      nomineetedYouData.value = List<NomineetedResponseModel>.from(response.body.map((x)=> NomineetedResponseModel.fromJson(x)));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      nomineetedYouData.value = List<NomineetedResponseModel>.from(
+          response.body.map((x) => NomineetedResponseModel.fromJson(x)));
       isNomineeYou(false);
-    }else{
+    } else {
       isNomineeYou(false);
     }
   }
-
 
   final TextEditingController searchController = TextEditingController();
 
@@ -192,7 +183,6 @@ class NomineeController extends GetxController{
       isLoading.value = false;
     }
   }
-
 
   ///==================Save nominee Up===========================
   // bool isNomineeTrue = true;
@@ -261,7 +251,7 @@ class NomineeController extends GetxController{
         'Content-Type': 'application/json',
       };
 
-      final body = jsonEncode({
+      final body = {
         "name": userName,
         "mobile": mobileNo,
         "email": email,
@@ -269,23 +259,30 @@ class NomineeController extends GetxController{
         "dob": dob,
         "presentAddress": presentAddress,
         "permanentAddress": permanentAddress,
-      });
+      };
 
       final endpoint = isNomineeTrue
           ? ApiConstants.addNomineePoint
           : ApiConstants.addWitnessEndPoint;
 
-      final response = await ApiClient.postData(endpoint, body, headers: headers);
+      final response =
+          await ApiClient.postData(endpoint, body, headers: headers);
 
       print("Response: ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessageHelper.successMessageShowToster(
-          isNomineeTrue ? "Nominee Added Successfully" : "Witness Added Successfully",
+          isNomineeTrue
+              ? "Nominee Added Successfully"
+              : "Witness Added Successfully",
         );
-        isNomineeTrue ? Get.toNamed(AppRoutes.addNomineeScreen, preventDuplicates: false):Get.toNamed(AppRoutes.addWitnessesScreen, preventDuplicates: false);
+        isNomineeTrue
+            ? Get.toNamed(AppRoutes.addNomineeScreen, preventDuplicates: false)
+            : Get.toNamed(AppRoutes.addWitnessesScreen,
+                preventDuplicates: false);
       } else {
-        ToastMessageHelper.errorMessageShowToster('Add failed. Please try again.');
+        ToastMessageHelper.errorMessageShowToster(
+            'Add failed. Please try again.');
       }
     } catch (e) {
       ToastMessageHelper.errorMessageShowToster('An error occurred: $e');
@@ -294,25 +291,22 @@ class NomineeController extends GetxController{
     }
   }
 
-
-
   ///==================get Question===========================
-  RxBool isDelNomineeYou= false.obs;
-  getNomineeDeleteData({String? requestKey}) async{
+  RxBool isDelNomineeYou = false.obs;
+  getNomineeDeleteData({String? requestKey}) async {
     isDelNomineeYou(true);
-    var response = await ApiClient.getData("${ApiConstants.nomineeDeletePoint}?requestKey=${requestKey}");
+    var response = await ApiClient.getData(
+        "${ApiConstants.nomineeDeletePoint}?requestKey=${requestKey}");
     print("deleteData data ------------${response.body}");
-    if(response.statusCode == 200 || response.statusCode == 201){
+    if (response.statusCode == 200 || response.statusCode == 201) {
       ToastMessageHelper.successMessageShowToster(
-      "Nominee Delete Successfully",
+        "Nominee Delete Successfully",
       );
       getNomineeData();
       isDelNomineeYou(false);
-    }else{
+    } else {
       isDelNomineeYou(false);
       ToastMessageHelper.errorMessageShowToster("Try Again");
     }
   }
-
-
 }

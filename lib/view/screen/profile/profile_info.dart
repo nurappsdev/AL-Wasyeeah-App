@@ -424,7 +424,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
                                     AppConstants.businessID);
                                 await PrefsHelper.remove(AppConstants.type);
 
-                                await PrefsHelper.remove(AppConstants.isLogged);
                                 Get.toNamed(AppRoutes.loginScreen,
                                     preventDuplicates: false);
                               })),

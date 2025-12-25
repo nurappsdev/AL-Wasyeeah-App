@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -12,16 +11,16 @@ import '../../services/services.dart';
 import '../../utils/utils.dart';
 import '../../view/widgets/widgets.dart';
 
-class ZakatController extends GetxController{
-
-
+class ZakatController extends GetxController {
   ///==================get Witness===========================
   final cashAndBankController = TextEditingController();
 
   RxBool isNisabLoading = false.obs;
-  RxList<GetNisabRatesResponseModel> nisabRates = <GetNisabRatesResponseModel>[].obs;
+  RxList<GetNisabRatesResponseModel> nisabRates =
+      <GetNisabRatesResponseModel>[].obs;
 
-  Rx<GetNisabRatesResponseModel?> selectedCurrency = Rx<GetNisabRatesResponseModel?>(null);
+  Rx<GetNisabRatesResponseModel?> selectedCurrency =
+      Rx<GetNisabRatesResponseModel?>(null);
 
   @override
   void onInit() {
@@ -53,24 +52,23 @@ class ZakatController extends GetxController{
     WidgetsBinding.instance.addPostFrameCallback((_) {
       cashAndBankController.text = value.nisabAmount.toString();
     });
-
   }
+
   ///==================Save Sign Up===========================
   RxBool zakatLoading = false.obs;
   Future<void> zakatHandle({
-     String? goldValue,
-     String? silverValue,
-     String? cashAndBank,
-     String? futureDeposits,
-     String? loanGiven,
-     String? investmentValue,
-     String? rentalIncome,
-     String? immediateLiabilities,
-
+    String? goldValue,
+    String? silverValue,
+    String? cashAndBank,
+    String? futureDeposits,
+    String? loanGiven,
+    String? investmentValue,
+    String? rentalIncome,
+    String? immediateLiabilities,
   }) async {
     zakatLoading(true);
 
-    String bearerToken = await  PrefsHelper.getString(AppConstants.bearerToken);
+    String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
     print("token-------${bearerToken}");
     var headers = {
       'Content-Type': 'application/json',
@@ -82,7 +80,7 @@ class ZakatController extends GetxController{
       "goldValue": goldValue ?? "",
       "silverValue": silverValue ?? "",
       "cashAndBank": cashAndBank ?? "",
-      "futureDeposits":futureDeposits ?? "",
+      "futureDeposits": futureDeposits ?? "",
       "loanGiven": loanGiven,
       "investmentValue": investmentValue,
       "rentalIncome": rentalIncome,
@@ -90,25 +88,28 @@ class ZakatController extends GetxController{
     };
     var response = await ApiClient.postData(
       ApiConstants.zakatEndPoint,
-      jsonEncode(body),
+      body,
       headers: headers,
     );
     print("----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
-   ToastMessageHelper.successMessageShowToster("RECORD INSERTED SUCCESSFULLY!!");
+      ToastMessageHelper.successMessageShowToster(
+          "RECORD INSERTED SUCCESSFULLY!!");
       print("zakat netAssets${response.body}");
-      showZakatDialog( assetsAccount:"${response.body["netAssets"]}".tr,zakatAccount:"${response.body["zakatAmount"]}".tr );
+      showZakatDialog(
+          assetsAccount: "${response.body["netAssets"]}".tr,
+          zakatAccount: "${response.body["zakatAmount"]}".tr);
 
       // Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
       zakatLoading(false);
-
     } else {
-     // ToastMessageHelper.errorMessageShowToster("${response.body["message"]}");
+      // ToastMessageHelper.errorMessageShowToster("${response.body["message"]}");
       zakatLoading(false);
     }
   }
 
-  void showZakatDialog({required String assetsAccount, required String zakatAccount}) {
+  void showZakatDialog(
+      {required String assetsAccount, required String zakatAccount}) {
     Get.dialog(
       AlertDialog(
         title: CustomText(
@@ -156,5 +157,4 @@ class ZakatController extends GetxController{
       barrierDismissible: true,
     );
   }
-
 }

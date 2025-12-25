@@ -1,434 +1,246 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:al_wasyeah/helpers/app_routes.dart';
+import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:mime_type/mime_type.dart';
+
 import '../helpers/prefs_helper.dart';
-import '../utils/utils.dart';
 import 'api_constants.dart';
-import 'error_response.dart';
 
 class ApiClient extends GetxService {
-  static var client = http.Client();
-  static const String noInternetMessage = "Can't connect to the internet!";
+  static final http.Client _client = http.Client();
+  static bool _isLoggingOut = false;
   static const int timeoutInSeconds = 30;
-  static String bearerToken = "";
+  static String _bearerToken = '';
 
-//==========================================> Get Data <======================================
-  static Future<Response> getData(String uri,
-      {Map<String, dynamic>? query, Map<String, String>? headers}) async {
-    bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+  // ========================== COMMON RESPONSE BUILDER ==========================
+  static void _handleUnauthorized() async {
+    if (_isLoggingOut) return;
 
-    var mainHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $bearerToken'
-    };
+    _isLoggingOut = true;
+
+    // Clear session
+    await PrefsHelper.remove(AppConstants.bearerToken);
+
+    // Navigate to login (delay avoids context issues)
+    Future.microtask(() {
+      Get.offAllNamed(AppRoutes.loginScreen);
+      _isLoggingOut = false;
+    });
+  }
+
+  static Response _buildResponse(http.Response response, String uri) {
+    dynamic body;
+
     try {
-      debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
+      body = jsonDecode(utf8.decode(response.bodyBytes));
+    } catch (_) {
+      body = response.body;
+    }
 
-      http.Response response = await client
+    final statusText = body is Map && body['message'] != null
+        ? body['message'].toString()
+        : response.reasonPhrase;
+
+    log('====> API Response: [${response.statusCode}] ${ApiConstants.baseUrl + uri}\n$body');
+
+    // 🔴 GLOBAL 401 HANDLING
+    if (response.statusCode == 401) {
+      _handleUnauthorized();
+    }
+
+    return Response(
+      statusCode: response.statusCode,
+      body: body,
+      statusText: statusText,
+      headers: response.headers,
+      request: Request(
+        url: response.request!.url,
+        method: response.request!.method,
+        headers: response.request!.headers,
+      ),
+    );
+  }
+
+  static Future<Map<String, String>> _defaultHeaders() async {
+    _bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $_bearerToken',
+    };
+  }
+
+  // ========================== GET ==========================
+  static Future<Response> getData(
+    String uri, {
+    Map<String, String>? headers,
+  }) async {
+    try {
+      final response = await _client
           .get(
             Uri.parse(ApiConstants.baseUrl + uri),
-            headers: headers ?? mainHeaders,
+            headers: headers ?? await _defaultHeaders(),
           )
           .timeout(const Duration(seconds: timeoutInSeconds));
 
-      return handleResponse(response, uri);
+      return _buildResponse(response, uri);
+    } on SocketException {
+      return const Response(
+          statusCode: -1, statusText: "Can't connect to the internet!");
+    } on TimeoutException {
+      return const Response(statusCode: -1, statusText: 'Request timeout');
     } catch (e) {
-      debugPrint('------------${e.toString()}');
-      return const Response(statusCode: 1, statusText: noInternetMessage);
+      return Response(statusCode: -1, statusText: e.toString());
     }
   }
 
-//==========================================> Post Data <======================================
-  static Future<Response> postData(String uri, dynamic body,
-      {Map<String, String>? headers}) async {
-    String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+  // ========================== POST ==========================
 
-    var mainHeaders = {'Content-Type': 'application/json'};
-
+  static Future<Response> postData(
+    String uri,
+    Map<String, dynamic> body, {
+    Map<String, String>? headers,
+  }) async {
+    log('====> API Request: [POST] ${ApiConstants.baseUrl + uri}\n$headers\n$body');
     try {
-      print('====> API Call: $uri\nHeader: $mainHeaders');
-      print('====> API Body: $body');
-
-      http.Response response = await client
+      final response = await _client
           .post(
             Uri.parse(ApiConstants.baseUrl + uri),
-            body: body,
-            headers: headers ?? mainHeaders,
+            headers: headers ?? await _defaultHeaders(),
+            body: jsonEncode(body),
           )
           .timeout(const Duration(seconds: timeoutInSeconds));
 
-      print("==========> Response Post Method : ${response.statusCode}");
-      return handleResponse(response, uri);
+      return _buildResponse(response, uri);
+    } on SocketException {
+      return const Response(
+          statusCode: -1, statusText: "Can't connect to the internet!");
+    } on TimeoutException {
+      return const Response(statusCode: -1, statusText: 'Request timeout');
     } catch (e) {
-      print("===> Error in postData: $e");
-      return const Response(statusCode: 1, statusText: noInternetMessage);
+      return Response(statusCode: -1, statusText: e.toString());
     }
   }
 
-  // //==========================================> Test Post Data <======================================
-  // static Future<Response> testPostData(String uri, var body,
-  //     {Map<String, String>? headers}) async {
-  //   bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-  //
-  //   var mainHeaders = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': 'Bearer $bearerToken'
-  //   };
-  //   try {
-  //     debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
-  //     debugPrint('====> API Body: $body');
-  //
-  //     http.Response response = await client
-  //         .post(
-  //       Uri.parse(ApiConstants.baseUrl + uri),
-  //       body: body,
-  //       headers: headers ?? mainHeaders,
-  //     )
-  //         .timeout(const Duration(seconds: timeoutInSeconds));
-  //     debugPrint(
-  //         "==========> Response Post Method :------ : ${response.statusCode}");
-  //     return handleResponse(response, uri);
-  //   } catch (e) {
-  //     print("===> $e");
-  //     return const Response(statusCode: 1, statusText: noInternetMessage);
-  //   }
-  // }
-  //
+  // ========================== PUT ==========================
 
-  //==========================================> patch<======================================
-  static Future<Response> patch(String uri, var body,
-      {Map<String, String>? headers}) async {
-    bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-
-    var mainHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $bearerToken'
-    };
+  static Future<Response> putData(
+    String uri,
+    dynamic body, {
+    Map<String, String>? headers,
+  }) async {
     try {
-      debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
-      debugPrint('====> API Body: $body');
-
-      http.Response response = await client
-          .patch(
-            Uri.parse(ApiConstants.baseUrl + uri),
-            body: body,
-            headers: headers ?? mainHeaders,
-          )
-          .timeout(const Duration(seconds: timeoutInSeconds));
-      debugPrint(
-          "==========> Response Post Method :------ : ${response.statusCode}");
-      return handleResponse(response, uri);
-    } catch (e) {
-      print("===> $e");
-      return const Response(statusCode: 1, statusText: noInternetMessage);
-    }
-  }
-
-  static Future<Response> postMultipartData(
-      String uri, Map<String, String> body,
-      {required List<MultipartBody> multipartBody,
-      Map<String, String>? headers}) async {
-    try {
-      bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-
-      var mainHeaders = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer $bearerToken'
-      };
-
-      debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
-      debugPrint('====> API Body: $body with ${multipartBody.length} picture');
-      var request =
-          http.MultipartRequest('POST', Uri.parse(ApiConstants.baseUrl + uri));
-      request.headers.addAll(headers ?? mainHeaders);
-      for (MultipartBody element in multipartBody) {
-        request.files.add(await http.MultipartFile.fromPath(
-          element.key,
-          element.file.path,
-        ));
-      }
-      request.fields.addAll(body);
-      http.Response _response =
-          await http.Response.fromStream(await request.send());
-      return handleResponse(_response, uri);
-    } catch (e) {
-      return const Response(statusCode: 1, statusText: noInternetMessage);
-    }
-  }
-
-//==========================================> Put Data <======================================
-  static Future<Response> putData(String uri, dynamic body,
-      {Map<String, String>? headers}) async {
-    bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-
-    var mainHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $bearerToken'
-    };
-    try {
-      debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
-      debugPrint('====> API Body: $body');
-
-      http.Response response = await client
+      final response = await _client
           .put(
             Uri.parse(ApiConstants.baseUrl + uri),
+            headers: headers ?? await _defaultHeaders(),
             body: jsonEncode(body),
-            headers: headers ?? mainHeaders,
           )
           .timeout(const Duration(seconds: timeoutInSeconds));
-      return handleResponse(response, uri);
-    } catch (e) {
-      return const Response(statusCode: 1, statusText: noInternetMessage);
+
+      return _buildResponse(response, uri);
+    } catch (_) {
+      return const Response(
+          statusCode: -1, statusText: "Can't connect to the internet!");
     }
   }
 
-  // //==========================================> Put Multipart Data <======================================
-  // static Future<Response> putMultipartData(String uri, Map<String, String> body,
-  //     {List<MultipartBody>? multipartBody,
-  //       List<MultipartListBody>? multipartListBody,
-  //       Map<String, String>? headers}) async {
-  //   try {
-  //     bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-  //
-  //     var mainHeaders = {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer $bearerToken'
-  //     };
-  //
-  //     debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
-  //     debugPrint('====> API Body: $body with ${multipartBody?.length}  ');
-  //
-  //     var request =
-  //     http.MultipartRequest('PUT', Uri.parse(ApiConstants.baseUrl + uri));
-  //     request.fields.addAll(body);
-  //
-  //
-  //     if (multipartBody!.isNotEmpty) {
-  //       multipartBody.forEach((element) async {
-  //         debugPrint("path : ${element.file.path}");
-  //         String? mimeType = mime(element.file.path);
-  //         request.files.add(http.MultipartFile(
-  //           element.key,
-  //           element.file.readAsBytes().asStream(),
-  //           element.file.lengthSync(),
-  //           contentType: MediaType.parse(mimeType!),
-  //         ));
-  //       });
-  //     }
-  //     // request.headers.addAll(mainHeaders);
-  //     request.headers.addAll(headers ?? mainHeaders);
-  //     http.StreamedResponse response = await request.send();
-  //     final content = await response.stream.bytesToString();
-  //     debugPrint(
-  //         '====> API Response: [${response.statusCode}}] $uri\n$content');
-  //
-  //     return Response(
-  //         statusCode: response.statusCode,
-  //         statusText: noInternetMessage,
-  //         body: json.decode(content));
-  //   } catch (e) {
-  //     print("====================================e $e");
-  //     return const Response(statusCode: 1, statusText: noInternetMessage);
-  //   }
-  // }
+  // ========================== PATCH ==========================
 
-  //==========================================> Put Multipart Data <======================================
-  static Future<Response> putMultipartData(String uri, Map<String, String> body,
-      {List<MultipartBody>? multipartBody,
-      List<MultipartListBody>? multipartListBody,
-      Map<String, String>? headers}) async {
+  static Future<Response> patchData(
+    String uri,
+    dynamic body, {
+    Map<String, String>? headers,
+  }) async {
     try {
-      // Fetch bearer token from preferences
-      bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-
-      print("tokennnn =>$bearerToken");
-      // Set up main headers with Authorization and Content-Type for multipart data
-      var mainHeaders = {
-        'Content-Type': 'multipart/form-data', // Change to multipart form-data
-        'Authorization': 'Bearer $bearerToken'
-      };
-
-      // Log API Call details for debugging
-      debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
-      debugPrint(
-          '====> API Body: $body with ${multipartBody?.length ?? 0} picture');
-
-      // Create a MultipartRequest for PUT
-      var request =
-          http.MultipartRequest('PUT', Uri.parse(ApiConstants.baseUrl + uri));
-      request.fields.addAll(body); // Add fields to request
-
-      // Check if multipartBody exists and is not empty
-      if (multipartBody != null && multipartBody.isNotEmpty) {
-        for (var element in multipartBody) {
-          debugPrint("path : ${element.file.path}");
-          // Check if the file exists
-          if (element.file.existsSync()) {
-            String? mimeType = mime(element.file.path);
-            // Add file to the multipart request
-            request.files.add(await http.MultipartFile.fromPath(
-              element.key,
-              element.file.path,
-              contentType: MediaType.parse(mimeType!),
-            ));
-          } else {
-            debugPrint("File does not exist: ${element.file.path}");
-          }
-        }
-      }
-
-      // Add headers to the request
-      request.headers.addAll(mainHeaders);
-
-      // Send the request and get the streamed response
-      http.StreamedResponse response = await request.send();
-      // Convert streamed response to a string
-      final content = await response.stream.bytesToString();
-
-      // Log API response details
-      debugPrint('====> API Response: [${response.statusCode}] $uri\n$content');
-
-      // Return response with status code, body, and other details
-      return Response(
-        statusCode: response.statusCode,
-        statusText: response.statusCode == 200 ? 'Success' : noInternetMessage,
-        body: json.decode(content),
-      );
-    } catch (e, s) {
-      // Handle any exceptions and print error details
-      print("==================================== Error: $e");
-      print("==================================== Stacktrace: $s");
-      return const Response(statusCode: 1, statusText: noInternetMessage);
-    }
-  }
-
-  //==========================================> Patch Multipart Data <======================================
-  static Future<Response> patchMultipartData(
-      String uri, Map<String, String> body,
-      {List<MultipartBody>? multipartBody,
-      List<MultipartListBody>? multipartListBody,
-      Map<String, String>? headers}) async {
-    try {
-      bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-      // bearerToken = PrefsHelper.token;
-
-      var mainHeaders = {
-        // 'Content-Type': 'application/json',
-        'Authorization': 'Bearer $bearerToken'
-      };
-
-      debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
-      debugPrint('====> API Body: $body with ${multipartBody?.length} picture');
-      var request =
-          http.MultipartRequest('POST', Uri.parse(ApiConstants.baseUrl + uri));
-      request.fields.addAll(body);
-
-      if (multipartBody!.isNotEmpty) {
-        multipartBody.forEach((element) async {
-          debugPrint("path : ${element.file.path}");
-          String? mimeType = mime(element.file.path);
-          request.files.add(http.MultipartFile(
-            element.key,
-            element.file.readAsBytes().asStream(),
-            element.file.lengthSync(),
-            filename: element.file.path.split('/').last,
-            contentType: MediaType.parse(mimeType!),
-          ));
-        });
-      }
-      request.headers.addAll(mainHeaders);
-      http.StreamedResponse response = await request.send();
-      final content = await response.stream.bytesToString();
-      debugPrint(
-          '====> API Response: [${response.statusCode}}] $uri\n$content');
-
-      return Response(
-          statusCode: response.statusCode,
-          statusText: noInternetMessage,
-          body: json.decode(content));
-    } catch (e) {
-      print("====================================e $e");
-      return const Response(statusCode: 1, statusText: noInternetMessage);
-    }
-  }
-
-  //==========================================> Delete Data <======================================
-  static Future<Response> deleteData(String uri,
-      {Map<String, String>? headers, dynamic body}) async {
-    bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-
-    var mainHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $bearerToken'
-    };
-    try {
-      debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
-      debugPrint('====> API Call: $uri\n Body: ${body}');
-
-      http.Response response = await http
-          .delete(Uri.parse(ApiConstants.baseUrl + uri),
-              headers: headers ?? mainHeaders, body: body)
+      final response = await _client
+          .patch(
+            Uri.parse(ApiConstants.baseUrl + uri),
+            headers: headers ?? await _defaultHeaders(),
+            body: jsonEncode(body),
+          )
           .timeout(const Duration(seconds: timeoutInSeconds));
-      return handleResponse(response, uri);
-    } catch (e) {
-      return const Response(statusCode: 1, statusText: noInternetMessage);
+
+      return _buildResponse(response, uri);
+    } catch (_) {
+      return const Response(
+          statusCode: -1, statusText: "Can't connect to the internet!");
     }
   }
 
-  //==========================================> Handle Response <======================================
-  static Response handleResponse(http.Response response, String uri) {
-    dynamic body;
+  // ========================== DELETE ==========================
+
+  static Future<Response> deleteData(
+    String uri, {
+    dynamic body,
+    Map<String, String>? headers,
+  }) async {
     try {
-      final decodedBody = utf8.decode(response.bodyBytes);
-      body = jsonDecode(decodedBody);
-    } catch (e) {
-      log("Exception : " + e.toString());
-    }
+      final response = await _client
+          .delete(
+            Uri.parse(ApiConstants.baseUrl + uri),
+            headers: headers ?? await _defaultHeaders(),
+            body: body != null ? jsonEncode(body) : null,
+          )
+          .timeout(const Duration(seconds: timeoutInSeconds));
 
-    Response response0 = Response(
-      body: body ?? response.body,
-      bodyString: response.body.toString(),
-      request: Request(
-          headers: response.request!.headers,
-          method: response.request!.method,
-          url: response.request!.url),
-      headers: response.headers,
-      statusCode: response.statusCode,
-      statusText: response.reasonPhrase,
-    );
-    if (response0.statusCode != 200 &&
-        response0.body != null &&
-        response0.body is! String) {
-      ErrorResponse errorResponse = ErrorResponse.fromJson(response0.body);
-      response0 = Response(
-          statusCode: response0.statusCode,
-          body: response0.body,
-          statusText: errorResponse.message);
-    } else if (response0.statusCode != 200 && response0.body == null) {
-      response0 = const Response(statusCode: 0, statusText: noInternetMessage);
+      return _buildResponse(response, uri);
+    } catch (_) {
+      return const Response(
+          statusCode: -1, statusText: "Can't connect to the internet!");
     }
+  }
 
-    log('====> API Response: [${response0.statusCode}] $uri\n${response0.body}');
-    return response0;
+  // ========================== MULTIPART POST ==========================
+
+  static Future<Response> postMultipartData(
+    String uri,
+    Map<String, String> fields, {
+    required List<MultipartBody> files,
+  }) async {
+    try {
+      _bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+
+      final request =
+          http.MultipartRequest('POST', Uri.parse(ApiConstants.baseUrl + uri));
+
+      request.headers['Authorization'] = 'Bearer $_bearerToken';
+      request.fields.addAll(fields);
+
+      for (final file in files) {
+        final mimeType = mime(file.file.path);
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            file.key,
+            file.file.path,
+            contentType: mimeType != null ? MediaType.parse(mimeType) : null,
+          ),
+        );
+      }
+
+      final streamed = await request.send();
+      final response = await http.Response.fromStream(streamed);
+
+      return _buildResponse(response, uri);
+    } catch (_) {
+      return const Response(
+          statusCode: -1, statusText: "Can't connect to the internet!");
+    }
   }
 }
+
+// ========================== MODELS ==========================
 
 class MultipartBody {
-  String key;
-  File file;
+  final String key;
+  final File file;
 
   MultipartBody(this.key, this.file);
-}
-
-class MultipartListBody {
-  String key;
-  String value;
-  MultipartListBody(this.key, this.value);
 }
