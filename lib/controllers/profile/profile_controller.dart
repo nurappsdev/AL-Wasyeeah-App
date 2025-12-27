@@ -18,24 +18,14 @@ import 'package:al_wasyeah/helpers/file_download_util.dart';
 import 'profile_enum.dart';
 import 'spouse_form.dart';
 import 'child_form.dart';
+import 'personal_form.dart';
+import 'address_form.dart';
+import 'parent_form.dart';
 
 class ProfileController extends GetxController {
   final PageController pageController = PageController();
   RxInt currentStep = 0.obs;
   Rx<RxStatus> status = RxStatus.loading().obs;
-  Rxn<MaritalModel> selectedMarried = Rxn();
-  Rxn<ProfessionModel> selectedProfession = Rxn();
-  Rxn<CountryModel> selectedCountry = Rxn();
-  Rxn<CountryModel> selectedMultiCitizenCountry = Rxn();
-  Rxn<GenderModel> selectedGender = Rxn();
-  Rxn<BankModel> selectedBank = Rxn();
-  Rxn<WealthModel> selectedWealth = Rxn();
-  Rxn<CountryModel> selectedOverseasCountry = Rxn();
-  Rxn<ProfessionModel> selectedFatherProfession = Rxn();
-  Rxn<CountryModel> selectedFatherCountry = Rxn();
-  Rxn<ProfessionModel> selectedMotherProfession = Rxn();
-  Rxn<CountryModel> selectedMotherCountry = Rxn();
-
   RxList<MaritalModel> maritalList = <MaritalModel>[].obs;
   RxList<ProfessionModel> professionList = <ProfessionModel>[].obs;
   RxList<GenderModel> genderList = <GenderModel>[].obs;
@@ -43,41 +33,10 @@ class ProfileController extends GetxController {
   RxList<BankModel> bankList = <BankModel>[].obs;
   RxList<WealthModel> wealthList = <WealthModel>[].obs;
   Rx<ProfileModel> profileModel = ProfileModel().obs;
+  Rx<PersonalForm> personalForm = PersonalForm().obs;
+  Rx<AddressForm> addressForm = AddressForm().obs;
+  Rx<ParentForm> parentForm = ParentForm().obs;
 
-  Rx<TextEditingController> firstNameController = TextEditingController().obs;
-  Rx<TextEditingController> lastNameController = TextEditingController().obs;
-  Rx<TextEditingController> districtController = TextEditingController().obs;
-  Rx<TextEditingController> nidController = TextEditingController().obs;
-  Rx<TextEditingController> citizenshipPassportOrNIDController =
-      TextEditingController().obs;
-  Rx<TextEditingController> tinController = TextEditingController().obs;
-  Rx<TextEditingController> fatherNameController = TextEditingController().obs;
-  Rx<TextEditingController> motherNameController = TextEditingController().obs;
-  Rx<TextEditingController> fatherPassOrNIDController =
-      TextEditingController().obs;
-  Rx<TextEditingController> motherPassOrNIDController =
-      TextEditingController().obs;
-
-  Rx<TextEditingController> multiCitizenPassportController =
-      TextEditingController().obs;
-
-  Rx<TextEditingController> presentZipCodeController =
-      TextEditingController().obs;
-  Rx<TextEditingController> presentVillageController =
-      TextEditingController().obs;
-  Rx<TextEditingController> presentRoadController = TextEditingController().obs;
-
-  Rx<TextEditingController> permanentZipCodeController =
-      TextEditingController().obs;
-  Rx<TextEditingController> permanentVillageController =
-      TextEditingController().obs;
-  Rx<TextEditingController> permanentRoadController =
-      TextEditingController().obs;
-  Rx<TextEditingController> overseasVillageController =
-      TextEditingController().obs;
-
-  // Enum for download types
-  // Enum for download types
   RxMap<ProfileDownloadType, bool> isDownloadingMap =
       <ProfileDownloadType, bool>{}.obs;
   RxMap<ProfileDownloadType, double> downloadProgressMap =
@@ -86,8 +45,11 @@ class ProfileController extends GetxController {
   RxMap<ProfilePickerType, PickedFileResult> pickedFileMap =
       <ProfilePickerType, PickedFileResult>{}.obs;
 
-  RxBool isPresentAddressAsPermanentAddress = false.obs;
-  RxBool isFatherAlive = false.obs, isMotherAlive = false.obs;
+  // Spouse List Management
+  RxList<SpouseForm> spouseList = <SpouseForm>[].obs;
+
+  // Children List Management
+  RxList<ChildForm> childrenList = <ChildForm>[].obs;
 
   final step1formKey = GlobalKey<FormState>();
   final step2formKey = GlobalKey<FormState>();
@@ -113,7 +75,7 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<bool> _downloadGenericFile({
+  Future<bool> downloadFile({
     required String? urlPath,
     required String filePrefix,
     required ProfileDownloadType type,
@@ -158,71 +120,6 @@ class ProfileController extends GetxController {
     return completer.future;
   }
 
-  Future<bool> downloadNidFile() async {
-    return _downloadGenericFile(
-      urlPath: profileModel.value.userProfile?.nidPaperUrl,
-      filePrefix: 'NID',
-      type: ProfileDownloadType.nid,
-    );
-  }
-
-  Future<bool> downloadTinFile() async {
-    return _downloadGenericFile(
-      urlPath: profileModel.value.userProfile?.tinPaperUrl,
-      filePrefix: 'TIN',
-      type: ProfileDownloadType.tin,
-    );
-  }
-
-  Future<bool> downloadMultiCitizenFile() async {
-    return _downloadGenericFile(
-      urlPath: profileModel.value.userProfile?.passportPaperUrl,
-      filePrefix: 'MultiCitizen',
-      type: ProfileDownloadType.multiCitizen,
-    );
-  }
-
-  // Spouse File Logic
-  // Spouse File Logic
-  void pickSpouseFile(SpouseForm form,
-      {required ProfilePickerType type}) async {
-    var result = await FilePickerUtil.pickSingleFile();
-    if (result != null) {}
-  }
-
-  Future<void> downloadSpouseFile(SpouseForm form,
-      {required ProfileDownloadType type}) async {
-    bool isNid = type == ProfileDownloadType.spouseNidOrPassport;
-    String? urlPath = isNid ? form.nidUrl : form.passportUrl;
-    if (urlPath == null) return;
-
-    RxBool isDownloading =
-        isNid ? form.isDownloadingNid : form.isDownloadingPassport;
-    RxDouble progress =
-        isNid ? form.nidDownloadProgress : form.passportDownloadProgress;
-    String prefix = isNid ? "Spouse_NID" : "Spouse_Passport";
-
-    isDownloading.value = true;
-    progress.value = 0.0;
-
-    final String fileName =
-        '${prefix}_${form.name.text}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
-    final String filePath = '${ApiConstants.imageUrl}$urlPath';
-
-    await FileDownloadUtil.downloadFile(
-      filePath,
-      fileName,
-      (prog) {
-        progress.value = prog;
-        if (prog >= 100) {
-          isDownloading.value = false;
-        }
-      },
-    ).catchError((e) {
-      isDownloading.value = false;
-    });
-  }
-
   // Child File Logic
   void pickChildFile(ChildForm form, {required ProfilePickerType type}) async {
     var result = await FilePickerUtil.pickSingleFile();
@@ -259,15 +156,6 @@ class ProfileController extends GetxController {
       form.isDownloadingNid.value = false;
     });
   }
-
-  // Spouse List Management
-  RxList<SpouseForm> spouseList = <SpouseForm>[].obs;
-
-  // Children List Management
-  // Keeping original list for now as user only requested Spouse refactor,
-  // but logically this should also be refactored later.
-  // Children List Management
-  RxList<ChildForm> childrenList = <ChildForm>[].obs;
 
   void addChild() {
     childrenList.add(ChildForm());
@@ -356,6 +244,227 @@ class ProfileController extends GetxController {
   Future<void> getProfile() async {
     try {
       var response = await ApiClient.getData(
+        ApiConstants.getProfile,
+      );
+
+      profileModel(profileModelFromJson(jsonEncode(response.body)));
+      _mapPersonalInfo();
+      _mapAddressInfo();
+      _mapParentInfo();
+      _mapSpouseInfo();
+      _mapChildrenInfo();
+    } catch (e, s) {
+      log("Error: $e\nStacktrace: $s");
+    }
+  }
+
+  getProfilePageData() async {
+    try {
+      status(RxStatus.loading());
+      await getMaritalList();
+      await getProfessionList();
+      await getCountryList();
+      await getGenderList();
+      await getBankList();
+      await getWealthList();
+      await getProfile();
+      status(RxStatus.success());
+    } catch (e) {
+      status(RxStatus.error());
+    }
+  }
+
+  void _mapPersonalInfo() {
+    final user = profileModel.value.userProfile!;
+
+    personalForm.value.firstName.text = user.firstName ?? '';
+    personalForm.value.lastName.text = user.lastName ?? '';
+    personalForm.value.district.text = user.district ?? '';
+    personalForm.value.nid.text = user.nid?.toString() ?? '';
+    personalForm.value.tin.text = user.tin ?? '';
+    personalForm.value.multiCitizenPassport.text =
+        user.multipleCitizenPassportNo ?? '';
+
+    personalForm.value.selectedMarried.value = maritalList
+        .firstWhereOrNull((e) => e.maritalId == user.maritalStatusId);
+
+    personalForm.value.selectedProfession.value = professionList
+        .firstWhereOrNull((e) => e.professionId == user.professionId);
+
+    personalForm.value.selectedCountry.value =
+        countryList.firstWhereOrNull((e) => e.countryId == user.countryCode);
+
+    personalForm.value.selectedGender.value =
+        genderList.firstWhereOrNull((e) => e.genderId == user.gender);
+
+    personalForm.value.selectedMultiCitizenCountry.value = countryList
+        .firstWhereOrNull((e) => e.countryId == user.multipleCitizenCode);
+
+    personalForm.value.nidUrl = user.nidPaperUrl;
+    personalForm.value.tinUrl = user.tinPaperUrl;
+    personalForm.value.multiCitizenUrl = user.passportPaperUrl;
+  }
+
+  void _mapAddressInfo() {
+    final user = profileModel.value.userProfile!;
+
+    if (user.presentAddress != null) {
+      final parts = user.presentAddress!.split(',');
+      addressForm.value.presentZipCode.text = parts.elementAtOrNull(0) ?? '';
+      addressForm.value.presentVillage.text = parts.elementAtOrNull(1) ?? '';
+      addressForm.value.presentRoad.text = parts.elementAtOrNull(2) ?? '';
+    }
+
+    addressForm.value.overseasVillage.text = user.overseasVillage ?? '';
+
+    addressForm.value.selectedOverseasCountry.value = countryList
+        .firstWhereOrNull((e) => e.countryId == user.overseasCountryCode);
+  }
+
+  void _mapParentInfo() {
+    final parent = profileModel.value.parentInfo;
+    if (parent == null) return;
+
+    // Father
+    parentForm.value.fatherName.text = parent.fatherName ?? '';
+    parentForm.value.fatherPassOrNID.text = parent.fatherNid?.toString() ?? '';
+    parentForm.value.isFatherAlive.value = parent.fatherExisting ?? false;
+    parentForm.value.fatherNidUrl = parent.fatherNidUrl;
+
+    parentForm.value.selectedFatherProfession.value = professionList
+        .firstWhereOrNull((e) => e.professionId == parent.fatherProfessionId);
+
+    parentForm.value.selectedFatherCountry.value = countryList
+        .firstWhereOrNull((e) => e.countryId == parent.fatherNationalityId);
+
+    // Mother
+    parentForm.value.motherName.text = parent.motherName ?? '';
+    parentForm.value.motherPassOrNID.text = parent.motherNid?.toString() ?? '';
+    parentForm.value.isMotherAlive.value = parent.motherExisting ?? false;
+    parentForm.value.motherNidUrl = parent.motherNidUrl;
+
+    parentForm.value.selectedMotherProfession.value = professionList
+        .firstWhereOrNull((e) => e.professionId == parent.motherProfessionId);
+
+    parentForm.value.selectedMotherCountry.value = countryList
+        .firstWhereOrNull((e) => e.countryId == parent.motherNationalityId);
+  }
+
+  void _mapSpouseInfo() {
+    spouseList.clear();
+
+    final spouses = profileModel.value.spouseInfo;
+
+    if (spouses != null && spouses.isNotEmpty) {
+      for (final spouse in spouses) {
+        final form = SpouseForm(
+          nameVal: spouse.spouseName,
+          nidVal: spouse.nid,
+          passportVal: spouse.passport?.toString() ?? '',
+          mobileVal: spouse.mobile,
+          emailVal: spouse.email,
+          nidUrl: spouse.nidPaperUrl,
+          passportUrl: spouse.passportPaperUrl?.toString(),
+          isAliveVal: spouse.existing ?? true,
+        );
+
+        /// Profession
+        if (spouse.professionId != null) {
+          form.profession.value = professionList.firstWhereOrNull(
+            (p) => p.professionId == spouse.professionId,
+          );
+        }
+
+        /// Nationality
+        if (spouse.nationalityId != null) {
+          form.nationality.value = countryList.firstWhereOrNull(
+            (c) => c.countryId == spouse.nationalityId,
+          );
+        }
+
+        spouseList.add(form);
+      }
+    } else {
+      /// Always keep one empty spouse form
+      spouseList.add(SpouseForm());
+    }
+  }
+
+  void _mapChildrenInfo() {
+    childrenList.clear();
+
+    final children = profileModel.value.childInfo;
+
+    if (children != null && children.isNotEmpty) {
+      for (final child in children) {
+        final form = ChildForm();
+
+        /// Text fields
+        form.name.text = child.childName ?? '';
+        form.nid.text = child.nid ?? '';
+        form.mobile.text = child.mobile ?? '';
+        form.email.text = child.email ?? '';
+
+        /// DOB
+        if (child.dob != null) {
+          form.selectedDob.value = child.dob;
+        }
+
+        /// Status
+        form.isAlive.value = child.existing ?? true;
+
+        /// File URLs
+        form.nidUrl = child.nidPaperUrl;
+
+        /// Profession
+        if (child.professionId != null) {
+          form.profession.value = professionList.firstWhereOrNull(
+            (p) => p.professionId == child.professionId,
+          );
+        }
+
+        /// Nationality
+        if (child.nationalityId != null) {
+          form.nationality.value = countryList.firstWhereOrNull(
+            (c) => c.countryId == child.nationalityId,
+          );
+        }
+
+        /// Gender
+        if (child.genderId != null) {
+          form.gender.value = genderList.firstWhereOrNull(
+            (g) => g.genderId == child.genderId,
+          );
+        }
+
+        childrenList.add(form);
+      }
+    } else {
+      /// Always keep one empty child form
+      childrenList.add(ChildForm());
+    }
+  }
+
+  @override
+  void onClose() {
+    personalForm.value.dispose();
+    addressForm.value.dispose();
+    parentForm.value.dispose();
+    super.onClose();
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/*
+   var response = await ApiClient.getData(
         ApiConstants.getProfile,
       );
 
@@ -538,24 +647,4 @@ class ProfileController extends GetxController {
           ),
         ),
       );
-    } catch (e, s) {
-      log("Error: $e\nStacktrace: $s");
-    }
-  }
-
-  getProfilePageData() async {
-    try {
-      status(RxStatus.loading());
-      await getMaritalList();
-      await getProfessionList();
-      await getCountryList();
-      await getGenderList();
-      await getBankList();
-      await getWealthList();
-      await getProfile();
-      status(RxStatus.success());
-    } catch (e) {
-      status(RxStatus.error());
-    }
-  }
-}
+ */

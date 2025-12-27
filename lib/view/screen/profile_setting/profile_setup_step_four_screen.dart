@@ -13,7 +13,7 @@ import 'package:al_wasyeah/controllers/profile/profile_enum.dart';
 class FamilyInfoScreen extends StatelessWidget {
   FamilyInfoScreen({super.key});
 
-  final ProfileController profileController = Get.find();
+  final ProfileController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +46,9 @@ class FamilyInfoScreen extends StatelessWidget {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: profileController.spouseList.length,
+                  itemCount: controller.spouseList.length,
                   itemBuilder: (context, index) {
-                    final form = profileController.spouseList[index];
+                    final form = controller.spouseList[index];
                     return Container(
                       margin: EdgeInsets.only(bottom: 24.h),
                       padding: EdgeInsets.all(16.h),
@@ -68,7 +68,7 @@ class FamilyInfoScreen extends StatelessWidget {
                           SizedBox(height: 20.h),
                           CustomDropdown<ProfessionModel>(
                             hint: "Profession".tr,
-                            items: profileController.professionList,
+                            items: controller.professionList,
                             value: form.profession.value,
                             itemToString: (e) => e.profession ?? "",
                             onChanged: (v) => form.profession.value = v,
@@ -76,7 +76,7 @@ class FamilyInfoScreen extends StatelessWidget {
                           SizedBox(height: 20.h),
                           CustomDropdown<CountryModel>(
                             hint: "Nationality".tr,
-                            items: profileController.countryList,
+                            items: controller.countryList,
                             value: form.nationality.value,
                             itemToString: (e) => e.country ?? "",
                             onChanged: (v) => form.nationality.value = v,
@@ -87,17 +87,23 @@ class FamilyInfoScreen extends StatelessWidget {
                             hintText: "NID/Passport No".tr,
                           ),
                           FileChooseAndDownloadButton(
-                            pickedFile: form.selectedNidFile,
-                            isDownloading: form.isDownloadingNid,
-                            progress: form.nidDownloadProgress,
-                            onPickFile: () => profileController.pickSpouseFile(
-                                form,
-                                type: ProfilePickerType.spouseNidOrPassport),
-                            onDownload: () => profileController
-                                .downloadSpouseFile(form,
-                                    type: ProfileDownloadType
-                                        .spouseNidOrPassport),
-                            fileUrl: form.nidUrl,
+                            pickedFile:
+                                Rxn(controller.pickedFileMap[pickerType]),
+                            isDownloading:
+                                (controller.isDownloadingMap[downloadType] ??
+                                        false)
+                                    .obs,
+                            progress:
+                                (controller.downloadProgressMap[downloadType] ??
+                                        0.0)
+                                    .obs,
+                            onPickFile: () => controller.pickFile(pickerType),
+                            onDownload: () => controller.downloadFile(
+                              urlPath: fileUrl,
+                              filePrefix: prefix,
+                              type: downloadType,
+                            ),
+                            fileUrl: fileUrl,
                           ),
                           SizedBox(height: 20.h),
                           CustomTextField(
@@ -135,8 +141,7 @@ class FamilyInfoScreen extends StatelessWidget {
                               child: IconButton(
                                 icon: const Icon(Icons.delete_forever,
                                     color: Colors.red),
-                                onPressed: () =>
-                                    profileController.removeSpouse(index),
+                                onPressed: () => controller.removeSpouse(index),
                               ),
                             ),
                         ],
@@ -151,7 +156,7 @@ class FamilyInfoScreen extends StatelessWidget {
                   child: CustomButton(
                     title: "+ Add More spouse",
                     titlecolor: AppColors.primaryColor,
-                    onpress: profileController.addSpouse,
+                    onpress: controller.addSpouse,
                   ),
                 ),
 
@@ -168,9 +173,9 @@ class FamilyInfoScreen extends StatelessWidget {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: profileController.childrenList.length,
+                  itemCount: controller.childrenList.length,
                   itemBuilder: (context, index) {
-                    final form = profileController.childrenList[index];
+                    final form = controller.childrenList[index];
                     return Container(
                       margin: EdgeInsets.only(bottom: 24.h),
                       padding: EdgeInsets.all(16.h),
@@ -191,7 +196,7 @@ class FamilyInfoScreen extends StatelessWidget {
                           // Gender
                           CustomDropdown<GenderModel>(
                             hint: "Gender".tr,
-                            items: profileController.genderList,
+                            items: controller.genderList,
                             value: form.gender.value,
                             itemToString: (e) => e.gender ?? "",
                             onChanged: (v) => form.gender.value = v,
@@ -199,7 +204,7 @@ class FamilyInfoScreen extends StatelessWidget {
                           SizedBox(height: 20.h),
                           CustomDropdown<ProfessionModel>(
                             hint: "Profession".tr,
-                            items: profileController.professionList,
+                            items: controller.professionList,
                             value: form.profession.value,
                             itemToString: (e) => e.profession ?? "",
                             onChanged: (v) => form.profession.value = v,
@@ -207,7 +212,7 @@ class FamilyInfoScreen extends StatelessWidget {
                           SizedBox(height: 20.h),
                           CustomDropdown<CountryModel>(
                             hint: "Nationality".tr,
-                            items: profileController.countryList,
+                            items: controller.countryList,
                             value: form.nationality.value,
                             itemToString: (e) => e.country ?? "",
                             onChanged: (v) => form.nationality.value = v,
@@ -221,13 +226,10 @@ class FamilyInfoScreen extends StatelessWidget {
                             pickedFile: form.selectedNidFile,
                             isDownloading: form.isDownloadingNid,
                             progress: form.nidDownloadProgress,
-                            onPickFile: () => profileController.pickChildFile(
-                                form,
+                            onPickFile: () => controller.pickChildFile(form,
                                 type: ProfilePickerType.childNidOrPassport),
-                            onDownload: () => profileController
-                                .downloadChildFile(form,
-                                    type:
-                                        ProfileDownloadType.childNidOrPassport),
+                            onDownload: () => controller.downloadChildFile(form,
+                                type: ProfileDownloadType.childNidOrPassport),
                             fileUrl: form.nidUrl,
                           ),
                           SizedBox(height: 20.h),
@@ -266,8 +268,7 @@ class FamilyInfoScreen extends StatelessWidget {
                               child: IconButton(
                                 icon: const Icon(Icons.delete_forever,
                                     color: Colors.red),
-                                onPressed: () =>
-                                    profileController.removeChild(index),
+                                onPressed: () => controller.removeChild(index),
                               ),
                             ),
                         ],
@@ -282,7 +283,7 @@ class FamilyInfoScreen extends StatelessWidget {
                   child: CustomButton(
                     title: "+ Add More Child".tr,
                     titlecolor: AppColors.primaryColor,
-                    onpress: profileController.addChild,
+                    onpress: controller.addChild,
                   ),
                 ),
               ],
