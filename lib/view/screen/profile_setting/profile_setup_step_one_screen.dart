@@ -13,8 +13,6 @@ import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
-import '../../../controllers/profile/profile_enum.dart';
-
 class ProfileSetupStepOneScreen extends StatefulWidget {
   @override
   State<ProfileSetupStepOneScreen> createState() =>
@@ -23,6 +21,28 @@ class ProfileSetupStepOneScreen extends StatefulWidget {
 
 class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
   final ProfileController controller = Get.find<ProfileController>();
+  Widget _sectionTitle(String title) {
+    return Column(
+      children: [
+        SizedBox(height: 16.h),
+        Container(
+          height: 48.h,
+          alignment: Alignment.center,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: AppColors.primaryColor,
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+          padding: EdgeInsets.all(8.h),
+          child: Text(
+            title.tr,
+            style: TextStyle(color: Colors.white, fontSize: 22.sp),
+          ),
+        ),
+        SizedBox(height: 16.h),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +69,7 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    _sectionTitle("Personal Information"),
                     // ================= First Name =================
                     const SizedBox(height: 16),
                     CustomText(
@@ -151,6 +172,11 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                           value!.isEmpty ? "NID/Passport No is required" : null,
                     ),
                     SizedBox(height: 16.h),
+                    CustomText(
+                      text: "NID/Passport Documents".tr,
+                      fontsize: 16.sp,
+                    ),
+                    SizedBox(height: 4.h),
                     if (form.nid.text.isNotEmpty)
                       Obx(() {
                         return _buildFileRow(
@@ -205,6 +231,11 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                           value!.isEmpty ? "TIN is required" : null,
                     ),
                     SizedBox(height: 16.h),
+                    CustomText(
+                      text: "TIN Documents".tr,
+                      fontsize: 16.sp,
+                    ),
+                    SizedBox(height: 4.h),
                     if (controller
                             .profileModel.value.userProfile?.tinPaperUrl !=
                         null)
@@ -263,12 +294,22 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                               onChanged: (val) =>
                                   form.selectedMultiCitizenCountry.value = val,
                             ),
-                            SizedBox(height: 10.h),
+                            SizedBox(height: 16.h),
+                            CustomText(
+                              text: "NID/Passport No".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
                             CustomTextFormField(
                               controller: form.multiCitizenPassport,
                               hint: "Passport No".tr,
                             ),
-                            SizedBox(height: 10.h),
+                            SizedBox(height: 16.h),
+                            CustomText(
+                              text: "NID/Passport Documents".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
                             if (controller.profileModel.value.userProfile
                                     ?.passportPaperUrl !=
                                 null)

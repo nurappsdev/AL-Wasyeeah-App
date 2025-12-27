@@ -15,7 +15,6 @@ import 'package:get/get.dart';
 
 import '../../services/services.dart';
 import 'package:al_wasyeah/helpers/file_download_util.dart';
-import 'profile_enum.dart';
 import 'spouse_form.dart';
 import 'child_form.dart';
 import 'personal_form.dart';
@@ -51,6 +50,7 @@ class ProfileController extends GetxController {
 
   final step1formKey = GlobalKey<FormState>();
   final step2formKey = GlobalKey<FormState>();
+  final step3formKey = GlobalKey<FormState>();
 
   void onStepTapped(int step) {
     currentStep(step);

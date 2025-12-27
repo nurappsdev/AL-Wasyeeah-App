@@ -5,60 +5,69 @@ import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart'
 import 'package:al_wasyeah/view/widgets/file_choose_and_download_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
-import '../../../controllers/profile/profile_enum.dart';
-
 class ProfileSetupStepThreeScreen extends StatelessWidget {
   ProfileSetupStepThreeScreen({super.key});
-
   final ProfileController controller = Get.find<ProfileController>();
-
-  ParentForm get form => controller.parentForm.value;
-
   @override
   Widget build(BuildContext context) {
+    ParentForm form = controller.parentForm.value;
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 14.h),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 16.h),
+          child: Form(
+            key: controller.step3formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// ========== Father ==========
+                _parentSection(
+                  title: "Father's Information",
+                  nameController: form.fatherName,
+                  nidController: form.fatherPassOrNID,
+                  selectedProfession: form.selectedFatherProfession,
+                  isAlive: form.isFatherAlive,
+                  fileUrl:
+                      controller.profileModel.value.parentInfo?.fatherNidUrl,
+                  pickerType: 'fatherNidOrPassport',
+                  downloadType: 'fatherNidOrPassport',
+                  filePrefix: 'FatherNidOrPassport',
+                ),
 
-              /// ========== Father ==========
-              _parentSection(
-                title: "Father's Information",
-                nameController: form.fatherName,
-                nidController: form.fatherPassOrNID,
-                selectedProfession: form.selectedFatherProfession,
-                isAlive: form.isFatherAlive,
-                fileUrl: controller.profileModel.value.parentInfo?.fatherNidUrl,
-                pickerType: 'fatherNidOrPassport',
-                downloadType: 'fatherNidOrPassport',
-                filePrefix: 'FatherNidOrPassport',
-              ),
+                SizedBox(height: 24.h),
 
-              /// ========== Mother ==========
-              _parentSection(
-                title: "Mother's Information",
-                nameController: form.motherName,
-                nidController: form.motherPassOrNID,
-                selectedProfession: form.selectedMotherProfession,
-                isAlive: form.isMotherAlive,
-                fileUrl: controller.profileModel.value.parentInfo?.motherNidUrl,
-                pickerType: 'motherNidOrPassport',
-                downloadType: 'motherNidOrPassport',
-                filePrefix: 'MotherNidOrPassport',
-              ),
-            ],
+                /// ========== Mother ==========
+                _parentSection(
+                  title: "Mother's Information",
+                  nameController: form.motherName,
+                  nidController: form.motherPassOrNID,
+                  selectedProfession: form.selectedMotherProfession,
+                  isAlive: form.isMotherAlive,
+                  fileUrl:
+                      controller.profileModel.value.parentInfo?.motherNidUrl,
+                  pickerType: 'motherNidOrPassport',
+                  downloadType: 'motherNidOrPassport',
+                  filePrefix: 'MotherNidOrPassport',
+                ),
+
+                SizedBox(height: 20.h),
+                CustomButtonCommon(
+                  title: "Next".tr,
+                  onpress: () {
+                    if (controller.step3formKey.currentState!.validate()) {
+                      controller.onStepTapped(controller.currentStep.value + 1);
+                    }
+                  },
+                ),
+                SizedBox(height: 20.h),
+              ],
+            ),
           ),
         ),
       ),
@@ -66,6 +75,28 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
   }
 
   /// ================= Helpers =================
+  Widget _sectionTitle(String title) {
+    return Column(
+      children: [
+        SizedBox(height: 16.h),
+        Container(
+          height: 48.h,
+          alignment: Alignment.center,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: AppColors.primaryColor,
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+          padding: EdgeInsets.all(8.h),
+          child: Text(
+            title.tr,
+            style: TextStyle(color: Colors.white, fontSize: 22.sp),
+          ),
+        ),
+        SizedBox(height: 16.h),
+      ],
+    );
+  }
 
   Widget _parentSection({
     required String title,
@@ -81,11 +112,15 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: title.tr, fontsize: 18.sp),
-        SizedBox(height: 12.h),
+        _sectionTitle(title),
         _textField("Name", nameController),
         _professionDropdown(selectedProfession),
         _textField("NID/Passport No", nidController),
+        CustomText(
+          text: "NID/Passport Documents".tr,
+          fontsize: 16.sp,
+        ),
+        SizedBox(height: 4.h),
         if (fileUrl != null)
           _filePicker(fileUrl, pickerType, downloadType, filePrefix),
         CustomText(
@@ -93,9 +128,33 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
           color: AppColors.redColor,
           fontsize: 12.sp,
         ),
-        SizedBox(height: 12.h),
-        AliveDeadToggle(isAlive: isAlive),
-        SizedBox(height: 24.h),
+        SizedBox(height: 16.h),
+        CustomText(
+          text: "Existence Status".tr,
+          fontsize: 16.sp,
+        ),
+        SizedBox(height: 4.h),
+        Obx(
+          () => Center(
+            child: ToggleButtons(
+              isSelected: [isAlive.value, !isAlive.value],
+              onPressed: (i) => isAlive.value = i == 0,
+              borderRadius: BorderRadius.circular(8),
+              fillColor: isAlive.value ? Colors.green : Colors.red,
+              selectedColor: Colors.white,
+              children: const [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  child: Text("Alive"),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  child: Text("Dead"),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -153,70 +212,5 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
           ),
           fileUrl: fileUrl,
         ));
-  }
-}
-
-class AliveDeadToggle extends StatelessWidget {
-  final RxBool isAlive;
-  AliveDeadToggle({required this.isAlive});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(6),
-      child: Obx(() => Row(
-            children: [
-              Expanded(
-                child: InkWell(
-                  onTap: () => isAlive(true),
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    height: 42,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: isAlive.value ? Colors.green : Colors.transparent,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: isAlive.value ? Colors.green : Colors.grey,
-                      ),
-                    ),
-                    child: Text(
-                      'Alive',
-                      style: TextStyle(
-                        color: isAlive.value ? Colors.white : Colors.black,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 6),
-              Expanded(
-                child: InkWell(
-                  onTap: () => isAlive(false),
-                  borderRadius: BorderRadius.circular(8),
-                  child: Container(
-                    height: 42,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: !isAlive.value ? Colors.green : Colors.transparent,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: !isAlive.value ? Colors.green : Colors.grey,
-                      ),
-                    ),
-                    child: Text(
-                      'Dead',
-                      style: TextStyle(
-                        color: !isAlive.value ? Colors.white : Colors.black,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )),
-    );
   }
 }

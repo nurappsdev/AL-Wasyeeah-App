@@ -35,8 +35,6 @@ class _ProfileSetupsStepTwoScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 16.h),
-
                 /// ========= Present Address =========
                 _sectionTitle("Present Address"),
 
@@ -132,6 +130,7 @@ class _ProfileSetupsStepTwoScreenState
         SizedBox(height: 16.h),
         Container(
           height: 48.h,
+          alignment: Alignment.center,
           width: double.infinity,
           decoration: BoxDecoration(
             color: AppColors.primaryColor,
