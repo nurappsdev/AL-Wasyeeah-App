@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -86,24 +88,27 @@ class FamilyInfoScreen extends StatelessWidget {
                             controller: form.nid,
                             hintText: "NID/Passport No".tr,
                           ),
-                          FileChooseAndDownloadButton(
-                            pickedFile:
-                                Rxn(controller.pickedFileMap[pickerType]),
-                            isDownloading:
-                                (controller.isDownloadingMap[downloadType] ??
-                                        false)
-                                    .obs,
-                            progress:
-                                (controller.downloadProgressMap[downloadType] ??
-                                        0.0)
-                                    .obs,
-                            onPickFile: () => controller.pickFile(pickerType),
-                            onDownload: () => controller.downloadFile(
-                              urlPath: fileUrl,
-                              filePrefix: prefix,
-                              type: downloadType,
+                          Obx(
+                            () => FileChooseAndDownloadButton(
+                              pickedFile: Rxn(controller
+                                  .pickedFileMap['spouseNidOrPassport$index']),
+                              isDownloading: (controller.isDownloadingMap[
+                                          'spouseNidOrPassport$index'] ??
+                                      false)
+                                  .obs,
+                              progress: (controller.downloadProgressMap[
+                                          'spouseNidOrPassport$index'] ??
+                                      0.0)
+                                  .obs,
+                              onPickFile: () => controller
+                                  .pickFile('spouseNidOrPassport$index'),
+                              onDownload: () => controller.downloadFile(
+                                urlPath: form.nidUrl,
+                                filePrefix: "Spouse",
+                                type: 'spouseNidOrPassport$index',
+                              ),
+                              fileUrl: form.nidUrl,
                             ),
-                            fileUrl: fileUrl,
                           ),
                           SizedBox(height: 20.h),
                           CustomTextField(
@@ -223,13 +228,23 @@ class FamilyInfoScreen extends StatelessWidget {
                             hintText: "NID/Passport No".tr,
                           ),
                           FileChooseAndDownloadButton(
-                            pickedFile: form.selectedNidFile,
-                            isDownloading: form.isDownloadingNid,
-                            progress: form.nidDownloadProgress,
-                            onPickFile: () => controller.pickChildFile(form,
-                                type: ProfilePickerType.childNidOrPassport),
-                            onDownload: () => controller.downloadChildFile(form,
-                                type: ProfileDownloadType.childNidOrPassport),
+                            pickedFile: Rxn(controller
+                                .pickedFileMap['childNidOrPassport$index']),
+                            isDownloading: (controller.isDownloadingMap[
+                                        'childNidOrPassport$index'] ??
+                                    false)
+                                .obs,
+                            progress: (controller.downloadProgressMap[
+                                        'childNidOrPassport$index'] ??
+                                    0.0)
+                                .obs,
+                            onPickFile: () =>
+                                controller.pickFile('childNidOrPassport$index'),
+                            onDownload: () => controller.downloadFile(
+                              urlPath: form.nidUrl,
+                              filePrefix: "Child",
+                              type: 'childNidOrPassport$index',
+                            ),
                             fileUrl: form.nidUrl,
                           ),
                           SizedBox(height: 20.h),

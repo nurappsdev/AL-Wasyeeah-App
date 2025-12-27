@@ -37,13 +37,11 @@ class ProfileController extends GetxController {
   Rx<AddressForm> addressForm = AddressForm().obs;
   Rx<ParentForm> parentForm = ParentForm().obs;
 
-  RxMap<ProfileDownloadType, bool> isDownloadingMap =
-      <ProfileDownloadType, bool>{}.obs;
-  RxMap<ProfileDownloadType, double> downloadProgressMap =
-      <ProfileDownloadType, double>{}.obs;
+  RxMap<String, bool> isDownloadingMap = <String, bool>{}.obs;
+  RxMap<String, double> downloadProgressMap = <String, double>{}.obs;
 
-  RxMap<ProfilePickerType, PickedFileResult> pickedFileMap =
-      <ProfilePickerType, PickedFileResult>{}.obs;
+  RxMap<String, PickedFileResult> pickedFileMap =
+      <String, PickedFileResult>{}.obs;
 
   // Spouse List Management
   RxList<SpouseForm> spouseList = <SpouseForm>[].obs;
@@ -53,11 +51,6 @@ class ProfileController extends GetxController {
 
   final step1formKey = GlobalKey<FormState>();
   final step2formKey = GlobalKey<FormState>();
-  @override
-  void onInit() async {
-    getProfilePageData();
-    super.onInit();
-  }
 
   void onStepTapped(int step) {
     currentStep(step);
@@ -68,7 +61,7 @@ class ProfileController extends GetxController {
     );
   }
 
-  void pickFile(ProfilePickerType type) async {
+  void pickFile(String type) async {
     var result = await FilePickerUtil.pickSingleFile();
     if (result != null) {
       pickedFileMap[type] = result;
@@ -78,7 +71,7 @@ class ProfileController extends GetxController {
   Future<bool> downloadFile({
     required String? urlPath,
     required String filePrefix,
-    required ProfileDownloadType type,
+    required String type,
   }) async {
     if (urlPath == null) {
       return false;
@@ -98,7 +91,7 @@ class ProfileController extends GetxController {
     log("$filePrefix File Path: $filePath");
 
     FileDownloadUtil.downloadFile(
-      filePath,
+      /*filePath*/ 'https://research.nhm.org/pdfs/10840/10840-002.pdf',
       fileName,
       (progress) {
         downloadProgressMap[type] = progress;
@@ -106,6 +99,9 @@ class ProfileController extends GetxController {
         if (progress >= 100) {
           isDownloadingMap[type] = false;
           log("Download $filePrefix Successful");
+        }
+
+        if (progress == 100) {
           completer.complete(true);
         }
       },
@@ -118,67 +114,6 @@ class ProfileController extends GetxController {
     });
 
     return completer.future;
-  }
-
-  // Child File Logic
-  void pickChildFile(ChildForm form, {required ProfilePickerType type}) async {
-    var result = await FilePickerUtil.pickSingleFile();
-    if (result != null) {
-      if (type == ProfilePickerType.childNidOrPassport) {
-        form.selectedNidFile.value = result;
-      }
-    }
-  }
-
-  Future<void> downloadChildFile(ChildForm form,
-      {required ProfileDownloadType type}) async {
-    if (type != ProfileDownloadType.childNidOrPassport) return;
-    String? urlPath = form.nidUrl;
-    if (urlPath == null) return;
-
-    form.isDownloadingNid.value = true;
-    form.nidDownloadProgress.value = 0.0;
-
-    final String fileName =
-        'Child_NID_${form.name.text}_${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
-    final String filePath = '${ApiConstants.imageUrl}$urlPath';
-
-    await FileDownloadUtil.downloadFile(
-      filePath,
-      fileName,
-      (prog) {
-        form.nidDownloadProgress.value = prog;
-        if (prog >= 100) {
-          form.isDownloadingNid.value = false;
-        }
-      },
-    ).catchError((e) {
-      form.isDownloadingNid.value = false;
-    });
-  }
-
-  void addChild() {
-    childrenList.add(ChildForm());
-  }
-
-  void removeChild(int index) {
-    if (index >= 0 && index < childrenList.length) {
-      childrenList[index].dispose();
-      childrenList.removeAt(index);
-    }
-  }
-
-  void addSpouse() {
-    spouseList.add(SpouseForm());
-  }
-
-  void removeSpouse(int index) {
-    if (index >= 0 && index < spouseList.length) {
-      final item = spouseList[index];
-      // If needed we can call API to delete if it's an existing item
-      item.dispose();
-      spouseList.removeAt(index);
-    }
   }
 
   Future<void> getMaritalList() async {
@@ -294,8 +229,8 @@ class ProfileController extends GetxController {
     personalForm.value.selectedCountry.value =
         countryList.firstWhereOrNull((e) => e.countryId == user.countryCode);
 
-    personalForm.value.selectedGender.value =
-        genderList.firstWhereOrNull((e) => e.genderId == user.gender);
+    personalForm.value.selectedGender.value = genderList
+        .firstWhereOrNull((e) => e.genderId.toString() == user.gender);
 
     personalForm.value.selectedMultiCitizenCountry.value = countryList
         .firstWhereOrNull((e) => e.countryId == user.multipleCitizenCode);
@@ -357,16 +292,21 @@ class ProfileController extends GetxController {
 
     if (spouses != null && spouses.isNotEmpty) {
       for (final spouse in spouses) {
-        final form = SpouseForm(
-          nameVal: spouse.spouseName,
-          nidVal: spouse.nid,
-          passportVal: spouse.passport?.toString() ?? '',
-          mobileVal: spouse.mobile,
-          emailVal: spouse.email,
-          nidUrl: spouse.nidPaperUrl,
-          passportUrl: spouse.passportPaperUrl?.toString(),
-          isAliveVal: spouse.existing ?? true,
-        );
+        final form = SpouseForm();
+
+        /// Text fields
+        form.name.text = spouse.spouseName ?? '';
+        form.nid.text = spouse.nid ?? '';
+        form.passport.text = spouse.passport?.toString() ?? '';
+        form.mobile.text = spouse.mobile ?? '';
+        form.email.text = spouse.email ?? '';
+
+        /// Alive / Dead
+        form.isAlive.value = spouse.existing ?? true;
+
+        /// API file URLs
+        form.nidUrl = spouse.nidPaperUrl;
+        form.passportUrl = spouse.passportPaperUrl?.toString();
 
         /// Profession
         if (spouse.professionId != null) {
@@ -445,206 +385,46 @@ class ProfileController extends GetxController {
     }
   }
 
+  void addChild() {
+    childrenList.add(ChildForm());
+  }
+
+  void removeChild(int index) {
+    if (index >= 0 && index < childrenList.length) {
+      childrenList[index].dispose();
+      childrenList.removeAt(index);
+    }
+  }
+
+  void addSpouse() {
+    spouseList.add(SpouseForm());
+  }
+
+  void removeSpouse(int index) {
+    if (index >= 0 && index < spouseList.length) {
+      final item = spouseList[index];
+      item.dispose();
+      spouseList.removeAt(index);
+    }
+  }
+
+  @override
+  void onInit() async {
+    getProfilePageData();
+    super.onInit();
+  }
+
   @override
   void onClose() {
     personalForm.value.dispose();
     addressForm.value.dispose();
     parentForm.value.dispose();
+    for (final form in spouseList) {
+      form.dispose();
+    }
+    for (final form in childrenList) {
+      form.dispose();
+    }
     super.onClose();
   }
 }
-
-
-
-
-
-
-
-
-
-
-/*
-   var response = await ApiClient.getData(
-        ApiConstants.getProfile,
-      );
-
-      profileModel(profileModelFromJson(jsonEncode(response.body)));
-      // first name
-      firstNameController.value.text =
-          profileModel.value.userProfile!.firstName ?? "";
-      // last name
-      lastNameController.value.text =
-          profileModel.value.userProfile!.lastName ?? "";
-      // marital status
-      selectedMarried.value = maritalList.firstWhere((element) =>
-          element.maritalId == profileModel.value.userProfile!.maritalStatusId);
-      // country
-      selectedCountry.value = countryList.firstWhere((element) =>
-          element.countryId == profileModel.value.userProfile!.countryCode);
-      // district
-      districtController.value.text =
-          profileModel.value.userProfile!.district ?? "";
-      // nid
-      nidController.value.text = profileModel.value.userProfile!.nid.toString();
-      // passport
-      citizenshipPassportOrNIDController.value.text =
-          profileModel.value.userProfile!.passportNo ?? "";
-      selectedProfession.value = professionList.firstWhere((element) =>
-          element.professionId == profileModel.value.userProfile!.professionId);
-      // country
-      selectedCountry.value = countryList.firstWhere((element) =>
-          element.countryId == profileModel.value.userProfile!.countryCode);
-      // gender
-      selectedGender.value = genderList.firstWhere((element) =>
-          element.genderId ==
-          int.parse(profileModel.value.userProfile!.gender.toString()));
-      // tin number
-      tinController.value.text = profileModel.value.userProfile!.tin ?? "";
-      // multi citizen passport
-      multiCitizenPassportController.value.text =
-          profileModel.value.userProfile!.multipleCitizenPassportNo ?? "";
-      // present zip code
-      presentZipCodeController.value.text =
-          profileModel.value.userProfile!.presentAddress?.split(',')[0] ?? "";
-      // present village
-      presentVillageController.value.text =
-          profileModel.value.userProfile!.presentAddress?.split(',')[1] ?? "";
-      presentRoadController.value.text =
-          profileModel.value.userProfile!.presentAddress?.split(',')[2] ?? "";
-
-      // overseas country
-      selectedOverseasCountry.value = countryList.firstWhere((element) =>
-          element.countryId ==
-          profileModel.value.userProfile!.overseasCountryCode);
-
-      // overseas village
-      overseasVillageController.value.text =
-          profileModel.value.userProfile!.overseasVillage ?? "";
-
-      // father name
-      fatherNameController.value.text =
-          profileModel.value.parentInfo?.fatherName ?? "";
-      // father profession
-      selectedFatherProfession.value = professionList.firstWhere((element) =>
-          element.professionId ==
-          profileModel.value.parentInfo?.fatherProfessionId);
-      // father country
-      selectedFatherCountry.value = countryList.firstWhere((element) =>
-          element.countryId ==
-          profileModel.value.parentInfo?.fatherNationalityId);
-      // father passport or nid
-      fatherPassOrNIDController.value.text =
-          profileModel.value.parentInfo?.fatherNid.toString() ?? "";
-      // father alive dead
-      isFatherAlive.value =
-          profileModel.value.parentInfo?.fatherExisting ?? false;
-      // mother name
-      motherNameController.value.text =
-          profileModel.value.parentInfo?.motherName ?? "";
-
-      // mother profession
-      selectedMotherProfession.value = professionList.firstWhere((element) =>
-          element.professionId ==
-          profileModel.value.parentInfo?.motherProfessionId);
-      // mother country
-      selectedMotherCountry.value = countryList.firstWhere((element) =>
-          element.countryId ==
-          profileModel.value.parentInfo?.motherNationalityId);
-      // mother passport or nid
-      motherPassOrNIDController.value.text =
-          profileModel.value.parentInfo?.motherNid.toString() ?? "";
-      // mother alive dead
-      isMotherAlive.value =
-          profileModel.value.parentInfo?.motherExisting ?? false;
-      // Spouse
-      spouseList.clear();
-      if (profileModel.value.spouseInfo != null) {
-        for (var spouse in profileModel.value.spouseInfo!) {
-          spouseList.add(SpouseForm(
-            spouseId: spouse.spouseId,
-            userId: spouse.userId,
-            existing: spouse.existing,
-            nameVal: spouse.spouseName,
-            nidVal: spouse.nid,
-            passportVal:
-                spouse.passport != null ? spouse.passport.toString() : '',
-            mobileVal: spouse.mobile,
-            emailVal: spouse.email,
-            nidUrl: spouse.nidPaperUrl,
-            passportUrl: spouse.passportPaperUrl != null
-                ? spouse.passportPaperUrl.toString()
-                : null,
-            isAliveVal: true,
-          ));
-
-          if (spouseList.last.profession.value == null &&
-              spouse.professionId != null) {
-            spouseList.last.profession.value = professionList
-                .firstWhereOrNull((p) => p.professionId == spouse.professionId);
-          }
-          if (spouseList.last.nationality.value == null &&
-              spouse.nationalityId != null) {
-            spouseList.last.nationality.value = countryList
-                .firstWhereOrNull((c) => c.countryId == spouse.nationalityId);
-          }
-        }
-      } else {
-        spouseList.add(SpouseForm());
-      }
-
-      // Populate Children List
-      childrenList.clear();
-      if (profileModel.value.childInfo != null) {
-        for (var child in profileModel.value.childInfo!) {
-          ChildForm form = ChildForm();
-          form.name.text = child.childName ?? "";
-          form.nid.text = child.nid ?? "";
-          form.mobile.text = child.mobile ?? "";
-          form.email.text = child.email ?? "";
-          if (child.dob != null) {
-            form.selectedDob.value = child.dob;
-          }
-          form.nidUrl = child.nidPaperUrl;
-          form.isAlive.value = child.existing ?? true;
-
-          if (child.professionId != null) {
-            form.profession.value = professionList
-                .firstWhereOrNull((e) => e.professionId == child.professionId);
-          }
-          if (child.nationalityId != null) {
-            form.nationality.value = countryList
-                .firstWhereOrNull((e) => e.countryId == child.nationalityId);
-          }
-          if (child.genderId != null) {
-            form.gender.value = genderList
-                .firstWhereOrNull((e) => e.genderId == child.genderId);
-          }
-
-          childrenList.add(form);
-        }
-      } else {
-        childrenList.add(ChildForm());
-      }
-
-      if (profileModel.value.userProfile!.multipleCitizenCode != null) {
-        selectedMultiCitizenCountry.value = countryList.firstWhere((element) =>
-            element.countryId ==
-            profileModel.value.userProfile!.multipleCitizenCode);
-      }
-
-      selectedBank(
-        bankList.firstWhere(
-          (element) => profileModel.value.bankInfo!.any(
-            (bank) => bank.bankId == element.bankId,
-          ),
-        ),
-      );
-
-      selectedWealth(
-        wealthList.firstWhere(
-          (element) => profileModel.value.wealthInfo!.any(
-            (wealth) => wealth.wealthId == element.wealthId,
-          ),
-        ),
-      );
- */

@@ -41,8 +41,8 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
                 selectedProfession: form.selectedFatherProfession,
                 isAlive: form.isFatherAlive,
                 fileUrl: controller.profileModel.value.parentInfo?.fatherNidUrl,
-                pickerType: ProfilePickerType.fatherNidOrPassport,
-                downloadType: ProfileDownloadType.fatherNidOrPassport,
+                pickerType: 'fatherNidOrPassport',
+                downloadType: 'fatherNidOrPassport',
                 filePrefix: 'FatherNidOrPassport',
               ),
 
@@ -54,8 +54,8 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
                 selectedProfession: form.selectedMotherProfession,
                 isAlive: form.isMotherAlive,
                 fileUrl: controller.profileModel.value.parentInfo?.motherNidUrl,
-                pickerType: ProfilePickerType.motherNidOrPassport,
-                downloadType: ProfileDownloadType.motherNidOrPassport,
+                pickerType: 'motherNidOrPassport',
+                downloadType: 'motherNidOrPassport',
                 filePrefix: 'MotherNidOrPassport',
               ),
             ],
@@ -74,8 +74,8 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
     required Rxn<ProfessionModel> selectedProfession,
     required RxBool isAlive,
     required String? fileUrl,
-    required ProfilePickerType pickerType,
-    required ProfileDownloadType downloadType,
+    required String pickerType,
+    required String downloadType,
     required String filePrefix,
   }) {
     return Column(
@@ -136,8 +136,8 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
 
   Widget _filePicker(
     String fileUrl,
-    ProfilePickerType pickerType,
-    ProfileDownloadType downloadType,
+    String pickerType,
+    String downloadType,
     String prefix,
   ) {
     return Obx(() => FileChooseAndDownloadButton(
@@ -155,224 +155,6 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
         ));
   }
 }
-
-// class ProfileSetupStepThreeScreen extends StatefulWidget {
-//   ProfileSetupStepThreeScreen({super.key});
-
-//   @override
-//   State<ProfileSetupStepThreeScreen> createState() =>
-//       _ProfileSetupStepThreeScreenState();
-// }
-
-// class _ProfileSetupStepThreeScreenState
-//     extends State<ProfileSetupStepThreeScreen> {
-//   final ProfileController controller = Get.find<ProfileController>();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         body: Container(
-//             height: Get.height,
-//             width: double.infinity,
-//             child: Padding(
-//               padding: EdgeInsets.symmetric(horizontal: 14.h),
-//               child: SingleChildScrollView(
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     ///=============="Father’s Information================================
-//                     SizedBox(height: 16.h),
-//                     CustomText(
-//                       text: "Father's Name".tr,
-//                       fontsize: 16.sp,
-//                     ),
-//                     SizedBox(height: 4.h),
-//                     CustomTextFormField(
-//                       controller: controller.fatherNameController.value,
-//                       hint: "Father's Name".tr,
-//                       validator: (value) =>
-//                           value!.isEmpty ? "Father's Name is required" : null,
-//                     ),
-//                     SizedBox(height: 16.h),
-//                     //================== Father Profession ====================
-//                     CustomText(
-//                       text: "Father's Profession".tr,
-//                       fontsize: 16.sp,
-//                     ),
-
-//                     SizedBox(height: 4.h),
-//                     CustomDropdown<ProfessionModel>(
-//                       hint: "Profession".tr,
-//                       items: controller.professionList,
-//                       value: controller.selectedFatherProfession.value,
-//                       itemToString: (item) => item.profession ?? "",
-//                       onChanged: (val) =>
-//                           controller.selectedFatherProfession.value = val,
-//                     ),
-//                     SizedBox(height: 16.h),
-
-//                     ///============Father NID/PASSPORT No*====================
-
-//                     CustomText(
-//                         text: "Father's NID/Passport No".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
-//                     CustomTextFormField(
-//                       controller: controller.fatherPassOrNIDController.value,
-//                       hint: "NID/Passport No".tr,
-//                       validator: (value) => value!.isEmpty
-//                           ? "Father's NID/Passport No is required"
-//                           : null,
-//                     ),
-//                     SizedBox(height: 16.h),
-//                     if (controller
-//                             .profileModel.value.parentInfo?.fatherNidUrl !=
-//                         null)
-//                       Obx(() {
-//                         return FileChooseAndDownloadButton(
-//                           pickedFile: Rxn(controller.pickedFileMap[
-//                               ProfilePickerType.fatherNidOrPassport]),
-//                           isDownloading: (controller.isDownloadingMap[
-//                                       ProfileDownloadType
-//                                           .fatherNidOrPassport] ??
-//                                   false)
-//                               .obs,
-//                           progress: (controller.downloadProgressMap[
-//                                       ProfileDownloadType
-//                                           .fatherNidOrPassport] ??
-//                                   0.0)
-//                               .obs,
-//                           onPickFile: () => controller
-//                               .pickFile(ProfilePickerType.fatherNidOrPassport),
-//                           onDownload: () async {
-//                             final isComplete = await controller.downloadFile(
-//                               urlPath: controller
-//                                   .profileModel.value.parentInfo?.fatherNidUrl,
-//                               filePrefix: 'FatherNidOrPassport',
-//                               type: ProfileDownloadType.fatherNidOrPassport,
-//                             );
-//                             if (isComplete) {
-//                               Fluttertoast.showToast(
-//                                 msg: "NID/Passport File downloaded successfully"
-//                                     .tr,
-//                                 toastLength: Toast.LENGTH_SHORT,
-//                                 gravity: ToastGravity.TOP,
-//                                 timeInSecForIosWeb: 2,
-//                                 backgroundColor: AppColors.primaryColor,
-//                                 textColor: AppColors.whiteColor,
-//                               );
-//                             }
-//                           },
-//                           fileUrl: controller
-//                               .profileModel.value.parentInfo?.fatherNidUrl,
-//                         );
-//                       }),
-//                     CustomText(
-//                       text: "* Only Pdf,JPEG,PNG file are allowed".tr,
-//                       color: AppColors.redColor,
-//                       fontsize: 12.sp,
-//                     ),
-//                     SizedBox(height: 16.h),
-//                     AliveDeadToggle(isAlive: controller.isFatherAlive),
-
-//                     ///=============="Mother's Information================================
-//                     SizedBox(height: 16.h),
-//                     CustomText(
-//                       text: "Mother's Name".tr,
-//                       fontsize: 16.sp,
-//                     ),
-//                     SizedBox(height: 4.h),
-//                     CustomTextFormField(
-//                       controller: controller.motherNameController.value,
-//                       hint: "Mother's Name".tr,
-//                       validator: (value) =>
-//                           value!.isEmpty ? "Mother's Name is required" : null,
-//                     ),
-//                     SizedBox(height: 16.h),
-//                     //================== Mother Profession ====================
-//                     CustomText(
-//                       text: "Mother's Profession".tr,
-//                       fontsize: 16.sp,
-//                     ),
-
-//                     SizedBox(height: 4.h),
-//                     CustomDropdown<ProfessionModel>(
-//                       hint: "Profession".tr,
-//                       items: controller.professionList,
-//                       value: controller.selectedMotherProfession.value,
-//                       itemToString: (item) => item.profession ?? "",
-//                       onChanged: (val) =>
-//                           controller.selectedMotherProfession.value = val,
-//                     ),
-//                     SizedBox(height: 16.h),
-
-//                     ///============Mother NID/PASSPORT No*====================
-
-//                     CustomText(
-//                         text: "Mother's NID/Passport No".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
-//                     CustomTextFormField(
-//                       controller: controller.motherPassOrNIDController.value,
-//                       hint: "NID/Passport No".tr,
-//                       validator: (value) => value!.isEmpty
-//                           ? "Mother's NID/Passport No is required"
-//                           : null,
-//                     ),
-//                     SizedBox(height: 16.h),
-//                     if (controller
-//                             .profileModel.value.parentInfo?.motherNidUrl !=
-//                         null)
-//                       Obx(() {
-//                         return FileChooseAndDownloadButton(
-//                           pickedFile: Rxn(controller.pickedFileMap[
-//                               ProfilePickerType.motherNidOrPassport]),
-//                           isDownloading: (controller.isDownloadingMap[
-//                                       ProfileDownloadType
-//                                           .motherNidOrPassport] ??
-//                                   false)
-//                               .obs,
-//                           progress: (controller.downloadProgressMap[
-//                                       ProfileDownloadType
-//                                           .motherNidOrPassport] ??
-//                                   0.0)
-//                               .obs,
-//                           onPickFile: () => controller
-//                               .pickFile(ProfilePickerType.motherNidOrPassport),
-//                           onDownload: () async {
-//                             final isComplete = await controller.downloadFile(
-//                               urlPath: controller
-//                                   .profileModel.value.parentInfo?.motherNidUrl,
-//                               filePrefix: 'MotherNidOrPassport',
-//                               type: ProfileDownloadType.motherNidOrPassport,
-//                             );
-//                             if (isComplete) {
-//                               Fluttertoast.showToast(
-//                                 msg: "NID/Passport File downloaded successfully"
-//                                     .tr,
-//                                 toastLength: Toast.LENGTH_SHORT,
-//                                 gravity: ToastGravity.TOP,
-//                                 timeInSecForIosWeb: 2,
-//                                 backgroundColor: AppColors.primaryColor,
-//                                 textColor: AppColors.whiteColor,
-//                               );
-//                             }
-//                           },
-//                           fileUrl: controller
-//                               .profileModel.value.parentInfo?.motherNidUrl,
-//                         );
-//                       }),
-//                     CustomText(
-//                       text: "* Only Pdf,JPEG,PNG file are allowed".tr,
-//                       color: AppColors.redColor,
-//                       fontsize: 12.sp,
-//                     ),
-//                     SizedBox(height: 16.h),
-//                     AliveDeadToggle(isAlive: controller.isMotherAlive),
-//                   ],
-//                 ),
-//               ),
-//             )));
-//   }
-// }
 
 class AliveDeadToggle extends StatelessWidget {
   final RxBool isAlive;
