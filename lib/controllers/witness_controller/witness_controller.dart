@@ -5,11 +5,13 @@ import 'package:get/get.dart';
 
 import '../../helpers/prefs_helper.dart';
 import '../../helpers/toast_message_helper.dart';
+import '../../models/access_phanel/zakat_property_wasyyah_model.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
 import 'package:http/http.dart' as http;
 
 import '../../utils/app_constant.dart';
+import '../access_phanel/ContextsService.dart';
 class WitnessController extends GetxController{
 
 @override
@@ -110,5 +112,35 @@ getWitnessDeleteData({String? requestKey}) async{
   }
 }
 
+
+
+
+
+RxBool isZakatPropertyWasiyyah = false.obs;
+Rx<ZakatPropertyWasiyyahModel?> contextsData = Rx<ZakatPropertyWasiyyahModel?>(null);
+
+/// 🔥 DIRECT API CALL INSIDE CONTROLLER
+Future<void> fetchContextsData(String requestKey) async {
+  try {
+    isZakatPropertyWasiyyah.value = true;
+
+
+    var response = await ApiClient.getData("${ApiConstants.baseUrl}/getContextsData?requestKey=$requestKey",);
+    print("deleteData data ------------${response.body}");
+
+    if (response.statusCode != 200 || response.statusCode == 201) {
+      final data = jsonDecode(response.body);
+
+      contextsData.value = ZakatPropertyWasiyyahModel.fromJson(data);
+    } else {
+      throw Exception(
+          "Request Failed. Status code: ${response.statusCode}");
+    }
+  } catch (e) {
+    Get.snackbar("Error", e.toString());
+  } finally {
+    isZakatPropertyWasiyyah.value = false;
+  }
+}
 
 }
