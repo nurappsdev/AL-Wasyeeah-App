@@ -79,12 +79,15 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
                               ],
                             ),
                             onTap: () {
-                              // Get.toNamed(AppRoutes.witnessDetailsScreen,
-                              //     arguments: user,
-                              //     preventDuplicates: false);
-                              showWitnessDetailsDialog(context,user);
+                              Get.to(
+                                    () => WitnessDetailsScreens(user: user),
+                                preventDuplicates: false,
+                              );
                               print("Tapped on");
+
+                              //showWitnessDetailsDialog()
                             },
+
                           ),
                         );
                       },
@@ -102,65 +105,65 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
     );
   }
 
- void showWitnessDetailsDialog(BuildContext context, GetWitnessResponseModel user) {
-   showDialog(
-     context: context,
-     builder: (context) {
-       return Dialog(
-         backgroundColor: Colors.transparent,
-         insetPadding: EdgeInsets.all(16),
-         child: Padding(
-           padding: const EdgeInsets.all(8.0),
-           child: SingleChildScrollView(
-             child: Container(
-               decoration: BoxDecoration(
-                 color: Colors.blueGrey[900],
-                 borderRadius: BorderRadius.circular(12),
-               ),
-               padding: const EdgeInsets.all(16.0),
-               child: Column(
-                 mainAxisSize: MainAxisSize.min,
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                 children: [
-                   Row(
-                     children: [
-                       Expanded(
-                         child: Text(
-                           user.name ?? "N/A",
-                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-                         ),
-                       ),
-                       IconButton(
-                         icon: Icon(Icons.close, color: Colors.white),
-                         onPressed: () => Navigator.pop(context),
-                       ),
-                     ],
-                   ),
-                   Divider(color: Colors.white70),
-                   _buildDialogRow(Icons.people, "Relation", user.relation ?? "N/A"),
-                   _buildDialogRow(Icons.email, "Email", user.email ?? "N/A"),
-                   _buildDialogRow(Icons.person, "Father Name", user.fatherName ?? "N/A"),
-                   _buildDialogRow(Icons.phone, "Mobile", user.mobile ?? "N/A"),
-                   _buildDialogRow(Icons.favorite, "Marital Status", user.maritalStatus ?? "N/A"),
-                   _buildDialogRow(Icons.work, "Profession", user.profession ?? "N/A"),
-                   SizedBox(height: 20),
-                   ElevatedButton(
-                     style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                     onPressed: () {
-                       // Implement remove witness logic
-                       Navigator.pop(context);
-                     },
-                     child: Text("Remove Witness"),
-                   ),
-                 ],
-               ),
-             ),
-           ),
-         ),
-       );
-     },
-   );
- }
+ // void showWitnessDetailsDialog(BuildContext context, GetWitnessResponseModel user) {
+ //   showDialog(
+ //     context: context,
+ //     builder: (context) {
+ //       return Dialog(
+ //         backgroundColor: Colors.transparent,
+ //         insetPadding: EdgeInsets.all(16),
+ //         child: Padding(
+ //           padding: const EdgeInsets.all(8.0),
+ //           child: SingleChildScrollView(
+ //             child: Container(
+ //               decoration: BoxDecoration(
+ //                 color: Colors.blueGrey[900],
+ //                 borderRadius: BorderRadius.circular(12),
+ //               ),
+ //               padding: const EdgeInsets.all(16.0),
+ //               child: Column(
+ //                 mainAxisSize: MainAxisSize.min,
+ //                 crossAxisAlignment: CrossAxisAlignment.start,
+ //                 children: [
+ //                   Row(
+ //                     children: [
+ //                       Expanded(
+ //                         child: Text(
+ //                           user.name ?? "N/A",
+ //                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+ //                         ),
+ //                       ),
+ //                       IconButton(
+ //                         icon: Icon(Icons.close, color: Colors.white),
+ //                         onPressed: () => Navigator.pop(context),
+ //                       ),
+ //                     ],
+ //                   ),
+ //                   Divider(color: Colors.white70),
+ //                   _buildDialogRow(Icons.people, "Relation", user.relation ?? "N/A"),
+ //                   _buildDialogRow(Icons.email, "Email", user.email ?? "N/A"),
+ //                   _buildDialogRow(Icons.person, "Father Name", user.fatherName ?? "N/A"),
+ //                   _buildDialogRow(Icons.phone, "Mobile", user.mobile ?? "N/A"),
+ //                   _buildDialogRow(Icons.favorite, "Marital Status", user.maritalStatus ?? "N/A"),
+ //                   _buildDialogRow(Icons.work, "Profession", user.profession ?? "N/A"),
+ //                   SizedBox(height: 20),
+ //                   ElevatedButton(
+ //                     style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+ //                     onPressed: () {
+ //                       // Implement remove witness logic
+ //                       Navigator.pop(context);
+ //                     },
+ //                     child: Text("OK"),
+ //                   ),
+ //                 ],
+ //               ),
+ //             ),
+ //           ),
+ //         ),
+ //       );
+ //     },
+ //   );
+ // }
 
  Widget _buildDialogRow(IconData icon, String label, String value) {
    return Padding(
@@ -175,4 +178,92 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
      ),
    );
  }
+}
+
+
+
+class WitnessDetailsScreens extends StatelessWidget {
+  final GetWitnessResponseModel user;
+
+
+   WitnessDetailsScreens({super.key, required this.user});
+  WitnessController witnessController = Get.put(WitnessController());
+  @override
+  Widget build(BuildContext context) {
+    print(user.requestKey.toString());
+   // witnessController.fetchContextsData("8E1087C1C3F54338C3313F40B6FFAD00");
+    print(witnessController.contextsData.value?.zakat?.currencyCode);
+    return Scaffold(
+      backgroundColor: Colors.blueGrey[900],
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(user.name ?? "Witness Details"),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.blueGrey[900],
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildDialogRow(Icons.people, "Relation", user.relation ?? "N/A"),
+              _buildDialogRow(Icons.email, "Email", user.email ?? "N/A"),
+              _buildDialogRow(Icons.person, "Father Name", user.fatherName ?? "N/A"),
+              _buildDialogRow(Icons.phone, "Mobile", user.mobile ?? "N/A"),
+              _buildDialogRow(Icons.favorite, "Marital Status", user.maritalStatus ?? "N/A"),
+              _buildDialogRow(Icons.work, "Profession", user.profession ?? "N/A"),
+
+              const SizedBox(height: 30),
+
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  ),
+                  onPressed: () {
+                  Get.toNamed(AppRoutes.witnessPhanelData,arguments: user.requestKey);
+                  },
+                  child: const Text("Access Panel"),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Widget _buildDialogRow(IconData icon, String title, String value) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8.0),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, color: Colors.white, size: 22),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(color: Colors.white70, fontSize: 14),
+              ),
+              Text(
+                value,
+                style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 }

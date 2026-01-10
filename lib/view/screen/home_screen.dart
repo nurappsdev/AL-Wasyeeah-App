@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     print("magrib ${userController.getSalatTimeResponseModel.value?.maghrib}");
-
+    userController.getUserProfileData();
     return ConnectivityWrapper(
       child: Scaffold(
         appBar: AppBar(
@@ -147,23 +147,29 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(width: 8.h), // Space between the image and text
                 Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Obx(()=> userController.isLoadingUserProfile.value ? CustomLoader():
-                    CustomText(
-                        text: userController.userProfile.value?.firstName ?? "N/A",
-                        fontsize: 16.sp,
-                        textAlign: TextAlign.start,
+                    Obx(
+                          () => userController.isLoadingUserProfile.value
+                          ? const CustomLoader()
+                          : Flexible(
+                        child: CustomText(
+                          text: userController.userProfile.value?.firstName ?? "N/A",
+                          fontsize: 16.sp,
+                          maxline: 1,
+                          textOverflow:  TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                     CustomText(
                       text: "Welcome back!".tr,
                       fontsize: 14.sp,
-                      textAlign: TextAlign.start,
                     ),
                   ],
-                ),
+                )
+
+
               ],
             ),
           ),
