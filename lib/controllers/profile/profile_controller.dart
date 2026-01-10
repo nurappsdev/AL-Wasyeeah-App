@@ -1,771 +1,430 @@
-
+import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-
+import 'dart:developer';
+import 'package:al_wasyeah/helpers/file_picker_util.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/marital_list_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/profile_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
-import '../../helpers/helpers.dart';
-import '../../helpers/prefs_helper.dart';
-import '../../models/models.dart';
 import '../../services/services.dart';
-import '../../utils/utils.dart';
-import '../../view/screen/screen.dart';
+import 'package:al_wasyeah/helpers/file_download_util.dart';
+import 'spouse_form.dart';
+import 'child_form.dart';
+import 'personal_form.dart';
+import 'address_form.dart';
+import 'parent_form.dart';
 
-class ProfileController extends GetxController{
+class ProfileController extends GetxController {
+  final PageController pageController = PageController();
+  RxInt currentStep = 0.obs;
+  Rx<RxStatus> status = RxStatus.loading().obs;
+  RxList<MaritalModel> maritalList = <MaritalModel>[].obs;
+  RxList<ProfessionModel> professionList = <ProfessionModel>[].obs;
+  RxList<GenderModel> genderList = <GenderModel>[].obs;
+  RxList<CountryModel> countryList = <CountryModel>[].obs;
+  RxList<BankModel> bankList = <BankModel>[].obs;
+  RxList<WealthModel> wealthList = <WealthModel>[].obs;
+  Rx<ProfileModel> profileModel = ProfileModel().obs;
+  Rx<PersonalForm> personalForm = PersonalForm().obs;
+  Rx<AddressForm> addressForm = AddressForm().obs;
+  Rx<ParentForm> parentForm = ParentForm().obs;
 
+  RxMap<String, bool> isDownloadingMap = <String, bool>{}.obs;
+  RxMap<String, double> downloadProgressMap = <String, double>{}.obs;
 
-///+========================1st Profile=====================
-  RxString selectedGender = ''.obs;
-  RxString selectedMarried = ''.obs;
-  RxString selectedProfession = ''.obs;
-  RxString selectedNationality = ''.obs;
-  RxString selectedBank = ''.obs;
+  RxMap<String, PickedFileResult> pickedFileMap =
+      <String, PickedFileResult>{}.obs;
 
-  final List<String> gender = ['Male'.tr, 'FeMale'.tr, 'Others'.tr];
-  final List<String> maritalStatus = ['Married'.tr, 'Un Married'.tr,];
-  final List<String> profession = ['Business'.tr, 'Doctor'.tr, "Engineers".tr,"Housewife".tr, "Others".tr];
-  final List<String> nationality = ['Bangaldeshi'.tr, 'Pakisthani'.tr, "Indian".tr,];
+  // Spouse List Management
+  RxList<SpouseForm> spouseList = <SpouseForm>[].obs;
 
+  // Children List Management
+  RxList<ChildForm> childrenList = <ChildForm>[].obs;
 
-  final List<String> banks = ['Islami Bank'.tr, 'Al Arafa Bank'.tr,'Sonali Bank'.tr,];
+  final step1formKey = GlobalKey<FormState>();
+  final step2formKey = GlobalKey<FormState>();
+  final step3formKey = GlobalKey<FormState>();
 
-  final List<Map<String, String>> muslimCountriesInWorld = [
-    {'name': 'Palestine', 'flag': 'PS'}, // Palestine
-    {'name': 'Lebanon', 'flag': 'LB'}, // Lebanon
-    {'name': 'Jordan', 'flag': 'JO'}, // Jordan
-    {'name': 'Syria', 'flag': 'SY'}, // Syria
-    {'name': 'Saudi Arabia', 'flag': 'SA'}, // Saudi Arabia
-    {'name': 'United Arab Emirates', 'flag': 'AE'}, // UAE
-    {'name': 'Oman', 'flag': 'OM'}, // Oman
-    {'name': 'Qatar', 'flag': 'QA'}, // Qatar
-    {'name': 'Bahrain', 'flag': 'BH'}, // Bahrain
-    {'name': 'Kuwait', 'flag': 'KW'}, // Kuwait
-    {'name': 'Iraq', 'flag': 'IQ'}, // Iraq
-    {'name': 'Turkey', 'flag': 'TR'}, // Turkey
-    {'name': 'Afghanistan', 'flag': 'AF'}, // Afghanistan
-    {'name': 'Pakistan', 'flag': 'PK'}, // Pakistan
-    {'name': 'Indonesia', 'flag': 'ID'}, // Indonesia
-    {'name': 'Malaysia', 'flag': 'MY'}, // Malaysia
-    {'name': 'Brunei', 'flag': 'BN'}, // Brunei
-    {'name': 'Kazakhstan', 'flag': 'KZ'}, // Kazakhstan
-    {'name': 'Turkmenistan', 'flag': 'TM'}, // Turkmenistan
-    {'name': 'Uzbekistan', 'flag': 'UZ'}, // Uzbekistan
-    {'name': 'Kyrgyzstan', 'flag': 'KG'}, // Kyrgyzstan
-    {'name': 'Tajikistan', 'flag': 'TJ'}, // Tajikistan
-    {'name': 'Maldives', 'flag': 'MV'}, // Maldives
-    {'name': 'Algeria', 'flag': 'DZ'}, // Algeria
-    {'name': 'Egypt', 'flag': 'EG'}, // Egypt
-    {'name': 'Morocco', 'flag': 'MA'}, // Morocco
-    {'name': 'Tunisia', 'flag': 'TN'}, // Tunisia
-    {'name': 'Libya', 'flag': 'LY'}, // Libya
-    {'name': 'Sudan', 'flag': 'SD'}, // Sudan
-    {'name': 'Somalia', 'flag': 'SO'}, // Somalia
-    {'name': 'Nigeria', 'flag': 'NG'}, // Nigeria
-    {'name': 'Senegal', 'flag': 'SN'}, // Senegal
-    {'name': 'Mali', 'flag': 'ML'}, // Mali
-    {'name': 'Chad', 'flag': 'TD'}, // Chad
-    {'name': 'Mauritania', 'flag': 'MR'}, // Mauritania
-    {'name': 'Gambia', 'flag': 'GM'}, // Gambia
-    {'name': 'Comoros', 'flag': 'KM'}, // Comoros
-    {'name': 'Sierra Leone', 'flag': 'SL'}, // Sierra Leone
-    {'name': 'Guinea', 'flag': 'GN'}, // Guinea
-    {'name': 'Indonesia', 'flag': 'ID'}, // Indonesia
-    {'name': 'Bangladesh', 'flag': 'BD'}, // Bangladesh
-    {'name': 'India', 'flag': 'IN'}, // India (significant Muslim population)
-    {'name': 'Russia', 'flag': 'RU'}, // Russia (significant Muslim population)
-    {'name': 'Philippines', 'flag': 'PH'}, // Philippines (significant Muslim population)
-  ];
-  String selectedCountry = 'Bangladesh';
+  void onStepTapped(int step) {
+    currentStep(step);
+    pageController.animateToPage(
+      step,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
 
-
-
-
-
-
-  List<SpouseItemS> addSpouseList = [];
-  List<ChildrenInfo> addChildrenInfoList = [];
-
-  Future<void> submitUserProfile({
-    // User Profile
-    required int userProfileId,
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String dob,
-    required int nid,
-    String? nidPaperPath,
-    required String passportNo,
-    String? passportPaperPath,
-    required String passportExpDate,
-    required int maritalStatusId,
-    required int professionId,
-    required int countryCode,
-    int? multipleCitizenCode,
-    int? multipleCitizenPassportNo,
-    String? tin,
-    String? tinPaperPath,
-    required String nationality,
-    required String mobile,
-    required String gender,
-    required String religion,
-    required String district,
-    required String presentAddress,
-    required String permanentAddress,
-    String? profilePicturePath,
-    int? overseasCountryCode,
-    String? overseasVillage,
-    String? signInSource,
-    String? isActive,
-    int userTypeId = 0,
-    int insertBy = 0,
-    String? insertAt,
-    int updateBy = 0,
-
-    // Parent Info
-    required String fatherName,
-    required int fatherProfessionId,
-    required int fatherNationalityId,
-    required String fatherNID,
-    String? fatherNIDPath,
-    required String fatherWhatsAppNumber,
-    required bool fatherExisting,
-    required String motherName,
-    required int motherProfessionId,
-    required int motherNationalityId,
-    required String motherNID,
-    String? motherNIDPath,
-    required String motherWhatsAppNumber,
-    required bool motherExisting,
-
-    // Social Media
-    String? facebookLink,
-    String? linkDinLink,
-    String? instagramLink,
-    String? whatsAppLink,
-
-    // Spouse Info (list)
-    required List<SpouseItem> spouses,
-    // Child Info
-    required List<ChildItem> children,
-    // Sibling Info
-    required List<SiblingItem> siblings,
-    // Bank Info
-    required List<BankInfoItem> banks,
-    // Wealth Info
-    required List<WealthItem> wealths,
-    // Share Market Info
-    required List<ShareMarketItem> shares,
-    // Receivable Info
-    required List<ReceivableItem> receivables,
-    // Payable Info
-    required List<PayableItem> payables,
-  }) async {
-    final uri = Uri.parse('${ApiConstants.baseUrl}/user/profile/upload');
-
-    // Helper to map file path to url string
-    String fileUrl(String? path) => path != null && path.isNotEmpty
-        ? "/images/${File(path).path.split('/').last}"
-        : "";
-
-    Map<String, dynamic> body = {
-      "userProfile": {
-        "userProfileId": userProfileId,
-        "firstName": firstName,
-        "lastName": lastName,
-        "email": email,
-        "dob": dob,
-        "nid": nid,
-        "nidPaperUrl": fileUrl(nidPaperPath),
-        "passportNo": passportNo,
-        "passportPaperUrl": fileUrl(passportPaperPath),
-        "passportExpDate": passportExpDate,
-        "maritalStatusId": maritalStatusId,
-        "professionId": professionId,
-        "countryCode": countryCode,
-        "multipleCitizenCode": multipleCitizenCode,
-        "multipleCitizenPassportNo": multipleCitizenPassportNo,
-        "tin": tin ?? "",
-        "tinPaperUrl": fileUrl(tinPaperPath),
-        "nationality": nationality,
-        "mobile": mobile,
-        "gender": gender,
-        "religion": religion,
-        "district": district,
-        "presentAddress": presentAddress,
-        "permanentAddress": permanentAddress,
-        "profilePictureUrl": fileUrl(profilePicturePath),
-        "overseasCountryCode": overseasCountryCode,
-        "overseasVillage": overseasVillage,
-        "signInSource": signInSource,
-        "isActive": isActive,
-        "userTypeId": userTypeId,
-        "insertBy": insertBy,
-        "insertAt": insertAt,
-        "updateBy": updateBy,
-      },
-      "socialMediaLink": {
-        "facebookLink": facebookLink ?? "",
-        "linkDinLink": linkDinLink ?? "",
-        "instagramLink": instagramLink ?? "",
-        "whatsAppLink": whatsAppLink ?? "",
-      },
-      "parentInfo": {
-        "fatherName": fatherName,
-        "fatherProfessionId": fatherProfessionId,
-        "fatherNationalityId": fatherNationalityId,
-        "fatherNID": fatherNID,
-        "fatherNIDUrl": fileUrl(fatherNIDPath),
-        "fatherWhatsAppNumber": fatherWhatsAppNumber,
-        "fatherExisting": fatherExisting,
-        "motherName": motherName,
-        "motherProfessionId": motherProfessionId,
-        "motherNationalityId": motherNationalityId,
-        "motherNID": motherNID,
-        "motherNIDUrl": fileUrl(motherNIDPath),
-        "motherWhatsAppNumber": motherWhatsAppNumber,
-        "motherExisting": motherExisting,
-      },
-      "spouseInfo": spouses.map((s) => {
-        "spouseId": s.spouseId,
-        "spouseName": s.spouseName,
-        "professionId": s.professionId,
-        "nationalityId": s.nationalityId,
-        "nid": s.nid,
-        "nidPaperUrl": fileUrl(s.nidPaperPath),
-        "passport": s.passport,
-        "passportPaperUrl": fileUrl(s.passportPaperPath),
-        "mobile": s.mobile,
-        "email": s.email,
-        "existing": s.existing,
-        "userId": s.userId,
-      }).toList(),
-
-      "childInfo": children.map((c) => {
-        "childId": c.childId,
-        "childName": c.childName,
-        "genderId": c.genderId,
-        "professionId": c.professionId,
-        "nationalityId": c.nationalityId,
-        "dob": c.dob,
-        "nid": c.nid,
-        "nidPaperUrl": fileUrl(c.nidPaperPath),
-        "mobile": c.mobile,
-        "email": c.email,
-        "existing": c.existing,
-        "userId": c.userId,
-      }).toList(),
-
-      "siblingInfo": siblings.map((s) => {
-        "siblingId": s.siblingId,
-        "siblingName": s.siblingName,
-        "genderId": s.genderId,
-        "professionId": s.professionId,
-        "nationalityId": s.nationalityId,
-        "nid": s.nid,
-        "dob": s.dob,
-        "existing": s.existing,
-        "nidPaperUrl": fileUrl(s.nidPaperPath),
-        "whatsAppNumber": s.whatsAppNumber,
-        "email": s.email,
-        "mobile": s.mobile,
-        "socialMediaLink": s.socialMediaLink,
-        "userId": s.userId,
-      }).toList(),
-
-      "bankInfo": banks.map((b) => {
-        "userBankInfoId": b.userBankInfoId,
-        "userId": b.userId,
-        "bankId": b.bankId,
-        "branchId": b.branchId,
-        "bankAccNo": b.bankAccNo,
-        "accBalance": b.accBalance,
-      }).toList(),
-
-      "wealthInfo": wealths.map((w) => {
-        "userId": w.userId,
-        "wealthId": w.wealthId,
-        "documentTypeId": w.documentTypeId,
-        "documentPaperUrl": fileUrl(w.documentPaperPath),
-        "amount": w.amount,
-        "location": w.location,
-        "note": w.note,
-      }).toList(),
-
-      "shareMarketInfo": shares.map((s) => {
-        "userShareMarketId": s.userShareMarketId,
-        "userId": s.userId,
-        "brokerHouseName": s.brokerHouseName,
-        "accName": s.accName,
-        "accNumber": s.accNumber,
-        "shareCompanyName": s.shareCompanyName,
-        "shareQuality": s.shareQuality,
-        "buyingAmount": s.buyingAmount,
-      }).toList(),
-
-      "receivableInfo": receivables.map((r) => {
-        "recId": r.recId,
-        "userId": r.userId,
-        "receivableAmount": r.receivableAmount,
-        "receivablePerson": r.receivablePerson,
-        "receivablePersonMobile": r.receivablePersonMobile,
-      }).toList(),
-
-      "payableInfo": payables.map((p) => {
-        "payId": p.payId,
-        "userId": p.userId,
-        "payableAmount": p.payableAmount,
-        "payablePerson": p.payablePerson,
-        "payablePersonMobile": p.payablePersonMobile,
-      }).toList(),
-      // Similarly for siblings, bankInfo, wealthInfo, shareMarketInfo, receivableInfo, payableInfo
-    };
-
-    try {
-      final token = await PrefsHelper.getString(AppConstants.bearerToken);
-      final resp = await http.post(
-        uri,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: jsonEncode(body),
-      );
-      if (resp.statusCode == 200) {
-        final data = jsonDecode(resp.body);
-        ToastMessageHelper.successMessageShowToster(data['message']);
-        // Get.toNamed(AppRoutes.allBottomBarScreen);
-        print("Submission success: ${resp.body}");
-      } else {
-        final data = jsonDecode(resp.body);
-        ToastMessageHelper.errorMessageShowToster(data['message'] ?? "Error");
-        print("Error: ${resp.statusCode} ${resp.body}");
-      }
-    } catch (e) {
-      print("Exception during upload: $e");
-      // handleSocket/timeout etc
+  void pickFile(String type) async {
+    var result = await FilePickerUtil.pickSingleFile();
+    if (result != null) {
+      pickedFileMap[type] = result;
     }
   }
 
+  Future<bool> downloadFile({
+    required String? urlPath,
+    required String filePrefix,
+    required String type,
+  }) async {
+    if (urlPath == null) {
+      return false;
+    }
 
+    isDownloadingMap[type] = true;
+    downloadProgressMap[type] = 0.0;
 
-}
+    final completer = Completer<bool>();
 
+    final String fileName =
+        '${filePrefix}_${profileModel.value.userProfile?.firstName ?? "User"}_'
+        '${profileModel.value.userProfile?.lastName ?? ""}_'
+        '${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
 
-class SpouseItem {
-  final int spouseId;
-  final String spouseName;
-  final int professionId;
-  final int nationalityId;
-  final String nid;
-  final String? nidPaperPath;
-  final String passport;
-  final String? passportPaperPath;
-  final String mobile;
-  final String email;
-  final bool existing;
-  final int userId;
-  final String? spouseNIDFile;
-  final String? spousePassportFile;
+    final String filePath = '${ApiConstants.imageUrl}$urlPath';
+    log("$filePrefix File Path: $filePath");
 
-  SpouseItem({
-    required this.spouseId,
-    required this.spouseName,
-    required this.professionId,
-    required this.nationalityId,
-    required this.nid,
-    this.nidPaperPath,
-    required this.passport,
-    this.passportPaperPath,
-    required this.mobile,
-    required this.email,
-    required this.existing,
-    required this.userId,
-    this.spouseNIDFile,
-    this.spousePassportFile,
-  });
+    FileDownloadUtil.downloadFile(
+      /*filePath*/ 'https://research.nhm.org/pdfs/10840/10840-002.pdf',
+      fileName,
+      (progress) {
+        downloadProgressMap[type] = progress;
 
-  factory SpouseItem.fromJson(Map<String, dynamic> json) {
-    return SpouseItem(
-      spouseId: json['spouseId'] ?? 0,
-      spouseName: json['spouseName'] ?? '',
-      professionId: json['professionId'] ?? 0,
-      nationalityId: json['nationalityId'] ?? 0,
-      nid: json['nid'] ?? '',
-      nidPaperPath: json['nidPaperUrl'],
-      passport: json['passport'] ?? '',
-      passportPaperPath: json['passportPaperUrl'],
-      mobile: json['mobile'] ?? '',
-      email: json['email'] ?? '',
-      existing: json['existing'] ?? false,
-      userId: json['userId'] ?? 0,
-      spouseNIDFile: json['spouseNIDFile'],
-      spousePassportFile: json['spousePassportFile'],
-    );
+        if (progress >= 100) {
+          isDownloadingMap[type] = false;
+          log("Download $filePrefix Successful");
+        }
+
+        if (progress == 100) {
+          completer.complete(true);
+        }
+      },
+    ).catchError((e) {
+      isDownloadingMap[type] = false;
+      log('Download $filePrefix failed: $e');
+      if (!completer.isCompleted) {
+        completer.complete(false);
+      }
+    });
+
+    return completer.future;
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      "spouseId": spouseId,
-      "spouseName": spouseName,
-      "professionId": professionId,
-      "nationalityId": nationalityId,
-      "nid": nid,
-      "nidPaperUrl": nidPaperPath,
-      "passport": passport,
-      "passportPaperUrl": passportPaperPath,
-      "mobile": mobile,
-      "email": email,
-      "existing": existing,
-      "userId": userId,
-      "spouseNIDFile": spouseNIDFile,
-      "spousePassportFile": spousePassportFile,
-    };
-  }
-}
-
-class ChildItem {
-  final int childId;
-  final String childName;
-  final int genderId;
-  final int professionId;
-  final int nationalityId;
-  final String dob;
-  final String nid;
-  final String? nidPaperPath;
-  final String mobile;
-  final String email;
-  final bool existing;
-  final int userId;
-  final String? nidFile;
-
-  ChildItem({
-    required this.childId,
-    required this.childName,
-    required this.genderId,
-    required this.professionId,
-    required this.nationalityId,
-    required this.dob,
-    required this.nid,
-    this.nidPaperPath,
-    required this.mobile,
-    required this.email,
-    required this.existing,
-    required this.userId,
-    this.nidFile,
-  });
-
-  factory ChildItem.fromJson(Map<String, dynamic> json) {
-    return ChildItem(
-      childId: json['childId'] ?? 0,
-      childName: json['childName'] ?? '',
-      genderId: json['genderId'] ?? 0,
-      professionId: json['professionId'] ?? 0,
-      nationalityId: json['nationalityId'] ?? 0,
-      dob: json['dob'] ?? '',
-      nid: json['nid'] ?? '',
-      nidPaperPath: json['nidPaperUrl'],
-      mobile: json['mobile'] ?? '',
-      email: json['email'] ?? '',
-      existing: json['existing'] ?? false,
-      userId: json['userId'] ?? 0,
-      nidFile: json['nidFile'],
-    );
+  Future<void> getMaritalList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.maritalList,
+      );
+      maritalList(maritalListModelFromJson(jsonEncode(response.body)));
+    } catch (e, s) {
+      log("Marital List Error: $e\nStacktrace: $s");
+    }
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      "childId": childId,
-      "childName": childName,
-      "genderId": genderId,
-      "professionId": professionId,
-      "nationalityId": nationalityId,
-      "dob": dob,
-      "nid": nid,
-      "nidPaperUrl": nidPaperPath,
-      "mobile": mobile,
-      "email": email,
-      "existing": existing,
-      "userId": userId,
-      "nidFile": nidFile,
-    };
-  }
-}
-class SiblingItem {
-  final int siblingId;
-  final String siblingName;
-  final int genderId;
-  final int professionId;
-  final int nationalityId;
-  final String nid;
-  final String dob;
-  final bool existing;
-  final String? nidPaperPath;
-  final String whatsAppNumber;
-  final String email;
-  final String mobile;
-  final String socialMediaLink;
-  final int userId;
-  final String? nidFile;
+  Future<void> getGenderList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.genderList,
+      );
 
-  SiblingItem({
-    required this.siblingId,
-    required this.siblingName,
-    required this.genderId,
-    required this.professionId,
-    required this.nationalityId,
-    required this.nid,
-    required this.dob,
-    required this.existing,
-    this.nidPaperPath,
-    required this.whatsAppNumber,
-    required this.email,
-    required this.mobile,
-    required this.socialMediaLink,
-    required this.userId,
-    this.nidFile,
-  });
-
-  factory SiblingItem.fromJson(Map<String, dynamic> json) {
-    return SiblingItem(
-      siblingId: json['siblingId'] ?? 0,
-      siblingName: json['siblingName'] ?? '',
-      genderId: json['genderId'] ?? 0,
-      professionId: json['professionId'] ?? 0,
-      nationalityId: json['nationalityId'] ?? 0,
-      nid: json['nid'] ?? '',
-      dob: json['dob'] ?? '',
-      existing: json['existing'] ?? false,
-      nidPaperPath: json['nidPaperUrl'],
-      whatsAppNumber: json['whatsAppNumber'] ?? '',
-      email: json['email'] ?? '',
-      mobile: json['mobile'] ?? '',
-      socialMediaLink: json['socialMediaLink'] ?? '',
-      userId: json['userId'] ?? 0,
-      nidFile: json['nidFile'],
-    );
+      genderList(genderListModelFromJson(jsonEncode(response.body)));
+      log("Gender list: ${genderList.toJson()}");
+    } catch (e, s) {
+      log("Gender List Error: $e\nStacktrace: $s");
+    }
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      "siblingId": siblingId,
-      "siblingName": siblingName,
-      "genderId": genderId,
-      "professionId": professionId,
-      "nationalityId": nationalityId,
-      "nid": nid,
-      "dob": dob,
-      "existing": existing,
-      "nidPaperUrl": nidPaperPath,
-      "whatsAppNumber": whatsAppNumber,
-      "email": email,
-      "mobile": mobile,
-      "socialMediaLink": socialMediaLink,
-      "userId": userId,
-      "nidFile": nidFile,
-    };
-  }
-}
-class BankInfoItem {
-  final int userBankInfoId;
-  final int userId;
-  final String bankId;
-  final String branchId;
-  final String bankAccNo;
-  final double accBalance;
-
-  BankInfoItem({
-    required this.userBankInfoId,
-    required this.userId,
-    required this.bankId,
-    required this.branchId,
-    required this.bankAccNo,
-    required this.accBalance,
-  });
-
-  factory BankInfoItem.fromJson(Map<String, dynamic> json) {
-    return BankInfoItem(
-      userBankInfoId: json['userBankInfoId'] ?? 0,
-      userId: json['userId'] ?? 0,
-      bankId: json['bankId'] ?? '',
-      branchId: json['branchId'] ?? '',
-      bankAccNo: json['bankAccNo'] ?? '',
-      accBalance: (json['accBalance'] ?? 0).toDouble(),
-    );
+  Future<void> getProfessionList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.professionList,
+      );
+      professionList(professionListFromJson(jsonEncode(response.body)));
+    } catch (e) {}
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      "userBankInfoId": userBankInfoId,
-      "userId": userId,
-      "bankId": bankId,
-      "branchId": branchId,
-      "bankAccNo": bankAccNo,
-      "accBalance": accBalance,
-    };
-  }
-}
-class WealthItem {
-  final int userId;
-  final int wealthId;
-  final int documentTypeId;
-  final String? documentPaperPath;
-  final String amount;
-  final String location;
-  final String note;
-  final String? documentFile;
-
-  WealthItem({
-    required this.userId,
-    required this.wealthId,
-    required this.documentTypeId,
-    this.documentPaperPath,
-    required this.amount,
-    required this.location,
-    required this.note,
-    this.documentFile,
-  });
-
-  factory WealthItem.fromJson(Map<String, dynamic> json) {
-    return WealthItem(
-      userId: json['userId'] ?? 0,
-      wealthId: json['wealthId'] ?? 0,
-      documentTypeId: json['documentTypeId'] ?? 0,
-      documentPaperPath: json['documentPaperUrl'],
-      amount: json['amount'] ?? '',
-      location: json['location'] ?? '',
-      note: json['note'] ?? '',
-      documentFile: json['documentFile'],
-    );
+  Future<void> getCountryList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.countryList,
+      );
+      countryList(countryListModelFromJson(jsonEncode(response.body)));
+    } catch (e) {}
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      "userId": userId,
-      "wealthId": wealthId,
-      "documentTypeId": documentTypeId,
-      "documentPaperUrl": documentPaperPath,
-      "amount": amount,
-      "location": location,
-      "note": note,
-      "documentFile": documentFile,
-    };
-  }
-}
-class ShareMarketItem {
-  final int userShareMarketId;
-  final int userId;
-  final String brokerHouseName;
-  final String accName;
-  final String accNumber;
-  final String shareCompanyName;
-  final String shareQuality;
-  final String buyingAmount;
-
-  ShareMarketItem({
-    required this.userShareMarketId,
-    required this.userId,
-    required this.brokerHouseName,
-    required this.accName,
-    required this.accNumber,
-    required this.shareCompanyName,
-    required this.shareQuality,
-    required this.buyingAmount,
-  });
-
-  factory ShareMarketItem.fromJson(Map<String, dynamic> json) {
-    return ShareMarketItem(
-      userShareMarketId: json['userShareMarketId'] ?? 0,
-      userId: json['userId'] ?? 0,
-      brokerHouseName: json['brokerHouseName'] ?? '',
-      accName: json['accName'] ?? '',
-      accNumber: json['accNumber'] ?? '',
-      shareCompanyName: json['shareCompanyName'] ?? '',
-      shareQuality: json['shareQuality'] ?? '',
-      buyingAmount: json['buyingAmount'] ?? '',
-    );
+  Future<void> getBankList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.bankList,
+      );
+      bankList(bankListModelFromJson(jsonEncode(response.body)));
+    } catch (e) {}
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      "userShareMarketId": userShareMarketId,
-      "userId": userId,
-      "brokerHouseName": brokerHouseName,
-      "accName": accName,
-      "accNumber": accNumber,
-      "shareCompanyName": shareCompanyName,
-      "shareQuality": shareQuality,
-      "buyingAmount": buyingAmount,
-    };
-  }
-}
-class ReceivableItem {
-  final int recId;
-  final int userId;
-  final double receivableAmount;
-  final String receivablePerson;
-  final String receivablePersonMobile;
-
-  ReceivableItem({
-    required this.recId,
-    required this.userId,
-    required this.receivableAmount,
-    required this.receivablePerson,
-    required this.receivablePersonMobile,
-  });
-
-  factory ReceivableItem.fromJson(Map<String, dynamic> json) {
-    return ReceivableItem(
-      recId: json['recId'] ?? 0,
-      userId: json['userId'] ?? 0,
-      receivableAmount: (json['receivableAmount'] ?? 0).toDouble(),
-      receivablePerson: json['receivablePerson'] ?? '',
-      receivablePersonMobile: json['receivablePersonMobile'] ?? '',
-    );
+  Future<void> getWealthList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.wealthList,
+      );
+      wealthList(wealthListModelFromJson(jsonEncode(response.body)));
+    } catch (e) {}
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      "recId": recId,
-      "userId": userId,
-      "receivableAmount": receivableAmount,
-      "receivablePerson": receivablePerson,
-      "receivablePersonMobile": receivablePersonMobile,
-    };
-  }
-}
-class PayableItem {
-  final int payId;
-  final int userId;
-  final double payableAmount;
-  final String payablePerson;
-  final String payablePersonMobile;
+  Future<void> getProfile() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.getProfile,
+      );
 
-  PayableItem({
-    required this.payId,
-    required this.userId,
-    required this.payableAmount,
-    required this.payablePerson,
-    required this.payablePersonMobile,
-  });
-
-  factory PayableItem.fromJson(Map<String, dynamic> json) {
-    return PayableItem(
-      payId: json['payId'] ?? 0,
-      userId: json['userId'] ?? 0,
-      payableAmount: (json['payableAmount'] ?? 0).toDouble(),
-      payablePerson: json['payablePerson'] ?? '',
-      payablePersonMobile: json['payablePersonMobile'] ?? '',
-    );
+      profileModel(profileModelFromJson(jsonEncode(response.body)));
+      _mapPersonalInfo();
+      _mapAddressInfo();
+      _mapParentInfo();
+      _mapSpouseInfo();
+      _mapChildrenInfo();
+    } catch (e, s) {
+      log("Error: $e\nStacktrace: $s");
+    }
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      "payId": payId,
-      "userId": userId,
-      "payableAmount": payableAmount,
-      "payablePerson": payablePerson,
-      "payablePersonMobile": payablePersonMobile,
-    };
+  getProfilePageData() async {
+    try {
+      status(RxStatus.loading());
+      await getMaritalList();
+      await getProfessionList();
+      await getCountryList();
+      await getGenderList();
+      await getBankList();
+      await getWealthList();
+      await getProfile();
+      status(RxStatus.success());
+    } catch (e) {
+      status(RxStatus.error());
+    }
+  }
+
+  void _mapPersonalInfo() {
+    final user = profileModel.value.userProfile!;
+
+    personalForm.value.firstName.text = user.firstName ?? '';
+    personalForm.value.lastName.text = user.lastName ?? '';
+    personalForm.value.district.text = user.district ?? '';
+    personalForm.value.nid.text = user.nid?.toString() ?? '';
+    personalForm.value.tin.text = user.tin ?? '';
+    personalForm.value.multiCitizenPassport.text =
+        user.multipleCitizenPassportNo ?? '';
+
+    personalForm.value.selectedMarried.value = maritalList
+        .firstWhereOrNull((e) => e.maritalId == user.maritalStatusId);
+
+    personalForm.value.selectedProfession.value = professionList
+        .firstWhereOrNull((e) => e.professionId == user.professionId);
+
+    personalForm.value.selectedCountry.value =
+        countryList.firstWhereOrNull((e) => e.countryId == user.countryCode);
+
+    personalForm.value.selectedGender.value = genderList
+        .firstWhereOrNull((e) => e.genderId.toString() == user.gender);
+
+    personalForm.value.selectedMultiCitizenCountry.value = countryList
+        .firstWhereOrNull((e) => e.countryId == user.multipleCitizenCode);
+
+    personalForm.value.nidUrl = user.nidPaperUrl;
+    personalForm.value.tinUrl = user.tinPaperUrl;
+    personalForm.value.multiCitizenUrl = user.passportPaperUrl;
+  }
+
+  void _mapAddressInfo() {
+    final user = profileModel.value.userProfile!;
+
+    if (user.presentAddress != null) {
+      final parts = user.presentAddress!.split(',');
+      addressForm.value.presentZipCode.text = parts.elementAtOrNull(0) ?? '';
+      addressForm.value.presentVillage.text = parts.elementAtOrNull(1) ?? '';
+      addressForm.value.presentRoad.text = parts.elementAtOrNull(2) ?? '';
+    }
+
+    addressForm.value.overseasVillage.text = user.overseasVillage ?? '';
+
+    addressForm.value.selectedOverseasCountry.value = countryList
+        .firstWhereOrNull((e) => e.countryId == user.overseasCountryCode);
+  }
+
+  void _mapParentInfo() {
+    final parent = profileModel.value.parentInfo;
+    if (parent == null) return;
+
+    // Father
+    parentForm.value.fatherName.text = parent.fatherName ?? '';
+    parentForm.value.fatherPassOrNID.text = parent.fatherNid?.toString() ?? '';
+    parentForm.value.isFatherAlive.value = parent.fatherExisting ?? false;
+    parentForm.value.fatherNidUrl = parent.fatherNidUrl;
+
+    parentForm.value.selectedFatherProfession.value = professionList
+        .firstWhereOrNull((e) => e.professionId == parent.fatherProfessionId);
+
+    parentForm.value.selectedFatherCountry.value = countryList
+        .firstWhereOrNull((e) => e.countryId == parent.fatherNationalityId);
+
+    // Mother
+    parentForm.value.motherName.text = parent.motherName ?? '';
+    parentForm.value.motherPassOrNID.text = parent.motherNid?.toString() ?? '';
+    parentForm.value.isMotherAlive.value = parent.motherExisting ?? false;
+    parentForm.value.motherNidUrl = parent.motherNidUrl;
+
+    parentForm.value.selectedMotherProfession.value = professionList
+        .firstWhereOrNull((e) => e.professionId == parent.motherProfessionId);
+
+    parentForm.value.selectedMotherCountry.value = countryList
+        .firstWhereOrNull((e) => e.countryId == parent.motherNationalityId);
+  }
+
+  void _mapSpouseInfo() {
+    spouseList.clear();
+
+    final spouses = profileModel.value.spouseInfo;
+
+    if (spouses != null && spouses.isNotEmpty) {
+      for (final spouse in spouses) {
+        final form = SpouseForm();
+
+        /// Text fields
+        form.name.text = spouse.spouseName ?? '';
+        form.nid.text = spouse.nid ?? '';
+        form.passport.text = spouse.passport?.toString() ?? '';
+        form.mobile.text = spouse.mobile ?? '';
+        form.email.text = spouse.email ?? '';
+
+        /// Alive / Dead
+        form.isAlive.value = spouse.existing ?? true;
+
+        /// API file URLs
+        form.nidUrl = spouse.nidPaperUrl;
+        form.passportUrl = spouse.passportPaperUrl?.toString();
+
+        /// Profession
+        if (spouse.professionId != null) {
+          form.profession.value = professionList.firstWhereOrNull(
+            (p) => p.professionId == spouse.professionId,
+          );
+        }
+
+        /// Nationality
+        if (spouse.nationalityId != null) {
+          form.nationality.value = countryList.firstWhereOrNull(
+            (c) => c.countryId == spouse.nationalityId,
+          );
+        }
+
+        spouseList.add(form);
+      }
+    } else {
+      /// Always keep one empty spouse form
+      spouseList.add(SpouseForm());
+    }
+  }
+
+  void _mapChildrenInfo() {
+    childrenList.clear();
+
+    final children = profileModel.value.childInfo;
+
+    if (children != null && children.isNotEmpty) {
+      for (final child in children) {
+        final form = ChildForm();
+
+        /// Text fields
+        form.name.text = child.childName ?? '';
+        form.nid.text = child.nid ?? '';
+        form.mobile.text = child.mobile ?? '';
+        form.email.text = child.email ?? '';
+
+        /// DOB
+        if (child.dob != null) {
+          form.selectedDob.value = child.dob;
+        }
+
+        /// Status
+        form.isAlive.value = child.existing ?? true;
+
+        /// File URLs
+        form.nidUrl = child.nidPaperUrl;
+
+        /// Profession
+        if (child.professionId != null) {
+          form.profession.value = professionList.firstWhereOrNull(
+            (p) => p.professionId == child.professionId,
+          );
+        }
+
+        /// Nationality
+        if (child.nationalityId != null) {
+          form.nationality.value = countryList.firstWhereOrNull(
+            (c) => c.countryId == child.nationalityId,
+          );
+        }
+
+        /// Gender
+        if (child.genderId != null) {
+          form.gender.value = genderList.firstWhereOrNull(
+            (g) => g.genderId == child.genderId,
+          );
+        }
+
+        childrenList.add(form);
+      }
+    } else {
+      /// Always keep one empty child form
+      childrenList.add(ChildForm());
+    }
+  }
+
+  void addChild() {
+    childrenList.add(ChildForm());
+  }
+
+  void removeChild(int index) {
+    if (index >= 0 && index < childrenList.length) {
+      childrenList[index].dispose();
+      childrenList.removeAt(index);
+    }
+  }
+
+  void addSpouse() {
+    spouseList.add(SpouseForm());
+  }
+
+  void removeSpouse(int index) {
+    if (index >= 0 && index < spouseList.length) {
+      final item = spouseList[index];
+      item.dispose();
+      spouseList.removeAt(index);
+    }
+  }
+
+  @override
+  void onInit() async {
+    getProfilePageData();
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    personalForm.value.dispose();
+    addressForm.value.dispose();
+    parentForm.value.dispose();
+    for (final form in spouseList) {
+      form.dispose();
+    }
+    for (final form in childrenList) {
+      form.dispose();
+    }
+    super.onClose();
   }
 }

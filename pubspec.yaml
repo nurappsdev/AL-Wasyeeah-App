@@ -61,6 +61,9 @@ dependencies:
   connectivity_plus: ^5.0.2
   fluttertoast: ^8.2.12
   hijri: ^3.0.0
+  dropdown_search: ^6.0.2
+  file_picker: ^10.3.7
+  pool: ^1.5.2
 
 
 dev_dependencies:

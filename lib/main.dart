@@ -1,4 +1,3 @@
-
 import 'package:al_wasyeah/view/screen/no_internet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +9,8 @@ import 'helpers/app_routes.dart';
 import 'themes/theme.dart';
 import 'utils/utils.dart';
 import 'view/screen/screen.dart';
-
+import 'package:flutter/material.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 // void main() {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   // Stripe.publishableKey = AppConstants.publishAbleKey;
@@ -46,17 +46,17 @@ import 'view/screen/screen.dart';
 //   }
 // }
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   Map<String, Map<String, String>> _languages = await di.init();
 
-
-  runApp(MyApp(
-    languages: _languages,
-  ));
+  runApp(
+    MyApp(
+      languages: _languages,
+    ),
+  );
 }
 
 // class MyApp extends StatelessWidget {
@@ -97,23 +97,22 @@ class MyApp extends StatelessWidget {
           splitScreenMode: true,
           builder: (_, child) {
             return GetMaterialApp(
-                title: "App Name",
-                debugShowCheckedModeBanner: false,
-                navigatorKey: Get.key,
-                theme: light(),
-                getPages: AppRoutes.routes,
-                initialRoute: AppRoutes.firstSplashScreen,
-                initialBinding: ControllerBindings(),
-                // theme: themeController.darkTheme ? dark(): light(),
-              
-                defaultTransition: Transition.topLevel,
-                locale: localizeController.locale,
-                translations: Messages(languages: languages),
-                fallbackLocale: Locale(AppConstants.languages[0].languageCode,
-                    AppConstants.languages[0].countryCode),
-                transitionDuration: const Duration(milliseconds: 500),
-              );
+              title: "App Name",
+              debugShowCheckedModeBanner: false,
+              navigatorKey: Get.key,
+              theme: light(),
+              getPages: AppRoutes.routes,
+              initialRoute: AppRoutes.firstSplashScreen,
+              initialBinding: ControllerBindings(),
+              // theme: themeController.darkTheme ? dark(): light(),
 
+              defaultTransition: Transition.topLevel,
+              locale: localizeController.locale,
+              translations: Messages(languages: languages),
+              fallbackLocale: Locale(AppConstants.languages[0].languageCode,
+                  AppConstants.languages[0].countryCode),
+              transitionDuration: const Duration(milliseconds: 500),
+            );
           });
     });
   }
