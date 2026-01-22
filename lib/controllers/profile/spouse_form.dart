@@ -15,6 +15,9 @@ class SpouseForm {
   final Rxn<ProfessionModel> profession = Rxn<ProfessionModel>();
   final Rxn<CountryModel> nationality = Rxn<CountryModel>();
 
+  // Date of Birth
+  final Rx<DateTime?> selectedDob = Rx<DateTime?>(null);
+
   // File Pickers
   final Rxn<PickedFileResult> selectedNidFile = Rxn<PickedFileResult>();
   final Rxn<PickedFileResult> selectedPassportFile = Rxn<PickedFileResult>();
