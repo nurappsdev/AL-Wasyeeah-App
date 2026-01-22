@@ -283,75 +283,77 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                     // ================= Multi Citizenship =================
                     CustomText(text: "Multi Citizenship".tr),
                     SizedBox(height: 4.h),
-                    Obx(() => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomDropdown<CountryModel>(
-                              hint: "Select Country",
-                              items: controller.countryList,
-                              value: form.selectedMultiCitizenCountry.value,
-                              itemToString: (item) => item.country ?? "",
-                              onChanged: (val) =>
-                                  form.selectedMultiCitizenCountry.value = val,
-                            ),
-                            SizedBox(height: 16.h),
-                            CustomText(
-                              text: "NID/Passport No".tr,
-                              fontsize: 16.sp,
-                            ),
-                            SizedBox(height: 4.h),
-                            CustomTextFormField(
-                              controller: form.multiCitizenPassport,
-                              hint: "Passport No".tr,
-                            ),
-                            SizedBox(height: 16.h),
-                            CustomText(
-                              text: "NID/Passport Documents".tr,
-                              fontsize: 16.sp,
-                            ),
-                            SizedBox(height: 4.h),
-                            if (controller.profileModel.value.userProfile
-                                    ?.passportPaperUrl !=
-                                null)
-                              _buildFileRow(
-                                isDownloading: (controller.isDownloadingMap[
-                                            'userMultiCitizenOrPassport'] ??
-                                        false)
-                                    .obs,
-                                progress: (controller.downloadProgressMap[
-                                            'userMultiCitizenOrPassport'] ??
-                                        0.0)
-                                    .obs,
-                                pickedFile: Rxn(controller.pickedFileMap[
-                                    'userMultiCitizenOrPassport']),
-                                onPickFile: () => controller
-                                    .pickFile('userMultiCitizenOrPassport'),
-                                onDownload: () async {
-                                  final isComplete =
-                                      await controller.downloadFile(
-                                    urlPath: controller.profileModel.value
-                                        .userProfile?.passportPaperUrl,
-                                    filePrefix: 'MultiCitizen',
-                                    type: 'userMultiCitizenOrPassport',
+                    Obx(
+                      () => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomDropdown<CountryModel>(
+                            hint: "Select Country",
+                            items: controller.countryList,
+                            value: form.selectedMultiCitizenCountry.value,
+                            itemToString: (item) => item.country ?? "",
+                            onChanged: (val) =>
+                                form.selectedMultiCitizenCountry.value = val,
+                          ),
+                          SizedBox(height: 16.h),
+                          CustomText(
+                            text: "NID/Passport No".tr,
+                            fontsize: 16.sp,
+                          ),
+                          SizedBox(height: 4.h),
+                          CustomTextFormField(
+                            controller: form.multiCitizenPassport,
+                            hint: "Passport No".tr,
+                          ),
+                          SizedBox(height: 16.h),
+                          CustomText(
+                            text: "NID/Passport Documents".tr,
+                            fontsize: 16.sp,
+                          ),
+                          SizedBox(height: 4.h),
+                          if (controller.profileModel.value.userProfile
+                                  ?.passportPaperUrl !=
+                              null)
+                            _buildFileRow(
+                              isDownloading: (controller.isDownloadingMap[
+                                          'userMultiCitizenOrPassport'] ??
+                                      false)
+                                  .obs,
+                              progress: (controller.downloadProgressMap[
+                                          'userMultiCitizenOrPassport'] ??
+                                      0.0)
+                                  .obs,
+                              pickedFile: Rxn(controller
+                                  .pickedFileMap['userMultiCitizenOrPassport']),
+                              onPickFile: () => controller
+                                  .pickFile('userMultiCitizenOrPassport'),
+                              onDownload: () async {
+                                final isComplete =
+                                    await controller.downloadFile(
+                                  urlPath: controller.profileModel.value
+                                      .userProfile?.passportPaperUrl,
+                                  filePrefix: 'MultiCitizen',
+                                  type: 'userMultiCitizenOrPassport',
+                                );
+                                if (isComplete) {
+                                  Fluttertoast.showToast(
+                                    msg:
+                                        "MultiCitizen File downloaded successfully"
+                                            .tr,
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.TOP,
+                                    timeInSecForIosWeb: 2,
+                                    backgroundColor: AppColors.primaryColor,
+                                    textColor: AppColors.whiteColor,
                                   );
-                                  if (isComplete) {
-                                    Fluttertoast.showToast(
-                                      msg:
-                                          "MultiCitizen File downloaded successfully"
-                                              .tr,
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.TOP,
-                                      timeInSecForIosWeb: 2,
-                                      backgroundColor: AppColors.primaryColor,
-                                      textColor: AppColors.whiteColor,
-                                    );
-                                  }
-                                },
-                                fileUrl: controller.profileModel.value
-                                    .userProfile?.passportPaperUrl,
-                              ),
-                          ],
-                        )),
+                                }
+                              },
+                              fileUrl: controller.profileModel.value.userProfile
+                                  ?.passportPaperUrl,
+                            ),
+                        ],
+                      ),
+                    ),
 
                     SizedBox(height: 16.h),
                     // ================= Button =================
