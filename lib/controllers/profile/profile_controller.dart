@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:al_wasyeah/controllers/profile/sibling_form.dart';
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -47,6 +48,7 @@ class ProfileController extends GetxController {
 
   // Children List Management
   RxList<ChildForm> childrenList = <ChildForm>[].obs;
+  RxList<SiblingForm> siblingList = <SiblingForm>[].obs;
 
   final step1formKey = GlobalKey<FormState>();
   final step2formKey = GlobalKey<FormState>();
@@ -188,6 +190,7 @@ class ProfileController extends GetxController {
       _mapParentInfo();
       _mapSpouseInfo();
       _mapChildrenInfo();
+      _mapSiblingInfo();
     } catch (e, s) {
       log("Error: $e\nStacktrace: $s");
     }
@@ -408,6 +411,72 @@ class ProfileController extends GetxController {
     }
   }
 
+  void _mapSiblingInfo() {
+    siblingList.clear();
+
+    final siblings = profileModel.value.siblingInfo;
+
+    if (siblings != null && siblings.isNotEmpty) {
+      for (final sibling in siblings) {
+        final form = SiblingForm();
+
+        /// Text fields
+        form.name.text = sibling.siblingName ?? '';
+        form.nid.text = sibling.nid ?? '';
+        form.mobile.text = sibling.mobile ?? '';
+        form.email.text = sibling.email ?? '';
+
+        /// DOB
+        if (sibling.dob != null) {
+          form.selectedDob.value = sibling.dob;
+        }
+
+        /// Status
+        form.isAlive.value = sibling.existing ?? true;
+
+        /// File URLs
+        form.nidUrl = sibling.nidPaperUrl;
+
+        /// Profession
+        if (sibling.professionId != null) {
+          form.profession.value = professionList.firstWhereOrNull(
+            (p) => p.professionId == sibling.professionId,
+          );
+        }
+
+        /// Nationality
+        if (sibling.nationalityId != null) {
+          form.nationality.value = countryList.firstWhereOrNull(
+            (c) => c.countryId == sibling.nationalityId,
+          );
+        }
+
+        /// Gender
+        if (sibling.genderId != null) {
+          form.gender.value = genderList.firstWhereOrNull(
+            (g) => g.genderId == sibling.genderId,
+          );
+        }
+
+        siblingList.add(form);
+      }
+    } else {
+      /// Always keep one empty sibling form
+      siblingList.add(SiblingForm());
+    }
+  }
+
+  void addSibling() {
+    siblingList.add(SiblingForm());
+  }
+
+  void removeSibling(int index) {
+    if (index >= 0 && index < siblingList.length) {
+      siblingList[index].dispose();
+      siblingList.removeAt(index);
+    }
+  }
+
   @override
   void onInit() async {
     getProfilePageData();
@@ -423,6 +492,9 @@ class ProfileController extends GetxController {
       form.dispose();
     }
     for (final form in childrenList) {
+      form.dispose();
+    }
+    for (final form in siblingList) {
       form.dispose();
     }
     super.onClose();

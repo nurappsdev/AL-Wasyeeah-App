@@ -5,7 +5,7 @@ import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
 
-class ChildForm {
+class SiblingForm {
   final TextEditingController name = TextEditingController();
   final TextEditingController nid = TextEditingController();
   final TextEditingController mobile = TextEditingController();
