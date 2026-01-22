@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 import '../../widgets/file_choose_and_download_button.dart';
@@ -41,9 +42,10 @@ class FamilyInfoScreen extends StatelessWidget {
                       margin: EdgeInsets.only(bottom: 24.h),
                       padding: EdgeInsets.all(16.h),
                       decoration: BoxDecoration(
-                        color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.circular(24.r),
-                      ),
+                          color: AppColors.whiteColor,
+                          borderRadius: BorderRadius.circular(24.r),
+                          border: Border.all(
+                              color: Colors.black.withValues(alpha: 0.3))),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -87,6 +89,56 @@ class FamilyInfoScreen extends StatelessWidget {
                             value: form.nationality.value,
                             itemToString: (e) => e.country ?? "",
                             onChanged: (v) => form.nationality.value = v,
+                          ),
+                          SizedBox(height: 16.h),
+                          CustomText(
+                            text: "Spouse Date of Birth".tr,
+                            fontsize: 16.sp,
+                          ),
+                          SizedBox(height: 4.h),
+                          Obx(
+                            () => GestureDetector(
+                              onTap: () async {
+                                DateTime? selectedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate:
+                                      form.selectedDob.value ?? DateTime.now(),
+                                  firstDate: DateTime(1930),
+                                  lastDate: DateTime.now(),
+                                );
+                                if (selectedDate != null) {
+                                  form.selectedDob.value = selectedDate;
+                                }
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w, vertical: 16.h),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      form.selectedDob.value != null
+                                          ? DateFormat('yyyy-MM-dd')
+                                              .format(form.selectedDob.value!)
+                                          : "Select Date of Birth".tr,
+                                      style: TextStyle(
+                                        color: form.selectedDob.value != null
+                                            ? Colors.black
+                                            : Colors.black54,
+                                        fontSize: 16.sp,
+                                      ),
+                                    ),
+                                    Icon(Icons.calendar_month,
+                                        color: AppColors.primaryColor),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                           SizedBox(height: 16.h),
                           CustomText(
@@ -135,7 +187,7 @@ class FamilyInfoScreen extends StatelessWidget {
                                     msg:
                                         "Spouse (${form.name.text}) NID File downloaded successfully"
                                             .tr,
-                                    toastLength: Toast.LENGTH_SHORT,
+                                    toastLength: Toast.LENGTH_LONG,
                                     gravity: ToastGravity.TOP,
                                     timeInSecForIosWeb: 2,
                                     backgroundColor: AppColors.primaryColor,
@@ -215,10 +267,12 @@ class FamilyInfoScreen extends StatelessWidget {
                           SizedBox(
                             height: 16.h,
                           ),
-                          if (index != 0)
-                            Center(
-                              child: SizedBox(
-                                width: 0.5.sw,
+                          //   if (index != 0)
+                          Row(
+                            spacing: 4.w,
+                            //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
                                 child: ElevatedButton(
                                   onPressed: () =>
                                       controller.removeSpouse(index),
@@ -242,33 +296,50 @@ class FamilyInfoScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                            ),
+                              Expanded(
+                                  child: ElevatedButton(
+                                onPressed: () => controller.addSpouse(),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: AppColors.primaryColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4.r),
+                                  ),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.add,
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Expanded(
+                                      child: Text(
+                                        "Add More Spouse".tr,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ))
+                            ],
+                          ),
                         ],
                       ),
                     );
                   },
                 ),
-
-                // ===== Add More Button =====
-                Padding(
-                  padding: EdgeInsets.only(left: 50.w, right: 10, bottom: 10.h),
-                  child: CustomButton(
-                    title: "+ Add More spouse",
-                    titlecolor: AppColors.primaryColor,
-                    onpress: controller.addSpouse,
-                  ),
-                ),
               ],
             );
           }),
-
+          _sectionTitle("Children Information".tr),
+          // ===== Children Information =====
           Obx(
             () {
               return Column(
                 children: [
-                  // ===== Children Information =====
-                  _sectionTitle("Children Information".tr),
-
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -279,9 +350,10 @@ class FamilyInfoScreen extends StatelessWidget {
                         margin: EdgeInsets.only(bottom: 24.h),
                         padding: EdgeInsets.all(16.h),
                         decoration: BoxDecoration(
-                          color: AppColors.whiteColor,
-                          borderRadius: BorderRadius.circular(24.r),
-                        ),
+                            color: AppColors.whiteColor,
+                            borderRadius: BorderRadius.circular(24.r),
+                            border: Border.all(
+                                color: Colors.black.withValues(alpha: 0.3))),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -289,10 +361,25 @@ class FamilyInfoScreen extends StatelessWidget {
                               text: "Child Name".tr,
                               fontsize: 16.sp,
                             ),
-                            SizedBox(height: 10.h),
-                            CustomTextField(controller: form.name),
-                            SizedBox(height: 20.h),
+                            SizedBox(height: 4.h),
+                            CustomTextFormField(
+                              controller: form.name,
+                              hint: "Child Name".tr,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter name".tr;
+                                }
+                                return null;
+                              },
+                            ),
+
+                            SizedBox(height: 16.h),
                             // Gender
+                            CustomText(
+                              text: "Gender".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
                             CustomDropdown<GenderModel>(
                               hint: "Gender".tr,
                               items: controller.genderList,
@@ -300,7 +387,13 @@ class FamilyInfoScreen extends StatelessWidget {
                               itemToString: (e) => e.gender ?? "",
                               onChanged: (v) => form.gender.value = v,
                             ),
-                            SizedBox(height: 20.h),
+                            SizedBox(height: 16.h),
+                            // Profession
+                            CustomText(
+                              text: "Profession".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
                             CustomDropdown<ProfessionModel>(
                               hint: "Profession".tr,
                               items: controller.professionList,
@@ -308,7 +401,13 @@ class FamilyInfoScreen extends StatelessWidget {
                               itemToString: (e) => e.profession ?? "",
                               onChanged: (v) => form.profession.value = v,
                             ),
-                            SizedBox(height: 20.h),
+                            SizedBox(height: 16.h),
+                            // Nationality
+                            CustomText(
+                              text: "Nationality".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
                             CustomDropdown<CountryModel>(
                               hint: "Nationality".tr,
                               items: controller.countryList,
@@ -316,11 +415,75 @@ class FamilyInfoScreen extends StatelessWidget {
                               itemToString: (e) => e.country ?? "",
                               onChanged: (v) => form.nationality.value = v,
                             ),
-                            SizedBox(height: 20.h),
-                            CustomTextField(
-                              controller: form.nid,
-                              hintText: "NID/Passport No".tr,
+                            SizedBox(height: 16.h),
+                            // Date of Birth
+                            CustomText(
+                              text: "Child Date of Birth".tr,
+                              fontsize: 16.sp,
                             ),
+                            SizedBox(height: 4.h),
+                            Obx(
+                              () => GestureDetector(
+                                onTap: () async {
+                                  DateTime? selectedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: form.selectedDob.value ??
+                                        DateTime.now(),
+                                    firstDate: DateTime(1930),
+                                    lastDate: DateTime.now(),
+                                  );
+                                  if (selectedDate != null) {
+                                    form.selectedDob.value = selectedDate;
+                                  }
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 16.h),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(8.r),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        form.selectedDob.value != null
+                                            ? DateFormat('yyyy-MM-dd')
+                                                .format(form.selectedDob.value!)
+                                            : "Select Date of Birth".tr,
+                                        style: TextStyle(
+                                          color: form.selectedDob.value != null
+                                              ? Colors.black
+                                              : Colors.black54,
+                                          fontSize: 16.sp,
+                                        ),
+                                      ),
+                                      Icon(Icons.calendar_month,
+                                          color: AppColors.primaryColor),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 16.h),
+                            // NID/Passport No
+                            CustomText(
+                              text: "NID/Passport No".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
+                            CustomTextFormField(
+                              controller: form.nid,
+                              hint: "NID/Passport No".tr,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter NID/Passport No".tr;
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 16.h),
                             Obx(
                               () => FileChooseAndDownloadButton(
                                 pickedFile: Rxn(controller
@@ -358,13 +521,47 @@ class FamilyInfoScreen extends StatelessWidget {
                                 fileUrl: form.nidUrl,
                               ),
                             ),
-                            SizedBox(height: 20.h),
-                            CustomTextField(
-                                controller: form.mobile, hintText: "Mobile".tr),
                             SizedBox(height: 16.h),
-                            CustomTextField(
-                                controller: form.email, hintText: "Email".tr),
+                            // Mobile
+                            CustomText(
+                              text: "Mobile".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
+                            CustomTextFormField(
+                              controller: form.mobile,
+                              hint: "Mobile".tr,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter Mobile".tr;
+                                }
+                                return null;
+                              },
+                            ),
                             SizedBox(height: 16.h),
+                            // Email
+                            CustomText(
+                              text: "Email".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
+                            CustomTextFormField(
+                              controller: form.email,
+                              hint: "Email".tr,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter Email".tr;
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 16.h),
+
+                            CustomText(
+                              text: "Child Existence Status".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
                             Center(
                               child: ToggleButtons(
                                 isSelected: [
@@ -394,10 +591,12 @@ class FamilyInfoScreen extends StatelessWidget {
                             SizedBox(
                               height: 16.h,
                             ),
-                            if (index != 0)
-                              Center(
-                                child: SizedBox(
-                                  width: 0.5.sw,
+                            //  if (index != 0)
+                            Row(
+                              spacing: 4.w,
+                              //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Expanded(
                                   child: ElevatedButton(
                                     onPressed: () =>
                                         controller.removeChild(index),
@@ -423,22 +622,369 @@ class FamilyInfoScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              ),
+                                Expanded(
+                                    child: ElevatedButton(
+                                  onPressed: () => controller.addChild(),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: AppColors.primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4.r),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.add,
+                                      ),
+                                      SizedBox(width: 8.w),
+                                      Expanded(
+                                        child: Text(
+                                          "Add More Child".tr,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ))
+                              ],
+                            ),
                           ],
                         ),
                       );
                     },
                   ),
+                ],
+              );
+            },
+          ),
+          _sectionTitle("Sibling Information".tr),
+          // ===== Sibling Information =====
+          Obx(
+            () {
+              return Column(
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.siblingList.length,
+                    itemBuilder: (context, index) {
+                      final form = controller.siblingList[index];
+                      return Container(
+                        margin: EdgeInsets.only(bottom: 24.h),
+                        padding: EdgeInsets.all(16.h),
+                        decoration: BoxDecoration(
+                            color: AppColors.whiteColor,
+                            borderRadius: BorderRadius.circular(24.r),
+                            border: Border.all(
+                                color: Colors.black.withValues(alpha: 0.3))),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomText(
+                              text: "Sibling Name".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
+                            CustomTextFormField(
+                              controller: form.name,
+                              hint: "Sibling Name".tr,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter name".tr;
+                                }
+                                return null;
+                              },
+                            ),
 
-                  // ===== Add More Child Button =====
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: 50.w, right: 10, bottom: 10.h),
-                    child: CustomButton(
-                      title: "+ Add More Child".tr,
-                      titlecolor: AppColors.primaryColor,
-                      onpress: controller.addChild,
-                    ),
+                            SizedBox(height: 16.h),
+                            // Gender
+                            CustomText(
+                              text: "Gender".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
+                            CustomDropdown<GenderModel>(
+                              hint: "Gender".tr,
+                              items: controller.genderList,
+                              value: form.gender.value,
+                              itemToString: (e) => e.gender ?? "",
+                              onChanged: (v) => form.gender.value = v,
+                            ),
+                            SizedBox(height: 16.h),
+                            // Profession
+                            CustomText(
+                              text: "Profession".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
+                            CustomDropdown<ProfessionModel>(
+                              hint: "Profession".tr,
+                              items: controller.professionList,
+                              value: form.profession.value,
+                              itemToString: (e) => e.profession ?? "",
+                              onChanged: (v) => form.profession.value = v,
+                            ),
+                            SizedBox(height: 16.h),
+                            // Nationality
+                            CustomText(
+                              text: "Nationality".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
+                            CustomDropdown<CountryModel>(
+                              hint: "Nationality".tr,
+                              items: controller.countryList,
+                              value: form.nationality.value,
+                              itemToString: (e) => e.country ?? "",
+                              onChanged: (v) => form.nationality.value = v,
+                            ),
+                            SizedBox(height: 16.h),
+                            // Date of Birth
+                            CustomText(
+                              text: "Sibling Date of Birth".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
+                            Obx(
+                              () => GestureDetector(
+                                onTap: () async {
+                                  DateTime? selectedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: form.selectedDob.value ??
+                                        DateTime.now(),
+                                    firstDate: DateTime(1930),
+                                    lastDate: DateTime.now(),
+                                  );
+                                  if (selectedDate != null) {
+                                    form.selectedDob.value = selectedDate;
+                                  }
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.w, vertical: 16.h),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(8.r),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        form.selectedDob.value != null
+                                            ? DateFormat('yyyy-MM-dd')
+                                                .format(form.selectedDob.value!)
+                                            : "Select Date of Birth".tr,
+                                        style: TextStyle(
+                                          color: form.selectedDob.value != null
+                                              ? Colors.black
+                                              : Colors.black54,
+                                          fontSize: 16.sp,
+                                        ),
+                                      ),
+                                      Icon(Icons.calendar_month,
+                                          color: AppColors.primaryColor),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 16.h),
+                            // NID/Passport No
+                            CustomText(
+                              text: "NID/Passport No".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
+                            CustomTextFormField(
+                              controller: form.nid,
+                              hint: "NID/Passport No".tr,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter NID/Passport No".tr;
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 16.h),
+                            Obx(
+                              () => FileChooseAndDownloadButton(
+                                pickedFile: Rxn(controller.pickedFileMap[
+                                    'siblingNidOrPassport$index']),
+                                isDownloading: (controller.isDownloadingMap[
+                                            'siblingNidOrPassport$index'] ??
+                                        false)
+                                    .obs,
+                                progress: (controller.downloadProgressMap[
+                                            'siblingNidOrPassport$index'] ??
+                                        0.0)
+                                    .obs,
+                                onPickFile: () => controller
+                                    .pickFile('siblingNidOrPassport$index'),
+                                onDownload: () async {
+                                  bool isComplete =
+                                      await controller.downloadFile(
+                                    urlPath: form.nidUrl,
+                                    filePrefix: "Sibling",
+                                    type: 'siblingNidOrPassport$index',
+                                  );
+                                  if (isComplete) {
+                                    Fluttertoast.showToast(
+                                      msg:
+                                          "Sibling (${form.name.text}) NID File downloaded successfully"
+                                              .tr,
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.TOP,
+                                      timeInSecForIosWeb: 2,
+                                      backgroundColor: AppColors.primaryColor,
+                                      textColor: AppColors.whiteColor,
+                                    );
+                                  }
+                                },
+                                fileUrl: form.nidUrl,
+                              ),
+                            ),
+                            SizedBox(height: 16.h),
+                            // Mobile
+                            CustomText(
+                              text: "Mobile".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
+                            CustomTextFormField(
+                              controller: form.mobile,
+                              hint: "Mobile".tr,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter Mobile".tr;
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 16.h),
+                            // Email
+                            CustomText(
+                              text: "Email".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
+                            CustomTextFormField(
+                              controller: form.email,
+                              hint: "Email".tr,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please enter Email".tr;
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: 16.h),
+
+                            CustomText(
+                              text: "Sibling Existence Status".tr,
+                              fontsize: 16.sp,
+                            ),
+                            SizedBox(height: 4.h),
+                            Center(
+                              child: ToggleButtons(
+                                isSelected: [
+                                  form.isAlive.value,
+                                  !form.isAlive.value
+                                ],
+                                onPressed: (i) => form.isAlive.value = i == 0,
+                                borderRadius: BorderRadius.circular(8),
+                                fillColor: form.isAlive.value
+                                    ? Colors.green
+                                    : Colors.red,
+                                selectedColor: Colors.white,
+                                children: const [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 40),
+                                    child: Text("Alive"),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 40),
+                                    child: Text("Dead"),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 16.h,
+                            ),
+                            //  if (index != 0)
+                            Row(
+                              spacing: 4.w,
+                              //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                    onPressed: () =>
+                                        controller.removeSibling(index),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.red,
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(4.r),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.delete_forever,
+                                            color: Colors.white),
+                                        SizedBox(width: 8.w),
+                                        Text("Remove".tr)
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                    child: ElevatedButton(
+                                  onPressed: () => controller.addSibling(),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: AppColors.primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4.r),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.add,
+                                      ),
+                                      SizedBox(width: 8.w),
+                                      Expanded(
+                                        child: Text(
+                                          "Add More Sibling".tr,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ))
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ],
               );
@@ -452,7 +998,6 @@ class FamilyInfoScreen extends StatelessWidget {
   Widget _sectionTitle(String title) {
     return Column(
       children: [
-        SizedBox(height: 16.h),
         Container(
           height: 48.h,
           alignment: Alignment.center,
