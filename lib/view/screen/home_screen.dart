@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     print("magrib ${userController.getSalatTimeResponseModel.value?.maghrib}");
-    userController.getUserProfileData();
+
     return ConnectivityWrapper(
       child: Scaffold(
         appBar: PreferredSize(
@@ -136,16 +136,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         radius: 18, // Radius of the CircleAvatar
                         backgroundImage: AssetImage(AppImages.profileIcon),
                         backgroundColor:
-                            Colors.grey[200], // Optional background color
+                        Colors.grey[200], // Optional background color
                       )
-                      // CustomNetworkImage(
-                      //   boxShape: BoxShape.circle,
-                      //   imageUrl: AppImages.profileImage,
-                      //   height: 40,
-                      //   width: 40,
-                      //   boxFit: BoxFit.contain,
-                      // ),
-                      ),
+                    // CustomNetworkImage(
+                    //   boxShape: BoxShape.circle,
+                    //   imageUrl: AppImages.profileImage,
+                    //   height: 40,
+                    //   width: 40,
+                    //   boxFit: BoxFit.contain,
+                    // ),
+                  ),
                   SizedBox(width: 8.h), // Space between the image and text
                   // Column(
                   //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,7 +169,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   //     ),
                   //   ],
                   // ),
-
                 ],
               ),
             ),
@@ -200,62 +199,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-=======
-                ),
-                SizedBox(width: 8.h), // Space between the image and text
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Obx(
-                          () => userController.isLoadingUserProfile.value
-                          ? const CustomLoader()
-                          : Flexible(
-                        child: CustomText(
-                          text: userController.userProfile.value?.firstName ?? "N/A",
-                          fontsize: 16.sp,
-                          maxline: 1,
-                          textOverflow:  TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
-                    CustomText(
-                      text: "Welcome back!".tr,
-                      fontsize: 14.sp,
-                    ),
-                  ],
-                )
-
-
-              ],
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Stack(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.notifications_none_sharp),
-                    onPressed: () {
-                      Get.toNamed(AppRoutes.notificationsScreen,preventDuplicates: false);
-                      // Handle notification click
-                    },
-                  ),
-                  Positioned(
-                    right: 14,
-                    top: 10,
-                    child: Container(
-                      height: 10,
-                      width: 10,
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-                ],
-
               ),
             ],
           ),
@@ -324,11 +267,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
                                 border:
-                                    Border.all(color: AppColors.primaryColor),
+                                Border.all(color: AppColors.primaryColor),
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                MainAxisAlignment.spaceAround,
                                 children: [
                                   SvgPicture.asset(
                                     AppIcons.witness,
@@ -363,11 +306,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
                                 border:
-                                    Border.all(color: AppColors.primaryColor),
+                                Border.all(color: AppColors.primaryColor),
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                MainAxisAlignment.spaceAround,
                                 children: [
                                   SvgPicture.asset(
                                     AppIcons.nominee,
@@ -435,11 +378,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 200.h,
                           child: GridView.builder(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            const EdgeInsets.symmetric(horizontal: 16.0),
                             scrollDirection: Axis.horizontal,
                             itemCount: 2,
                             gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1,
                               mainAxisSpacing: 16.0,
                               childAspectRatio: 0.8,
@@ -453,7 +396,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
                                           height: 20,
@@ -462,7 +405,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       SizedBox(height: 8.h),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
+                                        MainAxisAlignment.spaceAround,
                                         children: [
                                           Container(
                                               height: 80.h,
@@ -471,17 +414,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Column(
                                             children: List.generate(
                                                 4,
-                                                (index) => Padding(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 4.0),
-                                                      child: Container(
-                                                          height: 20,
-                                                          width:
-                                                              60 + index * 10,
-                                                          color: Colors
-                                                              .grey.shade300),
-                                                    )),
+                                                    (index) => Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 4.0),
+                                                  child: Container(
+                                                      height: 20,
+                                                      width:
+                                                      60 + index * 10,
+                                                      color: Colors
+                                                          .grey.shade300),
+                                                )),
                                           ),
                                         ],
                                       ),
@@ -502,7 +445,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           scrollDirection: Axis.horizontal,
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 1,
                             mainAxisSpacing: 16.0,
                             childAspectRatio: 0.8,
@@ -526,7 +469,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       isCurrent
@@ -543,7 +486,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     SizedBox(height: 8.h),
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceAround,
                                       children: [
                                         Image.asset(AppImages.mosjidIcon,
                                             height: 80.h, width: 80),
@@ -571,7 +514,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Switch(
                                               value: isCurrent,
                                               activeColor:
-                                                  AppColors.primaryColor,
+                                              AppColors.primaryColor,
                                               onChanged: (value) {
                                                 // handle toggle
                                               },
