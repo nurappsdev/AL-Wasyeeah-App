@@ -184,10 +184,10 @@ class ProfileController extends GetxController {
     } catch (e) {}
   }
 
-  Future<void> getBranchList() async {
+  Future<void> getBranchList(String bankId) async {
     try {
       var response = await ApiClient.getData(
-        ApiConstants.branchList,
+        ApiConstants.branchList + "?bankId=$bankId",
       );
       branchList(branchListModelFromJson(jsonEncode(response.body)));
     } catch (e) {}
@@ -232,7 +232,6 @@ class ProfileController extends GetxController {
       await getCountryList();
       await getGenderList();
       await getBankList();
-      await getBranchList();
       await getWealthList();
       await getProfile();
       status(RxStatus.success());
@@ -507,7 +506,7 @@ class ProfileController extends GetxController {
   }
 
   // Bank Info Management
-  void _mapBankInfo() {
+  void _mapBankInfo() async {
     bankListForm.clear();
     final banks = profileModel.value.bankInfo;
     if (banks != null && banks.isNotEmpty) {
@@ -515,6 +514,7 @@ class ProfileController extends GetxController {
         final form = BankForm();
         form.bank.value =
             bankList.firstWhereOrNull((e) => e.bankId == bank.bankId);
+        await getBranchList(bank.bankId.toString());
 
         if (bank.branchId != null) {
           form.branch.value = branchList.firstWhereOrNull(
