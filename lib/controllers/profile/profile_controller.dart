@@ -53,6 +53,7 @@ class ProfileController extends GetxController {
   final step1formKey = GlobalKey<FormState>();
   final step2formKey = GlobalKey<FormState>();
   final step3formKey = GlobalKey<FormState>();
+  final step4formKey = GlobalKey<FormState>();
 
   void onStepTapped(int step) {
     currentStep(step);
