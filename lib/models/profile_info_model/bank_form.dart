@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class BankForm {
   final Rxn<BankModel> bank = Rxn<BankModel>();
   final Rxn<BranchModel> branch = Rxn<BranchModel>();
+  final RxList<BranchModel> branchList = <BranchModel>[].obs;
 
   final TextEditingController accountName = TextEditingController();
   final TextEditingController accountBalance = TextEditingController();

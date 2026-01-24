@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:al_wasyeah/controllers/profile/sibling_form.dart';
+import 'package:al_wasyeah/models/profile_info_model/document_type_form.dart';
+import 'package:al_wasyeah/models/profile_info_model/sibling_form.dart';
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/models/profile_info_model/branch_model.dart';
 import 'package:flutter/material.dart';
@@ -16,16 +17,16 @@ import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
 import 'package:get/get.dart';
 
 import '../../services/services.dart';
-import 'package:al_wasyeah/controllers/profile/account_payable_form.dart';
-import 'package:al_wasyeah/controllers/profile/account_receivable_form.dart';
-import 'package:al_wasyeah/controllers/profile/bank_form.dart';
-import 'package:al_wasyeah/controllers/profile/wealth_form.dart';
+import 'package:al_wasyeah/models/profile_info_model/account_payable_form.dart';
+import 'package:al_wasyeah/models/profile_info_model/account_receivable_form.dart';
+import 'package:al_wasyeah/models/profile_info_model/bank_form.dart';
+import 'package:al_wasyeah/models/profile_info_model/wealth_form.dart';
 import 'package:al_wasyeah/helpers/file_download_util.dart';
-import 'address_form.dart';
-import 'child_form.dart';
-import 'parent_form.dart';
-import 'personal_form.dart';
-import 'spouse_form.dart';
+import '../../models/profile_info_model/address_form.dart';
+import '../../models/profile_info_model/child_form.dart';
+import '../../models/profile_info_model/parent_form.dart';
+import '../../models/profile_info_model/personal_form.dart';
+import '../../models/profile_info_model/spouse_form.dart';
 
 class ProfileController extends GetxController {
   final PageController pageController = PageController();
@@ -36,7 +37,7 @@ class ProfileController extends GetxController {
   RxList<GenderModel> genderList = <GenderModel>[].obs;
   RxList<CountryModel> countryList = <CountryModel>[].obs;
   RxList<BankModel> bankList = <BankModel>[].obs;
-  RxList<BranchModel> branchList = <BranchModel>[].obs;
+
   RxList<WealthModel> wealthList = <WealthModel>[].obs;
   Rx<ProfileModel> profileModel = ProfileModel().obs;
   Rx<PersonalForm> personalForm = PersonalForm().obs;
@@ -59,6 +60,7 @@ class ProfileController extends GetxController {
   // Step 5 Lists
   RxList<BankForm> bankListForm = <BankForm>[].obs;
   RxList<WealthForm> wealthListForm = <WealthForm>[].obs;
+  RxList<DocumentTypeForm> documentTypeListForm = <DocumentTypeForm>[].obs;
   RxList<AccountReceivableForm> receivableListForm =
       <AccountReceivableForm>[].obs;
   RxList<AccountPayableForm> payableListForm = <AccountPayableForm>[].obs;
@@ -184,13 +186,15 @@ class ProfileController extends GetxController {
     } catch (e) {}
   }
 
-  Future<void> getBranchList(String bankId) async {
+  Future<List<BranchModel>> getBranchList(String bankId) async {
     try {
       var response = await ApiClient.getData(
         ApiConstants.branchList + "?bankId=$bankId",
       );
-      branchList(branchListModelFromJson(jsonEncode(response.body)));
-    } catch (e) {}
+      return branchListModelFromJson(jsonEncode(response.body));
+    } catch (e) {
+      return [];
+    }
   }
 
   Future<void> getWealthList() async {
@@ -200,6 +204,17 @@ class ProfileController extends GetxController {
       );
       wealthList(wealthListModelFromJson(jsonEncode(response.body)));
     } catch (e) {}
+  }
+
+  Future<List<DocumentTypeForm>> getDocumentTypeList(String wealthId) async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.documentTypeList + "?lang=en&wealthId=$wealthId",
+      );
+      return documentTypeListFromJson(jsonEncode(response.body));
+    } catch (e) {
+      return [];
+    }
   }
 
   Future<void> getProfile() async {
@@ -242,7 +257,6 @@ class ProfileController extends GetxController {
 
   void _mapPersonalInfo() {
     final user = profileModel.value.userProfile!;
-
     personalForm.value.firstName.text = user.firstName ?? '';
     personalForm.value.lastName.text = user.lastName ?? '';
     personalForm.value.district.text = user.district ?? '';
@@ -514,10 +528,11 @@ class ProfileController extends GetxController {
         final form = BankForm();
         form.bank.value =
             bankList.firstWhereOrNull((e) => e.bankId == bank.bankId);
-        await getBranchList(bank.bankId.toString());
+        var branches = await getBranchList(bank.bankId.toString());
+        form.branchList.value = branches;
 
         if (bank.branchId != null) {
-          form.branch.value = branchList.firstWhereOrNull(
+          form.branch.value = branches.firstWhereOrNull(
             (b) => b.branchId == bank.branchId,
           );
         }
@@ -542,8 +557,19 @@ class ProfileController extends GetxController {
     }
   }
 
+  void onBankChanged(BankForm form, BankModel? bank) async {
+    form.bank.value = bank;
+    form.branch.value = null;
+    form.branchList.clear();
+
+    if (bank != null && bank.bankId != null) {
+      var branches = await getBranchList(bank.bankId.toString());
+      form.branchList.value = branches;
+    }
+  }
+
   // Wealth Info Management
-  void _mapWealthInfo() {
+  void _mapWealthInfo() async {
     wealthListForm.clear();
     final wealths = profileModel.value.wealthInfo;
 
@@ -552,15 +578,17 @@ class ProfileController extends GetxController {
         final form = WealthForm();
         form.wealth.value =
             wealthList.firstWhereOrNull((e) => e.wealthId == wealth.wealthId);
-        // Note: documentTypeId is int in model but we're mapping to text for now based on form requirement
-        // Assuming documentType refers to name/description if not ID
-        // The existing model has documentTypeId, form requested 'Document Type' field.
-        // There is no documentTypeList API currently used or requested so using text field as placeholder or map if needed.
-        // Since no list, maybe just leave text empty or map ID if user wants that.
-        // User requested "Document Type" field. Using text field for now as per form class creation.
-        // Update: wealth model has documentTypeId. No textual description in model.
-        // Leaving text field empty for manual input or handling it differently if more info available.
-        // form.documentType.text = wealth.documentTypeId?.toString() ?? ''; // Or fetch name if available
+
+        if (wealth.wealthId != null) {
+          var docTypes = await getDocumentTypeList(wealth.wealthId.toString());
+          form.documentTypeList.value = docTypes;
+
+          if (wealth.documentTypeId != null) {
+            form.selectedDocumentType.value = docTypes.firstWhereOrNull(
+              (d) => d.documentTypeId == wealth.documentTypeId,
+            );
+          }
+        }
 
         form.landArea.text =
             wealth.amount ?? ''; // Assuming 'amount' maps to 'Land Area'
@@ -583,6 +611,17 @@ class ProfileController extends GetxController {
     if (index >= 0 && index < wealthListForm.length) {
       wealthListForm[index].dispose();
       wealthListForm.removeAt(index);
+    }
+  }
+
+  void onWealthChanged(WealthForm form, WealthModel? wealth) async {
+    form.wealth.value = wealth;
+    form.selectedDocumentType.value = null;
+    form.documentTypeList.clear();
+
+    if (wealth != null && wealth.wealthId != null) {
+      var docTypes = await getDocumentTypeList(wealth.wealthId.toString());
+      form.documentTypeList.value = docTypes;
     }
   }
 

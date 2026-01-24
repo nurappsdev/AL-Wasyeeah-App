@@ -8,6 +8,7 @@ import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
+import 'package:al_wasyeah/models/profile_info_model/document_type_form.dart';
 
 class ProfileSetupStepFiveScreen extends StatelessWidget {
   ProfileSetupStepFiveScreen({super.key});
@@ -40,7 +41,7 @@ class ProfileSetupStepFiveScreen extends StatelessWidget {
 
             SizedBox(height: 20.h),
             CustomButtonCommon(
-              title: "Next".tr,
+              title: "Finish".tr,
               onpress: () {
                 if (controller.step5formKey.currentState!.validate()) {
                   // controller.onStepTapped(controller.currentStep.value + 1);
@@ -114,14 +115,14 @@ class _BankWidget extends StatelessWidget {
                       items: controller.bankList,
                       value: form.bank.value,
                       itemToString: (e) => e.bankEn ?? "",
-                      onChanged: (v) => form.bank.value = v,
+                      onChanged: (v) => controller.onBankChanged(form, v),
                     ),
                     SizedBox(height: 16.h),
                     CustomText(text: "Branch".tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomDropdown<BranchModel>(
                       hint: "Select Branch".tr,
-                      items: controller.branchList,
+                      items: form.branchList,
                       value: form.branch.value,
                       itemToString: (e) => e.branchNameEn ?? "",
                       onChanged: (v) => form.branch.value = v,
@@ -239,17 +240,17 @@ class _WealthWidget extends StatelessWidget {
                       items: controller.wealthList,
                       value: form.wealth.value,
                       itemToString: (e) => e.wealth ?? "",
-                      onChanged: (v) => form.wealth.value = v,
+                      onChanged: (v) => controller.onWealthChanged(form, v),
                     ),
                     SizedBox(height: 16.h),
                     CustomText(text: "Document Type".tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
-                    CustomTextFormField(
-                      controller: form.documentType,
-                      hint: "Document Type".tr,
-                      validator: (value) => value!.isEmpty
-                          ? "Please enter document type".tr
-                          : null,
+                    CustomDropdown<DocumentTypeForm>(
+                      hint: "Select Document Type".tr,
+                      items: form.documentTypeList,
+                      value: form.selectedDocumentType.value,
+                      itemToString: (e) => e.documentType ?? "",
+                      onChanged: (v) => form.selectedDocumentType.value = v,
                     ),
                     SizedBox(height: 16.h),
                     CustomText(

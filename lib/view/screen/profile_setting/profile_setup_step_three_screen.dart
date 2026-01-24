@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:al_wasyeah/controllers/profile/parent_form.dart';
+import 'package:al_wasyeah/models/profile_info_model/parent_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
 import 'package:al_wasyeah/view/widgets/file_choose_and_download_button.dart';
 import 'package:flutter/material.dart';
