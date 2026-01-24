@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:al_wasyeah/controllers/profile/sibling_form.dart';
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
+import 'package:al_wasyeah/models/profile_info_model/branch_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
@@ -15,12 +16,16 @@ import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
 import 'package:get/get.dart';
 
 import '../../services/services.dart';
+import 'package:al_wasyeah/controllers/profile/account_payable_form.dart';
+import 'package:al_wasyeah/controllers/profile/account_receivable_form.dart';
+import 'package:al_wasyeah/controllers/profile/bank_form.dart';
+import 'package:al_wasyeah/controllers/profile/wealth_form.dart';
 import 'package:al_wasyeah/helpers/file_download_util.dart';
-import 'spouse_form.dart';
-import 'child_form.dart';
-import 'personal_form.dart';
 import 'address_form.dart';
+import 'child_form.dart';
 import 'parent_form.dart';
+import 'personal_form.dart';
+import 'spouse_form.dart';
 
 class ProfileController extends GetxController {
   final PageController pageController = PageController();
@@ -31,6 +36,7 @@ class ProfileController extends GetxController {
   RxList<GenderModel> genderList = <GenderModel>[].obs;
   RxList<CountryModel> countryList = <CountryModel>[].obs;
   RxList<BankModel> bankList = <BankModel>[].obs;
+  RxList<BranchModel> branchList = <BranchModel>[].obs;
   RxList<WealthModel> wealthList = <WealthModel>[].obs;
   Rx<ProfileModel> profileModel = ProfileModel().obs;
   Rx<PersonalForm> personalForm = PersonalForm().obs;
@@ -50,10 +56,18 @@ class ProfileController extends GetxController {
   RxList<ChildForm> childrenList = <ChildForm>[].obs;
   RxList<SiblingForm> siblingList = <SiblingForm>[].obs;
 
+  // Step 5 Lists
+  RxList<BankForm> bankListForm = <BankForm>[].obs;
+  RxList<WealthForm> wealthListForm = <WealthForm>[].obs;
+  RxList<AccountReceivableForm> receivableListForm =
+      <AccountReceivableForm>[].obs;
+  RxList<AccountPayableForm> payableListForm = <AccountPayableForm>[].obs;
+
   final step1formKey = GlobalKey<FormState>();
   final step2formKey = GlobalKey<FormState>();
   final step3formKey = GlobalKey<FormState>();
   final step4formKey = GlobalKey<FormState>();
+  final step5formKey = GlobalKey<FormState>();
 
   void onStepTapped(int step) {
     currentStep(step);
@@ -170,6 +184,15 @@ class ProfileController extends GetxController {
     } catch (e) {}
   }
 
+  Future<void> getBranchList() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.branchList,
+      );
+      branchList(branchListModelFromJson(jsonEncode(response.body)));
+    } catch (e) {}
+  }
+
   Future<void> getWealthList() async {
     try {
       var response = await ApiClient.getData(
@@ -192,6 +215,10 @@ class ProfileController extends GetxController {
       _mapSpouseInfo();
       _mapChildrenInfo();
       _mapSiblingInfo();
+      _mapBankInfo();
+      _mapWealthInfo();
+      _mapReceivableInfo();
+      _mapPayableInfo();
     } catch (e, s) {
       log("Error: $e\nStacktrace: $s");
     }
@@ -205,6 +232,7 @@ class ProfileController extends GetxController {
       await getCountryList();
       await getGenderList();
       await getBankList();
+      await getBranchList();
       await getWealthList();
       await getProfile();
       status(RxStatus.success());
@@ -478,6 +506,144 @@ class ProfileController extends GetxController {
     }
   }
 
+  // Bank Info Management
+  void _mapBankInfo() {
+    bankListForm.clear();
+    final banks = profileModel.value.bankInfo;
+    if (banks != null && banks.isNotEmpty) {
+      for (final bank in banks) {
+        final form = BankForm();
+        form.bank.value =
+            bankList.firstWhereOrNull((e) => e.bankId == bank.bankId);
+
+        if (bank.branchId != null) {
+          form.branch.value = branchList.firstWhereOrNull(
+            (b) => b.branchId == bank.branchId,
+          );
+        }
+
+        form.accountName.text = bank.bankAccNo ?? '';
+        form.accountBalance.text = bank.accBalance?.toString() ?? '';
+        bankListForm.add(form);
+      }
+    } else {
+      bankListForm.add(BankForm());
+    }
+  }
+
+  void addBank() {
+    bankListForm.add(BankForm());
+  }
+
+  void removeBank(int index) {
+    if (index >= 0 && index < bankListForm.length) {
+      bankListForm[index].dispose();
+      bankListForm.removeAt(index);
+    }
+  }
+
+  // Wealth Info Management
+  void _mapWealthInfo() {
+    wealthListForm.clear();
+    final wealths = profileModel.value.wealthInfo;
+
+    if (wealths != null && wealths.isNotEmpty) {
+      for (final wealth in wealths) {
+        final form = WealthForm();
+        form.wealth.value =
+            wealthList.firstWhereOrNull((e) => e.wealthId == wealth.wealthId);
+        // Note: documentTypeId is int in model but we're mapping to text for now based on form requirement
+        // Assuming documentType refers to name/description if not ID
+        // The existing model has documentTypeId, form requested 'Document Type' field.
+        // There is no documentTypeList API currently used or requested so using text field as placeholder or map if needed.
+        // Since no list, maybe just leave text empty or map ID if user wants that.
+        // User requested "Document Type" field. Using text field for now as per form class creation.
+        // Update: wealth model has documentTypeId. No textual description in model.
+        // Leaving text field empty for manual input or handling it differently if more info available.
+        // form.documentType.text = wealth.documentTypeId?.toString() ?? ''; // Or fetch name if available
+
+        form.landArea.text =
+            wealth.amount ?? ''; // Assuming 'amount' maps to 'Land Area'
+        form.location.text = wealth.location ?? '';
+        form.note.text = wealth.note ?? '';
+        form.documentUrl = wealth.documentPaperUrl;
+
+        wealthListForm.add(form);
+      }
+    } else {
+      wealthListForm.add(WealthForm());
+    }
+  }
+
+  void addWealth() {
+    wealthListForm.add(WealthForm());
+  }
+
+  void removeWealth(int index) {
+    if (index >= 0 && index < wealthListForm.length) {
+      wealthListForm[index].dispose();
+      wealthListForm.removeAt(index);
+    }
+  }
+
+  // Account Receivable Management
+  void _mapReceivableInfo() {
+    receivableListForm.clear();
+    final receivables = profileModel.value.receivableInfo;
+
+    if (receivables != null && receivables.isNotEmpty) {
+      for (final rec in receivables) {
+        final form = AccountReceivableForm();
+        form.amount.text = rec.receivableAmount?.toString() ?? '';
+        form.personName.text = rec.receivablePerson ?? '';
+        form.personMobile.text = rec.receivablePersonMobile ?? '';
+        receivableListForm.add(form);
+      }
+    } else {
+      receivableListForm.add(AccountReceivableForm());
+    }
+  }
+
+  void addReceivable() {
+    receivableListForm.add(AccountReceivableForm());
+  }
+
+  void removeReceivable(int index) {
+    if (index >= 0 && index < receivableListForm.length) {
+      receivableListForm[index].dispose();
+      receivableListForm.removeAt(index);
+    }
+  }
+
+  // Account Payable Management
+  void _mapPayableInfo() {
+    payableListForm.clear();
+    final payables = profileModel.value.payableInfo;
+
+    if (payables != null && payables.isNotEmpty) {
+      for (final pay in payables) {
+        final form = AccountPayableForm();
+        form.amount.text = pay.payableAmount?.toString() ?? '';
+        form.personName.text = pay.payablePerson ?? '';
+        form.personMobile.text = pay.payablePersonMobile ?? '';
+        payableListForm.add(form);
+      }
+    } else {
+      payableListForm.add(AccountPayableForm());
+    }
+  }
+
+  void addPayable() {
+    payableListForm.add(AccountPayableForm());
+  }
+
+  void removePayable(int index) {
+    if (index >= 0 && index < payableListForm.length) {
+      payableListForm[index].dispose();
+      payableListForm.removeAt(index);
+    }
+  }
+
   @override
   void onInit() async {
     getProfilePageData();
@@ -496,6 +662,18 @@ class ProfileController extends GetxController {
       form.dispose();
     }
     for (final form in siblingList) {
+      form.dispose();
+    }
+    for (final form in bankListForm) {
+      form.dispose();
+    }
+    for (final form in wealthListForm) {
+      form.dispose();
+    }
+    for (final form in receivableListForm) {
+      form.dispose();
+    }
+    for (final form in payableListForm) {
       form.dispose();
     }
     super.onClose();

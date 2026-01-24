@@ -9,7 +9,6 @@ export 'before_login/zakat_calculator_screen.dart';
 export 'profile_setting/profile_setup_step_one_screen.dart';
 export 'profile_setting/profile_setup_step_three_screen.dart';
 export 'profile_setting/profile_setup_step_four_screen.dart';
-export 'profile_setting/bank_info_screen.dart';
 export 'home_screen.dart';
 export 'wasyyah/wasyyah_screen.dart';
 export 'wasyyah/wasiyah_edit_screen.dart';
