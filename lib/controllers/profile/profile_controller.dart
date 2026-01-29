@@ -618,7 +618,7 @@ class ProfileController extends GetxController {
     form.wealth.value = wealth;
     form.selectedDocumentType.value = null;
     form.documentTypeList.clear();
-
+    
     if (wealth != null && wealth.wealthId != null) {
       var docTypes = await getDocumentTypeList(wealth.wealthId.toString());
       form.documentTypeList.value = docTypes;
