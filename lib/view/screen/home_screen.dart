@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
   }
-
+/// middle branch checkg
   @override
   void dispose() {
     timer?.cancel();
