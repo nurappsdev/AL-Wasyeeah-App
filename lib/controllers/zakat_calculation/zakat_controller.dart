@@ -28,31 +28,68 @@ class ZakatController extends GetxController {
     getNisabRates();
   }
 
+  RxString currencySign = ''.obs;
+
   void getNisabRates() async {
     isNisabLoading(true);
+
     var response = await ApiClient.getData(ApiConstants.nisabEndPoint);
     if (response.statusCode == 200 || response.statusCode == 201) {
       nisabRates.value = List<GetNisabRatesResponseModel>.from(
         response.body.map((x) => GetNisabRatesResponseModel.fromJson(x)),
       );
-      if (nisabRates.isNotEmpty) {
-        selectedCurrency(nisabRates.first); // Set default
 
-        // Delay updating controller until widget tree is built
+      if (nisabRates.isNotEmpty) {
+        selectedCurrency(nisabRates.first);
+
+        /// 🔥 default currency sign
+        currencySign.value = nisabRates.first.currencyIcon ?? '';
+
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          cashAndBankController.text = nisabRates.first.nisabAmount.toString();
+          cashAndBankController.text =
+              nisabRates.first.nisabAmount.toString();
         });
       }
     }
+
     isNisabLoading(false);
   }
-
   void onCurrencySelected(GetNisabRatesResponseModel value) {
     selectedCurrency(value);
+
+    /// 🔥 update sign when dropdown changes
+    currencySign.value = value.currencyIcon ?? '';
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       cashAndBankController.text = value.nisabAmount.toString();
     });
   }
+
+  // void getNisabRates() async {
+  //   isNisabLoading(true);
+  //   var response = await ApiClient.getData(ApiConstants.nisabEndPoint);
+  //   if (response.statusCode == 200 || response.statusCode == 201) {
+  //     nisabRates.value = List<GetNisabRatesResponseModel>.from(
+  //       response.body.map((x) => GetNisabRatesResponseModel.fromJson(x)),
+  //     );
+  //     if (nisabRates.isNotEmpty) {
+  //       selectedCurrency(nisabRates.first); // Set default
+  //
+  //       // Delay updating controller until widget tree is built
+  //       WidgetsBinding.instance.addPostFrameCallback((_) {
+  //         cashAndBankController.text = nisabRates.first.nisabAmount.toString();
+  //       });
+  //     }
+  //   }
+  //   isNisabLoading(false);
+  // }
+
+  // void onCurrencySelected(GetNisabRatesResponseModel value) {
+  //   selectedCurrency(value);
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     cashAndBankController.text = value.nisabAmount.toString();
+  //   });
+  // }
 
   ///==================Save Sign Up===========================
   RxBool zakatLoading = false.obs;

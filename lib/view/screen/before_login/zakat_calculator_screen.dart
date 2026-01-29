@@ -64,6 +64,15 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    Widget amountLabel(String title) {
+      return Obx(() => CustomText(
+        text: zakatController.currencySign.value.isNotEmpty
+            ? "$title (${zakatController.currencySign.value})".tr
+            : title.tr,
+      ));
+    }
+
     zakatController.getNisabRates();
     return Scaffold(
       appBar: AppBar(
@@ -202,9 +211,8 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 10.h),
-                                CustomText(
-                                  text: "Value of Gold".tr,
-                                ),
+                                amountLabel("Value of Gold"),
+
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
@@ -216,9 +224,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                CustomText(
-                                  text: "Value of Silver".tr,
-                                ),
+                                amountLabel("Value of Silver"),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
@@ -230,9 +236,8 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                CustomText(
-                                  text: "Future deposits".tr,
-                                ),
+                                amountLabel("Future deposits"),
+
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
@@ -244,9 +249,9 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                CustomText(
-                                  text: "Given out in loans".tr,
-                                ),
+
+                                amountLabel("Given out in loans"),
+
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
@@ -258,9 +263,8 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                CustomText(
-                                  text: "Investment value".tr,
-                                ),
+
+                                amountLabel("Investment value"),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
@@ -272,9 +276,8 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                CustomText(
-                                  text: "Rental income".tr,
-                                ),
+
+                                amountLabel("Rental income"),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
@@ -286,9 +289,8 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                CustomText(
-                                  text: "Immediate liabilities".tr,
-                                ),
+
+                                amountLabel("Immediate liabilities"),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(

@@ -2,12 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../../../helpers/helpers.dart';
+import '../../../../models/models.dart';
 import '../../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
 
 class NomineeDetailsScreen extends StatelessWidget {
-  const NomineeDetailsScreen({super.key});
-
+   NomineeDetailsScreen({super.key});
+  final NomineetedResponseModel user = Get.arguments as NomineetedResponseModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +42,7 @@ class NomineeDetailsScreen extends StatelessWidget {
                               radius: 30,
                             ),
                             title: Text(
-                              "Mahmudul Hasan Rabbi",
+                              "${user.name}",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -81,51 +83,35 @@ class NomineeDetailsScreen extends StatelessWidget {
                           SizedBox(height: 10.h),
 
                           /// Relation Row
-                          _buildRow("Relation:", "Cousin"),
+                          _buildRow("Relation:", "${user.relation ?? "N/A"}"),
 
-                          /// Nominee Date Row
-                          _buildRow("Nominee Date:", "30-09-2024 | 2:48 PM"),
 
                           /// Mobile Row
-                          _buildRow("Mobile:", "+880 123456789"),
+                          _buildRow("Mobile:","${user.mobile ?? "N/A"}"),
+                          _buildRow("Profession:","${user.profession ?? "N/A"}"),
 
                           /// Email Row
-                          _buildRow("Email:", "mahmudul1990@gmail.com"),
+                          _buildRow("Email:", "${user.email ?? "N/A"}"),
 
                           /// Marital Status Row
-                          _buildRow("Marital Status:", "Married"),
+                          _buildRow("Marital Status:", "${user.maritalStatus ?? "N/A"}"),
 
-                          /// Spouse's Row
-                          _buildRow("Spouse’s:", "Mithila IslamJinia Chowdhury"),
 
-                          /// Profession Row
-                          _buildRow("Profession:", "Teacher"),
 
                           /// Mother's Name Row
-                          _buildRow("Mother’s Name:", "Sultana Zaman"),
+                          _buildRow("Mother’s Name:", "${user.motherName ?? "N/A"}"),
 
                           /// Father's Name Row
-                          _buildRow("Father’s Name:", "Sultana Zaman"),
-
-                          /// Current Address Row
-                          _buildRow(
-                            "Current Address:",
-                            "621/A, Shajahanpur, Khilgaon,\nDhaka 1000.",
-                          ),
-
-                          /// Permanent Address Row
-                          _buildRow(
-                            "Permanent Address:",
-                            "621/A, Shajahanpur, Khilgaon,\nDhaka 1000.",
-                          ),
+                          _buildRow("Father’s Name:", "${user.fatherName ?? "N/A"}"),
 
                           /// Buttons
                           SizedBox(height: 30.h),
-                          CustomButton(
-                            title: " - Remove Nominee".tr,
-                            titlecolor: AppColors.redColor,
-                            onpress: () {},
-                          ),
+                          CustomButtonCommon(title: "Access Panel", onpress: (){
+                            Get.toNamed(AppRoutes.witnessPhanelData,arguments: user.requestKey);
+
+
+                          }),
+
                           SizedBox(height: 10.h),
                         ],
                       ),
@@ -169,6 +155,4 @@ class NomineeDetailsScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

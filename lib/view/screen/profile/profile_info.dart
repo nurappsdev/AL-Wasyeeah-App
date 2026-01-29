@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/view/screen/profile/languge_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,10 +20,17 @@ class ProfileInfo extends StatefulWidget {
 
 class _ProfileInfoState extends State<ProfileInfo> {
   final userController = Get.put(UserController());
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userController.getUserProfileData();
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    userController.getUserProfileData();
+
     print("user data ${userController.userProfile.value?.firstName}");
     return Scaffold(
       appBar: AppBar(
@@ -124,51 +132,51 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 ),
 
                 ///=====================User Setting====================================
-                Container(
-                  width: 360.w,
-                  height: 60.h,
-                  margin: EdgeInsets.only(left: 2.w),
-                  decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                    border: Border.all(
-                      color: Color(0xffB0E3D3),
-                      width: 2.w,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              AppIcons.userSettingIcon,
-                            ),
-                            SizedBox(width: 16.w),
-                            CustomText(
-                              text: "User Setting".tr,
-                              fontsize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.textColor4E4E4E,
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        child: SvgPicture.asset(
-                          AppIcons.chevronIcon,
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
+                // Container(
+                //   width: 360.w,
+                //   height: 60.h,
+                //   margin: EdgeInsets.only(left: 2.w),
+                //   decoration: BoxDecoration(
+                //     color: AppColors.whiteColor,
+                //     borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                //     border: Border.all(
+                //       color: Color(0xffB0E3D3),
+                //       width: 2.w,
+                //     ),
+                //   ),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Padding(
+                //         padding: EdgeInsets.symmetric(horizontal: 12.w),
+                //         child: Row(
+                //           children: [
+                //             SvgPicture.asset(
+                //               AppIcons.userSettingIcon,
+                //             ),
+                //             SizedBox(width: 16.w),
+                //             CustomText(
+                //               text: "User Setting".tr,
+                //               fontsize: 16.sp,
+                //               fontWeight: FontWeight.w600,
+                //               color: AppColors.textColor4E4E4E,
+                //             )
+                //           ],
+                //         ),
+                //       ),
+                //       Padding(
+                //         padding: EdgeInsets.symmetric(horizontal: 12.w),
+                //         child: SvgPicture.asset(
+                //           AppIcons.chevronIcon,
+                //           color: AppColors.primaryColor,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 20.h,
+                // ),
 
                 ///=====================Device History====================================
                 Container(
@@ -195,7 +203,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
-                              text: "Device History".tr,
+                              text: "Change Password".tr,
                               fontsize: 16.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
@@ -272,46 +280,51 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 ),
 
                 ///=====================Language====================================
-                Container(
-                  width: 360.w,
-                  height: 60.h,
-                  margin: EdgeInsets.only(left: 2.w),
-                  decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                    border: Border.all(
-                      color: Color(0xffB0E3D3),
-                      width: 2.w,
+                InkWell(
+                  onTap: (){
+                    Get.to(()=>LanguageScreen());
+                  },
+                  child: Container(
+                    width: 360.w,
+                    height: 60.h,
+                    margin: EdgeInsets.only(left: 2.w),
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                      border: Border.all(
+                        color: Color(0xffB0E3D3),
+                        width: 2.w,
+                      ),
                     ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              AppIcons.languageIcon,
-                            ),
-                            SizedBox(width: 16.w),
-                            CustomText(
-                              text: "Language".tr,
-                              fontsize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.textColor4E4E4E,
-                            )
-                          ],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppIcons.languageIcon,
+                              ),
+                              SizedBox(width: 16.w),
+                              CustomText(
+                                text: "Language".tr,
+                                fontsize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textColor4E4E4E,
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        child: SvgPicture.asset(
-                          AppIcons.chevronIcon,
-                          color: AppColors.primaryColor,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          child: SvgPicture.asset(
+                            AppIcons.chevronIcon,
+                            color: AppColors.primaryColor,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -348,7 +361,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: "Log Out",
+                                text: "Log Out".tr,
                                 fontsize: 14.sp,
                                 color: AppColors.textColor4E4E4E,
                               )
