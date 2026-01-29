@@ -9,6 +9,7 @@ import '../../../../helpers/helpers.dart';
 import '../../../../models/models.dart';
 import '../../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
+import '../witnessess/your_witness_screen.dart';
 
 class NomineetedYouScreen extends StatefulWidget {
   const NomineetedYouScreen({super.key, required this.tabController});
@@ -35,14 +36,14 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 20.h),
-                  CustomButton(
-                    title: "+ Add more nominees".tr,
-                    titlecolor: AppColors.primaryColor,
-                    onpress: () {
-                      Get.toNamed(AppRoutes.addNomineeScreen,preventDuplicates: false);
-                    },
-                  ),
-                  SizedBox(height: 10.h),
+                  // CustomButton(
+                  //   title: "+ Add more nominees".tr,
+                  //   titlecolor: AppColors.primaryColor,
+                  //   onpress: () {
+                  //     Get.toNamed(AppRoutes.addNomineeScreen,preventDuplicates: false);
+                  //   },
+                  // ),
+                  // SizedBox(height: 10.h),
 
                   SizedBox(
                     height: 450.0, // Adjust height as per your needs
@@ -78,8 +79,12 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
                               ],
                             ),
                             onTap: () {
-                              showWitnessDetailsDialog(context,user,nomineeController);
-                              //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
+                          //    showWitnessDetailsDialog(context,user,nomineeController);
+                          //     Get.to(
+                          //           () => WitnessDetailsScreens(user: user),
+                          //       preventDuplicates: false,
+                          //     );
+                                 Get.toNamed(AppRoutes.nomineeDetailsScreen,arguments: user, preventDuplicates: false);
                               print("Tapped on");
                             },
                           ),

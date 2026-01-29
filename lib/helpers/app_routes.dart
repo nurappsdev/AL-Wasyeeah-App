@@ -1,5 +1,6 @@
 import 'package:al_wasyeah/view/screen/profile_setting/profile_setup_step_three_screen.dart';
 import 'package:get/get.dart';
+
 import '../view/screen/access_control/acceess_control_tab_screen.dart';
 import '../view/screen/screen.dart';
 
@@ -38,43 +39,42 @@ class AppRoutes {
 
   static List<GetPage> get routes => [
 
-        GetPage(name: firstSplashScreen, page: () => FirstSplashScreen()),
-        GetPage(name: splashScreen, page: () => SplashScreen()),
-        GetPage(name: loginScreen, page: () => LoginScreen()),
-        GetPage(name: registrationScreen, page: () => RegistrationScreen()),
-        GetPage(name: forgotPassScreen, page: () => ForgotPassScreen()),
-        GetPage(name: otpScreen, page: () => OtpVerifyScreen()),
-        GetPage(
-            name: propertyDistributionScreen,
-            page: () => PropertyDistributionScreen()),
-        GetPage(
-            name: propertyDistributionResultScreen,
-            page: () => PropertyDistributionResultScreen()),
-        GetPage(
-            name: zakatCalculatorScreen, page: () => ZakatCalculatorScreen()),
-        GetPage(name: profileSetting1, page: () => ProfileSetupStepOneScreen()),
-        GetPage(
-            name: fatherInfoScreen, page: () => ProfileSetupStepThreeScreen()),
-        GetPage(name: homeScreen, page: () => HomeScreen()),
-        GetPage(name: wasyyahScreen, page: () => WasyyahScreen()),
-        GetPage(name: wasyyahEditScreen, page: () => WasiyahEditScreen()),
-        GetPage(name: nomineeTabScreen, page: () => NomineeTabScreen()),
-        GetPage(name: witnessesScreen, page: () => WitnessScreen()),
-        GetPage(name: witnessTabScreen, page: () => WitnessTabScreen()),
-        GetPage(name: addWitnessesScreen, page: () => AddWitnessScreen()),
-        GetPage(name: nomineeDetailsScreen, page: () => NomineeDetailsScreen()),
-        GetPage(name: witnessDetailsScreen, page: () => WitnessDetailsScreen()),
-        GetPage(name: addNomineeScreen, page: () => AddNomineeScreen()),
-        GetPage(name: addOutsideWitnessScreen, page: () => AddOutsideWitness()),
-        GetPage(name: addOutsideNomineeScreen, page: () => AddOutsideNominee()),
-        GetPage(name: notificationsScreen, page: () => NotificationCard()),
-        GetPage(name: profileInfo, page: () => ProfileInfo()),
-        GetPage(name: wasyyahPriviewScreen, page: () => WasyyahPreviewScreen()),
-        GetPage(
-            name: accessControlTabScreen, page: () => AccessControlTabScreen()),
-        GetPage(name: featureScreen, page: () => FeatureScreen()),
-      ];
-
+      //   GetPage(name: firstSplashScreen, page: () => FirstSplashScreen()),
+      //   GetPage(name: splashScreen, page: () => SplashScreen()),
+      //   GetPage(name: loginScreen, page: () => LoginScreen()),
+      //   GetPage(name: registrationScreen, page: () => RegistrationScreen()),
+      //   GetPage(name: forgotPassScreen, page: () => ForgotPassScreen()),
+      //   GetPage(name: otpScreen, page: () => OtpVerifyScreen()),
+      //   GetPage(
+      //       name: propertyDistributionScreen,
+      //       page: () => PropertyDistributionScreen()),
+      //   GetPage(
+      //       name: propertyDistributionResultScreen,
+      //       page: () => PropertyDistributionResultScreen()),
+      //   GetPage(
+      //       name: zakatCalculatorScreen, page: () => ZakatCalculatorScreen()),
+      //   GetPage(name: profileSetting1, page: () => ProfileSetupStepOneScreen()),
+      //   GetPage(
+      //       name: fatherInfoScreen, page: () => ProfileSetupStepThreeScreen()),
+      //   GetPage(name: homeScreen, page: () => HomeScreen()),
+      //   GetPage(name: wasyyahScreen, page: () => WasyyahScreen()),
+      //   GetPage(name: wasyyahEditScreen, page: () => WasiyahEditScreen()),
+      //   GetPage(name: nomineeTabScreen, page: () => NomineeTabScreen()),
+      //   GetPage(name: witnessesScreen, page: () => WitnessScreen()),
+      //   GetPage(name: witnessTabScreen, page: () => WitnessTabScreen()),
+      //   GetPage(name: addWitnessesScreen, page: () => AddWitnessScreen()),
+      //   GetPage(name: nomineeDetailsScreen, page: () => NomineeDetailsScreen()),
+      //   GetPage(name: witnessDetailsScreen, page: () => WitnessDetailsScreen()),
+      //   GetPage(name: addNomineeScreen, page: () => AddNomineeScreen()),
+      //   GetPage(name: addOutsideWitnessScreen, page: () => AddOutsideWitness()),
+      //   GetPage(name: addOutsideNomineeScreen, page: () => AddOutsideNominee()),
+      //   GetPage(name: notificationsScreen, page: () => NotificationCard()),
+      //   GetPage(name: profileInfo, page: () => ProfileInfo()),
+      //   GetPage(name: wasyyahPriviewScreen, page: () => WasyyahPreviewScreen()),
+      //   GetPage(
+      //       name: accessControlTabScreen, page: () => AccessControlTabScreen()),
+      //   GetPage(name: featureScreen, page: () => FeatureScreen()),
+      // ];
   //  GetPage(name: firstSplashScreen, page: () =>  FirstSplashScreen()),
   //  GetPage(name: splashScreen, page: () =>  SplashScreen()),
   //  GetPage(name: loginScreen, page: () =>  LoginScreen()),
@@ -106,5 +106,38 @@ class AppRoutes {
   //  GetPage(name: witnessPhanelData, page: () => WitnessPhanelData()),
   //
   // ];
+
+   GetPage(name: firstSplashScreen, page: () =>  FirstSplashScreen()),
+   GetPage(name: splashScreen, page: () =>  SplashScreen()),
+   GetPage(name: loginScreen, page: () =>  LoginScreen()),
+   GetPage(name: registrationScreen, page: () =>  RegistrationScreen()),
+   GetPage(name: forgotPassScreen, page: () =>  ForgotPassScreen()),
+   GetPage(name: otpScreen, page: () =>  OtpVerifyScreen()),
+   GetPage(name: propertyDistributionScreen, page: () => PropertyDistributionScreen()),
+   GetPage(name: propertyDistributionResultScreen, page: () => PropertyDistributionResultScreen()),
+   GetPage(name: zakatCalculatorScreen, page: () => ZakatCalculatorScreen()),
+   // GetPage(name: profileSetting1, page: () => ProfileScreen1()),
+   // GetPage(name: fatherInfoScreen, page: () => FatherInfoScreen()),
+   GetPage(name: homeScreen, page: () => HomeScreen()),
+   GetPage(name: wasyyahScreen, page: () => WasyyahScreen()),
+   GetPage(name: wasyyahEditScreen, page: () => WasiyahEditScreen()),
+   GetPage(name: nomineeTabScreen, page: () => NomineeTabScreen()),
+   GetPage(name: witnessesScreen, page: () => WitnessScreen()),
+   GetPage(name: witnessTabScreen, page: () => WitnessTabScreen()),
+   GetPage(name: addWitnessesScreen, page: () => AddWitnessScreen()),
+   GetPage(name: nomineeDetailsScreen, page: () => NomineeDetailsScreen()),
+   GetPage(name: witnessDetailsScreen, page: () => WitnessDetailsScreen()),
+   GetPage(name: addNomineeScreen, page: () => AddNomineeScreen()),
+   GetPage(name: addOutsideWitnessScreen, page: () => AddOutsideWitness()),
+   GetPage(name: addOutsideNomineeScreen, page: () => AddOutsideNominee()),
+   GetPage(name: notificationsScreen, page: () => NotificationCard()),
+   GetPage(name: profileInfo, page: () => ProfileInfo()),
+   GetPage(name: wasyyahPriviewScreen, page: () => WasyyahPreviewScreen()),
+   GetPage(name: accessControlTabScreen, page: () => AccessControlTabScreen()),
+   GetPage(name: featureScreen, page: () => FeatureScreen()),
+   GetPage(name: witnessPhanelData, page: () => WitnessPhanelData()),
+
+  ];
+
 
 }

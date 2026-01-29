@@ -143,4 +143,75 @@ Future<void> fetchContextsData(String requestKey) async {
   }
 }
 
+
+
+
+
+
+
+
+
+
+final isLoadings = false.obs;
+final hasContextsData = false.obs;
+
+final zakat = <String, dynamic>{}.obs;
+final propertyResult = <dynamic>[].obs;
+final wasiyyahContent = <dynamic>[].obs;
+
+Future<void> getContextsData(String requestKey) async {
+  String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+
+  try {
+    isLoadings.value = true;
+    hasContextsData.value = false;
+
+    final uri = Uri.parse(
+      '${ApiConstants.baseUrl}/getContextsData?requestKey=$requestKey',
+    );
+
+    final response = await http.get(
+      uri,
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $bearerToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // ✅ UTF-8 decode (Bangla safe)
+      final decodedBody = utf8.decode(response.bodyBytes);
+      final Map<String, dynamic> data = jsonDecode(decodedBody);
+
+      /// 🔴 যদি API empty object দেয়
+      if (data.isEmpty) {
+        hasContextsData.value = false;
+        return;
+      }
+
+      // zakat
+      zakat.value = data['zakat'] ?? {};
+
+      // propertyResult (string JSON হলে)
+      propertyResult.value = data['propertyResult'] != null
+          ? jsonDecode(data['propertyResult'])
+          : [];
+
+      // wasiyyahContent
+      wasiyyahContent.value = data['wasiyyahContent'] ?? [];
+
+      /// ✅ data valid
+      hasContextsData.value = true;
+    } else {
+      /// ❌ requestKey match না করলে
+      hasContextsData.value = false;
+    }
+  } catch (e) {
+    hasContextsData.value = false;
+  } finally {
+    isLoadings.value = false;
+  }
+}
+
+
 }

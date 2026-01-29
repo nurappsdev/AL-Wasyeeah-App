@@ -167,7 +167,6 @@
  "Nominee Profile Details": "Nominee Profile Details",
  " - Remove Nominee": " - Remove Nominee",
  "Relation:": "Relation:",
- "Personal Details": "Personal Details",
  "Nominee Date:": "Nominee Date:",
  "Mobile:": "Mobile:",
  "Email:": "Email:",
@@ -188,9 +187,7 @@
  "+ Add outside witness": "+ Add outside witness",
  "Add Nominee": "Add Nominee",
  "+ Add outside Nominee": "+ Add outside Nominee",
- "User Profile": "User Profile",
  "User Setting": "User Setting",
- "Personal Details": "Personal Details",
  "User Name": "User Name",
  "Already have an account? ": "Already have an account? ",
  "Zakat Calculation": "Zakat Calculation",
@@ -216,5 +213,11 @@
  "Security Question": "Security Question",
  "Answer": "Answer",
  "Get Start": "Get Start",
- "Access Control Panel": "Access Control Panel"
+ "Access Control Panel": "Access Control Panel",
+ "Change Password": "Change Password",
+ "Personal Details": "Personal Details",
+ "Language": "Language",
+ "User Profile": "User Setting",
+ "Log Out": "Log Out"
+
 }

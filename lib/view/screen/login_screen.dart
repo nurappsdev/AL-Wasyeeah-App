@@ -19,11 +19,11 @@ class LoginScreen extends StatelessWidget {
 
   final GlobalKey<FormState> _logKey = GlobalKey<FormState>();
   final List<GridItem> items = [
-    GridItem(
-      icon: AppIcons.profileIcon,
-      text: "Nominee Log in".tr,
-      onTap: null,
-    ),
+    // GridItem(
+    //   icon: AppIcons.profileIcon,
+    //   text: "Nominee Log in".tr,
+    //   onTap: null,
+    // ),
     GridItem(
       icon: AppIcons.propertyIcons,
       text: "Property Distribution".tr,
