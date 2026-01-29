@@ -36,14 +36,14 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 20.h),
-                  CustomButton(
-                    title: "+ Add more witness".tr,
-                    titlecolor: AppColors.primaryColor,
-                    onpress: () {
-                      Get.toNamed(AppRoutes.addWitnessesScreen,preventDuplicates: false);
-                    },
-                  ),
-                  SizedBox(height: 10.h),
+                  // CustomButton(
+                  //   title: "+ Add more witness".tr,
+                  //   titlecolor: AppColors.primaryColor,
+                  //   onpress: () {
+                  //     Get.toNamed(AppRoutes.addWitnessesScreen,preventDuplicates: false);
+                  //   },
+                  // ),
+                  // SizedBox(height: 10.h),
 
                   SizedBox(
                     height: 450.0, // Adjust height as per your needs
@@ -79,10 +79,11 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
                               ],
                             ),
                             onTap: () {
-                              Get.to(
-                                    () => WitnessDetailsScreens(user: user),
-                                preventDuplicates: false,
-                              );
+                              // Get.to(
+                              //       () => WitnessDetailsScreens(user: user),
+                              //   preventDuplicates: false,
+                              // );
+                              Get.toNamed(AppRoutes.witnessDetailsScreen,arguments: user, preventDuplicates: false);
                               print("Tapped on");
 
                               //showWitnessDetailsDialog()
@@ -105,66 +106,6 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
     );
   }
 
- // void showWitnessDetailsDialog(BuildContext context, GetWitnessResponseModel user) {
- //   showDialog(
- //     context: context,
- //     builder: (context) {
- //       return Dialog(
- //         backgroundColor: Colors.transparent,
- //         insetPadding: EdgeInsets.all(16),
- //         child: Padding(
- //           padding: const EdgeInsets.all(8.0),
- //           child: SingleChildScrollView(
- //             child: Container(
- //               decoration: BoxDecoration(
- //                 color: Colors.blueGrey[900],
- //                 borderRadius: BorderRadius.circular(12),
- //               ),
- //               padding: const EdgeInsets.all(16.0),
- //               child: Column(
- //                 mainAxisSize: MainAxisSize.min,
- //                 crossAxisAlignment: CrossAxisAlignment.start,
- //                 children: [
- //                   Row(
- //                     children: [
- //                       Expanded(
- //                         child: Text(
- //                           user.name ?? "N/A",
- //                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
- //                         ),
- //                       ),
- //                       IconButton(
- //                         icon: Icon(Icons.close, color: Colors.white),
- //                         onPressed: () => Navigator.pop(context),
- //                       ),
- //                     ],
- //                   ),
- //                   Divider(color: Colors.white70),
- //                   _buildDialogRow(Icons.people, "Relation", user.relation ?? "N/A"),
- //                   _buildDialogRow(Icons.email, "Email", user.email ?? "N/A"),
- //                   _buildDialogRow(Icons.person, "Father Name", user.fatherName ?? "N/A"),
- //                   _buildDialogRow(Icons.phone, "Mobile", user.mobile ?? "N/A"),
- //                   _buildDialogRow(Icons.favorite, "Marital Status", user.maritalStatus ?? "N/A"),
- //                   _buildDialogRow(Icons.work, "Profession", user.profession ?? "N/A"),
- //                   SizedBox(height: 20),
- //                   ElevatedButton(
- //                     style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
- //                     onPressed: () {
- //                       // Implement remove witness logic
- //                       Navigator.pop(context);
- //                     },
- //                     child: Text("OK"),
- //                   ),
- //                 ],
- //               ),
- //             ),
- //           ),
- //         ),
- //       );
- //     },
- //   );
- // }
-
  Widget _buildDialogRow(IconData icon, String label, String value) {
    return Padding(
      padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -182,22 +123,38 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
 
 
 
-class WitnessDetailsScreens extends StatelessWidget {
+class WitnessDetailsScreens extends StatefulWidget {
   final GetWitnessResponseModel user;
 
+  const WitnessDetailsScreens({super.key, required this.user});
 
-   WitnessDetailsScreens({super.key, required this.user});
-  WitnessController witnessController = Get.put(WitnessController());
+  @override
+  State<WitnessDetailsScreens> createState() =>
+      _WitnessDetailsScreensState();
+}
+
+class _WitnessDetailsScreensState extends State<WitnessDetailsScreens> {
+  // final WitnessController witnessController =
+  // Get.put(WitnessController());
+
+  @override
+  void initState() {
+    super.initState();
+   // witnessController.getContextsData(widget.user.requestKey!);
+  }
   @override
   Widget build(BuildContext context) {
-    print(user.requestKey.toString());
-   // witnessController.fetchContextsData("8E1087C1C3F54338C3313F40B6FFAD00");
-    print(witnessController.contextsData.value?.zakat?.currencyCode);
+    print(widget.user.requestKey.toString());
+    // witnessController.getContextsData(
+    //   widget.user.requestKey.toString(),
+    // );
+    //witnessController.fetchContextsData("8E1087C1C3F54338C3313F40B6FFAD00");
+    // print(witnessController.contextsData.value?.zakat?.currencyCode);
     return Scaffold(
       backgroundColor: Colors.blueGrey[900],
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(user.name ?? "Witness Details"),
+        title: Text(widget.user.name ?? "Witness Details"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -211,12 +168,12 @@ class WitnessDetailsScreens extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildDialogRow(Icons.people, "Relation", user.relation ?? "N/A"),
-              _buildDialogRow(Icons.email, "Email", user.email ?? "N/A"),
-              _buildDialogRow(Icons.person, "Father Name", user.fatherName ?? "N/A"),
-              _buildDialogRow(Icons.phone, "Mobile", user.mobile ?? "N/A"),
-              _buildDialogRow(Icons.favorite, "Marital Status", user.maritalStatus ?? "N/A"),
-              _buildDialogRow(Icons.work, "Profession", user.profession ?? "N/A"),
+              _buildDialogRow(Icons.people, "Relation", widget.user.relation ?? "N/A"),
+              _buildDialogRow(Icons.email, "Email", widget.user.email ?? "N/A"),
+              _buildDialogRow(Icons.person, "Father Name", widget.user.fatherName ?? "N/A"),
+              _buildDialogRow(Icons.phone, "Mobile", widget.user.mobile ?? "N/A"),
+              _buildDialogRow(Icons.favorite, "Marital Status", widget.user.maritalStatus ?? "N/A"),
+              _buildDialogRow(Icons.work, "Profession", widget.user.profession ?? "N/A"),
 
               const SizedBox(height: 30),
 
@@ -227,11 +184,78 @@ class WitnessDetailsScreens extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   ),
                   onPressed: () {
-                  Get.toNamed(AppRoutes.witnessPhanelData,arguments: user.requestKey);
+                  Get.toNamed(AppRoutes.witnessPhanelData,arguments: widget.user.requestKey);
                   },
                   child: const Text("Access Panel"),
                 ),
               ),
+
+
+              // Obx(() {
+              //   if (witnessController.isLoadings.value) {
+              //     return const Center(
+              //       child: CircularProgressIndicator(),
+              //     );
+              //   }
+              //
+              //   return Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text(
+              //         'Zakat: ${witnessController.zakat['zakatAmount'] ?? 'N/A'}',
+              //         style: const TextStyle(color: Colors.white),
+              //       ),
+              //       const SizedBox(height: 8),
+              //       Text(
+              //         'Total Asset: ${witnessController.zakat['totalAsset'] ?? 'N/A'}',
+              //         style: const TextStyle(color: Colors.white),
+              //       ),
+              //       const Divider(color: Colors.white),
+              //       const Text(
+              //         'Wasiyyah Content',
+              //         style: TextStyle(
+              //           fontWeight: FontWeight.bold,
+              //           color: Colors.white,
+              //         ),
+              //       ),
+              //       const SizedBox(height: 8),
+              //
+              //       ...witnessController.wasiyyahContent.map(
+              //             (item) =>
+              //
+              //                 Container(
+              //           margin: const EdgeInsets.only(bottom: 12),
+              //           padding: const EdgeInsets.all(12),
+              //           decoration: BoxDecoration(
+              //             color: Colors.blueGrey[800],
+              //             borderRadius: BorderRadius.circular(8),
+              //           ),
+              //           child: Column(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               Text(
+              //                 item['title'] ?? '',
+              //                 style: const TextStyle(
+              //                   fontWeight: FontWeight.bold,
+              //                   color: Colors.white,
+              //                 ),
+              //               ),
+              //               const SizedBox(height: 6),
+              //
+              //
+              //               Text(
+              //                 item['content'] ?? '',
+              //                 style: const TextStyle(color: Colors.white70),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ).toList(),
+              //     ],
+              //   );
+              // }),
+
+
             ],
           ),
         ),
@@ -267,3 +291,6 @@ Widget _buildDialogRow(IconData icon, String title, String value) {
     ),
   );
 }
+
+
+

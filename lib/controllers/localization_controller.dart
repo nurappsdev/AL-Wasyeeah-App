@@ -85,4 +85,17 @@ class LocalizationController extends GetxController implements GetxService {
     }
     update();
   }
+
+
+  var selectedLanguage = 'en'.obs;
+
+  void changeLanguage(String langCode) {
+    selectedLanguage.value = langCode;
+    if (langCode == 'en') {
+      Get.updateLocale(const Locale('en', 'US'));
+    } else {
+      Get.updateLocale(const Locale('bn', 'BD'));
+    }
+  }
+
 }

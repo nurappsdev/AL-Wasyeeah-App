@@ -1,0 +1,2 @@
+C:/Users/Sabbir/StudioProjects/AL-Wasyeeah-App-last-update/android/app/.cxx/RelWithDebInfo/316c5s6k/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/Sabbir/StudioProjects/AL-Wasyeeah-App-last-update/android/app/.cxx/RelWithDebInfo/316c5s6k/x86_64/CMakeFiles/rebuild_cache.dir
