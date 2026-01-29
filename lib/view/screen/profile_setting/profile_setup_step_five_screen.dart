@@ -1,9 +1,12 @@
 import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:al_wasyeah/models/profile_info_model/branch_model.dart';
+import 'package:al_wasyeah/view/widgets/file_choose_and_download_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../../../helpers/file_picker_util.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
@@ -44,9 +47,7 @@ class ProfileSetupStepFiveScreen extends StatelessWidget {
               title: "Finish".tr,
               onpress: () {
                 if (controller.step5formKey.currentState!.validate()) {
-                  // controller.onStepTapped(controller.currentStep.value + 1);
-                  // TODO: Implement submission or next step logic
-                  Get.snackbar("Success", "Step 5 Validated");
+                  controller.submitProfile();
                 } else {
                   // log("Not validate");
                 }
@@ -88,15 +89,15 @@ class _BankWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return Column(
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: controller.bankListForm.length,
-            itemBuilder: (context, index) {
-              final form = controller.bankListForm[index];
+    return Column(
+      children: [
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: controller.bankListForm.length,
+          itemBuilder: (context, index) {
+            final form = controller.bankListForm[index];
+            return Obx(() {
               return Container(
                 margin: EdgeInsets.only(bottom: 24.h),
                 padding: EdgeInsets.all(16.h),
@@ -121,6 +122,7 @@ class _BankWidget extends StatelessWidget {
                     CustomText(text: "Branch".tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomDropdown<BranchModel>(
+                      key: ValueKey("branch_${form.bank.value?.bankId}_$index"),
                       hint: "Select Branch".tr,
                       items: form.branchList,
                       value: form.branch.value,
@@ -199,11 +201,11 @@ class _BankWidget extends StatelessWidget {
                   ],
                 ),
               );
-            },
-          ),
-        ],
-      );
-    });
+            });
+          },
+        ),
+      ],
+    );
   }
 }
 
@@ -213,15 +215,15 @@ class _WealthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return Column(
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: controller.wealthListForm.length,
-            itemBuilder: (context, index) {
-              final form = controller.wealthListForm[index];
+    return Column(
+      children: [
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: controller.wealthListForm.length,
+          itemBuilder: (context, index) {
+            final form = controller.wealthListForm[index];
+            return Obx(() {
               return Container(
                 margin: EdgeInsets.only(bottom: 24.h),
                 padding: EdgeInsets.all(16.h),
@@ -246,6 +248,8 @@ class _WealthWidget extends StatelessWidget {
                     CustomText(text: "Document Type".tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomDropdown<DocumentTypeForm>(
+                      key:
+                          ValueKey("doc_${form.wealth.value?.wealthId}_$index"),
                       hint: "Select Document Type".tr,
                       items: form.documentTypeList,
                       value: form.selectedDocumentType.value,
@@ -280,6 +284,50 @@ class _WealthWidget extends StatelessWidget {
                       hint: "Note".tr,
                       maxLines: 3,
                     ),
+                    SizedBox(height: 16.h),
+                    CustomText(
+                      text: "Wealth Documents".tr,
+                      fontsize: 16.sp,
+                    ),
+                    SizedBox(height: 4.h),
+                    Obx(
+                      () => FileChooseAndDownloadButton(
+                        pickedFile: form.documentFile,
+                        isDownloading: (controller
+                                    .isDownloadingMap['wealthDocument$index'] ??
+                                false)
+                            .obs,
+                        progress: (controller.downloadProgressMap[
+                                    'wealthDocument$index'] ??
+                                0.0)
+                            .obs,
+                        onPickFile: () async {
+                          var result = await FilePickerUtil.pickSingleFile();
+                          if (result != null) form.documentFile.value = result;
+                        },
+                        onDownload: () async {
+                          bool isComplete = await controller.downloadFile(
+                            urlPath: form.documentUrl,
+                            filePrefix: "Wealth",
+                            type: 'wealthDocument$index',
+                          );
+                          if (isComplete) {
+                            Fluttertoast.showToast(
+                              msg:
+                                  "Wealth Document File downloaded successfully"
+                                      .tr,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              timeInSecForIosWeb: 2,
+                              backgroundColor: AppColors.primaryColor,
+                              textColor: AppColors.whiteColor,
+                            );
+                          }
+                        },
+                        fileUrl: form.documentUrl,
+                      ),
+                    ),
+                    SizedBox(height: 16.h),
                     SizedBox(height: 16.h),
                     Row(
                       spacing: 4.w,
@@ -331,11 +379,11 @@ class _WealthWidget extends StatelessWidget {
                   ],
                 ),
               );
-            },
-          ),
-        ],
-      );
-    });
+            });
+          },
+        ),
+      ],
+    );
   }
 }
 

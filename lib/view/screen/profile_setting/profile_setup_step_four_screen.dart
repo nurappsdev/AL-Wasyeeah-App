@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -241,8 +241,7 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       Obx(
                         () => FileChooseAndDownloadButton(
-                          pickedFile: Rxn(controller
-                              .pickedFileMap['siblingNidOrPassport$index']),
+                          pickedFile: form.selectedNidFile,
                           isDownloading: (controller.isDownloadingMap[
                                       'siblingNidOrPassport$index'] ??
                                   false)
@@ -251,8 +250,11 @@ class SiblingWidget extends StatelessWidget {
                                       'siblingNidOrPassport$index'] ??
                                   0.0)
                               .obs,
-                          onPickFile: () =>
-                              controller.pickFile('siblingNidOrPassport$index'),
+                          onPickFile: () async {
+                            var result = await FilePickerUtil.pickSingleFile();
+                            if (result != null)
+                              form.selectedNidFile.value = result;
+                          },
                           onDownload: () async {
                             bool isComplete = await controller.downloadFile(
                               urlPath: form.nidUrl,
@@ -571,8 +573,7 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       Obx(
                         () => FileChooseAndDownloadButton(
-                          pickedFile: Rxn(controller
-                              .pickedFileMap['childNidOrPassport$index']),
+                          pickedFile: form.selectedNidFile,
                           isDownloading: (controller.isDownloadingMap[
                                       'childNidOrPassport$index'] ??
                                   false)
@@ -581,8 +582,11 @@ class _ChildWidget extends StatelessWidget {
                                       'childNidOrPassport$index'] ??
                                   0.0)
                               .obs,
-                          onPickFile: () =>
-                              controller.pickFile('childNidOrPassport$index'),
+                          onPickFile: () async {
+                            var result = await FilePickerUtil.pickSingleFile();
+                            if (result != null)
+                              form.selectedNidFile.value = result;
+                          },
                           onDownload: () async {
                             bool isComplete = await controller.downloadFile(
                               urlPath: form.nidUrl,
@@ -887,8 +891,7 @@ class _SpouseWidget extends StatelessWidget {
                     SizedBox(height: 4.h),
                     Obx(
                       () => FileChooseAndDownloadButton(
-                        pickedFile: Rxn(controller
-                            .pickedFileMap['spouseNidOrPassport$index']),
+                        pickedFile: form.selectedNidFile,
                         isDownloading: (controller.isDownloadingMap[
                                     'spouseNidOrPassport$index'] ??
                                 false)
@@ -897,8 +900,11 @@ class _SpouseWidget extends StatelessWidget {
                                     'spouseNidOrPassport$index'] ??
                                 0.0)
                             .obs,
-                        onPickFile: () =>
-                            controller.pickFile('spouseNidOrPassport$index'),
+                        onPickFile: () async {
+                          var result = await FilePickerUtil.pickSingleFile();
+                          if (result != null)
+                            form.selectedNidFile.value = result;
+                        },
                         onDownload: () async {
                           bool isComplete = await controller.downloadFile(
                             urlPath: form.nidUrl,
