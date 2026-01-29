@@ -100,8 +100,10 @@ class _HomeScreenState extends State<HomeScreen> {
       });
       userController.startPrayerTimer();
     });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userController.getUserProfileData();
+    });
 
-    userController.getUserProfileData();
   }
 
   @override
@@ -116,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     print("magrib ${userController.getSalatTimeResponseModel.value?.maghrib}");
-    userController.getUserProfileData();
+
     return ConnectivityWrapper(
       child: Scaffold(
         appBar: PreferredSize(
@@ -147,28 +149,35 @@ class _HomeScreenState extends State<HomeScreen> {
                       // ),
                       ),
                   SizedBox(width: 8.h), // Space between the image and text
-                  // Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Obx(
-                  //       () => userController.isLoadingUserProfile.value
-                  //           ? CustomLoader()
-                  //           : CustomText(
-                  //               text: userController
-                  //                       .userProfile.value?.firstName ??
-                  //                   "N/A",
-                  //               fontsize: 16.sp,
-                  //               textAlign: TextAlign.start,
-                  //             ),
-                  //     ),
-                  //     CustomText(
-                  //       text: "Welcome back!".tr,
-                  //       fontsize: 14.sp,
-                  //       textAlign: TextAlign.start,
-                  //     ),
-                  //   ],
-                  // ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min, // ⭐ IMPORTANT
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Obx(
+                            () => userController.isLoadingUserProfile.value
+                            ? SizedBox(
+                          height: 16.sp,
+                          width: 16.sp,
+                          child: CustomLoader(),
+                        )
+                            : Flexible(
+                          child: Text(
+                            userController.userProfile.value?.firstName ?? "N/A",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 16.sp),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Welcome back!".tr,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 14.sp),
+                      ),
+                    ],
+                  ),
+
 
                 ],
               ),
@@ -200,66 +209,66 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-=======
+
                 ),
                 SizedBox(width: 8.h), // Space between the image and text
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Obx(
-                          () => userController.isLoadingUserProfile.value
-                          ? const CustomLoader()
-                          : Flexible(
-                        child: CustomText(
-                          text: userController.userProfile.value?.firstName ?? "N/A",
-                          fontsize: 16.sp,
-                          maxline: 1,
-                          textOverflow:  TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
-                    CustomText(
-                      text: "Welcome back!".tr,
-                      fontsize: 14.sp,
-                    ),
-                  ],
-                )
+                // Column(
+                //   mainAxisSize: MainAxisSize.min,
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     Obx(
+                //           () => userController.isLoadingUserProfile.value
+                //           ? const CustomLoader()
+                //           : Flexible(
+                //         child: CustomText(
+                //           text: userController.userProfile.value?.firstName ?? "N/A",
+                //           fontsize: 16.sp,
+                //           maxline: 1,
+                //           textOverflow:  TextOverflow.ellipsis,
+                //         ),
+                //       ),
+                //     ),
+                //     CustomText(
+                //       text: "Welcome back!".tr,
+                //       fontsize: 14.sp,
+                //     ),
+                //   ],
+                // )
 
 
               ],
             ),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Stack(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.notifications_none_sharp),
-                    onPressed: () {
-                      Get.toNamed(AppRoutes.notificationsScreen,preventDuplicates: false);
-                      // Handle notification click
-                    },
-                  ),
-                  Positioned(
-                    right: 14,
-                    top: 10,
-                    child: Container(
-                      height: 10,
-                      width: 10,
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-                ],
-
-              ),
-            ],
-          ),
-        ),
+        //   actions: [
+        //     Padding(
+        //       padding: const EdgeInsets.all(8.0),
+        //       child: Stack(
+        //         children: [
+        //           IconButton(
+        //             icon: Icon(Icons.notifications_none_sharp),
+        //             onPressed: () {
+        //               Get.toNamed(AppRoutes.notificationsScreen,preventDuplicates: false);
+        //               // Handle notification click
+        //             },
+        //           ),
+        //           Positioned(
+        //             right: 14,
+        //             top: 10,
+        //             child: Container(
+        //               height: 10,
+        //               width: 10,
+        //               decoration: BoxDecoration(
+        //                 color: Colors.red,
+        //                 shape: BoxShape.circle,
+        //               ),
+        //             ),
+        //           ),
+        //         ],
+        //
+        //       ),
+        //     ],
+        //   ),
+        // ),
         body: BackgroundImageContainer(
           child: Container(
             height: Get.height,

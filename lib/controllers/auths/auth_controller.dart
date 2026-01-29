@@ -97,41 +97,64 @@ class AuthController extends GetxController {
     required String password,
   }) async {
     signInLoading(true);
-    var headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    };
-    var body = {
-      "username": userName,
-      "password": password,
-    };
-    var response = await ApiClient.postData(
-      ApiConstants.signInEndPoint,
-      body,
-      headers: headers,
-    );
 
-    print("log in-----------------${response.body}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      await PrefsHelper.setString(
-        AppConstants.bearerToken,
-        response.body['data']['token'].toString(),
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+      };
+
+      var body = {
+        "username": userName,
+        "password": password,
+      };
+
+      var response = await ApiClient.postData(
+        ApiConstants.signInEndPoint,
+        body,
+        headers: headers,
       );
 
-      print(
-          "token---------->${PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString())}");
-      ToastMessageHelper.successMessageShowToster(
-          "${response.body["message"]}");
-      // Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
-      Get.off(() => HomeScreen(), preventDuplicates: false);
-      signInLoading(false);
-    } else {
-      signInLoading(false);
-      // print(response.body['message']);
+      print("log in-----------------${response.body}");
+
+      /// ✅ SUCCESS
+      if (response.statusCode == 200 || response.statusCode == 201) {
+
+
+        if(response.body["status"] == false){
+          ToastMessageHelper.errorMessageShowToster(response.body?['message'] ?? 'Invalid username or password',
+          );
+        }else{
+          final token = response.body?['data']['token'];
+          print("token::::---------$token");
+          await PrefsHelper.setString(
+            AppConstants.bearerToken,
+            token.toString(),
+          );
+
+          ToastMessageHelper.successMessageShowToster(
+            response.body?["message"] ?? "Login successful",
+          );
+
+          Get.off(() => HomeScreen(), preventDuplicates: false);
+        }
+      }
+      /// ❌ LOGIN FAILED (401, 403, etc)
+      else {
+        ToastMessageHelper.errorMessageShowToster(response.body?['message'] ?? 'Invalid username or password',
+        );
+      }
+    } catch (e) {
+      /// 💥 ANY UNEXPECTED ERROR
+      print("Login error: $e");
       ToastMessageHelper.errorMessageShowToster(
-          response.body['message'] ?? 'Login failed. Please try again.');
+        "Something went wrong. Please try again.",
+      );
+    } finally {
+      /// 🔁 ALWAYS STOP LOADING
+      signInLoading(false);
     }
   }
+
 
   ///==================Save Sign Up===========================
   RxBool forgotLoading = false.obs;
