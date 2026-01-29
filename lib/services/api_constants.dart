@@ -85,6 +85,8 @@ class ApiConstants {
   static String countryList = "/lookup/countryList";
   static String genderList = "/lookup/gender";
   static String bankList = "/lookup/bankList";
+  static String branchList = "/lookup/branchList";
   static String wealthList = "/lookup/wealthList?lang=en";
   static String getProfile = "/user/getProfileData";
+  static String documentTypeList = "/lookup/documentTypeList";
 }

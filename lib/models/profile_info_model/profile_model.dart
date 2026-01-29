@@ -499,7 +499,7 @@ class UserProfile {
   final String? firstName;
   final String? lastName;
   final String? email;
-  final DateTime? dob;
+  final String? dob;
   final int? nid;
   final String? nidPaperUrl;
   final dynamic passportNo;
@@ -578,7 +578,7 @@ class UserProfile {
         firstName: json["firstName"],
         lastName: json["lastName"],
         email: json["email"],
-        dob: json["dob"] == null ? null : DateTime.parse(json["dob"]),
+        dob: json["dob"] == null ? null : json["dob"] /*DateTime.parse()*/,
         nid: json["nid"],
         nidPaperUrl: json["nidPaperUrl"],
         passportNo: json["passportNo"],
@@ -619,8 +619,7 @@ class UserProfile {
         "firstName": firstName,
         "lastName": lastName,
         "email": email,
-        "dob":
-            "${dob!.year.toString().padLeft(4, '0')}-${dob!.month.toString().padLeft(2, '0')}-${dob!.day.toString().padLeft(2, '0')}",
+        "dob": dob,
         "nid": nid,
         "nidPaperUrl": nidPaperUrl,
         "passportNo": passportNo,

@@ -49,7 +49,7 @@ class ApiClient extends GetxService {
         ? body['message'].toString()
         : response.reasonPhrase;
 
-    log('====> API Response: [${response.statusCode}] ${ApiConstants.baseUrl + uri}\n$body');
+    log('====> API Response: [${response.statusCode}] ${ApiConstants.baseUrl + uri}\nToken:$_bearerToken\nBody\n$body');
 
     // 🔴 GLOBAL 401 HANDLING
     if (response.statusCode == 401) {
