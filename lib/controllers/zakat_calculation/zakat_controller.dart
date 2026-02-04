@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../helpers/helpers.dart';
-import '../../helpers/prefs_helper.dart';
+import '../../services/database_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
 import '../../utils/app_constant.dart';
@@ -68,7 +68,8 @@ class ZakatController extends GetxController {
   }) async {
     zakatLoading(true);
 
-    String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+    String bearerToken =
+        await DatabaseService.getString(AppConstants.bearerToken);
     print("token-------${bearerToken}");
     var headers = {
       'Content-Type': 'application/json',

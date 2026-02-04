@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
 import '../no_internet_screen.dart';
-import 'package:al_wasyeah/utils/app_strings.dart';
+import 'package:al_wasyeah/utils/app_en_strings.dart';
 import 'add_new_washyia_screen.dart';
 import 'wasiyah_preview_screen.dart';
 

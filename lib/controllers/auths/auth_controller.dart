@@ -1,12 +1,16 @@
+import 'dart:convert';
+
+import 'package:al_wasyeah/models/auths/login_response_model.dart';
+import 'package:al_wasyeah/models/security_questions/security_question_model.dart';
+import 'package:al_wasyeah/services/database_helper.dart';
+import 'package:al_wasyeah/services/database_keys.dart';
 import 'package:al_wasyeah/view/screen/home_screen.dart';
 import 'package:al_wasyeah/view/screen/otp_verify_screen.dart';
 import 'package:get/get.dart';
 
 import '../../helpers/helpers.dart';
-import '../../helpers/prefs_helper.dart';
-import '../../models/models.dart';
+
 import '../../services/services.dart';
-import '../../utils/app_constant.dart';
 
 class AuthController extends GetxController {
   @override
@@ -15,23 +19,45 @@ class AuthController extends GetxController {
     //
   }
 
+  // Save token after login
+  Future<void> saveToken(LoginResponseModel response) async {
+    final token = response.data?.token;
+    if (token == null || token.isEmpty) return;
+
+    await DatabaseService.instance.put<String>(
+      DatabaseKeys.authBox,
+      DatabaseKeys.token,
+      token,
+    );
+  }
+
+  // Get token
+  String? getToken() {
+    return DatabaseService.instance.get<String>(
+      DatabaseKeys.authBox,
+      DatabaseKeys.token,
+    );
+  }
+
+  // Clear token on logout
+  Future<void> clearToken() async {
+    await DatabaseService.instance.delete(
+      DatabaseKeys.authBox,
+      DatabaseKeys.token,
+    );
+  }
+
   ///==================get Question===========================
-  RxBool isQuestion = false.obs;
-  RxList<SecurityQuestionResponseModel> securityQuestionResponseModel =
-      <SecurityQuestionResponseModel>[].obs;
+
+  RxList<SecurityQuestionListModel> securityQuestionResponseModel =
+      <SecurityQuestionListModel>[].obs;
 
   getSecurityQuestion() async {
-    isQuestion(true);
     var response =
         await ApiClient.getData(ApiConstants.securityQuestionEndPoint);
-    print("getSecurityQuestion data ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
-      securityQuestionResponseModel.value =
-          List<SecurityQuestionResponseModel>.from(response.body
-              .map((x) => SecurityQuestionResponseModel.fromJson(x)));
-      isQuestion(false);
-    } else {
-      isQuestion(false);
+      securityQuestionResponseModel(
+          securityQuestionListModelFromJson(jsonEncode(response.body)));
     }
   }
 
@@ -39,27 +65,27 @@ class AuthController extends GetxController {
   RxBool signUpLoading = false.obs;
 
   Future<void> signUpHandle({
+    required String agreeTerms,
+    required String dob,
+    required String email,
     required String firstName,
     required String lastName,
-    required String email,
     required String mobile,
-    required String dob,
-    required String userTypeId,
-    required String securityCode,
     required String securityAnswer,
+    required String securityCode,
     required String source,
   }) async {
     signUpLoading(true);
     var headers = {'Content-Type': 'application/json'};
     var body = {
+      "agreeTerms": agreeTerms,
+      "dob": dob,
+      "email": email,
       "firstName": firstName,
       "lastName": lastName,
-      "email": email,
       "mobile": mobile,
-      "dob": dob,
-      "userTypeId": userTypeId,
-      "securityCode": securityCode,
       "securityAnswer": securityAnswer,
+      "securityCode": securityCode,
       "source": source,
     };
     var response = await ApiClient.postData(
@@ -67,7 +93,7 @@ class AuthController extends GetxController {
       body,
       headers: headers,
     );
-    print("regggggggggggggggggggggggggggg${response.body}");
+
     if (response.statusCode == 200) {
       // await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
       ToastMessageHelper.successMessageShowToster(
@@ -108,16 +134,11 @@ class AuthController extends GetxController {
       body,
       headers: headers,
     );
-
+    LoginResponseModel loginResponseModel =
+        loginResponseModelFromJson(jsonEncode(response.body));
     print("log in-----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
-      await PrefsHelper.setString(
-        AppConstants.bearerToken,
-        response.body['data']['token'].toString(),
-      );
-
-      print(
-          "token---------->${PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString())}");
+      loginResponseModel.data?.token;
       ToastMessageHelper.successMessageShowToster(
           "${response.body["message"]}");
       // Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../helpers/helpers.dart';
-import '../../helpers/prefs_helper.dart';
+import '../../services/database_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
 import 'package:http/http.dart' as http;
@@ -92,7 +92,7 @@ class NomineeController extends GetxController {
   }) async {
     addFeatureLoading(true);
     try {
-      final token = await PrefsHelper.getString(AppConstants.bearerToken);
+      final token = await DatabaseService.getString(AppConstants.bearerToken);
       final headers = {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
@@ -159,7 +159,7 @@ class NomineeController extends GetxController {
     final url = Uri.parse(
       '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=false',
     );
-    String token = await PrefsHelper.getString(AppConstants.bearerToken);
+    String token = await DatabaseService.getString(AppConstants.bearerToken);
     try {
       final response = await http.get(
         url,
@@ -245,7 +245,7 @@ class NomineeController extends GetxController {
   }) async {
     addNomineeLoading(true);
     try {
-      final token = await PrefsHelper.getString(AppConstants.bearerToken);
+      final token = await DatabaseService.getString(AppConstants.bearerToken);
       final headers = {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',

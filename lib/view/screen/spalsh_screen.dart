@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/controllers.dart';
-import '../../helpers/prefs_helper.dart';
+import '../../services/database_helper.dart';
 import '../../utils/app_image.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_en_strings.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/controllers/property_distribution_calculation/property_distribution_calculation_controller.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
-import 'package:al_wasyeah/utils/app_strings.dart';
+import 'package:al_wasyeah/utils/app_en_strings.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class PropertyDistributionCalculationPage extends StatelessWidget {

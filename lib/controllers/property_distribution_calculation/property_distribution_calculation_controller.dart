@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:al_wasyeah/helpers/toast_message_helper.dart';
 import 'package:al_wasyeah/services/api_client.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
-import 'package:al_wasyeah/utils/app_strings.dart';
+import 'package:al_wasyeah/utils/app_en_strings.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/models/property_distribution_calculation_model/relavant_list_model.dart';
 

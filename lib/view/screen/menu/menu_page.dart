@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/utils/app_image.dart';
 import 'package:al_wasyeah/view/screen/property_distribution_calculation/property_distribution_calculation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,7 +7,7 @@ import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
 import '../../../helpers/helpers.dart';
-import '../../../helpers/prefs_helper.dart';
+import '../../../services/database_helper.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/app_icons.dart';
 import '../../../utils/app_en_strings.dart';
@@ -480,19 +481,24 @@ class _MenuPageState extends State<MenuPage> {
                               fontSize: 16.h,
                               onpress: () async {
                                 //   profileController.promoCode.value = "";
-                                await PrefsHelper.remove(
+                                await DatabaseService.remove(
                                     AppConstants.bearerToken);
-                                await PrefsHelper.remove(AppConstants.userId);
-                                await PrefsHelper.remove(
+                                await DatabaseService.remove(
+                                    AppConstants.userId);
+                                await DatabaseService.remove(
                                     AppConstants.firstname);
-                                await PrefsHelper.remove(AppConstants.lastname);
+                                await DatabaseService.remove(
+                                    AppConstants.lastname);
                                 // await PrefsHelper.remove(AppConstants.userName);
-                                await PrefsHelper.remove(AppConstants.phone);
-                                await PrefsHelper.remove(AppConstants.image);
-                                await PrefsHelper.remove(AppConstants.email);
-                                await PrefsHelper.remove(
+                                await DatabaseService.remove(
+                                    AppConstants.phone);
+                                await DatabaseService.remove(
+                                    AppConstants.image);
+                                await DatabaseService.remove(
+                                    AppConstants.email);
+                                await DatabaseService.remove(
                                     AppConstants.businessID);
-                                await PrefsHelper.remove(AppConstants.type);
+                                await DatabaseService.remove(AppConstants.type);
 
                                 Get.toNamed(AppRoutes.loginScreen,
                                     preventDuplicates: false);

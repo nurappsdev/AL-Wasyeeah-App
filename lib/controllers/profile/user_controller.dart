@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:convert';
 
@@ -6,18 +5,19 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../helpers/helpers.dart';
-import '../../helpers/prefs_helper.dart';
+import '../../services/database_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
 import '../../utils/app_constant.dart';
 
-class UserController extends GetxController{
+class UserController extends GetxController {
   @override
-  onInit(){
+  onInit() {
     super.onInit();
     getsalatTimeHandle();
     getUserProfileData();
   }
+
   RxBool isLoadingUserProfile = false.obs;
   Rxn<GetUserResponseModel> userProfile = Rxn<GetUserResponseModel>();
 
@@ -30,7 +30,8 @@ class UserController extends GetxController{
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (response.body['userProfile'] != null) {
-          userProfile.value = GetUserResponseModel.fromJson(response.body['userProfile']);
+          userProfile.value =
+              GetUserResponseModel.fromJson(response.body['userProfile']);
         }
       }
     } catch (e) {
@@ -40,25 +41,26 @@ class UserController extends GetxController{
     }
   }
 
-
-
   RxBool salatTimeLoading = false.obs;
-  Rxn<GetSalatTimeResponseModel> getSalatTimeResponseModel = Rxn<GetSalatTimeResponseModel>();
+  Rxn<GetSalatTimeResponseModel> getSalatTimeResponseModel =
+      Rxn<GetSalatTimeResponseModel>();
 
   Future<void> getsalatTimeHandle() async {
     salatTimeLoading(true);
 
     try {
-
-     String lat = await PrefsHelper.getString(AppConstants.latitude);
-     String long = await PrefsHelper.getString(AppConstants.longitude);
-      var response = await ApiClient.getData(ApiConstants.salatTimeAPI(lat, long),);
+      String lat = await DatabaseService.getString(AppConstants.latitude);
+      String long = await DatabaseService.getString(AppConstants.longitude);
+      var response = await ApiClient.getData(
+        ApiConstants.salatTimeAPI(lat, long),
+      );
       print("UserProfile Response: ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         print("long ${long}");
         if (response.body != null) {
-          getSalatTimeResponseModel.value = GetSalatTimeResponseModel.fromJson(response.body);
+          getSalatTimeResponseModel.value =
+              GetSalatTimeResponseModel.fromJson(response.body);
         }
         prayerTimes.value = {
           'Fajr': getSalatTimeResponseModel.value?.fajr ?? '',
@@ -103,7 +105,8 @@ class UserController extends GetxController{
   void _calculateNextPrayer() {
     final now = DateTime.now();
     final today = DateFormat('yyyy-MM-dd').format(now);
-    final tomorrow = DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 1)));
+    final tomorrow =
+        DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 1)));
 
     bool found = false;
 
@@ -136,15 +139,10 @@ class UserController extends GetxController{
     }
   }
 
-
   void startPrayerTimer() {
     Timer.periodic(Duration(seconds: 1), (_) {
       _calculateNextPrayer();
       upcomingPrayer.refresh();
     });
   }
-
-
-
-
 }

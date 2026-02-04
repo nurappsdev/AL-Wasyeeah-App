@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../helpers/prefs_helper.dart';
+import '../../services/database_helper.dart';
 import '../../helpers/toast_message_helper.dart';
 import '../../models/access_phanel/zakat_property_wasyyah_model.dart';
 import '../../models/models.dart';
@@ -12,45 +12,47 @@ import 'package:http/http.dart' as http;
 
 import '../../utils/app_constant.dart';
 import '../access_phanel/ContextsService.dart';
-class WitnessController extends GetxController{
 
-@override
+class WitnessController extends GetxController {
+  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     searchController.clear();
   }
+
   ///==================get Witness===========================
-  RxBool isWitness= false.obs;
+  RxBool isWitness = false.obs;
   RxList<GetWitnessResponseModel> witnessData = <GetWitnessResponseModel>[].obs;
-  getWitnessData() async{
+  getWitnessData() async {
     isWitness(true);
     var response = await ApiClient.getData(ApiConstants.witnessEndPoint);
     print("nomineeData data ------------${response.body}");
-    if(response.statusCode == 200 || response.statusCode == 201){
-      witnessData.value = List<GetWitnessResponseModel>.from(response.body.map((x)=> GetWitnessResponseModel.fromJson(x)));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      witnessData.value = List<GetWitnessResponseModel>.from(
+          response.body.map((x) => GetWitnessResponseModel.fromJson(x)));
       isWitness(false);
-    }else{
+    } else {
       isWitness(false);
     }
   }
 
-
   ///==================get nominee===========================
-  RxBool isWitnessesYou= false.obs;
-  RxList<GetWitnessResponseModel> witnessesYouData = <GetWitnessResponseModel>[].obs;
-  getWitnessesYouData() async{
+  RxBool isWitnessesYou = false.obs;
+  RxList<GetWitnessResponseModel> witnessesYouData =
+      <GetWitnessResponseModel>[].obs;
+  getWitnessesYouData() async {
     isWitnessesYou(true);
     var response = await ApiClient.getData(ApiConstants.witnessesYouEndPoint);
     print("witnessesYouData data ------------${response.body}");
-    if(response.statusCode == 200 || response.statusCode == 201){
-      witnessesYouData.value = List<GetWitnessResponseModel>.from(response.body.map((x)=> GetWitnessResponseModel.fromJson(x)));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      witnessesYouData.value = List<GetWitnessResponseModel>.from(
+          response.body.map((x) => GetWitnessResponseModel.fromJson(x)));
       isWitnessesYou(false);
-    }else{
+    } else {
       isWitnessesYou(false);
     }
   }
-
 
   final TextEditingController searchController = TextEditingController();
   var isLoading = false.obs;
@@ -65,10 +67,10 @@ class WitnessController extends GetxController{
     final url = Uri.parse(
       '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=true',
     );
-    String token = await PrefsHelper.getString(AppConstants.bearerToken);
+    String token = await DatabaseService.getString(AppConstants.bearerToken);
     try {
       final response = await http.get(
-          url,
+        url,
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
@@ -90,57 +92,52 @@ class WitnessController extends GetxController{
     }
   }
 
-
-///==================get Question===========================
-RxBool isDelNomineeYou= false.obs;
-getWitnessDeleteData({String? requestKey}) async{
-  isDelNomineeYou(true);
-  var response = await ApiClient.getData("${ApiConstants.witnessDeletePoint}?requestKey=${requestKey}");
-  print("deleteData data ------------${response.body}");
-  if(response.statusCode == 200 || response.statusCode == 201){
-
-    ToastMessageHelper.successMessageShowToster(
-      "REMOVE THIS WITNESS FROM YOUR SIDE SUCCESSFULLY!!",
-    );
-    getWitnessData();
-    isDelNomineeYou(false);
-  } else if(response.body == 500){
-    ToastMessageHelper.errorMessageShowToster("500 Internal Server Error");
-  }else{
-    isDelNomineeYou(false);
-    ToastMessageHelper.errorMessageShowToster("Try Again");
-  }
-}
-
-
-
-
-
-RxBool isZakatPropertyWasiyyah = false.obs;
-Rx<ZakatPropertyWasiyyahModel?> contextsData = Rx<ZakatPropertyWasiyyahModel?>(null);
-
-/// 🔥 DIRECT API CALL INSIDE CONTROLLER
-Future<void> fetchContextsData(String requestKey) async {
-  try {
-    isZakatPropertyWasiyyah.value = true;
-
-
-    var response = await ApiClient.getData("${ApiConstants.baseUrl}/getContextsData?requestKey=$requestKey",);
+  ///==================get Question===========================
+  RxBool isDelNomineeYou = false.obs;
+  getWitnessDeleteData({String? requestKey}) async {
+    isDelNomineeYou(true);
+    var response = await ApiClient.getData(
+        "${ApiConstants.witnessDeletePoint}?requestKey=${requestKey}");
     print("deleteData data ------------${response.body}");
-
-    if (response.statusCode != 200 || response.statusCode == 201) {
-      final data = jsonDecode(response.body);
-
-      contextsData.value = ZakatPropertyWasiyyahModel.fromJson(data);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      ToastMessageHelper.successMessageShowToster(
+        "REMOVE THIS WITNESS FROM YOUR SIDE SUCCESSFULLY!!",
+      );
+      getWitnessData();
+      isDelNomineeYou(false);
+    } else if (response.body == 500) {
+      ToastMessageHelper.errorMessageShowToster("500 Internal Server Error");
     } else {
-      throw Exception(
-          "Request Failed. Status code: ${response.statusCode}");
+      isDelNomineeYou(false);
+      ToastMessageHelper.errorMessageShowToster("Try Again");
     }
-  } catch (e) {
-    Get.snackbar("Error", e.toString());
-  } finally {
-    isZakatPropertyWasiyyah.value = false;
   }
-}
 
+  RxBool isZakatPropertyWasiyyah = false.obs;
+  Rx<ZakatPropertyWasiyyahModel?> contextsData =
+      Rx<ZakatPropertyWasiyyahModel?>(null);
+
+  /// 🔥 DIRECT API CALL INSIDE CONTROLLER
+  Future<void> fetchContextsData(String requestKey) async {
+    try {
+      isZakatPropertyWasiyyah.value = true;
+
+      var response = await ApiClient.getData(
+        "${ApiConstants.baseUrl}/getContextsData?requestKey=$requestKey",
+      );
+      print("deleteData data ------------${response.body}");
+
+      if (response.statusCode != 200 || response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+
+        contextsData.value = ZakatPropertyWasiyyahModel.fromJson(data);
+      } else {
+        throw Exception("Request Failed. Status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    } finally {
+      isZakatPropertyWasiyyah.value = false;
+    }
+  }
 }
