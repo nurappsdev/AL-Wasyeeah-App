@@ -98,10 +98,9 @@ class ProfileController extends GetxController {
         '${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
 
     final String filePath = '${ApiConstants.imageUrl}$urlPath';
-    log("$filePrefix File Path: $filePath");
 
     FileDownloadUtil.downloadFile(
-      /*filePath*/ 'https://research.nhm.org/pdfs/10840/10840-002.pdf',
+      filePath,
       fileName,
       (progress) {
         downloadProgressMap[type] = progress;
