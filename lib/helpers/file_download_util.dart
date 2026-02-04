@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
@@ -27,11 +28,11 @@ class FileDownloadUtil {
       },
       onDone: () async {
         // Save the file when the download is complete
-        final directory = await getApplicationDocumentsDirectory();
+        // final directory = await getApplicationDocumentsDirectory();
+        final directory = Directory('/storage/emulated/0/Download');
         final file = File('${directory.path}/$fileName');
         await file.writeAsBytes(bytes);
-        onProgress(100.0); // Signal completion
-        print('Download complete. File saved at: ${file.path}');
+        onProgress(100.0);
       },
       onError: (error) {
         print('Download error: $error');
