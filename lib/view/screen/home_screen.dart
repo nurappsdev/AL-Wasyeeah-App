@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
   }
-/// middle branch checkg
+
   @override
   void dispose() {
     timer?.cancel();
@@ -149,30 +149,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     // ),
                   ),
                   SizedBox(width: 8.h), // Space between the image and text
-
-                  // Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Obx(
-                  //       () => userController.isLoadingUserProfile.value
-                  //           ? CustomLoader()
-                  //           : CustomText(
-                  //               text: userController
-                  //                       .userProfile.value?.firstName ??
-                  //                   "N/A",
-                  //               fontsize: 16.sp,
-                  //               textAlign: TextAlign.start,
-                  //             ),
-                  //     ),
-                  //     CustomText(
-                  //       text: "Welcome back!".tr,
-                  //       fontsize: 14.sp,
-                  //       textAlign: TextAlign.start,
-                  //     ),
-                  //   ],
-                  // ),
-
                   Column(
                     mainAxisSize: MainAxisSize.min, // ⭐ IMPORTANT
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,7 +177,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-
 
 
                 ],
@@ -236,40 +211,34 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
 
               ),
+              SizedBox(width: 8.h), // Space between the image and text
+              // Column(
+              //   mainAxisSize: MainAxisSize.min,
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Obx(
+              //           () => userController.isLoadingUserProfile.value
+              //           ? const CustomLoader()
+              //           : Flexible(
+              //         child: CustomText(
+              //           text: userController.userProfile.value?.firstName ?? "N/A",
+              //           fontsize: 16.sp,
+              //           maxline: 1,
+              //           textOverflow:  TextOverflow.ellipsis,
+              //         ),
+              //       ),
+              //     ),
+              //     CustomText(
+              //       text: "Welcome back!".tr,
+              //       fontsize: 14.sp,
+              //     ),
+              //   ],
+              // )
+
+
             ],
           ),
         ),
-
-
-                ),
-                SizedBox(width: 8.h), // Space between the image and text
-                // Column(
-                //   mainAxisSize: MainAxisSize.min,
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
-                //     Obx(
-                //           () => userController.isLoadingUserProfile.value
-                //           ? const CustomLoader()
-                //           : Flexible(
-                //         child: CustomText(
-                //           text: userController.userProfile.value?.firstName ?? "N/A",
-                //           fontsize: 16.sp,
-                //           maxline: 1,
-                //           textOverflow:  TextOverflow.ellipsis,
-                //         ),
-                //       ),
-                //     ),
-                //     CustomText(
-                //       text: "Welcome back!".tr,
-                //       fontsize: 14.sp,
-                //     ),
-                //   ],
-                // )
-
-
-              ],
-            ),
-          ),
         //   actions: [
         //     Padding(
         //       padding: const EdgeInsets.all(8.0),
@@ -300,7 +269,6 @@ class _HomeScreenState extends State<HomeScreen> {
         //     ],
         //   ),
         // ),
-
         body: BackgroundImageContainer(
           child: Container(
             height: Get.height,

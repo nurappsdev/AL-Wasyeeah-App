@@ -85,7 +85,7 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                                 // Get.toNamed(AppRoutes.nomineeDetailsScreen);
                               },
                               child: Text(
-                                "Go Access",
+                                "Give Access",
                                 style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.w600,

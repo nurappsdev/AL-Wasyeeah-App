@@ -76,7 +76,7 @@ class _NomineeApplicationMenuState extends State<NomineeApplicationMenu> {
                                 // Get.toNamed(AppRoutes.nomineeDetailsScreen);
                               },
                               child: Text(
-                                "Go Access",
+                                "Give Access",
                                 style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.w600,

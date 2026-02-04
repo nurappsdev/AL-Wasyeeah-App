@@ -507,7 +507,7 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                      right: 0,
                      child: Center(
                        child: CustomText(
-                         text: "Panel",
+                         text: "Access Panel",
                          fontWeight: FontWeight.w600,
                          fontsize: 32.sp,
                          color: AppColors.primaryColor,

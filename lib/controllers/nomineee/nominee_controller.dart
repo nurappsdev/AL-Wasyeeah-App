@@ -114,7 +114,7 @@ class NomineeController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessageHelper.successMessageShowToster(
             "RECORD UPDATED SUCCESSFULLY!!");
-        getNomineeAccessData();
+        // getNomineeAccessData();
         update();
         Get.back();
       } else {
