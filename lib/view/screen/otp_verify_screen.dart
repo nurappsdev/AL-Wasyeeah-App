@@ -3,7 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../utils/utils.dart';
+import '../../utils/app_en_strings.dart';
+import '../../utils/app_dimentions.dart';
+import '../../utils/app_icons.dart';
+import '../../utils/app_colors.dart';
 import '../widgets/widgets.dart';
 import 'profile/profile_page.dart';
 
@@ -39,7 +42,7 @@ class OtpVerifyScreen extends StatelessWidget {
                 ),
                 Center(
                     child: CustomText(
-                  text: "Enter OTP".tr,
+                  text: AppString.enterOTP.tr,
                   fontsize: 24.sp,
                   textAlign: TextAlign.center,
                   fontWeight: FontWeight.w500,
@@ -49,7 +52,7 @@ class OtpVerifyScreen extends StatelessWidget {
                 ),
                 Center(
                     child: CustomText(
-                  text: "An 5 digit code sent to your".tr,
+                  text: AppString.otpSentMsg.tr,
                   fontsize: 16.sp,
                   maxline: 2,
                   textAlign: TextAlign.center,
@@ -67,7 +70,7 @@ class OtpVerifyScreen extends StatelessWidget {
                 ///=============Sign In Button====================
                 CustomButtonCommon(
                   // loading: authController.loadingLoading.value == true,
-                  title: "Submit".tr,
+                  title: AppString.submit.tr,
                   onpress: () {
                     Get.off(() => ProfilePage());
                     // if (_forRegKey.currentState!.validate()) {
@@ -84,11 +87,11 @@ class OtpVerifyScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomText(
-                      text: "Didn’t receive code?".tr,
+                      text: AppString.didntReceiveCode.tr,
                       fontsize: 18.sp,
                     ),
                     CustomText(
-                      text: "Resent Code".tr,
+                      text: AppString.resendCode.tr,
                       fontsize: 18.sp,
                       color: AppColors.primaryColor,
                     ),

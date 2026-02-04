@@ -4,28 +4,35 @@ import 'package:get/get.dart';
 
 import '../../../../controllers/controllers.dart';
 import '../../../../helpers/helpers.dart';
-import '../../../../utils/utils.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/app_en_strings.dart';
+import '../../../../utils/app_image.dart';
 import '../../../widgets/widgets.dart';
 
 class AddWitnessScreen extends StatefulWidget {
-   AddWitnessScreen({super.key});
+  AddWitnessScreen({super.key});
 
   @override
   State<AddWitnessScreen> createState() => _AddWitnessScreenState();
 }
 
 class _AddWitnessScreenState extends State<AddWitnessScreen> {
-@override
+  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-
   }
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(WitnessController());
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Add Witness".tr,fontsize: 18. sp,),),
+      appBar: AppBar(
+        title: CustomText(
+          text: "Add Witness".tr,
+          fontsize: 18.sp,
+        ),
+      ),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -39,17 +46,23 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 20.h),
+
                       ///=============Last Name====================
-                      SizedBox(height: 10.h,),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
                           controller: controller.searchController,
                           hintText: "Search".tr,
                           borderColor: AppColors.secondaryPrimaryColor,
-                          suffixIcon: IconButton(onPressed:
-                            controller.searchWitness,
-                          icon: Icon(Icons.search_rounded,color: AppColors.primaryColor,)),
+                          suffixIcon: IconButton(
+                              onPressed: controller.searchWitness,
+                              icon: Icon(
+                                Icons.search_rounded,
+                                color: AppColors.primaryColor,
+                              )),
                         ),
                       ),
                       // Padding(
@@ -114,16 +127,19 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
                             margin: EdgeInsets.symmetric(vertical: 8.0),
                             child: ListTile(
                               leading: CircleAvatar(
-                                backgroundImage: AssetImage(AppImages.profileIcon),
+                                backgroundImage:
+                                    AssetImage(AppImages.profileIcon),
                                 radius: 30,
                               ),
                               title: Text(
-                                controller.witnesssData['name'] ?? 'Name not found',
+                                controller.witnesssData['name'] ??
+                                    'Name not found',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               subtitle: Row(
                                 children: [
-                                  Icon(Icons.visibility, size: 16.0, color: Colors.grey),
+                                  Icon(Icons.visibility,
+                                      size: 16.0, color: Colors.grey),
                                   SizedBox(width: 4.0),
                                   Text(
                                     "View Details".tr,
@@ -132,7 +148,8 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
                                 ],
                               ),
                               onTap: () {
-                                Get.toNamed('/witnessDetailsScreen', preventDuplicates: false);
+                                Get.toNamed('/witnessDetailsScreen',
+                                    preventDuplicates: false);
                               },
                             ),
                           );
@@ -143,11 +160,11 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
                         title: "+ Add outside witness".tr,
                         titlecolor: AppColors.primaryColor,
                         onpress: () {
-                          Get.toNamed(AppRoutes.addOutsideWitnessScreen,preventDuplicates: false);
+                          Get.toNamed(AppRoutes.addOutsideWitnessScreen,
+                              preventDuplicates: false);
                         },
                       ),
                       SizedBox(height: 10.h),
-
                     ],
                   ),
                 ],
@@ -155,7 +172,6 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
             ),
           ),
         ),
-
       ),
     );
   }

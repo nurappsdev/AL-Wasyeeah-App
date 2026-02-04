@@ -1,20 +1,23 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../utils/utils.dart';
+import '../../utils/app_colors.dart';
 
 class CustomPinCodeTextField extends StatelessWidget {
-  const CustomPinCodeTextField({super.key,this.textEditingController});
+  const CustomPinCodeTextField({super.key, this.textEditingController});
   final TextEditingController? textEditingController;
   @override
   Widget build(BuildContext context) {
-    return  PinCodeTextField(
+    return PinCodeTextField(
       backgroundColor: Colors.transparent,
       cursorColor: AppColors.primaryColor,
       controller: textEditingController,
-      textStyle:  TextStyle(color: AppColors.textColor4E4E4E, fontSize: 16.sp, fontFamily:"ComicNeue-Light",fontWeight: FontWeight.w400),
+      textStyle: TextStyle(
+          color: AppColors.textColor4E4E4E,
+          fontSize: 16.sp,
+          fontFamily: "ComicNeue-Light",
+          fontWeight: FontWeight.w400),
       autoFocus: false,
       appContext: context,
       scrollPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 32.h),

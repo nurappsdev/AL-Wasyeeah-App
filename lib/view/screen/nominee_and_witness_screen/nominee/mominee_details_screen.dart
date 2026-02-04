@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../utils/utils.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/app_en_strings.dart';
 import '../../../widgets/widgets.dart';
 
 class NomineeDetailsScreen extends StatelessWidget {
@@ -11,7 +11,12 @@ class NomineeDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Nominee Profile Details".tr,fontsize: 18.sp,),),
+      appBar: AppBar(
+        title: CustomText(
+          text: "Nominee Profile Details".tr,
+          fontsize: 18.sp,
+        ),
+      ),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -36,7 +41,8 @@ class NomineeDetailsScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundImage: NetworkImage("https://via.placeholder.com/150"),
+                              backgroundImage: NetworkImage(
+                                  "https://via.placeholder.com/150"),
                               radius: 30,
                             ),
                             title: Text(
@@ -48,7 +54,9 @@ class NomineeDetailsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10.h,),
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -57,9 +65,11 @@ class NomineeDetailsScreen extends StatelessWidget {
                       border: Border.all(),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.4), // Shadow color with opacity
+                          color: Colors.black
+                              .withOpacity(0.4), // Shadow color with opacity
                           blurRadius: 10.0, // Softness of the shadow
-                          offset: Offset(0.5, 1), // Position of the shadow (x, y)
+                          offset:
+                              Offset(0.5, 1), // Position of the shadow (x, y)
                         ),
                       ],
                     ),
@@ -96,7 +106,8 @@ class NomineeDetailsScreen extends StatelessWidget {
                           _buildRow("Marital Status:", "Married"),
 
                           /// Spouse's Row
-                          _buildRow("Spouse’s:", "Mithila IslamJinia Chowdhury"),
+                          _buildRow(
+                              "Spouse’s:", "Mithila IslamJinia Chowdhury"),
 
                           /// Profession Row
                           _buildRow("Profession:", "Teacher"),
@@ -137,15 +148,16 @@ class NomineeDetailsScreen extends StatelessWidget {
             ),
           ),
         ),
-
       ),
     );
   }
+
   Widget _buildRow(String label, String value) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.h),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align label and value
+        mainAxisAlignment:
+            MainAxisAlignment.spaceBetween, // Align label and value
         children: [
           Expanded(
             flex: 1,
@@ -169,6 +181,4 @@ class NomineeDetailsScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

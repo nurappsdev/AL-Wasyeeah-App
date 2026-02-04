@@ -7,7 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
-import '../../../utils/utils.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_en_strings.dart';
 import '../../widgets/widgets.dart';
 
 class ProfileSettingStepTwoWidget extends StatefulWidget {
@@ -36,19 +37,22 @@ class _ProfileSettingStepTwoWidgetState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 /// ========= Present Address =========
-                _sectionTitle("Present Address"),
+                _sectionTitle(AppString.presentAddress),
 
                 _textField(
-                  label: "Zip code",
+                  label: AppString.zipCode.tr,
                   controller: form.presentZipCode,
+                  error: AppString.zipCodeRequired.tr,
                 ),
                 _textField(
-                  label: "Village/House",
+                  label: AppString.villageHouse.tr,
                   controller: form.presentVillage,
+                  error: AppString.villageHouseRequired.tr,
                 ),
                 _textField(
-                  label: "Road/Block/Section",
+                  label: AppString.roadBlockSection.tr,
                   controller: form.presentRoad,
+                  error: AppString.roadBlockSectionRequired.tr,
                 ),
 
                 /// ========= Permanent Address =========
@@ -67,30 +71,33 @@ class _ProfileSettingStepTwoWidgetState
                         }
                       },
                       title: Text(
-                        "Mark Present Address as Permanent Address".tr,
+                        AppString.markAsPermanent.tr,
                       ),
                     )),
 
-                _sectionTitle("Permanent Address"),
+                _sectionTitle(AppString.permanentAddress),
 
                 _textField(
-                  label: "Zip code",
+                  label: AppString.zipCode.tr,
                   controller: form.permanentZipCode,
+                  error: AppString.zipCodeRequired.tr,
                 ),
                 _textField(
-                  label: "Village/House",
+                  label: AppString.villageHouse.tr,
                   controller: form.permanentVillage,
+                  error: AppString.villageHouseRequired.tr,
                 ),
                 _textField(
-                  label: "Road/Block/Section",
+                  label: AppString.roadBlockSection.tr,
                   controller: form.permanentRoad,
+                  error: AppString.roadBlockSectionRequired.tr,
                 ),
 
                 /// ========= Overseas Address =========
-                _sectionTitle("Overseas Address"),
+                _sectionTitle(AppString.overseasAddress),
 
                 Obx(() => CustomDropdown<CountryModel>(
-                      hint: "Select Country",
+                      hint: AppString.selectCountry.tr,
                       items: controller.countryList,
                       value: form.selectedOverseasCountry.value,
                       itemToString: (item) => item.country ?? "",
@@ -99,8 +106,9 @@ class _ProfileSettingStepTwoWidgetState
                     )),
 
                 _textField(
-                  label: "Village/House",
+                  label: AppString.villageHouse.tr,
                   controller: form.overseasVillage,
+                  error: AppString.villageHouseRequired.tr,
                 ),
 
                 /// ========= Button =========
@@ -138,7 +146,7 @@ class _ProfileSettingStepTwoWidgetState
           ),
           padding: EdgeInsets.all(8.h),
           child: Text(
-            title.tr,
+            title,
             style: TextStyle(color: Colors.white, fontSize: 22.sp),
           ),
         ),
@@ -150,16 +158,17 @@ class _ProfileSettingStepTwoWidgetState
   Widget _textField({
     required String label,
     required TextEditingController controller,
+    required String error,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: label.tr, fontsize: 16.sp),
+        CustomText(text: label, fontsize: 16.sp),
         SizedBox(height: 4.h),
         CustomTextFormField(
           controller: controller,
-          hint: label.tr,
-          validator: (value) => value!.isEmpty ? "$label is required" : null,
+          hint: label,
+          validator: (value) => value!.isEmpty ? error : null,
         ),
         SizedBox(height: 16.h),
       ],

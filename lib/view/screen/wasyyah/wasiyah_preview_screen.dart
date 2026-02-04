@@ -138,15 +138,15 @@
 //   }
 //import '../../../helpers/helpers.dart';
 
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../helpers/app_routes.dart';
 import '../../../models/models.dart';
-import '../../../utils/utils.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_en_strings.dart';
+import '../../../utils/app_image.dart';
 import '../../widgets/widgets.dart';
 
 class WasyyahPreviewScreen extends StatefulWidget {
@@ -170,7 +170,7 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: "Wasyyah Preview",
+          text: AppString.wasyyahPreview.tr,
           fontsize: 18.sp,
           fontWeight: FontWeight.w600,
         ),
@@ -186,21 +186,25 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
                 children: [
                   Image.asset(AppImages.wasyyahIcon),
                   Positioned(
-                     right: 20.w,
+                      right: 20.w,
                       top: 10.h,
-                      child: Image.asset(AppImages.scanImg,height: 50.h,width: 40.w,)),
+                      child: Image.asset(
+                        AppImages.scanImg,
+                        height: 50.h,
+                        width: 40.w,
+                      )),
                 ],
               ),
 
               CustomText(
-                text: "Bismillahir Rahmanir Raheem".tr,
+                text: AppString.bismillah.tr,
                 fontsize: 14,
               ),
               SizedBox(height: 10.h),
               Divider(color: AppColors.primaryColor, height: 14),
               SizedBox(height: 10.h),
               CustomText(
-                text: "ওয়াসিয়াহ (ইচ্ছানামা)".tr,
+                text: AppString.wasyyahTitleInBangla.tr,
                 fontsize: 20.sp,
                 fontWeight: FontWeight.w700,
               ),
@@ -212,55 +216,55 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
               ...waseeyaList
                   .where((item) => item.visible == "Y")
                   .map((item) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    // color: Colors.white,
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: Colors.grey.withOpacity(0.5),
-                    //     spreadRadius: 2,
-                    //     blurRadius: 5,
-                    //     offset: Offset(0, 3),
-                    //   ),
-                    // ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 5.h),
-                        Center(
-                          child: CustomText(
-                            text: item.title ?? "নিজের পরিচিতি",
-                            fontsize: 16.sp,
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            // color: Colors.white,
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //     color: Colors.grey.withOpacity(0.5),
+                            //     spreadRadius: 2,
+                            //     blurRadius: 5,
+                            //     offset: Offset(0, 3),
+                            //   ),
+                            // ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 5.h),
+                                Center(
+                                  child: CustomText(
+                                    text: item.title ?? "নিজের পরিচিতি",
+                                    fontsize: 16.sp,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 40),
+                                  child: Divider(
+                                    color: AppColors.primaryColor,
+                                    endIndent: 2.2,
+                                    thickness: 1.2,
+                                  ),
+                                ),
+                                SizedBox(height: 6.h),
+                                CustomText(
+                                  fontWeight: FontWeight.w500,
+                                  maxline: 100,
+                                  text: item.content ?? "No content available.",
+                                  textAlign: TextAlign.start,
+                                ),
+                                SizedBox(height: 10.h),
+                              ],
+                            ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
-                          child: Divider(
-                            color: AppColors.primaryColor,
-                            endIndent: 2.2,
-                            thickness: 1.2,
-                          ),
-                        ),
-                        SizedBox(height: 6.h),
-                        CustomText(
-                          fontWeight: FontWeight.w500,
-                          maxline: 100,
-                          text: item.content ?? "No content available.",
-                          textAlign: TextAlign.start,
-                        ),
-                        SizedBox(height: 10.h),
-                      ],
-                    ),
-                  ),
-                ),
-              ))
+                      ))
                   .toList(),
-
             ],
           ),
         ),

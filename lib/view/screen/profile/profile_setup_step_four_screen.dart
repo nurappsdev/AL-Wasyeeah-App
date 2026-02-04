@@ -6,7 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../../utils/utils.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_en_strings.dart';
 import '../../widgets/widgets.dart';
 import '../../widgets/file_choose_and_download_button.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
@@ -27,14 +28,14 @@ class ProfileSettingStepFourWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ===== Header =====
-            _sectionTitle("Family Information".tr),
+            _sectionTitle(AppString.familyInformation.tr),
 
             // ===== Spouse forms =====
             _SpouseWidget(controller: controller),
-            _sectionTitle("Children Information".tr),
+            _sectionTitle(AppString.childrenInformation.tr),
             // ===== Children Information =====
             _ChildWidget(controller: controller),
-            _sectionTitle("Sibling Information".tr),
+            _sectionTitle(AppString.siblingInformation.tr),
             // ===== Sibling Information =====
             SiblingWidget(controller: controller),
             SizedBox(height: 20.h),
@@ -110,7 +111,7 @@ class SiblingWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        text: "Sibling Name".tr,
+                        text: AppString.siblingName.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -128,12 +129,12 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Gender
                       CustomText(
-                        text: "Gender".tr,
+                        text: AppString.gender.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<GenderModel>(
-                        hint: "Gender".tr,
+                        hint: AppString.gender.tr,
                         items: controller.genderList,
                         value: form.gender.value,
                         itemToString: (e) => e.gender ?? "",
@@ -142,12 +143,12 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Profession
                       CustomText(
-                        text: "Profession".tr,
+                        text: AppString.profession.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<ProfessionModel>(
-                        hint: "Profession".tr,
+                        hint: AppString.profession.tr,
                         items: controller.professionList,
                         value: form.profession.value,
                         itemToString: (e) => e.profession ?? "",
@@ -156,12 +157,12 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Nationality
                       CustomText(
-                        text: "Nationality".tr,
+                        text: AppString.nationality.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<CountryModel>(
-                        hint: "Nationality".tr,
+                        hint: AppString.nationality.tr,
                         items: controller.countryList,
                         value: form.nationality.value,
                         itemToString: (e) => e.country ?? "",
@@ -170,7 +171,7 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Date of Birth
                       CustomText(
-                        text: "Sibling Date of Birth".tr,
+                        text: AppString.siblingDob.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -233,7 +234,7 @@ class SiblingWidget extends StatelessWidget {
                         hint: "NID/Passport No".tr,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter NID/Passport No".tr;
+                            return AppString.nidPassportNoRequired.tr;
                           }
                           return null;
                         },
@@ -264,8 +265,7 @@ class SiblingWidget extends StatelessWidget {
                             if (isComplete) {
                               Fluttertoast.showToast(
                                 msg:
-                                    "Sibling (${form.name.text}) NID File downloaded successfully"
-                                        .tr,
+                                    "Sibling (${form.name.text}) ${AppString.fileDownloadedSuccess.tr}",
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.TOP,
                                 timeInSecForIosWeb: 2,
@@ -314,7 +314,7 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
 
                       CustomText(
-                        text: "Sibling Existence Status".tr,
+                        text: AppString.siblingExistenceStatus.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -388,7 +388,7 @@ class SiblingWidget extends StatelessWidget {
                                 SizedBox(width: 8.w),
                                 Expanded(
                                   child: Text(
-                                    "Add More Sibling".tr,
+                                    AppString.addMoreSibling.tr,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -442,16 +442,16 @@ class _ChildWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        text: "Child Name".tr,
+                        text: AppString.childName.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
                         controller: form.name,
-                        hint: "Child Name".tr,
+                        hint: AppString.childName.tr,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter name".tr;
+                            return AppString.nameRequired.tr;
                           }
                           return null;
                         },
@@ -460,12 +460,12 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Gender
                       CustomText(
-                        text: "Gender".tr,
+                        text: AppString.gender.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<GenderModel>(
-                        hint: "Gender".tr,
+                        hint: AppString.gender.tr,
                         items: controller.genderList,
                         value: form.gender.value,
                         itemToString: (e) => e.gender ?? "",
@@ -474,12 +474,12 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Profession
                       CustomText(
-                        text: "Profession".tr,
+                        text: AppString.profession.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<ProfessionModel>(
-                        hint: "Profession".tr,
+                        hint: AppString.profession.tr,
                         items: controller.professionList,
                         value: form.profession.value,
                         itemToString: (e) => e.profession ?? "",
@@ -488,12 +488,12 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Nationality
                       CustomText(
-                        text: "Nationality".tr,
+                        text: AppString.nationality.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<CountryModel>(
-                        hint: "Nationality".tr,
+                        hint: AppString.nationality.tr,
                         items: controller.countryList,
                         value: form.nationality.value,
                         itemToString: (e) => e.country ?? "",
@@ -502,7 +502,7 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Date of Birth
                       CustomText(
-                        text: "Child Date of Birth".tr,
+                        text: AppString.childDob.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -565,7 +565,7 @@ class _ChildWidget extends StatelessWidget {
                         hint: "NID/Passport No".tr,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter NID/Passport No".tr;
+                            return AppString.nidPassportNoRequired.tr;
                           }
                           return null;
                         },
@@ -596,8 +596,7 @@ class _ChildWidget extends StatelessWidget {
                             if (isComplete) {
                               Fluttertoast.showToast(
                                 msg:
-                                    "Child (${form.name.text}) NID File downloaded successfully"
-                                        .tr,
+                                    "Child (${form.name.text}) ${AppString.fileDownloadedSuccess.tr}",
                                 toastLength: Toast.LENGTH_LONG,
                                 gravity: ToastGravity.TOP,
                                 timeInSecForIosWeb: 2,
@@ -646,7 +645,7 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
 
                       CustomText(
-                        text: "Child Existence Status".tr,
+                        text: AppString.childExistenceStatus.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -658,14 +657,16 @@ class _ChildWidget extends StatelessWidget {
                           fillColor:
                               form.isAlive.value ? Colors.green : Colors.red,
                           selectedColor: Colors.white,
-                          children: const [
+                          children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 40),
-                              child: Text("Alive"),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40),
+                              child: Text(AppString.alive.tr),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 40),
-                              child: Text("Dead"),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40),
+                              child: Text(AppString.dead.tr),
                             ),
                           ],
                         ),
@@ -720,7 +721,7 @@ class _ChildWidget extends StatelessWidget {
                                 SizedBox(width: 8.w),
                                 Expanded(
                                   child: Text(
-                                    "Add More Child".tr,
+                                    AppString.addMoreChild.tr,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -774,28 +775,28 @@ class _SpouseWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomText(
-                      text: "Spouse Name".tr,
+                      text: AppString.spouseName.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.name,
-                      hint: "Spouse Name".tr,
+                      hint: AppString.spouseName.tr,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter name".tr;
+                          return AppString.nameRequired.tr;
                         }
                         return null;
                       },
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Spouse Profession".tr,
+                      text: AppString.spouseProfession.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
                     CustomDropdown<ProfessionModel>(
-                      hint: "Profession".tr,
+                      hint: AppString.profession.tr,
                       items: controller.professionList,
                       value: form.profession.value,
                       itemToString: (e) => e.profession ?? "",
@@ -803,12 +804,12 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Spouse Nationality".tr,
+                      text: AppString.spouseNationality.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
                     CustomDropdown<CountryModel>(
-                      hint: "Nationality".tr,
+                      hint: AppString.nationality.tr,
                       items: controller.countryList,
                       value: form.nationality.value,
                       itemToString: (e) => e.country ?? "",
@@ -816,7 +817,7 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Spouse Date of Birth".tr,
+                      text: AppString.spouseDob.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -869,7 +870,7 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Spouse NID/Passport No".tr,
+                      text: AppString.spouseNidPassportNo.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -878,14 +879,14 @@ class _SpouseWidget extends StatelessWidget {
                       hint: "NID/Passport No".tr,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter NID/Passport No".tr;
+                          return AppString.nidPassportNoRequired.tr;
                         }
                         return null;
                       },
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Spouse NID/Passport Documents".tr,
+                      text: AppString.spouseNidPassportDocuments.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -914,8 +915,7 @@ class _SpouseWidget extends StatelessWidget {
                           if (isComplete) {
                             Fluttertoast.showToast(
                               msg:
-                                  "Spouse (${form.name.text}) NID File downloaded successfully"
-                                      .tr,
+                                  "Spouse (${form.name.text}) ${AppString.fileDownloadedSuccess.tr}",
                               toastLength: Toast.LENGTH_LONG,
                               gravity: ToastGravity.TOP,
                               timeInSecForIosWeb: 2,
@@ -929,7 +929,7 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Spouse Mobile No".tr,
+                      text: AppString.spouseMobileNo.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -945,7 +945,7 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Spouse Email".tr,
+                      text: AppString.spouseEmail.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -961,7 +961,7 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Spouse Existence Status".tr,
+                      text: AppString.spouseExistenceStatus.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -1036,7 +1036,7 @@ class _SpouseWidget extends StatelessWidget {
                               SizedBox(width: 8.w),
                               Expanded(
                                 child: Text(
-                                  "Add More Spouse".tr,
+                                  AppString.addMoreSpouse.tr,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),

@@ -1,15 +1,12 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../utils/utils.dart';
+import '../../utils/app_colors.dart';
 
-class TextFormFieldTextContainerWidget extends GetxController{
-
-
+class TextFormFieldTextContainerWidget extends GetxController {
   Widget textFormFieldTextContainerWidget({
     required BuildContext context,
     required double mainContainerHeight,
@@ -74,22 +71,30 @@ class TextFormFieldTextContainerWidget extends GetxController{
           border: InputBorder.none,
           contentPadding: EdgeInsets.only(
             left: MediaQuery.of(context).size.width / textFormFieldLeftPadding,
-            right: MediaQuery.of(context).size.width / textFormFieldRightPadding,
-            bottom: MediaQuery.of(context).size.height / textFormFieldBottomPadding,
+            right:
+                MediaQuery.of(context).size.width / textFormFieldRightPadding,
+            bottom:
+                MediaQuery.of(context).size.height / textFormFieldBottomPadding,
             top: MediaQuery.of(context).size.height / textFormFieldTopPadding,
           ),
-          prefixIcon: isNeedPrefixIcon == true ? Padding(
-            padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width / prefixImageLeftPadding,
-              right: MediaQuery.of(context).size.width / prefixImageRightPadding,
-              bottom: MediaQuery.of(context).size.height / prefixImageBottomPadding,
-              top: MediaQuery.of(context).size.height / prefixImageTopPadding,
-            ),
-            child: Image(
-              image: AssetImage(prefixImageString),
-              fit: prefixImageBoxFit,
-            ),
-          ) : const SizedBox.shrink(),
+          prefixIcon: isNeedPrefixIcon == true
+              ? Padding(
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width /
+                        prefixImageLeftPadding,
+                    right: MediaQuery.of(context).size.width /
+                        prefixImageRightPadding,
+                    bottom: MediaQuery.of(context).size.height /
+                        prefixImageBottomPadding,
+                    top: MediaQuery.of(context).size.height /
+                        prefixImageTopPadding,
+                  ),
+                  child: Image(
+                    image: AssetImage(prefixImageString),
+                    fit: prefixImageBoxFit,
+                  ),
+                )
+              : const SizedBox.shrink(),
           hintText: hintTextString,
           hintStyle: GoogleFonts.nunito(
             fontSize: hintTextFontSize,
@@ -97,21 +102,27 @@ class TextFormFieldTextContainerWidget extends GetxController{
             fontWeight: hintTextFontWeight,
             fontStyle: hintTextFontStyle,
           ),
-          suffixIcon: isNeedSuffixIcon == true ? InkWell(
-            onTap: suffixImageIconOnTap,
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: MediaQuery.of(context).size.width / suffixImageLeftPadding,
-                right: MediaQuery.of(context).size.width / suffixImageRightPadding,
-                bottom: MediaQuery.of(context).size.height / suffixImageBottomPadding,
-                top: MediaQuery.of(context).size.height / suffixImageTopPadding,
-              ),
-              child: Image(
-                image: AssetImage(suffixImageString),
-                fit: suffixImageBoxFit,
-              ),
-            ),
-          ) : SizedBox.shrink(),
+          suffixIcon: isNeedSuffixIcon == true
+              ? InkWell(
+                  onTap: suffixImageIconOnTap,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width /
+                          suffixImageLeftPadding,
+                      right: MediaQuery.of(context).size.width /
+                          suffixImageRightPadding,
+                      bottom: MediaQuery.of(context).size.height /
+                          suffixImageBottomPadding,
+                      top: MediaQuery.of(context).size.height /
+                          suffixImageTopPadding,
+                    ),
+                    child: Image(
+                      image: AssetImage(suffixImageString),
+                      fit: suffixImageBoxFit,
+                    ),
+                  ),
+                )
+              : SizedBox.shrink(),
         ),
         onChanged: textFormFieldOnChange,
         onTap: textFormFieldOnTab,
@@ -119,8 +130,6 @@ class TextFormFieldTextContainerWidget extends GetxController{
       ),
     );
   }
-
-
 
   Widget textFormFieldTextContainerWidgetWithOutFunction({
     required BuildContext context,
@@ -170,15 +179,19 @@ class TextFormFieldTextContainerWidget extends GetxController{
           border: InputBorder.none,
           contentPadding: EdgeInsets.only(
             left: MediaQuery.of(context).size.width / textFormFieldLeftPadding,
-            right: MediaQuery.of(context).size.width / textFormFieldRightPadding,
-            bottom: MediaQuery.of(context).size.height / textFormFieldBottomPadding,
+            right:
+                MediaQuery.of(context).size.width / textFormFieldRightPadding,
+            bottom:
+                MediaQuery.of(context).size.height / textFormFieldBottomPadding,
             top: MediaQuery.of(context).size.height / textFormFieldTopPadding,
           ),
           prefixIcon: Padding(
             padding: EdgeInsets.only(
               left: MediaQuery.of(context).size.width / prefixImageLeftPadding,
-              right: MediaQuery.of(context).size.width / prefixImageRightPadding,
-              bottom: MediaQuery.of(context).size.height / prefixImageBottomPadding,
+              right:
+                  MediaQuery.of(context).size.width / prefixImageRightPadding,
+              bottom:
+                  MediaQuery.of(context).size.height / prefixImageBottomPadding,
               top: MediaQuery.of(context).size.height / prefixImageTopPadding,
             ),
             child: Image(
@@ -264,22 +277,20 @@ class TextFormFieldTextContainerWidget extends GetxController{
           showCursor: true,
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular( 12.r),
-              borderSide:BorderSide(
-                  color: AppColors.primaryColor
-              ),
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.primaryColor),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular( 12.r),
-              borderSide:BorderSide(
-                  color: AppColors.primaryColor
-              ),
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.primaryColor),
             ),
             border: InputBorder.none,
             contentPadding: EdgeInsets.only(
               left: MediaQuery.of(context).size.width / 40,
-              right: MediaQuery.of(context).size.width / textFormFieldRightPadding,
-              bottom: MediaQuery.of(context).size.height / textFormFieldBottomPadding,
+              right:
+                  MediaQuery.of(context).size.width / textFormFieldRightPadding,
+              bottom: MediaQuery.of(context).size.height /
+                  textFormFieldBottomPadding,
               top: MediaQuery.of(context).size.height / textFormFieldTopPadding,
             ),
             hintText: hintTextString,
@@ -289,22 +300,28 @@ class TextFormFieldTextContainerWidget extends GetxController{
               fontWeight: hintTextFontWeight,
               fontStyle: hintTextFontStyle,
             ),
-            suffixIcon: isNeedSuffixIcon == true ? InkWell(
-              onTap: suffixImageIconOnTap,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width / suffixImageLeftPadding,
-                  right: MediaQuery.of(context).size.width / suffixImageRightPadding,
-                  bottom: MediaQuery.of(context).size.height / suffixImageBottomPadding,
-                  top: MediaQuery.of(context).size.height / suffixImageTopPadding,
-                ),
-                child: Image(
-                  color: AppColors.primaryColor,
-                  image: AssetImage(suffixImageString),
-                  fit: suffixImageBoxFit,
-                ),
-              ),
-            ) : SizedBox.shrink(),
+            suffixIcon: isNeedSuffixIcon == true
+                ? InkWell(
+                    onTap: suffixImageIconOnTap,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width /
+                            suffixImageLeftPadding,
+                        right: MediaQuery.of(context).size.width /
+                            suffixImageRightPadding,
+                        bottom: MediaQuery.of(context).size.height /
+                            suffixImageBottomPadding,
+                        top: MediaQuery.of(context).size.height /
+                            suffixImageTopPadding,
+                      ),
+                      child: Image(
+                        color: AppColors.primaryColor,
+                        image: AssetImage(suffixImageString),
+                        fit: suffixImageBoxFit,
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
           ),
           onChanged: textFormFieldOnChange,
           onTap: textFormFieldOnTab,
@@ -313,6 +330,4 @@ class TextFormFieldTextContainerWidget extends GetxController{
       ),
     );
   }
-
-
 }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,7 +6,9 @@ import '../../helpers/helpers.dart';
 import '../../helpers/prefs_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
-import '../../utils/utils.dart';
+import '../../utils/app_constant.dart';
+import '../../utils/app_en_strings.dart';
+import '../../utils/app_colors.dart';
 import '../../view/widgets/widgets.dart';
 
 class ZakatController extends GetxController {
@@ -94,7 +94,7 @@ class ZakatController extends GetxController {
     print("----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       ToastMessageHelper.successMessageShowToster(
-          "RECORD INSERTED SUCCESSFULLY!!");
+          AppString.recordInsertedSuccessfully.tr);
       print("zakat netAssets${response.body}");
       showZakatDialog(
           assetsAccount: "${response.body["netAssets"]}".tr,
@@ -113,7 +113,7 @@ class ZakatController extends GetxController {
     Get.dialog(
       AlertDialog(
         title: CustomText(
-          text: "Result".tr,
+          text: AppString.result.tr,
           fontsize: 20.sp,
           fontWeight: FontWeight.w600,
         ),
@@ -124,7 +124,7 @@ class ZakatController extends GetxController {
             children: [
               Divider(),
               CustomText(
-                text: "Total Assets".tr,
+                text: AppString.totalAssets.tr,
                 fontsize: 20.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
@@ -138,7 +138,7 @@ class ZakatController extends GetxController {
               ),
               Divider(color: AppColors.primaryColor),
               CustomText(
-                text: "PAYABLE ZAKAT".tr,
+                text: AppString.payableZakat.tr,
                 fontsize: 20.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,

@@ -1,20 +1,18 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-
 import '../../../../controllers/controllers.dart';
 import '../../../../helpers/helpers.dart';
-import '../../../../utils/utils.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/app_en_strings.dart';
+import '../../../../utils/app_image.dart';
 import '../../../widgets/widgets.dart';
 
 class AddNomineeScreen extends StatelessWidget {
   AddNomineeScreen({super.key});
   List<bool> isSelected = [true, false];
-  final List<Map<String, String>> user= [
+  final List<Map<String, String>> user = [
     {
       "name": "Khadijah",
       "image": "https://via.placeholder.com/150",
@@ -29,7 +27,12 @@ class AddNomineeScreen extends StatelessWidget {
     final controller = Get.put(NomineeController());
     TextEditingController searchController = TextEditingController();
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Add Nominee".tr,fontsize: 18. sp,),),
+      appBar: AppBar(
+        title: CustomText(
+          text: "Add Nominee".tr,
+          fontsize: 18.sp,
+        ),
+      ),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -41,17 +44,23 @@ class AddNomineeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 20.h),
+
                   ///=============Last Name====================
-                  SizedBox(height: 10.h,),
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
                       controller: controller.searchController,
                       hintText: "Search".tr,
                       borderColor: AppColors.secondaryPrimaryColor,
-                      suffixIcon: IconButton(onPressed:
-                      controller.searchNominee,
-                          icon: Icon(Icons.search_rounded,color: AppColors.primaryColor,)),
+                      suffixIcon: IconButton(
+                          onPressed: controller.searchNominee,
+                          icon: Icon(
+                            Icons.search_rounded,
+                            color: AppColors.primaryColor,
+                          )),
                     ),
                   ),
                   Obx(() {
@@ -77,7 +86,8 @@ class AddNomineeScreen extends StatelessWidget {
                           ),
                           subtitle: Row(
                             children: [
-                              Icon(Icons.visibility, size: 16.0, color: Colors.grey),
+                              Icon(Icons.visibility,
+                                  size: 16.0, color: Colors.grey),
                               SizedBox(width: 4.0),
                               Text(
                                 "View Details".tr,
@@ -86,14 +96,17 @@ class AddNomineeScreen extends StatelessWidget {
                             ],
                           ),
                           onTap: () {
-                            Get.toNamed('/witnessDetailsScreen', preventDuplicates: false);
+                            Get.toNamed('/witnessDetailsScreen',
+                                preventDuplicates: false);
                             print("dfkjld");
                           },
                         ),
                       );
                     }
                   }),
-                  SizedBox(height: 400.h,),
+                  SizedBox(
+                    height: 400.h,
+                  ),
                   // SizedBox(
                   //   height: 500.0, // Adjust height as per your needs
                   //   child: ListView.builder(
@@ -141,17 +154,16 @@ class AddNomineeScreen extends StatelessWidget {
                     title: "+ Add outside Nominee".tr,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
-                      Get.toNamed(AppRoutes.addOutsideNomineeScreen,preventDuplicates: false);
+                      Get.toNamed(AppRoutes.addOutsideNomineeScreen,
+                          preventDuplicates: false);
                     },
                   ),
                   SizedBox(height: 10.h),
-
                 ],
               ),
             ),
           ),
         ),
-
       ),
     );
   }

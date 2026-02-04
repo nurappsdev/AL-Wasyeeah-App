@@ -1,14 +1,13 @@
-
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../utils/utils.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/app_image.dart';
 import '../../../widgets/widgets.dart';
 
-
 class WitnessScreen extends StatefulWidget {
-   WitnessScreen({super.key});
+  WitnessScreen({super.key});
 
   @override
   State<WitnessScreen> createState() => _WitnessScreenState();
@@ -36,16 +35,20 @@ class _WitnessScreenState extends State<WitnessScreen> {
     {
       "name": "Mosharaf Kashem Khan",
       "image": "${AppImages.profileIcon}",
-    },    {
+    },
+    {
       "name": "Mosharaf Kashem Khan",
       "image": "${AppImages.profileIcon}",
-    },    {
+    },
+    {
       "name": "Mosharaf Kashem Khan",
       "image": "${AppImages.profileIcon}",
-    },    {
+    },
+    {
       "name": "Mosharaf Kashem Khan",
       "image": "${AppImages.profileIcon}",
-    },    {
+    },
+    {
       "name": "Mosharaf Kashem Khan",
       "image": "${AppImages.profileIcon}",
     },
@@ -53,7 +56,12 @@ class _WitnessScreenState extends State<WitnessScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Witness".tr,fontsize: 18.sp,),),
+      appBar: AppBar(
+        title: CustomText(
+          text: "Witness".tr,
+          fontsize: 18.sp,
+        ),
+      ),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -128,7 +136,8 @@ class _WitnessScreenState extends State<WitnessScreen> {
                             ),
                             subtitle: Row(
                               children: [
-                                Icon(Icons.visibility, size: 16.0, color: Colors.grey),
+                                Icon(Icons.visibility,
+                                    size: 16.0, color: Colors.grey),
                                 SizedBox(width: 4.0),
                                 Text(
                                   "View Details".tr,
@@ -137,7 +146,8 @@ class _WitnessScreenState extends State<WitnessScreen> {
                               ],
                             ),
                             onTap: () {
-                              Get.toNamed(AppRoutes.witnessDetailsScreen, preventDuplicates: false);
+                              Get.toNamed(AppRoutes.witnessDetailsScreen,
+                                  preventDuplicates: false);
                               print("Tapped on ${user['name']}");
                             },
                           ),
@@ -150,7 +160,8 @@ class _WitnessScreenState extends State<WitnessScreen> {
                     title: "+ Add more witness".tr,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
-                      Get.toNamed(AppRoutes.addWitnessesScreen,preventDuplicates: false);
+                      Get.toNamed(AppRoutes.addWitnessesScreen,
+                          preventDuplicates: false);
                     },
                   ),
                   SizedBox(height: 10.h),

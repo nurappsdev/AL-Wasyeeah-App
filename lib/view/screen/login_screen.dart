@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../controllers/controllers.dart';
 import '../../helpers/helpers.dart';
-import '../../utils/utils.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/app_en_strings.dart';
+import '../../utils/app_constant.dart';
+import '../../utils/app_icons.dart';
 import '../widgets/widgets.dart';
 import 'before_login/profirty_Distribute_screen2.dart';
 
@@ -21,33 +24,33 @@ class LoginScreen extends StatelessWidget {
   final List<GridItem> items = [
     GridItem(
       icon: AppIcons.profileIcon,
-      text: "Nominee Log in".tr,
+      text: AppString.nomineeLogin.tr,
       onTap: null,
     ),
     GridItem(
       icon: AppIcons.propertyIcons,
-      text: "Property Distribution".tr,
+      text: AppString.propertyDistribution.tr,
       onTap: () {
         Get.to(() => PropertyDistributionScreen2(), preventDuplicates: false);
       },
     ),
     GridItem(
       icon: AppIcons.zakatIcons,
-      text: "Zakat Calculation".tr,
+      text: AppString.zakatCalculation.tr,
       onTap: () {
         Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
       },
     ),
     GridItem(
       icon: AppIcons.contactIcons,
-      text: "Contact Us".tr,
+      text: AppString.contactUs.tr,
       onTap: () {
         // Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
       },
     ),
     GridItem(
       icon: AppIcons.helpsIcons,
-      text: "Helps".tr,
+      text: AppString.helps.tr,
       onTap: () {
         //  Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
       },
@@ -123,7 +126,7 @@ class LoginScreen extends StatelessWidget {
                         height: 20.h,
                       ),
                       CustomText(
-                        text: "User Name".tr,
+                        text: AppString.enterYourName.tr,
                         color: AppColors.hitTextColor000000,
                         fontsize: 20.sp,
                       ),
@@ -134,7 +137,7 @@ class LoginScreen extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
                           controller: emailController,
-                          hintText: "User Name".tr,
+                          hintText: AppString.enterYourName.tr,
                           borderColor: AppColors.secondaryPrimaryColor,
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(left: 16.w, right: 12.w),
@@ -145,7 +148,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter User Name'.tr;
+                              return AppString.enterUserNameError.tr;
                             }
                             return null;
                           },
@@ -157,7 +160,7 @@ class LoginScreen extends StatelessWidget {
                         height: 20.h,
                       ),
                       CustomText(
-                        text: "Password".tr,
+                        text: AppString.enterYourPass.tr,
                         color: AppColors.hitTextColor000000,
                         fontsize: 20.sp,
                       ),
@@ -180,11 +183,10 @@ class LoginScreen extends StatelessWidget {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your Password'.tr;
+                              return AppString.enterPassError.tr;
                             } else if (value.length < 8 ||
                                 !AppConstants.validatePassword(value)) {
-                              return "Password: 8 characters min, letters & digits \nrequired"
-                                  .tr;
+                              return AppString.passValidationError.tr;
                             }
                             return null;
                           },

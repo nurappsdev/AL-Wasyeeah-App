@@ -1,12 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../../controllers/controllers.dart';
-import '../../../../utils/utils.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/app_en_strings.dart';
+import '../../../../utils/app_constant.dart';
 import '../../../widgets/widgets.dart';
-
 
 class AddOutsideNominee extends StatefulWidget {
   AddOutsideNominee({super.key});
@@ -47,7 +47,12 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: CustomText(text: "Outside Nominee".tr,fontsize: 18.sp,),),
+        appBar: AppBar(
+          title: CustomText(
+            text: "Outside Nominee".tr,
+            fontsize: 18.sp,
+          ),
+        ),
         body: BackgroundImageContainer(
           child: Container(
             height: Get.height,
@@ -60,79 +65,107 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 20.h,),
-
+                      SizedBox(
+                        height: 20.h,
+                      ),
 
                       ///=============Relation with nominee====================
-                      SizedBox(height: 16.h,),
-                      CustomText(text: "Relation with nominee".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
-                      SizedBox(height: 10.h,),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      CustomText(
+                        text: "Relation with nominee".tr,
+                        color: AppColors.hitTextColor000000,
+                        fontsize: 20.sp,
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
-                          controller:  relWithController,
+                          controller: relWithController,
                           hintText: "Relation with nominee".tr,
                           borderColor: AppColors.secondaryPrimaryColor,
-                          validator: (value){
-                            if(value == null || value.isEmpty){
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
                               return 'Relation with nominee'.tr;
                             }
                             return null;
-
                           },
                         ),
                       ),
+
                       ///=============Last Name====================
-                      SizedBox(height: 16.h,),
-                      CustomText(text: "Name".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
-                      SizedBox(height: 10.h,),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      CustomText(
+                        text: "Name".tr,
+                        color: AppColors.hitTextColor000000,
+                        fontsize: 20.sp,
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
-                          controller:  firstNameController,
+                          controller: firstNameController,
                           hintText: "Name".tr,
                           borderColor: AppColors.secondaryPrimaryColor,
-                          validator: (value){
-                            if(value == null || value.isEmpty){
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
                               return 'Please enter your Name'.tr;
                             }
                             return null;
-
                           },
                         ),
                       ),
 
-
                       ///=============Mobile====================
-                      SizedBox(height: 16.h,),
-                      CustomText(text: "Mobile".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
-                      SizedBox(height: 10.h,),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      CustomText(
+                        text: "Mobile".tr,
+                        color: AppColors.hitTextColor000000,
+                        fontsize: 20.sp,
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
-                          controller:  mobileController,
+                          controller: mobileController,
                           hintText: "Mobile".tr,
                           borderColor: AppColors.secondaryPrimaryColor,
-                          validator: (value){
-                            if(value == null || value.isEmpty){
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
                               return 'Please enter your Mobile Number'.tr;
                             }
                             return null;
-
                           },
                         ),
                       ),
 
-
-
                       ///=============Email====================
-                      SizedBox(height: 16.h,),
-                      CustomText(text: "email".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
-                      SizedBox(height: 10.h,),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      CustomText(
+                        text: "email".tr,
+                        color: AppColors.hitTextColor000000,
+                        fontsize: 20.sp,
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
-                          controller:  emailController,
+                          controller: emailController,
                           hintText: AppString.enterYourEmail.tr,
                           borderColor: AppColors.secondaryPrimaryColor,
                           // prefixIcon: Padding(
@@ -140,24 +173,27 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                           //   child: SvgPicture.asset(AppIcons.email, color:
                           //   AppColors.primaryColor, height: 20.h, width: 20.w),
                           // ),
-                          validator: (value){
-                            if(value == null || value.isEmpty){
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
                               return 'Please enter your Email'.tr;
-                            }else if(!AppConstants.emailValidate.hasMatch(value)){
+                            } else if (!AppConstants.emailValidate
+                                .hasMatch(value)) {
                               return "Invalid Email".tr;
                             }
                             return null;
-
                           },
                         ),
                       ),
-                      SizedBox(height: 16.h,),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+
                       ///==========================Date of birth*==========================
-                      CustomText(text: "Date of birth".tr,
+                      CustomText(
+                        text: "Date of birth".tr,
                         fontsize: 16.sp,
                         color: AppColors.hitTextColor000000,
                         textAlign: TextAlign.left,
-
                       ),
                       SizedBox(height: 8.h),
                       Padding(
@@ -168,7 +204,7 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                           hintText: "Date of birth".tr,
                           hintextColor: Colors.black54,
                           borderColor: AppColors.secondaryPrimaryColor,
-                          onTap: () async{
+                          onTap: () async {
                             DateTime? selectedDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
@@ -178,13 +214,17 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
 
                             if (selectedDate != null) {
                               birthDate = selectedDate;
-                              dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(birthDate!);
+                              dateOfBirthController.text =
+                                  DateFormat('yyyy-MM-dd').format(birthDate!);
                             }
                             print(dateOfBirthController.text);
                           },
-                          suffixIcon: Icon(Icons.calendar_month,color: AppColors.primaryColor,),
-                          validator: (value){
-                            if(value == null || value.isEmpty){
+                          suffixIcon: Icon(
+                            Icons.calendar_month,
+                            color: AppColors.primaryColor,
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
                               return 'Please Write Date of birth'.tr;
                             }
                             return null;
@@ -193,75 +233,95 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                       ),
 
                       ///============Present Address"===================
-                      SizedBox(height: 16.h,),
-                      CustomText(text: "Present Address".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
-                      SizedBox(height: 10.h,),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      CustomText(
+                        text: "Present Address".tr,
+                        color: AppColors.hitTextColor000000,
+                        fontsize: 20.sp,
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
-                          controller:  presentAddressController,
+                          controller: presentAddressController,
                           hintText: "Present Address".tr,
                           maxLine: 4,
                           borderColor: AppColors.secondaryPrimaryColor,
-                          validator: (value){
-                            if(value == null || value.isEmpty){
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
                               return 'Present Address'.tr;
                             }
                             return null;
-
                           },
                         ),
                       ),
+
                       ///============Permanent Address"===================
-                      SizedBox(height: 16.h,),
-                      CustomText(text: "Permanent Address".tr,color: AppColors.hitTextColor000000,fontsize: 20.sp,),
-                      SizedBox(height: 10.h,),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      CustomText(
+                        text: "Permanent Address".tr,
+                        color: AppColors.hitTextColor000000,
+                        fontsize: 20.sp,
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
-                          controller:  permanentAddressController,
+                          controller: permanentAddressController,
                           hintText: "Permanent Address".tr,
                           maxLine: 4,
                           borderColor: AppColors.secondaryPrimaryColor,
-                          validator: (value){
-                            if(value == null || value.isEmpty){
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
                               return 'Permanent Address'.tr;
                             }
                             return null;
-
                           },
                         ),
                       ),
 
-                      SizedBox(height: 10,),
-                      Obx(()=>
-                       CustomButtonCommon(
-                          loading: nomineeController.addNomineeLoading.value == true,
-                            title: "Submit",
-                            onpress: (){
-                            if(_formKey.currentState!.validate()){
-                              nomineeController.addNomineeAndWitness(
-                                isNomineeTrue: true,
-                                  userName: firstNameController.text,
-                                  mobileNo: mobileController.text,
-                                  email: emailController.text,
-                                  relationWithUser: relWithController.text,
-                                  dob: dateOfBirthController.text,
-                                  presentAddress: presentAddressController.text,
-                                  permanentAddress: permanentAddressController.text
-                              );
-                            }
-                            }
-                        ),
+                      SizedBox(
+                        height: 10,
                       ),
-                      SizedBox(height: 20,),
+                      Obx(
+                        () => CustomButtonCommon(
+                            loading:
+                                nomineeController.addNomineeLoading.value ==
+                                    true,
+                            title: "Submit",
+                            onpress: () {
+                              if (_formKey.currentState!.validate()) {
+                                nomineeController.addNomineeAndWitness(
+                                    isNomineeTrue: true,
+                                    userName: firstNameController.text,
+                                    mobileNo: mobileController.text,
+                                    email: emailController.text,
+                                    relationWithUser: relWithController.text,
+                                    dob: dateOfBirthController.text,
+                                    presentAddress:
+                                        presentAddressController.text,
+                                    permanentAddress:
+                                        permanentAddressController.text);
+                              }
+                            }),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
           ),
-        )
-    );
+        ));
   }
 }

@@ -7,7 +7,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../helpers/file_picker_util.dart';
-import '../../../utils/utils.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_en_strings.dart';
 import '../../widgets/widgets.dart';
 import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
@@ -27,24 +28,24 @@ class ProfileSettingStepFiveWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ===== Bank Information =====
-            _sectionTitle("Bank Information".tr),
+            _sectionTitle(AppString.bankInformation.tr),
             _BankWidget(controller: controller),
 
             // ===== Wealth Information =====
-            _sectionTitle("Wealth Information".tr),
+            _sectionTitle(AppString.wealthInformation.tr),
             _WealthWidget(controller: controller),
 
             // ===== Account Receivable Information =====
-            _sectionTitle("Account Receivable Information".tr),
+            _sectionTitle(AppString.accountReceivable.tr),
             _ReceivableWidget(controller: controller),
 
             // ===== Account Payable Information =====
-            _sectionTitle("Account Payable Information".tr),
+            _sectionTitle(AppString.accountPayable.tr),
             _PayableWidget(controller: controller),
 
             SizedBox(height: 20.h),
             CustomButtonCommon(
-              title: "Finish".tr,
+              title: AppString.finish.tr,
               onpress: () {
                 if (controller.step5formKey.currentState!.validate()) {
                   controller.submitProfile();
@@ -109,45 +110,46 @@ class _BankWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(text: "Bank".tr, fontsize: 16.sp),
+                    CustomText(text: AppString.bank.tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomDropdown<BankModel>(
-                      hint: "Select Bank".tr,
+                      hint: AppString.selectBank.tr,
                       items: controller.bankList,
                       value: form.bank.value,
                       itemToString: (e) => e.bankEn ?? "",
                       onChanged: (v) => controller.onBankChanged(form, v),
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: "Branch".tr, fontsize: 16.sp),
+                    CustomText(text: AppString.branch.tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomDropdown<BranchModel>(
                       key: ValueKey("branch_${form.bank.value?.bankId}_$index"),
-                      hint: "Select Branch".tr,
+                      hint: AppString.selectBranch.tr,
                       items: form.branchList,
                       value: form.branch.value,
                       itemToString: (e) => e.branchNameEn ?? "",
                       onChanged: (v) => form.branch.value = v,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: "Account Name".tr, fontsize: 16.sp),
+                    CustomText(text: AppString.accountName.tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.accountName,
-                      hint: "Account Name".tr,
+                      hint: AppString.accountName.tr,
                       validator: (value) => value!.isEmpty
-                          ? "Please enter account name".tr
+                          ? AppString.accountNameRequired.tr
                           : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: "Account Balance".tr, fontsize: 16.sp),
+                    CustomText(
+                        text: AppString.accountBalance.tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.accountBalance,
-                      hint: "Account Balance".tr,
+                      hint: AppString.accountBalance.tr,
                       keyboardType: TextInputType.number,
                       validator: (value) => value!.isEmpty
-                          ? "Please enter account balance".tr
+                          ? AppString.accountBalanceRequired.tr
                           : null,
                     ),
                     SizedBox(height: 16.h),
@@ -190,7 +192,7 @@ class _BankWidget extends StatelessWidget {
                               Icon(Icons.add),
                               SizedBox(width: 8.w),
                               Expanded(
-                                  child: Text("Add More Bank".tr,
+                                  child: Text(AppString.addMoreBank.tr,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis))
                             ],
@@ -235,22 +237,23 @@ class _WealthWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(text: "Wealth".tr, fontsize: 16.sp),
+                    CustomText(text: AppString.wealth.tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomDropdown<WealthModel>(
-                      hint: "Select Wealth".tr,
+                      hint: AppString.selectWealth.tr,
                       items: controller.wealthList,
                       value: form.wealth.value,
                       itemToString: (e) => e.wealth ?? "",
                       onChanged: (v) => controller.onWealthChanged(form, v),
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: "Document Type".tr, fontsize: 16.sp),
+                    CustomText(
+                        text: AppString.documentType.tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomDropdown<DocumentTypeForm>(
                       key:
                           ValueKey("doc_${form.wealth.value?.wealthId}_$index"),
-                      hint: "Select Document Type".tr,
+                      hint: AppString.selectDocumentType.tr,
                       items: form.documentTypeList,
                       value: form.selectedDocumentType.value,
                       itemToString: (e) => e.documentType ?? "",
@@ -258,35 +261,36 @@ class _WealthWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                        text: "Land Area (in Shotangsho)".tr, fontsize: 16.sp),
+                        text: AppString.landAreaInShotangsho.tr,
+                        fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.landArea,
-                      hint: "Land Area".tr,
+                      hint: AppString.landArea.tr,
                       keyboardType: TextInputType.number,
                       validator: (value) =>
-                          value!.isEmpty ? "Please enter land area".tr : null,
+                          value!.isEmpty ? AppString.landAreaRequired.tr : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: "Location".tr, fontsize: 16.sp),
+                    CustomText(text: AppString.location.tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.location,
-                      hint: "Location".tr,
+                      hint: AppString.location.tr,
                       validator: (value) =>
-                          value!.isEmpty ? "Please enter location".tr : null,
+                          value!.isEmpty ? AppString.locationRequired.tr : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: "Note".tr, fontsize: 16.sp),
+                    CustomText(text: AppString.note.tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.note,
-                      hint: "Note".tr,
+                      hint: AppString.note.tr,
                       maxLines: 3,
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Wealth Documents".tr,
+                      text: AppString.wealthDocuments.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -313,9 +317,7 @@ class _WealthWidget extends StatelessWidget {
                           );
                           if (isComplete) {
                             Fluttertoast.showToast(
-                              msg:
-                                  "Wealth Document File downloaded successfully"
-                                      .tr,
+                              msg: AppString.wealthDocumentDownloaded.tr,
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.TOP,
                               timeInSecForIosWeb: 2,
@@ -368,7 +370,7 @@ class _WealthWidget extends StatelessWidget {
                               Icon(Icons.add),
                               SizedBox(width: 8.w),
                               Expanded(
-                                  child: Text("Add More Wealth".tr,
+                                  child: Text(AppString.addMoreWealth.tr,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis))
                             ],
@@ -413,34 +415,38 @@ class _ReceivableWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(text: "Receivable Amount".tr, fontsize: 16.sp),
+                    CustomText(
+                        text: AppString.receivableAmount.tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.amount,
-                      hint: "Amount".tr,
+                      hint: AppString.amount.tr,
                       keyboardType: TextInputType.number,
                       validator: (value) =>
-                          value!.isEmpty ? "Please enter amount".tr : null,
-                    ),
-                    SizedBox(height: 16.h),
-                    CustomText(text: "Receivable Person".tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
-                    CustomTextFormField(
-                      controller: form.personName,
-                      hint: "Person Name".tr,
-                      validator: (value) =>
-                          value!.isEmpty ? "Please enter person name".tr : null,
+                          value!.isEmpty ? AppString.amountRequired.tr : null,
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                        text: "Receivable Person Mobile".tr, fontsize: 16.sp),
+                        text: AppString.receivablePerson.tr, fontsize: 16.sp),
+                    SizedBox(height: 4.h),
+                    CustomTextFormField(
+                      controller: form.personName,
+                      hint: AppString.personName.tr,
+                      validator: (value) => value!.isEmpty
+                          ? AppString.personNameRequired.tr
+                          : null,
+                    ),
+                    SizedBox(height: 16.h),
+                    CustomText(
+                        text: AppString.receivablePersonMobile.tr,
+                        fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.personMobile,
-                      hint: "Mobile".tr,
+                      hint: AppString.mobile.tr,
                       keyboardType: TextInputType.phone,
                       validator: (value) =>
-                          value!.isEmpty ? "Please enter mobile".tr : null,
+                          value!.isEmpty ? AppString.mobileRequired.tr : null,
                     ),
                     SizedBox(height: 16.h),
                     Row(
@@ -482,7 +488,7 @@ class _ReceivableWidget extends StatelessWidget {
                               Icon(Icons.add),
                               SizedBox(width: 8.w),
                               Expanded(
-                                  child: Text("Add More".tr,
+                                  child: Text(AppString.addMore.tr,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis))
                             ],
@@ -527,34 +533,38 @@ class _PayableWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(text: "Payable Amount".tr, fontsize: 16.sp),
+                    CustomText(
+                        text: AppString.payableAmount.tr, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.amount,
-                      hint: "Amount".tr,
+                      hint: AppString.amount.tr,
                       keyboardType: TextInputType.number,
                       validator: (value) =>
-                          value!.isEmpty ? "Please enter amount".tr : null,
-                    ),
-                    SizedBox(height: 16.h),
-                    CustomText(text: "Payable Person".tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
-                    CustomTextFormField(
-                      controller: form.personName,
-                      hint: "Person Name".tr,
-                      validator: (value) =>
-                          value!.isEmpty ? "Please enter person name".tr : null,
+                          value!.isEmpty ? AppString.amountRequired.tr : null,
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                        text: "Payable Person Mobile".tr, fontsize: 16.sp),
+                        text: AppString.payablePerson.tr, fontsize: 16.sp),
+                    SizedBox(height: 4.h),
+                    CustomTextFormField(
+                      controller: form.personName,
+                      hint: AppString.personName.tr,
+                      validator: (value) => value!.isEmpty
+                          ? AppString.personNameRequired.tr
+                          : null,
+                    ),
+                    SizedBox(height: 16.h),
+                    CustomText(
+                        text: AppString.payablePersonMobile.tr,
+                        fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.personMobile,
-                      hint: "Mobile".tr,
+                      hint: AppString.mobile.tr,
                       keyboardType: TextInputType.phone,
                       validator: (value) =>
-                          value!.isEmpty ? "Please enter mobile".tr : null,
+                          value!.isEmpty ? AppString.mobileRequired.tr : null,
                     ),
                     SizedBox(height: 16.h),
                     Row(
@@ -596,7 +606,7 @@ class _PayableWidget extends StatelessWidget {
                               Icon(Icons.add),
                               SizedBox(width: 8.w),
                               Expanded(
-                                  child: Text("Add More".tr,
+                                  child: Text(AppString.addMore.tr,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis))
                             ],

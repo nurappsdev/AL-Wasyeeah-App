@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,7 +6,9 @@ import 'package:intl/intl.dart';
 import '../../../../controllers/controllers.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../../models/models.dart';
-import '../../../../utils/utils.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/app_en_strings.dart';
+import '../../../../utils/app_dimentions.dart';
 import '../../../widgets/widgets.dart';
 
 class WitnessesYouScreen extends StatefulWidget {
@@ -19,7 +20,6 @@ class WitnessesYouScreen extends StatefulWidget {
 }
 
 class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
-
   WitnessController witnessController = Get.put(WitnessController());
   @override
   Widget build(BuildContext context) {
@@ -38,61 +38,76 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                 children: [
                   SizedBox(height: 20.h),
                   CustomButton(
-                    title: "+ Add more witness".tr,
+                    title: AppString.addMoreWitness.tr,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
-                      Get.toNamed(AppRoutes.addWitnessesScreen,preventDuplicates: false);
+                      Get.toNamed(AppRoutes.addWitnessesScreen,
+                          preventDuplicates: false);
                     },
                   ),
                   SizedBox(height: 10.h),
-
                   SizedBox(
                     height: 450.0, // Adjust height as per your needs
-                    child: Obx(()=> witnessController.isWitness.value ? CustomLoader(): witnessController.witnessData.isEmpty ?Center(child: CustomText(text: "No Nominee data",),) :
-                    ListView.builder(
-                      padding: EdgeInsets.all(8.0),
-                      itemCount: witnessController.witnessData.length,
-                      itemBuilder: (context, index) {
-                        final user = witnessController.witnessData[index];
-                        return Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          elevation: 3.0,
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
-                          child: ListTile(
-                            // leading: CircleAvatar(
-                            //   backgroundImage: AssetImage(user["image"]!),
-                            //   radius: 30,
-                            // ),
-                            title: Text(
-                              user.name ?? "N/A",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Row(
-                              children: [
-                                Icon(Icons.visibility, size: 16.0, color: Colors.grey),
-                                SizedBox(width: 4.0),
-                                Text(
-                                  "View Details".tr,
-                                  style: TextStyle(color: Colors.grey),
+                    child: Obx(
+                      () => witnessController.isWitness.value
+                          ? CustomLoader()
+                          : witnessController.witnessData.isEmpty
+                              ? Center(
+                                  child: CustomText(
+                                    text: AppString.noNomineeData.tr,
+                                  ),
+                                )
+                              : ListView.builder(
+                                  padding: EdgeInsets.all(8.0),
+                                  itemCount:
+                                      witnessController.witnessData.length,
+                                  itemBuilder: (context, index) {
+                                    final user =
+                                        witnessController.witnessData[index];
+                                    return Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                      elevation: 3.0,
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 8.0),
+                                      child: ListTile(
+                                        // leading: CircleAvatar(
+                                        //   backgroundImage: AssetImage(user["image"]!),
+                                        //   radius: 30,
+                                        // ),
+                                        title: Text(
+                                          user.name ?? "N/A",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        subtitle: Row(
+                                          children: [
+                                            Icon(Icons.visibility,
+                                                size: 16.0, color: Colors.grey),
+                                            SizedBox(width: 4.0),
+                                            Text(
+                                              AppString.viewDetails.tr,
+                                              style:
+                                                  TextStyle(color: Colors.grey),
+                                            ),
+                                          ],
+                                        ),
+                                        onTap: () {
+                                          // Get.toNamed(AppRoutes.witnessDetailsScreen,preventDuplicates: false);
+                                          showWitnessDetailsDialog(
+                                              context, user, witnessController);
+                                          //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
+                                          print("Tapped on");
+                                        },
+                                      ),
+                                    );
+                                  },
                                 ),
-                              ],
-                            ),
-                            onTap: () {
-                              // Get.toNamed(AppRoutes.witnessDetailsScreen,preventDuplicates: false);
-                              showWitnessDetailsDialog(context,user,witnessController);
-                              //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
-                              print("Tapped on");
-                            },
-                          ),
-                        );
-                      },
-                    ),
                     ),
                   ),
                   SizedBox(height: 10.h),
-
                 ],
               ),
             ),
@@ -102,7 +117,8 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
     );
   }
 
-  void showWitnessDetailsDialog(BuildContext context, GetWitnessResponseModel user, WitnessController witnessController) {
+  void showWitnessDetailsDialog(BuildContext context,
+      GetWitnessResponseModel user, WitnessController witnessController) {
     showDialog(
       context: context,
       builder: (context) {
@@ -127,7 +143,10 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                         Expanded(
                           child: Text(
                             user.name ?? "N/A",
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                         ),
                         IconButton(
@@ -137,24 +156,35 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                       ],
                     ),
                     Divider(color: Colors.white70),
-                    _buildDialogRow(Icons.people, "Relation", user.relation ?? "N/A"),
-                    _buildDialogRow(Icons.email, "Email", user.email ?? "N/A"),
-                    _buildDialogRow(Icons.person, "Father Name", user.fatherName ?? "N/A"),
-                    _buildDialogRow(Icons.phone, "Mobile", user.mobile ?? "N/A"),
-                    _buildDialogRow(Icons.favorite, "Marital Status", user.maritalStatus ?? "N/A"),
-                    _buildDialogRow(Icons.work, "Profession", user.profession ?? "N/A"),
-                    _buildDialogRow(Icons.calendar_today, "Date", "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ?? "N/A"),
+                    _buildDialogRow(Icons.people, AppString.relation.tr,
+                        user.relation ?? "N/A"),
+                    _buildDialogRow(
+                        Icons.email, AppString.email.tr, user.email ?? "N/A"),
+                    _buildDialogRow(Icons.person, AppString.fatherName.tr,
+                        user.fatherName ?? "N/A"),
+                    _buildDialogRow(
+                        Icons.phone, AppString.mobile.tr, user.mobile ?? "N/A"),
+                    _buildDialogRow(Icons.favorite, AppString.maritalStatus.tr,
+                        user.maritalStatus ?? "N/A"),
+                    _buildDialogRow(Icons.work, AppString.profession.tr,
+                        user.profession ?? "N/A"),
+                    _buildDialogRow(
+                        Icons.calendar_today,
+                        AppString.date.tr,
+                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ??
+                            "N/A"),
                     SizedBox(height: 20),
-            Obx(()=>
-
-                CustomButtonCommon(title: "Remove Witness",
-                    color: AppColors.redColor,
-                    loading: witnessController.isDelNomineeYou.value == true,
-                    onpress: (){
-                      print(user.requestKey);
-                      witnessController.getWitnessDeleteData(requestKey: user.requestKey);
-                      Get.back();
-                    }))
+                    Obx(() => CustomButtonCommon(
+                        title: AppString.removeWitness.tr,
+                        color: AppColors.redColor,
+                        loading:
+                            witnessController.isDelNomineeYou.value == true,
+                        onpress: () {
+                          print(user.requestKey);
+                          witnessController.getWitnessDeleteData(
+                              requestKey: user.requestKey);
+                          Get.back();
+                        }))
                   ],
                 ),
               ),
@@ -172,8 +202,11 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
         children: [
           Icon(icon, color: Colors.orange, size: 18),
           SizedBox(width: 10),
-          Text("$label: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          Expanded(child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
+          Text("$label: ",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          Expanded(
+              child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
         ],
       ),
     );

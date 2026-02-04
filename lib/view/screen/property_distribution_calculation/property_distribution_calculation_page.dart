@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/controllers/property_distribution_calculation/property_distribution_calculation_controller.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_strings.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class PropertyDistributionCalculationPage extends StatelessWidget {
@@ -41,7 +42,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "Property Distribution Calculation",
+          AppString.propertyDistributionTitle.tr,
           style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w600,
@@ -60,7 +61,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
 
               return ListView(
                 children: [
-                  _sectionTitle("Relative List"),
+                  _sectionTitle(AppString.relativeList),
                   ...controller.filteredRelatives.map((rel) {
                     final relativeName = rel.relative!;
                     return Obx(() {
@@ -76,7 +77,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                       );
                     });
                   }).toList(),
-                  _sectionTitle("Property Distribution Calculation"),
+                  _sectionTitle(AppString.propertyDistributionTitle),
                   _buildPropertySection(),
                   Obx(() {
                     if (controller.propertyDistributionResult.isEmpty) {
@@ -84,7 +85,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                     }
                     return Column(
                       children: [
-                        _sectionTitle("Calculation Results"),
+                        _sectionTitle(AppString.calculationResults),
                         _buildPieChartSection(),
                         _buildResultCards(),
                       ],
@@ -120,9 +121,9 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                           strokeWidth: 2,
                         ),
                       )
-                    : const Text(
-                        "Calculate",
-                        style: TextStyle(
+                    : Text(
+                        AppString.calculate.tr,
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.bold),
@@ -204,7 +205,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                   ),
                   SizedBox(width: 4.w),
                   Text(
-                    data.relativeName ?? "Unknown",
+                    data.relativeName ?? AppString.unknown.tr,
                     style:
                         TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
                   ),
@@ -244,23 +245,27 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      data.relativeName ?? "Unknown",
+                      data.relativeName ?? AppString.unknown.tr,
                       style: TextStyle(
                           fontSize: 18.sp, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
                 const Divider(),
-                _resultRow(
-                    "Share Portion", "${(data.portionPart ?? 0) * 100}%"),
+                _resultRow(AppString.sharePortion.tr,
+                    "${(data.portionPart ?? 0) * 100}%"),
                 if (data.landPart != null && data.landPart! > 0)
-                  _resultRow("Land Portion", "${data.landPart} Deciman"),
+                  _resultRow(
+                      AppString.landPortion.tr, "${data.landPart} Deciman"),
                 if (data.goldPart != null && data.goldPart! > 0)
-                  _resultRow("Gold Portion", "${data.goldPart} GRAM/VORI"),
+                  _resultRow(AppString.goldPortion.tr,
+                      "${data.goldPart} ${AppString.gram.tr}/${AppString.vori.tr}"),
                 if (data.silverPart != null && data.silverPart! > 0)
-                  _resultRow("Silver Portion", "${data.silverPart} GRAM/VORI"),
+                  _resultRow(AppString.silverPortion.tr,
+                      "${data.silverPart} ${AppString.gram.tr}/${AppString.vori.tr}"),
                 if (data.currencyPart != null && data.currencyPart! > 0)
-                  _resultRow("Total Money", "${data.currencyPart} Taka"),
+                  _resultRow(
+                      AppString.totalMoney.tr, "${data.currencyPart} Taka"),
               ],
             ),
           ),
@@ -291,31 +296,31 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Property Calculation Section",
+            AppString.propertyCalculationSection,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           _buildPropertyField(
-            label: "Land in Deciman",
+            label: AppString.landInDeciman.tr,
             controller: controller.landController,
-            hint: "Enter land amount",
+            hint: AppString.enterLandAmount.tr,
           ),
           _buildPropertyFieldWithUnit(
-            label: "Gold amount",
+            label: AppString.goldAmount.tr,
             controller: controller.goldController,
-            hint: "Enter gold amount",
+            hint: AppString.enterGoldAmount.tr,
             unitValue: controller.goldUnit,
           ),
           _buildPropertyFieldWithUnit(
-            label: "Silver amount",
+            label: AppString.silverAmount.tr,
             controller: controller.silverController,
-            hint: "Enter silver amount",
+            hint: AppString.enterSilverAmount.tr,
             unitValue: controller.silverUnit,
           ),
           _buildPropertyField(
-            label: "Total Money in Taka",
+            label: AppString.totalMoneyInTaka.tr,
             controller: controller.moneyController,
-            hint: "Enter money amount",
+            hint: AppString.enterMoneyAmount.tr,
           ),
         ],
       ),
@@ -368,10 +373,11 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                         child: DropdownButton<String>(
                           value: unitValue.value,
                           isExpanded: true,
-                          items: ["Gram", "Vori"].map((String value) {
+                          items: [AppString.gram, AppString.vori]
+                              .map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
-                              child: Text(value),
+                              child: Text(value.tr),
                             );
                           }).toList(),
                           onChanged: (newValue) {
@@ -443,7 +449,8 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Text("Count: ", style: TextStyle(color: Colors.grey)),
+                const Text(AppString.count,
+                    style: TextStyle(color: Colors.grey)),
                 IconButton(
                   icon: const Icon(Icons.remove_circle_outline,
                       color: AppColors.redColor),

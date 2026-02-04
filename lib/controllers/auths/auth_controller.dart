@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:al_wasyeah/view/screen/home_screen.dart';
 import 'package:al_wasyeah/view/screen/otp_verify_screen.dart';
 import 'package:get/get.dart';
@@ -8,7 +6,7 @@ import '../../helpers/helpers.dart';
 import '../../helpers/prefs_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
-import '../../utils/utils.dart';
+import '../../utils/app_constant.dart';
 
 class AuthController extends GetxController {
   @override

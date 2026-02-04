@@ -1,7 +1,5 @@
-
-
-
 import 'package:al_wasyeah/controllers/controllers.dart';
+import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,9 +7,10 @@ import 'package:intl/intl.dart';
 
 import '../../../../helpers/helpers.dart';
 import '../../../../models/models.dart';
-import '../../../../utils/utils.dart';
-import '../../widgets/widgets.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/app_en_strings.dart';
 
+import '../../widgets/widgets.dart';
 
 class WitnessApplicationMenu extends StatefulWidget {
   const WitnessApplicationMenu({super.key, required this.tabController});
@@ -21,8 +20,6 @@ class WitnessApplicationMenu extends StatefulWidget {
 }
 
 class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
-
-
   NomineeController nomineeController = Get.put(NomineeController());
   @override
   Widget build(BuildContext context) {
@@ -41,70 +38,91 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 20.h),
-                  Center(child: CustomText(text: "Application Menu",fontsize: 20.sp,color: AppColors.primaryColor,fontWeight: FontWeight.w600,)),
-
+                  Center(
+                      child: CustomText(
+                    text: "Application Menu",
+                    fontsize: 20.sp,
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.w600,
+                  )),
                   SizedBox(
                     height: 450.0, // Adjust height as per your needs
-                    child: Obx(()=> nomineeController.isNomineeAccess.value ? CustomLoader(): nomineeController.accessControllResponseModel.isEmpty ?Center(child: CustomText(text: "No Nominee data",),) :
-                    ListView.builder(
-                      padding: EdgeInsets.all(8.0),
-                      itemCount: nomineeController.accessControllResponseModel.length,
-                      itemBuilder: (context, index) {
-                        final user = nomineeController.accessControllResponseModel[index];
-                        return Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          elevation: 3.0,
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
-                          child: ListTile(
-                            title: Text(
-                              user.name ?? "N/A",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Row(
-                              children: [
-                                Icon(Icons.man, size: 16.0, color: Colors.grey),
-                                SizedBox(width: 4.0),
-                                Text(
-                                  "Select Nominee".tr,
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                              ],
-                            ),
-                            trailing: TextButton(
-                              onPressed: () {
-                                Get.toNamed(
-                                  AppRoutes.featureScreen,
-                                  arguments: {
-                                    "requestKey": user.requestKey,
-                                  },
-                                  preventDuplicates: false,
-                                );
-                                // Example:
-                                // Get.toNamed(AppRoutes.nomineeDetailsScreen);
-                              },
-                              child: Text(
-                                "Go Access",
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              Get.toNamed(AppRoutes.featureScreen,preventDuplicates: false);
+                    child: Obx(
+                      () => nomineeController.isNomineeAccess.value
+                          ? CustomLoader()
+                          : nomineeController
+                                  .accessControllResponseModel.isEmpty
+                              ? Center(
+                                  child: CustomText(
+                                    text: "No Nominee data",
+                                  ),
+                                )
+                              : ListView.builder(
+                                  padding: EdgeInsets.all(8.0),
+                                  itemCount: nomineeController
+                                      .accessControllResponseModel.length,
+                                  itemBuilder: (context, index) {
+                                    final user = nomineeController
+                                        .accessControllResponseModel[index];
+                                    return Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                      elevation: 3.0,
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 8.0),
+                                      child: ListTile(
+                                        title: Text(
+                                          user.name ?? "N/A",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        subtitle: Row(
+                                          children: [
+                                            Icon(Icons.man,
+                                                size: 16.0, color: Colors.grey),
+                                            SizedBox(width: 4.0),
+                                            Text(
+                                              "Select Nominee".tr,
+                                              style:
+                                                  TextStyle(color: Colors.grey),
+                                            ),
+                                          ],
+                                        ),
+                                        trailing: TextButton(
+                                          onPressed: () {
+                                            Get.toNamed(
+                                              AppRoutes.featureScreen,
+                                              arguments: {
+                                                "requestKey": user.requestKey,
+                                              },
+                                              preventDuplicates: false,
+                                            );
+                                            // Example:
+                                            // Get.toNamed(AppRoutes.nomineeDetailsScreen);
+                                          },
+                                          child: Text(
+                                            "Go Access",
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          Get.toNamed(AppRoutes.featureScreen,
+                                              preventDuplicates: false);
 
-                              print("Card tapped");
-                            },
-                          ),
-                        );
-                      },
-                    ),
+                                          print("Card tapped");
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
                     ),
                   ),
                   SizedBox(height: 10.h),
-
                 ],
               ),
             ),
@@ -113,7 +131,9 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
       ),
     );
   }
-  void showWitnessDetailsDialog(BuildContext context, NomineetedResponseModel user) {
+
+  void showWitnessDetailsDialog(
+      BuildContext context, NomineetedResponseModel user) {
     showDialog(
       context: context,
       builder: (context) {
@@ -138,7 +158,10 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                         Expanded(
                           child: Text(
                             user.name ?? "N/A",
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                         ),
                         IconButton(
@@ -148,16 +171,26 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                       ],
                     ),
                     Divider(color: Colors.white70),
-                    _buildDialogRow(Icons.people, "Relation", user.relation ?? "N/A"),
+                    _buildDialogRow(
+                        Icons.people, "Relation", user.relation ?? "N/A"),
                     _buildDialogRow(Icons.email, "Email", user.email ?? "N/A"),
-                    _buildDialogRow(Icons.person, "Father Name", user.fatherName ?? "N/A"),
-                    _buildDialogRow(Icons.phone, "Mobile", user.mobile ?? "N/A"),
-                    _buildDialogRow(Icons.favorite, "Marital Status", user.maritalStatus ?? "N/A"),
-                    _buildDialogRow(Icons.work, "Profession", user.profession ?? "N/A"),
-                    _buildDialogRow(Icons.calendar_today, "Date", "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ?? "N/A"),
+                    _buildDialogRow(
+                        Icons.person, "Father Name", user.fatherName ?? "N/A"),
+                    _buildDialogRow(
+                        Icons.phone, "Mobile", user.mobile ?? "N/A"),
+                    _buildDialogRow(Icons.favorite, "Marital Status",
+                        user.maritalStatus ?? "N/A"),
+                    _buildDialogRow(
+                        Icons.work, "Profession", user.profession ?? "N/A"),
+                    _buildDialogRow(
+                        Icons.calendar_today,
+                        "Date",
+                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ??
+                            "N/A"),
                     SizedBox(height: 20),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                      style:
+                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
                       onPressed: () {
                         // Implement remove witness logic
                         Navigator.pop(context);
@@ -181,8 +214,11 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
         children: [
           Icon(icon, color: Colors.orange, size: 18),
           SizedBox(width: 10),
-          Text("$label: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          Expanded(child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
+          Text("$label: ",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          Expanded(
+              child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
         ],
       ),
     );

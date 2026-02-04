@@ -7,7 +7,10 @@ import 'package:get/get.dart';
 import '../../../controllers/controllers.dart';
 import '../../../helpers/helpers.dart';
 import '../../../helpers/prefs_helper.dart';
-import '../../../utils/utils.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_icons.dart';
+import '../../../utils/app_en_strings.dart';
+import '../../../utils/app_constant.dart';
 import '../../widgets/widgets.dart';
 import '../profile/profile_page.dart';
 
@@ -28,7 +31,7 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: "User Profile".tr,
+          text: AppString.userProfile.tr,
           fontsize: 18.sp,
         ),
       ),
@@ -101,7 +104,7 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: "Personal Details".tr,
+                                text: AppString.personalDetails.tr,
                                 fontsize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
@@ -162,8 +165,8 @@ class _MenuPageState extends State<MenuPage> {
                                   SizedBox(width: 16.w),
                                   Expanded(
                                     child: CustomText(
-                                      text: "Property Distribution Calculation"
-                                          .tr,
+                                      text: AppString
+                                          .propertyDistributionTitle.tr,
                                       fontsize: 16.sp,
                                       textOverflow: TextOverflow.ellipsis,
                                       fontWeight: FontWeight.w600,
@@ -215,7 +218,7 @@ class _MenuPageState extends State<MenuPage> {
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
-                              text: "User Setting".tr,
+                              text: AppString.userSetting.tr,
                               fontsize: 16.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
@@ -262,7 +265,7 @@ class _MenuPageState extends State<MenuPage> {
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
-                              text: "Device History".tr,
+                              text: AppString.deviceHistory.tr,
                               fontsize: 16.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
@@ -314,7 +317,7 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: "Access Control Panel".tr,
+                                text: AppString.accessControlPanel.tr,
                                 fontsize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
@@ -363,7 +366,7 @@ class _MenuPageState extends State<MenuPage> {
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
-                              text: "Language".tr,
+                              text: AppString.language.tr,
                               fontsize: 16.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
@@ -415,7 +418,7 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: "Log Out",
+                                text: AppString.loOut.tr,
                                 fontsize: 14.sp,
                                 color: AppColors.textColor4E4E4E,
                               )
@@ -446,7 +449,7 @@ class _MenuPageState extends State<MenuPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomText(
-                    text: AppString.areYouSure,
+                    text: AppString.areYouSure.tr,
                     fontsize: 16.sp,
                     fontWeight: FontWeight.w600,
                     maxline: 2,
@@ -459,7 +462,7 @@ class _MenuPageState extends State<MenuPage> {
                           width: 120.w,
                           height: 40.h,
                           child: CustomButton(
-                            title: 'Cancel',
+                            title: AppString.cancel.tr,
                             fontSize: 16.h,
                             onpress: () {
                               Get.back();
@@ -473,7 +476,7 @@ class _MenuPageState extends State<MenuPage> {
                           child: CustomButton(
                               color: AppColors.secondaryPrimaryColor,
                               titlecolor: AppColors.primaryColor,
-                              title: 'LogOut',
+                              title: AppString.loOut.tr,
                               fontSize: 16.h,
                               onpress: () async {
                                 //   profileController.promoCode.value = "";

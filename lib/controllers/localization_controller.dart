@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/language_model.dart';
-import '../utils/utils.dart';
+import '../../utils/app_constant.dart';
+import '../../utils/app_en_strings.dart';
 
 class LocalizationController extends GetxController implements GetxService {
   final SharedPreferences sharedPreferences;

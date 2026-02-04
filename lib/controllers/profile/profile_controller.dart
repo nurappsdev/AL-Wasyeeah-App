@@ -16,6 +16,9 @@ import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
 import 'package:get/get.dart';
 
 import 'dart:io';
+import '../../utils/app_colors.dart';
+import '../../utils/app_en_strings.dart';
+import '../../utils/app_constant.dart';
 import '../../services/services.dart';
 import 'package:al_wasyeah/models/profile_info_model/account_payable_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/account_receivable_form.dart';
@@ -860,14 +863,14 @@ class ProfileController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Fluttertoast.showToast(msg: "Profile updated successfully".tr);
+        Fluttertoast.showToast(msg: AppString.profileUpdatedSuccessfully.tr);
         await getProfile(); // Refresh local data
       } else {
         Fluttertoast.showToast(msg: "Update failed: ${response.statusText}".tr);
       }
     } catch (e, s) {
       log("Error during submission: $e\n$s");
-      Fluttertoast.showToast(msg: "Something went wrong".tr);
+      Fluttertoast.showToast(msg: AppString.somethingWentWrong.tr);
     } finally {
       status(RxStatus.success());
     }

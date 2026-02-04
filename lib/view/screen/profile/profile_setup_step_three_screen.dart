@@ -8,7 +8,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
-import '../../../utils/utils.dart';
+import '../../../utils/app_colors.dart';
+import '../../../utils/app_en_strings.dart';
 import '../../widgets/widgets.dart';
 
 class ProfileSettingStepThreeWidget extends StatelessWidget {
@@ -28,7 +29,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
               children: [
                 /// ========== Father ==========
                 _parentSection(
-                  title: "Father's Information",
+                  title: AppString.fatherInformation,
                   nameController: form.fatherName,
                   nidController: form.fatherPassOrNID,
                   selectedProfession: form.selectedFatherProfession,
@@ -48,7 +49,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
 
                 /// ========== Mother ==========
                 _parentSection(
-                  title: "Mother's Information",
+                  title: AppString.motherInformation,
                   nameController: form.motherName,
                   nidController: form.motherPassOrNID,
                   selectedProfession: form.selectedMotherProfession,
@@ -66,7 +67,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
 
                 SizedBox(height: 20.h),
                 CustomButtonCommon(
-                  title: "Next".tr,
+                  title: AppString.next.tr,
                   onpress: () {
                     if (controller.step3formKey.currentState!.validate()) {
                       controller.onStepTapped(controller.currentStep.value + 1);
@@ -122,11 +123,12 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _sectionTitle(title),
-        _textField("Name", nameController),
+        _textField(AppString.name, nameController, AppString.nameRequired.tr),
         _professionDropdown(selectedProfession),
-        _textField("NID/Passport No", nidController),
+        _textField(AppString.nidPassportNo, nidController,
+            AppString.nidPassportNoRequired.tr),
         CustomText(
-          text: "NID/Passport Documents".tr,
+          text: AppString.nidPassportDocuments.tr,
           fontsize: 16.sp,
         ),
         SizedBox(height: 4.h),
@@ -134,13 +136,13 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
           _filePicker(
               fileUrl, pickedFile, onPickFile, downloadType, filePrefix),
         CustomText(
-          text: "* Only Pdf, JPEG, PNG file are allowed".tr,
+          text: AppString.fileAllowedWarning.tr,
           color: AppColors.redColor,
           fontsize: 12.sp,
         ),
         SizedBox(height: 16.h),
         CustomText(
-          text: "Existence Status".tr,
+          text: AppString.existenceStatus.tr,
           fontsize: 16.sp,
         ),
         SizedBox(height: 4.h),
@@ -152,14 +154,14 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               fillColor: isAlive.value ? Colors.green : Colors.red,
               selectedColor: Colors.white,
-              children: const [
+              children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
-                  child: Text("Alive"),
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Text(AppString.alive.tr),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
-                  child: Text("Dead"),
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Text(AppString.dead.tr),
                 ),
               ],
             ),
@@ -169,7 +171,8 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     );
   }
 
-  Widget _textField(String label, TextEditingController controller) {
+  Widget _textField(
+      String label, TextEditingController controller, String error) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -178,7 +181,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
         CustomTextFormField(
           controller: controller,
           hint: label.tr,
-          validator: (value) => value!.isEmpty ? "$label is required" : null,
+          validator: (value) => value!.isEmpty ? error : null,
         ),
         SizedBox(height: 16.h),
       ],
@@ -189,10 +192,10 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: "Profession".tr, fontsize: 16.sp),
+        CustomText(text: AppString.profession.tr, fontsize: 16.sp),
         SizedBox(height: 4.h),
         Obx(() => CustomDropdown<ProfessionModel>(
-              hint: "Profession".tr,
+              hint: AppString.profession.tr,
               items: controller.professionList,
               value: selectedProfession.value,
               itemToString: (item) => item.profession ?? "",
@@ -224,7 +227,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
             );
             if (isComplete) {
               Fluttertoast.showToast(
-                msg: "File downloaded successfully".tr,
+                msg: AppString.fileDownloadedSuccess.tr,
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.TOP,
                 timeInSecForIosWeb: 2,

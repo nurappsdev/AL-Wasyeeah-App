@@ -1,12 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../models/models.dart';
-import '../../../../utils/utils.dart';
+import '../../../../utils/app_colors.dart';
+import '../../../../utils/app_en_strings.dart';
 import '../../../widgets/widgets.dart';
-
 
 class WitnessDetailsScreen extends StatefulWidget {
   const WitnessDetailsScreen({super.key});
@@ -16,13 +15,18 @@ class WitnessDetailsScreen extends StatefulWidget {
 }
 
 class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
-final getData = Get.arguments;
+  final getData = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
     print("kdklg ${getData}");
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Witness Profile Details".tr,fontsize: 18.sp,),),
+      appBar: AppBar(
+        title: CustomText(
+          text: "Witness Profile Details".tr,
+          fontsize: 18.sp,
+        ),
+      ),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -47,7 +51,8 @@ final getData = Get.arguments;
                           padding: const EdgeInsets.all(8.0),
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundImage: NetworkImage("https://via.placeholder.com/150"),
+                              backgroundImage: NetworkImage(
+                                  "https://via.placeholder.com/150"),
                               radius: 30,
                             ),
                             title: Text(
@@ -59,7 +64,9 @@ final getData = Get.arguments;
                       ),
                     ),
                   ),
-                  SizedBox(height: 10.h,),
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -68,9 +75,11 @@ final getData = Get.arguments;
                       border: Border.all(),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.4), // Shadow color with opacity
+                          color: Colors.black
+                              .withOpacity(0.4), // Shadow color with opacity
                           blurRadius: 10.0, // Softness of the shadow
-                          offset: Offset(0.5, 1), // Position of the shadow (x, y)
+                          offset:
+                              Offset(0.5, 1), // Position of the shadow (x, y)
                         ),
                       ],
                     ),
@@ -107,7 +116,8 @@ final getData = Get.arguments;
                           _buildRow("Marital Status:", "Married"),
 
                           /// Spouse's Row
-                          _buildRow("Spouse’s:", "Mithila IslamJinia Chowdhury"),
+                          _buildRow(
+                              "Spouse’s:", "Mithila IslamJinia Chowdhury"),
 
                           /// Profession Row
                           _buildRow("Profession:", "Teacher"),
@@ -148,7 +158,6 @@ final getData = Get.arguments;
             ),
           ),
         ),
-
       ),
     );
   }
@@ -157,7 +166,8 @@ final getData = Get.arguments;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.h),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align label and value
+        mainAxisAlignment:
+            MainAxisAlignment.spaceBetween, // Align label and value
         children: [
           Expanded(
             flex: 1,

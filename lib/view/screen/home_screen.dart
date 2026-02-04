@@ -4,6 +4,8 @@ import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:al_wasyeah/utils/app_image.dart';
+import '../../utils/app_en_strings.dart';
+import '../../utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -136,16 +138,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         radius: 18, // Radius of the CircleAvatar
                         backgroundImage: AssetImage(AppImages.profileIcon),
                         backgroundColor:
-                        Colors.grey[200], // Optional background color
+                            Colors.grey[200], // Optional background color
                       )
-                    // CustomNetworkImage(
-                    //   boxShape: BoxShape.circle,
-                    //   imageUrl: AppImages.profileImage,
-                    //   height: 40,
-                    //   width: 40,
-                    //   boxFit: BoxFit.contain,
-                    // ),
-                  ),
+                      // CustomNetworkImage(
+                      //   boxShape: BoxShape.circle,
+                      //   imageUrl: AppImages.profileImage,
+                      //   height: 40,
+                      //   width: 40,
+                      //   boxFit: BoxFit.contain,
+                      // ),
+                      ),
                   SizedBox(width: 8.h), // Space between the image and text
                   // Column(
                   //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -240,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 80.h,
                             ),
                             CustomText(
-                              text: "Explore your \n Wasyyah".tr,
+                              text: AppString.exploreWasyyah.tr,
                               fontsize: 18.sp,
                               color: AppColors.primaryColor,
                             )
@@ -267,11 +269,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
                                 border:
-                                Border.all(color: AppColors.primaryColor),
+                                    Border.all(color: AppColors.primaryColor),
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   SvgPicture.asset(
                                     AppIcons.witness,
@@ -279,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 50.h,
                                   ),
                                   CustomText(
-                                    text: "Witness".tr,
+                                    text: AppString.witness.tr,
                                     fontsize: 18.sp,
                                     color: AppColors.textColor4E4E4E,
                                   )
@@ -306,11 +308,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
                                 border:
-                                Border.all(color: AppColors.primaryColor),
+                                    Border.all(color: AppColors.primaryColor),
                               ),
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   SvgPicture.asset(
                                     AppIcons.nominee,
@@ -318,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 40.h,
                                   ),
                                   CustomText(
-                                    text: "Nominee".tr,
+                                    text: AppString.nominee.tr,
                                     fontsize: 18.sp,
                                     color: AppColors.textColor4E4E4E,
                                   )
@@ -378,11 +380,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 200.h,
                           child: GridView.builder(
                             padding:
-                            const EdgeInsets.symmetric(horizontal: 16.0),
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             scrollDirection: Axis.horizontal,
                             itemCount: 2,
                             gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1,
                               mainAxisSpacing: 16.0,
                               childAspectRatio: 0.8,
@@ -396,7 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
                                           height: 20,
@@ -405,7 +407,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       SizedBox(height: 8.h),
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                            MainAxisAlignment.spaceAround,
                                         children: [
                                           Container(
                                               height: 80.h,
@@ -414,17 +416,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                           Column(
                                             children: List.generate(
                                                 4,
-                                                    (index) => Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      vertical: 4.0),
-                                                  child: Container(
-                                                      height: 20,
-                                                      width:
-                                                      60 + index * 10,
-                                                      color: Colors
-                                                          .grey.shade300),
-                                                )),
+                                                (index) => Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 4.0),
+                                                      child: Container(
+                                                          height: 20,
+                                                          width:
+                                                              60 + index * 10,
+                                                          color: Colors
+                                                              .grey.shade300),
+                                                    )),
                                           ),
                                         ],
                                       ),
@@ -445,7 +447,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           scrollDirection: Axis.horizontal,
                           gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 1,
                             mainAxisSpacing: 16.0,
                             childAspectRatio: 0.8,
@@ -469,12 +471,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       isCurrent
-                                          ? "Upcoming Prayers"
-                                          : "Prayer Time",
+                                          ? AppString.upcomingPrayers.tr
+                                          : AppString.prayerTime.tr,
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.bold,
@@ -486,7 +488,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     SizedBox(height: 8.h),
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.spaceAround,
                                       children: [
                                         Image.asset(AppImages.mosjidIcon,
                                             height: 80.h, width: 80),
@@ -514,7 +516,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Switch(
                                               value: isCurrent,
                                               activeColor:
-                                              AppColors.primaryColor,
+                                                  AppColors.primaryColor,
                                               onChanged: (value) {
                                                 // handle toggle
                                               },
