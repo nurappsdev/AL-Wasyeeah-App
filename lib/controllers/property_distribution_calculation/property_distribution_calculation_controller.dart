@@ -31,6 +31,9 @@ class PropertyDistributionCalculationController extends GetxController {
   final silverController = TextEditingController();
   final moneyController = TextEditingController();
 
+  RxString goldUnit = "Gram".obs;
+  RxString silverUnit = "Gram".obs;
+
   RxBool isCalculateVisible = false.obs;
   RxBool isCalculateLoading = false.obs;
 
@@ -205,16 +208,24 @@ class PropertyDistributionCalculationController extends GetxController {
 
     // 3. Add Property fields
     if (landController.text.isNotEmpty) {
-      finalOutput["propertyLand"] = int.tryParse(landController.text) ?? 0;
+      finalOutput["propertyLand"] = double.tryParse(landController.text) ?? 0;
     }
     if (goldController.text.isNotEmpty) {
-      finalOutput["propertyGold"] = int.tryParse(goldController.text) ?? 0;
+      double goldVal = double.tryParse(goldController.text) ?? 0;
+      if (goldUnit.value == "Vori") {
+        goldVal = goldVal * 11.664;
+      }
+      finalOutput["propertyGold"] = goldVal;
     }
     if (silverController.text.isNotEmpty) {
-      finalOutput["propertySilver"] = int.tryParse(silverController.text) ?? 0;
+      double silverVal = double.tryParse(silverController.text) ?? 0;
+      if (silverUnit.value == "Vori") {
+        silverVal = silverVal * 11.664;
+      }
+      finalOutput["propertySilver"] = silverVal;
     }
     if (moneyController.text.isNotEmpty) {
-      finalOutput["propertyTk"] = int.tryParse(moneyController.text) ?? 0;
+      finalOutput["propertyTk"] = double.tryParse(moneyController.text) ?? 0;
     }
 
     log("Final Submission JSON: ${jsonEncode(finalOutput)}");
@@ -253,6 +264,8 @@ class PropertyDistributionCalculationController extends GetxController {
     goldController.clear();
     silverController.clear();
     moneyController.clear();
+    goldUnit.value = "Gram";
+    silverUnit.value = "Gram";
     isCalculateVisible.value = false;
     update();
   }

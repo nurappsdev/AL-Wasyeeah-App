@@ -300,20 +300,90 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
             controller: controller.landController,
             hint: "Enter land amount",
           ),
-          _buildPropertyField(
-            label: "Gold in GRAM or VORI",
+          _buildPropertyFieldWithUnit(
+            label: "Gold amount",
             controller: controller.goldController,
             hint: "Enter gold amount",
+            unitValue: controller.goldUnit,
           ),
-          _buildPropertyField(
-            label: "Silver in GRAM or VORI",
+          _buildPropertyFieldWithUnit(
+            label: "Silver amount",
             controller: controller.silverController,
             hint: "Enter silver amount",
+            unitValue: controller.silverUnit,
           ),
           _buildPropertyField(
             label: "Total Money in Taka",
             controller: controller.moneyController,
             hint: "Enter money amount",
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPropertyFieldWithUnit({
+    required String label,
+    required TextEditingController controller,
+    required String hint,
+    required RxString unitValue,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: TextField(
+                  controller: controller,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    hintText: hint,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                flex: 2,
+                child: Obx(() => Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: unitValue.value,
+                          isExpanded: true,
+                          items: ["Gram", "Vori"].map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (newValue) {
+                            if (newValue != null) {
+                              unitValue.value = newValue;
+                            }
+                          },
+                        ),
+                      ),
+                    )),
+              ),
+            ],
           ),
         ],
       ),
