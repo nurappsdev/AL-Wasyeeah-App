@@ -90,4 +90,5 @@ class ApiConstants {
   static String getProfile = "/user/getProfileData";
   static String documentTypeList = "/lookup/documentTypeList";
   static String profileUpdate = "/lookup/saveProfileData";
+  static String relevantList = "/relevantList?lang=en";
 }

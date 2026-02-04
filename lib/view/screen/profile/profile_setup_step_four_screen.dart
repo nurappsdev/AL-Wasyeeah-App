@@ -13,8 +13,8 @@ import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart'
 import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
 
-class ProfileSetupStepFourScreen extends StatelessWidget {
-  ProfileSetupStepFourScreen({super.key});
+class ProfileSettingStepFourWidget extends StatelessWidget {
+  ProfileSettingStepFourWidget({super.key});
 
   final ProfileController controller = Get.find();
 

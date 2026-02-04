@@ -1,7 +1,8 @@
-import 'package:al_wasyeah/view/screen/profile_setting/profile_setup_step_three_screen.dart';
+import 'package:al_wasyeah/view/screen/profile/profile_setup_step_three_screen.dart';
 import 'package:get/get.dart';
 import '../view/screen/access_control/acceess_control_tab_screen.dart';
 import '../view/screen/screen.dart';
+import '../view/screen/property_distribution_calculation/property_distribution_calculation_page.dart';
 
 class AppRoutes {
   static const String firstSplashScreen = "/firstSplashScreen.dart";
@@ -14,6 +15,9 @@ class AppRoutes {
       "/propertyDistributionScreen.dart";
   static const String propertyDistributionResultScreen =
       "/propertyDistributionResultScreen.dart";
+  static const String propertyDistributionCalculationScreen =
+      "/propertyDistributionCalculationScreen.dart";
+
   static const String zakatCalculatorScreen = "/zakatCalculatorScreen.dart";
   static const String profileSetting1 = "/profileSetting1.dart";
   static const String fatherInfoScreen = "/fatherInfoScreen.dart";
@@ -37,7 +41,6 @@ class AppRoutes {
   static const String witnessPhanelData = "/witnessPhanelData.dart";
 
   static List<GetPage> get routes => [
-
         GetPage(name: firstSplashScreen, page: () => FirstSplashScreen()),
         GetPage(name: splashScreen, page: () => SplashScreen()),
         GetPage(name: loginScreen, page: () => LoginScreen()),
@@ -52,9 +55,11 @@ class AppRoutes {
             page: () => PropertyDistributionResultScreen()),
         GetPage(
             name: zakatCalculatorScreen, page: () => ZakatCalculatorScreen()),
-        GetPage(name: profileSetting1, page: () => ProfileSetupStepOneScreen()),
         GetPage(
-            name: fatherInfoScreen, page: () => ProfileSetupStepThreeScreen()),
+            name: profileSetting1, page: () => ProfileSettingStepOneWidget()),
+        GetPage(
+            name: fatherInfoScreen,
+            page: () => ProfileSettingStepThreeWidget()),
         GetPage(name: homeScreen, page: () => HomeScreen()),
         GetPage(name: wasyyahScreen, page: () => WasyyahScreen()),
         GetPage(name: wasyyahEditScreen, page: () => WasiyahEditScreen()),
@@ -68,11 +73,14 @@ class AppRoutes {
         GetPage(name: addOutsideWitnessScreen, page: () => AddOutsideWitness()),
         GetPage(name: addOutsideNomineeScreen, page: () => AddOutsideNominee()),
         GetPage(name: notificationsScreen, page: () => NotificationCard()),
-        GetPage(name: profileInfo, page: () => ProfileInfo()),
+        GetPage(name: profileInfo, page: () => MenuPage()),
         GetPage(name: wasyyahPriviewScreen, page: () => WasyyahPreviewScreen()),
         GetPage(
             name: accessControlTabScreen, page: () => AccessControlTabScreen()),
         GetPage(name: featureScreen, page: () => FeatureScreen()),
+        GetPage(
+            name: propertyDistributionCalculationScreen,
+            page: () => PropertyDistributionCalculationPage()),
       ];
 
   //  GetPage(name: firstSplashScreen, page: () =>  FirstSplashScreen()),
@@ -106,5 +114,4 @@ class AppRoutes {
   //  GetPage(name: witnessPhanelData, page: () => WitnessPhanelData()),
   //
   // ];
-
 }

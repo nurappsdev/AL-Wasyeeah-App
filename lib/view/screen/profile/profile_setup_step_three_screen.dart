@@ -11,8 +11,8 @@ import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
-class ProfileSetupStepThreeScreen extends StatelessWidget {
-  ProfileSetupStepThreeScreen({super.key});
+class ProfileSettingStepThreeWidget extends StatelessWidget {
+  ProfileSettingStepThreeWidget({super.key});
   final ProfileController controller = Get.find<ProfileController>();
   @override
   Widget build(BuildContext context) {

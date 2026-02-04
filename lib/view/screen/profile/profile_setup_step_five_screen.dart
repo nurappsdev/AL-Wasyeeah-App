@@ -13,8 +13,8 @@ import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/document_type_form.dart';
 
-class ProfileSetupStepFiveScreen extends StatelessWidget {
-  ProfileSetupStepFiveScreen({super.key});
+class ProfileSettingStepFiveWidget extends StatelessWidget {
+  ProfileSettingStepFiveWidget({super.key});
 
   final ProfileController controller = Get.find();
 

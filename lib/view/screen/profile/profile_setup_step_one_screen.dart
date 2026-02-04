@@ -13,13 +13,14 @@ import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
-class ProfileSetupStepOneScreen extends StatefulWidget {
+class ProfileSettingStepOneWidget extends StatefulWidget {
   @override
-  State<ProfileSetupStepOneScreen> createState() =>
-      _ProfileSetupStepOneScreenState();
+  State<ProfileSettingStepOneWidget> createState() =>
+      _ProfileSettingStepOneWidgetState();
 }
 
-class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
+class _ProfileSettingStepOneWidgetState
+    extends State<ProfileSettingStepOneWidget> {
   final ProfileController controller = Get.find<ProfileController>();
   Widget _sectionTitle(String title) {
     return Column(

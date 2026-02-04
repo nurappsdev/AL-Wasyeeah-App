@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/view/screen/property_distribution_calculation/property_distribution_calculation_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,16 +9,16 @@ import '../../../helpers/helpers.dart';
 import '../../../helpers/prefs_helper.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
-import '../profile_setting/profile_setting.dart';
+import '../profile/profile_page.dart';
 
-class ProfileInfo extends StatefulWidget {
-  const ProfileInfo({super.key});
+class MenuPage extends StatefulWidget {
+  const MenuPage({super.key});
 
   @override
-  State<ProfileInfo> createState() => _ProfileInfoState();
+  State<MenuPage> createState() => _MenuPageState();
 }
 
-class _ProfileInfoState extends State<ProfileInfo> {
+class _MenuPageState extends State<MenuPage> {
   final userController = Get.put(UserController());
 
   @override
@@ -72,9 +73,9 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 ///=====================Personal Details====================================
                 GestureDetector(
                   onTap: () {
-                    Get.off(() => StepNavigationWithPageView(),
-                        preventDuplicates: false);
-                    // Get.off(()=>MultiStepFormScreen(),preventDuplicates: false);
+                    Get.to(
+                      () => ProfilePage(),
+                    );
                   },
                   child: Container(
                     width: 360.w,
@@ -101,6 +102,60 @@ class _ProfileInfoState extends State<ProfileInfo> {
                               SizedBox(width: 16.w),
                               CustomText(
                                 text: "Personal Details".tr,
+                                fontsize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textColor4E4E4E,
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          child: SvgPicture.asset(
+                            AppIcons.chevronIcon,
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+
+                ///=====================Property Distribution Calculation====================================
+                GestureDetector(
+                  onTap: () {
+                    Get.to(
+                      () => PropertyDistributionCalculationPage(),
+                    );
+                  },
+                  child: Container(
+                    width: 360.w,
+                    height: 60.h,
+                    margin: EdgeInsets.only(left: 2.w),
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                      border: Border.all(
+                        color: Color(0xffB0E3D3),
+                        width: 2.w,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppIcons.zakatIcons,
+                              ),
+                              SizedBox(width: 16.w),
+                              CustomText(
+                                text: "Property Distribution Calculation".tr,
                                 fontsize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
