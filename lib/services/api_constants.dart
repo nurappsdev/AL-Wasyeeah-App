@@ -91,4 +91,6 @@ class ApiConstants {
   static String documentTypeList = "/lookup/documentTypeList";
   static String profileUpdate = "/lookup/saveProfileData";
   static String relevantList = "/relevantList?lang=en";
+  static String propertyDistributionCalculationResult =
+      "/propertyDistributeResult?lang=en";
 }

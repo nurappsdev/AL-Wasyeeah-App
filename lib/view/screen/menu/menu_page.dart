@@ -126,54 +126,66 @@ class _MenuPageState extends State<MenuPage> {
 
                 ///=====================Property Distribution Calculation====================================
                 GestureDetector(
-                  onTap: () {
-                    Get.to(
-                      () => PropertyDistributionCalculationPage(),
-                    );
-                  },
-                  child: Container(
-                    width: 360.w,
-                    height: 60.h,
-                    margin: EdgeInsets.only(left: 2.w),
-                    decoration: BoxDecoration(
-                      color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                      border: Border.all(
-                        color: Color(0xffB0E3D3),
-                        width: 2.w,
+                    onTap: () {
+                      Get.to(
+                        () => PropertyDistributionCalculationPage(),
+                      );
+                    },
+                    child: Container(
+                      width: 360.w,
+                      height: 60.h,
+                      margin: EdgeInsets.only(left: 2.w),
+                      decoration: BoxDecoration(
+                        color: AppColors.whiteColor,
+                        borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                        border: Border.all(
+                          color: const Color(0xffB0E3D3),
+                          width: 2.w,
+                        ),
                       ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.zakatIcons,
+                      child: Row(
+                        children: [
+                          // LEFT SIDE (ICON + TEXT)
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 12.w),
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 18.r,
+                                    backgroundColor: Color(0xFF39B048),
+                                    child: Icon(
+                                      Icons.calculate,
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ),
+                                  SizedBox(width: 16.w),
+                                  Expanded(
+                                    child: CustomText(
+                                      text: "Property Distribution Calculation"
+                                          .tr,
+                                      fontsize: 16.sp,
+                                      textOverflow: TextOverflow.ellipsis,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.textColor4E4E4E,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: 16.w),
-                              CustomText(
-                                text: "Property Distribution Calculation".tr,
-                                fontsize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textColor4E4E4E,
-                              )
-                            ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
-                          child: SvgPicture.asset(
-                            AppIcons.chevronIcon,
-                            color: AppColors.primaryColor,
+
+                          // RIGHT CHEVRON ICON
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            child: SvgPicture.asset(
+                              AppIcons.chevronIcon,
+                              color: AppColors.primaryColor,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                        ],
+                      ),
+                    )),
                 SizedBox(
                   height: 20.h,
                 ),

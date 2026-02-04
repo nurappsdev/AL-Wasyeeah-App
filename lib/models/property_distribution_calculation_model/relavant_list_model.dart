@@ -4,22 +4,26 @@
 
 import 'dart:convert';
 
-List<RelevantList> relevantListFromJson(String str) => List<RelevantList>.from(
-    json.decode(str).map((x) => RelevantList.fromJson(x)));
+List<RelativeModelForPropertyDistribution> relevantListFromJson(String str) =>
+    List<RelativeModelForPropertyDistribution>.from(json
+        .decode(str)
+        .map((x) => RelativeModelForPropertyDistribution.fromJson(x)));
 
-String relevantListToJson(List<RelevantList> data) =>
+String relevantListToJson(List<RelativeModelForPropertyDistribution> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class RelevantList {
+class RelativeModelForPropertyDistribution {
   final String? encrypted;
   final String? relative;
 
-  RelevantList({
+  RelativeModelForPropertyDistribution({
     this.encrypted,
     this.relative,
   });
 
-  factory RelevantList.fromJson(Map<String, dynamic> json) => RelevantList(
+  factory RelativeModelForPropertyDistribution.fromJson(
+          Map<String, dynamic> json) =>
+      RelativeModelForPropertyDistribution(
         encrypted: json["ENCRYPTED"],
         relative: json["RELATIVE"],
       );

@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:al_wasyeah/models/property_distribution_calculation_model/property_destribution_result_model.dart';
+import 'package:flutter/material.dart';
 import 'package:al_wasyeah/helpers/toast_message_helper.dart';
 import 'package:al_wasyeah/services/api_client.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
@@ -9,7 +11,10 @@ import 'package:al_wasyeah/models/property_distribution_calculation_model/relava
 class PropertyDistributionCalculationController extends GetxController {
   final Rx<RxStatus> status = RxStatus.loading().obs;
 
-  RxList<RelevantList> allRelatives = <RelevantList>[].obs;
+  RxList<RelativeModelForPropertyDistribution> allRelatives =
+      <RelativeModelForPropertyDistribution>[].obs;
+  RxList<PropertydistributionResultModel> propertyDistributionResult =
+      <PropertydistributionResultModel>[].obs;
 
   // Selection and Counts
   RxMap<String, bool> isChecked = <String, bool>{}.obs;
@@ -19,6 +24,15 @@ class PropertyDistributionCalculationController extends GetxController {
   // Key format: "Deceased 1st Son's Son" -> count
   RxMap<String, bool> dynamicIsChecked = <String, bool>{}.obs;
   RxMap<String, int> dynamicCounts = <String, int>{}.obs;
+
+  // Property Calculation Fields
+  final landController = TextEditingController();
+  final goldController = TextEditingController();
+  final silverController = TextEditingController();
+  final moneyController = TextEditingController();
+
+  RxBool isCalculateVisible = false.obs;
+  RxBool isCalculateLoading = false.obs;
 
   final List<String> hiddenRelatives = [
     "Deceased Son's Son",
@@ -31,6 +45,28 @@ class PropertyDistributionCalculationController extends GetxController {
   void onInit() {
     super.onInit();
     initData();
+
+    // Add listeners to property fields to toggle button visibility
+    landController.addListener(_checkVisibility);
+    goldController.addListener(_checkVisibility);
+    silverController.addListener(_checkVisibility);
+    moneyController.addListener(_checkVisibility);
+  }
+
+  void _checkVisibility() {
+    isCalculateVisible.value = landController.text.isNotEmpty ||
+        goldController.text.isNotEmpty ||
+        silverController.text.isNotEmpty ||
+        moneyController.text.isNotEmpty;
+  }
+
+  @override
+  void onClose() {
+    landController.dispose();
+    goldController.dispose();
+    silverController.dispose();
+    moneyController.dispose();
+    super.onClose();
   }
 
   Future<void> initData() async {
@@ -58,7 +94,7 @@ class PropertyDistributionCalculationController extends GetxController {
     }
   }
 
-  List<RelevantList> get filteredRelatives {
+  List<RelativeModelForPropertyDistribution> get filteredRelatives {
     return allRelatives
         .where((rel) => !hiddenRelatives.contains(rel.relative))
         .toList();
@@ -140,6 +176,103 @@ class PropertyDistributionCalculationController extends GetxController {
       }
     }
     update();
+  }
+
+  void submitCalculation() async {
+    Map<String, int> relatives = {};
+
+    // 1. Map standard relatives
+    for (var rel in allRelatives) {
+      String name = rel.relative!;
+      if (isChecked[name] == true) {
+        String key = "relative_no_${rel.encrypted}";
+        relatives[key] = counts[name] ?? 0;
+      }
+    }
+
+    // 2. Map dynamic (deceased) relatives
+    // UI Key example: "Deceased 1st Son's Son"
+    dynamicIsChecked.forEach((uiKey, isSel) {
+      if (isSel) {
+        String mappedKey = _mapDynamicKeyToShortKey(uiKey);
+        relatives[mappedKey] = dynamicCounts[uiKey] ?? 0;
+      }
+    });
+
+    Map<String, dynamic> finalOutput = {
+      "relative": [relatives],
+    };
+
+    // 3. Add Property fields
+    if (landController.text.isNotEmpty) {
+      finalOutput["propertyLand"] = int.tryParse(landController.text) ?? 0;
+    }
+    if (goldController.text.isNotEmpty) {
+      finalOutput["propertyGold"] = int.tryParse(goldController.text) ?? 0;
+    }
+    if (silverController.text.isNotEmpty) {
+      finalOutput["propertySilver"] = int.tryParse(silverController.text) ?? 0;
+    }
+    if (moneyController.text.isNotEmpty) {
+      finalOutput["propertyTk"] = int.tryParse(moneyController.text) ?? 0;
+    }
+
+    log("Final Submission JSON: ${jsonEncode(finalOutput)}");
+
+    try {
+      isCalculateLoading.value = true;
+      var response = await ApiClient.postData(
+          ApiConstants.propertyDistributionCalculationResult, finalOutput);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ToastMessageHelper.successMessageShowToster(
+            "Calculation fetched successfully");
+        propertyDistributionResult.value =
+            propertydistributionResultModelFromJson(jsonEncode(response.body));
+
+        // Reset all inputs after success if needed,
+        // Note: User asked to clean the selected and typed value.
+        resetInputs();
+      } else {
+        ToastMessageHelper.errorMessageShowToster(
+            "Failed to fetch calculation result");
+      }
+    } catch (e, s) {
+      log("Property Calculation Error: $e\nStacktrace: $s");
+      ToastMessageHelper.errorMessageShowToster("Something went wrong");
+    } finally {
+      isCalculateLoading.value = false;
+    }
+  }
+
+  void resetInputs() {
+    isChecked.clear();
+    counts.clear();
+    dynamicIsChecked.clear();
+    dynamicCounts.clear();
+    landController.clear();
+    goldController.clear();
+    silverController.clear();
+    moneyController.clear();
+    isCalculateVisible.value = false;
+    update();
+  }
+
+  String _mapDynamicKeyToShortKey(String uiKey) {
+    // Regex to parse "Deceased 1st Son's Son" -> parent: son, child: son, index: 1
+    // Regex to parse "Deceased 2nd Daughter's Daughter" -> parent: daughter, child: daughter, index: 2
+
+    final pattern = RegExp(
+        r"Deceased (\d+)(?:st|nd|rd|th) (Son|Daughter)'s (Son|Daughter)");
+    final match = pattern.firstMatch(uiKey);
+
+    if (match != null) {
+      int index = int.parse(match.group(1)!);
+      String parent = match.group(2)!.toLowerCase();
+      String child = match.group(3)!.toLowerCase();
+      return "relative_no_${parent}_${child}_$index";
+    }
+
+    return uiKey; // Fallback
   }
 
   String getOrdinal(int n) {

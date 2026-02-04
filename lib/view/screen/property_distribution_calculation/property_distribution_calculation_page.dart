@@ -1,47 +1,354 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/controllers/property_distribution_calculation/property_distribution_calculation_controller.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class PropertyDistributionCalculationPage extends StatelessWidget {
   PropertyDistributionCalculationPage({super.key});
 
   final controller = Get.put(PropertyDistributionCalculationController());
+  Widget _sectionTitle(String title) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.h),
+      child: Column(
+        children: [
+          SizedBox(height: 16.h),
+          Container(
+            height: 48.h,
+            alignment: Alignment.center,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+            padding: EdgeInsets.all(8.h),
+            child: Text(
+              title.tr,
+              style: TextStyle(color: Colors.white, fontSize: 22.sp),
+            ),
+          ),
+          SizedBox(height: 16.h),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Property Distribution Calculation"),
-        backgroundColor: AppColors.primaryColor,
-        foregroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          "Property Distribution Calculation",
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontSize: 20.sp),
+        ),
+        backgroundColor: AppColors.whiteColor,
+        // foregroundColor: Colors.black,
       ),
-      body: Obx(() {
-        if (controller.status.value.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
+      body: Column(
+        children: [
+          Expanded(
+            child: Obx(() {
+              if (controller.status.value.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-        return ListView.builder(
-          itemCount: controller.filteredRelatives.length,
-          itemBuilder: (context, index) {
-            final rel = controller.filteredRelatives[index];
-            final relativeName = rel.relative!;
-
-            return Obx(() {
-              return Column(
+              return ListView(
                 children: [
-                  _buildRelativeTile(relativeName),
-                  if ((relativeName == "Deceased Son" ||
-                          relativeName == "Deceased Daughter") &&
-                      controller.isChecked[relativeName] == true)
-                    ..._buildDynamicTiles(relativeName),
-                  const Divider(),
+                  _sectionTitle("Relative List"),
+                  ...controller.filteredRelatives.map((rel) {
+                    final relativeName = rel.relative!;
+                    return Obx(() {
+                      return Column(
+                        children: [
+                          _buildRelativeTile(relativeName),
+                          if ((relativeName == "Deceased Son" ||
+                                  relativeName == "Deceased Daughter") &&
+                              controller.isChecked[relativeName] == true)
+                            ..._buildDynamicTiles(relativeName),
+                          const Divider(),
+                        ],
+                      );
+                    });
+                  }).toList(),
+                  _sectionTitle("Property Distribution Calculation"),
+                  _buildPropertySection(),
+                  Obx(() {
+                    if (controller.propertyDistributionResult.isEmpty) {
+                      return const SizedBox.shrink();
+                    }
+                    return Column(
+                      children: [
+                        _sectionTitle("Calculation Results"),
+                        _buildPieChartSection(),
+                        _buildResultCards(),
+                      ],
+                    );
+                  }),
                 ],
               );
-            });
-          },
+            }),
+          ),
+          Obx(() {
+            if (!controller.isCalculateVisible.value) {
+              return const SizedBox.shrink();
+            }
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: controller.isCalculateLoading.value
+                    ? null
+                    : () => controller.submitCalculation(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryColor,
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: controller.isCalculateLoading.value
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : const Text(
+                        "Calculate",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+              ),
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
+  final List<Color> _chartColors = [
+    Colors.blue,
+    Colors.green,
+    Colors.orange,
+    Colors.purple,
+    Colors.red,
+    Colors.teal,
+    Colors.pink,
+    Colors.indigo,
+    Colors.amber,
+    Colors.cyan,
+  ];
+
+  Widget _buildPieChartSection() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 250.h,
+            child: PieChart(
+              PieChartData(
+                sections: controller.propertyDistributionResult
+                    .asMap()
+                    .entries
+                    .map((entry) {
+                  final index = entry.key;
+                  final data = entry.value;
+                  final percentage = (data.portionPart ?? 0) * 100;
+                  return PieChartSectionData(
+                    color: _chartColors[index % _chartColors.length],
+                    value: percentage,
+                    title: '${percentage.toStringAsFixed(1)}%',
+                    radius: 60,
+                    titleStyle: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  );
+                }).toList(),
+                sectionsSpace: 2,
+                centerSpaceRadius: 40,
+              ),
+            ),
+          ),
+          SizedBox(height: 20.h),
+          Wrap(
+            spacing: 16.w,
+            runSpacing: 8.h,
+            children: controller.propertyDistributionResult
+                .asMap()
+                .entries
+                .map((entry) {
+              final index = entry.key;
+              final data = entry.value;
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 12.w,
+                    height: 12.h,
+                    decoration: BoxDecoration(
+                      color: _chartColors[index % _chartColors.length],
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  SizedBox(width: 4.w),
+                  Text(
+                    data.relativeName ?? "Unknown",
+                    style:
+                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildResultCards() {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: controller.propertyDistributionResult.length,
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+      itemBuilder: (context, index) {
+        final data = controller.propertyDistributionResult[index];
+        return Card(
+          elevation: 4,
+          margin: EdgeInsets.only(bottom: 16.h),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+          child: Padding(
+            padding: EdgeInsets.all(16.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 4.w,
+                      height: 24.h,
+                      color: _chartColors[index % _chartColors.length],
+                    ),
+                    SizedBox(width: 8.w),
+                    Text(
+                      data.relativeName ?? "Unknown",
+                      style: TextStyle(
+                          fontSize: 18.sp, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                const Divider(),
+                _resultRow(
+                    "Share Portion", "${(data.portionPart ?? 0) * 100}%"),
+                if (data.landPart != null && data.landPart! > 0)
+                  _resultRow("Land Portion", "${data.landPart} Deciman"),
+                if (data.goldPart != null && data.goldPart! > 0)
+                  _resultRow("Gold Portion", "${data.goldPart} GRAM/VORI"),
+                if (data.silverPart != null && data.silverPart! > 0)
+                  _resultRow("Silver Portion", "${data.silverPart} GRAM/VORI"),
+                if (data.currencyPart != null && data.currencyPart! > 0)
+                  _resultRow("Total Money", "${data.currencyPart} Taka"),
+              ],
+            ),
+          ),
         );
-      }),
+      },
+    );
+  }
+
+  Widget _resultRow(String label, String value) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 4.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label,
+              style: TextStyle(fontSize: 14.sp, color: Colors.grey[700])),
+          Text(value,
+              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPropertySection() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Property Calculation Section",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          _buildPropertyField(
+            label: "Land in Deciman",
+            controller: controller.landController,
+            hint: "Enter land amount",
+          ),
+          _buildPropertyField(
+            label: "Gold in GRAM or VORI",
+            controller: controller.goldController,
+            hint: "Enter gold amount",
+          ),
+          _buildPropertyField(
+            label: "Silver in GRAM or VORI",
+            controller: controller.silverController,
+            hint: "Enter silver amount",
+          ),
+          _buildPropertyField(
+            label: "Total Money in Taka",
+            controller: controller.moneyController,
+            hint: "Enter money amount",
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPropertyField({
+    required String label,
+    required TextEditingController controller,
+    required String hint,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: controller,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              hintText: hint,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -130,37 +437,6 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
               onChanged: (val) => controller.toggleDynamicCheck(key, val),
               controlAffinity: ListTileControlAffinity.leading,
             ),
-            if (controller.dynamicIsChecked[key] == true)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text("Count: ",
-                        style: TextStyle(color: Colors.grey, fontSize: 12)),
-                    IconButton(
-                      icon: const Icon(Icons.remove_circle_outline,
-                          size: 20, color: AppColors.redColor),
-                      onPressed: () => controller.decrementDynamic(key),
-                    ),
-                    SizedBox(
-                      width: 25,
-                      child: Center(
-                        child: Text(
-                          (controller.dynamicCounts[key] ?? 0).toString(),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.add_circle_outline,
-                          size: 20, color: AppColors.primaryColor),
-                      onPressed: () => controller.incrementDynamic(key),
-                    ),
-                  ],
-                ),
-              ),
           ],
         ),
       );
