@@ -1,4 +1,4 @@
-
+﻿
 class NomineetedResponseModel {
   final dynamic requestKey;
   final dynamic relation;
@@ -50,3 +50,4 @@ class NomineetedResponseModel {
     "motherName": motherName,
   };
 }
+

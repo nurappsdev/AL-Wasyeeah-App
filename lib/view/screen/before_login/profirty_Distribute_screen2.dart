@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
+﻿import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 // }
 //
 // class _PropertyDistributionScreen2State extends State<PropertyDistributionScreen2> {
-//   // Checkbox এর স্টেট ম্যানেজমেন্টের জন্য ভ্যারিয়েবল
+//   // Checkbox à¦à¦° à¦¸à§à¦Ÿà§‡à¦Ÿ à¦®à§à¦¯à¦¾à¦¨à§‡à¦œà¦®à§‡à¦¨à§à¦Ÿà§‡à¦° à¦œà¦¨à§à¦¯ à¦­à§à¦¯à¦¾à¦°à¦¿à§Ÿà§‡à¦¬à¦²
 //   bool isCheckbox1Checked = false;
 //   bool isCheckbox2Checked = false;
 //
@@ -17,7 +17,7 @@ import 'package:get/get.dart';
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: const Text('Checkbox এবং TextField'),
+//         title: const Text('Checkbox à¦à¦¬à¦‚ TextField'),
 //       ),
 //       body: Padding(
 //         padding: const EdgeInsets.all(16.0),
@@ -37,16 +37,16 @@ import 'package:get/get.dart';
 //                         });
 //                       },
 //                     ),
-//                     const Text("পুত্র"),
+//                     const Text("à¦ªà§à¦¤à§à¦°"),
 //                   ],
 //                 ),
 //                 SizedBox(width: 10.w,),
-//                 // যদি Checkbox checked থাকে, তাহলে TextField দেখাবে
+//                 // à¦¯à¦¦à¦¿ Checkbox checked à¦¥à¦¾à¦•à§‡, à¦¤à¦¾à¦¹à¦²à§‡ TextField à¦¦à§‡à¦–à¦¾à¦¬à§‡
 //                 isCheckbox1Checked
 //                     ? Expanded(
 //                   child: CustomTextField(
 //                     controller: TextEditingController(),
-//                     hintText: "পুত্র এর জন্য ইনপুট দিন",
+//                     hintText: "à¦ªà§à¦¤à§à¦° à¦à¦° à¦œà¦¨à§à¦¯ à¦‡à¦¨à¦ªà§à¦Ÿ à¦¦à¦¿à¦¨",
 //                   ),
 //                 )
 //                     : const SizedBox.shrink(),
@@ -75,7 +75,7 @@ import 'package:get/get.dart';
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: const Text('Checkbox এবং TextField'),
+//         title: const Text('Checkbox à¦à¦¬à¦‚ TextField'),
 //       ),
 //       body: Padding(
 //         padding: const EdgeInsets.all(16.0),
@@ -145,7 +145,7 @@ import 'package:get/get.dart';
 //             //             controller.isCheckbox1Checked.value = value ?? false;
 //             //           },
 //             //         ),
-//             //         const Text("পুত্র"),
+//             //         const Text("à¦ªà§à¦¤à§à¦°"),
 //             //       ],
 //             //     )),
 //             //     const SizedBox(width: 10),
@@ -153,7 +153,7 @@ import 'package:get/get.dart';
 //             //         ? Expanded(
 //             //       child: CustomTextField(
 //             //         controller: TextEditingController(),
-//             //         hintText: "পুত্র এর জন্য ইনপুট দিন",
+//             //         hintText: "à¦ªà§à¦¤à§à¦° à¦à¦° à¦œà¦¨à§à¦¯ à¦‡à¦¨à¦ªà§à¦Ÿ à¦¦à¦¿à¦¨",
 //             //       ),
 //             //     )
 //             //         : const SizedBox.shrink()),
@@ -169,7 +169,6 @@ import 'package:get/get.dart';
 
 import '../../../helpers/helpers.dart';
 import '../../../utils/app_colors.dart';
-import '../../../utils/app_en_strings.dart';
 import '../../../utils/app_constant.dart';
 import '../../widgets/widgets.dart';
 
@@ -427,3 +426,5 @@ class PropertyDistributionScreen2 extends StatelessWidget {
     );
   }
 }
+
+

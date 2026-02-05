@@ -1,4 +1,4 @@
-
+﻿
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/utils.dart';
@@ -73,9 +73,10 @@ class _WitnessTabScreenState extends State<WitnessTabScreen>
         indicatorSize: TabBarIndicatorSize.tab,
         tabs:  [
           Tab(text:  'Your Witness'.tr,),
-          Tab(text: 'I’m the witness'.tr,),
+          Tab(text: 'Iâ€™m the witness'.tr,),
         ],
       ),
     );
   }
 }
+

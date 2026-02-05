@@ -1,4 +1,4 @@
-// To parse this JSON data, do
+﻿// To parse this JSON data, do
 //
 //     final propertydistributionResultModel = propertydistributionResultModelFromJson(jsonString);
 
@@ -50,3 +50,4 @@ class PropertydistributionResultModel {
         "currency_part": currencyPart,
       };
 }
+

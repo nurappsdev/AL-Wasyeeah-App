@@ -1,6 +1,7 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 
 import 'package:al_wasyeah/models/auths/login_response_model.dart';
+import 'package:al_wasyeah/models/auths/registation_response_model.dart';
 import 'package:al_wasyeah/models/security_questions/security_question_model.dart';
 import 'package:al_wasyeah/services/database_helper.dart';
 import 'package:al_wasyeah/services/database_keys.dart';
@@ -12,15 +13,9 @@ import '../../helpers/helpers.dart';
 
 import '../../services/services.dart';
 
-class AuthController extends GetxController {
-  @override
-  void onInit() {
-    super.onInit();
-    //
-  }
-
+class AuthController extends GetxService {
   // Save token after login
-  Future<void> saveToken(LoginResponseModel response) async {
+  static Future<void> saveToken(LoginResponseModel response) async {
     final token = response.data?.token;
     if (token == null || token.isEmpty) return;
 
@@ -32,7 +27,7 @@ class AuthController extends GetxController {
   }
 
   // Get token
-  String? getToken() {
+  static String? getToken() {
     return DatabaseService.instance.get<String>(
       DatabaseKeys.authBox,
       DatabaseKeys.token,
@@ -40,7 +35,7 @@ class AuthController extends GetxController {
   }
 
   // Clear token on logout
-  Future<void> clearToken() async {
+  static Future<void> clearToken() async {
     await DatabaseService.instance.delete(
       DatabaseKeys.authBox,
       DatabaseKeys.token,
@@ -53,8 +48,7 @@ class AuthController extends GetxController {
       <SecurityQuestionListModel>[].obs;
 
   getSecurityQuestion() async {
-    var response =
-        await ApiClient.getData(ApiConstants.securityQuestionEndPoint);
+    var response = await ApiClient.get(ApiConstants.securityQuestionEndPoint);
     if (response.statusCode == 200 || response.statusCode == 201) {
       securityQuestionResponseModel(
           securityQuestionListModelFromJson(jsonEncode(response.body)));
@@ -65,7 +59,7 @@ class AuthController extends GetxController {
   RxBool signUpLoading = false.obs;
 
   Future<void> signUpHandle({
-    required String agreeTerms,
+    required bool agreeTerms,
     required String dob,
     required String email,
     required String firstName,
@@ -88,16 +82,17 @@ class AuthController extends GetxController {
       "securityCode": securityCode,
       "source": source,
     };
-    var response = await ApiClient.postData(
+    var response = await ApiClient.post(
       ApiConstants.signUpEndPoint,
       body,
       headers: headers,
     );
 
     if (response.statusCode == 200) {
-      // await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
+     RegistrationModel registrationModel = registrationModelFromJson(jsonEncode(response.body));
+     
       ToastMessageHelper.successMessageShowToster(
-          "Account create successful.\n \nNow you have a user name and password your email");
+          "Account create successful.\n \nNow you have a user name and password your email.");
       Get.toNamed(
         AppRoutes.loginScreen,
         preventDuplicates: false,
@@ -129,7 +124,7 @@ class AuthController extends GetxController {
       "username": userName,
       "password": password,
     };
-    var response = await ApiClient.postData(
+    var response = await ApiClient.post(
       ApiConstants.signInEndPoint,
       body,
       headers: headers,
@@ -174,7 +169,7 @@ class AuthController extends GetxController {
       "securityAnswer": securityAnswer,
       "securityCode": securityCode
     };
-    var response = await ApiClient.postData(
+    var response = await ApiClient.post(
       ApiConstants.forgotEndPoint,
       body,
       headers: headers,

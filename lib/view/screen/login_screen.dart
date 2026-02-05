@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/utils/app_dimentions.dart';
+﻿import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +7,6 @@ import 'package:flutter_svg/svg.dart';
 import '../../controllers/controllers.dart';
 import '../../helpers/helpers.dart';
 import '../../utils/app_colors.dart';
-import '../../utils/app_en_strings.dart';
 import '../../utils/app_constant.dart';
 import '../../utils/app_icons.dart';
 import '../widgets/widgets.dart';
@@ -25,33 +24,33 @@ class LoginScreen extends StatelessWidget {
   final List<GridItem> items = [
     GridItem(
       icon: AppIcons.profileIcon,
-      text: AppString.nomineeLogin.tr,
+      text: 'nomineeLogin'.tr,
       onTap: null,
     ),
     GridItem(
       icon: AppIcons.propertyIcons,
-      text: AppString.propertyDistribution.tr,
+      text: 'propertyDistribution'.tr,
       onTap: () {
         Get.to(() => PropertyDistributionScreen2(), preventDuplicates: false);
       },
     ),
     GridItem(
       icon: AppIcons.zakatIcons,
-      text: AppString.zakatCalculation.tr,
+      text: 'zakatCalculation'.tr,
       onTap: () {
         Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
       },
     ),
     GridItem(
       icon: AppIcons.contactIcons,
-      text: AppString.contactUs.tr,
+      text: 'contactUs'.tr,
       onTap: () {
         // Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
       },
     ),
     GridItem(
       icon: AppIcons.helpsIcons,
-      text: AppString.helps.tr,
+      text: 'helps'.tr,
       onTap: () {
         //  Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
       },
@@ -127,7 +126,7 @@ class LoginScreen extends StatelessWidget {
                         height: 20.h,
                       ),
                       CustomText(
-                        text: AppString.enterYourName.tr,
+                        text: 'enterYourName'.tr,
                         color: AppColors.hitTextColor000000,
                         fontsize: 20.sp,
                       ),
@@ -138,7 +137,7 @@ class LoginScreen extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
                           controller: emailController,
-                          hintText: AppString.enterYourName.tr,
+                          hintText: 'enterYourName'.tr,
                           borderColor: AppColors.secondaryPrimaryColor,
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(left: 16.w, right: 12.w),
@@ -149,7 +148,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppString.enterUserNameError.tr;
+                              return 'enterUserNameError'.tr;
                             }
                             return null;
                           },
@@ -161,7 +160,7 @@ class LoginScreen extends StatelessWidget {
                         height: 20.h,
                       ),
                       CustomText(
-                        text: AppString.enterYourPass.tr,
+                        text: 'enterYourPass'.tr,
                         color: AppColors.hitTextColor000000,
                         fontsize: 20.sp,
                       ),
@@ -173,7 +172,7 @@ class LoginScreen extends StatelessWidget {
                         child: CustomTextField(
                           controller: passController,
                           isPassword: true,
-                          hintText: AppString.enterYourPass.tr,
+                          hintText: 'enterYourPass'.tr,
                           borderColor: AppColors.secondaryPrimaryColor,
                           prefixIcon: Padding(
                             padding: EdgeInsets.only(left: 16.w, right: 12.w),
@@ -184,10 +183,10 @@ class LoginScreen extends StatelessWidget {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppString.enterPassError.tr;
+                              return 'enterPassError'.tr;
                             } else if (value.length < 8 ||
                                 !AppConstants.validatePassword(value)) {
-                              return AppString.passValidationError.tr;
+                              return 'passValidationError'.tr;
                             }
                             return null;
                           },
@@ -203,7 +202,7 @@ class LoginScreen extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.only(left: 190.w),
                             child: CustomText(
-                              text: AppString.forgotPass.tr,
+                              text: 'forgotPass'.tr,
                               fontsize: 16.sp,
                               color: AppColors.primaryColor,
                               textAlign: TextAlign.right,
@@ -218,7 +217,7 @@ class LoginScreen extends StatelessWidget {
                       Obx(
                         () => CustomButtonCommon(
                           loading: authController.signInLoading.value == true,
-                          title: AppString.signIn.tr,
+                          title: 'signIn'.tr,
                           onpress: () {
                             if (_logKey.currentState!.validate()) {
                               TextInput.finishAutofillContext();
@@ -244,7 +243,7 @@ class LoginScreen extends StatelessWidget {
                                 //  Get.toNamed(AppRoutes.otpVirifyScreen,preventDuplicates: false);
                               },
                               child: CustomText(
-                                text: AppString.dontHaveAccount.tr,
+                                text: 'dontHaveAccount'.tr,
                                 fontsize: 20.sp,
                               )),
                           InkWell(
@@ -253,7 +252,7 @@ class LoginScreen extends StatelessWidget {
                                     preventDuplicates: false);
                               },
                               child: CustomText(
-                                text: AppString.registerButton.tr,
+                                text: 'registerButton'.tr,
                                 fontsize: 20.sp,
                                 color: AppColors.primaryColor,
                               )),
@@ -278,3 +277,5 @@ class GridItem {
 
   GridItem({required this.icon, required this.text, this.onTap});
 }
+
+

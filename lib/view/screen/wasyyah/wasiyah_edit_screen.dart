@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
+﻿import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import '../../../controllers/controllers.dart';
 import '../../../models/models.dart';
 import '../../../utils/app_colors.dart';
-import '../../../utils/app_en_strings.dart';
 import '../../widgets/widgets.dart';
 
 class WasiyahEditScreen extends StatefulWidget {
@@ -40,7 +39,7 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: AppString.wasiyahEdit.tr,
+          text: 'wasiyahEdit'.tr,
           fontsize: 18.sp,
         ),
       ),
@@ -56,12 +55,12 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
                   padding: EdgeInsets.only(bottom: 16.h),
                   child: CustomTextField(
                     controller: titleController,
-                    hintText: AppString.addWashiyaTitleHint.tr,
+                    hintText: 'addWashiyaTitleHint'.tr,
                     borderColor: AppColors.secondaryPrimaryColor,
                     maxLine: 2,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppString.enterWasyyaTitleError.tr;
+                        return 'enterWasyyaTitleError'.tr;
                       }
                       return null;
                     },
@@ -71,12 +70,12 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
                   padding: EdgeInsets.only(bottom: 16.h),
                   child: CustomTextField(
                     controller: contentController,
-                    hintText: AppString.addWashiyaContentHint.tr,
+                    hintText: 'addWashiyaContentHint'.tr,
                     borderColor: AppColors.secondaryPrimaryColor,
                     maxLine: 20,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppString.enterWasyyaContentError.tr;
+                        return 'enterWasyyaContentError'.tr;
                       }
                       return null;
                     },
@@ -89,7 +88,7 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomButton(
-                        title: AppString.cancel.tr,
+                        title: 'cancel'.tr,
                         onpress: () {
                           Get.back();
                         },
@@ -104,7 +103,7 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
                         () => CustomButton(
                           loading:
                               wasyyahController.isUpdateWasseya.value == true,
-                          title: AppString.save.tr,
+                          title: 'save'.tr,
                           onpress: () {
                             wasyyahController.updateWasyyahData(
                                 orderSeq:
@@ -132,3 +131,5 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
     );
   }
 }
+
+

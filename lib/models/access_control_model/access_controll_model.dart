@@ -1,4 +1,4 @@
-
+﻿
 class AccessControllResponseModel {
   final String? name;
   final String? requestKey;
@@ -18,3 +18,4 @@ class AccessControllResponseModel {
     "requestKey": requestKey,
   };
 }
+

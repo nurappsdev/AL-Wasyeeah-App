@@ -1,4 +1,4 @@
-
+﻿
 
 class ZakatPropertyWasiyyahModel {
   final Zakat? zakat;
@@ -83,3 +83,4 @@ class Zakat {
     "currencyCode": currencyCode,
   };
 }
+

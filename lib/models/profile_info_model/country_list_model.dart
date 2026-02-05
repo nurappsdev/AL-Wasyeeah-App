@@ -1,4 +1,4 @@
-// To parse this JSON data, do
+﻿// To parse this JSON data, do
 //
 //     final countryListModel = countryListModelFromJson(jsonString);
 
@@ -34,3 +34,4 @@ class CountryModel {
         "countryId": countryId,
       };
 }
+

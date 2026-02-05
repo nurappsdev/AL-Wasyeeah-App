@@ -1,4 +1,4 @@
-
+﻿
 class SelectFeatureModel {
   final String? name;
   final int? key;
@@ -18,3 +18,4 @@ class SelectFeatureModel {
     "key": key,
   };
 }
+

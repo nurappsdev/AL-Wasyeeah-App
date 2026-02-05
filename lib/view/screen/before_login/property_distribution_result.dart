@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 import '../../../utils/app_colors.dart';
-import '../../../utils/app_en_strings.dart';
 import '../../../utils/app_dimentions.dart';
 import '../../widgets/widgets.dart';
 
@@ -98,17 +97,17 @@ class PropertyDistributionResultScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         CustomText(
-                          text: "পুত্র ১  - ০.৪".tr,
+                          text: "à¦ªà§à¦¤à§à¦° à§§  - à§¦.à§ª".tr,
                           fontsize: 18.sp,
                           color: Color(0xff9747FF),
                         ),
                         CustomText(
-                          text: "পুত্র ২  - ০.৪".tr,
+                          text: "à¦ªà§à¦¤à§à¦° à§¨  - à§¦.à§ª".tr,
                           fontsize: 18.sp,
                           color: Color(0xffFF7A00),
                         ),
                         CustomText(
-                          text: "কন্যা   - ০.২".tr,
+                          text: "à¦•à¦¨à§à¦¯à¦¾   - à§¦.à§¨".tr,
                           fontsize: 18.sp,
                           color: Color(0xff00A851),
                         )
@@ -313,3 +312,5 @@ class PropertyDistributionResultScreen extends StatelessWidget {
     );
   }
 }
+
+

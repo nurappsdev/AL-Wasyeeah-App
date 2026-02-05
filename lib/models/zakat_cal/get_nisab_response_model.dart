@@ -1,4 +1,4 @@
-
+﻿
 class GetNisabRatesResponseModel {
   final int? id;
   final String? currencyCode;
@@ -46,3 +46,4 @@ class GetNisabRatesResponseModel {
     "updateAt": updateAt?.toIso8601String(),
   };
 }
+

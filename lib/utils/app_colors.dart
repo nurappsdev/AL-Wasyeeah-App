@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 class AppColors {
   static const Color primaryColor = Color(0xff058240);
@@ -14,3 +14,4 @@ class AppColors {
   static const Color iconColor = const Color.fromRGBO(34, 34, 34, 0.4);
   static const Color grey = Color(0xffC4C4C4);
 }
+

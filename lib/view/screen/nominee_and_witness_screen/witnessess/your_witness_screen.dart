@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
@@ -7,7 +7,6 @@ import '../../../../controllers/controllers.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../../models/models.dart';
 import '../../../../utils/app_colors.dart';
-import '../../../../utils/app_en_strings.dart';
 import '../../../../utils/app_dimentions.dart';
 import '../../../widgets/widgets.dart';
 
@@ -37,7 +36,7 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
                 children: [
                   SizedBox(height: 20.h),
                   CustomButton(
-                    title: AppString.addMoreWitness.tr,
+                    title: 'addMoreWitness'.tr,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
                       Get.toNamed(AppRoutes.addWitnessesScreen,
@@ -53,7 +52,7 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
                           : witnessController.witnessesYouData.isEmpty
                               ? Center(
                                   child: CustomText(
-                                    text: AppString.noNomineeData.tr,
+                                    text: 'noNomineeData'.tr,
                                   ),
                                 )
                               : ListView.builder(
@@ -87,7 +86,7 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
                                                 size: 16.0, color: Colors.grey),
                                             SizedBox(width: 4.0),
                                             Text(
-                                              AppString.viewDetails.tr,
+                                              'viewDetails'.tr,
                                               style:
                                                   TextStyle(color: Colors.grey),
                                             ),
@@ -211,7 +210,7 @@ class WitnessDetailsScreens extends StatelessWidget {
       backgroundColor: Colors.blueGrey[900],
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(user.name ?? AppString.witnessDetails.tr),
+        title: Text(user.name ?? 'witnessDetails'.tr),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -226,16 +225,16 @@ class WitnessDetailsScreens extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildDialogRow(
-                  Icons.people, AppString.relation.tr, user.relation ?? "N/A"),
+                  Icons.people, 'relation'.tr, user.relation ?? "N/A"),
               _buildDialogRow(
-                  Icons.email, AppString.email.tr, user.email ?? "N/A"),
-              _buildDialogRow(Icons.person, AppString.fatherName.tr,
+                  Icons.email, 'email'.tr, user.email ?? "N/A"),
+              _buildDialogRow(Icons.person, 'fatherName'.tr,
                   user.fatherName ?? "N/A"),
               _buildDialogRow(
-                  Icons.phone, AppString.mobile.tr, user.mobile ?? "N/A"),
-              _buildDialogRow(Icons.favorite, AppString.maritalStatus.tr,
+                  Icons.phone, 'mobile'.tr, user.mobile ?? "N/A"),
+              _buildDialogRow(Icons.favorite, 'maritalStatus'.tr,
                   user.maritalStatus ?? "N/A"),
-              _buildDialogRow(Icons.work, AppString.profession.tr,
+              _buildDialogRow(Icons.work, 'profession'.tr,
                   user.profession ?? "N/A"),
               const SizedBox(height: 30),
               Center(
@@ -249,7 +248,7 @@ class WitnessDetailsScreens extends StatelessWidget {
                     Get.toNamed(AppRoutes.witnessPhanelData,
                         arguments: user.requestKey);
                   },
-                  child: Text(AppString.accessPanel.tr),
+                  child: Text('accessPanel'.tr),
                 ),
               ),
             ],
@@ -290,3 +289,5 @@ Widget _buildDialogRow(IconData icon, String title, String value) {
     ),
   );
 }
+
+

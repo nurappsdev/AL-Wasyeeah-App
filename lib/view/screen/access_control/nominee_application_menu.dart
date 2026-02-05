@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/controllers/controllers.dart';
+﻿import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../../models/models.dart';
 import '../../../../utils/app_colors.dart';
-import '../../../../utils/app_en_strings.dart';
 import '../../widgets/widgets.dart';
 
 class NomineeApplicationMenu extends StatefulWidget {
@@ -224,3 +223,5 @@ class _NomineeApplicationMenuState extends State<NomineeApplicationMenu> {
     );
   }
 }
+
+

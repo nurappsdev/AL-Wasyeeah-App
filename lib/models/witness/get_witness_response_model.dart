@@ -1,4 +1,4 @@
-
+﻿
 class GetWitnessResponseModel {
   final String? requestKey;
   final dynamic relation;
@@ -50,3 +50,4 @@ class GetWitnessResponseModel {
     "motherName": motherName,
   };
 }
+

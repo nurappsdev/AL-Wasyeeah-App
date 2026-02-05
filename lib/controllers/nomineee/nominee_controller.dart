@@ -1,15 +1,9 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../helpers/helpers.dart';
-import '../../services/database_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
-import 'package:http/http.dart' as http;
-
-import '../../utils/app_constant.dart';
 
 class NomineeController extends GetxController {
   ///==================get nominee===========================
@@ -17,7 +11,7 @@ class NomineeController extends GetxController {
   RxList<NomineetedResponseModel> nomineeData = <NomineetedResponseModel>[].obs;
   getNomineeData() async {
     isNominee(true);
-    var response = await ApiClient.getData(ApiConstants.nomineeEndPoint);
+    var response = await ApiClient.get(ApiConstants.nomineeEndPoint);
     print("nomineeData data ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       nomineeData.value = List<NomineetedResponseModel>.from(
@@ -34,7 +28,7 @@ class NomineeController extends GetxController {
       <AccessControllResponseModel>[].obs;
   getNomineeAccessData({String? nominee1Witness2}) async {
     isNominee(true);
-    var response = await ApiClient.getData(
+    var response = await ApiClient.get(
         "${ApiConstants.accessControlEndPoint}${nominee1Witness2}");
     print("nomineeData data ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -53,8 +47,7 @@ class NomineeController extends GetxController {
       <GetAccessFeatureModel>[].obs;
   getAccessFeatureData() async {
     isAccessFeature(true);
-    var response =
-        await ApiClient.getData("${ApiConstants.accessFeatureEndPoint}");
+    var response = await ApiClient.get("${ApiConstants.accessFeatureEndPoint}");
     print("feature list data  ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       getAccessFeatureModel.value = List<GetAccessFeatureModel>.from(
@@ -70,7 +63,7 @@ class NomineeController extends GetxController {
   RxList<SelectFeatureModel> selectFeatureModel = <SelectFeatureModel>[].obs;
   getSelectFeatureData({String? requestKey}) async {
     isAccessFeature(true);
-    var response = await ApiClient.getData(
+    var response = await ApiClient.get(
         "${ApiConstants.accessSelectEndPoint}?requestKey=${requestKey}&trace=false");
     print("select list data  ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -92,12 +85,6 @@ class NomineeController extends GetxController {
   }) async {
     addFeatureLoading(true);
     try {
-      final token = await DatabaseService.getString(AppConstants.bearerToken);
-      final headers = {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      };
-
       final Map<String, dynamic> body = {
         "requestKey": requestKey ?? '',
         "contextIds": contextIds.toList(),
@@ -106,8 +93,7 @@ class NomineeController extends GetxController {
       final endpoint =
           "${ApiConstants.addFeatureNomineeWitnessPoint}${isWitness}";
 
-      final response =
-          await ApiClient.postData(endpoint, body, headers: headers);
+      final response = await ApiClient.post(endpoint, body);
 
       print("Response: ${response.body}");
 
@@ -134,7 +120,7 @@ class NomineeController extends GetxController {
       <NomineetedResponseModel>[].obs;
   getNomineetedData() async {
     isNomineeYou(true);
-    var response = await ApiClient.getData(ApiConstants.nomineetedYouPoint);
+    var response = await ApiClient.get(ApiConstants.nomineetedYouPoint);
     print("nomineetedYouData data ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       nomineetedYouData.value = List<NomineetedResponseModel>.from(
@@ -156,22 +142,18 @@ class NomineeController extends GetxController {
 
     isLoading.value = true;
 
-    final url = Uri.parse(
-      '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=false',
-    );
-    String token = await DatabaseService.getString(AppConstants.bearerToken);
+    final endpoint =
+        '/user/search-witness-nominee?email=$email&isWitness=false';
+
     try {
-      final response = await http.get(
-        url,
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-      );
+      final response = await ApiClient.get(endpoint);
       print("response.body---------------${response.body}");
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        nominessData.value = data;
+        if (response.body is Map) {
+          nominessData.value = Map<String, dynamic>.from(response.body as Map);
+        } else {
+          nominessData.value = {};
+        }
       } else {
         Get.snackbar("Error", "This is not right email");
         nominessData.value = {};
@@ -245,12 +227,6 @@ class NomineeController extends GetxController {
   }) async {
     addNomineeLoading(true);
     try {
-      final token = await DatabaseService.getString(AppConstants.bearerToken);
-      final headers = {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      };
-
       final body = {
         "name": userName,
         "mobile": mobileNo,
@@ -265,8 +241,7 @@ class NomineeController extends GetxController {
           ? ApiConstants.addNomineePoint
           : ApiConstants.addWitnessEndPoint;
 
-      final response =
-          await ApiClient.postData(endpoint, body, headers: headers);
+      final response = await ApiClient.post(endpoint, body);
 
       print("Response: ${response.body}");
 
@@ -295,7 +270,7 @@ class NomineeController extends GetxController {
   RxBool isDelNomineeYou = false.obs;
   getNomineeDeleteData({String? requestKey}) async {
     isDelNomineeYou(true);
-    var response = await ApiClient.getData(
+    var response = await ApiClient.get(
         "${ApiConstants.nomineeDeletePoint}?requestKey=${requestKey}");
     print("deleteData data ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -310,3 +285,4 @@ class NomineeController extends GetxController {
     }
   }
 }
+

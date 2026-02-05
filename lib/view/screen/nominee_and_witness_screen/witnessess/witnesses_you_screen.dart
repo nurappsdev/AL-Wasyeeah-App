@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -7,7 +7,6 @@ import '../../../../controllers/controllers.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../../models/models.dart';
 import '../../../../utils/app_colors.dart';
-import '../../../../utils/app_en_strings.dart';
 import '../../../../utils/app_dimentions.dart';
 import '../../../widgets/widgets.dart';
 
@@ -38,7 +37,7 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                 children: [
                   SizedBox(height: 20.h),
                   CustomButton(
-                    title: AppString.addMoreWitness.tr,
+                    title: 'addMoreWitness'.tr,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
                       Get.toNamed(AppRoutes.addWitnessesScreen,
@@ -54,7 +53,7 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                           : witnessController.witnessData.isEmpty
                               ? Center(
                                   child: CustomText(
-                                    text: AppString.noNomineeData.tr,
+                                    text: 'noNomineeData'.tr,
                                   ),
                                 )
                               : ListView.builder(
@@ -88,7 +87,7 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                                                 size: 16.0, color: Colors.grey),
                                             SizedBox(width: 4.0),
                                             Text(
-                                              AppString.viewDetails.tr,
+                                              'viewDetails'.tr,
                                               style:
                                                   TextStyle(color: Colors.grey),
                                             ),
@@ -156,26 +155,26 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                       ],
                     ),
                     Divider(color: Colors.white70),
-                    _buildDialogRow(Icons.people, AppString.relation.tr,
+                    _buildDialogRow(Icons.people, 'relation'.tr,
                         user.relation ?? "N/A"),
                     _buildDialogRow(
-                        Icons.email, AppString.email.tr, user.email ?? "N/A"),
-                    _buildDialogRow(Icons.person, AppString.fatherName.tr,
+                        Icons.email, 'email'.tr, user.email ?? "N/A"),
+                    _buildDialogRow(Icons.person, 'fatherName'.tr,
                         user.fatherName ?? "N/A"),
                     _buildDialogRow(
-                        Icons.phone, AppString.mobile.tr, user.mobile ?? "N/A"),
-                    _buildDialogRow(Icons.favorite, AppString.maritalStatus.tr,
+                        Icons.phone, 'mobile'.tr, user.mobile ?? "N/A"),
+                    _buildDialogRow(Icons.favorite, 'maritalStatus'.tr,
                         user.maritalStatus ?? "N/A"),
-                    _buildDialogRow(Icons.work, AppString.profession.tr,
+                    _buildDialogRow(Icons.work, 'profession'.tr,
                         user.profession ?? "N/A"),
                     _buildDialogRow(
                         Icons.calendar_today,
-                        AppString.date.tr,
+                        'date'.tr,
                         "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ??
                             "N/A"),
                     SizedBox(height: 20),
                     Obx(() => CustomButtonCommon(
-                        title: AppString.removeWitness.tr,
+                        title: 'removeWitness'.tr,
                         color: AppColors.redColor,
                         loading:
                             witnessController.isDelNomineeYou.value == true,
@@ -212,3 +211,5 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
     );
   }
 }
+
+

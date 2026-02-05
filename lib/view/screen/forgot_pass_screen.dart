@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/utils/app_dimentions.dart';
+﻿import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../controllers/controllers.dart';
 import '../../utils/app_colors.dart';
-import '../../utils/app_en_strings.dart';
 import '../../utils/app_constant.dart';
 import '../widgets/widgets.dart';
 
@@ -51,7 +50,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: AppString.forgotPassword.tr,
+          text: 'forgotPassword'.tr,
           fontsize: 18.sp,
         ),
       ),
@@ -79,7 +78,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     ),
                     Center(
                         child: CustomText(
-                      text: AppString.forgotPassword.tr,
+                      text: 'forgotPassword'.tr,
                       fontsize: 20.sp,
                       textAlign: TextAlign.center,
                       fontWeight: FontWeight.w600,
@@ -89,7 +88,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     ),
                     Center(
                         child: CustomText(
-                      text: AppString.forgotPassInstructions.tr,
+                      text: 'forgotPassInstructions'.tr,
                       maxline: 2,
                       fontsize: 14.sp,
                       textAlign: TextAlign.center,
@@ -100,7 +99,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       height: 16.h,
                     ),
                     CustomText(
-                      text: AppString.mobile.tr,
+                      text: 'mobile'.tr,
                       color: AppColors.hitTextColor000000,
                       fontsize: 20.sp,
                     ),
@@ -111,11 +110,11 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: mobileController,
-                        hintText: AppString.mobile.tr,
+                        hintText: 'mobile'.tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppString.enterMobileError.tr;
+                            return 'enterMobileError'.tr;
                           }
                           return null;
                         },
@@ -127,7 +126,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       height: 20.h,
                     ),
                     CustomText(
-                      text: AppString.email.tr,
+                      text: 'email'.tr,
                       color: AppColors.hitTextColor000000,
                       fontsize: 20.sp,
                     ),
@@ -138,7 +137,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: emailController,
-                        hintText: AppString.enterYourEmail,
+                        hintText: 'enterYourEmail'.tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         // prefixIcon: Padding(
                         //   padding: EdgeInsets.only(left: 16.w, right: 12.w),
@@ -147,10 +146,10 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                         // ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppString.enterEmailError.tr;
+                            return 'enterEmailError'.tr;
                           } else if (!AppConstants.emailValidate
                               .hasMatch(value)) {
-                            return AppString.invalidEmail.tr;
+                            return 'invalidEmail'.tr;
                           }
                           return null;
                         },
@@ -159,7 +158,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
 
                     ///==========================Date of birth*==========================
                     CustomText(
-                      text: AppString.dateOfBirth.tr,
+                      text: 'dateOfBirth'.tr,
                       fontsize: 16.sp,
                       color: AppColors.hitTextColor000000,
                       textAlign: TextAlign.left,
@@ -170,7 +169,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       child: CustomTextField(
                         controller: dateOfBirthController,
                         readOnly: true,
-                        hintText: AppString.dateOfBirth.tr,
+                        hintText: 'dateOfBirth'.tr,
                         hintextColor: Colors.black54,
                         borderColor: AppColors.secondaryPrimaryColor,
                         onTap: () async {
@@ -204,7 +203,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
 
                     SizedBox(height: 10.h),
                     CustomText(
-                      text: AppString.securityQuestion.tr,
+                      text: 'securityQuestion'.tr,
                       fontsize: 16.sp,
                       color: AppColors.hitTextColor000000,
                       textAlign: TextAlign.left,
@@ -227,7 +226,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                             borderRadius: BorderRadius.circular(16.r)),
                       ),
                       isExpanded: true,
-                      hint: CustomText(text: AppString.selectYourQuestion.tr),
+                      hint: CustomText(text: 'selectYourQuestion'.tr),
                       value: _selectedQuestionId,
                       items: authController.securityQuestionResponseModel
                           .map((model) => DropdownMenuItem<String>(
@@ -247,7 +246,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       height: 16.h,
                     ),
                     CustomText(
-                      text: AppString.answer.tr,
+                      text: 'answer'.tr,
                       color: AppColors.hitTextColor000000,
                       fontsize: 20.sp,
                     ),
@@ -258,11 +257,11 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: securityController,
-                        hintText: AppString.answer.tr,
+                        hintText: 'answer'.tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppString.enterAnswerError.tr;
+                            return 'enterAnswerError'.tr;
                           }
                           return null;
                         },
@@ -273,7 +272,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     Obx(
                       () => CustomButtonCommon(
                         loading: authController.forgotLoading.value == true,
-                        title: AppString.submit.tr,
+                        title: 'submit'.tr,
                         onpress: () {
                           if (_logRegKey.currentState!.validate()) {
                             authController.forgotHandle(
@@ -300,3 +299,5 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
     );
   }
 }
+
+

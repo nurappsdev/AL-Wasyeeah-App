@@ -1,18 +1,13 @@
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:al_wasyeah/helpers/app_routes.dart';
+﻿import 'package:al_wasyeah/helpers/app_routes.dart';
+import 'package:al_wasyeah/services/translation/language_service.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/controllers.dart';
-import '../../services/database_helper.dart';
 import '../../utils/app_image.dart';
 import '../../utils/app_colors.dart';
-import '../../utils/app_en_strings.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,10 +16,10 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-final LocalizationController _localizationController =
-    Get.find<LocalizationController>(); //
-
 class _SplashScreenState extends State<SplashScreen> {
+  // Initialize the language controller
+  final LanguageService languageService = Get.put(LanguageService());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,18 +30,19 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Stack(
           children: [
             Center(
-                child: Image.asset(
-              AppImages.splashImg1,
-              fit: BoxFit.fitHeight,
-              height: double.infinity,
-              width: double.infinity,
-            )),
+              child: Image.asset(
+                AppImages.splashImg1,
+                fit: BoxFit.fitHeight,
+                height: double.infinity,
+                width: double.infinity,
+              ),
+            ),
             Positioned(
               top: 330.h,
               right: 60.w,
-              left: 60,
-              child: Container(
-                height: Get.height,
+              left: 60.w,
+              child: SizedBox(
+                height: 200.h,
                 child: CustomText(
                   text: "ayat".tr,
                   maxline: 20,
@@ -57,89 +53,107 @@ class _SplashScreenState extends State<SplashScreen> {
             Positioned(
               top: 30.h,
               right: 4.w,
-              child: Row(
-                children: [
-                  Text(
-                    'language'.tr,
-                    style: TextStyle(color: Colors.black, fontSize: 16.sp),
-                  ),
-                  const SizedBox(width: 8),
-                  // Toggle for language
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+              child: Obx(
+                () => Row(
+                  children: [
+                    Text(
+                      'language'.tr,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              // isEnglish = false;
-                              // Get.updateLocale(const Locale('bd', 'BD'));
-                            });
-                          },
-                          child: Text(
-                            'Eng',
-                            style: TextStyle(
-                              // color: isEnglish ? Colors.grey : Colors.white,
-                              color: _localizationController.isLtr
-                                  ? Colors.grey
-                                  : Colors.white,
-                              fontWeight: FontWeight.bold,
+                    SizedBox(width: 8.w),
+                    // Toggle for language
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                        vertical: 4.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // English Label
+                          GestureDetector(
+                            onTap: () {
+                              languageService.changeLanguage('en', 'US');
+                            },
+                            child: Text(
+                              'Eng',
+                              style: TextStyle(
+                                color: languageService.isEnglish
+                                    ? AppColors.primaryColor
+                                    : Colors.grey,
+                                fontWeight: languageService.isEnglish
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                                fontSize: 14.sp,
+                              ),
                             ),
                           ),
-                        ),
-                        Switch(
-                          value: _localizationController.isLtr,
-                          onChanged: (value) {
-                            setState(() {
-                              // isEnglish = value;
-                              // Get.updateLocale(value ? const Locale('en', 'US') : const Locale('bd', 'BD'));
-                              _localizationController.isLtr
-                                  ? _localizationController
-                                      .setLanguage(const Locale('bd', "BD"))
-                                  : _localizationController
-                                      .setLanguage(const Locale('en', "US"));
-                            });
-                          },
-                          activeColor: AppColors.primaryColor,
-                          inactiveThumbColor: Colors.white,
-                          inactiveTrackColor: Colors.grey,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            // setState(() {
-                            //   isEnglish = true;
-                            //   Get.updateLocale(const Locale('en', 'US'));
-                            // });
-                          },
-                          child: Text(
-                            'বাং',
-                            style: TextStyle(
-                              color: _localizationController.isLtr
-                                  ? Colors.white
-                                  : Colors.grey,
-                              fontWeight: FontWeight.bold,
+                          // Switch
+                          Switch(
+                            value: languageService.isBangla,
+                            onChanged: (value) {
+                              if (value) {
+                                // Switch to Bangla
+                                languageService.changeLanguage('bn', 'BD');
+                              } else {
+                                // Switch to English
+                                languageService.changeLanguage('en', 'US');
+                              }
+                            },
+                            activeThumbColor: AppColors.primaryColor,
+                            activeTrackColor:
+                                AppColors.primaryColor.withOpacity(0.5),
+                            inactiveThumbColor: Colors.white,
+                            inactiveTrackColor: Colors.grey.shade400,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          // Bangla Label
+                          GestureDetector(
+                            onTap: () {
+                              languageService.changeLanguage('bn', 'BD');
+                            },
+                            child: Text(
+                              'বাং',
+                              style: TextStyle(
+                                color: languageService.isBangla
+                                    ? AppColors.primaryColor
+                                    : Colors.grey,
+                                fontWeight: languageService.isBangla
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                                fontSize: 14.sp,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Positioned(
-              bottom: 12,
+              bottom: 12.h,
+              left: 0,
+              right: 0,
               child: Padding(
                 padding: EdgeInsets.all(8.r),
                 child: CustomButtonCommon(
-                  title: AppString.getStart.tr,
+                  title: 'getStart'.tr,
                   onpress: () {
-                    Get.toNamed(AppRoutes.loginScreen,
-                        preventDuplicates: false);
+                    Get.toNamed(
+                      AppRoutes.loginScreen,
+                      preventDuplicates: false,
+                    );
                   },
                 ),
               ),

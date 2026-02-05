@@ -1,4 +1,4 @@
-// To parse this JSON data, do
+﻿// To parse this JSON data, do
 //
 //     final genderListModel = genderListModelFromJson(jsonString);
 
@@ -29,3 +29,4 @@ class GenderModel {
         "gender": gender,
       };
 }
+

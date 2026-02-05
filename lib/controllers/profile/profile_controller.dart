@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:al_wasyeah/models/profile_info_model/document_type_form.dart';
@@ -17,7 +17,6 @@ import 'package:get/get.dart';
 
 import 'dart:io';
 import '../../utils/app_colors.dart';
-import '../../utils/app_en_strings.dart';
 import '../../utils/app_constant.dart';
 import '../../services/services.dart';
 import 'package:al_wasyeah/models/profile_info_model/account_payable_form.dart';
@@ -130,7 +129,7 @@ class ProfileController extends GetxController {
 
   Future<void> getMaritalList() async {
     try {
-      var response = await ApiClient.getData(
+      var response = await ApiClient.get(
         ApiConstants.maritalList,
       );
       maritalList(maritalListModelFromJson(jsonEncode(response.body)));
@@ -141,7 +140,7 @@ class ProfileController extends GetxController {
 
   Future<void> getGenderList() async {
     try {
-      var response = await ApiClient.getData(
+      var response = await ApiClient.get(
         ApiConstants.genderList,
       );
 
@@ -154,7 +153,7 @@ class ProfileController extends GetxController {
 
   Future<void> getProfessionList() async {
     try {
-      var response = await ApiClient.getData(
+      var response = await ApiClient.get(
         ApiConstants.professionList,
       );
       professionList(professionListFromJson(jsonEncode(response.body)));
@@ -163,7 +162,7 @@ class ProfileController extends GetxController {
 
   Future<void> getCountryList() async {
     try {
-      var response = await ApiClient.getData(
+      var response = await ApiClient.get(
         ApiConstants.countryList,
       );
       countryList(countryListModelFromJson(jsonEncode(response.body)));
@@ -172,7 +171,7 @@ class ProfileController extends GetxController {
 
   Future<void> getBankList() async {
     try {
-      var response = await ApiClient.getData(
+      var response = await ApiClient.get(
         ApiConstants.bankList,
       );
       bankList(bankListModelFromJson(jsonEncode(response.body)));
@@ -181,7 +180,7 @@ class ProfileController extends GetxController {
 
   Future<List<BranchModel>> getBranchList(String bankId) async {
     try {
-      var response = await ApiClient.getData(
+      var response = await ApiClient.get(
         ApiConstants.branchList + "?bankId=$bankId",
       );
       return branchListModelFromJson(jsonEncode(response.body));
@@ -192,7 +191,7 @@ class ProfileController extends GetxController {
 
   Future<void> getWealthList() async {
     try {
-      var response = await ApiClient.getData(
+      var response = await ApiClient.get(
         ApiConstants.wealthList,
       );
       wealthList(wealthListModelFromJson(jsonEncode(response.body)));
@@ -201,7 +200,7 @@ class ProfileController extends GetxController {
 
   Future<List<DocumentTypeForm>> getDocumentTypeList(String wealthId) async {
     try {
-      var response = await ApiClient.getData(
+      var response = await ApiClient.get(
         ApiConstants.documentTypeList + "?lang=en&wealthId=$wealthId",
       );
       return documentTypeListFromJson(jsonEncode(response.body));
@@ -212,7 +211,7 @@ class ProfileController extends GetxController {
 
   Future<void> getProfile() async {
     try {
-      var response = await ApiClient.getData(
+      var response = await ApiClient.get(
         ApiConstants.getProfile,
       );
 
@@ -857,20 +856,20 @@ class ProfileController extends GetxController {
         payableInfo: payables,
       );
 
-      var response = await ApiClient.postData(
+      var response = await ApiClient.post(
         ApiConstants.profileUpdate,
         submitData.toJson(),
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Fluttertoast.showToast(msg: AppString.profileUpdatedSuccessfully.tr);
+        Fluttertoast.showToast(msg: 'profileUpdatedSuccessfully'.tr);
         await getProfile(); // Refresh local data
       } else {
         Fluttertoast.showToast(msg: "Update failed: ${response.statusText}".tr);
       }
     } catch (e, s) {
       log("Error during submission: $e\n$s");
-      Fluttertoast.showToast(msg: AppString.somethingWentWrong.tr);
+      Fluttertoast.showToast(msg: 'somethingWentWrong'.tr);
     } finally {
       status(RxStatus.success());
     }
@@ -911,3 +910,5 @@ class ProfileController extends GetxController {
     super.onClose();
   }
 }
+
+

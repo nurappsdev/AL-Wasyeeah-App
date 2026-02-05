@@ -1,4 +1,4 @@
-
+﻿
 import 'package:get/get.dart';
 
 import '../../models/access_phanel/zakat_property_wasyyah_model.dart';
@@ -22,3 +22,4 @@ class AccessPhanelController extends GetxController {
     }
   }
 }
+

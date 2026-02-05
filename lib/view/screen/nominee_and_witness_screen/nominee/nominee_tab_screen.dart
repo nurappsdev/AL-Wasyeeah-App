@@ -1,4 +1,4 @@
-
+﻿
 
 import 'package:al_wasyeah/view/screen/nominee_and_witness_screen/nominee/nomineeted_you_screen.dart';
 import 'package:flutter/material.dart';
@@ -129,3 +129,4 @@ class _NomineeTabScreenState extends State<NomineeTabScreen>
     );
   }
 }
+

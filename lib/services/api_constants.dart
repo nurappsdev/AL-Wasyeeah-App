@@ -1,4 +1,4 @@
-class ApiConstants {
+﻿class ApiConstants {
   //static const String baseUrl = "https://45b4-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
   static const String baseUrl = "https://api.wasiyyat.com/api/v1";
   static const String imageUrl = "$baseUrl/raw-media/";
@@ -94,3 +94,4 @@ class ApiConstants {
   static String propertyDistributionCalculationResult =
       "/propertyDistributeResult?lang=en";
 }
+

@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/utils/app_dimentions.dart';
+﻿import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import '../../controllers/controllers.dart';
 import '../../helpers/helpers.dart';
 import '../../utils/app_colors.dart';
-import '../../utils/app_en_strings.dart';
 import '../../utils/app_constant.dart';
 
 import '../widgets/widgets.dart';
@@ -86,7 +85,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     Center(
                         child: CustomText(
-                      text: AppString.registration.tr,
+                      text: 'registration'.tr,
                       fontsize: 28.sp,
                       textAlign: TextAlign.center,
                     )),
@@ -97,7 +96,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       height: 16.h,
                     ),
                     CustomText(
-                      text: AppString.firstName.tr,
+                      text: 'firstName'.tr,
                       color: AppColors.hitTextColor000000,
                       fontsize: 20.sp,
                     ),
@@ -108,11 +107,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: firstNameController,
-                        hintText: AppString.firstName.tr,
+                        hintText: 'firstName'.tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppString.enterFirstNameError.tr;
+                            return 'enterFirstNameError'.tr;
                           }
                           return null;
                         },
@@ -124,7 +123,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       height: 16.h,
                     ),
                     CustomText(
-                      text: AppString.lastName.tr,
+                      text: 'lastName'.tr,
                       color: AppColors.hitTextColor000000,
                       fontsize: 20.sp,
                     ),
@@ -135,11 +134,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: secondNameController,
-                        hintText: AppString.lastName.tr,
+                        hintText: 'lastName'.tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppString.enterLastNameError.tr;
+                            return 'enterLastNameError'.tr;
                           }
                           return null;
                         },
@@ -151,7 +150,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       height: 16.h,
                     ),
                     CustomText(
-                      text: AppString.mobile.tr,
+                      text: 'mobile'.tr,
                       color: AppColors.hitTextColor000000,
                       fontsize: 20.sp,
                     ),
@@ -163,11 +162,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       child: CustomTextField(
                         controller: mobileController,
                         keyboardType: TextInputType.number,
-                        hintText: AppString.mobile.tr,
+                        hintText: 'mobile'.tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppString.enterMobileError.tr;
+                            return 'enterMobileError'.tr;
                           }
                           return null;
                         },
@@ -179,7 +178,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       height: 16.h,
                     ),
                     CustomText(
-                      text: AppString.email.tr,
+                      text: 'email'.tr,
                       color: AppColors.hitTextColor000000,
                       fontsize: 20.sp,
                     ),
@@ -190,7 +189,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: emailController,
-                        hintText: AppString.enterYourEmail.tr,
+                        hintText: 'enterYourEmail'.tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         // prefixIcon: Padding(
                         //   padding: EdgeInsets.only(left: 16.w, right: 12.w),
@@ -199,10 +198,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         // ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppString.enterEmailError.tr;
+                            return 'enterEmailError'.tr;
                           } else if (!AppConstants.emailValidate
                               .hasMatch(value)) {
-                            return AppString.invalidEmail.tr;
+                            return 'invalidEmail'.tr;
                           }
                           return null;
                         },
@@ -211,7 +210,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     ///==========================Date of birth*==========================
                     CustomText(
-                      text: AppString.dateOfBirth.tr,
+                      text: 'dateOfBirth'.tr,
                       fontsize: 16.sp,
                       color: AppColors.hitTextColor000000,
                       textAlign: TextAlign.left,
@@ -222,7 +221,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       child: CustomTextField(
                         controller: dateOfBirthController,
                         readOnly: true,
-                        hintText: AppString.dateOfBirth.tr,
+                        hintText: 'dateOfBirth'.tr,
                         hintextColor: Colors.black54,
                         borderColor: AppColors.secondaryPrimaryColor,
                         onTap: () async {
@@ -246,7 +245,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppString.writeDateOfBirthError.tr;
+                            return 'writeDateOfBirthError'.tr;
                           }
                           return null;
                         },
@@ -254,7 +253,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     SizedBox(height: 10.h),
                     CustomText(
-                      text: AppString.securityQuestion.tr,
+                      text: 'securityQuestion'.tr,
                       fontsize: 16.sp,
                       color: AppColors.hitTextColor000000,
                       textAlign: TextAlign.left,
@@ -277,7 +276,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             borderRadius: BorderRadius.circular(16.r)),
                       ),
                       isExpanded: true,
-                      hint: CustomText(text: AppString.selectYourQuestion.tr),
+                      hint: CustomText(text: 'selectYourQuestion'.tr),
                       value: _selectedQuestionId,
                       items: authController.securityQuestionResponseModel
                           .map((model) => DropdownMenuItem<String>(
@@ -297,7 +296,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       height: 16.h,
                     ),
                     CustomText(
-                      text: AppString.answer.tr,
+                      text: 'answer'.tr,
                       color: AppColors.hitTextColor000000,
                       fontsize: 20.sp,
                     ),
@@ -308,11 +307,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: securityController,
-                        hintText: AppString.answer.tr,
+                        hintText: 'answer'.tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppString.enterAnswerError.tr;
+                            return 'enterAnswerError'.tr;
                           }
                           return null;
                         },
@@ -323,11 +322,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Obx(
                       () => CustomButtonCommon(
                         loading: authController.signUpLoading.value == true,
-                        title: AppString.registerButton.tr,
+                        title: 'registerButton'.tr,
                         onpress: () {
                           // Get.toNamed(AppRoutes.otpScreen,preventDuplicates: false);
                           if (_forRegKey.currentState!.validate()) {
                             authController.signUpHandle(
+                              agreeTerms: true,
                                 firstName: firstNameController.text,
                                 lastName: secondNameController.text,
                                 email: emailController.text,
@@ -336,7 +336,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 securityAnswer: securityController.text,
                                 source: "mobile",
                                 securityCode: _selectedQuestionId.toString(),
-                                userTypeId: "2");
+                               );
                           }
                         },
                       ),
@@ -357,7 +357,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               //  Get.toNamed(AppRoutes.otpVirifyScreen,preventDuplicates: false);
                             },
                             child: CustomText(
-                              text: "${AppString.allReadyAccount.tr} ",
+                              text: "${'allReadyAccount'.tr} ",
                               fontsize: 18.sp,
                             )),
                         InkWell(
@@ -366,7 +366,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   preventDuplicates: false);
                             },
                             child: CustomText(
-                              text: AppString.signIn.tr,
+                              text: 'signIn'.tr,
                               fontsize: 18.sp,
                               color: AppColors.primaryColor,
                             )),
@@ -385,3 +385,5 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 }
+
+

@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 
 import '../../../../controllers/controllers.dart';
 import '../../../../utils/app_colors.dart';
-import '../../../../utils/app_en_strings.dart';
 import '../../../../utils/app_constant.dart';
 
 import '../../../widgets/widgets.dart';
@@ -148,7 +147,7 @@ class AddOutsideWitness extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
                           controller: emailController,
-                          hintText: AppString.enterYourEmail.tr,
+                          hintText: 'enterYourEmail'.tr,
                           borderColor: AppColors.secondaryPrimaryColor,
                           // prefixIcon: Padding(
                           //   padding: EdgeInsets.only(left: 16.w, right: 12.w),
@@ -305,3 +304,5 @@ class AddOutsideWitness extends StatelessWidget {
         ));
   }
 }
+
+

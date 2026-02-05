@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/helpers/app_routes.dart';
+﻿import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -103,7 +103,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              'I’m the witness'.tr,
+                              'Iâ€™m the witness'.tr,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -174,3 +174,4 @@ class _WitnessScreenState extends State<WitnessScreen> {
     );
   }
 }
+

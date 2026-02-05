@@ -1,11 +1,10 @@
-import 'package:al_wasyeah/view/screen/no_internet_screen.dart';
+﻿import 'package:al_wasyeah/view/screen/no_internet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
 import '../../../utils/app_colors.dart';
-import '../../../utils/app_en_strings.dart';
 import '../../widgets/widgets.dart';
 
 class AddNewWashyiaScreen extends StatefulWidget {
@@ -36,7 +35,7 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: AppString.addMoreContent.tr,
+          text: 'addMoreContent'.tr,
           fontsize: 18.sp,
           fontWeight: FontWeight.w600,
         ),
@@ -55,7 +54,7 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                   // Note section
                   SizedBox(height: 16.h),
                   CustomText(
-                    text: AppString.addWashiyaTitleHint.tr,
+                    text: 'addWashiyaTitleHint'.tr,
                     color: AppColors.hitTextColor000000,
                     fontsize: 16.sp,
                   ),
@@ -64,12 +63,12 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
                       controller: titleController,
-                      hintText: AppString.addWashiyaTitleHint.tr,
+                      hintText: 'addWashiyaTitleHint'.tr,
                       maxLine: 1,
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppString.enterWasyyaTitleError.tr;
+                          return 'enterWasyyaTitleError'.tr;
                         }
                         return null;
                       },
@@ -78,7 +77,7 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                   // Note section
                   SizedBox(height: 16.h),
                   CustomText(
-                    text: AppString.addWashiyaContentHint.tr,
+                    text: 'addWashiyaContentHint'.tr,
                     color: AppColors.hitTextColor000000,
                     fontsize: 16.sp,
                   ),
@@ -87,12 +86,12 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
                       controller: contentController,
-                      hintText: AppString.addWashiyaContentHint.tr,
+                      hintText: 'addWashiyaContentHint'.tr,
                       maxLine: 10,
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppString.enterWasyyaContentError.tr;
+                          return 'enterWasyyaContentError'.tr;
                         }
                         return null;
                       },
@@ -107,7 +106,7 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CustomButton(
-                          title: AppString.cancel.tr,
+                          title: 'cancel'.tr,
                           onpress: () {},
                           width: 100.w,
                           height: 40.h,
@@ -120,7 +119,7 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                           () => CustomButton(
                             loading:
                                 wasyyahController.addWaseeyea.value == true,
-                            title: AppString.save.tr,
+                            title: 'save'.tr,
                             onpress: () {
                               if (_createWasKey.currentState!.validate()) {
                                 wasyyahController.addWasyyahData(
@@ -146,3 +145,5 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
     );
   }
 }
+
+

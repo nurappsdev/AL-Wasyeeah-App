@@ -1,4 +1,4 @@
-
+﻿
 class NomineeResponseModel {
   final String? requestKey;
   final String? name;
@@ -38,3 +38,4 @@ class NomineeResponseModel {
   };
 
 }
+

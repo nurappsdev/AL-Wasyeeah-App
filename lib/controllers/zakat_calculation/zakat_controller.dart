@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -7,7 +7,6 @@ import '../../services/database_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
 import '../../utils/app_constant.dart';
-import '../../utils/app_en_strings.dart';
 import '../../utils/app_colors.dart';
 import '../../view/widgets/widgets.dart';
 
@@ -30,7 +29,7 @@ class ZakatController extends GetxController {
 
   void getNisabRates() async {
     isNisabLoading(true);
-    var response = await ApiClient.getData(ApiConstants.nisabEndPoint);
+    var response = await ApiClient.get(ApiConstants.nisabEndPoint);
     if (response.statusCode == 200 || response.statusCode == 201) {
       nisabRates.value = List<GetNisabRatesResponseModel>.from(
         response.body.map((x) => GetNisabRatesResponseModel.fromJson(x)),
@@ -68,14 +67,6 @@ class ZakatController extends GetxController {
   }) async {
     zakatLoading(true);
 
-    String bearerToken =
-        await DatabaseService.getString(AppConstants.bearerToken);
-    print("token-------${bearerToken}");
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $bearerToken'
-    };
-    print("token-------${headers}");
     var body = {
       "currencyCode": "bdt",
       "goldValue": goldValue ?? "",
@@ -87,15 +78,15 @@ class ZakatController extends GetxController {
       "rentalIncome": rentalIncome,
       "immediateLiabilities": immediateLiabilities
     };
-    var response = await ApiClient.postData(
+    var response = await ApiClient.post(
       ApiConstants.zakatEndPoint,
       body,
-      headers: headers,
+ 
     );
     print("----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       ToastMessageHelper.successMessageShowToster(
-          AppString.recordInsertedSuccessfully.tr);
+          'recordInsertedSuccessfully'.tr);
       print("zakat netAssets${response.body}");
       showZakatDialog(
           assetsAccount: "${response.body["netAssets"]}".tr,
@@ -114,7 +105,7 @@ class ZakatController extends GetxController {
     Get.dialog(
       AlertDialog(
         title: CustomText(
-          text: AppString.result.tr,
+          text: 'result'.tr,
           fontsize: 20.sp,
           fontWeight: FontWeight.w600,
         ),
@@ -125,7 +116,7 @@ class ZakatController extends GetxController {
             children: [
               Divider(),
               CustomText(
-                text: AppString.totalAssets.tr,
+                text: 'totalAssets'.tr,
                 fontsize: 20.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
@@ -139,7 +130,7 @@ class ZakatController extends GetxController {
               ),
               Divider(color: AppColors.primaryColor),
               CustomText(
-                text: AppString.payableZakat.tr,
+                text: 'payableZakat'.tr,
                 fontsize: 20.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
@@ -159,3 +150,5 @@ class ZakatController extends GetxController {
     );
   }
 }
+
+

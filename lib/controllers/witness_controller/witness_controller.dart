@@ -1,17 +1,12 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../services/database_helper.dart';
 import '../../helpers/toast_message_helper.dart';
 import '../../models/access_phanel/zakat_property_wasyyah_model.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
-import 'package:http/http.dart' as http;
-
-import '../../utils/app_constant.dart';
-import '../access_phanel/ContextsService.dart';
 
 class WitnessController extends GetxController {
   @override
@@ -26,7 +21,7 @@ class WitnessController extends GetxController {
   RxList<GetWitnessResponseModel> witnessData = <GetWitnessResponseModel>[].obs;
   getWitnessData() async {
     isWitness(true);
-    var response = await ApiClient.getData(ApiConstants.witnessEndPoint);
+    var response = await ApiClient.get(ApiConstants.witnessEndPoint);
     print("nomineeData data ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       witnessData.value = List<GetWitnessResponseModel>.from(
@@ -43,7 +38,7 @@ class WitnessController extends GetxController {
       <GetWitnessResponseModel>[].obs;
   getWitnessesYouData() async {
     isWitnessesYou(true);
-    var response = await ApiClient.getData(ApiConstants.witnessesYouEndPoint);
+    var response = await ApiClient.get(ApiConstants.witnessesYouEndPoint);
     print("witnessesYouData data ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       witnessesYouData.value = List<GetWitnessResponseModel>.from(
@@ -64,22 +59,17 @@ class WitnessController extends GetxController {
 
     isLoading.value = true;
 
-    final url = Uri.parse(
-      '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=true',
-    );
-    String token = await DatabaseService.getString(AppConstants.bearerToken);
+    final endpoint = '/user/search-witness-nominee?email=$email&isWitness=true';
+
     try {
-      final response = await http.get(
-        url,
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-      );
+      final response = await ApiClient.get(endpoint);
       print("response.body---------------${response.body}");
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        witnesssData.value = data;
+        if (response.body is Map) {
+          witnesssData.value = Map<String, dynamic>.from(response.body as Map);
+        } else {
+          witnesssData.value = {};
+        }
       } else {
         Get.snackbar("Error", "This is not right email");
         witnesssData.value = {};
@@ -96,7 +86,7 @@ class WitnessController extends GetxController {
   RxBool isDelNomineeYou = false.obs;
   getWitnessDeleteData({String? requestKey}) async {
     isDelNomineeYou(true);
-    var response = await ApiClient.getData(
+    var response = await ApiClient.get(
         "${ApiConstants.witnessDeletePoint}?requestKey=${requestKey}");
     print("deleteData data ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -117,18 +107,19 @@ class WitnessController extends GetxController {
   Rx<ZakatPropertyWasiyyahModel?> contextsData =
       Rx<ZakatPropertyWasiyyahModel?>(null);
 
-  /// 🔥 DIRECT API CALL INSIDE CONTROLLER
+  /// ðŸ”¥ DIRECT API CALL INSIDE CONTROLLER
   Future<void> fetchContextsData(String requestKey) async {
     try {
       isZakatPropertyWasiyyah.value = true;
 
-      var response = await ApiClient.getData(
-        "${ApiConstants.baseUrl}/getContextsData?requestKey=$requestKey",
+      var response = await ApiClient.get(
+        "/getContextsData?requestKey=$requestKey",
       );
       print("deleteData data ------------${response.body}");
 
       if (response.statusCode != 200 || response.statusCode == 201) {
-        final data = jsonDecode(response.body);
+        final data =
+            response.body is String ? jsonDecode(response.body) : response.body;
 
         contextsData.value = ZakatPropertyWasiyyahModel.fromJson(data);
       } else {
@@ -141,3 +132,4 @@ class WitnessController extends GetxController {
     }
   }
 }
+

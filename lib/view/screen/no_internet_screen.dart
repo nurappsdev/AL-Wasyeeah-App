@@ -1,4 +1,4 @@
-import 'dart:math' as math;
+﻿import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -158,4 +158,5 @@ class _ConnectivityWrapperState extends State<ConnectivityWrapper> {
     return hasInternet ? widget.child : NoInternetScreen();
   }
 }
+
 

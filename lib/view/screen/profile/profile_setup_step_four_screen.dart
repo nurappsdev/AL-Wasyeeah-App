@@ -7,7 +7,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../utils/app_colors.dart';
-import '../../../utils/app_en_strings.dart';
 import '../../widgets/widgets.dart';
 import '../../widgets/file_choose_and_download_button.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
@@ -28,14 +27,14 @@ class ProfileSettingStepFourWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ===== Header =====
-            _sectionTitle(AppString.familyInformation.tr),
+            _sectionTitle('familyInformation'),
 
             // ===== Spouse forms =====
             _SpouseWidget(controller: controller),
-            _sectionTitle(AppString.childrenInformation.tr),
+            _sectionTitle('childrenInformation'),
             // ===== Children Information =====
             _ChildWidget(controller: controller),
-            _sectionTitle(AppString.siblingInformation.tr),
+            _sectionTitle('siblingInformation'),
             // ===== Sibling Information =====
             SiblingWidget(controller: controller),
             SizedBox(height: 20.h),
@@ -111,7 +110,7 @@ class SiblingWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        text: AppString.siblingName.tr,
+                        text: 'siblingName'.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -129,12 +128,12 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Gender
                       CustomText(
-                        text: AppString.gender.tr,
+                        text: 'gender'.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<GenderModel>(
-                        hint: AppString.gender.tr,
+                        hint: 'gender'.tr,
                         items: controller.genderList,
                         value: form.gender.value,
                         itemToString: (e) => e.gender ?? "",
@@ -143,12 +142,12 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Profession
                       CustomText(
-                        text: AppString.profession.tr,
+                        text: 'profession'.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<ProfessionModel>(
-                        hint: AppString.profession.tr,
+                        hint: 'profession'.tr,
                         items: controller.professionList,
                         value: form.profession.value,
                         itemToString: (e) => e.profession ?? "",
@@ -157,12 +156,12 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Nationality
                       CustomText(
-                        text: AppString.nationality.tr,
+                        text: 'nationality'.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<CountryModel>(
-                        hint: AppString.nationality.tr,
+                        hint: 'nationality'.tr,
                         items: controller.countryList,
                         value: form.nationality.value,
                         itemToString: (e) => e.country ?? "",
@@ -171,7 +170,7 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Date of Birth
                       CustomText(
-                        text: AppString.siblingDob.tr,
+                        text: 'siblingDob'.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -234,7 +233,7 @@ class SiblingWidget extends StatelessWidget {
                         hint: "NID/Passport No".tr,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return AppString.nidPassportNoRequired.tr;
+                            return 'nidPassportNoRequired'.tr;
                           }
                           return null;
                         },
@@ -265,7 +264,7 @@ class SiblingWidget extends StatelessWidget {
                             if (isComplete) {
                               Fluttertoast.showToast(
                                 msg:
-                                    "Sibling (${form.name.text}) ${AppString.fileDownloadedSuccess.tr}",
+                                    "Sibling (${form.name.text}) ${'fileDownloadedSuccess'.tr}",
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.TOP,
                                 timeInSecForIosWeb: 2,
@@ -314,7 +313,7 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
 
                       CustomText(
-                        text: AppString.siblingExistenceStatus.tr,
+                        text: 'siblingExistenceStatus'.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -388,7 +387,7 @@ class SiblingWidget extends StatelessWidget {
                                 SizedBox(width: 8.w),
                                 Expanded(
                                   child: Text(
-                                    AppString.addMoreSibling.tr,
+                                    'addMoreSibling'.tr,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -442,16 +441,16 @@ class _ChildWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        text: AppString.childName.tr,
+                        text: 'childName'.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
                         controller: form.name,
-                        hint: AppString.childName.tr,
+                        hint: 'childName'.tr,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return AppString.nameRequired.tr;
+                            return 'nameRequired'.tr;
                           }
                           return null;
                         },
@@ -460,12 +459,12 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Gender
                       CustomText(
-                        text: AppString.gender.tr,
+                        text: 'gender'.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<GenderModel>(
-                        hint: AppString.gender.tr,
+                        hint: 'gender'.tr,
                         items: controller.genderList,
                         value: form.gender.value,
                         itemToString: (e) => e.gender ?? "",
@@ -474,12 +473,12 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Profession
                       CustomText(
-                        text: AppString.profession.tr,
+                        text: 'profession'.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<ProfessionModel>(
-                        hint: AppString.profession.tr,
+                        hint: 'profession'.tr,
                         items: controller.professionList,
                         value: form.profession.value,
                         itemToString: (e) => e.profession ?? "",
@@ -488,12 +487,12 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Nationality
                       CustomText(
-                        text: AppString.nationality.tr,
+                        text: 'nationality'.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<CountryModel>(
-                        hint: AppString.nationality.tr,
+                        hint: 'nationality'.tr,
                         items: controller.countryList,
                         value: form.nationality.value,
                         itemToString: (e) => e.country ?? "",
@@ -502,7 +501,7 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Date of Birth
                       CustomText(
-                        text: AppString.childDob.tr,
+                        text: 'childDob'.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -565,7 +564,7 @@ class _ChildWidget extends StatelessWidget {
                         hint: "NID/Passport No".tr,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return AppString.nidPassportNoRequired.tr;
+                            return 'nidPassportNoRequired'.tr;
                           }
                           return null;
                         },
@@ -596,7 +595,7 @@ class _ChildWidget extends StatelessWidget {
                             if (isComplete) {
                               Fluttertoast.showToast(
                                 msg:
-                                    "Child (${form.name.text}) ${AppString.fileDownloadedSuccess.tr}",
+                                    "Child (${form.name.text}) ${'fileDownloadedSuccess'.tr}",
                                 toastLength: Toast.LENGTH_LONG,
                                 gravity: ToastGravity.TOP,
                                 timeInSecForIosWeb: 2,
@@ -645,7 +644,7 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
 
                       CustomText(
-                        text: AppString.childExistenceStatus.tr,
+                        text: 'childExistenceStatus'.tr,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -661,12 +660,12 @@ class _ChildWidget extends StatelessWidget {
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 40),
-                              child: Text(AppString.alive.tr),
+                              child: Text('alive'.tr),
                             ),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 40),
-                              child: Text(AppString.dead.tr),
+                              child: Text('dead'.tr),
                             ),
                           ],
                         ),
@@ -721,7 +720,7 @@ class _ChildWidget extends StatelessWidget {
                                 SizedBox(width: 8.w),
                                 Expanded(
                                   child: Text(
-                                    AppString.addMoreChild.tr,
+                                    'addMoreChild'.tr,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -775,28 +774,28 @@ class _SpouseWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomText(
-                      text: AppString.spouseName.tr,
+                      text: 'spouseName'.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.name,
-                      hint: AppString.spouseName.tr,
+                      hint: 'spouseName'.tr,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return AppString.nameRequired.tr;
+                          return 'nameRequired'.tr;
                         }
                         return null;
                       },
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: AppString.spouseProfession.tr,
+                      text: 'spouseProfession'.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
                     CustomDropdown<ProfessionModel>(
-                      hint: AppString.profession.tr,
+                      hint: 'profession'.tr,
                       items: controller.professionList,
                       value: form.profession.value,
                       itemToString: (e) => e.profession ?? "",
@@ -804,12 +803,12 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: AppString.spouseNationality.tr,
+                      text: 'spouseNationality'.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
                     CustomDropdown<CountryModel>(
-                      hint: AppString.nationality.tr,
+                      hint: 'nationality'.tr,
                       items: controller.countryList,
                       value: form.nationality.value,
                       itemToString: (e) => e.country ?? "",
@@ -817,7 +816,7 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: AppString.spouseDob.tr,
+                      text: 'spouseDob'.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -870,7 +869,7 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: AppString.spouseNidPassportNo.tr,
+                      text: 'spouseNidPassportNo'.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -879,14 +878,14 @@ class _SpouseWidget extends StatelessWidget {
                       hint: "NID/Passport No".tr,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return AppString.nidPassportNoRequired.tr;
+                          return 'nidPassportNoRequired'.tr;
                         }
                         return null;
                       },
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: AppString.spouseNidPassportDocuments.tr,
+                      text: 'spouseNidPassportDocuments'.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -915,7 +914,7 @@ class _SpouseWidget extends StatelessWidget {
                           if (isComplete) {
                             Fluttertoast.showToast(
                               msg:
-                                  "Spouse (${form.name.text}) ${AppString.fileDownloadedSuccess.tr}",
+                                  "Spouse (${form.name.text}) ${'fileDownloadedSuccess'.tr}",
                               toastLength: Toast.LENGTH_LONG,
                               gravity: ToastGravity.TOP,
                               timeInSecForIosWeb: 2,
@@ -929,7 +928,7 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: AppString.spouseMobileNo.tr,
+                      text: 'spouseMobileNo'.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -945,7 +944,7 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: AppString.spouseEmail.tr,
+                      text: 'spouseEmail'.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -961,7 +960,7 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: AppString.spouseExistenceStatus.tr,
+                      text: 'spouseExistenceStatus'.tr,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -1036,7 +1035,7 @@ class _SpouseWidget extends StatelessWidget {
                               SizedBox(width: 8.w),
                               Expanded(
                                 child: Text(
-                                  AppString.addMoreSpouse.tr,
+                                  'addMoreSpouse'.tr,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -1056,3 +1055,6 @@ class _SpouseWidget extends StatelessWidget {
     });
   }
 }
+
+
+

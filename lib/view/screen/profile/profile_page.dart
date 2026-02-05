@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/controllers/controllers.dart';
+﻿import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:al_wasyeah/view/screen/profile/profile_setup_step_five_screen.dart';
 import 'package:al_wasyeah/view/screen/profile/profile_setup_step_two_screen.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -107,3 +107,4 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+

@@ -1,6 +1,7 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:convert';
 
+import 'package:al_wasyeah/controllers/auths/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -26,9 +27,9 @@ class _FirstSplashScreenState extends State<FirstSplashScreen> {
     Future.delayed(Duration(seconds: 3), () async {
       try {
         fetchAndSetLocation();
-        String token =
-            await DatabaseService.getString(AppConstants.bearerToken);
-        if (token.isNotEmpty) {
+        String? token =
+            await AuthController.getToken();
+        if (token != null) {
           Get.offAllNamed(AppRoutes.homeScreen);
         } else {
           Get.toNamed(AppRoutes.splashScreen, preventDuplicates: false);
@@ -51,10 +52,10 @@ class _FirstSplashScreenState extends State<FirstSplashScreen> {
         final double longitude = data['longitude'];
 
         // Save to SharedPreferences using PrefsHelper
-        await DatabaseService.setString(
-            AppConstants.latitude, latitude.toString());
-        await DatabaseService.setString(
-            AppConstants.longitude, longitude.toString());
+        // await AuthController.saveToken(
+        //     AppConstants.latitude, latitude.toString());
+        // await DatabaseService.setString(
+        //     AppConstants.longitude, longitude.toString());
 
         print('Location saved: lat=$latitude, long=$longitude');
       } else {
@@ -101,3 +102,4 @@ class _FirstSplashScreenState extends State<FirstSplashScreen> {
     );
   }
 }
+

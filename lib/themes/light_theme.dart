@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../utils/app_en_strings.dart';
 import '../utils/app_dimentions.dart';
 import '../utils/app_colors.dart';
 
@@ -47,3 +46,5 @@ ThemeData light() => ThemeData(
       dayStyle: TextStyle(color: AppColors.primaryColor, fontSize: 14.h),
       weekdayStyle: TextStyle(fontSize: 14.h, color: Colors.black),
     ));
+
+

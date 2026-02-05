@@ -1,4 +1,4 @@
-
+﻿
 class LanguageModel {
   String languageName;
   String languageCode;
@@ -9,3 +9,4 @@ class LanguageModel {
         required this.countryCode,
         required this.languageCode});
 }
+

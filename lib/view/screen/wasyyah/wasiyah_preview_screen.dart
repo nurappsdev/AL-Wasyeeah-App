@@ -1,4 +1,4 @@
-// import 'dart:io';
+﻿// import 'dart:io';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_pdfview/flutter_pdfview.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -145,7 +145,6 @@ import 'package:get/get.dart';
 import '../../../helpers/app_routes.dart';
 import '../../../models/models.dart';
 import '../../../utils/app_colors.dart';
-import '../../../utils/app_en_strings.dart';
 import '../../../utils/app_image.dart';
 import '../../widgets/widgets.dart';
 
@@ -170,7 +169,7 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: AppString.wasyyahPreview.tr,
+          text: 'wasyyahPreview'.tr,
           fontsize: 18.sp,
           fontWeight: FontWeight.w600,
         ),
@@ -197,14 +196,14 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
               ),
 
               CustomText(
-                text: AppString.bismillah.tr,
+                text: 'bismillah'.tr,
                 fontsize: 14,
               ),
               SizedBox(height: 10.h),
               Divider(color: AppColors.primaryColor, height: 14),
               SizedBox(height: 10.h),
               CustomText(
-                text: AppString.wasyyahTitleInBangla.tr,
+                text: 'wasyyahTitleInBangla'.tr,
                 fontsize: 20.sp,
                 fontWeight: FontWeight.w700,
               ),
@@ -272,3 +271,5 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
     );
   }
 }
+
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../helpers/helpers.dart';
 import '../../../models/models.dart';
 import '../../../utils/app_colors.dart';
-import '../../../utils/app_en_strings.dart';
 import '../../../utils/app_dimentions.dart';
 import '../../widgets/widgets.dart';
 
@@ -417,3 +416,5 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
     );
   }
 }
+
+

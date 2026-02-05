@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -41,3 +41,4 @@ class CustomPinCodeTextField extends StatelessWidget {
     );
   }
 }
+

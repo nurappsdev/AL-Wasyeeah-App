@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'dart:convert';
 
 import 'package:get/get.dart';
@@ -14,7 +14,7 @@ class UserController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    getsalatTimeHandle();
+    // getsalatTimeHandle();
     getUserProfileData();
   }
 
@@ -25,7 +25,7 @@ class UserController extends GetxController {
     isLoadingUserProfile(true);
 
     try {
-      var response = await ApiClient.getData(ApiConstants.userProfileEndPoint);
+      var response = await ApiClient.get(ApiConstants.userProfileEndPoint);
       print("UserProfile Response: ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -45,40 +45,40 @@ class UserController extends GetxController {
   Rxn<GetSalatTimeResponseModel> getSalatTimeResponseModel =
       Rxn<GetSalatTimeResponseModel>();
 
-  Future<void> getsalatTimeHandle() async {
-    salatTimeLoading(true);
+  // Future<void> getsalatTimeHandle() async {
+  //   salatTimeLoading(true);
 
-    try {
-      String lat = await DatabaseService.getString(AppConstants.latitude);
-      String long = await DatabaseService.getString(AppConstants.longitude);
-      var response = await ApiClient.getData(
-        ApiConstants.salatTimeAPI(lat, long),
-      );
-      print("UserProfile Response: ${response.body}");
+  //   try {
+  //     // String lat = await DatabaseService.getString(AppConstants.latitude);
+  //     // String long = await DatabaseService.getString(AppConstants.longitude);
+  //     var response = await ApiClient.get(
+  //       ApiConstants.salatTimeAPI(lat, long),
+  //     );
+  //     print("UserProfile Response: ${response.body}");
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        print("long ${long}");
-        if (response.body != null) {
-          getSalatTimeResponseModel.value =
-              GetSalatTimeResponseModel.fromJson(response.body);
-        }
-        prayerTimes.value = {
-          'Fajr': getSalatTimeResponseModel.value?.fajr ?? '',
-          'Sunrise': getSalatTimeResponseModel.value?.sunrise ?? '',
-          'Dhuhr': getSalatTimeResponseModel.value?.dhuhr ?? '',
-          'Asr': getSalatTimeResponseModel.value?.asr ?? '',
-          'Maghrib': getSalatTimeResponseModel.value?.maghrib ?? '',
-          'Isha': getSalatTimeResponseModel.value?.isha ?? '',
-        };
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       print("long ${long}");
+  //       if (response.body != null) {
+  //         getSalatTimeResponseModel.value =
+  //             GetSalatTimeResponseModel.fromJson(response.body);
+  //       }
+  //       prayerTimes.value = {
+  //         'Fajr': getSalatTimeResponseModel.value?.fajr ?? '',
+  //         'Sunrise': getSalatTimeResponseModel.value?.sunrise ?? '',
+  //         'Dhuhr': getSalatTimeResponseModel.value?.dhuhr ?? '',
+  //         'Asr': getSalatTimeResponseModel.value?.asr ?? '',
+  //         'Maghrib': getSalatTimeResponseModel.value?.maghrib ?? '',
+  //         'Isha': getSalatTimeResponseModel.value?.isha ?? '',
+  //       };
 
-        _calculateNextPrayer();
-      }
-    } catch (e) {
-      print("Error loading user profile: $e");
-    } finally {
-      salatTimeLoading(false);
-    }
-  }
+  //       _calculateNextPrayer();
+  //     }
+  //   } catch (e) {
+  //     print("Error loading user profile: $e");
+  //   } finally {
+  //     salatTimeLoading(false);
+  //   }
+  // }
 
   var upcomingPrayer = ''.obs;
   var timeLeft = Rxn<Duration>();
@@ -146,3 +146,4 @@ class UserController extends GetxController {
     });
   }
 }
+

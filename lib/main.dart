@@ -1,3 +1,4 @@
+﻿import 'package:al_wasyeah/services/translation/app_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,8 +34,12 @@ class MyApp extends StatelessWidget {
       getPages: AppRoutes.routes,
       initialRoute: AppRoutes.firstSplashScreen,
       initialBinding: ControllerBindings(),
-      // theme: themeController.darkTheme ? dark(): light(),
+      // translations: AppTranslation(), // Your translations
+      // locale: Get.deviceLocale ?? const Locale('en'), // default language
+      // fallbackLocale: const Locale('en'), // fallback if language not found
+      translations: AppTranslation(),
+      locale: Get.deviceLocale ?? const Locale('en'), // Uses device locale
+      fallbackLocale: Locale('en', 'US'),
     );
-    ;
   }
 }

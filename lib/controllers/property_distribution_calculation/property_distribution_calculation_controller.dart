@@ -1,11 +1,11 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'dart:developer';
 import 'package:al_wasyeah/models/property_distribution_calculation_model/property_destribution_result_model.dart';
 import 'package:flutter/material.dart';
 import 'package:al_wasyeah/helpers/toast_message_helper.dart';
 import 'package:al_wasyeah/services/api_client.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
-import 'package:al_wasyeah/utils/app_en_strings.dart';
+import 'package:al_wasyeah/services/translation/strings/en_string.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/models/property_distribution_calculation_model/relavant_list_model.dart';
 
@@ -32,8 +32,8 @@ class PropertyDistributionCalculationController extends GetxController {
   final silverController = TextEditingController();
   final moneyController = TextEditingController();
 
-  RxString goldUnit = AppString.gram.obs;
-  RxString silverUnit = AppString.gram.obs;
+  RxString goldUnit = 'gram'.obs;
+  RxString silverUnit = 'gram'.obs;
 
   RxBool isCalculateVisible = false.obs;
   RxBool isCalculateLoading = false.obs;
@@ -82,7 +82,7 @@ class PropertyDistributionCalculationController extends GetxController {
 
   Future<void> getRelevantList() async {
     try {
-      var response = await ApiClient.getData(
+      var response = await ApiClient.get(
         ApiConstants.relevantList,
       );
       allRelatives(relevantListFromJson(jsonEncode(response.body)));
@@ -106,23 +106,23 @@ class PropertyDistributionCalculationController extends GetxController {
 
   void toggleCheck(String relative, bool? value) {
     if (value == true) {
-      if (relative == AppString.husband && isChecked[AppString.wife] == true) {
+      if (relative == 'husband' && isChecked['wife'] == true) {
         ToastMessageHelper.errorMessageShowToster(
-            AppString.husbandWifeSelectionError.tr);
-        isChecked[AppString.wife] = false;
-        counts[AppString.wife] = 0;
-      } else if (relative == AppString.wife &&
-          isChecked[AppString.husband] == true) {
+            'husbandWifeSelectionError'.tr);
+        isChecked['wife'] = false;
+        counts['wife'] = 0;
+      } else if (relative =='wife' &&
+          isChecked['husband'] == true) {
         ToastMessageHelper.errorMessageShowToster(
-            AppString.husbandWifeSelectionError.tr);
-        isChecked[AppString.husband] = false;
-        counts[AppString.husband] = 0;
+            'husbandWifeSelectionError'.tr);
+        isChecked['husband'] = false;
+        counts['husband'] = 0;
       }
       isChecked[relative] = true;
       if (counts[relative] == 0) counts[relative] = 1;
 
       // Handle special limit for Husband and Father
-      if ((relative == AppString.husband || relative == AppString.father) &&
+      if ((relative == 'husband' || relative == 'father') &&
           counts[relative]! > 1) {
         counts[relative] = 1;
       }
@@ -136,7 +136,7 @@ class PropertyDistributionCalculationController extends GetxController {
   void increment(String relative) {
     if (isChecked[relative] != true) return;
 
-    if (relative == AppString.husband || relative == AppString.father) {
+    if (relative == 'husband' || relative == 'father') {
       if (counts[relative]! >= 1) return;
     }
 
@@ -214,14 +214,14 @@ class PropertyDistributionCalculationController extends GetxController {
     }
     if (goldController.text.isNotEmpty) {
       double goldVal = double.tryParse(goldController.text) ?? 0;
-      if (goldUnit.value == AppString.vori) {
+      if (goldUnit.value == 'vori') {
         goldVal = goldVal * 11.664;
       }
       finalOutput["propertyGold"] = goldVal;
     }
     if (silverController.text.isNotEmpty) {
       double silverVal = double.tryParse(silverController.text) ?? 0;
-      if (silverUnit.value == AppString.vori) {
+      if (silverUnit.value == 'vori') {
         silverVal = silverVal * 11.664;
       }
       finalOutput["propertySilver"] = silverVal;
@@ -234,11 +234,11 @@ class PropertyDistributionCalculationController extends GetxController {
 
     try {
       isCalculateLoading.value = true;
-      var response = await ApiClient.postData(
+      var response = await ApiClient.post(
           ApiConstants.propertyDistributionCalculationResult, finalOutput);
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessageHelper.successMessageShowToster(
-            AppString.calculationSuccess.tr);
+            'calculationSuccess'.tr);
         propertyDistributionResult.value =
             propertydistributionResultModelFromJson(jsonEncode(response.body));
 
@@ -247,12 +247,12 @@ class PropertyDistributionCalculationController extends GetxController {
         resetInputs();
       } else {
         ToastMessageHelper.errorMessageShowToster(
-            AppString.calculationError.tr);
+            'calculationError'.tr);
       }
     } catch (e, s) {
       log("Property Calculation Error: $e\nStacktrace: $s");
       ToastMessageHelper.errorMessageShowToster(
-          AppString.somethingWentWrong.tr);
+          'somethingWentWrong'.tr);
     } finally {
       isCalculateLoading.value = false;
     }
@@ -267,8 +267,8 @@ class PropertyDistributionCalculationController extends GetxController {
     goldController.clear();
     silverController.clear();
     moneyController.clear();
-    goldUnit.value = AppString.gram;
-    silverUnit.value = AppString.gram;
+    goldUnit.value = 'gram';
+    silverUnit.value = 'gram';
     isCalculateVisible.value = false;
     update();
   }
@@ -291,6 +291,11 @@ class PropertyDistributionCalculationController extends GetxController {
     return uiKey; // Fallback
   }
 
+  // String _enValue(String key) {
+  //   final value = AppEnString.appEnString[key];
+  //   return value is String ? value : key;
+  // }
+
   String getOrdinal(int n) {
     if (n == 1) return "1st";
     if (n == 2) return "2nd";
@@ -298,3 +303,12 @@ class PropertyDistributionCalculationController extends GetxController {
     return "${n}th";
   }
 }
+
+
+
+
+
+
+
+
+

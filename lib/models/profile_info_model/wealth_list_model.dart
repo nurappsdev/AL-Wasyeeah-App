@@ -1,4 +1,4 @@
-// To parse this JSON data, do
+﻿// To parse this JSON data, do
 //
 //     final wealthListModel = wealthListModelFromJson(jsonString);
 
@@ -29,3 +29,4 @@ class WealthModel {
         "wealth": wealth,
       };
 }
+

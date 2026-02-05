@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/helpers/file_picker_util.dart';
+﻿import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/models/profile_info_model/parent_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
 import 'package:al_wasyeah/view/widgets/file_choose_and_download_button.dart';
@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
 import '../../../utils/app_colors.dart';
-import '../../../utils/app_en_strings.dart';
 import '../../widgets/widgets.dart';
 
 class ProfileSettingStepThreeWidget extends StatelessWidget {
@@ -29,7 +28,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
               children: [
                 /// ========== Father ==========
                 _parentSection(
-                  title: AppString.fatherInformation,
+                  title: 'fatherInformation'.tr,
                   nameController: form.fatherName,
                   nidController: form.fatherPassOrNID,
                   selectedProfession: form.selectedFatherProfession,
@@ -49,7 +48,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
 
                 /// ========== Mother ==========
                 _parentSection(
-                  title: AppString.motherInformation,
+                  title: 'motherInformation'.tr,
                   nameController: form.motherName,
                   nidController: form.motherPassOrNID,
                   selectedProfession: form.selectedMotherProfession,
@@ -67,7 +66,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
 
                 SizedBox(height: 20.h),
                 CustomButtonCommon(
-                  title: AppString.next.tr,
+                  title: 'next'.tr,
                   onpress: () {
                     if (controller.step3formKey.currentState!.validate()) {
                       controller.onStepTapped(controller.currentStep.value + 1);
@@ -123,12 +122,12 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _sectionTitle(title),
-        _textField(AppString.name, nameController, AppString.nameRequired.tr),
+        _textField('name'.tr, nameController, 'nameRequired'.tr),
         _professionDropdown(selectedProfession),
-        _textField(AppString.nidPassportNo, nidController,
-            AppString.nidPassportNoRequired.tr),
+        _textField('nidPassportNo'.tr, nidController,
+            'nidPassportNoRequired'.tr),
         CustomText(
-          text: AppString.nidPassportDocuments.tr,
+          text: 'nidPassportDocuments'.tr,
           fontsize: 16.sp,
         ),
         SizedBox(height: 4.h),
@@ -136,13 +135,13 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
           _filePicker(
               fileUrl, pickedFile, onPickFile, downloadType, filePrefix),
         CustomText(
-          text: AppString.fileAllowedWarning.tr,
+          text: 'fileAllowedWarning'.tr,
           color: AppColors.redColor,
           fontsize: 12.sp,
         ),
         SizedBox(height: 16.h),
         CustomText(
-          text: AppString.existenceStatus.tr,
+          text: 'existenceStatus'.tr,
           fontsize: 16.sp,
         ),
         SizedBox(height: 4.h),
@@ -157,11 +156,11 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Text(AppString.alive.tr),
+                  child: Text('alive'.tr),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Text(AppString.dead.tr),
+                  child: Text('dead'.tr),
                 ),
               ],
             ),
@@ -192,10 +191,10 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: AppString.profession.tr, fontsize: 16.sp),
+        CustomText(text: 'profession'.tr, fontsize: 16.sp),
         SizedBox(height: 4.h),
         Obx(() => CustomDropdown<ProfessionModel>(
-              hint: AppString.profession.tr,
+              hint: 'profession'.tr,
               items: controller.professionList,
               value: selectedProfession.value,
               itemToString: (item) => item.profession ?? "",
@@ -227,7 +226,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
             );
             if (isComplete) {
               Fluttertoast.showToast(
-                msg: AppString.fileDownloadedSuccess.tr,
+                msg: 'fileDownloadedSuccess'.tr,
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.TOP,
                 timeInSecForIosWeb: 2,
@@ -240,3 +239,5 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
         ));
   }
 }
+
+

@@ -1,4 +1,4 @@
-// To parse this JSON data, do
+﻿// To parse this JSON data, do
 //
 //     final relevantList = relevantListFromJson(jsonString);
 
@@ -33,3 +33,4 @@ class RelativeModelForPropertyDistribution {
         "RELATIVE": relative,
       };
 }
+

@@ -1,10 +1,9 @@
-import 'dart:async';
+﻿import 'dart:async';
 
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:al_wasyeah/utils/app_image.dart';
-import '../../utils/app_en_strings.dart';
 import '../../utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -87,21 +86,21 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _scrollController = ScrollController();
 
-    userController.getsalatTimeHandle().then((_) {
-      Future.delayed(Duration(milliseconds: 500), () {
-        final index = userController.prayerTimes.keys
-            .toList()
-            .indexOf(userController.upcomingPrayer.value);
-        if (index != -1) {
-          _scrollController?.animateTo(
-            index * 250.h,
-            duration: Duration(milliseconds: 500),
-            curve: Curves.easeInOut,
-          );
-        }
-      });
-      userController.startPrayerTimer();
-    });
+    // userController.getsalatTimeHandle().then((_) {
+    //   Future.delayed(Duration(milliseconds: 500), () {
+    //     final index = userController.prayerTimes.keys
+    //         .toList()
+    //         .indexOf(userController.upcomingPrayer.value);
+    //     if (index != -1) {
+    //       _scrollController?.animateTo(
+    //         index * 250.h,
+    //         duration: Duration(milliseconds: 500),
+    //         curve: Curves.easeInOut,
+    //       );
+    //     }
+    //   });
+    //   userController.startPrayerTimer();
+    // });
 
     userController.getUserProfileData();
   }
@@ -242,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 80.h,
                             ),
                             CustomText(
-                              text: AppString.exploreWasyyah.tr,
+                              text: 'exploreWasyyah'.tr,
                               fontsize: 18.sp,
                               color: AppColors.primaryColor,
                             )
@@ -281,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 50.h,
                                   ),
                                   CustomText(
-                                    text: AppString.witness.tr,
+                                    text: 'witness'.tr,
                                     fontsize: 18.sp,
                                     color: AppColors.textColor4E4E4E,
                                   )
@@ -320,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 40.h,
                                   ),
                                   CustomText(
-                                    text: AppString.nominee.tr,
+                                    text: 'nominee'.tr,
                                     fontsize: 18.sp,
                                     color: AppColors.textColor4E4E4E,
                                   )
@@ -475,8 +474,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Text(
                                       isCurrent
-                                          ? AppString.upcomingPrayers.tr
-                                          : AppString.prayerTime.tr,
+                                          ? 'upcomingPrayers'.tr
+                                          : 'prayerTime'.tr,
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.bold,
@@ -825,3 +824,5 @@ class CustomCard extends StatelessWidget {
     );
   }
 }
+
+

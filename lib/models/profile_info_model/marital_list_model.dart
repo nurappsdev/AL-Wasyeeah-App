@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 
 List<MaritalModel> maritalListModelFromJson(String str) =>
     List<MaritalModel>.from(
@@ -26,3 +26,4 @@ class MaritalModel {
         "maritalId": maritalId,
       };
 }
+

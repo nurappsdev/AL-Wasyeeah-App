@@ -1,4 +1,4 @@
-
+﻿
 class GetAccessFeatureModel {
   final String? contextName;
   final int? id;
@@ -18,3 +18,4 @@ class GetAccessFeatureModel {
     "id": id,
   };
 }
+

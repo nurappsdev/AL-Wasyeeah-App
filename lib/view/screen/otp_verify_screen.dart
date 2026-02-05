@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../utils/app_en_strings.dart';
 import '../../utils/app_dimentions.dart';
 import '../../utils/app_icons.dart';
 import '../../utils/app_colors.dart';
@@ -18,7 +17,7 @@ class OtpVerifyScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: AppString.oTPVerify.tr,
+          text: 'oTPVerify'.tr,
           fontsize: 18.sp,
         ),
       ),
@@ -42,7 +41,7 @@ class OtpVerifyScreen extends StatelessWidget {
                 ),
                 Center(
                     child: CustomText(
-                  text: AppString.enterOTP.tr,
+                  text: 'enterOTP'.tr,
                   fontsize: 24.sp,
                   textAlign: TextAlign.center,
                   fontWeight: FontWeight.w500,
@@ -52,7 +51,7 @@ class OtpVerifyScreen extends StatelessWidget {
                 ),
                 Center(
                     child: CustomText(
-                  text: AppString.otpSentMsg.tr,
+                  text: 'otpSentMsg'.tr,
                   fontsize: 16.sp,
                   maxline: 2,
                   textAlign: TextAlign.center,
@@ -70,7 +69,7 @@ class OtpVerifyScreen extends StatelessWidget {
                 ///=============Sign In Button====================
                 CustomButtonCommon(
                   // loading: authController.loadingLoading.value == true,
-                  title: AppString.submit.tr,
+                  title: 'submit'.tr,
                   onpress: () {
                     Get.off(() => ProfilePage());
                     // if (_forRegKey.currentState!.validate()) {
@@ -87,11 +86,11 @@ class OtpVerifyScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomText(
-                      text: AppString.didntReceiveCode.tr,
+                      text: 'didntReceiveCode'.tr,
                       fontsize: 18.sp,
                     ),
                     CustomText(
-                      text: AppString.resendCode.tr,
+                      text: 'resendCode'.tr,
                       fontsize: 18.sp,
                       color: AppColors.primaryColor,
                     ),
@@ -105,3 +104,5 @@ class OtpVerifyScreen extends StatelessWidget {
     );
   }
 }
+
+

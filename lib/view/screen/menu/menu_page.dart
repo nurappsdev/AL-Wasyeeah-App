@@ -10,7 +10,6 @@ import '../../../helpers/helpers.dart';
 import '../../../services/database_helper.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/app_icons.dart';
-import '../../../utils/app_en_strings.dart';
 import '../../../utils/app_constant.dart';
 import '../../widgets/widgets.dart';
 import '../profile/profile_page.dart';
@@ -32,7 +31,7 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: AppString.userProfile.tr,
+          text: 'userProfile'.tr,
           fontsize: 18.sp,
         ),
       ),
@@ -105,7 +104,7 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: AppString.personalDetails.tr,
+                                text: 'personalDetails'.tr,
                                 fontsize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
@@ -166,8 +165,7 @@ class _MenuPageState extends State<MenuPage> {
                                   SizedBox(width: 16.w),
                                   Expanded(
                                     child: CustomText(
-                                      text: AppString
-                                          .propertyDistributionTitle.tr,
+                                      text: 'propertyDistributionTitle'.tr,
                                       fontsize: 16.sp,
                                       textOverflow: TextOverflow.ellipsis,
                                       fontWeight: FontWeight.w600,
@@ -219,7 +217,7 @@ class _MenuPageState extends State<MenuPage> {
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
-                              text: AppString.userSetting.tr,
+                              text: 'userSetting'.tr,
                               fontsize: 16.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
@@ -266,7 +264,7 @@ class _MenuPageState extends State<MenuPage> {
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
-                              text: AppString.deviceHistory.tr,
+                              text: 'deviceHistory'.tr,
                               fontsize: 16.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
@@ -318,7 +316,7 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: AppString.accessControlPanel.tr,
+                                text: 'accessControlPanel'.tr,
                                 fontsize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
@@ -367,7 +365,7 @@ class _MenuPageState extends State<MenuPage> {
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
-                              text: AppString.language.tr,
+                              text: 'language'.tr,
                               fontsize: 16.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
@@ -419,7 +417,7 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: AppString.loOut.tr,
+                                text: 'loOut'.tr,
                                 fontsize: 14.sp,
                                 color: AppColors.textColor4E4E4E,
                               )
@@ -450,7 +448,7 @@ class _MenuPageState extends State<MenuPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomText(
-                    text: AppString.areYouSure.tr,
+                    text: 'areYouSure'.tr,
                     fontsize: 16.sp,
                     fontWeight: FontWeight.w600,
                     maxline: 2,
@@ -463,7 +461,7 @@ class _MenuPageState extends State<MenuPage> {
                           width: 120.w,
                           height: 40.h,
                           child: CustomButton(
-                            title: AppString.cancel.tr,
+                            title: 'cancel'.tr,
                             fontSize: 16.h,
                             onpress: () {
                               Get.back();
@@ -477,29 +475,10 @@ class _MenuPageState extends State<MenuPage> {
                           child: CustomButton(
                               color: AppColors.secondaryPrimaryColor,
                               titlecolor: AppColors.primaryColor,
-                              title: AppString.loOut.tr,
+                              title: 'loOut'.tr,
                               fontSize: 16.h,
                               onpress: () async {
-                                //   profileController.promoCode.value = "";
-                                await DatabaseService.remove(
-                                    AppConstants.bearerToken);
-                                await DatabaseService.remove(
-                                    AppConstants.userId);
-                                await DatabaseService.remove(
-                                    AppConstants.firstname);
-                                await DatabaseService.remove(
-                                    AppConstants.lastname);
-                                // await PrefsHelper.remove(AppConstants.userName);
-                                await DatabaseService.remove(
-                                    AppConstants.phone);
-                                await DatabaseService.remove(
-                                    AppConstants.image);
-                                await DatabaseService.remove(
-                                    AppConstants.email);
-                                await DatabaseService.remove(
-                                    AppConstants.businessID);
-                                await DatabaseService.remove(AppConstants.type);
-
+                      
                                 Get.toNamed(AppRoutes.loginScreen,
                                     preventDuplicates: false);
                               })),
@@ -597,3 +576,6 @@ class _MenuPageState extends State<MenuPage> {
     // );
   }
 }
+
+
+

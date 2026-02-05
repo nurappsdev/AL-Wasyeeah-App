@@ -1,261 +1,10 @@
-// import 'dart:convert';
-//
-// import 'package:al_wasyeah/helpers/helpers.dart';
-// import 'package:get/get.dart';
-//
-// import '../../helpers/prefs_helper.dart';
-// import '../../models/models.dart';
-// import '../../services/services.dart';
-// import 'package:http/http.dart' as http;
-//
-// import '../../utils/app_constant.dart';
-//
-// class WasyyahController extends GetxController {
-//
-//   @override
-//   void onInit() {
-//     getWasyyahData();
-//     super.onInit();
-//   }
-//
-//   var isWasyyah = false.obs;
-//   var wasyyahYouData = <GetWasyyahResponseModel>[].obs;
-//   var isUpdateWasseya = false.obs;
-//   var isLoading = false.obs;
-//
-//   getWasyyahData() async {
-//     isWasyyah(true);
-//
-//     try {
-//       // 1️⃣ টোকেন PrefsHelper থেকে আনুন
-//       final token = await PrefsHelper.getString(AppConstants.bearerToken);
-//
-//       // 2️⃣ হেডার তৈরি করুন
-//       final headers = {
-//         'Content-Type': 'application/json',
-//         'Authorization': 'Bearer $token',
-//       };
-//
-//       // 3️⃣ API কল করুন
-//       final response = await http.get(
-//         Uri.parse("${ApiConstants.baseUrl}${ApiConstants.wasyyahYouDataYouEndPoint}"),
-//         headers: headers,
-//       );
-//
-//       if (response.statusCode == 200 || response.statusCode == 201) {
-//         final decodedBody = utf8.decode(response.bodyBytes);
-//         final List<dynamic> jsonData = json.decode(decodedBody);
-//
-//         wasyyahYouData.value = jsonData
-//             .map((item) => GetWasyyahResponseModel.fromJson(item))
-//             .toList();
-//
-//         print("✅ Data Loaded: ${wasyyahYouData.length} items");
-//       } else {
-//         print("❌ Failed with status: ${response.statusCode}");
-//       }
-//     } catch (e) {
-//       print("❌ Exception in getWasyyahData: $e");
-//     }
-//
-//     isWasyyah(false);
-//   }
-//
-//   Future<void> updateWasyyahData({
-//     required int orderSeq,
-//     required String visible,
-//     required String title,
-//     required String requestKey,
-//     required String content,
-//   }) async {
-//     isUpdateWasseya(true);
-//
-//     try {
-//       final url = Uri.parse("${ApiConstants.baseUrl}/user/saveWasiyyah");
-//       String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-//       final headers = {
-//         'Content-Type': 'application/json',
-//         'Authorization': 'Bearer $bearerToken',
-//       };
-//
-//       final body = jsonEncode({
-//         "orderSeq": orderSeq,
-//         "visible": visible,
-//         "title": title,
-//         "requestKey": requestKey,
-//         "content": content,
-//       });
-//
-//       final response = await http.post(url, headers: headers, body: body);
-//
-//       if (response.statusCode == 200 || response.statusCode == 201) {
-//         ToastMessageHelper.successMessageShowToster("RECORD INSERTED SUCCESSFULLY!!");
-//         getWasyyahData();
-//         Get.back();
-//         update();
-//       } else {
-//         ToastMessageHelper.errorMessageShowToster("error, try again");
-//       }
-//     } catch (e) {
-//       print("❗ Exception: $e");
-//       ToastMessageHelper.errorMessageShowToster("Network error occurred");
-//     } finally {
-//       isUpdateWasseya(false);
-//     }
-//   }
-//
-//   ///-----------------need drag and drop--------------------------
-//   void swapOnly(int oldIndex, int newIndex) {
-//     if (oldIndex == newIndex) return;
-//
-//     final temp = wasyyahYouData[oldIndex];
-//     wasyyahYouData[oldIndex] = wasyyahYouData[newIndex];
-//     wasyyahYouData[newIndex] = temp;
-//
-//     wasyyahYouData.refresh();
-//   }
-//
-//   // Main method for updating order sequence
-//   Future<bool> updateAllOrderSeqHttp() async {
-//     isLoading.value = true;
-//
-//     // Store original orderSeq values for rollback
-//     final originalOrderSeqs = <int>[];
-//     for (var item in wasyyahYouData) {
-//       originalOrderSeqs.add(item.orderSeq ?? 0);
-//     }
-//
-//     try {
-//       // Step 1: Update local orderSeqs
-//       for (int i = 0; i < wasyyahYouData.length; i++) {
-//         wasyyahYouData[i].orderSeq = i + 1;
-//       }
-//       wasyyahYouData.refresh();
-//
-//       // Step 2: Create payload - CORRECTED VERSION
-//       final payload = {
-//         "data": wasyyahYouData
-//             .map((item) => {
-//           "requestKey": item.requestKey,
-//           "order": item.orderSeq,
-//         })
-//             .toList(),
-//       };
-//
-//       print("📤 Sending payload: ${jsonEncode(payload)}");
-//
-//       // Step 3: Send to backend
-//       final uri = Uri.parse("${ApiConstants.baseUrl}/user/changeOrder");
-//       String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-//
-//       final response = await http.post(
-//         uri,
-//         headers: {
-//           "Content-Type": "application/json",
-//           'Authorization': 'Bearer $bearerToken',
-//         },
-//         body: jsonEncode(payload),
-//       ).timeout(Duration(seconds: 30));
-//
-//       if (response.statusCode == 200) {
-//         print("✅ Order updated successfully");
-//         ToastMessageHelper.successMessageShowToster("Order updated successfully!");
-//         return true;
-//       } else {
-//         // Rollback original orderSeq values
-//         for (int i = 0; i < wasyyahYouData.length; i++) {
-//           wasyyahYouData[i].orderSeq = originalOrderSeqs[i];
-//         }
-//         wasyyahYouData.refresh();
-//
-//         print("❌ Order update failed: ${response.statusCode}");
-//         print("Response body: ${response.body}");
-//         Get.snackbar("Error", "Failed to update order. Status: ${response.statusCode}");
-//         return false;
-//       }
-//     } catch (e) {
-//       // Rollback original orderSeq values
-//       for (int i = 0; i < wasyyahYouData.length; i++) {
-//         wasyyahYouData[i].orderSeq = originalOrderSeqs[i];
-//       }
-//       wasyyahYouData.refresh();
-//
-//       print("❌ Error updating order: $e");
-//       Get.snackbar("Error", "Network error occurred");
-//       return false;
-//     } finally {
-//       isLoading.value = false;
-//     }
-//   }
-//
-//   // Simple version without rollback (your original working version)
-//   Future<void> updateAllOrderSeqHttpSimple() async {
-//     // Step 1: Update local orderSeqs
-//     for (int i = 0; i < wasyyahYouData.length; i++) {
-//       wasyyahYouData[i].orderSeq = i + 1;
-//     }
-//     wasyyahYouData.refresh();
-//
-//     // Step 2: Create payload
-//     final payload = {
-//       "data": wasyyahYouData
-//           .map((e) => {
-//         "requestKey": e.requestKey,
-//         "order": e.orderSeq,
-//       })
-//           .toList(),
-//     };
-//
-//     // Step 3: Send to backend
-//     final uri = Uri.parse("${ApiConstants.baseUrl}/user/changeOrder");
-//     String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-//
-//     try {
-//       final response = await http.post(
-//         uri,
-//         headers: {
-//           "Content-Type": "application/json",
-//           'Authorization': 'Bearer $bearerToken',
-//         },
-//         body: jsonEncode(payload),
-//       );
-//
-//       if (response.statusCode == 200) {
-//         print("✅ Order updated successfully");
-//         ToastMessageHelper.successMessageShowToster("Order updated!");
-//       } else {
-//         print("❌ Order update failed: ${response.statusCode}");
-//         print(response.body);
-//         ToastMessageHelper.errorMessageShowToster("Failed to update order");
-//       }
-//     } catch (e) {
-//       print("❌ Error updating order: $e");
-//       ToastMessageHelper.errorMessageShowToster("Network error");
-//     }
-//   }
-//
-//   // Method to call after drag & drop
-//   Future<void> updateOrderAfterDragDrop() async {
-//     final success = await updateAllOrderSeqHttp();
-//     if (!success) {
-//       // If failed, refresh data from server
-//       print("🔄 Refreshing data from server due to update failure");
-//       await getWasyyahData();
-//     }
-//   }
-// }
-
-import 'dart:convert';
+﻿import 'dart:convert';
 
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:get/get.dart';
 
-import '../../services/database_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
-import 'package:http/http.dart' as http;
-
-import '../../utils/app_constant.dart';
 
 class WasyyahController extends GetxController {
   @override
@@ -273,29 +22,13 @@ class WasyyahController extends GetxController {
     isWasyyah(true);
 
     try {
-      // 1️⃣ টোকেন PrefsHelper থেকে আনুন
-      final token = await DatabaseService.getString(AppConstants.bearerToken);
-
-      // 2️⃣ হেডার তৈরি করুন
-      final headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      };
-
-      // 3️⃣ API কল করুন
-      final response = await http.get(
-        Uri.parse(
-            "${ApiConstants.baseUrl}${ApiConstants.wasyyahYouDataYouEndPoint}"),
-        headers: headers,
-      );
+      final response =
+          await ApiClient.get(ApiConstants.wasyyahYouDataYouEndPoint);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final decodedBody = utf8.decode(response.bodyBytes);
-        final List<dynamic> jsonData = json.decode(decodedBody);
-
-        wasyyahYouData.value = jsonData
-            .map((item) => GetWasyyahResponseModel.fromJson(item))
-            .toList();
+        wasyyahYouData.value = List<GetWasyyahResponseModel>.from(
+          response.body.map((item) => GetWasyyahResponseModel.fromJson(item)),
+        );
 
         print("✅ Data Loaded: ${wasyyahYouData.length} items");
       } else {
@@ -319,23 +52,16 @@ class WasyyahController extends GetxController {
     addWaseeyea(true);
 
     try {
-      final url = Uri.parse("${ApiConstants.baseUrl}/user/saveWasiyyah");
-      String bearerToken =
-          await DatabaseService.getString(AppConstants.bearerToken);
-      final headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $bearerToken',
-      };
-
-      final body = jsonEncode({
-        // "orderSeq": orderSeq,
-        "visible": "Y",
-        "title": title,
-        // "requestKey": requestKey,
-        "content": content,
-      });
-
-      final response = await http.post(url, headers: headers, body: body);
+      final response = await ApiClient.post(
+        "/user/saveWasiyyah",
+        {
+          // "orderSeq": orderSeq,
+          "visible": "Y",
+          "title": title,
+          // "requestKey": requestKey,
+          "content": content,
+        },
+      );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         getWasyyahData();
@@ -364,23 +90,16 @@ class WasyyahController extends GetxController {
     isUpdateWasseya(true);
 
     try {
-      final url = Uri.parse("${ApiConstants.baseUrl}/user/saveWasiyyah");
-      String bearerToken =
-          await DatabaseService.getString(AppConstants.bearerToken);
-      final headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $bearerToken',
-      };
-
-      final body = jsonEncode({
-        "orderSeq": orderSeq,
-        "visible": visible,
-        "title": title,
-        "requestKey": requestKey,
-        "content": content,
-      });
-
-      final response = await http.post(url, headers: headers, body: body);
+      final response = await ApiClient.post(
+        "/user/saveWasiyyah",
+        {
+          "orderSeq": orderSeq,
+          "visible": visible,
+          "title": title,
+          "requestKey": requestKey,
+          "content": content,
+        },
+      );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         getWasyyahData();
@@ -485,9 +204,6 @@ class WasyyahController extends GetxController {
   // }
 
   Future<bool> sendFullOrderListToBackend() async {
-    final url = "${ApiConstants.baseUrl}/user/changeOrder";
-    final token = await DatabaseService.getString(AppConstants.bearerToken);
-
     final payload = wasyyahYouData.asMap().entries.map((e) {
       return {
         "requestKey": e.value.requestKey,
@@ -496,16 +212,12 @@ class WasyyahController extends GetxController {
     }).toList();
 
     try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token",
-        },
-        body: jsonEncode(payload),
+      final response = await ApiClient.post(
+        "/user/changeOrder",
+        payload,
       );
 
-      return response.statusCode == 200;
+      return response.statusCode == 200 || response.statusCode == 201;
     } catch (e) {
       print("Error sending full order: $e");
       return false;
@@ -559,22 +271,12 @@ class WasyyahController extends GetxController {
       print("📤 Sending payload: ${jsonEncode(payload)}");
 
       // Step 3: Send to backend
-      final uri = Uri.parse("${ApiConstants.baseUrl}/user/changeOrder");
-      String bearerToken =
-          await DatabaseService.getString(AppConstants.bearerToken);
+      final response = await ApiClient.post(
+        "/user/changeOrder",
+        payload,
+      );
 
-      final response = await http
-          .post(
-            uri,
-            headers: {
-              "Content-Type": "application/json",
-              'Authorization': 'Bearer $bearerToken',
-            },
-            body: jsonEncode(payload),
-          )
-          .timeout(Duration(seconds: 30));
-
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         print("✅ Order updated successfully");
         ToastMessageHelper.successMessageShowToster(
             "Order updated successfully!");
@@ -625,22 +327,13 @@ class WasyyahController extends GetxController {
           .toList(),
     };
 
-    // Step 3: Send to backend
-    final uri = Uri.parse("${ApiConstants.baseUrl}/user/changeOrder");
-    String bearerToken =
-        await DatabaseService.getString(AppConstants.bearerToken);
-
     try {
-      final response = await http.post(
-        uri,
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': 'Bearer $bearerToken',
-        },
-        body: jsonEncode(payload),
+      final response = await ApiClient.post(
+        "/user/changeOrder",
+        payload,
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         print("✅ Order updated successfully");
         ToastMessageHelper.successMessageShowToster("Order updated!");
       } else {
@@ -664,3 +357,4 @@ class WasyyahController extends GetxController {
     }
   }
 }
+

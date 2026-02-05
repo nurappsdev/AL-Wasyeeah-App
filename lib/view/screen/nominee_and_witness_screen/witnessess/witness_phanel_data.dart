@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +22,6 @@ import '../../../../controllers/controllers.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../utils/app_colors.dart';
-import '../../../../utils/app_en_strings.dart';
 import '../../../../utils/app_image.dart';
 import '../../../widgets/widgets.dart';
 
@@ -82,7 +81,7 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                     left: 8.w,
                     right: 8.w,
                     child: CustomText(
-                      text: AppString.witnessPanel.tr,
+                      text: 'witnessPanel'.tr,
                       fontWeight: FontWeight.w600,
                       fontsize: 32.sp,
                       color: AppColors.primaryColor,
@@ -108,7 +107,7 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                             leading: Icon(Icons.email,
                                 color: AppColors.primaryColor),
                             title: Text(
-                              AppString.email.tr,
+                              'email'.tr,
                               style: TextStyle(
                                 color: Color(0xFF205072),
                                 fontWeight: FontWeight.w600,
@@ -158,7 +157,7 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                             leading: Icon(Icons.local_phone_rounded,
                                 color: AppColors.primaryColor),
                             title: Text(
-                              AppString.phoneString.tr,
+                              'phoneString'.tr,
                               style: TextStyle(
                                 color: Color(0xFF205072),
                                 fontWeight: FontWeight.w600,
@@ -204,7 +203,7 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                             leading: Icon(Icons.language_sharp,
                                 color: AppColors.primaryColor),
                             title: Text(
-                              AppString.website.tr,
+                              'website'.tr,
                               style: TextStyle(
                                 color: Color(0xFF205072),
                                 fontWeight: FontWeight.w600,
@@ -255,3 +254,5 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
     );
   }
 }
+
+

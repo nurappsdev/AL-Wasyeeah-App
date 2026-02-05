@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/helpers/app_routes.dart';
+﻿import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/view/widgets/custom_button.dart';
 import 'package:al_wasyeah/view/widgets/custom_loader.dart';
@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
 import '../no_internet_screen.dart';
-import 'package:al_wasyeah/utils/app_en_strings.dart';
 import 'add_new_washyia_screen.dart';
 import 'wasiyah_preview_screen.dart';
 
@@ -26,7 +25,7 @@ class WasyyahScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: CustomText(
-            text: AppString.wasyyah.tr,
+            text: 'wasyyah'.tr,
             fontsize: 18.sp,
             fontWeight: FontWeight.w600,
           ),
@@ -34,7 +33,7 @@ class WasyyahScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: CustomButton(
-                title: AppString.preview.tr,
+                title: 'preview'.tr,
                 onpress: () {
                   Get.toNamed(
                     AppRoutes.wasyyahPriviewScreen,
@@ -60,7 +59,7 @@ class WasyyahScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: 20.h),
                   CustomText(
-                    text: AppString.bismillah.tr,
+                    text: 'bismillah'.tr,
                     fontsize: 14,
                   ),
                   SizedBox(
@@ -74,7 +73,7 @@ class WasyyahScreen extends StatelessWidget {
                     height: 10.h,
                   ),
                   CustomText(
-                    text: AppString.wasyyahTitleInBangla.tr,
+                    text: 'wasyyahTitleInBangla'.tr,
                     fontsize: 20.sp,
                     fontWeight: FontWeight.w700,
                   ),
@@ -378,7 +377,7 @@ class WasyyahScreen extends StatelessWidget {
                                                         child: _iconTextCon(
                                                             Icons
                                                                 .edit_calendar_outlined,
-                                                            AppString.edit.tr),
+                                                            'edit'.tr),
                                                       ),
                                                 GestureDetector(
                                                   onTap: () {
@@ -388,7 +387,7 @@ class WasyyahScreen extends StatelessWidget {
                                                   child: _iconTextCon(
                                                       Icons
                                                           .remove_red_eye_outlined,
-                                                      AppString.view.tr),
+                                                      'view'.tr),
                                                 ),
                                               ],
                                             ),
@@ -407,7 +406,7 @@ class WasyyahScreen extends StatelessWidget {
                     height: 20.h,
                   ),
                   CustomButton(
-                    title: AppString.addMoreContent.tr,
+                    title: 'addMoreContent'.tr,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
                       Get.to(() => AddNewWashyiaScreen(),
@@ -453,3 +452,5 @@ class WasyyahScreen extends StatelessWidget {
     );
   }
 }
+
+

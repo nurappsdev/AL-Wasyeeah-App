@@ -1,4 +1,4 @@
-// To parse this JSON data, do
+﻿// To parse this JSON data, do
 //
 //     final bankListModel = bankListModelFromJson(jsonString);
 
@@ -33,3 +33,4 @@ class BankModel {
         "bankId": bankId,
       };
 }
+

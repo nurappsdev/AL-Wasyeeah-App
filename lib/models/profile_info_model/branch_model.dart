@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 
 List<BranchModel> branchListModelFromJson(String str) => List<BranchModel>.from(
     json.decode(str).map((x) => BranchModel.fromJson(x)));
@@ -29,3 +29,4 @@ class BranchModel {
         "branchNameBn": branchNameBn,
       };
 }
+

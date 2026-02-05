@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../../models/models.dart';
 import '../../../../utils/app_colors.dart';
-import '../../../../utils/app_en_strings.dart';
 import '../../../widgets/widgets.dart';
 
 class WitnessDetailsScreen extends StatefulWidget {
@@ -117,16 +116,16 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
 
                           /// Spouse's Row
                           _buildRow(
-                              "Spouse’s:", "Mithila IslamJinia Chowdhury"),
+                              "Spouseâ€™s:", "Mithila IslamJinia Chowdhury"),
 
                           /// Profession Row
                           _buildRow("Profession:", "Teacher"),
 
                           /// Mother's Name Row
-                          _buildRow("Mother’s Name:", "Sultana Zaman"),
+                          _buildRow("Motherâ€™s Name:", "Sultana Zaman"),
 
                           /// Father's Name Row
-                          _buildRow("Father’s Name:", "Sultana Zaman"),
+                          _buildRow("Fatherâ€™s Name:", "Sultana Zaman"),
 
                           /// Current Address Row
                           _buildRow(
@@ -192,3 +191,5 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
     );
   }
 }
+
+

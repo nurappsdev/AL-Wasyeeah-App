@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
 import '../../../utils/app_colors.dart';
-import '../../../utils/app_en_strings.dart';
 import '../../widgets/widgets.dart';
 
 class ProfileSettingStepTwoWidget extends StatefulWidget {
@@ -37,22 +36,22 @@ class _ProfileSettingStepTwoWidgetState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 /// ========= Present Address =========
-                _sectionTitle(AppString.presentAddress),
+                _sectionTitle('presentAddress'),
 
                 _textField(
-                  label: AppString.zipCode.tr,
+                  label: 'zipCode'.tr,
                   controller: form.presentZipCode,
-                  error: AppString.zipCodeRequired.tr,
+                  error: 'zipCodeRequired'.tr,
                 ),
                 _textField(
-                  label: AppString.villageHouse.tr,
+                  label: 'villageHouse'.tr,
                   controller: form.presentVillage,
-                  error: AppString.villageHouseRequired.tr,
+                  error: 'villageHouseRequired'.tr,
                 ),
                 _textField(
-                  label: AppString.roadBlockSection.tr,
+                  label: 'roadBlockSection'.tr,
                   controller: form.presentRoad,
-                  error: AppString.roadBlockSectionRequired.tr,
+                  error: 'roadBlockSectionRequired'.tr,
                 ),
 
                 /// ========= Permanent Address =========
@@ -71,33 +70,33 @@ class _ProfileSettingStepTwoWidgetState
                         }
                       },
                       title: Text(
-                        AppString.markAsPermanent.tr,
+                        'markAsPermanent'.tr,
                       ),
                     )),
 
-                _sectionTitle(AppString.permanentAddress),
+                _sectionTitle('permanentAddress'),
 
                 _textField(
-                  label: AppString.zipCode.tr,
+                  label: 'zipCode'.tr,
                   controller: form.permanentZipCode,
-                  error: AppString.zipCodeRequired.tr,
+                  error: 'zipCodeRequired'.tr,
                 ),
                 _textField(
-                  label: AppString.villageHouse.tr,
+                  label: 'villageHouse'.tr,
                   controller: form.permanentVillage,
-                  error: AppString.villageHouseRequired.tr,
+                  error: 'villageHouseRequired'.tr,
                 ),
                 _textField(
-                  label: AppString.roadBlockSection.tr,
+                  label: 'roadBlockSection'.tr,
                   controller: form.permanentRoad,
-                  error: AppString.roadBlockSectionRequired.tr,
+                  error: 'roadBlockSectionRequired'.tr,
                 ),
 
                 /// ========= Overseas Address =========
-                _sectionTitle(AppString.overseasAddress),
+                _sectionTitle('overseasAddress'),
 
                 Obx(() => CustomDropdown<CountryModel>(
-                      hint: AppString.selectCountry.tr,
+                      hint: 'selectCountry'.tr,
                       items: controller.countryList,
                       value: form.selectedOverseasCountry.value,
                       itemToString: (item) => item.country ?? "",
@@ -106,15 +105,15 @@ class _ProfileSettingStepTwoWidgetState
                     )),
 
                 _textField(
-                  label: AppString.villageHouse.tr,
+                  label: 'villageHouse'.tr,
                   controller: form.overseasVillage,
-                  error: AppString.villageHouseRequired.tr,
+                  error: 'villageHouseRequired'.tr,
                 ),
 
                 /// ========= Button =========
                 SizedBox(height: 20.h),
                 CustomButtonCommon(
-                  title: "Next".tr,
+                  title: 'next'.tr,
                   onpress: () {
                     if (controller.step2formKey.currentState!.validate()) {
                       controller.onStepTapped(controller.currentStep.value + 1);
@@ -146,7 +145,7 @@ class _ProfileSettingStepTwoWidgetState
           ),
           padding: EdgeInsets.all(8.h),
           child: Text(
-            title,
+            title.tr,
             style: TextStyle(color: Colors.white, fontSize: 22.sp),
           ),
         ),
@@ -428,7 +427,7 @@ class _ProfileSettingStepTwoWidgetState
 //                   SizedBox(height: 16.h),
 //                   CustomButtonCommon(
 //                     // loading: authController.loadingLoading.value == true,
-//                     title: "Next".tr,
+//                     title: 'next'.tr,
 //                     onpress: () {
 //                       if (controller.step2formKey.currentState!.validate()) {
 //                         controller
@@ -448,3 +447,6 @@ class _ProfileSettingStepTwoWidgetState
 //     );
 //   }
 // }
+
+
+

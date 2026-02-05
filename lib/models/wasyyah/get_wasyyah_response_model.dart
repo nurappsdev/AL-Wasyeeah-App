@@ -1,4 +1,4 @@
-
+﻿
 class GetWasyyahResponseModel {
    int? orderSeq;
   final String? title;
@@ -30,3 +30,4 @@ class GetWasyyahResponseModel {
     "content": content,
   };
 }
+
