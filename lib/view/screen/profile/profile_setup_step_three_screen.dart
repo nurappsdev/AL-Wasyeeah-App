@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/models/profile_info_model/parent_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
 import 'package:al_wasyeah/view/widgets/file_choose_and_download_button.dart';
@@ -12,8 +11,8 @@ import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
-class ProfileSetupStepThreeScreen extends StatelessWidget {
-  ProfileSetupStepThreeScreen({super.key});
+class ProfileSettingStepThreeWidget extends StatelessWidget {
+  ProfileSettingStepThreeWidget({super.key});
   final ProfileController controller = Get.find<ProfileController>();
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,11 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
                   isAlive: form.isFatherAlive,
                   fileUrl:
                       controller.profileModel.value.parentInfo?.fatherNidUrl,
-                  pickerType: 'fatherNidOrPassport',
+                  pickedFile: form.selectedFatherFile,
+                  onPickFile: () async {
+                    var result = await FilePickerUtil.pickSingleFile();
+                    if (result != null) form.selectedFatherFile.value = result;
+                  },
                   downloadType: 'fatherNidOrPassport',
                   filePrefix: 'FatherNidOrPassport',
                 ),
@@ -52,7 +55,11 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
                   isAlive: form.isMotherAlive,
                   fileUrl:
                       controller.profileModel.value.parentInfo?.motherNidUrl,
-                  pickerType: 'motherNidOrPassport',
+                  pickedFile: form.selectedMotherFile,
+                  onPickFile: () async {
+                    var result = await FilePickerUtil.pickSingleFile();
+                    if (result != null) form.selectedMotherFile.value = result;
+                  },
                   downloadType: 'motherNidOrPassport',
                   filePrefix: 'MotherNidOrPassport',
                 ),
@@ -106,7 +113,8 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
     required Rxn<ProfessionModel> selectedProfession,
     required RxBool isAlive,
     required String? fileUrl,
-    required String pickerType,
+    required Rxn<PickedFileResult> pickedFile,
+    required VoidCallback onPickFile,
     required String downloadType,
     required String filePrefix,
   }) {
@@ -123,7 +131,8 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
         ),
         SizedBox(height: 4.h),
         if (fileUrl != null)
-          _filePicker(fileUrl, pickerType, downloadType, filePrefix),
+          _filePicker(
+              fileUrl, pickedFile, onPickFile, downloadType, filePrefix),
         CustomText(
           text: "* Only Pdf, JPEG, PNG file are allowed".tr,
           color: AppColors.redColor,
@@ -196,16 +205,17 @@ class ProfileSetupStepThreeScreen extends StatelessWidget {
 
   Widget _filePicker(
     String fileUrl,
-    String pickerType,
+    Rxn<PickedFileResult> pickedFile,
+    VoidCallback onPickFile,
     String downloadType,
     String prefix,
   ) {
     return Obx(() => FileChooseAndDownloadButton(
-          pickedFile: Rxn(controller.pickedFileMap[pickerType]),
+          pickedFile: pickedFile,
           isDownloading:
               (controller.isDownloadingMap[downloadType] ?? false).obs,
           progress: (controller.downloadProgressMap[downloadType] ?? 0.0).obs,
-          onPickFile: () => controller.pickFile(pickerType),
+          onPickFile: onPickFile,
           onDownload: () async {
             final isComplete = await controller.downloadFile(
               urlPath: fileUrl,

@@ -1,7 +1,6 @@
 import 'package:al_wasyeah/controllers/controllers.dart';
-import 'package:al_wasyeah/view/screen/profile_setting/profile_setup_step_five_screen.dart';
-import 'package:al_wasyeah/view/screen/profile_setting/profile_setup_step_three_screen.dart';
-import 'package:al_wasyeah/view/screen/profile_setting/profile_setup_step_two_screen.dart';
+import 'package:al_wasyeah/view/screen/profile/profile_setup_step_five_screen.dart';
+import 'package:al_wasyeah/view/screen/profile/profile_setup_step_two_screen.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,14 +8,12 @@ import 'package:get/get.dart';
 
 import '../screen.dart';
 
-class StepNavigationWithPageView extends StatefulWidget {
+class ProfilePage extends StatefulWidget {
   @override
-  _StepNavigationWithPageViewState createState() =>
-      _StepNavigationWithPageViewState();
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _StepNavigationWithPageViewState
-    extends State<StepNavigationWithPageView> {
+class _ProfilePageState extends State<ProfilePage> {
   final ProfileController controller = Get.put(ProfileController());
 
   @override
@@ -96,11 +93,11 @@ class _StepNavigationWithPageViewState
                   controller.currentStep.value = index;
                 },
                 children: [
-                  ProfileSetupStepOneScreen(),
-                  ProfileSetupsStepTwoScreen(),
-                  ProfileSetupStepThreeScreen(),
-                  ProfileSetupStepFourScreen(),
-                  ProfileSetupStepFiveScreen(),
+                  ProfileSettingStepOneWidget(),
+                  ProfileSettingStepTwoWidget(),
+                  ProfileSettingStepThreeWidget(),
+                  ProfileSettingStepFourWidget(),
+                  ProfileSettingStepFiveWidget(),
                 ],
               ),
             ),
