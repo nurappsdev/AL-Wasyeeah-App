@@ -1,4 +1,4 @@
-﻿
+
 class GetNisabRatesResponseModel {
   final int? id;
   final String? currencyCode;

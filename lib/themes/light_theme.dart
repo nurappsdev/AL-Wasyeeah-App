@@ -1,5 +1,4 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 
 import '../utils/app_dimentions.dart';
 import '../utils/app_colors.dart';
@@ -43,8 +42,8 @@ ThemeData light() => ThemeData(
       shadowColor: Colors.black.withOpacity(0.12),
     ),
     datePickerTheme: DatePickerThemeData(
-      dayStyle: TextStyle(color: AppColors.primaryColor, fontSize: 14.h),
-      weekdayStyle: TextStyle(fontSize: 14.h, color: Colors.black),
+      dayStyle: TextStyle(color: AppColors.primaryColor, fontSize: 14),
+      weekdayStyle: TextStyle(fontSize: 14, color: Colors.black),
     ));
 
 

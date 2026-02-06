@@ -1,6 +1,5 @@
-﻿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -23,7 +22,7 @@ class AddOutsideWitness extends StatelessWidget {
 
   TextEditingController permanentAddressController = TextEditingController();
   DateTime? birthDate;
-  NomineeController nomineeController = Get.put(NomineeController());
+  NomineeController nomineeController = Get.find<NomineeController>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class AddOutsideWitness extends StatelessWidget {
         appBar: AppBar(
           title: CustomText(
             text: "Outside Witness".tr,
-            fontsize: 18.sp,
+            fontsize: 18,
           ),
         ),
         body: BackgroundImageContainer(
@@ -39,7 +38,7 @@ class AddOutsideWitness extends StatelessWidget {
             height: Get.height,
             width: double.infinity,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: SingleChildScrollView(
                 child: Form(
                   key: _formKey,
@@ -47,23 +46,23 @@ class AddOutsideWitness extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 20.h,
+                        height: 20,
                       ),
 
                       ///=============Last Name====================
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
                       CustomText(
                         text: "Relation with Witness".tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: relNameController,
                           hintText: "Relation with Witness".tr,
@@ -79,18 +78,18 @@ class AddOutsideWitness extends StatelessWidget {
 
                       ///=============Last Name====================
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
                       CustomText(
                         text: "Name".tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: nameController,
                           hintText: "Name".tr,
@@ -106,18 +105,18 @@ class AddOutsideWitness extends StatelessWidget {
 
                       ///=============Mobile====================
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
                       CustomText(
                         text: "Mobile".tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: mobileController,
                           hintText: "Mobile".tr,
@@ -133,26 +132,26 @@ class AddOutsideWitness extends StatelessWidget {
 
                       ///=============Email====================
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
                       CustomText(
                         text: "email".tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: emailController,
                           hintText: 'enterYourEmail'.tr,
                           borderColor: AppColors.secondaryPrimaryColor,
                           // prefixIcon: Padding(
-                          //   padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                          //   padding: EdgeInsets.only(left: 16, right: 12),
                           //   child: SvgPicture.asset(AppIcons.email, color:
-                          //   AppColors.primaryColor, height: 20.h, width: 20.w),
+                          //   AppColors.primaryColor, height: 20, width: 20),
                           // ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -166,17 +165,17 @@ class AddOutsideWitness extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 20.h,
+                        height: 20,
                       ),
                       CustomText(
                         text: "Date of birth".tr,
-                        fontsize: 16.sp,
+                        fontsize: 16,
                         color: AppColors.hitTextColor000000,
                         textAlign: TextAlign.left,
                       ),
-                      SizedBox(height: 8.h),
+                      SizedBox(height: 8),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: dateOfBirthController,
                           readOnly: true,
@@ -213,18 +212,18 @@ class AddOutsideWitness extends StatelessWidget {
 
                       ///============Present Address"===================
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
                       CustomText(
                         text: "Present Address".tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: presentAddressController,
                           hintText: "Present Address".tr,
@@ -241,18 +240,18 @@ class AddOutsideWitness extends StatelessWidget {
 
                       ///============Permanent Address"===================
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
                       CustomText(
                         text: "Permanent Address".tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: permanentAddressController,
                           hintText: "Permanent Address".tr,
@@ -304,5 +303,3 @@ class AddOutsideWitness extends StatelessWidget {
         ));
   }
 }
-
-

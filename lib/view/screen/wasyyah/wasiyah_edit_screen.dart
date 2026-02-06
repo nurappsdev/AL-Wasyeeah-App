@@ -1,6 +1,5 @@
-﻿import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
@@ -32,7 +31,7 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
     super.initState();
   }
 
-  WasyyahController wasyyahController = Get.put(WasyyahController());
+  WasyyahController wasyyahController = Get.find<WasyyahController>();
   @override
   Widget build(BuildContext context) {
     print(titleController.text);
@@ -40,19 +39,19 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
       appBar: AppBar(
         title: CustomText(
           text: 'wasiyahEdit'.tr,
-          fontsize: 18.sp,
+          fontsize: 18,
         ),
       ),
       body: Container(
         height: Get.height,
         width: double.infinity,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(bottom: 16.h),
+                  padding: EdgeInsets.only(bottom: 16),
                   child: CustomTextField(
                     controller: titleController,
                     hintText: 'addWashiyaTitleHint'.tr,
@@ -67,7 +66,7 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 16.h),
+                  padding: EdgeInsets.only(bottom: 16),
                   child: CustomTextField(
                     controller: contentController,
                     hintText: 'addWashiyaContentHint'.tr,
@@ -81,7 +80,7 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
                     },
                   ),
                 ),
-                SizedBox(height: 60.h),
+                SizedBox(height: 60),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -92,8 +91,8 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
                         onpress: () {
                           Get.back();
                         },
-                        width: 100.w,
-                        height: 40.h,
+                        width: 100,
+                        height: 40,
                         color: Colors.red,
                       ),
                     ),
@@ -115,8 +114,8 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
                                     waseeyaResponseModel.requestKey.toString(),
                                 content: contentController.text);
                           },
-                          width: 100.w,
-                          height: 40.h,
+                          width: 100,
+                          height: 40,
                           color: AppColors.primaryColor,
                         ),
                       ),
@@ -131,5 +130,3 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
     );
   }
 }
-
-

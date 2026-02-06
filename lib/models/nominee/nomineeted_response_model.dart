@@ -1,4 +1,4 @@
-﻿
+
 class NomineetedResponseModel {
   final dynamic requestKey;
   final dynamic relation;

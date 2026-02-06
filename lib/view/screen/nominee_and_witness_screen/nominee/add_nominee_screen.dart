@@ -1,5 +1,4 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../controllers/controllers.dart';
@@ -23,13 +22,13 @@ class AddNomineeScreen extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(NomineeController());
+    final controller = Get.find<NomineeController>();
     TextEditingController searchController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
           text: "Add Nominee".tr,
-          fontsize: 18.sp,
+          fontsize: 18,
         ),
       ),
       body: BackgroundImageContainer(
@@ -37,19 +36,19 @@ class AddNomineeScreen extends StatelessWidget {
           height: Get.height,
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 20),
 
                   ///=============Last Name====================
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 16.h),
+                    padding: EdgeInsets.only(bottom: 16),
                     child: CustomTextField(
                       controller: controller.searchController,
                       hintText: "Search".tr,
@@ -104,7 +103,7 @@ class AddNomineeScreen extends StatelessWidget {
                     }
                   }),
                   SizedBox(
-                    height: 400.h,
+                    height: 400,
                   ),
                   // SizedBox(
                   //   height: 500.0, // Adjust height as per your needs
@@ -148,7 +147,7 @@ class AddNomineeScreen extends StatelessWidget {
                   //   ),
                   // ),
 
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                   CustomButton(
                     title: "+ Add outside Nominee".tr,
                     titlecolor: AppColors.primaryColor,
@@ -157,7 +156,7 @@ class AddNomineeScreen extends StatelessWidget {
                           preventDuplicates: false);
                     },
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
@@ -167,5 +166,3 @@ class AddNomineeScreen extends StatelessWidget {
     );
   }
 }
-
-

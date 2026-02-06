@@ -1,6 +1,5 @@
-﻿
+
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/utils.dart';
 
 import '../../../widgets/widgets.dart';
@@ -34,7 +33,7 @@ class _WitnessTabScreenState extends State<WitnessTabScreen>
   Widget build(BuildContext context) {
     return ConnectivityWrapper(
       child: Scaffold(
-        appBar: AppBar(title: CustomText(text: "Witness".tr,fontsize: 20.sp,),),
+        appBar: AppBar(title: CustomText(text: "Witness".tr,fontsize: 20,),),
         body: Column(
           children: [
             const SizedBox(height: 10),
@@ -73,7 +72,7 @@ class _WitnessTabScreenState extends State<WitnessTabScreen>
         indicatorSize: TabBarIndicatorSize.tab,
         tabs:  [
           Tab(text:  'Your Witness'.tr,),
-          Tab(text: 'Iâ€™m the witness'.tr,),
+          Tab(text: 'I’m the witness'.tr,),
         ],
       ),
     );

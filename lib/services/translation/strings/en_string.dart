@@ -1,4 +1,4 @@
-﻿const Map<String, String> enString = {
+const Map<String, String> enString = {
   "forgotPass": "Forget Password?",
   "forgotPassword": "Forgot Password",
   "forgotPassInstructions": "Don't worry! it happens Please enter the address associate with your account.",
@@ -24,7 +24,7 @@
   "setNewPass": "Set New Password",
   "setYourNewPass": "Set Your New Password",
   "setPassButton": "Set Password",
-  "homeTitle": "Hello,\nJohn Doe ✨ ",
+  "homeTitle": "Hello,\nJohn Doe ? ",
   "homeDetailsTitle": "To The Moon",
   "descriptionTitle": "Description",
   "description": "Donec sed erat ut magna suscipit mattis.\nAliquam erat volutpat. Morbi in orci risus. \nDonec pretium f",
@@ -243,7 +243,7 @@
   "getStart": "Get Start",
   "preview": "Preview",
   "bismillah": "Bismillahir Rahmanir Raheem",
-  "wasyyahTitleInBangla": "ওয়াসিয়াহ (ইচ্ছানামা)",
+  "wasyyahTitleInBangla": "?????????? (?????????)",
   "addMoreContent": "Add more content",
   "wasiyahEdit": "Wasiyah Edit",
   "save": "Save",

@@ -1,10 +1,7 @@
-﻿
-
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
@@ -120,9 +117,9 @@ class FeatureScreen extends StatefulWidget {
 //                 ),
 //               ),
 //             ),
-//             SizedBox(height: 20.h,),
+//             SizedBox(height: 20,),
 //             CustomButtonCommon(title: "Save", onpress: (){},color: AppColors.primaryColor,),
-//             SizedBox(height: 40.h,),
+//             SizedBox(height: 40,),
 //           ],
 //         ),
 //       ),
@@ -130,15 +127,12 @@ class FeatureScreen extends StatefulWidget {
 //   }
 // }
 
-
-
-
 class _FeatureScreenState extends State<FeatureScreen> {
   List<bool> isChecked = [];
   List<int> selectedIds = [];
 
-  NomineeController nomineeController = Get.put(NomineeController());
-String reqKey = "";
+  NomineeController nomineeController = Get.find<NomineeController>();
+  String reqKey = "";
   @override
   void initState() {
     super.initState();
@@ -149,6 +143,7 @@ String reqKey = "";
     // Load data only once
     loadData(requestKey);
   }
+
   Future<void> loadData(requestKey) async {
     await nomineeController.getAccessFeatureData();
     await nomineeController.getSelectFeatureData(requestKey: requestKey);
@@ -164,6 +159,7 @@ String reqKey = "";
 
     setState(() {});
   }
+
   @override
   void dispose() {
     // dispose controller if needed
@@ -192,14 +188,13 @@ String reqKey = "";
     print(reqKey);
     return Scaffold(
       appBar: AppBar(title: const Text("Access Feature")),
-
-
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            SizedBox(height: 30.h,),
-
+            SizedBox(
+              height: 30,
+            ),
             Obx(() {
               final accessList = nomineeController.getAccessFeatureModel;
 
@@ -223,7 +218,8 @@ String reqKey = "";
                               height: 22,
                               width: 22,
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.green, width: 2),
+                                border:
+                                    Border.all(color: Colors.green, width: 2),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Checkbox(
@@ -251,9 +247,10 @@ String reqKey = "";
                                   });
                                 },
 
-
-                                side: const BorderSide(color: Colors.transparent),
-                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                side:
+                                    const BorderSide(color: Colors.transparent),
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
                               ),
                             ),
                             const SizedBox(width: 12),
@@ -272,29 +269,26 @@ String reqKey = "";
                 ),
               );
             }),
-
-            SizedBox(height: 30.h,),
-            Obx(()=>
-           CustomButtonCommon(title: "Save",
-                  loading: nomineeController.addFeatureLoading.value == true,
-                  onpress: (){
-                nomineeController.addFeatureNomineeAndWitness(
-                    requestKey: reqKey,
-                    contextIds: selectedIds,
-                    isWitness: "2"
-                );
-              }),
+            SizedBox(
+              height: 30,
             ),
-            SizedBox(height: 30.h,),
+            Obx(
+              () => CustomButtonCommon(
+                  title: "Save",
+                  loading: nomineeController.addFeatureLoading.value == true,
+                  onpress: () {
+                    nomineeController.addFeatureNomineeAndWitness(
+                        requestKey: reqKey,
+                        contextIds: selectedIds,
+                        isWitness: "2");
+                  }),
+            ),
+            SizedBox(
+              height: 30,
+            ),
           ],
         ),
       ),
-
     );
   }
 }
-
-
-
-
-

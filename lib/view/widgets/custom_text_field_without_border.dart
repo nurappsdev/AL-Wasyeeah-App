@@ -1,5 +1,4 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/app_colors.dart';
 
 class CustomTextFieldWithoutBorder extends StatelessWidget {
@@ -58,7 +57,7 @@ class CustomTextFieldWithoutBorder extends StatelessWidget {
       obscuringCharacter: obscureCharacrter!,
       validator: validator,
       cursorColor: AppColors.primaryColor,
-      style:  TextStyle(color: Colors.black, fontSize: 14.h),
+      style: TextStyle(color: Colors.black, fontSize: 14),
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(
             horizontal: contenpaddingHorizontal.toDouble(),
@@ -68,7 +67,7 @@ class CustomTextFieldWithoutBorder extends StatelessWidget {
         prefixIcon: prefixIcon,
         suffixIcon: sufixicons,
         helperText: helperText,
-        prefixIconConstraints: BoxConstraints(minHeight: 24.w, minWidth: 24.w),
+        prefixIconConstraints: BoxConstraints(minHeight: 24, minWidth: 24),
         errorStyle: const TextStyle(color: Colors.red),
         suffixIconColor: AppColors.primaryColor,
         prefixIconColor: AppColors.primaryColor,
@@ -79,10 +78,8 @@ class CustomTextFieldWithoutBorder extends StatelessWidget {
             fontFamily: 'OpenSans-Regular',
             fontWeight: FontWeight.w400),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16.r),
-          borderSide: BorderSide(
-              width: 0.w
-          ),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(width: 0),
         ),
         // errorBorder: _buildOutlineInputBorder(),
         focusedBorder: _buildOutlineInputBorder(),
@@ -94,8 +91,6 @@ class CustomTextFieldWithoutBorder extends StatelessWidget {
 
   _buildOutlineInputBorder() {
     return OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16.r),
-        borderSide: BorderSide.none
-    );
+        borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none);
   }
 }

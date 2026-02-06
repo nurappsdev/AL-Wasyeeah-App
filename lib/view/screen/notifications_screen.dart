@@ -1,6 +1,4 @@
-﻿
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../widgets/widgets.dart';
@@ -11,7 +9,12 @@ class NotificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Notifications".tr,fontsize: 18. sp,),),
+      appBar: AppBar(
+        title: CustomText(
+          text: "Notifications".tr,
+          fontsize: 18,
+        ),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(8.0),
         children: [
@@ -167,6 +170,3 @@ class NotificationCard extends StatelessWidget {
     );
   }
 }
-
-
-

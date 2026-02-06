@@ -1,4 +1,4 @@
-﻿import 'package:al_wasyeah/services/translation/strings/bn_string.dart';
+import 'package:al_wasyeah/services/translation/strings/bn_string.dart';
 import 'package:al_wasyeah/services/translation/strings/en_string.dart';
 import 'package:get/get.dart';
 

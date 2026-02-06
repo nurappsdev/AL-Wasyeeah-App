@@ -1,7 +1,6 @@
-﻿import 'package:al_wasyeah/utils/app_dimentions.dart';
+import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -26,7 +25,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
   TextEditingController emailController = TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
   DateTime? birthDate;
-  AuthController authController = Get.put(AuthController());
+  AuthController authController = Get.find<AuthController>();
 
   String? _selectedQuestionId;
 
@@ -51,7 +50,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
       appBar: AppBar(
         title: CustomText(
           text: 'forgotPassword'.tr,
-          fontsize: 18.sp,
+          fontsize: 18,
         ),
       ),
       body: BackgroundImageContainer(
@@ -60,7 +59,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
           width: double.infinity,
           child: Padding(
             padding:
-                EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+                EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge),
             child: SingleChildScrollView(
               child: Form(
                 key: _logRegKey,
@@ -68,46 +67,46 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 40.h,
+                      height: 40,
                     ),
                     Center(
                         child: SvgPicture.asset(AppIcons.logo,
-                            height: 100.h, width: 140.w)),
+                            height: 100, width: 140)),
                     SizedBox(
-                      height: 30.h,
+                      height: 30,
                     ),
                     Center(
                         child: CustomText(
                       text: 'forgotPassword'.tr,
-                      fontsize: 20.sp,
+                      fontsize: 20,
                       textAlign: TextAlign.center,
                       fontWeight: FontWeight.w600,
                     )),
                     SizedBox(
-                      height: 16.h,
+                      height: 16,
                     ),
                     Center(
                         child: CustomText(
                       text: 'forgotPassInstructions'.tr,
                       maxline: 2,
-                      fontsize: 14.sp,
+                      fontsize: 14,
                       textAlign: TextAlign.center,
                     )),
 
                     ///=============Mobile====================
                     SizedBox(
-                      height: 16.h,
+                      height: 16,
                     ),
                     CustomText(
                       text: 'mobile'.tr,
                       color: AppColors.hitTextColor000000,
-                      fontsize: 20.sp,
+                      fontsize: 20,
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: mobileController,
                         hintText: 'mobile'.tr,
@@ -123,26 +122,26 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
 
                     ///=============Email====================
                     SizedBox(
-                      height: 20.h,
+                      height: 20,
                     ),
                     CustomText(
                       text: 'email'.tr,
                       color: AppColors.hitTextColor000000,
-                      fontsize: 20.sp,
+                      fontsize: 20,
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: emailController,
                         hintText: 'enterYourEmail'.tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         // prefixIcon: Padding(
-                        //   padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                        //   padding: EdgeInsets.only(left: 16, right: 12),
                         //   child: SvgPicture.asset(AppIcons.email, color:
-                        //   AppColors.primaryColor, height: 20.h, width: 20.w),
+                        //   AppColors.primaryColor, height: 20, width: 20),
                         // ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -159,13 +158,13 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     ///==========================Date of birth*==========================
                     CustomText(
                       text: 'dateOfBirth'.tr,
-                      fontsize: 16.sp,
+                      fontsize: 16,
                       color: AppColors.hitTextColor000000,
                       textAlign: TextAlign.left,
                     ),
-                    SizedBox(height: 8.h),
+                    SizedBox(height: 8),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: dateOfBirthController,
                         readOnly: true,
@@ -199,31 +198,31 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 10),
 
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 10),
                     CustomText(
                       text: 'securityQuestion'.tr,
-                      fontsize: 16.sp,
+                      fontsize: 16,
                       color: AppColors.hitTextColor000000,
                       textAlign: TextAlign.left,
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 10),
                     DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: AppColors.secondaryPrimaryColor),
-                            borderRadius: BorderRadius.circular(14.r)),
+                            borderRadius: BorderRadius.circular(14)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: AppColors.secondaryPrimaryColor,
                             ),
-                            borderRadius: BorderRadius.circular(14.r)),
+                            borderRadius: BorderRadius.circular(14)),
                         border: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: AppColors.primaryColor),
-                            borderRadius: BorderRadius.circular(16.r)),
+                            borderRadius: BorderRadius.circular(16)),
                       ),
                       isExpanded: true,
                       hint: CustomText(text: 'selectYourQuestion'.tr),
@@ -239,22 +238,22 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                         print(_selectedQuestionId);
                       },
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 10),
 
                     ///=============Answer====================
                     SizedBox(
-                      height: 16.h,
+                      height: 16,
                     ),
                     CustomText(
                       text: 'answer'.tr,
                       color: AppColors.hitTextColor000000,
-                      fontsize: 20.sp,
+                      fontsize: 20,
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: securityController,
                         hintText: 'answer'.tr,
@@ -287,7 +286,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     ),
 
                     SizedBox(
-                      height: 20.h,
+                      height: 20,
                     ),
                   ],
                 ),
@@ -299,5 +298,3 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
     );
   }
 }
-
-

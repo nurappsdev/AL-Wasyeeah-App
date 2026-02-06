@@ -1,7 +1,6 @@
-﻿import 'package:al_wasyeah/helpers/app_routes.dart';
+import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/app_colors.dart';
@@ -21,7 +20,7 @@ class PropertyDistributionScreen extends StatelessWidget {
       appBar: AppBar(
         title: CustomText(
           text: "Property Distribution".tr,
-          fontsize: 18.sp,
+          fontsize: 18,
         ),
       ),
       body: BackgroundImageContainer(
@@ -30,7 +29,7 @@ class PropertyDistributionScreen extends StatelessWidget {
           height: Get.height,
           child: Padding(
             padding:
-                EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+                EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge),
             child: SingleChildScrollView(
               child: Form(
                 key: _forProKey,
@@ -38,14 +37,14 @@ class PropertyDistributionScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CustomText(
                           text: "List of relatives".tr,
-                          fontsize: 18.sp,
+                          fontsize: 18,
                         ),
                         ElevatedButton(
                             onPressed: () {
@@ -54,12 +53,12 @@ class PropertyDistributionScreen extends StatelessWidget {
                             },
                             child: CustomText(
                               text: "Skip".tr,
-                              fontsize: 18.sp,
+                              fontsize: 18,
                             ))
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///First Row========================
@@ -68,7 +67,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: samiCNTR,
                               hintText: "Husband".tr,
@@ -79,7 +78,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Wife".tr,
@@ -90,7 +89,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: sonCNTR,
                               hintText: "Son".tr,
@@ -103,7 +102,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                     ),
 
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///Second Row========================
@@ -112,7 +111,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: samiCNTR,
                               hintText: "Dead son".tr,
@@ -123,7 +122,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Son of a dead son".tr,
@@ -136,7 +135,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                     ),
 
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///third Row========================
@@ -144,7 +143,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: samiCNTR,
                               hintText: "Daughter of a deceased son".tr,
@@ -156,7 +155,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///Fourth Row========================
@@ -165,7 +164,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Daughter".tr,
@@ -176,7 +175,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Dead daughter".tr,
@@ -188,7 +187,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///Fifth Row========================
@@ -197,7 +196,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Son of the deceased daughter".tr,
@@ -209,7 +208,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///Six Row========================
@@ -218,7 +217,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText:
@@ -231,7 +230,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///Seven Row========================
@@ -240,7 +239,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Father".tr,
@@ -251,7 +250,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Mother".tr,
@@ -262,11 +261,11 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Grandfather".tr,
-                              hintextSize: 12.sp,
+                              hintextSize: 12,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -275,7 +274,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///Eight Row========================
@@ -284,7 +283,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Grandma".tr,
@@ -295,7 +294,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Granny".tr,
@@ -306,11 +305,11 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Brother".tr,
-                              hintextSize: 12.sp,
+                              hintextSize: 12,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -319,7 +318,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///Nine Row========================
@@ -328,7 +327,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Half-brother (bipartite)".tr,
@@ -339,7 +338,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Half-sister (bilateral)".tr,
@@ -351,7 +350,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///Ten Row========================
@@ -360,7 +359,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Stepbrother (half-brother)".tr,
@@ -371,7 +370,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Half-sister (step-sister)".tr,
@@ -383,7 +382,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///ELEVEN Row========================
@@ -392,7 +391,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Brother's son".tr,
@@ -403,7 +402,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Son of half-brother (uncle)".tr,
@@ -415,7 +414,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///ELEVEN Row========================
@@ -424,7 +423,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Brother's son's son".tr,
@@ -436,7 +435,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///ELEVEN Row========================
@@ -445,7 +444,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Son of half-brother's son".tr,
@@ -457,7 +456,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///Eight Row========================
@@ -466,7 +465,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Uncle".tr,
@@ -477,7 +476,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Uncle (bilingual)".tr,
@@ -488,11 +487,11 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Cousin".tr,
-                              hintextSize: 12.sp,
+                              hintextSize: 12,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -502,7 +501,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                     ),
 
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///Eight Row========================
@@ -511,7 +510,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Cousin (bipartite)".tr,
@@ -522,7 +521,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Cousin's son".tr,
@@ -535,7 +534,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                     ),
 
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///Eight Row========================
@@ -544,7 +543,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Cousin's son (Baimatreya).".tr,
@@ -555,7 +554,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Cousin's son's son's son".tr,
@@ -567,7 +566,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///Eight Row========================
@@ -576,7 +575,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4),
                             child: CustomTextField(
                               controller: wifeCNTR,
                               hintText: "Cousin's (Vaimatreya's) son's son".tr,
@@ -588,23 +587,23 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///=============Mobile====================
                     SizedBox(
-                      height: 16.h,
+                      height: 16,
                     ),
                     CustomText(
                       text: "Asset Description".tr,
                       color: AppColors.hitTextColor000000,
-                      fontsize: 20.sp,
+                      fontsize: 20,
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: landCNTR,
                         hintText: "'Land' Measurement Unit Percentage".tr,
@@ -619,7 +618,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: landCNTR,
                         hintText: "'Gold' Measurement Unit Bhari".tr,
@@ -634,7 +633,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: landCNTR,
                         hintText: "'Silver' Measurement Unit Bhari".tr,
@@ -649,7 +648,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: landCNTR,
                         hintText: "'Money' Measurement Unit Taka".tr,
@@ -664,7 +663,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
 
                     ///=============Sign In Button====================
@@ -696,7 +695,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                     //           // }
                     //         },),
                     //     ),
-                    //     SizedBox(width: 8.w,),
+                    //     SizedBox(width: 8,),
                     //     Expanded(
                     //       child: CustomButtonCommon(
                     //         // loading: authController.loadingLoading.value == true,
@@ -712,7 +711,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                     //   ],
                     // ),
                     SizedBox(
-                      height: 12.h,
+                      height: 12,
                     ),
                   ],
                 ),

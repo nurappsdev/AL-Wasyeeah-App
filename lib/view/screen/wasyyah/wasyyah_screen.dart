@@ -1,21 +1,21 @@
-﻿import 'package:al_wasyeah/helpers/app_routes.dart';
+import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/view/widgets/custom_button.dart';
 import 'package:al_wasyeah/view/widgets/custom_loader.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
 import '../no_internet_screen.dart';
-import 'add_new_washyia_screen.dart';
+
 import 'wasiyah_preview_screen.dart';
 
 class WasyyahScreen extends StatelessWidget {
   WasyyahScreen({super.key});
 
-  WasyyahController wasyyahController = Get.put(WasyyahController());
+  WasyyahController wasyyahController = Get.find<WasyyahController>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class WasyyahScreen extends StatelessWidget {
         appBar: AppBar(
           title: CustomText(
             text: 'wasyyah'.tr,
-            fontsize: 18.sp,
+            fontsize: 18,
             fontWeight: FontWeight.w600,
           ),
           actions: [
@@ -42,8 +42,8 @@ class WasyyahScreen extends StatelessWidget {
                   );
                   // Get.off(()=>WasyyahPreviewScreen(),preventDuplicates: false);
                 },
-                width: 100.w,
-                height: 40.h,
+                width: 100,
+                height: 40,
                 color: AppColors.primaryColor,
               ),
             )
@@ -53,54 +53,54 @@ class WasyyahScreen extends StatelessWidget {
           height: Get.height,
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 20),
                   CustomText(
                     text: 'bismillah'.tr,
                     fontsize: 14,
                   ),
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
                   Divider(
                     color: AppColors.primaryColor,
                     height: 14,
                   ),
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
                   CustomText(
                     text: 'wasyyahTitleInBangla'.tr,
-                    fontsize: 20.sp,
+                    fontsize: 20,
                     fontWeight: FontWeight.w700,
                   ),
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
                   Divider(
                     color: AppColors.primaryColor,
                     height: 14,
                   ),
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
                   CustomText(
                       text:
-                          "আসসালামু আলাইকুম ওয়া রাহমাতুল্লা ইন্নালহামদালিল্লাহি রাব্বিল আ'লামীন \n ওয়াসসালাতু ওয়াসসালামু আলা রাসুলিল্লাহ \n (সাল্লাল্লাহু আলাইহিসসালাম)।",
+                          "???????? ??????? ???? ??????????? ??????????????????? ??????? ?'????? \n ??????????? ??????????? ??? ??????????? \n (???????????? ????????????)?",
                       maxline: 4),
                   SizedBox(
-                    height: 20.h,
+                    height: 20,
                   ),
 
-                  ///====================================নিজের পরিচিতি================================
+                  ///====================================????? ???????================================
                   SizedBox(
-                    height: 20.h,
+                    height: 20,
                   ),
                   // SizedBox(
-                  //   height: 440.h,
+                  //   height: 440,
                   //   width: double.infinity,
                   //   child: Obx(() => wasyyahController.isWasyyah.value
                   //       ? Center(child: CustomLoader())
@@ -112,7 +112,7 @@ class WasyyahScreen extends StatelessWidget {
                   //       return  Padding(
                   //         padding: const EdgeInsets.symmetric(vertical: 8.0),
                   //         child:  Opacity(
-                  //       opacity: data.visible == "N" ? 0.3 : 1.0, // 👈 Faded if not visible
+                  //       opacity: data.visible == "N" ? 0.3 : 1.0, // ?? Faded if not visible
                   //         child: Container(
                   //           decoration: BoxDecoration(
                   //             borderRadius: BorderRadius.circular(10),
@@ -130,10 +130,10 @@ class WasyyahScreen extends StatelessWidget {
                   //             padding: const EdgeInsets.all(8.0),
                   //             child: Column(
                   //               children: [
-                  //                 SizedBox(height: 5.h),
+                  //                 SizedBox(height: 5),
                   //                 CustomText(
                   //                   text: "${data.title ?? "N/A"}".tr,
-                  //                   fontsize: 16.sp,
+                  //                   fontsize: 16,
                   //                 ),
                   //                 Padding(
                   //                   padding: EdgeInsets.symmetric(horizontal: 20),
@@ -143,14 +143,14 @@ class WasyyahScreen extends StatelessWidget {
                   //                     thickness: 1.2,
                   //                   ),
                   //                 ),
-                  //                 SizedBox(height: 6.h),
+                  //                 SizedBox(height: 6),
                   //                 CustomText(
                   //                   textAlign: TextAlign.start,
                   //                   fontWeight: FontWeight.w500,
                   //                   maxline: 100,
                   //                   text: data.content ?? "",
                   //                 ),
-                  //                 SizedBox(height: 10.h),
+                  //                 SizedBox(height: 10),
                   //                 Row(
                   //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   //                   children: [
@@ -190,10 +190,10 @@ class WasyyahScreen extends StatelessWidget {
                   //         //     padding: const EdgeInsets.all(8.0),
                   //         //     child: Column(
                   //         //       children: [
-                  //         //         SizedBox(height: 5.h),
+                  //         //         SizedBox(height: 5),
                   //         //         CustomText(
                   //         //           text: "${data.title ?? "N/A"}".tr,
-                  //         //           fontsize: 16.sp,
+                  //         //           fontsize: 16,
                   //         //         ),
                   //         //         Padding(
                   //         //           padding: EdgeInsets.symmetric(horizontal: 20),
@@ -203,14 +203,14 @@ class WasyyahScreen extends StatelessWidget {
                   //         //             thickness: 1.2,
                   //         //           ),
                   //         //         ),
-                  //         //         SizedBox(height: 6.h),
+                  //         //         SizedBox(height: 6),
                   //         //         CustomText(
                   //         //           textAlign: TextAlign.start,
                   //         //           fontWeight: FontWeight.w500,
                   //         //           maxline: 100,
                   //         //           text: data.content ?? "",
                   //         //         ),
-                  //         //         SizedBox(height: 10.h),
+                  //         //         SizedBox(height: 10),
                   //         //         Row(
                   //         //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   //         //           children: [
@@ -235,10 +235,10 @@ class WasyyahScreen extends StatelessWidget {
                   //         //     padding: const EdgeInsets.all(8.0),
                   //         //     child: Column(
                   //         //       children: [
-                  //         //         SizedBox(height: 5.h),
+                  //         //         SizedBox(height: 5),
                   //         //         CustomText(
                   //         //           text: "${data.title ?? "N/A"}".tr,
-                  //         //           fontsize: 16.sp,
+                  //         //           fontsize: 16,
                   //         //         ),
                   //         //         Padding(
                   //         //           padding: EdgeInsets.symmetric(horizontal: 20),
@@ -248,14 +248,14 @@ class WasyyahScreen extends StatelessWidget {
                   //         //             thickness: 1.2,
                   //         //           ),
                   //         //         ),
-                  //         //         SizedBox(height: 6.h),
+                  //         //         SizedBox(height: 6),
                   //         //         CustomText(
                   //         //           textAlign: TextAlign.start,
                   //         //           fontWeight: FontWeight.w500,
                   //         //           maxline: 100,
                   //         //           text: data.content ?? "",
                   //         //         ),
-                  //         //         SizedBox(height: 10.h),
+                  //         //         SizedBox(height: 10),
                   //         //         Row(
                   //         //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   //         //           children: [
@@ -283,7 +283,7 @@ class WasyyahScreen extends StatelessWidget {
                   //   )),
                   // ),
                   SizedBox(
-                    height: 440.h,
+                    height: 440,
                     width: double.infinity,
                     child: Obx(() => wasyyahController.isWasyyah.value
                         ? Center(child: CustomLoader())
@@ -296,9 +296,9 @@ class WasyyahScreen extends StatelessWidget {
                               padding: EdgeInsets.all(8.0),
 
                               // onReorder: (int oldIndex, int newIndex) {
-                              //   wasyyahController.changeOrderApi(requestKey: oldIndex.toString(), order: newIndex); // এই method call করুন
+                              //   wasyyahController.changeOrderApi(requestKey: oldIndex.toString(), order: newIndex); // ?? method call ????
                               //
-                              //  // wasyyahController.onReorderItems(oldIndex, newIndex); // এই method call করুন
+                              //  // wasyyahController.onReorderItems(oldIndex, newIndex); // ?? method call ????
                               // },
                               onReorder: (int oldIndex, int newIndex) {
                                 /// Update local list visually
@@ -335,10 +335,10 @@ class WasyyahScreen extends StatelessWidget {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
                                           children: [
-                                            SizedBox(height: 5.h),
+                                            SizedBox(height: 5),
                                             CustomText(
                                               text: "${data.title ?? "N/A"}".tr,
-                                              fontsize: 16.sp,
+                                              fontsize: 16,
                                             ),
                                             Padding(
                                               padding: EdgeInsets.symmetric(
@@ -349,14 +349,14 @@ class WasyyahScreen extends StatelessWidget {
                                                 thickness: 1.2,
                                               ),
                                             ),
-                                            SizedBox(height: 6.h),
+                                            SizedBox(height: 6),
                                             CustomText(
                                               textAlign: TextAlign.start,
                                               fontWeight: FontWeight.w500,
                                               maxline: 100,
                                               text: data.content ?? "",
                                             ),
-                                            SizedBox(height: 10.h),
+                                            SizedBox(height: 10),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -403,18 +403,18 @@ class WasyyahScreen extends StatelessWidget {
                   ),
 
                   SizedBox(
-                    height: 20.h,
+                    height: 20,
                   ),
                   CustomButton(
                     title: 'addMoreContent'.tr,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
-                      Get.to(() => AddNewWashyiaScreen(),
+                      Get.toNamed(AppRoutes.addNewWashyiaScreen,
                           preventDuplicates: false);
                     },
                   ),
                   SizedBox(
-                    height: 30.h,
+                    height: 30,
                   ),
                 ],
               ),
@@ -429,10 +429,10 @@ class WasyyahScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: 35.h,
-        width: 80.w,
+        height: 35,
+        width: 80,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.r),
+            borderRadius: BorderRadius.circular(10),
             color: Color(0xff757575)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -444,7 +444,7 @@ class WasyyahScreen extends StatelessWidget {
             CustomText(
               text: text,
               color: Colors.white,
-              fontsize: 16.sp,
+              fontsize: 16,
             )
           ],
         ),
@@ -452,5 +452,3 @@ class WasyyahScreen extends StatelessWidget {
     );
   }
 }
-
-

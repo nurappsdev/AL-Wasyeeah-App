@@ -1,4 +1,4 @@
-﻿
+
 class ErrorResponse {
   final String? status;
   final int? statusCode;

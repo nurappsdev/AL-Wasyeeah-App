@@ -1,6 +1,5 @@
 ﻿import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -277,11 +276,11 @@ class TextFormFieldTextContainerWidget extends GetxController {
           showCursor: true,
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: AppColors.primaryColor),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: AppColors.primaryColor),
             ),
             border: InputBorder.none,
@@ -331,4 +330,3 @@ class TextFormFieldTextContainerWidget extends GetxController {
     );
   }
 }
-

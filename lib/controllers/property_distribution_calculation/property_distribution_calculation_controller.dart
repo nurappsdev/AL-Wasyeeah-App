@@ -1,4 +1,4 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 import 'dart:developer';
 import 'package:al_wasyeah/models/property_distribution_calculation_model/property_destribution_result_model.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:get/get.dart';
@@ -30,12 +30,12 @@ class WasyyahController extends GetxController {
           response.body.map((item) => GetWasyyahResponseModel.fromJson(item)),
         );
 
-        print("✅ Data Loaded: ${wasyyahYouData.length} items");
+        print("? Data Loaded: ${wasyyahYouData.length} items");
       } else {
-        print("❌ Failed with status: ${response.statusCode}");
+        print("? Failed with status: ${response.statusCode}");
       }
     } catch (e) {
-      print("❌ Exception in getWasyyahData: $e");
+      print("? Exception in getWasyyahData: $e");
     }
 
     isWasyyah(false);
@@ -73,7 +73,7 @@ class WasyyahController extends GetxController {
         ToastMessageHelper.errorMessageShowToster("error, try again");
       }
     } catch (e) {
-      print("❗ Exception: $e");
+      print("? Exception: $e");
       ToastMessageHelper.errorMessageShowToster("Network error occurred");
     } finally {
       addWaseeyea(false);
@@ -111,7 +111,7 @@ class WasyyahController extends GetxController {
         ToastMessageHelper.errorMessageShowToster("error, try again");
       }
     } catch (e) {
-      print("❗ Exception: $e");
+      print("? Exception: $e");
       ToastMessageHelper.errorMessageShowToster("Network error occurred");
     } finally {
       isUpdateWasseya(false);
@@ -135,7 +135,7 @@ class WasyyahController extends GetxController {
     } catch (e) {
       // If API call fails, revert visibility
       item.visible = previousVisibility;
-      print('❌ Error updating visibility: $e');
+      print('? Error updating visibility: $e');
       ToastMessageHelper.errorMessageShowToster("Failed to update visibility.");
     }
   }
@@ -159,11 +159,11 @@ class WasyyahController extends GetxController {
   //   // Prevent multiple simultaneous reorders
   //   if (isDragDropLoading.value) return;
   //
-  //   print("🔄 Reordering from $oldIndex to $newIndex");
+  //   print("?? Reordering from $oldIndex to $newIndex");
   //
   //   // Step 1: Perform UI swap first
   //   if (newIndex > oldIndex) {
-  //     newIndex -= 1; // ReorderableListView এর জন্য adjustment
+  //     newIndex -= 1; // ReorderableListView ?? ???? adjustment
   //   }
   //
   //   if (oldIndex == newIndex) return;
@@ -183,21 +183,21 @@ class WasyyahController extends GetxController {
   //     final success = await updateAllOrderSeqHttp();
   //
   //     if (success) {
-  //       print("✅ Drag drop completed successfully");
+  //       print("? Drag drop completed successfully");
   //       ToastMessageHelper.successMessageShowToster("Order updated!");
   //     } else {
   //       // Rollback UI on backend failure
   //       wasyyahYouData.clear();
   //       wasyyahYouData.addAll(originalList);
   //       wasyyahYouData.refresh();
-  //       print("❌ Backend update failed, UI rolled back");
+  //       print("? Backend update failed, UI rolled back");
   //     }
   //   } catch (e) {
   //     // Rollback UI on exception
   //     wasyyahYouData.clear();
   //     wasyyahYouData.addAll(originalList);
   //     wasyyahYouData.refresh();
-  //     print("❌ Exception during drag drop: $e");
+  //     print("? Exception during drag drop: $e");
   //   } finally {
   //     isDragDropLoading.value = false;
   //   }
@@ -268,7 +268,7 @@ class WasyyahController extends GetxController {
             .toList(),
       };
 
-      print("📤 Sending payload: ${jsonEncode(payload)}");
+      print("?? Sending payload: ${jsonEncode(payload)}");
 
       // Step 3: Send to backend
       final response = await ApiClient.post(
@@ -277,7 +277,7 @@ class WasyyahController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print("✅ Order updated successfully");
+        print("? Order updated successfully");
         ToastMessageHelper.successMessageShowToster(
             "Order updated successfully!");
         return true;
@@ -288,7 +288,7 @@ class WasyyahController extends GetxController {
         }
         wasyyahYouData.refresh();
 
-        print("❌ Order update failed: ${response.statusCode}");
+        print("? Order update failed: ${response.statusCode}");
         print("Response body: ${response.body}");
         Get.snackbar(
             "Error", "Failed to update order. Status: ${response.statusCode}");
@@ -301,7 +301,7 @@ class WasyyahController extends GetxController {
       }
       wasyyahYouData.refresh();
 
-      print("❌ Error updating order: $e");
+      print("? Error updating order: $e");
       Get.snackbar("Error", "Network error occurred");
       return false;
     } finally {
@@ -334,15 +334,15 @@ class WasyyahController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print("✅ Order updated successfully");
+        print("? Order updated successfully");
         ToastMessageHelper.successMessageShowToster("Order updated!");
       } else {
-        print("❌ Order update failed: ${response.statusCode}");
+        print("? Order update failed: ${response.statusCode}");
         print(response.body);
         ToastMessageHelper.errorMessageShowToster("Failed to update order");
       }
     } catch (e) {
-      print("❌ Error updating order: $e");
+      print("? Error updating order: $e");
       ToastMessageHelper.errorMessageShowToster("Network error");
     }
   }
@@ -352,7 +352,7 @@ class WasyyahController extends GetxController {
     final success = await updateAllOrderSeqHttp();
     if (!success) {
       // If failed, refresh data from server
-      print("🔄 Refreshing data from server due to update failure");
+      print("?? Refreshing data from server due to update failure");
       await getWasyyahData();
     }
   }

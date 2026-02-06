@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:get/get.dart';
 
 import '../../helpers/helpers.dart';
@@ -81,7 +81,6 @@ class ZakatController extends GetxController {
     var response = await ApiClient.post(
       ApiConstants.zakatEndPoint,
       body,
- 
     );
     print("----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -106,39 +105,39 @@ class ZakatController extends GetxController {
       AlertDialog(
         title: CustomText(
           text: 'result'.tr,
-          fontsize: 20.sp,
+          fontsize: 20,
           fontWeight: FontWeight.w600,
         ),
         content: SizedBox(
           width: double.infinity,
-          height: 200.h,
+          height: 200,
           child: Column(
             children: [
               Divider(),
               CustomText(
                 text: 'totalAssets'.tr,
-                fontsize: 20.sp,
+                fontsize: 20,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
               ),
-              SizedBox(height: 12.h),
+              SizedBox(height: 12),
               CustomText(
                 text: assetsAccount,
-                fontsize: 22.sp,
+                fontsize: 22,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
               ),
               Divider(color: AppColors.primaryColor),
               CustomText(
                 text: 'payableZakat'.tr,
-                fontsize: 20.sp,
+                fontsize: 20,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
               ),
-              SizedBox(height: 12.h),
+              SizedBox(height: 12),
               CustomText(
                 text: zakatAccount,
-                fontsize: 22.sp,
+                fontsize: 22,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
               ),
@@ -150,5 +149,3 @@ class ZakatController extends GetxController {
     );
   }
 }
-
-

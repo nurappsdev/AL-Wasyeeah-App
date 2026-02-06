@@ -1,9 +1,8 @@
-﻿import 'package:al_wasyeah/controllers/controllers.dart';
+import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:al_wasyeah/view/screen/profile/profile_setup_step_five_screen.dart';
 import 'package:al_wasyeah/view/screen/profile/profile_setup_step_two_screen.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../screen.dart';
@@ -14,7 +13,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final ProfileController controller = Get.put(ProfileController());
+  final ProfileController controller = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +22,11 @@ class _ProfilePageState extends State<ProfilePage> {
         title: CustomText(
           text: "Profile Settings".tr,
           fontWeight: FontWeight.w600,
-          fontsize: 20.sp,
+          fontsize: 20,
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.h),
+        padding: EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -107,4 +106,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-

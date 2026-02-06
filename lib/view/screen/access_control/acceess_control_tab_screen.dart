@@ -1,9 +1,8 @@
-﻿
+
 
 import 'package:al_wasyeah/view/screen/access_control/witness_application_menu.dart';
 import 'package:al_wasyeah/view/screen/nominee_and_witness_screen/nominee/nomineeted_you_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/utils.dart';
 // class NomineeTabScreen extends StatefulWidget {
 //   const NomineeTabScreen({super.key});
@@ -26,12 +25,12 @@ import 'package:get/utils.dart';
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title:   AppBar(title: CustomText(text: "Nominee".tr,fontsize: 18.sp,),),
+//         title:   AppBar(title: CustomText(text: "Nominee".tr,fontsize: 18,),),
 //         bottom: TabBar(
 //           controller: tabController,
 //           indicatorColor:AppColors.primaryColor,
 //           unselectedLabelColor: Colors.black54,
-//           labelStyle:  TextStyle(color: AppColors.primaryColor,fontWeight: FontWeight.w600,fontSize: 16.sp),
+//           labelStyle:  TextStyle(color: AppColors.primaryColor,fontWeight: FontWeight.w600,fontSize: 16),
 //           tabs: [
 //             Tab(text: 'Your Nominee'.tr,),
 //             Tab(text:  'Nominated You'.tr,),
@@ -84,7 +83,7 @@ class _AccessControlTabScreenState extends State<AccessControlTabScreen>
   Widget build(BuildContext context) {
     return ConnectivityWrapper(
       child: Scaffold(
-        appBar: AppBar(title: CustomText(text: "Access Control".tr,fontsize: 20.sp,),),
+        appBar: AppBar(title: CustomText(text: "Access Control".tr,fontsize: 20,),),
         body: Column(
           children: [
             const SizedBox(height: 10),

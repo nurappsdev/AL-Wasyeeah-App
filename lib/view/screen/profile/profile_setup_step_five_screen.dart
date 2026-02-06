@@ -2,7 +2,6 @@ import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:al_wasyeah/models/profile_info_model/branch_model.dart';
 import 'package:al_wasyeah/view/widgets/file_choose_and_download_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -42,7 +41,7 @@ class ProfileSettingStepFiveWidget extends StatelessWidget {
             _sectionTitle('accountPayable'),
             _PayableWidget(controller: controller),
 
-            SizedBox(height: 20.h),
+            SizedBox(height: 20),
             CustomButtonCommon(
               title: 'finish'.tr,
               onpress: () {
@@ -53,7 +52,7 @@ class ProfileSettingStepFiveWidget extends StatelessWidget {
                 }
               },
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: 20),
           ],
         ),
       ),
@@ -64,20 +63,20 @@ class ProfileSettingStepFiveWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 48.h,
+          height: 48,
           alignment: Alignment.center,
           width: double.infinity,
           decoration: BoxDecoration(
             color: AppColors.primaryColor,
-            borderRadius: BorderRadius.circular(8.r),
+            borderRadius: BorderRadius.circular(8),
           ),
-          padding: EdgeInsets.all(8.h),
+          padding: EdgeInsets.all(8),
           child: Text(
             title.tr,
-            style: TextStyle(color: Colors.white, fontSize: 22.sp),
+            style: TextStyle(color: Colors.white, fontSize: 22),
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 16),
       ],
     );
   }
@@ -99,18 +98,18 @@ class _BankWidget extends StatelessWidget {
             final form = controller.bankListForm[index];
             return Obx(() {
               return Container(
-                margin: EdgeInsets.only(bottom: 24.h),
-                padding: EdgeInsets.all(16.h),
+                margin: EdgeInsets.only(bottom: 24),
+                padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
                     color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.circular(24.r),
+                    borderRadius: BorderRadius.circular(24),
                     border:
                         Border.all(color: Colors.black.withValues(alpha: 0.3))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(text: 'bank'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                    CustomText(text: 'bank'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomDropdown<BankModel>(
                       hint: 'selectBank'.tr,
                       items: controller.bankList,
@@ -118,9 +117,9 @@ class _BankWidget extends StatelessWidget {
                       itemToString: (e) => e.bankEn ?? "",
                       onChanged: (v) => controller.onBankChanged(form, v),
                     ),
-                    SizedBox(height: 16.h),
-                    CustomText(text: 'branch'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 16),
+                    CustomText(text: 'branch'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomDropdown<BranchModel>(
                       key: ValueKey("branch_${form.bank.value?.bankId}_$index"),
                       hint: 'selectBranch'.tr,
@@ -129,9 +128,9 @@ class _BankWidget extends StatelessWidget {
                       itemToString: (e) => e.branchNameEn ?? "",
                       onChanged: (v) => form.branch.value = v,
                     ),
-                    SizedBox(height: 16.h),
-                    CustomText(text: 'accountName'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 16),
+                    CustomText(text: 'accountName'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.accountName,
                       hint: 'accountName'.tr,
@@ -139,10 +138,10 @@ class _BankWidget extends StatelessWidget {
                           ? 'accountNameRequired'.tr
                           : null,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     CustomText(
-                        text: 'accountBalance'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        text: 'accountBalance'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.accountBalance,
                       hint: 'accountBalance'.tr,
@@ -151,9 +150,9 @@ class _BankWidget extends StatelessWidget {
                           ? 'accountBalanceRequired'.tr
                           : null,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     Row(
-                      spacing: 4.w,
+                      spacing: 4,
                       children: [
                         Expanded(
                           child: ElevatedButton(
@@ -162,14 +161,14 @@ class _BankWidget extends StatelessWidget {
                               backgroundColor: Colors.red,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.r),
+                                borderRadius: BorderRadius.circular(4),
                               ),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.delete_forever, color: Colors.white),
-                                SizedBox(width: 8.w),
+                                SizedBox(width: 8),
                                 Text("Remove".tr)
                               ],
                             ),
@@ -182,14 +181,14 @@ class _BankWidget extends StatelessWidget {
                             backgroundColor: Colors.white,
                             foregroundColor: AppColors.primaryColor,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.r),
+                              borderRadius: BorderRadius.circular(4),
                             ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.add),
-                              SizedBox(width: 8.w),
+                              SizedBox(width: 8),
                               Expanded(
                                   child: Text('addMoreBank'.tr,
                                       maxLines: 2,
@@ -226,18 +225,18 @@ class _WealthWidget extends StatelessWidget {
             final form = controller.wealthListForm[index];
             return Obx(() {
               return Container(
-                margin: EdgeInsets.only(bottom: 24.h),
-                padding: EdgeInsets.all(16.h),
+                margin: EdgeInsets.only(bottom: 24),
+                padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
                     color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.circular(24.r),
+                    borderRadius: BorderRadius.circular(24),
                     border:
                         Border.all(color: Colors.black.withValues(alpha: 0.3))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(text: 'wealth'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                    CustomText(text: 'wealth'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomDropdown<WealthModel>(
                       hint: 'selectWealth'.tr,
                       items: controller.wealthList,
@@ -245,10 +244,10 @@ class _WealthWidget extends StatelessWidget {
                       itemToString: (e) => e.wealth ?? "",
                       onChanged: (v) => controller.onWealthChanged(form, v),
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     CustomText(
-                        text: 'documentType'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        text: 'documentType'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomDropdown<DocumentTypeForm>(
                       key:
                           ValueKey("doc_${form.wealth.value?.wealthId}_$index"),
@@ -258,11 +257,11 @@ class _WealthWidget extends StatelessWidget {
                       itemToString: (e) => e.documentType ?? "",
                       onChanged: (v) => form.selectedDocumentType.value = v,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     CustomText(
                         text: 'landAreaInShotangsho'.tr,
-                        fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.landArea,
                       hint: 'landArea'.tr,
@@ -270,29 +269,29 @@ class _WealthWidget extends StatelessWidget {
                       validator: (value) =>
                           value!.isEmpty ? 'landAreaRequired'.tr : null,
                     ),
-                    SizedBox(height: 16.h),
-                    CustomText(text: 'location'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 16),
+                    CustomText(text: 'location'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.location,
                       hint: 'location'.tr,
                       validator: (value) =>
                           value!.isEmpty ? 'locationRequired'.tr : null,
                     ),
-                    SizedBox(height: 16.h),
-                    CustomText(text: 'note'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 16),
+                    CustomText(text: 'note'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.note,
                       hint: 'note'.tr,
                       maxLines: 3,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     CustomText(
                       text: 'wealthDocuments'.tr,
-                      fontsize: 16.sp,
+                      fontsize: 16,
                     ),
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 4),
                     Obx(
                       () => FileChooseAndDownloadButton(
                         pickedFile: form.documentFile,
@@ -328,10 +327,10 @@ class _WealthWidget extends StatelessWidget {
                         fileUrl: form.documentUrl,
                       ),
                     ),
-                    SizedBox(height: 16.h),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
+                    SizedBox(height: 16),
                     Row(
-                      spacing: 4.w,
+                      spacing: 4,
                       children: [
                         Expanded(
                           child: ElevatedButton(
@@ -340,14 +339,14 @@ class _WealthWidget extends StatelessWidget {
                               backgroundColor: Colors.red,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.r),
+                                borderRadius: BorderRadius.circular(4),
                               ),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.delete_forever, color: Colors.white),
-                                SizedBox(width: 8.w),
+                                SizedBox(width: 8),
                                 Text("Remove".tr)
                               ],
                             ),
@@ -360,14 +359,14 @@ class _WealthWidget extends StatelessWidget {
                             backgroundColor: Colors.white,
                             foregroundColor: AppColors.primaryColor,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.r),
+                              borderRadius: BorderRadius.circular(4),
                             ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.add),
-                              SizedBox(width: 8.w),
+                              SizedBox(width: 8),
                               Expanded(
                                   child: Text('addMoreWealth'.tr,
                                       maxLines: 2,
@@ -404,19 +403,19 @@ class _ReceivableWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               final form = controller.receivableListForm[index];
               return Container(
-                margin: EdgeInsets.only(bottom: 24.h),
-                padding: EdgeInsets.all(16.h),
+                margin: EdgeInsets.only(bottom: 24),
+                padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
                     color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.circular(24.r),
+                    borderRadius: BorderRadius.circular(24),
                     border:
                         Border.all(color: Colors.black.withValues(alpha: 0.3))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomText(
-                        text: 'receivableAmount'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        text: 'receivableAmount'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.amount,
                       hint: 'amount'.tr,
@@ -424,10 +423,10 @@ class _ReceivableWidget extends StatelessWidget {
                       validator: (value) =>
                           value!.isEmpty ? 'amountRequired'.tr : null,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     CustomText(
-                        text: 'receivablePerson'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        text: 'receivablePerson'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.personName,
                       hint: 'personName'.tr,
@@ -435,11 +434,11 @@ class _ReceivableWidget extends StatelessWidget {
                           ? 'personNameRequired'.tr
                           : null,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     CustomText(
                         text: 'receivablePersonMobile'.tr,
-                        fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.personMobile,
                       hint: 'mobile'.tr,
@@ -447,9 +446,9 @@ class _ReceivableWidget extends StatelessWidget {
                       validator: (value) =>
                           value!.isEmpty ? 'mobileRequired'.tr : null,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     Row(
-                      spacing: 4.w,
+                      spacing: 4,
                       children: [
                         Expanded(
                           child: ElevatedButton(
@@ -458,14 +457,14 @@ class _ReceivableWidget extends StatelessWidget {
                               backgroundColor: Colors.red,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.r),
+                                borderRadius: BorderRadius.circular(4),
                               ),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.delete_forever, color: Colors.white),
-                                SizedBox(width: 8.w),
+                                SizedBox(width: 8),
                                 Text("Remove".tr)
                               ],
                             ),
@@ -478,14 +477,14 @@ class _ReceivableWidget extends StatelessWidget {
                             backgroundColor: Colors.white,
                             foregroundColor: AppColors.primaryColor,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.r),
+                              borderRadius: BorderRadius.circular(4),
                             ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.add),
-                              SizedBox(width: 8.w),
+                              SizedBox(width: 8),
                               Expanded(
                                   child: Text('addMore'.tr,
                                       maxLines: 2,
@@ -522,19 +521,19 @@ class _PayableWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               final form = controller.payableListForm[index];
               return Container(
-                margin: EdgeInsets.only(bottom: 24.h),
-                padding: EdgeInsets.all(16.h),
+                margin: EdgeInsets.only(bottom: 24),
+                padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
                     color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.circular(24.r),
+                    borderRadius: BorderRadius.circular(24),
                     border:
                         Border.all(color: Colors.black.withValues(alpha: 0.3))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomText(
-                        text: 'payableAmount'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        text: 'payableAmount'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.amount,
                       hint: 'amount'.tr,
@@ -542,10 +541,10 @@ class _PayableWidget extends StatelessWidget {
                       validator: (value) =>
                           value!.isEmpty ? 'amountRequired'.tr : null,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     CustomText(
-                        text: 'payablePerson'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        text: 'payablePerson'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.personName,
                       hint: 'personName'.tr,
@@ -553,11 +552,11 @@ class _PayableWidget extends StatelessWidget {
                           ? 'personNameRequired'.tr
                           : null,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     CustomText(
                         text: 'payablePersonMobile'.tr,
-                        fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.personMobile,
                       hint: 'mobile'.tr,
@@ -565,9 +564,9 @@ class _PayableWidget extends StatelessWidget {
                       validator: (value) =>
                           value!.isEmpty ? 'mobileRequired'.tr : null,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     Row(
-                      spacing: 4.w,
+                      spacing: 4,
                       children: [
                         Expanded(
                           child: ElevatedButton(
@@ -576,14 +575,14 @@ class _PayableWidget extends StatelessWidget {
                               backgroundColor: Colors.red,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.r),
+                                borderRadius: BorderRadius.circular(4),
                               ),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.delete_forever, color: Colors.white),
-                                SizedBox(width: 8.w),
+                                SizedBox(width: 8),
                                 Text("Remove".tr)
                               ],
                             ),
@@ -596,14 +595,14 @@ class _PayableWidget extends StatelessWidget {
                             backgroundColor: Colors.white,
                             foregroundColor: AppColors.primaryColor,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.r),
+                              borderRadius: BorderRadius.circular(4),
                             ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.add),
-                              SizedBox(width: 8.w),
+                              SizedBox(width: 8),
                               Expanded(
                                   child: Text('addMore'.tr,
                                       maxLines: 2,

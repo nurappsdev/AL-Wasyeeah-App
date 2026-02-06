@@ -1,4 +1,4 @@
-﻿export 'controller_bindings.dart';
+export 'controller_bindings.dart';
 export 'profile/profile_controller.dart';
 export 'auths/auth_controller.dart';
 export 'nomineee/nominee_controller.dart';
@@ -6,3 +6,15 @@ export 'zakat_calculation/zakat_controller.dart';
 export 'witness_controller/witness_controller.dart';
 export 'profile/user_controller.dart';
 export 'wasyyah/wasyyah_controller.dart';
+export 'property_distribution_calculation/property_distribution_calculation_controller.dart';
+export 'access_phanel/access_phanel_controller.dart';
+
+// Bindings
+export 'bindings/auth_binding.dart';
+export 'bindings/profile_binding.dart';
+export 'bindings/wasyyah_binding.dart';
+export 'bindings/nominee_binding.dart';
+export 'bindings/witness_binding.dart';
+export 'bindings/zakat_binding.dart';
+export 'bindings/property_distribution_binding.dart';
+export 'bindings/access_panel_binding.dart';

@@ -3,7 +3,6 @@ import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
@@ -28,7 +27,7 @@ class _ProfileSettingStepTwoWidgetState
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 14.h),
+        padding: EdgeInsets.symmetric(horizontal: 14),
         child: SingleChildScrollView(
           child: Form(
             key: controller.step2formKey,
@@ -111,7 +110,7 @@ class _ProfileSettingStepTwoWidgetState
                 ),
 
                 /// ========= Button =========
-                SizedBox(height: 20.h),
+                SizedBox(height: 20),
                 CustomButtonCommon(
                   title: 'next'.tr,
                   onpress: () {
@@ -120,7 +119,7 @@ class _ProfileSettingStepTwoWidgetState
                     }
                   },
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height: 20),
               ],
             ),
           ),
@@ -134,22 +133,22 @@ class _ProfileSettingStepTwoWidgetState
   Widget _sectionTitle(String title) {
     return Column(
       children: [
-        SizedBox(height: 16.h),
+        SizedBox(height: 16),
         Container(
-          height: 48.h,
+          height: 48,
           alignment: Alignment.center,
           width: double.infinity,
           decoration: BoxDecoration(
             color: AppColors.primaryColor,
-            borderRadius: BorderRadius.circular(8.r),
+            borderRadius: BorderRadius.circular(8),
           ),
-          padding: EdgeInsets.all(8.h),
+          padding: EdgeInsets.all(8),
           child: Text(
             title.tr,
-            style: TextStyle(color: Colors.white, fontSize: 22.sp),
+            style: TextStyle(color: Colors.white, fontSize: 22),
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 16),
       ],
     );
   }
@@ -162,14 +161,14 @@ class _ProfileSettingStepTwoWidgetState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: label, fontsize: 16.sp),
-        SizedBox(height: 4.h),
+        CustomText(text: label, fontsize: 16),
+        SizedBox(height: 4),
         CustomTextFormField(
           controller: controller,
           hint: label,
           validator: (value) => value!.isEmpty ? error : null,
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 16),
       ],
     );
   }
@@ -194,7 +193,7 @@ class _ProfileSettingStepTwoWidgetState
 //         height: Get.height,
 //         width: double.infinity,
 //         child: Padding(
-//           padding: EdgeInsets.symmetric(horizontal: 14.h),
+//           padding: EdgeInsets.symmetric(horizontal: 14),
 //           child: SingleChildScrollView(
 //             child: Form(
 //               key: controller.step2formKey,
@@ -202,55 +201,55 @@ class _ProfileSettingStepTwoWidgetState
 //                 crossAxisAlignment: CrossAxisAlignment.start,
 //                 children: [
 //                   ///=============="Present Address================================
-//                   SizedBox(height: 16.h),
+//                   SizedBox(height: 16),
 //                   Container(
-//                     height: 48.h,
+//                     height: 48,
 //                     width: double.infinity,
 //                     decoration: BoxDecoration(
 //                       color: AppColors.primaryColor,
-//                       borderRadius: BorderRadius.circular(8.r),
+//                       borderRadius: BorderRadius.circular(8),
 //                     ),
 //                     child: Padding(
-//                       padding: EdgeInsets.all(8.0.h),
+//                       padding: EdgeInsets.all(8.0),
 //                       child: Text(
 //                         "Present Address".tr,
 //                         style: TextStyle(
 //                           color: AppColors.whiteColor,
-//                           fontSize: 24.sp,
+//                           fontSize: 24,
 //                         ),
 //                       ),
 //                     ),
 //                   ),
-//                   SizedBox(height: 16.h),
+//                   SizedBox(height: 16),
 //                   CustomText(
 //                     text: "Zip code".tr,
-//                     fontsize: 16.sp,
+//                     fontsize: 16,
 //                   ),
-//                   SizedBox(height: 4.h),
+//                   SizedBox(height: 4),
 //                   CustomTextFormField(
 //                     controller: controller.presentZipCodeController.value,
 //                     hint: "Zip Code".tr,
 //                     validator: (value) =>
 //                         value!.isEmpty ? "Zip code is required" : null,
 //                   ),
-//                   SizedBox(height: 16.h),
+//                   SizedBox(height: 16),
 //                   CustomText(
 //                     text: "Village/House".tr,
-//                     fontsize: 16.sp,
+//                     fontsize: 16,
 //                   ),
-//                   SizedBox(height: 4.h),
+//                   SizedBox(height: 4),
 //                   CustomTextFormField(
 //                     controller: controller.presentVillageController.value,
 //                     hint: "Village/House".tr,
 //                     validator: (value) =>
 //                         value!.isEmpty ? "Village/House is required" : null,
 //                   ),
-//                   SizedBox(height: 16.h),
+//                   SizedBox(height: 16),
 //                   CustomText(
 //                     text: "Road/Block/Section".tr,
-//                     fontsize: 16.sp,
+//                     fontsize: 16,
 //                   ),
-//                   SizedBox(height: 4.h),
+//                   SizedBox(height: 4),
 //                   CustomTextFormField(
 //                     controller: controller.presentRoadController.value,
 //                     hint: "Road/Block/Section".tr,
@@ -310,31 +309,31 @@ class _ProfileSettingStepTwoWidgetState
 //                           title: Text(
 //                               "Mark Present Address as Permanent Address".tr),
 //                         ),
-//                         SizedBox(height: 16.h),
+//                         SizedBox(height: 16),
 //                         Container(
-//                           height: 48.h,
+//                           height: 48,
 //                           width: double.infinity,
 //                           decoration: BoxDecoration(
 //                             color: AppColors.primaryColor,
-//                             borderRadius: BorderRadius.circular(8.r),
+//                             borderRadius: BorderRadius.circular(8),
 //                           ),
 //                           child: Padding(
-//                             padding: EdgeInsets.all(8.0.h),
+//                             padding: EdgeInsets.all(8.0),
 //                             child: Text(
 //                               "Permanent Address".tr,
 //                               style: TextStyle(
 //                                 color: AppColors.whiteColor,
-//                                 fontSize: 24.sp,
+//                                 fontSize: 24,
 //                               ),
 //                             ),
 //                           ),
 //                         ),
-//                         SizedBox(height: 16.h),
+//                         SizedBox(height: 16),
 //                         CustomText(
 //                           text: "Zip code".tr,
-//                           fontsize: 16.sp,
+//                           fontsize: 16,
 //                         ),
-//                         SizedBox(height: 4.h),
+//                         SizedBox(height: 4),
 //                         CustomTextFormField(
 //                           controller:
 //                               controller.permanentZipCodeController.value,
@@ -342,12 +341,12 @@ class _ProfileSettingStepTwoWidgetState
 //                           validator: (value) =>
 //                               value!.isEmpty ? "Zip code is required" : null,
 //                         ),
-//                         SizedBox(height: 16.h),
+//                         SizedBox(height: 16),
 //                         CustomText(
 //                           text: "Village/House".tr,
-//                           fontsize: 16.sp,
+//                           fontsize: 16,
 //                         ),
-//                         SizedBox(height: 4.h),
+//                         SizedBox(height: 4),
 //                         CustomTextFormField(
 //                           controller:
 //                               controller.permanentVillageController.value,
@@ -356,12 +355,12 @@ class _ProfileSettingStepTwoWidgetState
 //                               ? "Village/House is required"
 //                               : null,
 //                         ),
-//                         SizedBox(height: 16.h),
+//                         SizedBox(height: 16),
 //                         CustomText(
 //                           text: "Road/Block/Section".tr,
-//                           fontsize: 16.sp,
+//                           fontsize: 16,
 //                         ),
-//                         SizedBox(height: 4.h),
+//                         SizedBox(height: 4),
 //                         CustomTextFormField(
 //                           controller: controller.permanentRoadController.value,
 //                           hint: "Road/Block/Section".tr,
@@ -374,31 +373,31 @@ class _ProfileSettingStepTwoWidgetState
 //                   ),
 
 //                   // =====Overseas Address=====
-//                   SizedBox(height: 16.h),
+//                   SizedBox(height: 16),
 //                   Container(
-//                     height: 48.h,
+//                     height: 48,
 //                     width: double.infinity,
 //                     decoration: BoxDecoration(
 //                       color: AppColors.primaryColor,
-//                       borderRadius: BorderRadius.circular(8.r),
+//                       borderRadius: BorderRadius.circular(8),
 //                     ),
 //                     child: Padding(
-//                       padding: EdgeInsets.all(8.0.h),
+//                       padding: EdgeInsets.all(8.0),
 //                       child: Text(
 //                         "Overseas Address".tr,
 //                         style: TextStyle(
 //                           color: AppColors.whiteColor,
-//                           fontSize: 24.sp,
+//                           fontSize: 24,
 //                         ),
 //                       ),
 //                     ),
 //                   ),
-//                   SizedBox(height: 16.h),
+//                   SizedBox(height: 16),
 //                   CustomText(
 //                     text: "Country".tr,
-//                     fontsize: 16.sp,
+//                     fontsize: 16,
 //                   ),
-//                   SizedBox(height: 4.h),
+//                   SizedBox(height: 4),
 //                   Obx(
 //                     () => CustomDropdown<CountryModel>(
 //                       hint: "Select Country",
@@ -410,12 +409,12 @@ class _ProfileSettingStepTwoWidgetState
 //                     ),
 //                   ),
 
-//                   SizedBox(height: 16.h),
+//                   SizedBox(height: 16),
 //                   CustomText(
 //                     text: "Village/House".tr,
-//                     fontsize: 16.sp,
+//                     fontsize: 16,
 //                   ),
-//                   SizedBox(height: 4.h),
+//                   SizedBox(height: 4),
 //                   CustomTextFormField(
 //                     controller: controller.overseasVillageController.value,
 //                     hint: "Village/House".tr,
@@ -424,7 +423,7 @@ class _ProfileSettingStepTwoWidgetState
 //                   ),
 
 //                   ///=============Button====================
-//                   SizedBox(height: 16.h),
+//                   SizedBox(height: 16),
 //                   CustomButtonCommon(
 //                     // loading: authController.loadingLoading.value == true,
 //                     title: 'next'.tr,
@@ -436,7 +435,7 @@ class _ProfileSettingStepTwoWidgetState
 //                     },
 //                   ),
 //                   SizedBox(
-//                     height: 20.h,
+//                     height: 20,
 //                   ),
 //                 ],
 //               ),

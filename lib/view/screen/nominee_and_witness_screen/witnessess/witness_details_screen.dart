@@ -1,5 +1,4 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../models/models.dart';
@@ -23,7 +22,7 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
       appBar: AppBar(
         title: CustomText(
           text: "Witness Profile Details".tr,
-          fontsize: 18.sp,
+          fontsize: 18,
         ),
       ),
       body: BackgroundImageContainer(
@@ -31,12 +30,12 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
           height: Get.height,
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 20),
                   Container(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -64,13 +63,13 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 10.h,
+                    height: 10,
                   ),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(12.r),
+                      borderRadius: BorderRadius.circular(12),
                       border: Border.all(),
                       boxShadow: [
                         BoxShadow(
@@ -88,16 +87,16 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
                         mainAxisSize: MainAxisSize.min, //
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 20.h),
+                          SizedBox(height: 20),
                           Center(
                             child: CustomText(
                               text: "Personal Details".tr,
-                              fontsize: 18.sp,
+                              fontsize: 18,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Divider(),
-                          SizedBox(height: 10.h),
+                          SizedBox(height: 10),
 
                           /// Relation Row
                           _buildRow("Relation:", "Cousin"),
@@ -116,16 +115,16 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
 
                           /// Spouse's Row
                           _buildRow(
-                              "Spouseâ€™s:", "Mithila IslamJinia Chowdhury"),
+                              "Spouse’s:", "Mithila IslamJinia Chowdhury"),
 
                           /// Profession Row
                           _buildRow("Profession:", "Teacher"),
 
                           /// Mother's Name Row
-                          _buildRow("Motherâ€™s Name:", "Sultana Zaman"),
+                          _buildRow("Mother’s Name:", "Sultana Zaman"),
 
                           /// Father's Name Row
-                          _buildRow("Fatherâ€™s Name:", "Sultana Zaman"),
+                          _buildRow("Father’s Name:", "Sultana Zaman"),
 
                           /// Current Address Row
                           _buildRow(
@@ -140,18 +139,18 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
                           ),
 
                           /// Buttons
-                          SizedBox(height: 30.h),
+                          SizedBox(height: 30),
                           CustomButton(
                             title: " - Remove Witness".tr,
                             titlecolor: AppColors.redColor,
                             onpress: () {},
                           ),
-                          SizedBox(height: 10.h),
+                          SizedBox(height: 10),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
@@ -163,7 +162,7 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
 
   Widget _buildRow(String label, String value) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.h),
+      padding: EdgeInsets.symmetric(vertical: 5),
       child: Row(
         mainAxisAlignment:
             MainAxisAlignment.spaceBetween, // Align label and value
@@ -172,7 +171,7 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
             flex: 1,
             child: CustomText(
               text: label.tr,
-              fontsize: 16.sp,
+              fontsize: 16,
               fontWeight: FontWeight.w500,
               textAlign: TextAlign.start, // Align text to the start (left)
             ),
@@ -181,7 +180,7 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
             flex: 1,
             child: CustomText(
               text: value.tr,
-              fontsize: 16.sp,
+              fontsize: 16,
               maxline: 2,
               textAlign: TextAlign.start, // Align text to the end (right)
             ),

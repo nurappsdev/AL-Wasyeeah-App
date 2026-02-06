@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:al_wasyeah/models/profile_info_model/document_type_form.dart';

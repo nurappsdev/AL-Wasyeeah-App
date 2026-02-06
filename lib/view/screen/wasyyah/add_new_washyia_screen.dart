@@ -1,6 +1,5 @@
-﻿import 'package:al_wasyeah/view/screen/no_internet_screen.dart';
+import 'package:al_wasyeah/view/screen/no_internet_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
@@ -19,7 +18,7 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
 
   TextEditingController contentController = TextEditingController();
 
-  WasyyahController wasyyahController = Get.put(WasyyahController());
+  WasyyahController wasyyahController = Get.find<WasyyahController>();
 
   final GlobalKey<FormState> _createWasKey = GlobalKey<FormState>();
   @override
@@ -36,7 +35,7 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
       appBar: AppBar(
         title: CustomText(
           text: 'addMoreContent'.tr,
-          fontsize: 18.sp,
+          fontsize: 18,
           fontWeight: FontWeight.w600,
         ),
       ),
@@ -44,7 +43,7 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
         height: Get.height,
         width: double.infinity,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             child: Form(
               key: _createWasKey,
@@ -52,15 +51,15 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Note section
-                  SizedBox(height: 16.h),
+                  SizedBox(height: 16),
                   CustomText(
                     text: 'addWashiyaTitleHint'.tr,
                     color: AppColors.hitTextColor000000,
-                    fontsize: 16.sp,
+                    fontsize: 16,
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 16.h),
+                    padding: EdgeInsets.only(bottom: 16),
                     child: CustomTextField(
                       controller: titleController,
                       hintText: 'addWashiyaTitleHint'.tr,
@@ -75,15 +74,15 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                     ),
                   ),
                   // Note section
-                  SizedBox(height: 16.h),
+                  SizedBox(height: 16),
                   CustomText(
                     text: 'addWashiyaContentHint'.tr,
                     color: AppColors.hitTextColor000000,
-                    fontsize: 16.sp,
+                    fontsize: 16,
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 16.h),
+                    padding: EdgeInsets.only(bottom: 16),
                     child: CustomTextField(
                       controller: contentController,
                       hintText: 'addWashiyaContentHint'.tr,
@@ -97,7 +96,7 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                       },
                     ),
                   ),
-                  SizedBox(height: 120.h), // Replaces Spacer
+                  SizedBox(height: 120), // Replaces Spacer
 
                   // Buttons
                   Row(
@@ -108,8 +107,8 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                         child: CustomButton(
                           title: 'cancel'.tr,
                           onpress: () {},
-                          width: 100.w,
-                          height: 40.h,
+                          width: 100,
+                          height: 40,
                           color: Colors.red,
                         ),
                       ),
@@ -127,15 +126,15 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                                     content: contentController.text);
                               }
                             },
-                            width: 100.w,
-                            height: 40.h,
+                            width: 100,
+                            height: 40,
                             color: AppColors.primaryColor,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 40.h),
+                  SizedBox(height: 40),
                 ],
               ),
             ),
@@ -145,5 +144,3 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
     );
   }
 }
-
-

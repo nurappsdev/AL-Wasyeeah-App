@@ -1,6 +1,5 @@
-﻿import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // class PropertyDistributionScreen2 extends StatefulWidget {
@@ -9,7 +8,7 @@ import 'package:get/get.dart';
 // }
 //
 // class _PropertyDistributionScreen2State extends State<PropertyDistributionScreen2> {
-//   // Checkbox à¦à¦° à¦¸à§à¦Ÿà§‡à¦Ÿ à¦®à§à¦¯à¦¾à¦¨à§‡à¦œà¦®à§‡à¦¨à§à¦Ÿà§‡à¦° à¦œà¦¨à§à¦¯ à¦­à§à¦¯à¦¾à¦°à¦¿à§Ÿà§‡à¦¬à¦²
+//   // Checkbox এর স্টেট ম্যানেজমেন্টের জন্য ভ্যারিয়েবল
 //   bool isCheckbox1Checked = false;
 //   bool isCheckbox2Checked = false;
 //
@@ -17,7 +16,7 @@ import 'package:get/get.dart';
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: const Text('Checkbox à¦à¦¬à¦‚ TextField'),
+//         title: const Text('Checkbox এবং TextField'),
 //       ),
 //       body: Padding(
 //         padding: const EdgeInsets.all(16.0),
@@ -37,16 +36,16 @@ import 'package:get/get.dart';
 //                         });
 //                       },
 //                     ),
-//                     const Text("à¦ªà§à¦¤à§à¦°"),
+//                     const Text("পুত্র"),
 //                   ],
 //                 ),
-//                 SizedBox(width: 10.w,),
-//                 // à¦¯à¦¦à¦¿ Checkbox checked à¦¥à¦¾à¦•à§‡, à¦¤à¦¾à¦¹à¦²à§‡ TextField à¦¦à§‡à¦–à¦¾à¦¬à§‡
+//                 SizedBox(width: 10,),
+//                 // যদি Checkbox checked থাকে, তাহলে TextField দেখাবে
 //                 isCheckbox1Checked
 //                     ? Expanded(
 //                   child: CustomTextField(
 //                     controller: TextEditingController(),
-//                     hintText: "à¦ªà§à¦¤à§à¦° à¦à¦° à¦œà¦¨à§à¦¯ à¦‡à¦¨à¦ªà§à¦Ÿ à¦¦à¦¿à¦¨",
+//                     hintText: "পুত্র এর জন্য ইনপুট দিন",
 //                   ),
 //                 )
 //                     : const SizedBox.shrink(),
@@ -54,7 +53,7 @@ import 'package:get/get.dart';
 //             ),
 //
 //
-//              SizedBox(height: 4.h),
+//              SizedBox(height: 4),
 //           ],
 //         ),
 //       ),
@@ -75,7 +74,7 @@ import 'package:get/get.dart';
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: const Text('Checkbox à¦à¦¬à¦‚ TextField'),
+//         title: const Text('Checkbox এবং TextField'),
 //       ),
 //       body: Padding(
 //         padding: const EdgeInsets.all(16.0),
@@ -107,7 +106,7 @@ import 'package:get/get.dart';
 //                     : const SizedBox.shrink()),
 //               ],
 //             ),
-//             SizedBox(height: 10.h,),
+//             SizedBox(height: 10,),
 //             // Row(
 //             //   crossAxisAlignment: CrossAxisAlignment.center,
 //             //   children: [
@@ -133,7 +132,7 @@ import 'package:get/get.dart';
 //             //         : const SizedBox.shrink()),
 //             //   ],
 //             // ),
-//             // SizedBox(height: 10.h,),
+//             // SizedBox(height: 10,),
 //             // Row(
 //             //   crossAxisAlignment: CrossAxisAlignment.center,
 //             //   children: [
@@ -145,7 +144,7 @@ import 'package:get/get.dart';
 //             //             controller.isCheckbox1Checked.value = value ?? false;
 //             //           },
 //             //         ),
-//             //         const Text("à¦ªà§à¦¤à§à¦°"),
+//             //         const Text("পুত্র"),
 //             //       ],
 //             //     )),
 //             //     const SizedBox(width: 10),
@@ -153,7 +152,7 @@ import 'package:get/get.dart';
 //             //         ? Expanded(
 //             //       child: CustomTextField(
 //             //         controller: TextEditingController(),
-//             //         hintText: "à¦ªà§à¦¤à§à¦° à¦à¦° à¦œà¦¨à§à¦¯ à¦‡à¦¨à¦ªà§à¦Ÿ à¦¦à¦¿à¦¨",
+//             //         hintText: "পুত্র এর জন্য ইনপুট দিন",
 //             //       ),
 //             //     )
 //             //         : const SizedBox.shrink()),
@@ -250,7 +249,7 @@ class PropertyDistributionScreen2 extends StatelessWidget {
       appBar: AppBar(
         title: CustomText(
           text: "Property Distribution".tr,
-          fontsize: 18.sp,
+          fontsize: 18,
         ),
       ),
       body: Padding(
@@ -298,18 +297,18 @@ class PropertyDistributionScreen2 extends StatelessWidget {
                 }).toList(),
               ),
               SizedBox(
-                height: 20.h,
+                height: 20,
               ),
               CustomText(
                 text: "Asset Description".tr,
                 color: AppColors.hitTextColor000000,
-                fontsize: 20.sp,
+                fontsize: 20,
               ),
               SizedBox(
-                height: 10.h,
+                height: 10,
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 16.h),
+                padding: EdgeInsets.only(bottom: 16),
                 child: CustomTextField(
                   controller: landCNTR,
                   hintText: "'Land' Measurement Unit Percentage".tr,
@@ -324,7 +323,7 @@ class PropertyDistributionScreen2 extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 16.h),
+                padding: EdgeInsets.only(bottom: 16),
                 child: CustomTextField(
                   controller: landCNTR,
                   hintText: "'Gold' Measurement Unit Bhari".tr,
@@ -339,7 +338,7 @@ class PropertyDistributionScreen2 extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 16.h),
+                padding: EdgeInsets.only(bottom: 16),
                 child: CustomTextField(
                   controller: landCNTR,
                   hintText: "'Silver' Measurement Unit Bhari".tr,
@@ -354,7 +353,7 @@ class PropertyDistributionScreen2 extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 16.h),
+                padding: EdgeInsets.only(bottom: 16),
                 child: CustomTextField(
                   controller: landCNTR,
                   hintText: "'Money' Measurement Unit Taka".tr,
@@ -369,7 +368,7 @@ class PropertyDistributionScreen2 extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 12.h,
+                height: 12,
               ),
 
               ///=============Sign In Button====================
@@ -401,7 +400,7 @@ class PropertyDistributionScreen2 extends StatelessWidget {
               //           // }
               //         },),
               //     ),
-              //     SizedBox(width: 8.w,),
+              //     SizedBox(width: 8,),
               //     Expanded(
               //       child: CustomButtonCommon(
               //         // loading: authController.loadingLoading.value == true,
@@ -417,7 +416,7 @@ class PropertyDistributionScreen2 extends StatelessWidget {
               //   ],
               // ),
               SizedBox(
-                height: 12.h,
+                height: 12,
               ),
             ],
           ),

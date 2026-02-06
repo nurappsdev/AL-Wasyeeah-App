@@ -1,5 +1,4 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../utils/app_colors.dart';
 
@@ -45,7 +44,7 @@ class CustomText extends StatelessWidget {
         maxLines: maxline,
         overflow: textOverflow ?? TextOverflow.ellipsis,
         style: TextStyle(
-            fontSize: fontsize ?? 14.h,
+            fontSize: fontsize ?? 14,
             fontFamily: fontName ?? "Poppins-Regular",
             fontWeight: fontWeight == null ? FontWeight.w400 : fontWeight,
             color: color ?? AppColors.textColor4E4E4E),
@@ -53,4 +52,3 @@ class CustomText extends StatelessWidget {
     );
   }
 }
-

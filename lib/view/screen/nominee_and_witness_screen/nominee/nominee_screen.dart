@@ -1,6 +1,5 @@
-﻿import 'package:al_wasyeah/controllers/controllers.dart';
+import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -19,7 +18,7 @@ class NomineeScreen extends StatefulWidget {
 }
 
 class _NomineeScreenState extends State<NomineeScreen> {
-  NomineeController nomineeController = Get.put(NomineeController());
+  NomineeController nomineeController = Get.find<NomineeController>();
   @override
   Widget build(BuildContext context) {
     nomineeController.getNomineeData();
@@ -30,12 +29,12 @@ class _NomineeScreenState extends State<NomineeScreen> {
           height: Get.height,
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 20),
                   CustomButton(
                     title: 'addMoreNominees'.tr,
                     titlecolor: AppColors.primaryColor,
@@ -44,7 +43,7 @@ class _NomineeScreenState extends State<NomineeScreen> {
                           preventDuplicates: false);
                     },
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                   SizedBox(
                     height: 450.0, // Adjust height as per your needs
                     child: Obx(
@@ -105,7 +104,7 @@ class _NomineeScreenState extends State<NomineeScreen> {
                                 ),
                     ),
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
@@ -157,8 +156,8 @@ class _NomineeScreenState extends State<NomineeScreen> {
                       ],
                     ),
                     Divider(color: Colors.white70),
-                    _buildDialogRow(Icons.people, 'relation'.tr,
-                        user.relation ?? "N/A"),
+                    _buildDialogRow(
+                        Icons.people, 'relation'.tr, user.relation ?? "N/A"),
                     _buildDialogRow(
                         Icons.email, 'email'.tr, user.email ?? "N/A"),
                     _buildDialogRow(Icons.person, 'fatherName'.tr,
@@ -167,8 +166,8 @@ class _NomineeScreenState extends State<NomineeScreen> {
                         Icons.phone, 'mobile'.tr, user.mobile ?? "N/A"),
                     _buildDialogRow(Icons.favorite, 'maritalStatus'.tr,
                         user.maritalStatus ?? "N/A"),
-                    _buildDialogRow(Icons.work, 'profession'.tr,
-                        user.profession ?? "N/A"),
+                    _buildDialogRow(
+                        Icons.work, 'profession'.tr, user.profession ?? "N/A"),
                     _buildDialogRow(
                         Icons.calendar_today,
                         'date'.tr,
@@ -215,5 +214,3 @@ class _NomineeScreenState extends State<NomineeScreen> {
     );
   }
 }
-
-

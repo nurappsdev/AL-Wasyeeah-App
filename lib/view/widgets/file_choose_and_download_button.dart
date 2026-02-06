@@ -1,7 +1,7 @@
 ﻿import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:get/get.dart';
 
 class FileChooseAndDownloadButton extends StatelessWidget {
@@ -29,9 +29,9 @@ class FileChooseAndDownloadButton extends StatelessWidget {
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.primaryColor,
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 side: BorderSide(color: AppColors.primaryColor),
               ),
@@ -42,32 +42,32 @@ class FileChooseAndDownloadButton extends StatelessWidget {
                     // Icon
                     Icon(
                       Icons.attach_file,
-                      size: 20.sp,
+                      size: 20,
                       color: AppColors.primaryColor,
                     ),
-                    SizedBox(width: 8.w),
+                    SizedBox(width: 8),
 
                     // Choose file text
                     Text(
                       "Choose file",
                       style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: AppColors.primaryColor,
                       ),
                     ),
 
                     ...[
-                      SizedBox(width: 12.w),
+                      SizedBox(width: 12),
 
                       // Divider
                       Container(
-                        height: 18.h,
+                        height: 18,
                         width: 1,
                         color: AppColors.primaryColor.withOpacity(0.4),
                       ),
 
-                      SizedBox(width: 12.w),
+                      SizedBox(width: 12),
 
                       // File name or placeholder
                       Expanded(
@@ -76,7 +76,7 @@ class FileChooseAndDownloadButton extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 13.sp,
+                            fontSize: 13,
                             color: pickedFile.value == null
                                 ? Colors.grey
                                 : AppColors.hitTextColor000000,
@@ -89,22 +89,22 @@ class FileChooseAndDownloadButton extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: 6.w),
+          SizedBox(width: 6),
           if (fileUrl != null)
             InkWell(
               onTap: isDownloading.value ? null : onDownload,
               child: Container(
-                width: 48.w,
+                width: 48,
                 decoration: BoxDecoration(
                   color: AppColors.primaryColor,
-                  borderRadius: BorderRadius.circular(8.r),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Obx(() {
                   return isDownloading.value
                       ? Center(
                           child: SizedBox(
-                            width: 22.w,
-                            height: 22.w,
+                            width: 22,
+                            height: 22,
                             child: CircularProgressIndicator(
                               value: progress.value / 100,
                               strokeWidth: 2,
@@ -121,4 +121,3 @@ class FileChooseAndDownloadButton extends StatelessWidget {
     );
   }
 }
-

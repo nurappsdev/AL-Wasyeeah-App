@@ -1,9 +1,8 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:al_wasyeah/controllers/auths/auth_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../helpers/app_routes.dart';
@@ -71,7 +70,7 @@ class _FirstSplashScreenState extends State<FirstSplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(right: 10.w, left: 10.w),
+        padding: EdgeInsets.only(right: 10, left: 10),
         width: double.infinity,
         decoration: const BoxDecoration(color: Colors.white),
         child: Stack(
@@ -84,15 +83,15 @@ class _FirstSplashScreenState extends State<FirstSplashScreen> {
               width: double.infinity,
             )),
             Positioned(
-              top: 330.h,
-              right: 60.w,
+              top: 330,
+              right: 60,
               left: 60,
               child: Container(
                 height: Get.height,
                 child: CustomText(
                   text: "ayat".tr,
                   maxline: 20,
-                  fontsize: 16.sp,
+                  fontsize: 16,
                 ),
               ),
             ),

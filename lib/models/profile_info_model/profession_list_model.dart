@@ -1,4 +1,4 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 
 List<ProfessionModel> professionListFromJson(String str) =>
     List<ProfessionModel>.from(

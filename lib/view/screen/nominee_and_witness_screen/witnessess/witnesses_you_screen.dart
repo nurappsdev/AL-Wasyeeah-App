@@ -1,5 +1,4 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -19,7 +18,7 @@ class WitnessesYouScreen extends StatefulWidget {
 }
 
 class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
-  WitnessController witnessController = Get.put(WitnessController());
+  WitnessController witnessController = Get.find<WitnessController>();
   @override
   Widget build(BuildContext context) {
     witnessController.getWitnessData();
@@ -30,12 +29,12 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
           height: Get.height,
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 20),
                   CustomButton(
                     title: 'addMoreWitness'.tr,
                     titlecolor: AppColors.primaryColor,
@@ -44,7 +43,7 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                           preventDuplicates: false);
                     },
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                   SizedBox(
                     height: 450.0, // Adjust height as per your needs
                     child: Obx(
@@ -106,7 +105,7 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                                 ),
                     ),
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
@@ -155,8 +154,8 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                       ],
                     ),
                     Divider(color: Colors.white70),
-                    _buildDialogRow(Icons.people, 'relation'.tr,
-                        user.relation ?? "N/A"),
+                    _buildDialogRow(
+                        Icons.people, 'relation'.tr, user.relation ?? "N/A"),
                     _buildDialogRow(
                         Icons.email, 'email'.tr, user.email ?? "N/A"),
                     _buildDialogRow(Icons.person, 'fatherName'.tr,
@@ -165,8 +164,8 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
                         Icons.phone, 'mobile'.tr, user.mobile ?? "N/A"),
                     _buildDialogRow(Icons.favorite, 'maritalStatus'.tr,
                         user.maritalStatus ?? "N/A"),
-                    _buildDialogRow(Icons.work, 'profession'.tr,
-                        user.profession ?? "N/A"),
+                    _buildDialogRow(
+                        Icons.work, 'profession'.tr, user.profession ?? "N/A"),
                     _buildDialogRow(
                         Icons.calendar_today,
                         'date'.tr,
@@ -211,5 +210,3 @@ class _WitnessesYouScreenState extends State<WitnessesYouScreen> {
     );
   }
 }
-
-

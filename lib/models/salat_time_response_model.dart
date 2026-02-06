@@ -1,4 +1,4 @@
-﻿
+
 class GetSalatTimeResponseModel {
   final String? fajr;
   final String? sunrise;

@@ -1,7 +1,6 @@
-﻿import 'package:al_wasyeah/utils/app_dimentions.dart';
+import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -34,7 +33,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   TextEditingController securityController = TextEditingController();
 
-  AuthController authController = Get.put(AuthController());
+  AuthController authController = Get.find<AuthController>();
 
   String? _selectedQuestionId;
 
@@ -67,7 +66,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           width: double.infinity,
           child: Padding(
             padding:
-                EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+                EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge),
             child: SingleChildScrollView(
               child: Form(
                 key: _forRegKey,
@@ -75,36 +74,36 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 40.h,
+                      height: 40,
                     ),
                     Center(
                         child: SvgPicture.asset(AppIcons.logo,
-                            height: 100.h, width: 140.w)),
+                            height: 100, width: 140)),
                     SizedBox(
-                      height: 30.h,
+                      height: 30,
                     ),
                     Center(
                         child: CustomText(
                       text: 'registration'.tr,
-                      fontsize: 28.sp,
+                      fontsize: 28,
                       textAlign: TextAlign.center,
                     )),
-                    // SizedBox(height: 16.h,),
-                    // Center(child: CustomText(text: "Enter your details to register Al Wasyyah",fontsize: 16.sp,textAlign: TextAlign.center,)),
+                    // SizedBox(height: 16,),
+                    // Center(child: CustomText(text: "Enter your details to register Al Wasyyah",fontsize: 16,textAlign: TextAlign.center,)),
 
                     SizedBox(
-                      height: 16.h,
+                      height: 16,
                     ),
                     CustomText(
                       text: 'firstName'.tr,
                       color: AppColors.hitTextColor000000,
-                      fontsize: 20.sp,
+                      fontsize: 20,
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: firstNameController,
                         hintText: 'firstName'.tr,
@@ -120,18 +119,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     ///=============Last Name====================
                     SizedBox(
-                      height: 16.h,
+                      height: 16,
                     ),
                     CustomText(
                       text: 'lastName'.tr,
                       color: AppColors.hitTextColor000000,
-                      fontsize: 20.sp,
+                      fontsize: 20,
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: secondNameController,
                         hintText: 'lastName'.tr,
@@ -147,18 +146,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     ///=============Mobile====================
                     SizedBox(
-                      height: 16.h,
+                      height: 16,
                     ),
                     CustomText(
                       text: 'mobile'.tr,
                       color: AppColors.hitTextColor000000,
-                      fontsize: 20.sp,
+                      fontsize: 20,
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: mobileController,
                         keyboardType: TextInputType.number,
@@ -175,26 +174,26 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     ///=============Email====================
                     SizedBox(
-                      height: 16.h,
+                      height: 16,
                     ),
                     CustomText(
                       text: 'email'.tr,
                       color: AppColors.hitTextColor000000,
-                      fontsize: 20.sp,
+                      fontsize: 20,
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: emailController,
                         hintText: 'enterYourEmail'.tr,
                         borderColor: AppColors.secondaryPrimaryColor,
                         // prefixIcon: Padding(
-                        //   padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                        //   padding: EdgeInsets.only(left: 16, right: 12),
                         //   child: SvgPicture.asset(AppIcons.email, color:
-                        //   AppColors.primaryColor, height: 20.h, width: 20.w),
+                        //   AppColors.primaryColor, height: 20, width: 20),
                         // ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -211,13 +210,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ///==========================Date of birth*==========================
                     CustomText(
                       text: 'dateOfBirth'.tr,
-                      fontsize: 16.sp,
+                      fontsize: 16,
                       color: AppColors.hitTextColor000000,
                       textAlign: TextAlign.left,
                     ),
-                    SizedBox(height: 8.h),
+                    SizedBox(height: 8),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: dateOfBirthController,
                         readOnly: true,
@@ -251,29 +250,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 10),
                     CustomText(
                       text: 'securityQuestion'.tr,
-                      fontsize: 16.sp,
+                      fontsize: 16,
                       color: AppColors.hitTextColor000000,
                       textAlign: TextAlign.left,
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 10),
                     DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: AppColors.secondaryPrimaryColor),
-                            borderRadius: BorderRadius.circular(14.r)),
+                            borderRadius: BorderRadius.circular(14)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: AppColors.secondaryPrimaryColor,
                             ),
-                            borderRadius: BorderRadius.circular(14.r)),
+                            borderRadius: BorderRadius.circular(14)),
                         border: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: AppColors.primaryColor),
-                            borderRadius: BorderRadius.circular(16.r)),
+                            borderRadius: BorderRadius.circular(16)),
                       ),
                       isExpanded: true,
                       hint: CustomText(text: 'selectYourQuestion'.tr),
@@ -289,22 +288,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         print(_selectedQuestionId);
                       },
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 10),
 
                     ///=============Answer====================
                     SizedBox(
-                      height: 16.h,
+                      height: 16,
                     ),
                     CustomText(
                       text: 'answer'.tr,
                       color: AppColors.hitTextColor000000,
-                      fontsize: 20.sp,
+                      fontsize: 20,
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16),
                       child: CustomTextField(
                         controller: securityController,
                         hintText: 'answer'.tr,
@@ -328,26 +327,26 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           if (_forRegKey.currentState!.validate()) {
                             authController.signUpHandle(
                               agreeTerms: true,
-                                firstName: firstNameController.text,
-                                lastName: secondNameController.text,
-                                email: emailController.text,
-                                mobile: mobileController.text,
-                                dob: dateOfBirthController.text,
-                                securityAnswer: securityController.text,
-                                source: "mobile",
-                                securityCode: _selectedQuestionId.toString(),
-                               );
+                              firstName: firstNameController.text,
+                              lastName: secondNameController.text,
+                              email: emailController.text,
+                              mobile: mobileController.text,
+                              dob: dateOfBirthController.text,
+                              securityAnswer: securityController.text,
+                              source: "mobile",
+                              securityCode: _selectedQuestionId.toString(),
+                            );
                           }
                         },
                       ),
                     ),
                     SizedBox(
-                      height: 20.h,
+                      height: 20,
                     ),
 
                     ///=============SignUp====================
                     SizedBox(
-                      height: 16.h,
+                      height: 16,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -358,7 +357,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             },
                             child: CustomText(
                               text: "${'allReadyAccount'.tr} ",
-                              fontsize: 18.sp,
+                              fontsize: 18,
                             )),
                         InkWell(
                             onTap: () {
@@ -367,13 +366,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             },
                             child: CustomText(
                               text: 'signIn'.tr,
-                              fontsize: 18.sp,
+                              fontsize: 18,
                               color: AppColors.primaryColor,
                             )),
                       ],
                     ),
                     SizedBox(
-                      height: 20.h,
+                      height: 20,
                     ),
                   ],
                 ),
@@ -385,5 +384,3 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 }
-
-

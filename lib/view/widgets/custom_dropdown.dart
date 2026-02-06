@@ -1,6 +1,5 @@
 ﻿import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomDropdown<T> extends StatefulWidget {
   const CustomDropdown({
@@ -81,7 +80,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
         return Text(
           hasValue ? widget.itemToString(selectedItem) : widget.hint,
           style: TextStyle(
-            fontSize: 12.sp,
+            fontSize: 12,
             fontWeight: hasValue ? FontWeight.bold : FontWeight.w400,
             color: hasValue ? Colors.black : Colors.grey[500],
           ),
@@ -116,4 +115,3 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
     );
   }
 }
-

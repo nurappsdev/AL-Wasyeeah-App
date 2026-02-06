@@ -1,5 +1,4 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../controllers/controllers.dart';
@@ -33,7 +32,7 @@ class WitnessPhanelData extends StatefulWidget {
 }
 
 class _WitnessPhanelDataState extends State<WitnessPhanelData> {
-  WitnessController witnessController = Get.put(WitnessController());
+  WitnessController witnessController = Get.find<WitnessController>();
   @override
   Widget build(BuildContext context) {
     final requestKey = Get.arguments;
@@ -52,13 +51,13 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(24.r),
-                          bottomRight: Radius.circular(24.r),
+                          bottomLeft: Radius.circular(24),
+                          bottomRight: Radius.circular(24),
                         ),
                         child: Image.asset(
                           AppImages.backImg, // your image
                           fit: BoxFit.cover,
-                          height: 260.h,
+                          height: 260,
                           width: double.infinity,
                         ),
                       ),
@@ -66,8 +65,8 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                   ),
                 ),
                 Positioned(
-                    top: 40.h,
-                    left: 30.w,
+                    top: 40,
+                    left: 30,
                     child: InkWell(
                         onTap: () {
                           Navigator.pop(context);
@@ -77,33 +76,33 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                           color: AppColors.whiteColor,
                         ))),
                 Positioned(
-                    top: 100.h,
-                    left: 8.w,
-                    right: 8.w,
+                    top: 100,
+                    left: 8,
+                    right: 8,
                     child: CustomText(
                       text: 'witnessPanel'.tr,
                       fontWeight: FontWeight.w600,
-                      fontsize: 32.sp,
+                      fontsize: 32,
                       color: AppColors.primaryColor,
                     )),
                 Positioned(
-                  top: 212.h,
-                  left: 8.w,
-                  right: 8.w,
+                  top: 212,
+                  left: 8,
+                  right: 8,
                   child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 4.h),
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                     child: Column(
                       children: [
                         // First tile
                         Material(
-                          borderRadius: BorderRadius.circular(16.r),
+                          borderRadius: BorderRadius.circular(16),
                           color: Colors.white,
                           clipBehavior: Clip.antiAlias,
                           child: ExpansionTile(
                             backgroundColor: Colors.white,
                             tilePadding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 4.h),
+                                horizontal: 16, vertical: 4),
                             leading: Icon(Icons.email,
                                 color: AppColors.primaryColor),
                             title: Text(
@@ -111,13 +110,13 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                               style: TextStyle(
                                 color: Color(0xFF205072),
                                 fontWeight: FontWeight.w600,
-                                fontSize: 16.sp,
+                                fontSize: 16,
                               ),
                             ),
                             children: [
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 12.h),
+                                    horizontal: 16, vertical: 12),
                                 child: InkWell(
                                     onTap: () async {
                                       final Uri emailUrl = Uri(
@@ -137,23 +136,23 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                                       text: "info@carerfinderau.com",
                                       fontWeight: FontWeight.w700,
                                       textAlign: TextAlign.start,
-                                      fontsize: 16.sp,
+                                      fontsize: 16,
                                     )),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: 16.h),
+                        SizedBox(height: 16),
 
                         // Second tile
                         Material(
-                          borderRadius: BorderRadius.circular(16.r),
+                          borderRadius: BorderRadius.circular(16),
                           color: Colors.white,
                           clipBehavior: Clip.antiAlias,
                           child: ExpansionTile(
                             backgroundColor: Colors.white,
                             tilePadding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 4.h),
+                                horizontal: 16, vertical: 4),
                             leading: Icon(Icons.local_phone_rounded,
                                 color: AppColors.primaryColor),
                             title: Text(
@@ -161,13 +160,13 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                               style: TextStyle(
                                 color: Color(0xFF205072),
                                 fontWeight: FontWeight.w600,
-                                fontSize: 16.sp,
+                                fontSize: 16,
                               ),
                             ),
                             children: [
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 12.h),
+                                    horizontal: 16, vertical: 12),
                                 child: InkWell(
                                     onTap: () async {
                                       final Uri url =
@@ -183,23 +182,23 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                                       text: "(880)1634425785",
                                       fontWeight: FontWeight.w700,
                                       textAlign: TextAlign.start,
-                                      fontsize: 16.sp,
+                                      fontsize: 16,
                                     )),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: 16.h),
+                        SizedBox(height: 16),
 
                         // Third tile
                         Material(
-                          borderRadius: BorderRadius.circular(12.r),
+                          borderRadius: BorderRadius.circular(12),
                           color: Colors.white,
                           clipBehavior: Clip.antiAlias,
                           child: ExpansionTile(
                             backgroundColor: Colors.white,
                             tilePadding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 4.h),
+                                horizontal: 16, vertical: 4),
                             leading: Icon(Icons.language_sharp,
                                 color: AppColors.primaryColor),
                             title: Text(
@@ -207,13 +206,13 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                               style: TextStyle(
                                 color: Color(0xFF205072),
                                 fontWeight: FontWeight.w600,
-                                fontSize: 16.sp,
+                                fontSize: 16,
                               ),
                             ),
                             children: [
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w, vertical: 12.w),
+                                    horizontal: 16, vertical: 12),
                                 child: InkWell(
                                     onTap: () {
                                       String rawLink =
@@ -233,7 +232,7 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                                       text: "https://carerfinderau.com",
                                       fontWeight: FontWeight.w700,
                                       textAlign: TextAlign.start,
-                                      fontsize: 16.sp,
+                                      fontsize: 16,
                                     )),
                               ),
                             ],
@@ -254,5 +253,3 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
     );
   }
 }
-
-

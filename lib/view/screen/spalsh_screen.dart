@@ -3,7 +3,7 @@ import 'package:al_wasyeah/services/translation/language_service.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:get/get.dart';
 
 import '../../utils/app_image.dart';
@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(right: 10.w, left: 10.w),
+        padding: EdgeInsets.only(right: 10, left: 10),
         width: double.infinity,
         decoration: const BoxDecoration(color: Colors.white),
         child: Stack(
@@ -38,21 +38,21 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             Positioned(
-              top: 330.h,
-              right: 60.w,
-              left: 60.w,
+              top: 330,
+              right: 60,
+              left: 60,
               child: SizedBox(
-                height: 200.h,
+                height: 200,
                 child: CustomText(
                   text: "ayat".tr,
                   maxline: 20,
-                  fontsize: 16.sp,
+                  fontsize: 16,
                 ),
               ),
             ),
             Positioned(
-              top: 30.h,
-              right: 4.w,
+              top: 30,
+              right: 4,
               child: Obx(
                 () => Row(
                   children: [
@@ -60,20 +60,20 @@ class _SplashScreenState extends State<SplashScreen> {
                       'language'.tr,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 16.sp,
+                        fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(width: 8.w),
+                    SizedBox(width: 8),
                     // Toggle for language
                     Container(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 8.w,
-                        vertical: 4.h,
+                        horizontal: 8,
+                        vertical: 4,
                       ),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(20.r),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -92,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                 fontWeight: languageService.isEnglish
                                     ? FontWeight.bold
                                     : FontWeight.normal,
-                                fontSize: 14.sp,
+                                fontSize: 14,
                               ),
                             ),
                           ),
@@ -130,7 +130,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                 fontWeight: languageService.isBangla
                                     ? FontWeight.bold
                                     : FontWeight.normal,
-                                fontSize: 14.sp,
+                                fontSize: 14,
                               ),
                             ),
                           ),
@@ -142,11 +142,11 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             Positioned(
-              bottom: 12.h,
+              bottom: 12,
               left: 0,
               right: 0,
               child: Padding(
-                padding: EdgeInsets.all(8.r),
+                padding: EdgeInsets.all(8),
                 child: CustomButtonCommon(
                   title: 'getStart'.tr,
                   onpress: () {

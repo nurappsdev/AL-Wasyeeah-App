@@ -6,7 +6,6 @@ import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/marital_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../../controllers/controllers.dart';
@@ -25,22 +24,22 @@ class _ProfileSettingStepOneWidgetState
   Widget _sectionTitle(String title) {
     return Column(
       children: [
-        SizedBox(height: 16.h),
+        SizedBox(height: 16),
         Container(
-          height: 48.h,
+          height: 48,
           alignment: Alignment.center,
           width: double.infinity,
           decoration: BoxDecoration(
             color: AppColors.primaryColor,
-            borderRadius: BorderRadius.circular(8.r),
+            borderRadius: BorderRadius.circular(8),
           ),
-          padding: EdgeInsets.all(8.h),
+          padding: EdgeInsets.all(8),
           child: Text(
             title.tr,
-            style: TextStyle(color: Colors.white, fontSize: 22.sp),
+            style: TextStyle(color: Colors.white, fontSize: 22),
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 16),
       ],
     );
   }
@@ -63,7 +62,7 @@ class _ProfileSettingStepOneWidgetState
         return Form(
           key: controller.step1formKey,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 14.h),
+            padding: EdgeInsets.symmetric(horizontal: 14),
             child: RefreshIndicator(
               onRefresh: () => controller.getProfilePageData(),
               child: SingleChildScrollView(
@@ -75,9 +74,9 @@ class _ProfileSettingStepOneWidgetState
                     const SizedBox(height: 16),
                     CustomText(
                       text: 'firstName'.tr,
-                      fontsize: 16.sp,
+                      fontsize: 16,
                     ),
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.firstName,
                       hint: 'firstName'.tr,
@@ -86,13 +85,13 @@ class _ProfileSettingStepOneWidgetState
                           : null,
                     ),
 
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     // ================= Last Name =================
                     CustomText(
                       text: 'lastName'.tr,
-                      fontsize: 16.sp,
+                      fontsize: 16,
                     ),
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.lastName,
                       hint: 'lastName'.tr,
@@ -101,11 +100,11 @@ class _ProfileSettingStepOneWidgetState
                           : null,
                     ),
 
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     // ================= Marital Status =================
                     CustomText(
-                        text: 'maritalStatus'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        text: 'maritalStatus'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     Obx(() => CustomDropdown<MaritalModel>(
                           hint: 'selectMaritalStatus'.tr,
                           items: controller.maritalList,
@@ -117,10 +116,10 @@ class _ProfileSettingStepOneWidgetState
                               : null,
                         )),
 
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     // ================= Profession =================
-                    CustomText(text: 'profession'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                    CustomText(text: 'profession'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     Obx(() => CustomDropdown<ProfessionModel>(
                           hint: 'selectProfession'.tr,
                           items: controller.professionList,
@@ -130,11 +129,11 @@ class _ProfileSettingStepOneWidgetState
                               form.selectedProfession.value = val,
                         )),
 
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     // ================= Place of Birth =================
                     CustomText(
-                        text: 'placeOfBirth'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        text: 'placeOfBirth'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     Obx(() => CustomDropdown<CountryModel>(
                           hint: 'selectCountry'.tr,
                           items: controller.countryList,
@@ -143,11 +142,11 @@ class _ProfileSettingStepOneWidgetState
                           onChanged: (val) => form.selectedCountry.value = val,
                         )),
 
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     // ================= District/State =================
                     CustomText(
-                        text: 'districtState'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        text: 'districtState'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.district,
                       hint: 'districtState'.tr,
@@ -156,10 +155,10 @@ class _ProfileSettingStepOneWidgetState
                           : null,
                     ),
 
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     // ================= Gender =================
-                    CustomText(text: 'gender'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                    CustomText(text: 'gender'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     Obx(() => CustomDropdown<GenderModel>(
                           hint: 'selectGender'.tr,
                           items: controller.genderList,
@@ -168,11 +167,11 @@ class _ProfileSettingStepOneWidgetState
                           onChanged: (val) => form.selectedGender.value = val,
                         )),
 
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     // ================= NID / Passport =================
                     CustomText(
-                        text: 'nidPassportNo'.tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
+                        text: 'nidPassportNo'.tr, fontsize: 16),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.nid,
                       hint: 'nidPassportNo'.tr,
@@ -180,12 +179,12 @@ class _ProfileSettingStepOneWidgetState
                           ? 'nidPassportNoRequired'.tr
                           : null,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     CustomText(
                       text: 'nidPassportDocuments'.tr,
-                      fontsize: 16.sp,
+                      fontsize: 16,
                     ),
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 4),
                     if (form.nid.text.isNotEmpty)
                       Obx(() {
                         return _buildFileRow(
@@ -228,25 +227,25 @@ class _ProfileSettingStepOneWidgetState
                     CustomText(
                       text: 'fileAllowedWarning'.tr,
                       color: AppColors.redColor,
-                      fontsize: 12.sp,
+                      fontsize: 12,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
 
                     // ================= TIN =================
                     CustomText(text: 'tinFull'.tr),
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 4),
                     CustomTextFormField(
                       controller: form.tin,
                       hint: 'tin'.tr,
                       validator: (value) =>
                           value!.isEmpty ? 'tinRequired'.tr : null,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     CustomText(
                       text: 'tinDocuments'.tr,
-                      fontsize: 16.sp,
+                      fontsize: 16,
                     ),
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 4),
                     if (controller
                             .profileModel.value.userProfile?.tinPaperUrl !=
                         null)
@@ -290,13 +289,13 @@ class _ProfileSettingStepOneWidgetState
                     CustomText(
                       text: 'fileAllowedWarning'.tr,
                       color: AppColors.redColor,
-                      fontsize: 12.sp,
+                      fontsize: 12,
                     ),
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
 
                     // ================= Multi Citizenship =================
                     CustomText(text: "Multi Citizenship".tr),
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 4),
                     Obx(
                       () => Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -309,22 +308,22 @@ class _ProfileSettingStepOneWidgetState
                             onChanged: (val) =>
                                 form.selectedMultiCitizenCountry.value = val,
                           ),
-                          SizedBox(height: 16.h),
+                          SizedBox(height: 16),
                           CustomText(
                             text: 'nidPassportNo'.tr,
-                            fontsize: 16.sp,
+                            fontsize: 16,
                           ),
-                          SizedBox(height: 4.h),
+                          SizedBox(height: 4),
                           CustomTextFormField(
                             controller: form.multiCitizenPassport,
                             hint: 'passportNo'.tr,
                           ),
-                          SizedBox(height: 16.h),
+                          SizedBox(height: 16),
                           CustomText(
                             text: 'nidPassportDocuments'.tr,
-                            fontsize: 16.sp,
+                            fontsize: 16,
                           ),
-                          SizedBox(height: 4.h),
+                          SizedBox(height: 4),
                           if (controller.profileModel.value.userProfile
                                   ?.passportPaperUrl !=
                               null)
@@ -372,7 +371,7 @@ class _ProfileSettingStepOneWidgetState
                       ),
                     ),
 
-                    SizedBox(height: 16.h),
+                    SizedBox(height: 16),
                     // ================= Button =================
                     CustomButtonCommon(
                       title: 'next'.tr,
@@ -383,7 +382,7 @@ class _ProfileSettingStepOneWidgetState
                         }
                       },
                     ),
-                    SizedBox(height: 20.h),
+                    SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -411,9 +410,9 @@ class _ProfileSettingStepOneWidgetState
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.primaryColor,
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 side: BorderSide(color: AppColors.primaryColor),
               ),
@@ -424,32 +423,32 @@ class _ProfileSettingStepOneWidgetState
                     // Icon
                     Icon(
                       Icons.attach_file,
-                      size: 20.sp,
+                      size: 20,
                       color: AppColors.primaryColor,
                     ),
-                    SizedBox(width: 8.w),
+                    SizedBox(width: 8),
 
                     // Choose file text
                     Text(
                       'chooseFile'.tr,
                       style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: AppColors.primaryColor,
                       ),
                     ),
 
                     ...[
-                      SizedBox(width: 12.w),
+                      SizedBox(width: 12),
 
                       // Divider
                       Container(
-                        height: 18.h,
+                        height: 18,
                         width: 1,
                         color: AppColors.primaryColor.withOpacity(0.4),
                       ),
 
-                      SizedBox(width: 12.w),
+                      SizedBox(width: 12),
 
                       // File name or placeholder
                       Expanded(
@@ -459,7 +458,7 @@ class _ProfileSettingStepOneWidgetState
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 13.sp,
+                            fontSize: 13,
                             color: pickedFile.value == null
                                 ? Colors.grey
                                 : AppColors.hitTextColor000000,
@@ -472,22 +471,22 @@ class _ProfileSettingStepOneWidgetState
               ),
             ),
           ),
-          SizedBox(width: 6.w),
+          SizedBox(width: 6),
           if (fileUrl != null)
             InkWell(
               onTap: isDownloading.value ? null : onDownload,
               child: Container(
-                width: 48.w,
+                width: 48,
                 decoration: BoxDecoration(
                   color: AppColors.primaryColor,
-                  borderRadius: BorderRadius.circular(8.r),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Obx(() {
                   return isDownloading.value
                       ? Center(
                           child: SizedBox(
-                            width: 22.w,
-                            height: 22.w,
+                            width: 22,
+                            height: 22,
                             child: CircularProgressIndicator(
                               value: progress.value / 100,
                               strokeWidth: 2,
@@ -531,7 +530,7 @@ class _ProfileSettingStepOneWidgetState
 //         return Form(
 //           key: controller.step1formKey,
 //           child: Padding(
-//             padding: EdgeInsets.symmetric(horizontal: 14.h),
+//             padding: EdgeInsets.symmetric(horizontal: 14),
 //             child: RefreshIndicator(
 //               onRefresh: controller.getProfilePageData(),
 //               child: SingleChildScrollView(
@@ -540,8 +539,8 @@ class _ProfileSettingStepOneWidgetState
 //                   children: [
 //                     /// ---------- First Name ----------
 //                     const SizedBox(height: 16),
-//                     CustomText(text: "First Name".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
+//                     CustomText(text: "First Name".tr, fontsize: 16),
+//                     SizedBox(height: 4),
 //                     CustomTextFormField(
 //                       controller: form.value.firstName,
 //                       hint: "First Name".tr,
@@ -550,9 +549,9 @@ class _ProfileSettingStepOneWidgetState
 //                     ),
 
 //                     /// ---------- Last Name ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "Last Name".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
+//                     SizedBox(height: 16),
+//                     CustomText(text: "Last Name".tr, fontsize: 16),
+//                     SizedBox(height: 4),
 //                     CustomTextFormField(
 //                       controller: form.value.lastName,
 //                       hint: "Last Name".tr,
@@ -561,9 +560,9 @@ class _ProfileSettingStepOneWidgetState
 //                     ),
 
 //                     /// ---------- Marital Status ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "Marital Status".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
+//                     SizedBox(height: 16),
+//                     CustomText(text: "Marital Status".tr, fontsize: 16),
+//                     SizedBox(height: 4),
 //                     Obx(() => CustomDropdown<MaritalModel>(
 //                           hint: "Select Marital Status",
 //                           items: controller.maritalList,
@@ -576,9 +575,9 @@ class _ProfileSettingStepOneWidgetState
 //                         )),
 
 //                     /// ---------- Profession ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "Profession".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
+//                     SizedBox(height: 16),
+//                     CustomText(text: "Profession".tr, fontsize: 16),
+//                     SizedBox(height: 4),
 //                     Obx(() => CustomDropdown<ProfessionModel>(
 //                           hint: "Select Profession",
 //                           items: controller.professionList,
@@ -589,9 +588,9 @@ class _ProfileSettingStepOneWidgetState
 //                         )),
 
 //                     /// ---------- Place of Birth ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "Place of Birth".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
+//                     SizedBox(height: 16),
+//                     CustomText(text: "Place of Birth".tr, fontsize: 16),
+//                     SizedBox(height: 4),
 //                     Obx(() => CustomDropdown<CountryModel>(
 //                           hint: "Select Country",
 //                           items: controller.countryList,
@@ -602,9 +601,9 @@ class _ProfileSettingStepOneWidgetState
 //                         )),
 
 //                     /// ---------- District ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "District/State".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
+//                     SizedBox(height: 16),
+//                     CustomText(text: "District/State".tr, fontsize: 16),
+//                     SizedBox(height: 4),
 //                     CustomTextFormField(
 //                       controller: form.value.district,
 //                       hint: "District/State".tr,
@@ -613,9 +612,9 @@ class _ProfileSettingStepOneWidgetState
 //                     ),
 
 //                     /// ---------- Gender ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "Gender".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
+//                     SizedBox(height: 16),
+//                     CustomText(text: "Gender".tr, fontsize: 16),
+//                     SizedBox(height: 4),
 //                     Obx(() => CustomDropdown<GenderModel>(
 //                           hint: "Select Gender",
 //                           items: controller.genderList,
@@ -625,9 +624,9 @@ class _ProfileSettingStepOneWidgetState
 //                         )),
 
 //                     /// ---------- NID ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "NID/Passport No".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
+//                     SizedBox(height: 16),
+//                     CustomText(text: "NID/Passport No".tr, fontsize: 16),
+//                     SizedBox(height: 4),
 //                     CustomTextFormField(
 //                       controller: form.value.nid,
 //                       hint: "NID/Passport No".tr,
@@ -636,9 +635,9 @@ class _ProfileSettingStepOneWidgetState
 //                     ),
 
 //                     /// ---------- TIN ----------
-//                     SizedBox(height: 16.h),
+//                     SizedBox(height: 16),
 //                     CustomText(text: "TIN".tr),
-//                     SizedBox(height: 4.h),
+//                     SizedBox(height: 4),
 //                     CustomTextFormField(
 //                       controller: form.value.tin,
 //                       hint: "TIN".tr,
@@ -646,9 +645,9 @@ class _ProfileSettingStepOneWidgetState
 //                     ),
 
 //                     /// ---------- Multi Citizenship ----------
-//                     SizedBox(height: 16.h),
+//                     SizedBox(height: 16),
 //                     CustomText(text: "Multi Citizenship".tr),
-//                     SizedBox(height: 4.h),
+//                     SizedBox(height: 4),
 //                     Obx(() => CustomDropdown<CountryModel>(
 //                           hint: "Select Country",
 //                           items: controller.countryList,
@@ -657,14 +656,14 @@ class _ProfileSettingStepOneWidgetState
 //                           onChanged: (v) =>
 //                               form.value.selectedMultiCitizenCountry.value = v,
 //                         )),
-//                     SizedBox(height: 10.h),
+//                     SizedBox(height: 10),
 //                     CustomTextFormField(
 //                       controller: form.value.multiCitizenPassport,
 //                       hint: "Passport No".tr,
 //                     ),
 
 //                     /// ---------- Next Button ----------
-//                     SizedBox(height: 20.h),
+//                     SizedBox(height: 20),
 //                     CustomButtonCommon(
 //                       title: "Next".tr,
 //                       onpress: () {
@@ -674,7 +673,7 @@ class _ProfileSettingStepOneWidgetState
 //                         }
 //                       },
 //                     ),
-//                     SizedBox(height: 30.h),
+//                     SizedBox(height: 30),
 //                   ],
 //                 ),
 //               ),

@@ -1,9 +1,8 @@
-﻿import 'package:al_wasyeah/helpers/file_picker_util.dart';
+import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/models/profile_info_model/parent_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
 import 'package:al_wasyeah/view/widgets/file_choose_and_download_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +18,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     ParentForm form = controller.parentForm.value;
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 14.h),
+        padding: EdgeInsets.symmetric(horizontal: 14),
         child: SingleChildScrollView(
           child: Form(
             key: controller.step3formKey,
@@ -44,7 +43,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
                   filePrefix: 'FatherNidOrPassport',
                 ),
 
-                SizedBox(height: 24.h),
+                SizedBox(height: 24),
 
                 /// ========== Mother ==========
                 _parentSection(
@@ -64,7 +63,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
                   filePrefix: 'MotherNidOrPassport',
                 ),
 
-                SizedBox(height: 20.h),
+                SizedBox(height: 20),
                 CustomButtonCommon(
                   title: 'next'.tr,
                   onpress: () {
@@ -73,7 +72,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
                     }
                   },
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height: 20),
               ],
             ),
           ),
@@ -86,22 +85,22 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
   Widget _sectionTitle(String title) {
     return Column(
       children: [
-        SizedBox(height: 16.h),
+        SizedBox(height: 16),
         Container(
-          height: 48.h,
+          height: 48,
           alignment: Alignment.center,
           width: double.infinity,
           decoration: BoxDecoration(
             color: AppColors.primaryColor,
-            borderRadius: BorderRadius.circular(8.r),
+            borderRadius: BorderRadius.circular(8),
           ),
-          padding: EdgeInsets.all(8.h),
+          padding: EdgeInsets.all(8),
           child: Text(
             title.tr,
-            style: TextStyle(color: Colors.white, fontSize: 22.sp),
+            style: TextStyle(color: Colors.white, fontSize: 22),
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 16),
       ],
     );
   }
@@ -128,23 +127,23 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
             'nidPassportNoRequired'.tr),
         CustomText(
           text: 'nidPassportDocuments'.tr,
-          fontsize: 16.sp,
+          fontsize: 16,
         ),
-        SizedBox(height: 4.h),
+        SizedBox(height: 4),
         if (fileUrl != null)
           _filePicker(
               fileUrl, pickedFile, onPickFile, downloadType, filePrefix),
         CustomText(
           text: 'fileAllowedWarning'.tr,
           color: AppColors.redColor,
-          fontsize: 12.sp,
+          fontsize: 12,
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 16),
         CustomText(
           text: 'existenceStatus'.tr,
-          fontsize: 16.sp,
+          fontsize: 16,
         ),
-        SizedBox(height: 4.h),
+        SizedBox(height: 4),
         Obx(
           () => Center(
             child: ToggleButtons(
@@ -175,14 +174,14 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: label.tr, fontsize: 16.sp),
-        SizedBox(height: 4.h),
+        CustomText(text: label.tr, fontsize: 16),
+        SizedBox(height: 4),
         CustomTextFormField(
           controller: controller,
           hint: label.tr,
           validator: (value) => value!.isEmpty ? error : null,
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 16),
       ],
     );
   }
@@ -191,8 +190,8 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: 'profession'.tr, fontsize: 16.sp),
-        SizedBox(height: 4.h),
+        CustomText(text: 'profession'.tr, fontsize: 16),
+        SizedBox(height: 4),
         Obx(() => CustomDropdown<ProfessionModel>(
               hint: 'profession'.tr,
               items: controller.professionList,
@@ -200,7 +199,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
               itemToString: (item) => item.profession ?? "",
               onChanged: (val) => selectedProfession.value = val,
             )),
-        SizedBox(height: 16.h),
+        SizedBox(height: 16),
       ],
     );
   }

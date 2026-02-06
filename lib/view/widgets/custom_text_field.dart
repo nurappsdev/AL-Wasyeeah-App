@@ -2,7 +2,6 @@
 
 import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../utils/app_colors.dart';
 
@@ -113,16 +112,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
       obscureText: widget.isPassword ? obscureText : false,
       style: TextStyle(
           color: widget.textColor ?? Colors.black,
-          fontSize: widget.hintextSize ?? 16.h),
+          fontSize: widget.hintextSize ?? 16),
 
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(
-            horizontal: widget.contentPaddingHorizontal ?? 20.w,
-            vertical: widget.contentPaddingVertical ?? 10.h),
+            horizontal: widget.contentPaddingHorizontal ?? 20,
+            vertical: widget.contentPaddingVertical ?? 10),
         fillColor: const Color(0xffFFFFFF),
         filled: true,
         errorStyle: TextStyle(
-            fontSize: 12.sp,
+            fontSize: 12,
             fontWeight: FontWeight.w500,
             color: Colors.red,
             fontFamily: "ComicNeue-Light"),
@@ -135,12 +134,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     : Icons.visibility_outlined),
               )
             : widget.suffixIcon,
-        prefixIconConstraints: BoxConstraints(minHeight: 24.w, minWidth: 24.w),
+        prefixIconConstraints: BoxConstraints(minHeight: 24, minWidth: 24),
         labelText: widget.labelText,
         hintText: widget.hintText,
         hintStyle: TextStyle(
             color: widget.hintextColor ?? Colors.black54,
-            fontSize: widget.hintextSize ?? 14.h,
+            fontSize: widget.hintextSize ?? 14,
             fontWeight: FontWeight.w400,
             fontFamily: "ComicNeue-Light"),
         focusedBorder: focusedBorder(),
@@ -159,7 +158,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   OutlineInputBorder focusedBorder() {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(widget.borderRadio?.r ?? 16.r),
+      borderRadius: BorderRadius.circular(widget.borderRadio ?? 16.0),
       borderSide:
           BorderSide(color: widget.borderColor ?? AppColors.primaryColor),
     );
@@ -167,7 +166,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   OutlineInputBorder enabledBorder() {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(widget.borderRadio?.r ?? 16.r),
+      borderRadius: BorderRadius.circular(widget.borderRadio ?? 16.0),
       borderSide:
           BorderSide(color: widget.borderColor ?? AppColors.hitTextColor000000),
     );
@@ -175,7 +174,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   OutlineInputBorder errorBorder() {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(widget.borderRadio?.r ?? 16.r),
+      borderRadius: BorderRadius.circular(widget.borderRadio ?? 16.0),
       borderSide: const BorderSide(
         color: Colors.red,
         width: 0.5,
@@ -272,7 +271,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       textInputAction: widget.textInputAction,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
-      style: TextStyle(color: Colors.black, fontSize: 12.sp),
+      style: TextStyle(color: Colors.black, fontSize: 12),
       onChanged: (value) {
         setState(() => _hasValue = value.isNotEmpty);
         widget.onChanged?.call(value);
@@ -295,4 +294,3 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     );
   }
 }
-

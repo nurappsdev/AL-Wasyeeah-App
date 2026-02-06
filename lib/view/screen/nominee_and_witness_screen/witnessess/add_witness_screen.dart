@@ -1,5 +1,4 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../controllers/controllers.dart';
@@ -24,12 +23,12 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(WitnessController());
+    final controller = Get.find<WitnessController>();
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
           text: "Add Witness".tr,
-          fontsize: 18.sp,
+          fontsize: 18,
         ),
       ),
       body: BackgroundImageContainer(
@@ -37,21 +36,21 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
           height: Get.height,
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 20.h),
+                      SizedBox(height: 20),
 
                       ///=============Last Name====================
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: controller.searchController,
                           hintText: "Search".tr,
@@ -154,7 +153,7 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
                           );
                         }
                       }),
-                      SizedBox(height: 400.h),
+                      SizedBox(height: 400),
                       CustomButton(
                         title: "+ Add outside witness".tr,
                         titlecolor: AppColors.primaryColor,
@@ -163,7 +162,7 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
                               preventDuplicates: false);
                         },
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 10),
                     ],
                   ),
                 ],
@@ -175,5 +174,3 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
     );
   }
 }
-
-

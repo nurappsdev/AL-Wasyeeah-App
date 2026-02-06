@@ -1,4 +1,4 @@
-﻿
+
 class GetUserResponseModel {
   final int? userProfileId;
   final String? firstName;

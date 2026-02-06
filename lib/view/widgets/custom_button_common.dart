@@ -1,6 +1,4 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../utils/app_colors.dart';
 import 'widgets.dart';
 
@@ -31,11 +29,11 @@ class CustomButtonCommon extends StatelessWidget {
     return GestureDetector(
       onTap: loading ? () {} : onpress,
       child: Container(
-        width: width ?? 355.w,
-        height: height ?? 48.h,
-        padding: EdgeInsets.all(10.r),
+        width: width ?? 355,
+        height: height ?? 48,
+        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: BorderRadius.circular(8),
           color: color ?? AppColors.primaryColor,
         ),
         child: Row(
@@ -45,15 +43,15 @@ class CustomButtonCommon extends StatelessWidget {
           children: [
             loading
                 ? SizedBox(
-                    height: 20.h,
-                    width: 20.h,
+                    height: 20,
+                    width: 20,
                     child: const CircularProgressIndicator(
                       color: Colors.white,
                     ),
                   )
                 : CustomText(
                     text: title,
-                    fontsize: fontSize ?? 20.sp,
+                    fontsize: fontSize ?? 20,
                     color: titlecolor ?? Colors.white,
                     fontWeight: FontWeight.w400,
                   ),
@@ -63,4 +61,3 @@ class CustomButtonCommon extends StatelessWidget {
     );
   }
 }
-

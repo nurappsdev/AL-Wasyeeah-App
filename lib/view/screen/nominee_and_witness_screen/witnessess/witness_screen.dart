@@ -1,6 +1,5 @@
-﻿import 'package:al_wasyeah/helpers/app_routes.dart';
+import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/app_image.dart';
@@ -59,7 +58,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
       appBar: AppBar(
         title: CustomText(
           text: "Witness".tr,
-          fontsize: 18.sp,
+          fontsize: 18,
         ),
       ),
       body: BackgroundImageContainer(
@@ -67,17 +66,17 @@ class _WitnessScreenState extends State<WitnessScreen> {
           height: Get.height,
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 20),
                   Center(
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(8.r),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       child: ToggleButtons(
                         isSelected: isSelected,
@@ -103,7 +102,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              'Iâ€™m the witness'.tr,
+                              'I’m the witness'.tr,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -111,7 +110,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 20),
                   SizedBox(
                     height: 500.0, // Adjust height as per your needs
                     child: ListView.builder(
@@ -155,7 +154,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
                       },
                     ),
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                   CustomButton(
                     title: "+ Add more witness".tr,
                     titlecolor: AppColors.primaryColor,
@@ -164,7 +163,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
                           preventDuplicates: false);
                     },
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                 ],
               ),
             ),

@@ -1,7 +1,6 @@
-﻿import 'package:al_wasyeah/utils/app_dimentions.dart';
+import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../controllers/controllers.dart';
@@ -18,7 +17,7 @@ class LoginScreen extends StatelessWidget {
       TextEditingController(text: "WASY100003");
   final TextEditingController passController =
       TextEditingController(text: "Asdf.1234");
-  final AuthController authController = Get.put(AuthController());
+  final AuthController authController = Get.find<AuthController>();
 
   final GlobalKey<FormState> _logKey = GlobalKey<FormState>();
   final List<GridItem> items = [
@@ -64,7 +63,7 @@ class LoginScreen extends StatelessWidget {
       body: BackgroundImageContainer(
         child: Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+              EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge),
           child: SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
@@ -77,20 +76,20 @@ class LoginScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 80.h,
+                        height: 80,
                       ),
                       Center(
                           child: SvgPicture.asset(AppIcons.logo,
-                              height: 160.h, width: 200.w)),
+                              height: 160, width: 200)),
                       SizedBox(
-                        height: 24.h,
+                        height: 24,
                       ),
 
                       ///================3 Icon ==== Nominee === Finance === Application=================
                       SizedBox(
                         width: double.infinity,
                         height:
-                            120.h, // Increased height to accommodate content
+                            120, // Increased height to accommodate content
                         child: GridView.builder(
                           scrollDirection:
                               Axis.horizontal, // Enables horizontal scrolling
@@ -111,8 +110,8 @@ class LoginScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SvgPicture.asset(item.icon,
-                                      height: 60.h, width: 60.w),
-                                  SizedBox(height: 4.h),
+                                      height: 60, width: 60),
+                                  SizedBox(height: 4),
                                   CustomText(text: item.text),
                                 ],
                               ),
@@ -123,28 +122,28 @@ class LoginScreen extends StatelessWidget {
 
                       ///=============Email====================
                       SizedBox(
-                        height: 20.h,
+                        height: 20,
                       ),
                       CustomText(
                         text: 'enterYourName'.tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: emailController,
                           hintText: 'enterYourName'.tr,
                           borderColor: AppColors.secondaryPrimaryColor,
                           prefixIcon: Padding(
-                            padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                            padding: EdgeInsets.only(left: 16, right: 12),
                             child: SvgPicture.asset(AppIcons.email,
                                 color: AppColors.primaryColor,
-                                height: 20.h,
-                                width: 20.w),
+                                height: 20,
+                                width: 20),
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -157,29 +156,29 @@ class LoginScreen extends StatelessWidget {
 
                       ///=============Password====================
                       SizedBox(
-                        height: 20.h,
+                        height: 20,
                       ),
                       CustomText(
                         text: 'enterYourPass'.tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: passController,
                           isPassword: true,
                           hintText: 'enterYourPass'.tr,
                           borderColor: AppColors.secondaryPrimaryColor,
                           prefixIcon: Padding(
-                            padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                            padding: EdgeInsets.only(left: 16, right: 12),
                             child: SvgPicture.asset(AppIcons.passIcon,
                                 color: AppColors.primaryColor,
-                                height: 24.h,
-                                width: 24.w),
+                                height: 24,
+                                width: 24),
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -200,17 +199,17 @@ class LoginScreen extends StatelessWidget {
                                 parameters: {'email': emailController.text});
                           },
                           child: Padding(
-                            padding: EdgeInsets.only(left: 190.w),
+                            padding: EdgeInsets.only(left: 190),
                             child: CustomText(
                               text: 'forgotPass'.tr,
-                              fontsize: 16.sp,
+                              fontsize: 16,
                               color: AppColors.primaryColor,
                               textAlign: TextAlign.right,
                               fontWeight: FontWeight.w500,
                             ),
                           )),
                       SizedBox(
-                        height: 20.h,
+                        height: 20,
                       ),
 
                       ///=============Sign In Button====================
@@ -233,7 +232,7 @@ class LoginScreen extends StatelessWidget {
 
                       ///=============SignUp====================
                       SizedBox(
-                        height: 20.h,
+                        height: 20,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -244,7 +243,7 @@ class LoginScreen extends StatelessWidget {
                               },
                               child: CustomText(
                                 text: 'dontHaveAccount'.tr,
-                                fontsize: 20.sp,
+                                fontsize: 20,
                               )),
                           InkWell(
                               onTap: () {
@@ -253,7 +252,7 @@ class LoginScreen extends StatelessWidget {
                               },
                               child: CustomText(
                                 text: 'registerButton'.tr,
-                                fontsize: 20.sp,
+                                fontsize: 20,
                                 color: AppColors.primaryColor,
                               )),
                         ],
@@ -277,5 +276,3 @@ class GridItem {
 
   GridItem({required this.icon, required this.text, this.onTap});
 }
-
-

@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
@@ -6,7 +6,6 @@ import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:al_wasyeah/utils/app_image.dart';
 import '../../utils/app_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -93,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //         .indexOf(userController.upcomingPrayer.value);
     //     if (index != -1) {
     //       _scrollController?.animateTo(
-    //         index * 250.h,
+    //         index * 250,
     //         duration: Duration(milliseconds: 500),
     //         curve: Curves.easeInOut,
     //       );
@@ -121,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ConnectivityWrapper(
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70.h),
+          preferredSize: Size.fromHeight(70),
           child: AppBar(
             leadingWidth: 200, // Adjust this width to fit your content
             leading: Padding(
@@ -147,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       //   boxFit: BoxFit.contain,
                       // ),
                       ),
-                  SizedBox(width: 8.h), // Space between the image and text
+                  SizedBox(width: 8), // Space between the image and text
                   // Column(
                   //   crossAxisAlignment: CrossAxisAlignment.start,
                   //   mainAxisAlignment: MainAxisAlignment.center,
@@ -159,13 +158,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   //               text: userController
                   //                       .userProfile.value?.firstName ??
                   //                   "N/A",
-                  //               fontsize: 16.sp,
+                  //               fontsize: 16,
                   //               textAlign: TextAlign.start,
                   //             ),
                   //     ),
                   //     CustomText(
                   //       text: "Welcome back!".tr,
-                  //       fontsize: 14.sp,
+                  //       fontsize: 14,
                   //       textAlign: TextAlign.start,
                   //     ),
                   //   ],
@@ -210,11 +209,11 @@ class _HomeScreenState extends State<HomeScreen> {
             width: double.infinity,
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 20.h,
+                      height: 20,
                     ),
 
                     ///=======================Explore your \n Wasyyah==========================
@@ -225,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             preventDuplicates: false);
                       },
                       child: Container(
-                        height: 150.h,
+                        height: 150,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -237,19 +236,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             SvgPicture.asset(
                               AppIcons.exploreWasyea,
-                              width: 80.w,
-                              height: 80.h,
+                              width: 80,
+                              height: 80,
                             ),
                             CustomText(
                               text: 'exploreWasyyah'.tr,
-                              fontsize: 18.sp,
+                              fontsize: 18,
                               color: AppColors.primaryColor,
                             )
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.h),
+                    SizedBox(height: 20),
 
                     ///=======================Witness \n Nominee==========================
                     Row(
@@ -262,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   preventDuplicates: false);
                             },
                             child: Container(
-                              height: 100.h,
+                              height: 100,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -276,12 +275,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   SvgPicture.asset(
                                     AppIcons.witness,
-                                    width: 50.w,
-                                    height: 50.h,
+                                    width: 50,
+                                    height: 50,
                                   ),
                                   CustomText(
                                     text: 'witness'.tr,
-                                    fontsize: 18.sp,
+                                    fontsize: 18,
                                     color: AppColors.textColor4E4E4E,
                                   )
                                 ],
@@ -292,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         ///======================Nominee====================
                         SizedBox(
-                          width: 6.w,
+                          width: 6,
                         ),
                         Expanded(
                           child: GestureDetector(
@@ -301,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   preventDuplicates: false);
                             },
                             child: Container(
-                              height: 100.h,
+                              height: 100,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -315,12 +314,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   SvgPicture.asset(
                                     AppIcons.nominee,
-                                    width: 40.w,
-                                    height: 40.h,
+                                    width: 40,
+                                    height: 40,
                                   ),
                                   CustomText(
                                     text: 'nominee'.tr,
-                                    fontsize: 18.sp,
+                                    fontsize: 18,
                                     color: AppColors.textColor4E4E4E,
                                   )
                                 ],
@@ -332,31 +331,31 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
 
                     SizedBox(
-                      height: 10.h,
+                      height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Prayer Times",
                             style: TextStyle(
-                                fontSize: 24.sp,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.green[700])),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            SizedBox(height: 12.h),
+                            SizedBox(height: 12),
                             Text(
                                 DateFormat('dd MMM, yyyy')
                                     .format(DateTime.now()),
                                 style: TextStyle(
-                                    fontSize: 14.sp, color: Colors.black)),
-                            SizedBox(height: 4.h),
+                                    fontSize: 14, color: Colors.black)),
+                            SizedBox(height: 4),
                             Text(
                               todayHijri.toFormat(
                                   "dd MMMM, yyyy"), // Example: 26 Muharram, 1447
                               style: TextStyle(
-                                fontSize: 14.sp,
+                                fontSize: 14,
                                 color: Colors.green[800],
                                 fontWeight: FontWeight.bold,
                               ),
@@ -367,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
 
                     SizedBox(
-                      height: 20.h,
+                      height: 20,
                     ),
                     Obx(() {
                       final prayers = userController.prayerTimes;
@@ -376,7 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       if (prayers.isEmpty) {
                         return SizedBox(
-                          height: 200.h,
+                          height: 200,
                           child: GridView.builder(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 16.0),
@@ -403,13 +402,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                           height: 20,
                                           width: 120,
                                           color: Colors.grey.shade300),
-                                      SizedBox(height: 8.h),
+                                      SizedBox(height: 8),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: [
                                           Container(
-                                              height: 80.h,
+                                              height: 80,
                                               width: 80,
                                               color: Colors.grey.shade300),
                                           Column(
@@ -439,7 +438,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
 
                       return SizedBox(
-                        height: 200.h,
+                        height: 200,
                         width: double.infinity,
                         child: GridView.builder(
                           controller: _scrollController,
@@ -484,19 +483,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                             : Colors.black,
                                       ),
                                     ),
-                                    SizedBox(height: 8.h),
+                                    SizedBox(height: 8),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
                                       children: [
                                         Image.asset(AppImages.mosjidIcon,
-                                            height: 80.h, width: 80),
+                                            height: 80, width: 80),
                                         Column(
                                           children: [
                                             Text(
                                               name,
                                               style: TextStyle(
-                                                  fontSize: 20.sp,
+                                                  fontSize: 20,
                                                   color: isCurrent
                                                       ? Colors.green
                                                       : Colors.red),
@@ -505,12 +504,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               Text(
                                                 left.toString().split(".")[0],
                                                 style: TextStyle(
-                                                    fontSize: 18.sp,
+                                                    fontSize: 18,
                                                     color: Colors.black87),
                                               ),
                                             Text(
                                               formatTime(time),
-                                              style: TextStyle(fontSize: 14.h),
+                                              style: TextStyle(fontSize: 14),
                                             ),
                                             Switch(
                                               value: isCurrent,
@@ -624,11 +623,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     //   ),
                     // ),
                     // SizedBox(
-                    //   height: 200.h,
+                    //   height: 200,
                     //   width: double.infinity,
                     //   child: prayerTimes.isNotEmpty
                     //       ? GridView.builder(
-                    //     controller: _scrollController, // 👉 attach controller here
+                    //     controller: _scrollController, // ?? attach controller here
                     //     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     //     scrollDirection: Axis.horizontal,
                     //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -660,11 +659,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     //                   color: isCurrent ? Colors.green : Colors.orange,
                     //                 ),
                     //               ),
-                    //               SizedBox(height: 8.h),
+                    //               SizedBox(height: 8),
                     //               Row(
                     //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                     //                 children: [
-                    //                   Image.asset(AppImages.mosjidIcon, height: 80.h, width: 80),
+                    //                   Image.asset(AppImages.mosjidIcon, height: 80, width: 80),
                     //                   Column(
                     //                     children: [
                     //                       Text(
@@ -674,11 +673,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     //                       if (isCurrent && timeLeft != null)
                     //                         Text(
                     //                           timeLeft!.toString().split(".")[0],
-                    //                           style: TextStyle(fontSize: 18.sp, color: Colors.black87),
+                    //                           style: TextStyle(fontSize: 18, color: Colors.black87),
                     //                         ),
                     //                       Text(
                     //                         formatTime(time),
-                    //                         style: TextStyle(fontSize: 14.h),
+                    //                         style: TextStyle(fontSize: 14),
                     //                       ),
                     //                       Switch(
                     //                         value: isCurrent ? true : false,
@@ -701,7 +700,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // ),
                     ///==========================Zakat distribute======================
                     SizedBox(
-                      height: 20.h,
+                      height: 20,
                     ),
                     InkWell(
                       onTap: () {
@@ -709,14 +708,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             preventDuplicates: false);
                       },
                       child: SizedBox(
-                        height: 200.h,
+                        height: 200,
                         child: Image.asset(AppImages.zakatImg),
                       ),
                     ),
 
                     ///==========================property distribute======================
                     SizedBox(
-                      height: 20.h,
+                      height: 20,
                     ),
                     InkWell(
                       onTap: () {
@@ -724,13 +723,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             preventDuplicates: false);
                       },
                       child: SizedBox(
-                        height: 200.h,
+                        height: 200,
                         child: Image.asset(AppImages.profirtyImg),
                       ),
                     ),
 
                     SizedBox(
-                      height: 40.h,
+                      height: 40,
                     ),
                   ],
                 ),
@@ -786,15 +785,15 @@ class CustomCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 8.h,
+              height: 8,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                // SvgPicture.asset(imageUrl, height: 80.h),
+                // SvgPicture.asset(imageUrl, height: 80),
                 Image.asset(
                   imageUrl,
-                  height: 80.h,
+                  height: 80,
                   width: 80,
                 ),
                 Column(

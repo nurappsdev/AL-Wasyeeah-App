@@ -1,10 +1,8 @@
-﻿
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class ToastMessageHelper{
-  static void successMessageShowToster(String message ) {
+class ToastMessageHelper {
+  static void successMessageShowToster(String message) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
@@ -12,11 +10,11 @@ class ToastMessageHelper{
       timeInSecForIosWeb: 2,
       backgroundColor: Colors.green,
       textColor: Colors.white,
-      fontSize: 16.h,
+      fontSize: 16,
     );
   }
 
-  static void errorMessageShowToster(String message ) {
+  static void errorMessageShowToster(String message) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
@@ -24,7 +22,7 @@ class ToastMessageHelper{
       timeInSecForIosWeb: 2,
       backgroundColor: Colors.red,
       textColor: Colors.white,
-      fontSize: 16.h,
+      fontSize: 16,
     );
   }
 }

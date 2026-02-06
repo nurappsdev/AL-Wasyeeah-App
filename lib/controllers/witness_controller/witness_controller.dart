@@ -1,4 +1,4 @@
-﻿import 'dart:convert';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -107,7 +107,7 @@ class WitnessController extends GetxController {
   Rx<ZakatPropertyWasiyyahModel?> contextsData =
       Rx<ZakatPropertyWasiyyahModel?>(null);
 
-  /// ðŸ”¥ DIRECT API CALL INSIDE CONTROLLER
+  /// 🔥 DIRECT API CALL INSIDE CONTROLLER
   Future<void> fetchContextsData(String requestKey) async {
     try {
       isZakatPropertyWasiyyah.value = true;

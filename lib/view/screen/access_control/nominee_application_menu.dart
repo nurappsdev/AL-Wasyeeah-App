@@ -1,6 +1,5 @@
-﻿import 'package:al_wasyeah/controllers/controllers.dart';
+import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -17,7 +16,7 @@ class NomineeApplicationMenu extends StatefulWidget {
 }
 
 class _NomineeApplicationMenuState extends State<NomineeApplicationMenu> {
-  NomineeController nomineeController = Get.put(NomineeController());
+  NomineeController nomineeController = Get.find<NomineeController>();
   @override
   Widget build(BuildContext context) {
     nomineeController.getNomineeAccessData(nominee1Witness2: "1");
@@ -28,16 +27,16 @@ class _NomineeApplicationMenuState extends State<NomineeApplicationMenu> {
           height: Get.height,
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 20),
                   Center(
                       child: CustomText(
                     text: "Application Menu",
-                    fontsize: 20.sp,
+                    fontsize: 20,
                     color: AppColors.primaryColor,
                     fontWeight: FontWeight.w600,
                   )),
@@ -121,7 +120,7 @@ class _NomineeApplicationMenuState extends State<NomineeApplicationMenu> {
                                 ),
                     ),
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
@@ -223,5 +222,3 @@ class _NomineeApplicationMenuState extends State<NomineeApplicationMenu> {
     );
   }
 }
-
-

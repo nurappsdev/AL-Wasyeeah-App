@@ -1,4 +1,4 @@
-﻿
+
 
 class ZakatPropertyWasiyyahModel {
   final Zakat? zakat;

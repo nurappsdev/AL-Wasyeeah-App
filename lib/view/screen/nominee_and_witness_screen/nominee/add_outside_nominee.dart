@@ -1,5 +1,4 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../../controllers/controllers.dart';
@@ -41,7 +40,7 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
   }
 
   DateTime? birthDate;
-  NomineeController nomineeController = Get.put(NomineeController());
+  NomineeController nomineeController = Get.find<NomineeController>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -49,7 +48,7 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
         appBar: AppBar(
           title: CustomText(
             text: "Outside Nominee".tr,
-            fontsize: 18.sp,
+            fontsize: 18,
           ),
         ),
         body: BackgroundImageContainer(
@@ -57,7 +56,7 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
             height: Get.height,
             width: double.infinity,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: SingleChildScrollView(
                 child: Form(
                   key: _formKey,
@@ -65,23 +64,23 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 20.h,
+                        height: 20,
                       ),
 
                       ///=============Relation with nominee====================
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
                       CustomText(
                         text: "Relation with nominee".tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: relWithController,
                           hintText: "Relation with nominee".tr,
@@ -97,18 +96,18 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
 
                       ///=============Last Name====================
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
                       CustomText(
                         text: "Name".tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: firstNameController,
                           hintText: "Name".tr,
@@ -124,18 +123,18 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
 
                       ///=============Mobile====================
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
                       CustomText(
                         text: "Mobile".tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: mobileController,
                           hintText: "Mobile".tr,
@@ -151,26 +150,26 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
 
                       ///=============Email====================
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
                       CustomText(
                         text: "email".tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: emailController,
                           hintText: 'enterYourEmail'.tr,
                           borderColor: AppColors.secondaryPrimaryColor,
                           // prefixIcon: Padding(
-                          //   padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                          //   padding: EdgeInsets.only(left: 16, right: 12),
                           //   child: SvgPicture.asset(AppIcons.email, color:
-                          //   AppColors.primaryColor, height: 20.h, width: 20.w),
+                          //   AppColors.primaryColor, height: 20, width: 20),
                           // ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
@@ -184,19 +183,19 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                         ),
                       ),
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
 
                       ///==========================Date of birth*==========================
                       CustomText(
                         text: "Date of birth".tr,
-                        fontsize: 16.sp,
+                        fontsize: 16,
                         color: AppColors.hitTextColor000000,
                         textAlign: TextAlign.left,
                       ),
-                      SizedBox(height: 8.h),
+                      SizedBox(height: 8),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: dateOfBirthController,
                           readOnly: true,
@@ -233,18 +232,18 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
 
                       ///============Present Address"===================
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
                       CustomText(
                         text: "Present Address".tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: presentAddressController,
                           hintText: "Present Address".tr,
@@ -261,18 +260,18 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
 
                       ///============Permanent Address"===================
                       SizedBox(
-                        height: 16.h,
+                        height: 16,
                       ),
                       CustomText(
                         text: "Permanent Address".tr,
                         color: AppColors.hitTextColor000000,
-                        fontsize: 20.sp,
+                        fontsize: 20,
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
+                        padding: EdgeInsets.only(bottom: 16),
                         child: CustomTextField(
                           controller: permanentAddressController,
                           hintText: "Permanent Address".tr,
@@ -324,5 +323,3 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
         ));
   }
 }
-
-

@@ -1,7 +1,7 @@
 import 'package:al_wasyeah/utils/app_image.dart';
-import 'package:al_wasyeah/view/screen/property_distribution_calculation/property_distribution_calculation_page.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +12,6 @@ import '../../../utils/app_colors.dart';
 import '../../../utils/app_icons.dart';
 import '../../../utils/app_constant.dart';
 import '../../widgets/widgets.dart';
-import '../profile/profile_page.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -22,7 +21,7 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  final userController = Get.put(UserController());
+  final userController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class _MenuPageState extends State<MenuPage> {
       appBar: AppBar(
         title: CustomText(
           text: 'userProfile'.tr,
-          fontsize: 18.sp,
+          fontsize: 18,
         ),
       ),
       body: BackgroundImageContainer(
@@ -40,12 +39,12 @@ class _MenuPageState extends State<MenuPage> {
           height: Get.height,
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
                 child: Column(
               children: [
                 SizedBox(
-                  height: 40.h,
+                  height: 40,
                 ),
                 Center(
                     child: CircleAvatar(
@@ -57,11 +56,11 @@ class _MenuPageState extends State<MenuPage> {
                 // CustomNetworkImage(
                 //   boxShape: BoxShape.circle,
                 //   imageUrl: "assets/profile_icon.png",
-                //   height: 120.h,
-                //   width: 120.w,
+                //   height: 120,
+                //   width: 120,
                 // ),
                 SizedBox(
-                  height: 10.h,
+                  height: 10,
                 ),
                 Obx(() => CustomText(
                       text:
@@ -70,42 +69,40 @@ class _MenuPageState extends State<MenuPage> {
                       fontWeight: FontWeight.w700,
                     )),
                 SizedBox(
-                  height: 40.h,
+                  height: 40,
                 ),
 
                 ///=====================Personal Details====================================
                 GestureDetector(
                   onTap: () {
-                    Get.to(
-                      () => ProfilePage(),
-                    );
+                    Get.toNamed(AppRoutes.profilePage);
                   },
                   child: Container(
-                    width: 360.w,
-                    height: 60.h,
-                    margin: EdgeInsets.only(left: 2.w),
+                    width: 360,
+                    height: 60,
+                    margin: EdgeInsets.only(left: 2),
                     decoration: BoxDecoration(
                       color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
                       border: Border.all(
                         color: Color(0xffB0E3D3),
-                        width: 2.w,
+                        width: 2,
                       ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          padding: EdgeInsets.symmetric(horizontal: 12),
                           child: Row(
                             children: [
                               SvgPicture.asset(
                                 AppIcons.proIcon,
                               ),
-                              SizedBox(width: 16.w),
+                              SizedBox(width: 16),
                               CustomText(
                                 text: 'personalDetails'.tr,
-                                fontsize: 16.sp,
+                                fontsize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
                               )
@@ -113,7 +110,7 @@ class _MenuPageState extends State<MenuPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          padding: EdgeInsets.symmetric(horizontal: 12),
                           child: SvgPicture.asset(
                             AppIcons.chevronIcon,
                             color: AppColors.primaryColor,
@@ -124,26 +121,25 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 20.h,
+                  height: 20,
                 ),
 
                 ///=====================Property Distribution Calculation====================================
                 GestureDetector(
                     onTap: () {
-                      Get.to(
-                        () => PropertyDistributionCalculationPage(),
-                      );
+                      Get.toNamed(
+                          AppRoutes.propertyDistributionCalculationScreen);
                     },
                     child: Container(
-                      width: 360.w,
-                      height: 60.h,
-                      margin: EdgeInsets.only(left: 2.w),
+                      width: 360,
+                      height: 60,
+                      margin: EdgeInsets.only(left: 2),
                       decoration: BoxDecoration(
                         color: AppColors.whiteColor,
-                        borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
                         border: Border.all(
                           color: const Color(0xffB0E3D3),
-                          width: 2.w,
+                          width: 2,
                         ),
                       ),
                       child: Row(
@@ -151,22 +147,22 @@ class _MenuPageState extends State<MenuPage> {
                           // LEFT SIDE (ICON + TEXT)
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 12.w),
+                              padding: EdgeInsets.symmetric(horizontal: 12),
                               child: Row(
                                 children: [
                                   CircleAvatar(
-                                    radius: 18.r,
+                                    radius: 18,
                                     backgroundColor: Color(0xFF39B048),
                                     child: Icon(
                                       Icons.calculate,
                                       color: AppColors.whiteColor,
                                     ),
                                   ),
-                                  SizedBox(width: 16.w),
+                                  SizedBox(width: 16),
                                   Expanded(
                                     child: CustomText(
                                       text: 'propertyDistributionTitle'.tr,
-                                      fontsize: 16.sp,
+                                      fontsize: 16,
                                       textOverflow: TextOverflow.ellipsis,
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.textColor4E4E4E,
@@ -179,7 +175,7 @@ class _MenuPageState extends State<MenuPage> {
 
                           // RIGHT CHEVRON ICON
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            padding: EdgeInsets.symmetric(horizontal: 12),
                             child: SvgPicture.asset(
                               AppIcons.chevronIcon,
                               color: AppColors.primaryColor,
@@ -189,36 +185,36 @@ class _MenuPageState extends State<MenuPage> {
                       ),
                     )),
                 SizedBox(
-                  height: 20.h,
+                  height: 20,
                 ),
 
                 ///=====================User Setting====================================
                 Container(
-                  width: 360.w,
-                  height: 60.h,
-                  margin: EdgeInsets.only(left: 2.w),
+                  width: 360,
+                  height: 60,
+                  margin: EdgeInsets.only(left: 2),
                   decoration: BoxDecoration(
                     color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
                     border: Border.all(
                       color: Color(0xffB0E3D3),
-                      width: 2.w,
+                      width: 2,
                     ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         child: Row(
                           children: [
                             SvgPicture.asset(
                               AppIcons.userSettingIcon,
                             ),
-                            SizedBox(width: 16.w),
+                            SizedBox(width: 16),
                             CustomText(
                               text: 'userSetting'.tr,
-                              fontsize: 16.sp,
+                              fontsize: 16,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
                             )
@@ -226,7 +222,7 @@ class _MenuPageState extends State<MenuPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         child: SvgPicture.asset(
                           AppIcons.chevronIcon,
                           color: AppColors.primaryColor,
@@ -236,36 +232,36 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 20.h,
+                  height: 20,
                 ),
 
                 ///=====================Device History====================================
                 Container(
-                  width: 360.w,
-                  height: 60.h,
-                  margin: EdgeInsets.only(left: 2.w),
+                  width: 360,
+                  height: 60,
+                  margin: EdgeInsets.only(left: 2),
                   decoration: BoxDecoration(
                     color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
                     border: Border.all(
                       color: Color(0xffB0E3D3),
-                      width: 2.w,
+                      width: 2,
                     ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         child: Row(
                           children: [
                             SvgPicture.asset(
                               AppIcons.userSettingIcon,
                             ),
-                            SizedBox(width: 16.w),
+                            SizedBox(width: 16),
                             CustomText(
                               text: 'deviceHistory'.tr,
-                              fontsize: 16.sp,
+                              fontsize: 16,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
                             )
@@ -273,7 +269,7 @@ class _MenuPageState extends State<MenuPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         child: SvgPicture.asset(
                           AppIcons.chevronIcon,
                           color: AppColors.primaryColor,
@@ -283,7 +279,7 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 20.h,
+                  height: 20,
                 ),
 
                 ///=====================Device History====================================
@@ -293,31 +289,31 @@ class _MenuPageState extends State<MenuPage> {
                         preventDuplicates: false);
                   },
                   child: Container(
-                    width: 360.w,
-                    height: 60.h,
-                    margin: EdgeInsets.only(left: 2.w),
+                    width: 360,
+                    height: 60,
+                    margin: EdgeInsets.only(left: 2),
                     decoration: BoxDecoration(
                       color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
                       border: Border.all(
                         color: Color(0xffB0E3D3),
-                        width: 2.w,
+                        width: 2,
                       ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          padding: EdgeInsets.symmetric(horizontal: 12),
                           child: Row(
                             children: [
                               SvgPicture.asset(
                                 AppIcons.accessIcon,
                               ),
-                              SizedBox(width: 16.w),
+                              SizedBox(width: 16),
                               CustomText(
                                 text: 'accessControlPanel'.tr,
-                                fontsize: 16.sp,
+                                fontsize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
                               )
@@ -325,7 +321,7 @@ class _MenuPageState extends State<MenuPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          padding: EdgeInsets.symmetric(horizontal: 12),
                           child: SvgPicture.asset(
                             AppIcons.chevronIcon,
                             color: AppColors.primaryColor,
@@ -337,36 +333,36 @@ class _MenuPageState extends State<MenuPage> {
                 ),
 
                 SizedBox(
-                  height: 20.h,
+                  height: 20,
                 ),
 
                 ///=====================Language====================================
                 Container(
-                  width: 360.w,
-                  height: 60.h,
-                  margin: EdgeInsets.only(left: 2.w),
+                  width: 360,
+                  height: 60,
+                  margin: EdgeInsets.only(left: 2),
                   decoration: BoxDecoration(
                     color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
                     border: Border.all(
                       color: Color(0xffB0E3D3),
-                      width: 2.w,
+                      width: 2,
                     ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         child: Row(
                           children: [
                             SvgPicture.asset(
                               AppIcons.languageIcon,
                             ),
-                            SizedBox(width: 16.w),
+                            SizedBox(width: 16),
                             CustomText(
                               text: 'language'.tr,
-                              fontsize: 16.sp,
+                              fontsize: 16,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
                             )
@@ -374,7 +370,7 @@ class _MenuPageState extends State<MenuPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        padding: EdgeInsets.symmetric(horizontal: 12),
                         child: SvgPicture.asset(
                           AppIcons.chevronIcon,
                           color: AppColors.primaryColor,
@@ -384,41 +380,41 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 20.h,
+                  height: 20,
                 ),
 
-                SizedBox(height: 15.h),
+                SizedBox(height: 15),
                 GestureDetector(
                   onTap: () {
                     _showLogoutDialog(context);
                   },
                   child: Container(
-                    width: 360.w,
-                    height: 60.h,
-                    margin: EdgeInsets.only(left: 2.w),
+                    width: 360,
+                    height: 60,
+                    margin: EdgeInsets.only(left: 2),
                     decoration: BoxDecoration(
                       color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
                       border: Border.all(
                         color: Color(0xffB0E3D3),
-                        width: 2.w,
+                        width: 2,
                       ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          padding: EdgeInsets.symmetric(horizontal: 12),
                           child: Row(
                             children: [
                               SvgPicture.asset(
                                 AppIcons.logoutIcon,
                                 color: AppColors.primaryColor,
                               ),
-                              SizedBox(width: 16.w),
+                              SizedBox(width: 16),
                               CustomText(
                                 text: 'loOut'.tr,
-                                fontsize: 14.sp,
+                                fontsize: 14,
                                 color: AppColors.textColor4E4E4E,
                               )
                             ],
@@ -443,26 +439,26 @@ class _MenuPageState extends State<MenuPage> {
         builder: (context) {
           return AlertDialog(
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 24.w, vertical: 26.h),
+                  EdgeInsets.symmetric(horizontal: 24, vertical: 26),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomText(
                     text: 'areYouSure'.tr,
-                    fontsize: 16.sp,
+                    fontsize: 16,
                     fontWeight: FontWeight.w600,
                     maxline: 2,
                   ),
-                  SizedBox(height: 24.h),
+                  SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                          width: 120.w,
-                          height: 40.h,
+                          width: 120,
+                          height: 40,
                           child: CustomButton(
                             title: 'cancel'.tr,
-                            fontSize: 16.h,
+                            fontSize: 16,
                             onpress: () {
                               Get.back();
                             },
@@ -470,15 +466,14 @@ class _MenuPageState extends State<MenuPage> {
                             titlecolor: AppColors.primaryColor,
                           )),
                       SizedBox(
-                          width: 120.w,
-                          height: 40.h,
+                          width: 120,
+                          height: 40,
                           child: CustomButton(
                               color: AppColors.secondaryPrimaryColor,
                               titlecolor: AppColors.primaryColor,
                               title: 'loOut'.tr,
-                              fontSize: 16.h,
+                              fontSize: 16,
                               onpress: () async {
-                      
                                 Get.toNamed(AppRoutes.loginScreen,
                                     preventDuplicates: false);
                               })),
@@ -488,41 +483,41 @@ class _MenuPageState extends State<MenuPage> {
               ),
               elevation: 12.0,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  side: BorderSide(width: 1.w, color: AppColors.primaryColor)));
+                  borderRadius: BorderRadius.circular(12),
+                  side: BorderSide(width: 1, color: AppColors.primaryColor)));
         });
     // Get.defaultDialog(
     //   title: 'Log Out',
     //   titleStyle: TextStyle(
     //       color: Colors.red,
-    //       fontSize: 20.sp,
+    //       fontSize: 20,
     //       fontWeight: FontWeight.bold),
-    //   titlePadding: EdgeInsets.only(top: 20.h),
-    //   contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
+    //   titlePadding: EdgeInsets.only(top: 20),
+    //   contentPadding: EdgeInsets.symmetric(horizontal: 20),
     //   backgroundColor: AppColors.whiteColor,
-    //   radius: 12.r,
+    //   radius: 12,
     //   barrierDismissible: false,
     //   content: SizedBox(
     //     width: MediaQuery.of(context).size.width * 0.9,
-    //     height: 180.h,
+    //     height: 180,
     //     child: Column(
     //       mainAxisSize: MainAxisSize.min,
     //       children: [
-    //         SizedBox(height: 10.h),
+    //         SizedBox(height: 10),
     //         Divider(
     //           color: AppColors.primaryColor.withOpacity(0.7),
-    //           thickness: 1.h,
-    //           indent: 25.w,
-    //           endIndent: 25.w,
+    //           thickness: 1,
+    //           indent: 25,
+    //           endIndent: 25,
     //         ),
-    //         SizedBox(height: 10.h),
+    //         SizedBox(height: 10),
     //         CustomText(
     //           text: 'Are you sure you want to log out of your account?',
     //           textAlign: TextAlign.center,
-    //           fontsize: 16.sp,
+    //           fontsize: 16,
     //           color: AppColors.textColor4E4E4E,
     //         ),
-    //         SizedBox(height: 20.h),
+    //         SizedBox(height: 20),
     //         Row(
     //           mainAxisAlignment: MainAxisAlignment.center,
     //           children: [
@@ -535,20 +530,20 @@ class _MenuPageState extends State<MenuPage> {
     //                 overlayColor: Colors.green,
     //                 backgroundColor: Colors.white,
     //                 shadowColor: Colors.green,
-    //                 fixedSize: Size(120.5.w, 60.h),
+    //                 fixedSize: Size(120.5, 60),
     //                 shape:  RoundedRectangleBorder(
-    //                   borderRadius: BorderRadius.circular(16.sp),
+    //                   borderRadius: BorderRadius.circular(16),
     //
     //                 ),
-    //                 padding: EdgeInsets.symmetric(vertical: 18.h,
-    //                     horizontal: 16.w),
+    //                 padding: EdgeInsets.symmetric(vertical: 18,
+    //                     horizontal: 16),
     //               ),
     //               child: Text(
     //                 'Cancel',
-    //                 style: TextStyle(fontSize: 16.sp),
+    //                 style: TextStyle(fontSize: 16),
     //               ),
     //             ),
-    //             SizedBox(width: 10.w),
+    //             SizedBox(width: 10),
     //             ElevatedButton(
     //               onPressed: () {
     //                 //  Get.offAllNamed(AppRoutes.roleScreen);
@@ -557,15 +552,15 @@ class _MenuPageState extends State<MenuPage> {
     //               style: ElevatedButton.styleFrom(
     //                 foregroundColor: AppColors.whiteColor,
     //                 backgroundColor: Colors.red,
-    //                 fixedSize: Size(130.5.w, 60.h),
+    //                 fixedSize: Size(130.5, 60),
     //                 shape: RoundedRectangleBorder(
-    //                   borderRadius: BorderRadius.circular(16.sp),
+    //                   borderRadius: BorderRadius.circular(16),
     //                 ),
-    //                 padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 16.w),
+    //                 padding: EdgeInsets.symmetric(vertical: 18, horizontal: 16),
     //               ),
     //               child: Text(
     //                 'Log Out',
-    //                 style: TextStyle(fontSize: 16.sp),
+    //                 style: TextStyle(fontSize: 16),
     //               ),
     //             ),
     //           ],
@@ -576,6 +571,3 @@ class _MenuPageState extends State<MenuPage> {
     // );
   }
 }
-
-
-

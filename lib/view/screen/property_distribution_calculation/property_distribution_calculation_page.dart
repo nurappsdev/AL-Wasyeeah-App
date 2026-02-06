@@ -1,5 +1,4 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/controllers/property_distribution_calculation/property_distribution_calculation_controller.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
@@ -8,28 +7,28 @@ import 'package:fl_chart/fl_chart.dart';
 class PropertyDistributionCalculationPage extends StatelessWidget {
   PropertyDistributionCalculationPage({super.key});
 
-  final controller = Get.put(PropertyDistributionCalculationController());
+  final controller = Get.find<PropertyDistributionCalculationController>();
   Widget _sectionTitle(String title) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.h),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          SizedBox(height: 16.h),
+          SizedBox(height: 16),
           Container(
-            height: 48.h,
+            height: 48,
             alignment: Alignment.center,
             width: double.infinity,
             decoration: BoxDecoration(
               color: AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(8.r),
+              borderRadius: BorderRadius.circular(8),
             ),
-            padding: EdgeInsets.all(8.h),
+            padding: EdgeInsets.all(8),
             child: Text(
               title.tr,
-              style: TextStyle(color: Colors.white, fontSize: 22.sp),
+              style: TextStyle(color: Colors.white, fontSize: 22),
             ),
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: 16),
         ],
       ),
     );
@@ -45,7 +44,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
           style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w600,
-              fontSize: 20.sp),
+              fontSize: 20),
         ),
         backgroundColor: AppColors.whiteColor,
         // foregroundColor: Colors.black,
@@ -150,11 +149,11 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
 
   Widget _buildPieChartSection() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       child: Column(
         children: [
           SizedBox(
-            height: 250.h,
+            height: 250,
             child: PieChart(
               PieChartData(
                 sections: controller.propertyDistributionResult
@@ -170,7 +169,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                     title: '${percentage.toStringAsFixed(1)}%',
                     radius: 60,
                     titleStyle: TextStyle(
-                      fontSize: 12.sp,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -181,10 +180,10 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: 20),
           Wrap(
-            spacing: 16.w,
-            runSpacing: 8.h,
+            spacing: 16,
+            runSpacing: 8,
             children: controller.propertyDistributionResult
                 .asMap()
                 .entries
@@ -195,18 +194,18 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    width: 12.w,
-                    height: 12.h,
+                    width: 12,
+                    height: 12,
                     decoration: BoxDecoration(
                       color: _chartColors[index % _chartColors.length],
                       shape: BoxShape.circle,
                     ),
                   ),
-                  SizedBox(width: 4.w),
+                  SizedBox(width: 4),
                   Text(
                     data.relativeName ?? 'unknown'.tr,
                     style:
-                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
+                        TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                   ),
                 ],
               );
@@ -222,40 +221,39 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: controller.propertyDistributionResult.length,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       itemBuilder: (context, index) {
         final data = controller.propertyDistributionResult[index];
         return Card(
           elevation: 4,
-          margin: EdgeInsets.only(bottom: 16.h),
+          margin: EdgeInsets.only(bottom: 16),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: Padding(
-            padding: EdgeInsets.all(16.h),
+            padding: EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     Container(
-                      width: 4.w,
-                      height: 24.h,
+                      width: 4,
+                      height: 24,
                       color: _chartColors[index % _chartColors.length],
                     ),
-                    SizedBox(width: 8.w),
+                    SizedBox(width: 8),
                     Text(
                       data.relativeName ?? 'unknown'.tr,
                       style: TextStyle(
-                          fontSize: 18.sp, fontWeight: FontWeight.bold),
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
                 const Divider(),
-                _resultRow('sharePortion'.tr,
-                    "${(data.portionPart ?? 0) * 100}%"),
+                _resultRow(
+                    'sharePortion'.tr, "${(data.portionPart ?? 0) * 100}%"),
                 if (data.landPart != null && data.landPart! > 0)
-                  _resultRow(
-                      'landPortion'.tr, "${data.landPart} Deciman"),
+                  _resultRow('landPortion'.tr, "${data.landPart} Deciman"),
                 if (data.goldPart != null && data.goldPart! > 0)
                   _resultRow('goldPortion'.tr,
                       "${data.goldPart} ${'gram'.tr}/${'vori'.tr}"),
@@ -263,8 +261,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                   _resultRow('silverPortion'.tr,
                       "${data.silverPart} ${'gram'.tr}/${'vori'.tr}"),
                 if (data.currencyPart != null && data.currencyPart! > 0)
-                  _resultRow(
-                      'totalMoney'.tr, "${data.currencyPart} Taka"),
+                  _resultRow('totalMoney'.tr, "${data.currencyPart} Taka"),
               ],
             ),
           ),
@@ -275,14 +272,14 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
 
   Widget _resultRow(String label, String value) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4.h),
+      padding: EdgeInsets.symmetric(vertical: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label,
-              style: TextStyle(fontSize: 14.sp, color: Colors.grey[700])),
+              style: TextStyle(fontSize: 14, color: Colors.grey[700])),
           Text(value,
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
         ],
       ),
     );
@@ -294,7 +291,8 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(           'propertyCalculationSection'.tr,
+          Text(
+            'propertyCalculationSection'.tr,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
@@ -371,8 +369,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                         child: DropdownButton<String>(
                           value: unitValue.value,
                           isExpanded: true,
-                          items: ['gram', 'vori']
-                              .map((String value) {
+                          items: ['gram', 'vori'].map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value.tr),
@@ -447,8 +444,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text('count'.tr,
-                    style: TextStyle(color: Colors.grey)),
+                Text('count'.tr, style: TextStyle(color: Colors.grey)),
                 IconButton(
                   icon: const Icon(Icons.remove_circle_outline,
                       color: AppColors.redColor),
@@ -518,6 +514,3 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
     });
   }
 }
-
-
-

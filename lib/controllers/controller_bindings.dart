@@ -1,10 +1,10 @@
-﻿import 'package:get/get.dart';
+import 'package:get/get.dart';
+import 'profile/user_controller.dart';
 
-
-class ControllerBindings extends Bindings{
+class ControllerBindings extends Bindings {
   @override
-  void dependencies(){
-    //Get.put<HomeController>(HomeController());
-    // Get.put<ListController>(ListController());
+  void dependencies() {
+    // Global controllers available throughout the app
+    Get.put<UserController>(UserController(), permanent: true);
   }
 }

@@ -1,7 +1,6 @@
-﻿// import 'dart:io';
+// import 'dart:io';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_pdfview/flutter_pdfview.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:get/get.dart';
 // import 'package:path_provider/path_provider.dart';
@@ -139,7 +138,6 @@
 //import '../../../helpers/helpers.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../helpers/app_routes.dart';
@@ -170,27 +168,27 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
       appBar: AppBar(
         title: CustomText(
           text: 'wasyyahPreview'.tr,
-          fontsize: 18.sp,
+          fontsize: 18,
           fontWeight: FontWeight.w600,
         ),
       ),
       body: BackgroundImageContainer(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: ListView(
-            padding: EdgeInsets.only(bottom: 40.h),
+            padding: EdgeInsets.only(bottom: 40),
             children: [
-              SizedBox(height: 20.h),
+              SizedBox(height: 20),
               Stack(
                 children: [
                   Image.asset(AppImages.wasyyahIcon),
                   Positioned(
-                      right: 20.w,
-                      top: 10.h,
+                      right: 20,
+                      top: 10,
                       child: Image.asset(
                         AppImages.scanImg,
-                        height: 50.h,
-                        width: 40.w,
+                        height: 50,
+                        width: 40,
                       )),
                 ],
               ),
@@ -199,17 +197,17 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
                 text: 'bismillah'.tr,
                 fontsize: 14,
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 10),
               Divider(color: AppColors.primaryColor, height: 14),
-              SizedBox(height: 10.h),
+              SizedBox(height: 10),
               CustomText(
                 text: 'wasyyahTitleInBangla'.tr,
-                fontsize: 20.sp,
+                fontsize: 20,
                 fontWeight: FontWeight.w700,
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 10),
               Divider(color: AppColors.primaryColor, height: 14),
-              SizedBox(height: 20.h),
+              SizedBox(height: 20),
 
               ///========== Dynamic Wasyyah List ===============
               ...waseeyaList
@@ -234,11 +232,11 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: 5.h),
+                                SizedBox(height: 5),
                                 Center(
                                   child: CustomText(
-                                    text: item.title ?? "নিজের পরিচিতি",
-                                    fontsize: 16.sp,
+                                    text: item.title ?? "????? ???????",
+                                    fontsize: 16,
                                   ),
                                 ),
                                 Padding(
@@ -250,14 +248,14 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
                                     thickness: 1.2,
                                   ),
                                 ),
-                                SizedBox(height: 6.h),
+                                SizedBox(height: 6),
                                 CustomText(
                                   fontWeight: FontWeight.w500,
                                   maxline: 100,
                                   text: item.content ?? "No content available.",
                                   textAlign: TextAlign.start,
                                 ),
-                                SizedBox(height: 10.h),
+                                SizedBox(height: 10),
                               ],
                             ),
                           ),

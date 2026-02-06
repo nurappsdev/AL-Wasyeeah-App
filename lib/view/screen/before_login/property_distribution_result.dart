@@ -1,5 +1,4 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -13,7 +12,7 @@ import '../../widgets/widgets.dart';
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//       appBar: AppBar(title: CustomText(text: "Property Distribution Result".tr,fontsize: 18.sp,),),
+//       appBar: AppBar(title: CustomText(text: "Property Distribution Result".tr,fontsize: 18,),),
 //       body: Container(
 //         height: Get.height,
 //         width: double.infinity,
@@ -66,7 +65,7 @@ class PropertyDistributionResultScreen extends StatelessWidget {
       appBar: AppBar(
         title: CustomText(
           text: "Property Distribution Result".tr,
-          fontsize: 18.sp,
+          fontsize: 18,
         ),
       ),
       body: BackgroundImageContainer(
@@ -75,12 +74,12 @@ class PropertyDistributionResultScreen extends StatelessWidget {
             width: double.infinity,
             child: Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: Dimensions.radiusExtraLarge.w),
+                  horizontal: Dimensions.radiusExtraLarge),
               child: Column(
                 children: [
                   ///==================Chart===================
                   Container(
-                    height: 300.h,
+                    height: 300,
                     child: PieChart(
                       PieChartData(
                         sections: showingSections(),
@@ -93,22 +92,22 @@ class PropertyDistributionResultScreen extends StatelessWidget {
 
                   ///==================result===================
                   Container(
-                    height: 160.h,
+                    height: 160,
                     child: Column(
                       children: [
                         CustomText(
-                          text: "à¦ªà§à¦¤à§à¦° à§§  - à§¦.à§ª".tr,
-                          fontsize: 18.sp,
+                          text: "পুত্র ১  - ০.৪".tr,
+                          fontsize: 18,
                           color: Color(0xff9747FF),
                         ),
                         CustomText(
-                          text: "à¦ªà§à¦¤à§à¦° à§¨  - à§¦.à§ª".tr,
-                          fontsize: 18.sp,
+                          text: "পুত্র ২  - ০.৪".tr,
+                          fontsize: 18,
                           color: Color(0xffFF7A00),
                         ),
                         CustomText(
-                          text: "à¦•à¦¨à§à¦¯à¦¾   - à§¦.à§¨".tr,
-                          fontsize: 18.sp,
+                          text: "কন্যা   - ০.২".tr,
+                          fontsize: 18,
                           color: Color(0xff00A851),
                         )
                       ],
@@ -169,7 +168,7 @@ class PropertyDistributionResultScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 20.h,
+                    height: 20,
                   ),
                   Container(
                     padding: EdgeInsets.all(16),
@@ -224,7 +223,7 @@ class PropertyDistributionResultScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 20.h,
+                    height: 20,
                   ),
                 ],
               ),

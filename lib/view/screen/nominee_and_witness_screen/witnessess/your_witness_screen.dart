@@ -1,5 +1,4 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
 
@@ -18,7 +17,7 @@ class YourWitnessScreen extends StatefulWidget {
 }
 
 class _NomineeScreenState extends State<YourWitnessScreen> {
-  WitnessController witnessController = Get.put(WitnessController());
+  WitnessController witnessController = Get.find<WitnessController>();
   @override
   Widget build(BuildContext context) {
     witnessController.getWitnessesYouData();
@@ -29,12 +28,12 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
           height: Get.height,
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 20),
                   CustomButton(
                     title: 'addMoreWitness'.tr,
                     titlecolor: AppColors.primaryColor,
@@ -43,7 +42,7 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
                           preventDuplicates: false);
                     },
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                   SizedBox(
                     height: 450.0, // Adjust height as per your needs
                     child: Obx(
@@ -108,7 +107,7 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
                                 ),
                     ),
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
@@ -200,7 +199,7 @@ class WitnessDetailsScreens extends StatelessWidget {
   final GetWitnessResponseModel user;
 
   WitnessDetailsScreens({super.key, required this.user});
-  WitnessController witnessController = Get.put(WitnessController());
+  WitnessController witnessController = Get.find<WitnessController>();
   @override
   Widget build(BuildContext context) {
     print(user.requestKey.toString());
@@ -226,16 +225,14 @@ class WitnessDetailsScreens extends StatelessWidget {
             children: [
               _buildDialogRow(
                   Icons.people, 'relation'.tr, user.relation ?? "N/A"),
+              _buildDialogRow(Icons.email, 'email'.tr, user.email ?? "N/A"),
               _buildDialogRow(
-                  Icons.email, 'email'.tr, user.email ?? "N/A"),
-              _buildDialogRow(Icons.person, 'fatherName'.tr,
-                  user.fatherName ?? "N/A"),
-              _buildDialogRow(
-                  Icons.phone, 'mobile'.tr, user.mobile ?? "N/A"),
+                  Icons.person, 'fatherName'.tr, user.fatherName ?? "N/A"),
+              _buildDialogRow(Icons.phone, 'mobile'.tr, user.mobile ?? "N/A"),
               _buildDialogRow(Icons.favorite, 'maritalStatus'.tr,
                   user.maritalStatus ?? "N/A"),
-              _buildDialogRow(Icons.work, 'profession'.tr,
-                  user.profession ?? "N/A"),
+              _buildDialogRow(
+                  Icons.work, 'profession'.tr, user.profession ?? "N/A"),
               const SizedBox(height: 30),
               Center(
                 child: ElevatedButton(
@@ -289,5 +286,3 @@ Widget _buildDialogRow(IconData icon, String title, String value) {
     ),
   );
 }
-
-

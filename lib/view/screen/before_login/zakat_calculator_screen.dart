@@ -1,5 +1,4 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -38,7 +37,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
   TextEditingController immediateLiabilitieseController =
       TextEditingController();
 
-  ZakatController zakatController = Get.put(ZakatController());
+  ZakatController zakatController = Get.find<ZakatController>();
 
   @override
   void initState() {
@@ -69,7 +68,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
       appBar: AppBar(
         title: CustomText(
           text: "Calculate Your Zakat Easily".tr,
-          fontsize: 18.sp,
+          fontsize: 18,
         ),
       ),
       body: BackgroundImageContainer(
@@ -78,7 +77,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
           height: Get.height,
           child: Padding(
             padding:
-                EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+                EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge),
             child: SingleChildScrollView(
               child: Form(
                   key: _forProKey,
@@ -105,7 +104,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                 labelStyle:
                                     TextStyle(fontWeight: FontWeight.bold),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(16.r),
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 12, vertical: 16),
@@ -130,14 +129,14 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                         );
                       }),
                       SizedBox(
-                        height: 12.h,
+                        height: 12,
                       ),
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.spaceAround,
                       //   children: [
                       //     CustomText(
                       //       text: "Zakat Calculator".tr,
-                      //       fontsize: 18.sp,
+                      //       fontsize: 18,
                       //     ),
                       //     ElevatedButton(
                       //         onPressed: () {
@@ -146,12 +145,12 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                       //         },
                       //         child: CustomText(
                       //           text: "Skip".tr,
-                      //           fontsize: 18.sp,
+                      //           fontsize: 18,
                       //         ))
                       //   ],
                       // ),
                       SizedBox(
-                        height: 12.h,
+                        height: 12,
                       ),
                       Obx(() {
                         final currency = zakatController.selectedCurrency.value;
@@ -159,23 +158,23 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                             DateFormat('dd/MM/yyyy').format(DateTime.now());
 
                         return Container(
-                          height: 100.h,
+                          height: 100,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
+                            borderRadius: BorderRadius.circular(10),
                             border: Border.all(),
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: Dimensions.radiusExtraLarge.w),
+                                horizontal: Dimensions.radiusExtraLarge),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: 4.h),
+                                SizedBox(height: 4),
                                 CustomText(
                                     text: "Nisab (updated $updatedDate)"),
                                 Padding(
-                                  padding: EdgeInsets.all(4.r),
+                                  padding: EdgeInsets.all(4),
                                   child: CustomTextField(
                                     readOnly: false,
                                     controller:
@@ -192,28 +191,28 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                         );
                       }),
                       SizedBox(
-                        height: 20.h,
+                        height: 20,
                       ),
                       Container(
-                        height: 450.h,
+                        height: 450,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
+                          borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: AppColors.primaryColor),
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: Dimensions.radiusExtraLarge.w),
+                              horizontal: Dimensions.radiusExtraLarge),
                           child: SingleChildScrollView(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(height: 10.h),
+                                SizedBox(height: 10),
                                 CustomText(
                                   text: "Value of Gold".tr,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(4.r),
+                                  padding: EdgeInsets.all(4),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: valueGoldController,
@@ -221,13 +220,13 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 20.h,
+                                  height: 20,
                                 ),
                                 CustomText(
                                   text: "Value of Silver".tr,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(4.r),
+                                  padding: EdgeInsets.all(4),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: silverGoldController,
@@ -235,13 +234,13 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 20.h,
+                                  height: 20,
                                 ),
                                 CustomText(
                                   text: "Future deposits".tr,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(4.r),
+                                  padding: EdgeInsets.all(4),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: futureDepositsController,
@@ -249,13 +248,13 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 20.h,
+                                  height: 20,
                                 ),
                                 CustomText(
                                   text: "Given out in loans".tr,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(4.r),
+                                  padding: EdgeInsets.all(4),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: loanGivenController,
@@ -263,13 +262,13 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 20.h,
+                                  height: 20,
                                 ),
                                 CustomText(
                                   text: "Investment value".tr,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(4.r),
+                                  padding: EdgeInsets.all(4),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: investmentValueController,
@@ -277,13 +276,13 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 20.h,
+                                  height: 20,
                                 ),
                                 CustomText(
                                   text: "Rental income".tr,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(4.r),
+                                  padding: EdgeInsets.all(4),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: rentalIncomeController,
@@ -291,13 +290,13 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 20.h,
+                                  height: 20,
                                 ),
                                 CustomText(
                                   text: "Immediate liabilities".tr,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(4.r),
+                                  padding: EdgeInsets.all(4),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: immediateLiabilitieseController,
@@ -310,7 +309,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 12.h,
+                        height: 12,
                       ),
                       Obx(
                         () => CustomButtonCommon(
@@ -340,7 +339,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                           },
                         ),
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 10),
                     ],
                   )),
             ),
@@ -358,27 +357,27 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
         return AlertDialog(
           title: CustomText(
             text: "Result".tr,
-            fontsize: 20.sp,
+            fontsize: 20,
             fontWeight: FontWeight.w600,
           ),
           content: Container(
             width: double.infinity,
-            height: 200.h,
+            height: 200,
             child: Column(
               children: [
                 Divider(),
                 CustomText(
                   text: "Total Assets".tr,
-                  fontsize: 20.sp,
+                  fontsize: 20,
                   fontWeight: FontWeight.w600,
                   color: AppColors.primaryColor,
                 ),
                 SizedBox(
-                  height: 12.h,
+                  height: 12,
                 ),
                 CustomText(
                   text: assetsAccount,
-                  fontsize: 22.sp,
+                  fontsize: 22,
                   fontWeight: FontWeight.w600,
                   color: AppColors.primaryColor,
                 ),
@@ -387,16 +386,16 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                 ),
                 CustomText(
                   text: "PAYABLE ZAKAT".tr,
-                  fontsize: 20.sp,
+                  fontsize: 20,
                   fontWeight: FontWeight.w600,
                   color: AppColors.primaryColor,
                 ),
                 SizedBox(
-                  height: 12.h,
+                  height: 12,
                 ),
                 CustomText(
                   text: zakatAccount,
-                  fontsize: 22.sp,
+                  fontsize: 22,
                   fontWeight: FontWeight.w600,
                   color: AppColors.primaryColor,
                 ),
@@ -416,5 +415,3 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
     );
   }
 }
-
-
