@@ -30,3 +30,4 @@ export 'nominee_and_witness_screen/witnessess/witness_phanel_data.dart';
 export 'first_splash_screen.dart';
 export 'wasyyah/wasiyah_preview_screen.dart';
 export 'access_control/feature_screen.dart';
+export 'nominee_and_witness_screen/nominee/asign_nominee_details.dart';

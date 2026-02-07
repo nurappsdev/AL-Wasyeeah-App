@@ -15,6 +15,8 @@ class ApiConstants {
   static const String witnessesYouEndPoint = "/get-witnessByAnotherUser";
   static const String wasyyahYouDataYouEndPoint = "/user/getWasiyyah";
   static const String witnessDeletePoint = "/user/remove-witness";
+  static const String witnessAssignPoint = "/user/assign-witness";
+  static const String nomineeAssignPoint = "/user/assign-nominee";
 
   static const String signUpEndPoint = "/user/register";
   static const String signInEndPoint = "/user/login";

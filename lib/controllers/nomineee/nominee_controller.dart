@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../helpers/helpers.dart';
 import '../../helpers/prefs_helper.dart';
 import '../../models/models.dart';
+import '../../models/nominee/search_asign_nominee_model.dart';
 import '../../services/services.dart';
 import 'package:http/http.dart' as http;
 
@@ -148,7 +149,9 @@ class NomineeController extends GetxController {
   final TextEditingController searchController = TextEditingController();
 
   var isLoading = false.obs;
-  var nominessData = {}.obs;
+
+  Rx<SearchAsignResponseModel?> nominessData =
+  Rx<SearchAsignResponseModel?>(null);
 
   Future<void> searchNominee() async {
     final email = searchController.text.trim();
@@ -159,7 +162,9 @@ class NomineeController extends GetxController {
     final url = Uri.parse(
       '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=false',
     );
+
     String token = await PrefsHelper.getString(AppConstants.bearerToken);
+
     try {
       final response = await http.get(
         url,
@@ -168,21 +173,63 @@ class NomineeController extends GetxController {
           'Content-Type': 'application/json',
         },
       );
+
       print("response.body---------------${response.body}");
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        nominessData.value = data;
+
+        nominessData.value = SearchAsignResponseModel.fromJson(data);
       } else {
         Get.snackbar("Error", "This is not right email");
-        nominessData.value = {};
+        nominessData.value = null;
       }
     } catch (e) {
       Get.snackbar("Error", "Something went wrong");
-      nominessData.value = {};
+      nominessData.value = null;
     } finally {
       isLoading.value = false;
     }
   }
+
+
+
+  // var isLoading = false.obs;
+  // var nominessData = {}.obs;
+  //
+  // Future<void> searchNominee() async {
+  //   final email = searchController.text.trim();
+  //   if (email.isEmpty) return;
+  //
+  //   isLoading.value = true;
+  //
+  //   final url = Uri.parse(
+  //     '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=false',
+  //   );
+  //   String token = await PrefsHelper.getString(AppConstants.bearerToken);
+  //   try {
+  //     final response = await http.get(
+  //       url,
+  //       headers: {
+  //         'Authorization': 'Bearer $token',
+  //         'Content-Type': 'application/json',
+  //       },
+  //     );
+  //     print("response.body---------------${response.body}");
+  //     if (response.statusCode == 200) {
+  //       final data = json.decode(response.body);
+  //       nominessData.value = data;
+  //     } else {
+  //       Get.snackbar("Error", "This is not right email");
+  //       nominessData.value = {};
+  //     }
+  //   } catch (e) {
+  //     Get.snackbar("Error", "Something went wrong");
+  //     nominessData.value = {};
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
 
   ///==================Save nominee Up===========================
   // bool isNomineeTrue = true;
@@ -309,4 +356,91 @@ class NomineeController extends GetxController {
       ToastMessageHelper.errorMessageShowToster("Try Again");
     }
   }
+
+
+  ///=================Assign ==========================
+  RxBool isAssignYou = false.obs;
+
+  Future<void> assignNomineeWitnessData({
+    String? email,
+    required String type,
+  }) async {
+    isAssignYou(true);
+
+    final response = await ApiClient.getData(
+      type == "WITNESS"
+          ? "${ApiConstants.witnessAssignPoint}?email=$email"
+          : "${ApiConstants.nomineeAssignPoint}?email=$email",
+    );
+
+    print("Assign data ------------${response.body}");
+
+    isAssignYou(false);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final message = response.body is Map
+          ? response.body["message"]
+          : response.body.toString();
+
+      ToastMessageHelper.successMessageShowToster(message);
+      getNomineeData();
+    } else {
+      final message = response.body is Map
+          ? response.body["message"]
+          : response.body.toString();
+
+      ToastMessageHelper.errorMessageShowToster(message);
+    }
+  }
+
+
+/// -------POST Assign
+  // RxBool isAssignYou = false.obs;
+  //
+  // Future<void> assignNomineeWitnessData({
+  //   required String? email,
+  //   required String? type, // "WITNESS" or "NOMINEE"
+  // }) async {
+  //   isAssignYou(true);
+  //
+  //   try {
+  //     final token = await PrefsHelper.getString(AppConstants.bearerToken);
+  //
+  //     final headers = {
+  //       'Authorization': 'Bearer $token',
+  //       'Content-Type': 'application/json',
+  //     };
+  //
+  //     /// ✅ Payload / Body
+  //     final body = {
+  //       "email": email,
+  //     };
+  //
+  //     /// ✅ Endpoint select
+  //     final endpoint = type == "WITNESS"
+  //         ? ApiConstants.witnessAssignPoint
+  //         : ApiConstants.nomineeAssignPoint;
+  //
+  //     final response =
+  //     await ApiClient.postData(endpoint, body, headers: headers);
+  //
+  //     print("Assign data ------------ ${response.body}");
+  //
+  //     final message = response.body is Map
+  //         ? response.body["message"]
+  //         : response.body.toString();
+  //
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       ToastMessageHelper.successMessageShowToster(message);
+  //       getNomineeData();
+  //     } else {
+  //       ToastMessageHelper.errorMessageShowToster(message);
+  //     }
+  //   } catch (e) {
+  //     ToastMessageHelper.errorMessageShowToster("Something went wrong");
+  //     print("Assign error: $e");
+  //   } finally {
+  //     isAssignYou(false);
+  //   }
+  // }
 }

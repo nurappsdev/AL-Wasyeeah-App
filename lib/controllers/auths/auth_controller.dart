@@ -72,12 +72,17 @@ class AuthController extends GetxController {
     print("regggggggggggggggggggggggggggg${response.body}");
     if (response.statusCode == 200) {
       // await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
-      ToastMessageHelper.successMessageShowToster(
-          "Account create successful.\n \nNow you have a user name and password your email");
-      Get.toNamed(
-        AppRoutes.loginScreen,
-        preventDuplicates: false,
-      );
+
+      if(response.body["status"] == false){
+        ToastMessageHelper.errorMessageShowToster(response.body?['message']);
+      }else{
+        ToastMessageHelper.successMessageShowToster(
+            "Account create successful.\n \nNow you have a user name and password your email");
+        Get.toNamed(
+          AppRoutes.loginScreen,
+          preventDuplicates: false,
+        );
+      }
       signUpLoading(false);
     } else if (response.statusCode == 1) {
       signUpLoading(false);

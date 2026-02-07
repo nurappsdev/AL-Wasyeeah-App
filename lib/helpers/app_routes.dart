@@ -1,4 +1,3 @@
-import 'package:al_wasyeah/view/screen/profile_setting/profile_setup_step_three_screen.dart';
 import 'package:get/get.dart';
 
 import '../view/screen/access_control/acceess_control_tab_screen.dart';
@@ -36,6 +35,7 @@ class AppRoutes {
   static const String accessControlTabScreen = "/accessControlTabScreen.dart";
   static const String featureScreen = "/featureScreen.dart";
   static const String witnessPhanelData = "/witnessPhanelData.dart";
+  static const String asignNomineeDetails = "/asignNomineeDetails.dart";
 
   static List<GetPage> get routes => [
 
@@ -136,6 +136,7 @@ class AppRoutes {
    GetPage(name: accessControlTabScreen, page: () => AccessControlTabScreen()),
    GetPage(name: featureScreen, page: () => FeatureScreen()),
    GetPage(name: witnessPhanelData, page: () => WitnessPhanelData()),
+   GetPage(name: asignNomineeDetails, page: () => AsignNomineeDetails()),
 
   ];
 

@@ -9,7 +9,7 @@ import '../../../helpers/helpers.dart';
 import '../../../helpers/prefs_helper.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
-import '../profile_setting/profile_setting.dart';
+import '../profile/profile_page.dart';
 
 class ProfileInfo extends StatefulWidget {
   const ProfileInfo({super.key});
@@ -80,7 +80,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 ///=====================Personal Details====================================
                 GestureDetector(
                   onTap: () {
-                    Get.off(() => StepNavigationWithPageView(),
+                    Get.off(() => ProfilePage(),
                         preventDuplicates: false);
                     // Get.off(()=>MultiStepFormScreen(),preventDuplicates: false);
                   },

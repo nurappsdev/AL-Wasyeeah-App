@@ -14,19 +14,11 @@ import '../../../widgets/widgets.dart';
 class AddNomineeScreen extends StatelessWidget {
   AddNomineeScreen({super.key});
   List<bool> isSelected = [true, false];
-  final List<Map<String, String>> user= [
-    {
-      "name": "Khadijah",
-      "image": "https://via.placeholder.com/150",
-    },
-    {
-      "name": "Shahriar Hasan",
-      "image": "https://via.placeholder.com/150",
-    },
-  ];
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(NomineeController());
+    controller.searchNominee();
     TextEditingController searchController = TextEditingController();
     return Scaffold(
       appBar: AppBar(title: CustomText(text: "Add Nominee".tr,fontsize: 18. sp,),),
@@ -57,7 +49,7 @@ class AddNomineeScreen extends StatelessWidget {
                   Obx(() {
                     if (controller.isLoading.value) {
                       return CustomLoader();
-                    } else if (controller.nominessData.isEmpty) {
+                    } else if (controller.nominessData.value == null) {
                       return Center(child: Text("No Nominee Added Here"));
                     } else {
                       return Card(
@@ -72,7 +64,7 @@ class AddNomineeScreen extends StatelessWidget {
                             radius: 30,
                           ),
                           title: Text(
-                            controller.nominessData['name'] ?? 'Name not found',
+                            controller.nominessData.value?.name ?? 'Name not found',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           subtitle: Row(
@@ -86,8 +78,9 @@ class AddNomineeScreen extends StatelessWidget {
                             ],
                           ),
                           onTap: () {
-                            Get.toNamed('/witnessDetailsScreen', preventDuplicates: false);
-                            print("dfkjld");
+                            Get.toNamed(AppRoutes.asignNomineeDetails,arguments: controller.nominessData.value, preventDuplicates: false);
+                            // Get.toNamed('/witnessDetailsScreen', preventDuplicates: false);
+                            // print("dfkjld");
                           },
                         ),
                       );
