@@ -9,6 +9,7 @@ class AppRoutes {
   static const String loginScreen = "/loginScreen.dart";
   static const String registrationScreen = "/registrationScreen.dart";
   static const String forgotPassScreen = "/forgotPassScreen.dart";
+  static const String changePassScreen = "/changePassScreen.dart";
   static const String otpScreen = "/otpScreen.dart";
   static const String propertyDistributionScreen =
       "/propertyDistributionScreen.dart";
@@ -112,6 +113,7 @@ class AppRoutes {
    GetPage(name: loginScreen, page: () =>  LoginScreen()),
    GetPage(name: registrationScreen, page: () =>  RegistrationScreen()),
    GetPage(name: forgotPassScreen, page: () =>  ForgotPassScreen()),
+   GetPage(name: changePassScreen, page: () =>  ChangePasswordScreen()),
    GetPage(name: otpScreen, page: () =>  OtpVerifyScreen()),
    GetPage(name: propertyDistributionScreen, page: () => PropertyDistributionScreen()),
    GetPage(name: propertyDistributionResultScreen, page: () => PropertyDistributionResultScreen()),

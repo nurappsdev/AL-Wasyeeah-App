@@ -19,6 +19,7 @@ class ApiConstants {
   static const String nomineeAssignPoint = "/user/assign-nominee";
 
   static const String signUpEndPoint = "/user/register";
+  static const String changePassAPI = "user/update/password";
   static const String signInEndPoint = "/user/login";
   static const String forgotEndPoint = "/user/forget-password";
   static const String zakatEndPoint = "/zakatCalculator?lang=en";

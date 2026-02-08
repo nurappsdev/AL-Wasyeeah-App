@@ -147,4 +147,36 @@ class UserController extends GetxController{
 
 
 
+  RxBool  forPassLoading = false.obs;
+  Future<void>  changePass(String oldPassword, String newPassword, String confirmPassword) async{
+    forPassLoading(true);
+    String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $bearerToken'
+    };
+    var body ={
+      "oldPassword": oldPassword,
+      "newPassword": newPassword,
+      "confirmPassword": confirmPassword
+    };
+    var response = await ApiClient.postData("${ApiConstants.changePassAPI}",
+        body,
+        headers: headers
+    );
+    print("dataaaaaaaaaaaaaaa ${response.body}");
+    if(response.statusCode == 200 || response.statusCode == 201){
+
+      ToastMessageHelper.successMessageShowToster(response.body['message'].toString());
+      forPassLoading(false);
+    }else{
+      ToastMessageHelper.errorMessageShowToster(response.body['message'].toString());
+      print("token==================> ${response.body['data']}");
+      forPassLoading(false);
+    }
+  }
+
+
+
+
 }
