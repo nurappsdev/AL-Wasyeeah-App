@@ -64,6 +64,8 @@ dependencies:
   dropdown_search: ^6.0.2
   file_picker: ^10.3.7
   pool: ^1.5.2
+  pretty_qr_code: ^3.5.0
+  barcode_widget: ^2.0.4
 
 
 dev_dependencies:
