@@ -89,8 +89,9 @@ class AuthController extends GetxService {
     );
 
     if (response.statusCode == 200) {
-     RegistrationModel registrationModel = registrationModelFromJson(jsonEncode(response.body));
-     
+      RegistrationModel registrationModel =
+          registrationModelFromJson(jsonEncode(response.body));
+
       ToastMessageHelper.successMessageShowToster(
           "Account create successful.\n \nNow you have a user name and password your email.");
       Get.toNamed(
@@ -137,7 +138,7 @@ class AuthController extends GetxService {
       ToastMessageHelper.successMessageShowToster(
           "${response.body["message"]}");
       // Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
-      Get.off(() => HomeScreen(), preventDuplicates: false);
+      Get.offNamed(AppRoutes.homeScreen);
       signInLoading(false);
     } else {
       signInLoading(false);
