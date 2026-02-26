@@ -6,14 +6,16 @@ export 'registration_screen.dart';
 export 'before_login/property_distribution_screen.dart';
 export 'before_login/property_distribution_result.dart';
 export 'before_login/zakat_calculator_screen.dart';
-export 'profile_setting/profile_setup_step_one_screen.dart';
-export 'profile_setting/profile_setup_step_three_screen.dart';
-export 'profile_setting/profile_setup_step_four_screen.dart';
+export 'profile/profile_setup_step_one_screen.dart';
+export 'profile/profile_setup_step_three_screen.dart';
+export 'profile/profile_setup_step_four_screen.dart';
 export 'home_screen.dart';
 export 'wasyyah/wasyyah_screen.dart';
 export 'wasyyah/wasiyah_edit_screen.dart';
+
 export 'notification/notifications_screen.dart';
-export 'profile/profile_info.dart';
+export 'menu/menu_page.dart';
+
 export 'nominee_and_witness_screen/nominee/nominee_tab_screen.dart';
 export 'nominee_and_witness_screen/nominee/add_nominee_screen.dart';
 export 'nominee_and_witness_screen/nominee/add_outside_nominee.dart';
@@ -30,3 +32,5 @@ export 'nominee_and_witness_screen/witnessess/witness_phanel_data.dart';
 export 'first_splash_screen.dart';
 export 'wasyyah/wasiyah_preview_screen.dart';
 export 'access_control/feature_screen.dart';
+export 'nominee_and_witness_screen/nominee/asign_nominee_details.dart';
+export 'change_password_screen.dart';

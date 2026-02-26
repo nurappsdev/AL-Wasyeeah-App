@@ -103,7 +103,7 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
                       Obx(() {
                         if (controller.isLoading.value) {
                           return CustomLoader();
-                        } else if (controller.witnesssData.isEmpty) {
+                        } else if (controller.witnesssData.value == null) {
                           return Center(child: Text("No Witness Added Here"));
                         } else {
                           return Card(
@@ -118,7 +118,7 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
                                 radius: 30,
                               ),
                               title: Text(
-                                controller.witnesssData['name'] ?? 'Name not found',
+                                controller.witnesssData.value?.name ?? 'Name not found',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               subtitle: Row(
@@ -132,7 +132,10 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
                                 ],
                               ),
                               onTap: () {
-                                Get.toNamed('/witnessDetailsScreen', preventDuplicates: false);
+                                Get.toNamed(AppRoutes.asignNomineeDetails,
+                                    parameters: {
+                                      "type": "WITNESS",
+                                    }, arguments: controller.witnesssData.value, preventDuplicates: false);
                               },
                             ),
                           );

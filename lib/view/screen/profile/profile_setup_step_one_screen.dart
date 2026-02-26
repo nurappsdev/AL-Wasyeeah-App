@@ -13,13 +13,14 @@ import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
-class ProfileSetupStepOneScreen extends StatefulWidget {
+class ProfileSettingStepOneWidget extends StatefulWidget {
   @override
-  State<ProfileSetupStepOneScreen> createState() =>
-      _ProfileSetupStepOneScreenState();
+  State<ProfileSettingStepOneWidget> createState() =>
+      _ProfileSettingStepOneWidgetState();
 }
 
-class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
+class _ProfileSettingStepOneWidgetState
+    extends State<ProfileSettingStepOneWidget> {
   final ProfileController controller = Get.find<ProfileController>();
   Widget _sectionTitle(String title) {
     return Column(
@@ -180,8 +181,7 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                     if (form.nid.text.isNotEmpty)
                       Obx(() {
                         return _buildFileRow(
-                          pickedFile: Rxn(
-                              controller.pickedFileMap['userNidOrPassport']),
+                          pickedFile: form.selectedNidFile,
                           isDownloading: (controller
                                       .isDownloadingMap['userNidOrPassport'] ??
                                   false)
@@ -190,8 +190,11 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                                       'userNidOrPassport'] ??
                                   0.0)
                               .obs,
-                          onPickFile: () =>
-                              controller.pickFile('userNidOrPassport'),
+                          onPickFile: () async {
+                            var result = await FilePickerUtil.pickSingleFile();
+                            if (result != null)
+                              form.selectedNidFile.value = result;
+                          },
                           onDownload: () async {
                             final isComplete = await controller.downloadFile(
                               urlPath: controller
@@ -240,8 +243,7 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                             .profileModel.value.userProfile?.tinPaperUrl !=
                         null)
                       Obx(() => _buildFileRow(
-                            pickedFile: Rxn(
-                                controller.pickedFileMap['userTinOrPassport']),
+                            pickedFile: form.selectedTinFile,
                             isDownloading: (controller.isDownloadingMap[
                                         'userTinOrPassport'] ??
                                     false)
@@ -250,8 +252,12 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                                         'userTinOrPassport'] ??
                                     0.0)
                                 .obs,
-                            onPickFile: () =>
-                                controller.pickFile('userTinOrPassport'),
+                            onPickFile: () async {
+                              var result =
+                                  await FilePickerUtil.pickSingleFile();
+                              if (result != null)
+                                form.selectedTinFile.value = result;
+                            },
                             onDownload: () async {
                               final isComplete = await controller.downloadFile(
                                 urlPath: controller.profileModel.value
@@ -323,10 +329,13 @@ class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
                                           'userMultiCitizenOrPassport'] ??
                                       0.0)
                                   .obs,
-                              pickedFile: Rxn(controller
-                                  .pickedFileMap['userMultiCitizenOrPassport']),
-                              onPickFile: () => controller
-                                  .pickFile('userMultiCitizenOrPassport'),
+                              pickedFile: form.selectedMultiCitizenFile,
+                              onPickFile: () async {
+                                var result =
+                                    await FilePickerUtil.pickSingleFile();
+                                if (result != null)
+                                  form.selectedMultiCitizenFile.value = result;
+                              },
                               onDownload: () async {
                                 final isComplete =
                                     await controller.downloadFile(

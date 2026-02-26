@@ -1,4 +1,3 @@
-import 'package:al_wasyeah/view/screen/profile_setting/profile_setup_step_three_screen.dart';
 import 'package:get/get.dart';
 
 import '../view/screen/access_control/acceess_control_tab_screen.dart';
@@ -10,6 +9,7 @@ class AppRoutes {
   static const String loginScreen = "/loginScreen.dart";
   static const String registrationScreen = "/registrationScreen.dart";
   static const String forgotPassScreen = "/forgotPassScreen.dart";
+  static const String changePassScreen = "/changePassScreen.dart";
   static const String otpScreen = "/otpScreen.dart";
   static const String propertyDistributionScreen =
       "/propertyDistributionScreen.dart";
@@ -36,6 +36,7 @@ class AppRoutes {
   static const String accessControlTabScreen = "/accessControlTabScreen.dart";
   static const String featureScreen = "/featureScreen.dart";
   static const String witnessPhanelData = "/witnessPhanelData.dart";
+  static const String asignNomineeDetails = "/asignNomineeDetails.dart";
 
   static List<GetPage> get routes => [
         //   GetPage(name: firstSplashScreen, page: () => FirstSplashScreen()),
@@ -111,6 +112,7 @@ class AppRoutes {
         GetPage(name: loginScreen, page: () => LoginScreen()),
         GetPage(name: registrationScreen, page: () => RegistrationScreen()),
         GetPage(name: forgotPassScreen, page: () => ForgotPassScreen()),
+        GetPage(name: changePassScreen, page: () => ChangePasswordScreen()),
         GetPage(name: otpScreen, page: () => OtpVerifyScreen()),
         GetPage(
             name: propertyDistributionScreen,
@@ -141,5 +143,6 @@ class AppRoutes {
             name: accessControlTabScreen, page: () => AccessControlTabScreen()),
         GetPage(name: featureScreen, page: () => FeatureScreen()),
         GetPage(name: witnessPhanelData, page: () => WitnessPhanelData()),
+        GetPage(name: asignNomineeDetails, page: () => AsignNomineeDetails()),
       ];
 }

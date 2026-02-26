@@ -15,8 +15,11 @@ class ApiConstants {
   static const String witnessesYouEndPoint = "/get-witnessByAnotherUser";
   static const String wasyyahYouDataYouEndPoint = "/user/getWasiyyah";
   static const String witnessDeletePoint = "/user/remove-witness";
+  static const String witnessAssignPoint = "/user/assign-witness";
+  static const String nomineeAssignPoint = "/user/assign-nominee";
 
   static const String signUpEndPoint = "/user/register";
+  static const String changePassAPI = "user/update/password";
   static const String signInEndPoint = "/user/login";
   static const String forgotEndPoint = "/user/forget-password";
   static const String zakatEndPoint = "/zakatCalculator?lang=en";
@@ -90,4 +93,8 @@ class ApiConstants {
   static String getProfile = "/user/getProfileData";
   static String documentTypeList = "/lookup/documentTypeList";
   static String inappnotificationList = '/get-notification';
+  static String profileUpdate = "/lookup/saveProfileData";
+  static String relevantList = "/relevantList?lang=en";
+  static String propertyDistributionCalculationResult =
+      "/propertyDistributeResult?lang=en";
 }

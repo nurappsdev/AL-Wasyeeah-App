@@ -9,7 +9,7 @@ import '../../../helpers/helpers.dart';
 import '../../../helpers/prefs_helper.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
-import '../profile_setting/profile_setting.dart';
+import '../profile/profile_page.dart';
 
 class ProfileInfo extends StatefulWidget {
   const ProfileInfo({super.key});
@@ -80,7 +80,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 ///=====================Personal Details====================================
                 GestureDetector(
                   onTap: () {
-                    Get.off(() => StepNavigationWithPageView(),
+                    Get.off(() => ProfilePage(),
                         preventDuplicates: false);
                     // Get.off(()=>MultiStepFormScreen(),preventDuplicates: false);
                   },
@@ -179,46 +179,51 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 // ),
 
                 ///=====================Device History====================================
-                Container(
-                  width: 360.w,
-                  height: 60.h,
-                  margin: EdgeInsets.only(left: 2.w),
-                  decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                    border: Border.all(
-                      color: Color(0xffB0E3D3),
-                      width: 2.w,
+                InkWell(
+                  onTap: (){
+                    Get.toNamed(AppRoutes.changePassScreen,preventDuplicates: false);
+                  },
+                  child: Container(
+                    width: 360.w,
+                    height: 60.h,
+                    margin: EdgeInsets.only(left: 2.w),
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                      border: Border.all(
+                        color: Color(0xffB0E3D3),
+                        width: 2.w,
+                      ),
                     ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              AppIcons.userSettingIcon,
-                            ),
-                            SizedBox(width: 16.w),
-                            CustomText(
-                              text: "Change Password".tr,
-                              fontsize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.textColor4E4E4E,
-                            )
-                          ],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppIcons.userSettingIcon,
+                              ),
+                              SizedBox(width: 16.w),
+                              CustomText(
+                                text: "Change Password".tr,
+                                fontsize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textColor4E4E4E,
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        child: SvgPicture.asset(
-                          AppIcons.chevronIcon,
-                          color: AppColors.primaryColor,
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          child: SvgPicture.asset(
+                            AppIcons.chevronIcon,
+                            color: AppColors.primaryColor,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(

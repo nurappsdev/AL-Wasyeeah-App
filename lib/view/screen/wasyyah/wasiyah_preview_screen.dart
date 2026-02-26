@@ -140,6 +140,7 @@
 
 
 
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -148,7 +149,7 @@ import '../../../helpers/app_routes.dart';
 import '../../../models/models.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
-
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 class WasyyahPreviewScreen extends StatefulWidget {
   const WasyyahPreviewScreen({super.key});
 
@@ -184,11 +185,48 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
               SizedBox(height: 20.h),
               Stack(
                 children: [
-                  Image.asset(AppImages.wasyyahIcon),
+                  Image.asset(AppImages.wasyyahImg),
                   Positioned(
-                     right: 20.w,
-                      top: 10.h,
-                      child: Image.asset(AppImages.scanImg,height: 50.h,width: 40.w,)),
+                     left: 20.w,
+                      top: 14.h,
+                      child:
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          /// BARCODE
+                          RotatedBox(
+                            quarterTurns: 1, // vertical
+                            child: BarcodeWidget(
+                              barcode: Barcode.code128(),
+                              data: 'ALQ820',
+                              width: 50,
+                              height: 20,
+                              drawText: false,
+                            ),
+                          ),
+
+
+                        ],
+                      ),
+
+
+                  ),
+
+                  Positioned(
+                    right: 16.w,
+                    top: 14.h,
+                    child: Container(
+                      width: 50.w,
+                      height: 50.w,
+                      padding: EdgeInsets.all(10),
+                      color: Colors.transparent, // debug purpose
+                      child: PrettyQrView.data(
+                        data: 'No Data',
+                        errorCorrectLevel: QrErrorCorrectLevel.H,
+                      ),
+                    ),
+                  )
+
                 ],
               ),
 

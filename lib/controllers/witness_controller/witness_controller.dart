@@ -7,6 +7,7 @@ import '../../helpers/prefs_helper.dart';
 import '../../helpers/toast_message_helper.dart';
 import '../../models/access_phanel/zakat_property_wasyyah_model.dart';
 import '../../models/models.dart';
+import '../../models/nominee/search_asign_nominee_model.dart';
 import '../../services/services.dart';
 import 'package:http/http.dart' as http;
 
@@ -53,42 +54,88 @@ class WitnessController extends GetxController{
 
 
   final TextEditingController searchController = TextEditingController();
-  var isLoading = false.obs;
-  var witnesssData = {}.obs;
+  // var isLoading = false.obs;
+  // var witnesssData = {}.obs;
+  //
+  // Future<void> searchWitness() async {
+  //   final email = searchController.text.trim();
+  //   if (email.isEmpty) return;
+  //
+  //   isLoading.value = true;
+  //
+  //   final url = Uri.parse(
+  //     '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=true',
+  //   );
+  //   String token = await PrefsHelper.getString(AppConstants.bearerToken);
+  //   try {
+  //     final response = await http.get(
+  //         url,
+  //       headers: {
+  //         'Authorization': 'Bearer $token',
+  //         'Content-Type': 'application/json',
+  //       },
+  //     );
+  //     print("response.body---------------${response.body}");
+  //     if (response.statusCode == 200) {
+  //       final data = json.decode(response.body);
+  //       witnesssData.value = data;
+  //     } else {
+  //       Get.snackbar("Error", "This is not right email");
+  //       witnesssData.value = {};
+  //     }
+  //   } catch (e) {
+  //     Get.snackbar("Error", "Something went wrong");
+  //     witnesssData.value = {};
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
+  //
 
-  Future<void> searchWitness() async {
-    final email = searchController.text.trim();
-    if (email.isEmpty) return;
+var isLoading = false.obs;
 
-    isLoading.value = true;
+Rx<SearchAsignResponseModel?> witnesssData =
+Rx<SearchAsignResponseModel?>(null);
 
-    final url = Uri.parse(
-      '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=true',
+Future<void> searchWitness() async {
+  final email = searchController.text.trim();
+  if (email.isEmpty) return;
+
+  isLoading.value = true;
+
+  final url = Uri.parse(
+    '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=true',
+  );
+
+  String token = await PrefsHelper.getString(AppConstants.bearerToken);
+
+  try {
+    final response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
     );
-    String token = await PrefsHelper.getString(AppConstants.bearerToken);
-    try {
-      final response = await http.get(
-          url,
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-      );
-      print("response.body---------------${response.body}");
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        witnesssData.value = data;
-      } else {
-        Get.snackbar("Error", "This is not right email");
-        witnesssData.value = {};
-      }
-    } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
-      witnesssData.value = {};
-    } finally {
-      isLoading.value = false;
+
+    print("response.body---------------${response.body}");
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+
+      witnesssData.value = SearchAsignResponseModel.fromJson(data);
+    } else {
+      Get.snackbar("Error", "This is not right email");
+      witnesssData.value = null;
     }
+  } catch (e) {
+    Get.snackbar("Error", "Something went wrong");
+    witnesssData.value = null;
+  } finally {
+    isLoading.value = false;
   }
+}
+
 
 
 ///==================get Question===========================

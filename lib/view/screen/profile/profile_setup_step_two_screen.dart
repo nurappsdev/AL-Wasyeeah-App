@@ -10,16 +10,16 @@ import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
 
-class ProfileSetupsStepTwoScreen extends StatefulWidget {
-  const ProfileSetupsStepTwoScreen({super.key});
+class ProfileSettingStepTwoWidget extends StatefulWidget {
+  const ProfileSettingStepTwoWidget({super.key});
 
   @override
-  State<ProfileSetupsStepTwoScreen> createState() =>
-      _ProfileSetupsStepTwoScreenState();
+  State<ProfileSettingStepTwoWidget> createState() =>
+      _ProfileSettingStepTwoWidgetState();
 }
 
-class _ProfileSetupsStepTwoScreenState
-    extends State<ProfileSetupsStepTwoScreen> {
+class _ProfileSettingStepTwoWidgetState
+    extends State<ProfileSettingStepTwoWidget> {
   final ProfileController controller = Get.find<ProfileController>();
 
   AddressForm get form => controller.addressForm.value;

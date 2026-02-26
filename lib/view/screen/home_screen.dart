@@ -17,6 +17,8 @@ import 'before_login/profirty_Distribute_screen2.dart';
 import 'no_internet_screen.dart';
 import 'package:hijri/hijri_calendar.dart';
 
+import 'property_distribution_calculation/property_distribution_calculation_page.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -785,8 +787,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        Get.off(() => PropertyDistributionScreen2(),
-                            preventDuplicates: false);
+                       // Get.off(() => PropertyDistributionScreen2(), preventDuplicates: false);
+                        Get.to(() => PropertyDistributionCalculationPage(), preventDuplicates: false);
                       },
                       child: SizedBox(
                         height: 200.h,

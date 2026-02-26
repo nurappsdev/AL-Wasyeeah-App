@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:al_wasyeah/models/profile_info_model/document_type_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/sibling_form.dart';
-import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/models/profile_info_model/branch_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +15,7 @@ import 'package:al_wasyeah/models/profile_info_model/profile_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
 import 'package:get/get.dart';
 
+import 'dart:io';
 import '../../services/services.dart';
 import 'package:al_wasyeah/models/profile_info_model/account_payable_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/account_receivable_form.dart';
@@ -27,6 +27,7 @@ import '../../models/profile_info_model/child_form.dart';
 import '../../models/profile_info_model/parent_form.dart';
 import '../../models/profile_info_model/personal_form.dart';
 import '../../models/profile_info_model/spouse_form.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ProfileController extends GetxController {
   final PageController pageController = PageController();
@@ -46,9 +47,6 @@ class ProfileController extends GetxController {
 
   RxMap<String, bool> isDownloadingMap = <String, bool>{}.obs;
   RxMap<String, double> downloadProgressMap = <String, double>{}.obs;
-
-  RxMap<String, PickedFileResult> pickedFileMap =
-      <String, PickedFileResult>{}.obs;
 
   // Spouse List Management
   RxList<SpouseForm> spouseList = <SpouseForm>[].obs;
@@ -80,13 +78,6 @@ class ProfileController extends GetxController {
     );
   }
 
-  void pickFile(String type) async {
-    var result = await FilePickerUtil.pickSingleFile();
-    if (result != null) {
-      pickedFileMap[type] = result;
-    }
-  }
-
   Future<bool> downloadFile({
     required String? urlPath,
     required String filePrefix,
@@ -107,10 +98,9 @@ class ProfileController extends GetxController {
         '${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
 
     final String filePath = '${ApiConstants.imageUrl}$urlPath';
-    log("$filePrefix File Path: $filePath");
 
     FileDownloadUtil.downloadFile(
-      /*filePath*/ 'https://research.nhm.org/pdfs/10840/10840-002.pdf',
+      filePath,
       fileName,
       (progress) {
         downloadProgressMap[type] = progress;
@@ -680,6 +670,206 @@ class ProfileController extends GetxController {
     if (index >= 0 && index < payableListForm.length) {
       payableListForm[index].dispose();
       payableListForm.removeAt(index);
+    }
+  }
+
+  Future<String?> _fileToBase64(File? file) async {
+    if (file == null) return null;
+    try {
+      List<int> fileBytes = await file.readAsBytes();
+      return base64Encode(fileBytes);
+    } catch (e) {
+      log("Error converting file to base64: $e");
+      return null;
+    }
+  }
+
+  Future<void> submitProfile() async {
+    try {
+      status(RxStatus.loading());
+
+      final personal = personalForm.value;
+      final address = addressForm.value;
+      final parent = parentForm.value;
+
+      // 1. Map UserProfile
+      final userProfile = UserProfile(
+        userProfileId: profileModel.value.userProfile?.userProfileId,
+        firstName: personal.firstName.text,
+        lastName: personal.lastName.text,
+        maritalStatusId: personal.selectedMarried.value?.maritalId,
+        professionId: personal.selectedProfession.value?.professionId,
+        countryCode: personal.selectedCountry.value?.countryId,
+        district: personal.district.text,
+        gender: personal.selectedGender.value?.genderId.toString(),
+        nid: int.tryParse(personal.nid.text),
+        tin: personal.tin.text,
+        multipleCitizenCode:
+            personal.selectedMultiCitizenCountry.value?.countryId,
+        multipleCitizenPassportNo: personal.multiCitizenPassport.text,
+        presentAddress:
+            "${address.presentZipCode.text},${address.presentVillage.text},${address.presentRoad.text}",
+        permanentAddress: address.isPresentAddressAsPermanentAddress.value
+            ? "${address.presentZipCode.text},${address.presentVillage.text},${address.presentRoad.text}"
+            : "${address.permanentZipCode.text},${address.permanentVillage.text},${address.permanentRoad.text}",
+        overseasCountryCode: address.selectedOverseasCountry.value?.countryId,
+        overseasVillage: address.overseasVillage.text,
+        nidFile: await _fileToBase64(personal.selectedNidFile.value?.file),
+        tinFile: await _fileToBase64(personal.selectedTinFile.value?.file),
+        passportFile:
+            await _fileToBase64(personal.selectedMultiCitizenFile.value?.file),
+      );
+
+      // 2. Map ParentInfo
+      final parentInfo = ParentInfo(
+        parentId: profileModel.value.parentInfo?.parentId,
+        fatherName: parent.fatherName.text,
+        fatherProfessionId: parent.selectedFatherProfession.value?.professionId,
+        fatherNationalityId: parent.selectedFatherCountry.value?.countryId,
+        fatherNid: parent.fatherPassOrNID.text,
+        fatherExisting: parent.isFatherAlive.value,
+        motherName: parent.motherName.text,
+        motherProfessionId: parent.selectedMotherProfession.value?.professionId,
+        motherNationalityId: parent.selectedMotherCountry.value?.countryId,
+        motherNid: parent.motherPassOrNID.text,
+        motherExisting: parent.isMotherAlive.value,
+        fatherNidFile:
+            await _fileToBase64(parent.selectedFatherFile.value?.file),
+        motherNidFile:
+            await _fileToBase64(parent.selectedMotherFile.value?.file),
+      );
+
+      // 3. Map SpouseInfo
+      List<SpouseInfo> spouses = [];
+      for (var form in spouseList) {
+        if (form.name.text.isEmpty) continue;
+        spouses.add(SpouseInfo(
+          spouseName: form.name.text,
+          professionId: form.profession.value?.professionId,
+          nationalityId: form.nationality.value?.countryId,
+          nid: form.nid.text,
+          passport: form.passport.text,
+          mobile: form.mobile.text,
+          email: form.email.text,
+          existing: form.isAlive.value,
+          spouseNidFile: await _fileToBase64(form.selectedNidFile.value?.file),
+          spousePassportFile:
+              await _fileToBase64(form.selectedPassportFile.value?.file),
+        ));
+      }
+
+      // 4. Map ChildInfo
+      List<ChildInfo> children = [];
+      for (var form in childrenList) {
+        if (form.name.text.isEmpty) continue;
+        children.add(ChildInfo(
+          childName: form.name.text,
+          professionId: form.profession.value?.professionId,
+          nationalityId: form.nationality.value?.countryId,
+          genderId: form.gender.value?.genderId,
+          dob: form.selectedDob.value,
+          nid: form.nid.text,
+          mobile: form.mobile.text,
+          email: form.email.text,
+          existing: form.isAlive.value,
+          nidFile: await _fileToBase64(form.selectedNidFile.value?.file),
+        ));
+      }
+
+      // 5. Map SiblingInfo
+      List<SiblingInfo> siblings = [];
+      for (var form in siblingList) {
+        if (form.name.text.isEmpty) continue;
+        siblings.add(SiblingInfo(
+          siblingName: form.name.text,
+          professionId: form.profession.value?.professionId,
+          nationalityId: form.nationality.value?.countryId,
+          genderId: form.gender.value?.genderId,
+          dob: form.selectedDob.value,
+          nid: form.nid.text,
+          mobile: form.mobile.text,
+          email: form.email.text,
+          existing: form.isAlive.value,
+          nidFile: await _fileToBase64(form.selectedNidFile.value?.file),
+        ));
+      }
+
+      // 6. Map BankInfo
+      List<BankInfo> banks = [];
+      for (var form in bankListForm) {
+        if (form.bank.value == null) continue;
+        banks.add(BankInfo(
+          bankId: form.bank.value?.bankId.toString(),
+          branchId: form.branch.value?.branchId.toString(),
+          bankAccNo: form.accountName.text,
+          accBalance: double.tryParse(form.accountBalance.text),
+        ));
+      }
+
+      // 7. Map WealthInfo
+      List<WealthInfo> wealths = [];
+      for (var form in wealthListForm) {
+        if (form.wealth.value == null) continue;
+        wealths.add(WealthInfo(
+          wealthId: form.wealth.value?.wealthId,
+          documentTypeId: form.selectedDocumentType.value?.documentTypeId,
+          amount: form.landArea.text,
+          location: form.location.text,
+          note: form.note.text,
+          documentFile: await _fileToBase64(form.documentFile.value?.file),
+        ));
+      }
+
+      // 8. Map ReceivableInfo
+      List<ReceivableInfo> receivables = [];
+      for (var form in receivableListForm) {
+        if (form.amount.text.isEmpty) continue;
+        receivables.add(ReceivableInfo(
+          receivableAmount: double.tryParse(form.amount.text),
+          receivablePerson: form.personName.text,
+          receivablePersonMobile: form.personMobile.text,
+        ));
+      }
+
+      // 9. Map PayableInfo
+      List<PayableInfo> payables = [];
+      for (var form in payableListForm) {
+        if (form.amount.text.isEmpty) continue;
+        payables.add(PayableInfo(
+          payableAmount: double.tryParse(form.amount.text),
+          payablePerson: form.personName.text,
+          payablePersonMobile: form.personMobile.text,
+        ));
+      }
+
+      final submitData = ProfileModel(
+        userProfile: userProfile,
+        parentInfo: parentInfo,
+        spouseInfo: spouses,
+        childInfo: children,
+        siblingInfo: siblings,
+        bankInfo: banks,
+        wealthInfo: wealths,
+        receivableInfo: receivables,
+        payableInfo: payables,
+      );
+
+      var response = await ApiClient.postData(
+        ApiConstants.profileUpdate,
+        submitData.toJson(),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Fluttertoast.showToast(msg: "Profile updated successfully".tr);
+        await getProfile(); // Refresh local data
+      } else {
+        Fluttertoast.showToast(msg: "Update failed: ${response.statusText}".tr);
+      }
+    } catch (e, s) {
+      log("Error during submission: $e\n$s");
+      Fluttertoast.showToast(msg: "Something went wrong".tr);
+    } finally {
+      status(RxStatus.success());
     }
   }
 

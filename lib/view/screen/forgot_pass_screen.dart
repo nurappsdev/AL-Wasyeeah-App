@@ -45,6 +45,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
 
   @override
   Widget build(BuildContext context) {
+    authController.getSecurityQuestion();
     return Scaffold(
       appBar: AppBar(title:  CustomText(text: "Forgot Password".tr,fontsize: 18.sp,),),
       body: BackgroundImageContainer(
@@ -164,30 +165,32 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
 
                     ),
                     SizedBox(height: 10.h),
-                    DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryPrimaryColor),borderRadius: BorderRadius.circular(14.r)),
-                        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color:  AppColors.secondaryPrimaryColor,),borderRadius: BorderRadius.circular(14.r)),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: AppColors.primaryColor),
-                            borderRadius: BorderRadius.circular(16.r)
+                    Obx(()=>
+                       DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryPrimaryColor),borderRadius: BorderRadius.circular(14.r)),
+                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color:  AppColors.secondaryPrimaryColor,),borderRadius: BorderRadius.circular(14.r)),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(color: AppColors.primaryColor),
+                              borderRadius: BorderRadius.circular(16.r)
+                          ),
+
                         ),
+                        isExpanded: true,
+                        hint: CustomText(text: "select Your Question"),
+                        value: _selectedQuestionId,
+                        items: authController.securityQuestionResponseModel
+                            .map((model) => DropdownMenuItem<String>(
+                          value: model.questionId.toString(),
+                          child: Text(model.questionText.toString()),
 
+                        ))
+                            .toList(),
+                        onChanged: (value) {
+                          _selectedQuestionId = value;
+                          print(_selectedQuestionId);
+                        },
                       ),
-                      isExpanded: true,
-                      hint: CustomText(text: "select Your Question"),
-                      value: _selectedQuestionId,
-                      items: authController.securityQuestionResponseModel
-                          .map((model) => DropdownMenuItem<String>(
-                        value: model.questionId.toString(),
-                        child: Text(model.questionText.toString()),
-
-                      ))
-                          .toList(),
-                      onChanged: (value) {
-                        _selectedQuestionId = value;
-                        print(_selectedQuestionId);
-                      },
                     ),
                     SizedBox(height: 10.h),
                     ///=============Answer====================

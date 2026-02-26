@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -34,7 +35,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
    AuthController  authController = Get.put(AuthController());
 
   String? _selectedQuestionId;
-
+   RxBool isChecked = false.obs;
   DateTime? birthDate;
 
   @override
@@ -50,13 +51,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
    @override
    void initState() {
      super.initState();
-     authController.getSecurityQuestion();
    }
 
 
    @override
   Widget build(BuildContext context) {
-
+     authController.getSecurityQuestion();
     print(authController.securityQuestionResponseModel.length);
     return Scaffold(
       body: BackgroundImageContainer(
@@ -219,30 +219,32 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     ),
                     SizedBox(height: 10.h),
-                    DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryPrimaryColor),borderRadius: BorderRadius.circular(14.r)),
-                        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color:  AppColors.secondaryPrimaryColor,),borderRadius: BorderRadius.circular(14.r)),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: AppColors.primaryColor),
-                          borderRadius: BorderRadius.circular(16.r)
+                    Obx(()=>
+                       DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryPrimaryColor),borderRadius: BorderRadius.circular(14.r)),
+                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color:  AppColors.secondaryPrimaryColor,),borderRadius: BorderRadius.circular(14.r)),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(color: AppColors.primaryColor),
+                            borderRadius: BorderRadius.circular(16.r)
+                          ),
+
                         ),
+                        isExpanded: true,
+                        hint: CustomText(text: "select Your Question"),
+                        value: _selectedQuestionId,
+                        items: authController.securityQuestionResponseModel
+                            .map((model) => DropdownMenuItem<String>(
+                          value: model.questionId.toString(),
+                          child: Text(model.questionText.toString()),
 
+                        ))
+                            .toList(),
+                        onChanged: (value) {
+                           _selectedQuestionId = value;
+                           print(_selectedQuestionId);
+                        },
                       ),
-                      isExpanded: true,
-                      hint: CustomText(text: "select Your Question"),
-                      value: _selectedQuestionId,
-                      items: authController.securityQuestionResponseModel
-                          .map((model) => DropdownMenuItem<String>(
-                        value: model.questionId.toString(),
-                        child: Text(model.questionText.toString()),
-
-                      ))
-                          .toList(),
-                      onChanged: (value) {
-                         _selectedQuestionId = value;
-                         print(_selectedQuestionId);
-                      },
                     ),
                     SizedBox(height: 10.h),
                     ///=============Answer====================
@@ -265,7 +267,61 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                     ),
 
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Obx(
+                              () => Checkbox(
+                            checkColor: Colors.white,
+                            activeColor: AppColors.primaryColor,
+                            value: isChecked.value,
+                            onChanged: (value) {
+                              isChecked.value = value!;
+                            },
+                          ),
+                        ),
+                        RichText(
+                          text:  TextSpan(
+                            text: 'I agree with ',
+                            style: TextStyle(color: Colors.black,fontSize: 12.sp),
+                            children: [
+                              TextSpan(
+                                text: 'Terms & Conditions',
+                                style: TextStyle(
+                                    color: AppColors.primaryColor,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 12.sp
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                  //  Get.toNamed(AppRoutes.termAndConScreen,preventDuplicates: false);
+                                    // Add your custom logic for the Terms & Conditions tap event
+                                    print('Terms & Conditions tapped');
+                                  },
+                              ),
+                              TextSpan(
+                                text: ' & ',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              TextSpan(
+                                text: 'Privacy Policy',
+                                style: TextStyle(
+                                    color: AppColors.primaryColor,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 12.sp
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                  //  Get.toNamed(AppRoutes.aboutScreen,preventDuplicates: false);
+                                    // Add your custom logic for the Terms & Conditions tap event
+                                    print('Privacy Policy');
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
 
                     ///=============Sign In Button====================
                     Obx(()=>
