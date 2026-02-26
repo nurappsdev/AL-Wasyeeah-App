@@ -12,7 +12,7 @@ export 'profile_setting/profile_setup_step_four_screen.dart';
 export 'home_screen.dart';
 export 'wasyyah/wasyyah_screen.dart';
 export 'wasyyah/wasiyah_edit_screen.dart';
-export 'notifications_screen.dart';
+export 'notification/notifications_screen.dart';
 export 'profile/profile_info.dart';
 export 'nominee_and_witness_screen/nominee/nominee_tab_screen.dart';
 export 'nominee_and_witness_screen/nominee/add_nominee_screen.dart';
