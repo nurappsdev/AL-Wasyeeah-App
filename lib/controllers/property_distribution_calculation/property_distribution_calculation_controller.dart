@@ -75,7 +75,7 @@ class PropertyDistributionCalculationController extends GetxController {
   Future<void> initData() async {
     status.value = RxStatus.loading();
     await getRelevantList();
-    loadRelatives();
+    await loadRelatives();
     status.value = RxStatus.success();
   }
 
@@ -90,7 +90,7 @@ class PropertyDistributionCalculationController extends GetxController {
     }
   }
 
-  void loadRelatives() {
+  Future<void> loadRelatives() async {
     for (var rel in allRelatives) {
       isChecked[rel.relative!] = false;
       counts[rel.relative!] = 0;

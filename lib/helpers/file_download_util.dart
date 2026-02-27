@@ -97,8 +97,8 @@ class FileDownloadUtil {
     }
     // if (contentType.contains("application/octet-stream")) return ".pdf";
     if (contentType.contains("pdf")) return ".pdf";
-    if (contentType.contains("docx")) return ".docx";
-    if (contentType.contains("doc")) return ".doc";
+    // if (contentType.contains("docx")) return ".docx";
+    // if (contentType.contains("doc")) return ".doc";
 
     return "";
   }
