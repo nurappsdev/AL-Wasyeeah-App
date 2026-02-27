@@ -1,7 +1,7 @@
-
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:al_wasyeah/models/profile_info_model/profile_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -11,27 +11,26 @@ import '../../models/models.dart';
 import '../../services/services.dart';
 import '../../utils/app_constant.dart';
 
-class UserController extends GetxController{
+class UserController extends GetxController {
   @override
-  onInit(){
+  onInit() {
     super.onInit();
     getsalatTimeHandle();
     getUserProfileData();
   }
+
   RxBool isLoadingUserProfile = false.obs;
-  Rxn<GetUserResponseModel> userProfile = Rxn<GetUserResponseModel>();
+  Rxn<ProfileModel> userProfile = Rxn<ProfileModel>();
 
   Future<void> getUserProfileData() async {
     isLoadingUserProfile(true);
 
     try {
-      var response = await ApiClient.getData(ApiConstants.userProfileEndPoint);
+      var response = await ApiClient.getData(ApiConstants.getProfile);
       print("UserProfile Response: ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        if (response.body['userProfile'] != null) {
-          userProfile.value = GetUserResponseModel.fromJson(response.body['userProfile']);
-        }
+        userProfile(profileModelFromJson(jsonEncode(response.body)));
       }
     } catch (e) {
       print("Error loading user profile: $e");
@@ -40,25 +39,26 @@ class UserController extends GetxController{
     }
   }
 
-
-
   RxBool salatTimeLoading = false.obs;
-  Rxn<GetSalatTimeResponseModel> getSalatTimeResponseModel = Rxn<GetSalatTimeResponseModel>();
+  Rxn<GetSalatTimeResponseModel> getSalatTimeResponseModel =
+      Rxn<GetSalatTimeResponseModel>();
 
   Future<void> getsalatTimeHandle() async {
     salatTimeLoading(true);
 
     try {
-
-     String lat = await PrefsHelper.getString(AppConstants.latitude);
-     String long = await PrefsHelper.getString(AppConstants.longitude);
-      var response = await ApiClient.getData(ApiConstants.salatTimeAPI(lat, long),);
+      String lat = await PrefsHelper.getString(AppConstants.latitude);
+      String long = await PrefsHelper.getString(AppConstants.longitude);
+      var response = await ApiClient.getData(
+        ApiConstants.salatTimeAPI(lat, long),
+      );
       print("UserProfile Response: ${response.body}");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         print("long ${long}");
         if (response.body != null) {
-          getSalatTimeResponseModel.value = GetSalatTimeResponseModel.fromJson(response.body);
+          getSalatTimeResponseModel.value =
+              GetSalatTimeResponseModel.fromJson(response.body);
         }
         prayerTimes.value = {
           'Fajr': getSalatTimeResponseModel.value?.fajr ?? '',
@@ -103,7 +103,8 @@ class UserController extends GetxController{
   void _calculateNextPrayer() {
     final now = DateTime.now();
     final today = DateFormat('yyyy-MM-dd').format(now);
-    final tomorrow = DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 1)));
+    final tomorrow =
+        DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 1)));
 
     bool found = false;
 
@@ -136,7 +137,6 @@ class UserController extends GetxController{
     }
   }
 
-
   void startPrayerTimer() {
     Timer.periodic(Duration(seconds: 1), (_) {
       _calculateNextPrayer();
@@ -144,39 +144,33 @@ class UserController extends GetxController{
     });
   }
 
-
-
-
-  RxBool  forPassLoading = false.obs;
-  Future<void>  changePass(String oldPassword, String newPassword, String confirmPassword) async{
+  RxBool forPassLoading = false.obs;
+  Future<void> changePass(
+      String oldPassword, String newPassword, String confirmPassword) async {
     forPassLoading(true);
     String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $bearerToken'
     };
-    var body ={
+    var body = {
       "oldPassword": oldPassword,
       "newPassword": newPassword,
       "confirmPassword": confirmPassword
     };
-    var response = await ApiClient.postData("${ApiConstants.changePassAPI}",
-        body,
-        headers: headers
-    );
+    var response = await ApiClient.postData(
+        "${ApiConstants.changePassAPI}", body,
+        headers: headers);
     print("dataaaaaaaaaaaaaaa ${response.body}");
-    if(response.statusCode == 200 || response.statusCode == 201){
-
-      ToastMessageHelper.successMessageShowToster(response.body['message'].toString());
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      ToastMessageHelper.successMessageShowToster(
+          response.body['message'].toString());
       forPassLoading(false);
-    }else{
-      ToastMessageHelper.errorMessageShowToster(response.body['message'].toString());
+    } else {
+      ToastMessageHelper.errorMessageShowToster(
+          response.body['message'].toString());
       print("token==================> ${response.body['data']}");
       forPassLoading(false);
     }
   }
-
-
-
-
 }

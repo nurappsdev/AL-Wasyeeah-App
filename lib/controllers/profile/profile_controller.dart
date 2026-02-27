@@ -273,6 +273,7 @@ class ProfileController extends GetxController {
     personalForm.value.nidUrl = user.nidPaperUrl;
     personalForm.value.tinUrl = user.tinPaperUrl;
     personalForm.value.multiCitizenUrl = user.passportPaperUrl;
+    personalForm.value.profilePictureUrl = user.profilePictureUrl;
   }
 
   void _mapAddressInfo() {
@@ -873,11 +874,11 @@ class ProfileController extends GetxController {
     }
   }
 
-  @override
-  void onInit() async {
-    getProfilePageData();
-    super.onInit();
-  }
+  // @override
+  // void onInit() async {
+  //   getProfilePageData();
+  //   super.onInit();
+  // }
 
   @override
   void onClose() {

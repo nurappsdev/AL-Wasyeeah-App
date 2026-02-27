@@ -34,6 +34,7 @@ class PersonalForm {
   String? nidUrl;
   String? tinUrl;
   String? multiCitizenUrl;
+  String? profilePictureUrl;
 
   void dispose() {
     firstName.dispose();

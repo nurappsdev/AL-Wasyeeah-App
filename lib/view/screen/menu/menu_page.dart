@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:al_wasyeah/view/screen/profile/languge_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,18 +11,20 @@ import '../../../helpers/helpers.dart';
 import '../../../helpers/prefs_helper.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
+import '../../../controllers/notification_controller.dart';
+import '../../../services/api_constants.dart';
 import '../profile/profile_page.dart';
 
-class ProfileInfo extends StatefulWidget {
-  const ProfileInfo({super.key});
+class MenuPage extends StatefulWidget {
+  const MenuPage({super.key});
 
   @override
-  State<ProfileInfo> createState() => _ProfileInfoState();
+  State<MenuPage> createState() => _MenuPageState();
 }
 
-class _ProfileInfoState extends State<ProfileInfo> {
+class _MenuPageState extends State<MenuPage> {
   final userController = Get.put(UserController());
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -28,10 +32,11 @@ class _ProfileInfoState extends State<ProfileInfo> {
       userController.getUserProfileData();
     });
   }
+
   @override
   Widget build(BuildContext context) {
-
-    print("user data ${userController.userProfile.value?.firstName}");
+    print(
+        "user data ${userController.userProfile.value?.userProfile?.firstName}");
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
@@ -52,25 +57,31 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   height: 40.h,
                 ),
                 Center(
-                    child: CircleAvatar(
-                  radius: 50, // Radius of the CircleAvatar
-                  backgroundImage: AssetImage(AppImages.profileIcon),
-                  backgroundColor:
-                      Colors.grey[200], // Optional background color
-                )),
-                // CustomNetworkImage(
-                //   boxShape: BoxShape.circle,
-                //   imageUrl: "assets/profile_icon.png",
-                //   height: 120.h,
-                //   width: 120.w,
-                // ),
+                  child: Obx(
+                    () => userController.userProfile.value?.userProfile
+                                ?.profilePictureUrl !=
+                            null
+                        ? CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(
+                                "${ApiConstants.imageUrl + "${userController.userProfile.value!.userProfile!.profilePictureUrl}"}"),
+                            backgroundColor: Colors.grey[200],
+                          )
+                        : CircleAvatar(
+                            radius: 50,
+                            child: Icon(Icons.person),
+                            backgroundColor: Colors.grey[200],
+                          ),
+                  ),
+                ),
                 SizedBox(
                   height: 10.h,
                 ),
                 Obx(() => CustomText(
-                      text:
-                          userController.userProfile.value?.firstName ?? "N/A",
-                      fontsize: 18,
+                      text: userController
+                              .userProfile.value?.userProfile?.firstName ??
+                          "N/A",
+                      fontsize: 18.sp,
                       fontWeight: FontWeight.w700,
                     )),
                 SizedBox(
@@ -80,8 +91,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 ///=====================Personal Details====================================
                 GestureDetector(
                   onTap: () {
-                    Get.off(() => ProfilePage(),
-                        preventDuplicates: false);
+                    Get.off(() => ProfilePage(), preventDuplicates: false);
                     // Get.off(()=>MultiStepFormScreen(),preventDuplicates: false);
                   },
                   child: Container(
@@ -180,8 +190,9 @@ class _ProfileInfoState extends State<ProfileInfo> {
 
                 ///=====================Device History====================================
                 InkWell(
-                  onTap: (){
-                    Get.toNamed(AppRoutes.changePassScreen,preventDuplicates: false);
+                  onTap: () {
+                    Get.toNamed(AppRoutes.changePassScreen,
+                        preventDuplicates: false);
                   },
                   child: Container(
                     width: 360.w,
@@ -286,8 +297,8 @@ class _ProfileInfoState extends State<ProfileInfo> {
 
                 ///=====================Language====================================
                 InkWell(
-                  onTap: (){
-                    Get.to(()=>LanguageScreen());
+                  onTap: () {
+                    Get.to(() => LanguageScreen());
                   },
                   child: Container(
                     width: 360.w,
@@ -336,9 +347,9 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   height: 20.h,
                 ),
 
-                SizedBox(height: 15.h),
                 GestureDetector(
                   onTap: () {
+                    log("asdasdasd");
                     _showLogoutDialog(context);
                   },
                   child: Container(
@@ -442,8 +453,12 @@ class _ProfileInfoState extends State<ProfileInfo> {
                                     AppConstants.businessID);
                                 await PrefsHelper.remove(AppConstants.type);
 
-                                Get.toNamed(AppRoutes.loginScreen,
-                                    preventDuplicates: false);
+                                // Clear controllers to avoid stale data
+                                Get.delete<UserController>(force: true);
+                                Get.delete<NotificationController>(force: true);
+                                Get.delete<ProfileController>(force: true);
+
+                                Get.offAllNamed(AppRoutes.loginScreen);
                               })),
                     ],
                   )

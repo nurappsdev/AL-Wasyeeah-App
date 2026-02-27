@@ -16,6 +16,11 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final ProfileController controller = Get.put(ProfileController());
 
+  void initState() {
+    super.initState();
+    controller.getProfilePageData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

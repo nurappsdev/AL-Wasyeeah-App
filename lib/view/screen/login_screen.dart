@@ -12,9 +12,9 @@ import 'before_login/profirty_Distribute_screen2.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   final TextEditingController emailController =
-      TextEditingController();
+      TextEditingController(text: "WASY100008");
   final TextEditingController passController =
-      TextEditingController();
+      TextEditingController(text: "+oGq#rH^");
   final AuthController authController = Get.put(AuthController());
 
   final GlobalKey<FormState> _logKey = GlobalKey<FormState>();

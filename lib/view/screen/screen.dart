@@ -13,7 +13,7 @@ export 'home_screen.dart';
 export 'wasyyah/wasyyah_screen.dart';
 export 'wasyyah/wasiyah_edit_screen.dart';
 
-export 'notification/notifications_screen.dart';
+export 'notification/notification_screen.dart';
 export 'menu/menu_page.dart';
 
 export 'nominee_and_witness_screen/nominee/nominee_tab_screen.dart';

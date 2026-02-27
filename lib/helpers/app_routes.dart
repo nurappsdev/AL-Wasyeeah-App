@@ -137,7 +137,7 @@ class AppRoutes {
         GetPage(name: addOutsideWitnessScreen, page: () => AddOutsideWitness()),
         GetPage(name: addOutsideNomineeScreen, page: () => AddOutsideNominee()),
         GetPage(name: notificationsScreen, page: () => NotificationScreen()),
-        GetPage(name: profileInfo, page: () => ProfileInfo()),
+        GetPage(name: profileInfo, page: () => MenuPage()),
         GetPage(name: wasyyahPriviewScreen, page: () => WasyyahPreviewScreen()),
         GetPage(
             name: accessControlTabScreen, page: () => AccessControlTabScreen()),

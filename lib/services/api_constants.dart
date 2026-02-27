@@ -1,7 +1,7 @@
 class ApiConstants {
   //static const String baseUrl = "https://45b4-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
   static const String baseUrl = "https://api.wasiyyat.com/api/v1";
-  static const String imageUrl = "$baseUrl/raw-media/";
+  static const String imageUrl = "$baseUrl/raw/";
 
   static const String securityQuestionEndPoint = "/user/securityQuestionList";
   static const String nomineeEndPoint = "/user/get-nominees";
@@ -29,7 +29,6 @@ class ApiConstants {
   static const String addWitnessEndPoint = "/user/save-nominee";
   static const String addFeatureNomineeWitnessPoint =
       "/assignContext?isWitness=";
-  static const String userProfileEndPoint = "/user/getProfileData";
   static String allPostCodeEndPoint(String postCode) =>
       "/suburbs?limit=50&postcode=$postCode";
   static String singleBusinessEndPoint(String id) => "/businesses/$id";
@@ -97,4 +96,5 @@ class ApiConstants {
   static String relevantList = "/relevantList?lang=en";
   static String propertyDistributionCalculationResult =
       "/propertyDistributeResult?lang=en";
+  static String inappNOtificationAcceptRejectRequest = "/accept-reject-request";
 }

@@ -33,4 +33,22 @@ class NotificationController extends GetxController
       log("Inapp Notification List Error: $e\nStacktrace: $s");
     }
   }
+
+  Future<void> approveOrDeclienNotification(requestKey, value) async {
+    try {
+      var response = await ApiClient.getData(
+          ApiConstants.inappNOtificationAcceptRejectRequest +
+              "?requestKey=$requestKey&value=$value");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        await getNotificationList();
+        Get.snackbar("Notification Status", "Updated");
+      } else {
+        Get.snackbar("Error",
+            response.statusText ?? "Failed to update notification status");
+      }
+    } catch (e, s) {
+      log("Inapp Notification Accept/Reject Error: $e\nStacktrace: $s");
+    }
+  }
 }

@@ -89,15 +89,15 @@ class ApiClient extends GetxService {
             headers: headers ?? await _defaultHeaders(),
           )
           .timeout(const Duration(seconds: timeoutInSeconds));
-
+      log("----******------GET RESPONSE: ${response.body}");
       return _buildResponse(response, uri);
     } on SocketException {
       return const Response(
-          statusCode: -1, statusText: "Can't connect to the internet!");
+          statusCode: 404, statusText: "Can't connect to the internet!");
     } on TimeoutException {
-      return const Response(statusCode: -1, statusText: 'Request timeout');
+      return const Response(statusCode: 404, statusText: 'Request timeout');
     } catch (e) {
-      return Response(statusCode: -1, statusText: e.toString());
+      return Response(statusCode: 404, statusText: e.toString());
     }
   }
 
