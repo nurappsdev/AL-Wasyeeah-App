@@ -27,6 +27,8 @@ class PersonalForm {
   final Rxn<PickedFileResult> selectedTinFile = Rxn<PickedFileResult>();
   final Rxn<PickedFileResult> selectedMultiCitizenFile =
       Rxn<PickedFileResult>();
+  final Rxn<PickedFileResult> selectedProfilePictureFile =
+      Rxn<PickedFileResult>();
 
   // Download State
 

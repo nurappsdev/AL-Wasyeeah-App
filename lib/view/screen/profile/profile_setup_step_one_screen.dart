@@ -178,45 +178,45 @@ class _ProfileSettingStepOneWidgetState
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
-                    if (form.nid.text.isNotEmpty)
-                      Obx(() {
-                        return _buildFileRow(
-                          pickedFile: form.selectedNidFile,
-                          isDownloading: (controller
-                                      .isDownloadingMap['userNidOrPassport'] ??
-                                  false)
-                              .obs,
-                          progress: (controller.downloadProgressMap[
-                                      'userNidOrPassport'] ??
-                                  0.0)
-                              .obs,
-                          onPickFile: () async {
-                            var result = await FilePickerUtil.pickSingleFile();
-                            if (result != null)
-                              form.selectedNidFile.value = result;
-                          },
-                          onDownload: () async {
-                            final isComplete = await controller.downloadFile(
-                              urlPath: controller
-                                  .profileModel.value.userProfile?.nidPaperUrl,
-                              filePrefix: 'NID',
-                              type: 'userNidOrPassport',
+
+                    Obx(() {
+                      return _buildFileRow(
+                        pickedFile: form.selectedNidFile,
+                        isDownloading:
+                            (controller.isDownloadingMap['userNidOrPassport'] ??
+                                    false)
+                                .obs,
+                        progress: (controller
+                                    .downloadProgressMap['userNidOrPassport'] ??
+                                0.0)
+                            .obs,
+                        onPickFile: () async {
+                          var result = await FilePickerUtil.pickSingleFile();
+                          if (result != null)
+                            form.selectedNidFile.value = result;
+                        },
+                        onDownload: () async {
+                          final isComplete = await controller.downloadFile(
+                            urlPath: controller
+                                .profileModel.value.userProfile?.nidPaperUrl,
+                            filePrefix: 'NID',
+                            type: 'userNidOrPassport',
+                          );
+                          if (isComplete) {
+                            Fluttertoast.showToast(
+                              msg: "NID File downloaded successfully".tr,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              timeInSecForIosWeb: 2,
+                              backgroundColor: AppColors.primaryColor,
+                              textColor: AppColors.whiteColor,
                             );
-                            if (isComplete) {
-                              Fluttertoast.showToast(
-                                msg: "NID File downloaded successfully".tr,
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.TOP,
-                                timeInSecForIosWeb: 2,
-                                backgroundColor: AppColors.primaryColor,
-                                textColor: AppColors.whiteColor,
-                              );
-                            }
-                          },
-                          fileUrl: controller
-                              .profileModel.value.userProfile?.nidPaperUrl,
-                        );
-                      }),
+                          }
+                        },
+                        fileUrl: controller
+                            .profileModel.value.userProfile?.nidPaperUrl,
+                      );
+                    }),
                     CustomText(
                       text: "* Only Pdf,JPEG,PNG file are allowed".tr,
                       color: AppColors.redColor,
@@ -239,46 +239,43 @@ class _ProfileSettingStepOneWidgetState
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
-                    if (controller
-                            .profileModel.value.userProfile?.tinPaperUrl !=
-                        null)
-                      Obx(() => _buildFileRow(
-                            pickedFile: form.selectedTinFile,
-                            isDownloading: (controller.isDownloadingMap[
-                                        'userTinOrPassport'] ??
-                                    false)
-                                .obs,
-                            progress: (controller.downloadProgressMap[
-                                        'userTinOrPassport'] ??
-                                    0.0)
-                                .obs,
-                            onPickFile: () async {
-                              var result =
-                                  await FilePickerUtil.pickSingleFile();
-                              if (result != null)
-                                form.selectedTinFile.value = result;
-                            },
-                            onDownload: () async {
-                              final isComplete = await controller.downloadFile(
-                                urlPath: controller.profileModel.value
-                                    .userProfile?.tinPaperUrl,
-                                filePrefix: 'TIN',
-                                type: 'userTinOrPassport',
+
+                    Obx(() => _buildFileRow(
+                          pickedFile: form.selectedTinFile,
+                          isDownloading: (controller
+                                      .isDownloadingMap['userTinOrPassport'] ??
+                                  false)
+                              .obs,
+                          progress: (controller.downloadProgressMap[
+                                      'userTinOrPassport'] ??
+                                  0.0)
+                              .obs,
+                          onPickFile: () async {
+                            var result = await FilePickerUtil.pickSingleFile();
+                            if (result != null)
+                              form.selectedTinFile.value = result;
+                          },
+                          onDownload: () async {
+                            final isComplete = await controller.downloadFile(
+                              urlPath: controller
+                                  .profileModel.value.userProfile?.tinPaperUrl,
+                              filePrefix: 'TIN',
+                              type: 'userTinOrPassport',
+                            );
+                            if (isComplete) {
+                              Fluttertoast.showToast(
+                                msg: "TIN File downloaded successfully".tr,
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.TOP,
+                                timeInSecForIosWeb: 2,
+                                backgroundColor: AppColors.primaryColor,
+                                textColor: AppColors.whiteColor,
                               );
-                              if (isComplete) {
-                                Fluttertoast.showToast(
-                                  msg: "TIN File downloaded successfully".tr,
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.TOP,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: AppColors.primaryColor,
-                                  textColor: AppColors.whiteColor,
-                                );
-                              }
-                            },
-                            fileUrl: controller
-                                .profileModel.value.userProfile?.tinPaperUrl,
-                          )),
+                            }
+                          },
+                          fileUrl: controller
+                              .profileModel.value.userProfile?.tinPaperUrl,
+                        )),
                     CustomText(
                       text: "* Only Pdf,JPEG,PNG file are allowed".tr,
                       color: AppColors.redColor,
@@ -290,80 +287,65 @@ class _ProfileSettingStepOneWidgetState
                     CustomText(text: "Multi Citizenship".tr),
                     SizedBox(height: 4.h),
                     Obx(
-                      () => Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomDropdown<CountryModel>(
-                            hint: "Select Country",
-                            items: controller.countryList,
-                            value: form.selectedMultiCitizenCountry.value,
-                            itemToString: (item) => item.country ?? "",
-                            onChanged: (val) =>
-                                form.selectedMultiCitizenCountry.value = val,
-                          ),
-                          SizedBox(height: 16.h),
-                          CustomText(
-                            text: "NID/Passport No".tr,
-                            fontsize: 16.sp,
-                          ),
-                          SizedBox(height: 4.h),
-                          CustomTextFormField(
-                            controller: form.multiCitizenPassport,
-                            hint: "Passport No".tr,
-                          ),
-                          SizedBox(height: 16.h),
-                          CustomText(
-                            text: "NID/Passport Documents".tr,
-                            fontsize: 16.sp,
-                          ),
-                          SizedBox(height: 4.h),
-                          if (controller.profileModel.value.userProfile
-                                  ?.passportPaperUrl !=
-                              null)
-                            _buildFileRow(
-                              isDownloading: (controller.isDownloadingMap[
-                                          'userMultiCitizenOrPassport'] ??
-                                      false)
-                                  .obs,
-                              progress: (controller.downloadProgressMap[
-                                          'userMultiCitizenOrPassport'] ??
-                                      0.0)
-                                  .obs,
-                              pickedFile: form.selectedMultiCitizenFile,
-                              onPickFile: () async {
-                                var result =
-                                    await FilePickerUtil.pickSingleFile();
-                                if (result != null)
-                                  form.selectedMultiCitizenFile.value = result;
-                              },
-                              onDownload: () async {
-                                final isComplete =
-                                    await controller.downloadFile(
-                                  urlPath: controller.profileModel.value
-                                      .userProfile?.passportPaperUrl,
-                                  filePrefix: 'MultiCitizen',
-                                  type: 'userMultiCitizenOrPassport',
-                                );
-                                if (isComplete) {
-                                  Fluttertoast.showToast(
-                                    msg:
-                                        "MultiCitizen File downloaded successfully"
-                                            .tr,
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.TOP,
-                                    timeInSecForIosWeb: 2,
-                                    backgroundColor: AppColors.primaryColor,
-                                    textColor: AppColors.whiteColor,
-                                  );
-                                }
-                              },
-                              fileUrl: controller.profileModel.value.userProfile
-                                  ?.passportPaperUrl,
-                            ),
-                        ],
+                      () => CustomDropdown<CountryModel>(
+                        hint: "Select Country",
+                        items: controller.countryList,
+                        value: form.selectedMultiCitizenCountry.value,
+                        itemToString: (item) => item.country ?? "",
+                        onChanged: (val) =>
+                            form.selectedMultiCitizenCountry.value = val,
                       ),
                     ),
+                    SizedBox(height: 16.h),
+                    CustomText(
+                      text: "Profile Picture".tr,
+                      fontsize: 16.sp,
+                    ),
+                    SizedBox(height: 4.h),
 
+                    Obx(
+                      () => _buildFileRow(
+                        isDownloading: (controller
+                                    .isDownloadingMap['userProfilePicture'] ??
+                                false)
+                            .obs,
+                        progress: (controller.downloadProgressMap[
+                                    'userProfilePicture'] ??
+                                0.0)
+                            .obs,
+                        pickedFile: form.selectedProfilePictureFile,
+                        onPickFile: () async {
+                          var result = await FilePickerUtil.pickSingleFile();
+                          if (result != null)
+                            form.selectedProfilePictureFile.value = result;
+                        },
+                        onDownload: () async {
+                          final isComplete = await controller.downloadFile(
+                            urlPath: controller.profileModel.value.userProfile
+                                ?.profilePictureUrl,
+                            filePrefix: 'ProfilePicture',
+                            type: 'userProfilePicture',
+                          );
+                          if (isComplete) {
+                            Fluttertoast.showToast(
+                              msg: "Profile picture downloaded successfully".tr,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.TOP,
+                              timeInSecForIosWeb: 2,
+                              backgroundColor: AppColors.primaryColor,
+                              textColor: AppColors.whiteColor,
+                            );
+                          }
+                        },
+                        fileUrl: controller
+                            .profileModel.value.userProfile?.profilePictureUrl,
+                      ),
+                    ),
+                    CustomText(
+                      text: "* Only Pdf,JPEG,PNG file are allowed".tr,
+                      color: AppColors.redColor,
+                      fontsize: 12.sp,
+                    ),
                     SizedBox(height: 16.h),
                     // ================= Button =================
                     CustomButtonCommon(
@@ -495,184 +477,3 @@ class _ProfileSettingStepOneWidgetState
     );
   }
 }
-
-// class ProfileSetupStepOneScreen extends StatefulWidget {
-//   @override
-//   State<ProfileSetupStepOneScreen> createState() =>
-//       _ProfileSetupStepOneScreenState();
-// }
-
-// class _ProfileSetupStepOneScreenState extends State<ProfileSetupStepOneScreen> {
-//   final ProfileController controller = Get.find<ProfileController>();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final form = controller.personalForm;
-
-//     return Scaffold(
-//       body: Obx(() {
-//         if (controller.status.value.isLoading) {
-//           return const Center(child: CircularProgressIndicator());
-//         }
-
-//         if (controller.status.value.isError) {
-//           return const Center(child: Text("Something went wrong"));
-//         }
-
-//         return Form(
-//           key: controller.step1formKey,
-//           child: Padding(
-//             padding: EdgeInsets.symmetric(horizontal: 14.h),
-//             child: RefreshIndicator(
-//               onRefresh: controller.getProfilePageData(),
-//               child: SingleChildScrollView(
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     /// ---------- First Name ----------
-//                     const SizedBox(height: 16),
-//                     CustomText(text: "First Name".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
-//                     CustomTextFormField(
-//                       controller: form.value.firstName,
-//                       hint: "First Name".tr,
-//                       validator: (v) =>
-//                           v!.isEmpty ? "First Name is required" : null,
-//                     ),
-
-//                     /// ---------- Last Name ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "Last Name".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
-//                     CustomTextFormField(
-//                       controller: form.value.lastName,
-//                       hint: "Last Name".tr,
-//                       validator: (v) =>
-//                           v!.isEmpty ? "Last Name is required" : null,
-//                     ),
-
-//                     /// ---------- Marital Status ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "Marital Status".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
-//                     Obx(() => CustomDropdown<MaritalModel>(
-//                           hint: "Select Marital Status",
-//                           items: controller.maritalList,
-//                           value: form.value.selectedMarried.value,
-//                           itemToString: (e) => e.maritalType ?? '',
-//                           onChanged: (v) =>
-//                               form.value.selectedMarried.value = v,
-//                           validator: (v) =>
-//                               v == null ? "Marital Status is required" : null,
-//                         )),
-
-//                     /// ---------- Profession ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "Profession".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
-//                     Obx(() => CustomDropdown<ProfessionModel>(
-//                           hint: "Select Profession",
-//                           items: controller.professionList,
-//                           value: form.value.selectedProfession.value,
-//                           itemToString: (e) => e.profession ?? '',
-//                           onChanged: (v) =>
-//                               form.value.selectedProfession.value = v,
-//                         )),
-
-//                     /// ---------- Place of Birth ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "Place of Birth".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
-//                     Obx(() => CustomDropdown<CountryModel>(
-//                           hint: "Select Country",
-//                           items: controller.countryList,
-//                           value: form.value.selectedCountry.value,
-//                           itemToString: (e) => e.country ?? '',
-//                           onChanged: (v) =>
-//                               form.value.selectedCountry.value = v,
-//                         )),
-
-//                     /// ---------- District ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "District/State".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
-//                     CustomTextFormField(
-//                       controller: form.value.district,
-//                       hint: "District/State".tr,
-//                       validator: (v) =>
-//                           v!.isEmpty ? "District/State is required" : null,
-//                     ),
-
-//                     /// ---------- Gender ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "Gender".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
-//                     Obx(() => CustomDropdown<GenderModel>(
-//                           hint: "Select Gender",
-//                           items: controller.genderList,
-//                           value: form.value.selectedGender.value,
-//                           itemToString: (e) => e.gender ?? '',
-//                           onChanged: (v) => form.value.selectedGender.value = v,
-//                         )),
-
-//                     /// ---------- NID ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "NID/Passport No".tr, fontsize: 16.sp),
-//                     SizedBox(height: 4.h),
-//                     CustomTextFormField(
-//                       controller: form.value.nid,
-//                       hint: "NID/Passport No".tr,
-//                       validator: (v) =>
-//                           v!.isEmpty ? "NID/Passport No is required" : null,
-//                     ),
-
-//                     /// ---------- TIN ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "TIN".tr),
-//                     SizedBox(height: 4.h),
-//                     CustomTextFormField(
-//                       controller: form.value.tin,
-//                       hint: "TIN".tr,
-//                       validator: (v) => v!.isEmpty ? "TIN is required" : null,
-//                     ),
-
-//                     /// ---------- Multi Citizenship ----------
-//                     SizedBox(height: 16.h),
-//                     CustomText(text: "Multi Citizenship".tr),
-//                     SizedBox(height: 4.h),
-//                     Obx(() => CustomDropdown<CountryModel>(
-//                           hint: "Select Country",
-//                           items: controller.countryList,
-//                           value: form.value.selectedMultiCitizenCountry.value,
-//                           itemToString: (e) => e.country ?? '',
-//                           onChanged: (v) =>
-//                               form.value.selectedMultiCitizenCountry.value = v,
-//                         )),
-//                     SizedBox(height: 10.h),
-//                     CustomTextFormField(
-//                       controller: form.value.multiCitizenPassport,
-//                       hint: "Passport No".tr,
-//                     ),
-
-//                     /// ---------- Next Button ----------
-//                     SizedBox(height: 20.h),
-//                     CustomButtonCommon(
-//                       title: "Next".tr,
-//                       onpress: () {
-//                         if (controller.step1formKey.currentState!.validate()) {
-//                           controller
-//                               .onStepTapped(controller.currentStep.value + 1);
-//                         }
-//                       },
-//                     ),
-//                     SizedBox(height: 30.h),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ),
-//         );
-//       }),
-//     );
-//   }
-// }

@@ -95,7 +95,7 @@ class ProfileController extends GetxController {
     final String fileName =
         '${filePrefix}_${profileModel.value.userProfile?.firstName ?? "User"}_'
         '${profileModel.value.userProfile?.lastName ?? ""}_'
-        '${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}.pdf';
+        '${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}';
 
     final String filePath = '${ApiConstants.imageUrl}$urlPath';
 
@@ -110,9 +110,9 @@ class ProfileController extends GetxController {
           log("Download $filePrefix Successful");
         }
 
-        if (progress == 100) {
-          completer.complete(true);
-        }
+        // if (progress == 100) {
+        //   completer.complete(true);
+        // }
       },
     ).catchError((e) {
       isDownloadingMap[type] = false;
@@ -274,6 +274,7 @@ class ProfileController extends GetxController {
     personalForm.value.tinUrl = user.tinPaperUrl;
     personalForm.value.multiCitizenUrl = user.passportPaperUrl;
     personalForm.value.profilePictureUrl = user.profilePictureUrl;
+    log("Value saved: ${personalForm.value.profilePictureUrl}");
   }
 
   void _mapAddressInfo() {
@@ -717,6 +718,8 @@ class ProfileController extends GetxController {
         overseasVillage: address.overseasVillage.text,
         nidFile: await _fileToBase64(personal.selectedNidFile.value?.file),
         tinFile: await _fileToBase64(personal.selectedTinFile.value?.file),
+        profileFile: await _fileToBase64(
+            personal.selectedProfilePictureFile.value?.file),
         passportFile:
             await _fileToBase64(personal.selectedMultiCitizenFile.value?.file),
       );

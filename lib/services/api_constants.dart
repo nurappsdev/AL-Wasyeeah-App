@@ -2,6 +2,7 @@ class ApiConstants {
   //static const String baseUrl = "https://45b4-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
   static const String baseUrl = "https://api.wasiyyat.com/api/v1";
   static const String imageUrl = "$baseUrl/raw/";
+  static const String fileDownloadUrl = "$baseUrl/raw-media/";
 
   static const String securityQuestionEndPoint = "/user/securityQuestionList";
   static const String nomineeEndPoint = "/user/get-nominees";
