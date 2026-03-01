@@ -62,7 +62,7 @@ class FileDownloadUtil {
 
     try {
       String extension =
-          _getExtensionFromContentType(response.headers['file-type']);
+          _getExtensionFromContentType(response.headers['content-type']);
 
       final file = File('${directory.path}/$fileName$extension');
       final sink = file.openWrite();
