@@ -73,9 +73,13 @@ class _ProfileSettingStepOneWidgetState
                     _sectionTitle("Personal Information"),
                     // ================= First Name =================
                     const SizedBox(height: 16),
-                    CustomText(
-                      text: "First Name".tr,
-                      fontsize: 16.sp,
+                    Row(
+                      children: [
+                        CustomText(text: "First Name".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
                     ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
@@ -87,9 +91,13 @@ class _ProfileSettingStepOneWidgetState
 
                     SizedBox(height: 16.h),
                     // ================= Last Name =================
-                    CustomText(
-                      text: "Last Name".tr,
-                      fontsize: 16.sp,
+                    Row(
+                      children: [
+                        CustomText(text: "Last Name".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
                     ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
@@ -101,7 +109,14 @@ class _ProfileSettingStepOneWidgetState
 
                     SizedBox(height: 16.h),
                     // ================= Marital Status =================
-                    CustomText(text: "Marital Status".tr, fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(text: "Marital Status".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     Obx(() => CustomDropdown<MaritalModel>(
                           hint: "Select Marital Status",
@@ -129,7 +144,14 @@ class _ProfileSettingStepOneWidgetState
 
                     SizedBox(height: 16.h),
                     // ================= Place of Birth =================
-                    CustomText(text: "Place of Birth".tr, fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(text: "Place of Birth".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     Obx(() => CustomDropdown<CountryModel>(
                           hint: "Select Country",
@@ -152,7 +174,14 @@ class _ProfileSettingStepOneWidgetState
 
                     SizedBox(height: 16.h),
                     // ================= Gender =================
-                    CustomText(text: "Gender".tr, fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(text: "Gender".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     Obx(() => CustomDropdown<GenderModel>(
                           hint: "Select Gender",
@@ -164,7 +193,14 @@ class _ProfileSettingStepOneWidgetState
 
                     SizedBox(height: 16.h),
                     // ================= NID / Passport =================
-                    CustomText(text: "NID/Passport No".tr, fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(text: "NID/Passport No".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.nid,

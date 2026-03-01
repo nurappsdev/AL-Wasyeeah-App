@@ -88,7 +88,7 @@ class _ProfileSettingStepTwoWidgetState
 
                 /// ========= Overseas Address =========
                 _sectionTitle("Overseas Address"),
-
+                CustomText(text: "Country".tr, fontsize: 16.sp),
                 Obx(() => CustomDropdown<CountryModel>(
                       hint: "Select Country",
                       items: controller.countryList,
@@ -154,7 +154,12 @@ class _ProfileSettingStepTwoWidgetState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: label.tr, fontsize: 16.sp),
+        Row(
+          children: [
+            CustomText(text: label.tr, fontsize: 16.sp),
+            Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+          ],
+        ),
         SizedBox(height: 4.h),
         CustomTextFormField(
           controller: controller,

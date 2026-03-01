@@ -173,7 +173,12 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: label.tr, fontsize: 16.sp),
+        Row(
+          children: [
+            CustomText(text: label.tr, fontsize: 16.sp),
+            Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+          ],
+        ),
         SizedBox(height: 4.h),
         CustomTextFormField(
           controller: controller,

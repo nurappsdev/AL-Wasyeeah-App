@@ -109,7 +109,14 @@ class _BankWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(text: "Bank".tr, fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(text: "Bank".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomDropdown<BankModel>(
                       hint: "Select Bank".tr,
@@ -119,7 +126,14 @@ class _BankWidget extends StatelessWidget {
                       onChanged: (v) => controller.onBankChanged(form, v),
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: "Branch".tr, fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(text: "Branch".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomDropdown<BranchModel>(
                       key: ValueKey("branch_${form.bank.value?.bankId}_$index"),
@@ -130,7 +144,14 @@ class _BankWidget extends StatelessWidget {
                       onChanged: (v) => form.branch.value = v,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: "Account Name".tr, fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(text: "Account Name".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.accountName,
@@ -235,7 +256,14 @@ class _WealthWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(text: "Wealth".tr, fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(text: "Wealth".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomDropdown<WealthModel>(
                       hint: "Select Wealth".tr,
@@ -245,7 +273,14 @@ class _WealthWidget extends StatelessWidget {
                       onChanged: (v) => controller.onWealthChanged(form, v),
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: "Document Type".tr, fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(text: "Document Type".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomDropdown<DocumentTypeForm>(
                       key:

@@ -109,9 +109,13 @@ class SiblingWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomText(
-                        text: "Sibling Name".tr,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(text: "Sibling Name".tr, fontsize: 16.sp),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
@@ -127,9 +131,13 @@ class SiblingWidget extends StatelessWidget {
 
                       SizedBox(height: 16.h),
                       // Gender
-                      CustomText(
-                        text: "Gender".tr,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(text: "Gender".tr, fontsize: 16.sp),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<GenderModel>(
@@ -169,9 +177,15 @@ class SiblingWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       // Date of Birth
-                      CustomText(
-                        text: "Sibling Date of Birth".tr,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(
+                              text: "Sibling Date of Birth".tr,
+                              fontsize: 16.sp),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       Obx(
@@ -441,9 +455,13 @@ class _ChildWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomText(
-                        text: "Child Name".tr,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(text: "Child Name".tr, fontsize: 16.sp),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
@@ -459,9 +477,13 @@ class _ChildWidget extends StatelessWidget {
 
                       SizedBox(height: 16.h),
                       // Gender
-                      CustomText(
-                        text: "Gender".tr,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(text: "Gender".tr, fontsize: 16.sp),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<GenderModel>(
@@ -473,9 +495,13 @@ class _ChildWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       // Profession
-                      CustomText(
-                        text: "Profession".tr,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(text: "Profession".tr, fontsize: 16.sp),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<ProfessionModel>(
@@ -487,9 +513,13 @@ class _ChildWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       // Nationality
-                      CustomText(
-                        text: "Nationality".tr,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(text: "Nationality".tr, fontsize: 16.sp),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<CountryModel>(
@@ -501,9 +531,14 @@ class _ChildWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       // Date of Birth
-                      CustomText(
-                        text: "Child Date of Birth".tr,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(
+                              text: "Child Date of Birth".tr, fontsize: 16.sp),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       Obx(
@@ -555,9 +590,14 @@ class _ChildWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       // NID/Passport No
-                      CustomText(
-                        text: "NID/Passport No".tr,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(
+                              text: "NID/Passport No".tr, fontsize: 16.sp),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
@@ -773,9 +813,13 @@ class _SpouseWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(
-                      text: "Spouse Name".tr,
-                      fontsize: 16.sp,
+                    Row(
+                      children: [
+                        CustomText(text: "Spouse Name".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
                     ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
@@ -789,9 +833,14 @@ class _SpouseWidget extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(
-                      text: "Spouse Profession".tr,
-                      fontsize: 16.sp,
+                    Row(
+                      children: [
+                        CustomText(
+                            text: "Spouse Profession".tr, fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
                     ),
                     SizedBox(height: 4.h),
                     CustomDropdown<ProfessionModel>(
@@ -802,9 +851,16 @@ class _SpouseWidget extends StatelessWidget {
                       onChanged: (v) => form.profession.value = v,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(
-                      text: "Spouse Nationality".tr,
-                      fontsize: 16.sp,
+                    Row(
+                      children: [
+                        CustomText(
+                          text: "Spouse Nationality".tr,
+                          fontsize: 16.sp,
+                        ),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
                     ),
                     SizedBox(height: 4.h),
                     CustomDropdown<CountryModel>(
@@ -815,9 +871,16 @@ class _SpouseWidget extends StatelessWidget {
                       onChanged: (v) => form.nationality.value = v,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(
-                      text: "Spouse Date of Birth".tr,
-                      fontsize: 16.sp,
+                    Row(
+                      children: [
+                        CustomText(
+                          text: "Spouse Date of Birth".tr,
+                          fontsize: 16.sp,
+                        ),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
                     ),
                     SizedBox(height: 4.h),
                     Obx(
@@ -868,9 +931,16 @@ class _SpouseWidget extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(
-                      text: "Spouse NID/Passport No".tr,
-                      fontsize: 16.sp,
+                    Row(
+                      children: [
+                        CustomText(
+                          text: "Spouse NID/Passport No".tr,
+                          fontsize: 16.sp,
+                        ),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
                     ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
@@ -928,9 +998,16 @@ class _SpouseWidget extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(
-                      text: "Spouse Mobile No".tr,
-                      fontsize: 16.sp,
+                    Row(
+                      children: [
+                        CustomText(
+                          text: "Spouse Mobile No".tr,
+                          fontsize: 16.sp,
+                        ),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
                     ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
