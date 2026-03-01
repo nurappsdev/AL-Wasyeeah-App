@@ -131,7 +131,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
         ),
         SizedBox(height: 4.h),
         if (fileUrl != null)
-          _filePicker(
+          _buildFileRow(
               fileUrl, pickedFile, onPickFile, downloadType, filePrefix),
         CustomText(
           text: "* Only Pdf, JPEG, PNG file are allowed".tr,
@@ -203,7 +203,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     );
   }
 
-  Widget _filePicker(
+  Widget _buildFileRow(
     String fileUrl,
     Rxn<PickedFileResult> pickedFile,
     VoidCallback onPickFile,

@@ -328,7 +328,6 @@ class _WealthWidget extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 16.h),
-                    SizedBox(height: 16.h),
                     Row(
                       spacing: 4.w,
                       children: [

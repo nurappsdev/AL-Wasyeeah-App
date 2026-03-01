@@ -97,7 +97,7 @@ class ProfileController extends GetxController {
         '${profileModel.value.userProfile?.lastName ?? ""}_'
         '${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}';
 
-    final String filePath = '${ApiConstants.imageUrl}$urlPath';
+    final String filePath = '${ApiConstants.fileDownloadUrl}$urlPath';
 
     FileDownloadUtil.downloadFile(
       filePath,
@@ -108,11 +108,11 @@ class ProfileController extends GetxController {
         if (progress >= 100) {
           isDownloadingMap[type] = false;
           log("Download $filePrefix Successful");
-        }
 
-        // if (progress == 100) {
-        //   completer.complete(true);
-        // }
+          if (!completer.isCompleted) {
+            completer.complete(true);
+          }
+        }
       },
     ).catchError((e) {
       isDownloadingMap[type] = false;

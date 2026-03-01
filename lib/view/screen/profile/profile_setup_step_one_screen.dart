@@ -459,12 +459,26 @@ class _ProfileSettingStepOneWidgetState
                   return isDownloading.value
                       ? Center(
                           child: SizedBox(
-                            width: 22.w,
-                            height: 22.w,
-                            child: CircularProgressIndicator(
-                              value: progress.value / 100,
-                              strokeWidth: 2,
-                              color: AppColors.whiteColor,
+                            width:
+                                40.w, // increase size a bit for text visibility
+                            height: 40.w,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                CircularProgressIndicator(
+                                  value: progress.value / 100,
+                                  strokeWidth: 3,
+                                  color: AppColors.whiteColor,
+                                ),
+                                Text(
+                                  "${progress.value.toInt()}%",
+                                  style: TextStyle(
+                                    fontSize: 10.sp,
+                                    color: AppColors.whiteColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         )

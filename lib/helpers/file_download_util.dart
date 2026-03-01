@@ -54,11 +54,14 @@ class FileDownloadUtil {
       String url, String fileName, Function(double) onProgress) async {
     final request = http.Request('GET', Uri.parse(url));
     final response = await request.send();
-    log("--------*--------------*---------*----------${response.headers}");
+    log("------${url}--*--------------*---------*----------${response.headers}");
     final int totalBytes = response.contentLength ?? 0;
     int receivedBytes = 0;
 
-    final directory = Directory('/storage/emulated/0/Download');
+    final directory = Directory('/storage/emulated/0/Download/AlWasyeeah');
+    if (!await directory.exists()) {
+      await directory.create(recursive: true);
+    }
 
     try {
       String extension =
@@ -95,7 +98,7 @@ class FileDownloadUtil {
     if (contentType.contains("jpg") || contentType.contains("jpeg")) {
       return ".jpg";
     }
-    // if (contentType.contains("application/octet-stream")) return ".pdf";
+    if (contentType.contains("application/octet-stream")) return ".pdf";
     if (contentType.contains("pdf")) return ".pdf";
     // if (contentType.contains("docx")) return ".docx";
     // if (contentType.contains("doc")) return ".doc";
