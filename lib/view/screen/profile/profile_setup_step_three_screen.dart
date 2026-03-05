@@ -17,8 +17,8 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ParentForm form = controller.parentForm.value;
-    return Scaffold(
-      body: Padding(
+    return BackgroundImageContainer(
+      child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 14.h),
         child: SingleChildScrollView(
           child: Form(

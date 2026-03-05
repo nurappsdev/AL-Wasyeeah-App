@@ -326,7 +326,7 @@ class ProfileController extends GetxController {
     spouseList.clear();
 
     final spouses = profileModel.value.spouseInfo;
-
+    log("Spouse Info: ${spouses?.length}");
     if (spouses != null && spouses.isNotEmpty) {
       for (final spouse in spouses) {
         final form = SpouseForm();
@@ -361,9 +361,6 @@ class ProfileController extends GetxController {
 
         spouseList.add(form);
       }
-    } else {
-      /// Always keep one empty spouse form
-      spouseList.add(SpouseForm());
     }
   }
 
@@ -371,7 +368,7 @@ class ProfileController extends GetxController {
     childrenList.clear();
 
     final children = profileModel.value.childInfo;
-
+    log("Child Info: ${children?.length}");
     if (children != null && children.isNotEmpty) {
       for (final child in children) {
         final form = ChildForm();
@@ -416,9 +413,6 @@ class ProfileController extends GetxController {
 
         childrenList.add(form);
       }
-    } else {
-      /// Always keep one empty child form
-      childrenList.add(ChildForm());
     }
   }
 

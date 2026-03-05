@@ -78,9 +78,8 @@ class _MenuPageState extends State<MenuPage> {
                   height: 10.h,
                 ),
                 Obx(() => CustomText(
-                      text: userController
-                              .userProfile.value?.userProfile?.firstName ??
-                          "N/A",
+                      text:
+                          "${userController.userProfile.value?.userProfile?.firstName} ${userController.userProfile.value?.userProfile?.lastName}",
                       fontsize: 18.sp,
                       fontWeight: FontWeight.w700,
                     )),

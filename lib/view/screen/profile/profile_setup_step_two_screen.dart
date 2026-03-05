@@ -26,8 +26,8 @@ class _ProfileSettingStepTwoWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
+    return BackgroundImageContainer(
+      child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 14.h),
         child: SingleChildScrollView(
           child: Form(
@@ -101,6 +101,7 @@ class _ProfileSettingStepTwoWidgetState
                 _textField(
                   label: "Village/House",
                   controller: form.overseasVillage,
+                  isRequired: false,
                 ),
 
                 /// ========= Button =========
@@ -150,6 +151,7 @@ class _ProfileSettingStepTwoWidgetState
   Widget _textField({
     required String label,
     required TextEditingController controller,
+    bool isRequired = true,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,14 +159,17 @@ class _ProfileSettingStepTwoWidgetState
         Row(
           children: [
             CustomText(text: label.tr, fontsize: 16.sp),
-            Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+            if (isRequired)
+              Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
           ],
         ),
         SizedBox(height: 4.h),
         CustomTextFormField(
           controller: controller,
           hint: label.tr,
-          validator: (value) => value!.isEmpty ? "$label is required" : null,
+          validator: isRequired
+              ? (value) => value!.isEmpty ? "$label is required" : null
+              : null,
         ),
         SizedBox(height: 16.h),
       ],

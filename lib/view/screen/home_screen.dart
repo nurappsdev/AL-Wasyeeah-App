@@ -182,9 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )
                               : Flexible(
                                   child: Text(
-                                    userController.userProfile.value
-                                            ?.userProfile?.firstName ??
-                                        "N/A",
+                                    "${userController.userProfile.value?.userProfile?.firstName} ${userController.userProfile.value?.userProfile?.lastName}",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(fontSize: 14.sp),

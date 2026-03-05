@@ -92,6 +92,29 @@ class SiblingWidget extends StatelessWidget {
       () {
         return Column(
           children: [
+            if (controller.siblingList.isEmpty)
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => controller.addSibling(),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                    backgroundColor: Colors.white,
+                    foregroundColor: AppColors.primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.add),
+                      SizedBox(width: 8.w),
+                      Text("Add More Sibling".tr)
+                    ],
+                  ),
+                ),
+              ),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -438,6 +461,29 @@ class _ChildWidget extends StatelessWidget {
       () {
         return Column(
           children: [
+            if (controller.childrenList.isEmpty)
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => controller.addChild(),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                    backgroundColor: Colors.white,
+                    foregroundColor: AppColors.primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.add),
+                      SizedBox(width: 8.w),
+                      Text("Add More Child".tr)
+                    ],
+                  ),
+                ),
+              ),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -795,6 +841,29 @@ class _SpouseWidget extends StatelessWidget {
     return Obx(() {
       return Column(
         children: [
+          if (controller.spouseList.isEmpty)
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => controller.addSpouse(),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                  backgroundColor: Colors.white,
+                  foregroundColor: AppColors.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.r),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.add),
+                    SizedBox(width: 8.w),
+                    Text("Add More Spouse".tr)
+                  ],
+                ),
+              ),
+            ),
           ListView.builder(
             padding: EdgeInsets.zero,
             shrinkWrap: true,

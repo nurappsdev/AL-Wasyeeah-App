@@ -47,8 +47,8 @@ class _ProfileSettingStepOneWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Obx(() {
+    return BackgroundImageContainer(
+      child: Obx(() {
         // Only the top-level loading/error depends on status
         if (controller.status.value.isLoading) {
           return const Center(
