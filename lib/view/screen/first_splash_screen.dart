@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,6 @@ import '../../helpers/app_routes.dart';
 import '../../helpers/prefs_helper.dart';
 import '../../utils/app_constant.dart';
 import '../../utils/app_image.dart';
-import '../widgets/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 

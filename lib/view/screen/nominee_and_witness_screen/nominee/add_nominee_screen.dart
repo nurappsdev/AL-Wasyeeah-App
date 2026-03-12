@@ -1,28 +1,33 @@
-
-
-
+import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
+import 'package:al_wasyeah/view/widgets/custom_button.dart';
+import 'package:al_wasyeah/view/widgets/custom_loader.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-
 import '../../../../controllers/controllers.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../../utils/utils.dart';
-import '../../../widgets/widgets.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AddNomineeScreen extends StatelessWidget {
   AddNomineeScreen({super.key});
-  List<bool> isSelected = [true, false];
+  final List<bool> isSelected = [true, false];
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(NomineeController());
     controller.searchNominee();
-    TextEditingController searchController = TextEditingController();
+
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: AppLocalizations.of(context)!.add_nominee,fontsize: 18. sp,),),
+      appBar: AppBar(
+        title: CustomText(
+          text: AppLocalizations.of(context)!.add_nominee,
+          fontsize: 18.sp,
+        ),
+      ),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -34,17 +39,23 @@ class AddNomineeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 20.h),
+
                   ///=============Last Name====================
-                  SizedBox(height: 10.h,),
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
                       controller: controller.searchController,
                       hintText: "Search".tr,
                       borderColor: AppColors.secondaryPrimaryColor,
-                      suffixIcon: IconButton(onPressed:
-                      controller.searchNominee,
-                          icon: Icon(Icons.search_rounded,color: AppColors.primaryColor,)),
+                      suffixIcon: IconButton(
+                          onPressed: controller.searchNominee,
+                          icon: Icon(
+                            Icons.search_rounded,
+                            color: AppColors.primaryColor,
+                          )),
                     ),
                   ),
                   Obx(() {
@@ -65,12 +76,14 @@ class AddNomineeScreen extends StatelessWidget {
                             radius: 30,
                           ),
                           title: Text(
-                            controller.nominessData.value?.name ?? 'Name not found',
+                            controller.nominessData.value?.name ??
+                                'Name not found',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           subtitle: Row(
                             children: [
-                              Icon(Icons.visibility, size: 16.0, color: Colors.grey),
+                              Icon(Icons.visibility,
+                                  size: 16.0, color: Colors.grey),
                               SizedBox(width: 4.0),
                               Text(
                                 AppLocalizations.of(context)!.view_details,
@@ -79,7 +92,9 @@ class AddNomineeScreen extends StatelessWidget {
                             ],
                           ),
                           onTap: () {
-                            Get.toNamed(AppRoutes.asignNomineeDetails,arguments: controller.nominessData.value, preventDuplicates: false);
+                            Get.toNamed(AppRoutes.asignNomineeDetails,
+                                arguments: controller.nominessData.value,
+                                preventDuplicates: false);
                             // Get.toNamed('/witnessDetailsScreen', preventDuplicates: false);
                             // print("dfkjld");
                           },
@@ -87,7 +102,9 @@ class AddNomineeScreen extends StatelessWidget {
                       );
                     }
                   }),
-                  SizedBox(height: 400.h,),
+                  SizedBox(
+                    height: 400.h,
+                  ),
                   // SizedBox(
                   //   height: 500.0, // Adjust height as per your needs
                   //   child: ListView.builder(
@@ -135,17 +152,16 @@ class AddNomineeScreen extends StatelessWidget {
                     title: AppLocalizations.of(context)!.add_outside_nominee,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
-                      Get.toNamed(AppRoutes.addOutsideNomineeScreen,preventDuplicates: false);
+                      Get.toNamed(AppRoutes.addOutsideNomineeScreen,
+                          preventDuplicates: false);
                     },
                   ),
                   SizedBox(height: 10.h),
-
                 ],
               ),
             ),
           ),
         ),
-
       ),
     );
   }

@@ -1,13 +1,13 @@
 import 'package:al_wasyeah/controllers/notification_controller.dart';
-import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_back_button_widget.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../widgets/widgets.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class NotificationScreen extends StatelessWidget {

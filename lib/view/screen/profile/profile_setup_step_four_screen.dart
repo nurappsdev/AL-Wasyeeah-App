@@ -1,13 +1,16 @@
 import 'dart:developer';
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/controllers/controllers.dart';
+import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/view/widgets/custom_dropdown.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../utils/utils.dart';
-import '../../widgets/widgets.dart';
 import '../../widgets/file_choose_and_download_button.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
@@ -172,7 +175,9 @@ class SiblingWidget extends StatelessWidget {
                       // Gender
                       Row(
                         children: [
-                          CustomText(text: AppLocalizations.of(context)!.gender, fontsize: 16.sp),
+                          CustomText(
+                              text: AppLocalizations.of(context)!.gender,
+                              fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -540,7 +545,9 @@ class _ChildWidget extends StatelessWidget {
                       // Gender
                       Row(
                         children: [
-                          CustomText(text: AppLocalizations.of(context)!.gender, fontsize: 16.sp),
+                          CustomText(
+                              text: AppLocalizations.of(context)!.gender,
+                              fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -558,7 +565,9 @@ class _ChildWidget extends StatelessWidget {
                       // Profession
                       Row(
                         children: [
-                          CustomText(text: AppLocalizations.of(context)!.profession, fontsize: 16.sp),
+                          CustomText(
+                              text: AppLocalizations.of(context)!.profession,
+                              fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -576,7 +585,9 @@ class _ChildWidget extends StatelessWidget {
                       // Nationality
                       Row(
                         children: [
-                          CustomText(text: AppLocalizations.of(context)!.nationality, fontsize: 16.sp),
+                          CustomText(
+                              text: AppLocalizations.of(context)!.nationality,
+                              fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -654,7 +665,9 @@ class _ChildWidget extends StatelessWidget {
                       Row(
                         children: [
                           CustomText(
-                              text: AppLocalizations.of(context)!.nid_passport_no, fontsize: 16.sp),
+                              text:
+                                  AppLocalizations.of(context)!.nid_passport_no,
+                              fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -898,7 +911,9 @@ class _SpouseWidget extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        CustomText(text: AppLocalizations.of(context)!.spouse_name, fontsize: 16.sp),
+                        CustomText(
+                            text: AppLocalizations.of(context)!.spouse_name,
+                            fontsize: 16.sp),
                         Text(' *',
                             style:
                                 TextStyle(color: Colors.red, fontSize: 16.sp)),

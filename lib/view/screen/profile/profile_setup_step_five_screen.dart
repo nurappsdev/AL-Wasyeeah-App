@@ -1,5 +1,9 @@
 import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:al_wasyeah/models/profile_info_model/branch_model.dart';
+import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/view/widgets/custom_dropdown.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:al_wasyeah/view/widgets/file_choose_and_download_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../helpers/file_picker_util.dart';
 import '../../../utils/utils.dart';
-import '../../widgets/widgets.dart';
+
 import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/document_type_form.dart';
@@ -149,7 +153,9 @@ class _BankWidget extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        CustomText(text: AppLocalizations.of(context)!.bank, fontsize: 16.sp),
+                        CustomText(
+                            text: AppLocalizations.of(context)!.bank,
+                            fontsize: 16.sp),
                         Text(' *',
                             style:
                                 TextStyle(color: Colors.red, fontSize: 16.sp)),
@@ -184,7 +190,9 @@ class _BankWidget extends StatelessWidget {
                     SizedBox(height: 16.h),
                     Row(
                       children: [
-                        CustomText(text: AppLocalizations.of(context)!.account_name, fontsize: 16.sp),
+                        CustomText(
+                            text: AppLocalizations.of(context)!.account_name,
+                            fontsize: 16.sp),
                         Text(' *',
                             style:
                                 TextStyle(color: Colors.red, fontSize: 16.sp)),
@@ -319,7 +327,9 @@ class _WealthWidget extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        CustomText(text: AppLocalizations.of(context)!.wealth, fontsize: 16.sp),
+                        CustomText(
+                            text: AppLocalizations.of(context)!.wealth,
+                            fontsize: 16.sp),
                         Text(' *',
                             style:
                                 TextStyle(color: Colors.red, fontSize: 16.sp)),
@@ -373,7 +383,9 @@ class _WealthWidget extends StatelessWidget {
                           value!.isEmpty ? "Please enter location".tr : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: AppLocalizations.of(context)!.note, fontsize: 16.sp),
+                    CustomText(
+                        text: AppLocalizations.of(context)!.note,
+                        fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.note,

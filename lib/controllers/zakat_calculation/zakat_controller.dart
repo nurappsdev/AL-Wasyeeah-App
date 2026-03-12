@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,6 @@ import '../../helpers/prefs_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
 import '../../utils/utils.dart';
-import '../../view/widgets/widgets.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ZakatController extends GetxController {

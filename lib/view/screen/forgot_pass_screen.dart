@@ -1,4 +1,8 @@
 import 'package:al_wasyeah/helpers/app_routes.dart';
+import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
+import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../controllers/controllers.dart';
 import '../../utils/utils.dart';
-import '../widgets/widgets.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ForgotPassScreen extends StatefulWidget {
@@ -28,21 +31,6 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
   AuthController authController = Get.put(AuthController());
 
   String? _selectedQuestionId;
-
-  Future<void> _selectDate(
-      BuildContext context, TextEditingController controller) async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-    if (pickedDate != null) {
-      setState(() {
-        controller.text = DateFormat('yyyy-MM-dd').format(pickedDate);
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

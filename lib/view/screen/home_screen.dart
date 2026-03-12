@@ -6,16 +6,17 @@ import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:al_wasyeah/utils/app_image.dart';
+import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
+import 'package:al_wasyeah/view/widgets/custom_loader.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../controllers/controllers.dart';
-import '../widgets/widgets.dart';
-import 'before_login/profirty_Distribute_screen2.dart';
+
 import 'no_internet_screen.dart';
 import 'package:hijri/hijri_calendar.dart';
 

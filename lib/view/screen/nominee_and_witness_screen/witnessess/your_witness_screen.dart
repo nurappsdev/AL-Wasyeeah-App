@@ -1,13 +1,13 @@
+import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
+import 'package:al_wasyeah/view/widgets/custom_loader.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
-
 import '../../../../controllers/controllers.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../../models/models.dart';
-import '../../../../utils/utils.dart';
-import '../../../widgets/widgets.dart';
+
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class YourWitnessScreen extends StatefulWidget {
@@ -122,23 +122,6 @@ class _NomineeScreenState extends State<YourWitnessScreen> {
       ),
     );
   }
-
-  Widget _buildDialogRow(IconData icon, String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.orange, size: 18),
-          SizedBox(width: 10),
-          Text("$label: ",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          Expanded(
-              child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
-        ],
-      ),
-    );
-  }
 }
 
 class WitnessDetailsScreens extends StatefulWidget {
@@ -151,23 +134,15 @@ class WitnessDetailsScreens extends StatefulWidget {
 }
 
 class _WitnessDetailsScreensState extends State<WitnessDetailsScreens> {
-  // final WitnessController witnessController =
-  // Get.put(WitnessController());
-
   @override
   void initState() {
     super.initState();
-    // witnessController.getContextsData(widget.user.requestKey!);
   }
 
   @override
   Widget build(BuildContext context) {
     print(widget.user.requestKey.toString());
-    // witnessController.getContextsData(
-    //   widget.user.requestKey.toString(),
-    // );
-    //witnessController.fetchContextsData("8E1087C1C3F54338C3313F40B6FFAD00");
-    // print(witnessController.contextsData.value?.zakat?.currencyCode);
+
     return Scaffold(
       backgroundColor: Colors.blueGrey[900],
       appBar: AppBar(
@@ -207,9 +182,7 @@ class _WitnessDetailsScreensState extends State<WitnessDetailsScreens> {
                   "Profession",
                   widget.user.profession ??
                       "AppLocalizations.of(context)!.n_a"),
-
               const SizedBox(height: 30),
-
               Center(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -224,70 +197,6 @@ class _WitnessDetailsScreensState extends State<WitnessDetailsScreens> {
                   child: const Text("Access Panel"),
                 ),
               ),
-
-              // Obx(() {
-              //   if (witnessController.isLoadings.value) {
-              //     return const Center(
-              //       child: CircularProgressIndicator(),
-              //     );
-              //   }
-              //
-              //   return Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text(
-              //         'Zakat: ${witnessController.zakat['zakatAmount'] ?? 'AppLocalizations.of(context)!.n_a'}',
-              //         style: const TextStyle(color: Colors.white),
-              //       ),
-              //       const SizedBox(height: 8),
-              //       Text(
-              //         'Total Asset: ${witnessController.zakat['totalAsset'] ?? 'AppLocalizations.of(context)!.n_a'}',
-              //         style: const TextStyle(color: Colors.white),
-              //       ),
-              //       const Divider(color: Colors.white),
-              //       const Text(
-              //         'Wasiyyah Content',
-              //         style: TextStyle(
-              //           fontWeight: FontWeight.bold,
-              //           color: Colors.white,
-              //         ),
-              //       ),
-              //       const SizedBox(height: 8),
-              //
-              //       ...witnessController.wasiyyahContent.map(
-              //             (item) =>
-              //
-              //                 Container(
-              //           margin: const EdgeInsets.only(bottom: 12),
-              //           padding: const EdgeInsets.all(12),
-              //           decoration: BoxDecoration(
-              //             color: Colors.blueGrey[800],
-              //             borderRadius: BorderRadius.circular(8),
-              //           ),
-              //           child: Column(
-              //             crossAxisAlignment: CrossAxisAlignment.start,
-              //             children: [
-              //               Text(
-              //                 item['title'] ?? '',
-              //                 style: const TextStyle(
-              //                   fontWeight: FontWeight.bold,
-              //                   color: Colors.white,
-              //                 ),
-              //               ),
-              //               const SizedBox(height: 6),
-              //
-              //
-              //               Text(
-              //                 item['content'] ?? '',
-              //                 style: const TextStyle(color: Colors.white70),
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       ).toList(),
-              //     ],
-              //   );
-              // }),
             ],
           ),
         ),

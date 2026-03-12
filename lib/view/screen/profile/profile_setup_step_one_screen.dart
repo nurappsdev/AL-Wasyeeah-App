@@ -1,17 +1,18 @@
-import 'dart:developer';
-
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/marital_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
+import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/view/widgets/custom_dropdown.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
-import '../../widgets/widgets.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ProfileSettingStepOneWidget extends StatefulWidget {
@@ -75,7 +76,9 @@ class _ProfileSettingStepOneWidgetState
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      CustomText(text: AppLocalizations.of(context)!.first_name, fontsize: 16.sp),
+                      CustomText(
+                          text: AppLocalizations.of(context)!.first_name,
+                          fontsize: 16.sp),
                       Text(' *',
                           style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
@@ -92,7 +95,9 @@ class _ProfileSettingStepOneWidgetState
                   // ================= Last Name =================
                   Row(
                     children: [
-                      CustomText(text: AppLocalizations.of(context)!.last_name, fontsize: 16.sp),
+                      CustomText(
+                          text: AppLocalizations.of(context)!.last_name,
+                          fontsize: 16.sp),
                       Text(' *',
                           style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
@@ -109,7 +114,9 @@ class _ProfileSettingStepOneWidgetState
                   // ================= Marital Status =================
                   Row(
                     children: [
-                      CustomText(text: AppLocalizations.of(context)!.marital_status, fontsize: 16.sp),
+                      CustomText(
+                          text: AppLocalizations.of(context)!.marital_status,
+                          fontsize: 16.sp),
                       Text(' *',
                           style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
@@ -128,7 +135,9 @@ class _ProfileSettingStepOneWidgetState
 
                   SizedBox(height: 16.h),
                   // ================= Profession =================
-                  CustomText(text: AppLocalizations.of(context)!.profession, fontsize: 16.sp),
+                  CustomText(
+                      text: AppLocalizations.of(context)!.profession,
+                      fontsize: 16.sp),
                   SizedBox(height: 4.h),
                   Obx(() => CustomDropdown<ProfessionModel>(
                         hint: "Select Profession".tr,
@@ -158,7 +167,9 @@ class _ProfileSettingStepOneWidgetState
 
                   SizedBox(height: 16.h),
                   // ================= District/State =================
-                  CustomText(text: AppLocalizations.of(context)!.district_state, fontsize: 16.sp),
+                  CustomText(
+                      text: AppLocalizations.of(context)!.district_state,
+                      fontsize: 16.sp),
                   SizedBox(height: 4.h),
                   CustomTextFormField(
                     controller: form.district,
@@ -171,7 +182,9 @@ class _ProfileSettingStepOneWidgetState
                   // ================= Gender =================
                   Row(
                     children: [
-                      CustomText(text: AppLocalizations.of(context)!.gender, fontsize: 16.sp),
+                      CustomText(
+                          text: AppLocalizations.of(context)!.gender,
+                          fontsize: 16.sp),
                       Text(' *',
                           style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
@@ -189,7 +202,9 @@ class _ProfileSettingStepOneWidgetState
                   // ================= NID / Passport =================
                   Row(
                     children: [
-                      CustomText(text: AppLocalizations.of(context)!.nid_passport_no, fontsize: 16.sp),
+                      CustomText(
+                          text: AppLocalizations.of(context)!.nid_passport_no,
+                          fontsize: 16.sp),
                       Text(' *',
                           style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
@@ -254,7 +269,9 @@ class _ProfileSettingStepOneWidgetState
                   SizedBox(height: 16.h),
 
                   // ================= TIN =================
-                  CustomText(text: AppLocalizations.of(context)!.tin_tax_identification_number),
+                  CustomText(
+                      text: AppLocalizations.of(context)!
+                          .tin_tax_identification_number),
                   SizedBox(height: 4.h),
                   CustomTextFormField(
                     controller: form.tin,

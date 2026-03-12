@@ -1,4 +1,8 @@
 import 'package:al_wasyeah/controllers/controllers.dart';
+import 'package:al_wasyeah/view/widgets/custom_button.dart';
+import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/view/widgets/custom_loader.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,7 +12,6 @@ import '../../../../helpers/helpers.dart';
 import '../../../../models/models.dart';
 import '../../../../utils/utils.dart';
 import '../../../widgets/background_image_screen_widget.dart';
-import '../../../widgets/widgets.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class NomineeScreen extends StatefulWidget {
@@ -174,11 +177,8 @@ class _NomineeScreenState extends State<NomineeScreen> {
                             "AppLocalizations.of(context)!.n_a"),
                     _buildDialogRow(Icons.work, "Profession",
                         user.profession ?? "AppLocalizations.of(context)!.n_a"),
-                    _buildDialogRow(
-                        Icons.calendar_today,
-                        "Date",
-                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ??
-                            "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(Icons.calendar_today, "Date",
+                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}"),
                     SizedBox(height: 20),
                     Obx(
                       () => CustomButtonCommon(

@@ -1,6 +1,10 @@
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/models/profile_info_model/parent_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
+import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/view/widgets/custom_dropdown.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:al_wasyeah/view/widgets/file_choose_and_download_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +13,7 @@ import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
-import '../../widgets/widgets.dart';
+
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ProfileSettingStepThreeWidget extends StatelessWidget {

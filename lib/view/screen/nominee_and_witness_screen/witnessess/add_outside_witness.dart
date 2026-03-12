@@ -1,4 +1,8 @@
-import 'package:flutter/foundation.dart';
+import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
+import 'package:al_wasyeah/view/widgets/custom_button_common.dart'
+    show CustomButtonCommon;
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,23 +11,24 @@ import 'package:intl/intl.dart';
 import '../../../../controllers/controllers.dart';
 import '../../../../utils/utils.dart';
 
-import '../../../widgets/widgets.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AddOutsideWitness extends StatelessWidget {
   AddOutsideWitness({super.key});
 
-  TextEditingController relNameController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController dateOfBirthController = TextEditingController();
+  final TextEditingController relNameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController dateOfBirthController = TextEditingController();
 
-  TextEditingController presentAddressController = TextEditingController();
+  final TextEditingController presentAddressController =
+      TextEditingController();
 
-  TextEditingController permanentAddressController = TextEditingController();
+  final TextEditingController permanentAddressController =
+      TextEditingController();
   DateTime? birthDate;
-  NomineeController nomineeController = Get.put(NomineeController());
+  final NomineeController nomineeController = Get.put(NomineeController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {

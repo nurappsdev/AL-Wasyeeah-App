@@ -1,11 +1,11 @@
-import 'package:al_wasyeah/view/screen/no_internet_screen.dart';
+import 'package:al_wasyeah/view/widgets/custom_button.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
-import '../../widgets/widgets.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AddNewWashyiaScreen extends StatefulWidget {

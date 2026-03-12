@@ -1,3 +1,8 @@
+import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
+import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/view/widgets/custom_loader.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,7 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../helpers/helpers.dart';
 import '../../../models/models.dart';
 import '../../../utils/utils.dart';
-import '../../widgets/widgets.dart';
+
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ZakatCalculatorScreen extends StatefulWidget {
@@ -21,7 +26,7 @@ class ZakatCalculatorScreen extends StatefulWidget {
 class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
   final GlobalKey<FormState> _forProKey = GlobalKey<FormState>();
 
- // TextEditingController cashAndBankController = TextEditingController();
+  // TextEditingController cashAndBankController = TextEditingController();
 
   TextEditingController valueGoldController = TextEditingController();
 
@@ -35,17 +40,17 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
 
   TextEditingController rentalIncomeController = TextEditingController();
 
-  TextEditingController immediateLiabilitieseController = TextEditingController();
+  TextEditingController immediateLiabilitieseController =
+      TextEditingController();
 
   ZakatController zakatController = Get.put(ZakatController());
-
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
+
   @override
   void dispose() {
     valueGoldController.dispose();
@@ -62,16 +67,14 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     Widget amountLabel(String title) {
       return Obx(() => CustomText(
-        text: zakatController.currencySign.value.isNotEmpty
-            ? "$title (${zakatController.currencySign.value})".tr
-            : title.tr,
-      ));
+            text: zakatController.currencySign.value.isNotEmpty
+                ? "$title (${zakatController.currencySign.value})".tr
+                : title.tr,
+          ));
     }
 
     zakatController.getNisabRates();
@@ -112,16 +115,21 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                               value: zakatController.selectedCurrency.value,
                               decoration: InputDecoration(
                                 labelText: "Currency",
-                                labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                                labelStyle:
+                                    TextStyle(fontWeight: FontWeight.bold),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(16.r),
                                 ),
-                                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 16),
                               ),
                               items: zakatController.nisabRates.map((model) {
                                 return DropdownMenuItem(
                                   value: model,
-                                  child: Text("${model.currencyCode} ${model.currencyIcon}", style: GoogleFonts.notoSans(),),
+                                  child: Text(
+                                    "${model.currencyCode} ${model.currencyIcon}",
+                                    style: GoogleFonts.notoSans(),
+                                  ),
                                 );
                               }).toList(),
                               onChanged: (value) {
@@ -130,9 +138,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                 }
                               },
                             ),
-
                             const SizedBox(height: 16),
-
                           ],
                         );
                       }),
@@ -162,7 +168,8 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                       ),
                       Obx(() {
                         final currency = zakatController.selectedCurrency.value;
-                        final updatedDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
+                        final updatedDate =
+                            DateFormat('dd/MM/yyyy').format(DateTime.now());
 
                         return Container(
                           height: 100.h,
@@ -172,17 +179,20 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                             border: Border.all(),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Dimensions.radiusExtraLarge.w),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 4.h),
-                                CustomText(text: "Nisab (updated $updatedDate)"),
+                                CustomText(
+                                    text: "Nisab (updated $updatedDate)"),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
                                     readOnly: false,
-                                    controller: zakatController.cashAndBankController,
+                                    controller:
+                                        zakatController.cashAndBankController,
                                     // controller: TextEditingController(
                                     //   text: "${currency?.nisabAmount?.toStringAsFixed(0) ?? ''} ${currency?.currencyIcon ?? ''}",
                                     // ),
@@ -213,13 +223,13 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                               children: [
                                 SizedBox(height: 10.h),
                                 amountLabel("Value of Gold"),
-
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: valueGoldController,
-                                    hintText: AppLocalizations.of(context)!.value_of_gold,
+                                    hintText: AppLocalizations.of(context)!
+                                        .value_of_gold,
                                   ),
                                 ),
                                 SizedBox(
@@ -231,14 +241,14 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: silverGoldController,
-                                    hintText: AppLocalizations.of(context)!.value_of_silver,
+                                    hintText: AppLocalizations.of(context)!
+                                        .value_of_silver,
                                   ),
                                 ),
                                 SizedBox(
                                   height: 20.h,
                                 ),
                                 amountLabel("Future deposits"),
-
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
@@ -250,21 +260,19 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                 SizedBox(
                                   height: 20.h,
                                 ),
-
                                 amountLabel("Given out in loans"),
-
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: loanGivenController,
-                                    hintText: AppLocalizations.of(context)!.given_out_in_loans,
+                                    hintText: AppLocalizations.of(context)!
+                                        .given_out_in_loans,
                                   ),
                                 ),
                                 SizedBox(
                                   height: 20.h,
                                 ),
-
                                 amountLabel("Investment value"),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
@@ -277,7 +285,6 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                 SizedBox(
                                   height: 20.h,
                                 ),
-
                                 amountLabel("Rental income"),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
@@ -290,7 +297,6 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                 SizedBox(
                                   height: 20.h,
                                 ),
-
                                 amountLabel("Immediate liabilities"),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
@@ -315,12 +321,14 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                           onpress: () {
                             // if (_forRegKey.currentState!.validate()) {
 
-                            if (zakatController.cashAndBankController.text.isEmpty) {
+                            if (zakatController
+                                .cashAndBankController.text.isEmpty) {
                               ToastMessageHelper.errorMessageShowToster(
                                   "At least Enter Nisab");
                             } else {
                               zakatController.zakatHandle(
-                                  cashAndBank: zakatController.cashAndBankController.text,
+                                  cashAndBank: zakatController
+                                      .cashAndBankController.text,
                                   goldValue: valueGoldController.text,
                                   futureDeposits: futureDepositsController.text,
                                   immediateLiabilities:
@@ -397,14 +405,6 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
               ],
             ),
           ),
-          // actions: <Widget>[
-          //   TextButton(
-          //     child: CustomText(text:  AppLocalizations.of(context)!.result,),
-          //     onPressed: () {
-          //       Navigator.of(context).pop(); // Close the dialog
-          //     },
-          //   ),
-          // ],
         );
       },
     );

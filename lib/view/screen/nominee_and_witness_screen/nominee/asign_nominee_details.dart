@@ -1,12 +1,11 @@
+import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
+import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../controllers/nomineee/nominee_controller.dart';
-import '../../../../helpers/helpers.dart';
-import '../../../../models/models.dart';
 import '../../../../models/nominee/search_asign_nominee_model.dart';
-import '../../../../utils/utils.dart';
-import '../../../widgets/widgets.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AsignNomineeDetails extends StatelessWidget {
