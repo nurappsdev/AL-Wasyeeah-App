@@ -26,97 +26,113 @@ class _ProfileSettingStepTwoWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return BackgroundImageContainer(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 14.h),
-        child: SingleChildScrollView(
-          child: Form(
-            key: controller.step2formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /// ========= Present Address =========
-                _sectionTitle("Present Address"),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 14.h),
+      child: SingleChildScrollView(
+        child: Form(
+          key: controller.step2formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// ========= Present Address =========
+              _sectionTitle("Present Address"),
 
-                _textField(
-                  label: "Zip code",
-                  controller: form.presentZipCode,
-                ),
-                _textField(
-                  label: "Village/House",
-                  controller: form.presentVillage,
-                ),
-                _textField(
-                  label: "Road/Block/Section",
-                  controller: form.presentRoad,
-                ),
+              _textField(
+                label: "Zip code",
+                controller: form.presentZipCode,
+              ),
+              _textField(
+                label: "Village/House",
+                controller: form.presentVillage,
+              ),
+              _textField(
+                label: "Road/Block/Section",
+                controller: form.presentRoad,
+              ),
 
-                /// ========= Permanent Address =========
-                Obx(() => CheckboxListTile(
-                      value: form.isPresentAddressAsPermanentAddress.value,
-                      onChanged: (value) {
-                        form.isPresentAddressAsPermanentAddress.value = value!;
-                        if (value) {
-                          form.permanentZipCode.text = form.presentZipCode.text;
-                          form.permanentVillage.text = form.presentVillage.text;
-                          form.permanentRoad.text = form.presentRoad.text;
-                        } else {
-                          form.permanentZipCode.clear();
-                          form.permanentVillage.clear();
-                          form.permanentRoad.clear();
+              /// ========= Permanent Address =========
+              Obx(() => CheckboxListTile(
+                    value: form.isPresentAddressAsPermanentAddress.value,
+                    onChanged: (value) {
+                      form.isPresentAddressAsPermanentAddress.value = value!;
+                      if (value) {
+                        form.permanentZipCode.text = form.presentZipCode.text;
+                        form.permanentVillage.text = form.presentVillage.text;
+                        form.permanentRoad.text = form.presentRoad.text;
+                      } else {
+                        form.permanentZipCode.clear();
+                        form.permanentVillage.clear();
+                        form.permanentRoad.clear();
+                      }
+                    },
+                    title: Text(
+                      "Mark Present Address as Permanent Address".tr,
+                    ),
+                  )),
+
+              _sectionTitle("Permanent Address"),
+
+              _textField(
+                label: "Zip code",
+                controller: form.permanentZipCode,
+              ),
+              _textField(
+                label: "Village/House",
+                controller: form.permanentVillage,
+              ),
+              _textField(
+                label: "Road/Block/Section",
+                controller: form.permanentRoad,
+              ),
+
+              /// ========= Overseas Address =========
+              _sectionTitle("Overseas Address"),
+              CustomText(text: "Country".tr, fontsize: 16.sp),
+              Obx(() => CustomDropdown<CountryModel>(
+                    hint: "Select Country",
+                    items: controller.countryList,
+                    value: form.selectedOverseasCountry.value,
+                    itemToString: (item) => item.country ?? "",
+                    onChanged: (val) =>
+                        form.selectedOverseasCountry.value = val,
+                  )),
+
+              _textField(
+                label: "Village/House",
+                controller: form.overseasVillage,
+                isRequired: false,
+              ),
+
+              /// ========= Button =========
+              SizedBox(height: 20.h),
+
+              Row(
+                spacing: 16.w,
+                children: [
+                  Expanded(
+                    child: CustomButtonCommon(
+                      title: "Previous".tr,
+                      onpress: () {
+                        controller
+                            .onStepTapped(controller.currentStep.value - 1);
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: CustomButtonCommon(
+                      title: "Next".tr,
+                      onpress: () {
+                        if (controller.step2formKey.currentState!.validate()) {
+                          controller
+                              .onStepTapped(controller.currentStep.value + 1);
                         }
                       },
-                      title: Text(
-                        "Mark Present Address as Permanent Address".tr,
-                      ),
-                    )),
-
-                _sectionTitle("Permanent Address"),
-
-                _textField(
-                  label: "Zip code",
-                  controller: form.permanentZipCode,
-                ),
-                _textField(
-                  label: "Village/House",
-                  controller: form.permanentVillage,
-                ),
-                _textField(
-                  label: "Road/Block/Section",
-                  controller: form.permanentRoad,
-                ),
-
-                /// ========= Overseas Address =========
-                _sectionTitle("Overseas Address"),
-                CustomText(text: "Country".tr, fontsize: 16.sp),
-                Obx(() => CustomDropdown<CountryModel>(
-                      hint: "Select Country",
-                      items: controller.countryList,
-                      value: form.selectedOverseasCountry.value,
-                      itemToString: (item) => item.country ?? "",
-                      onChanged: (val) =>
-                          form.selectedOverseasCountry.value = val,
-                    )),
-
-                _textField(
-                  label: "Village/House",
-                  controller: form.overseasVillage,
-                  isRequired: false,
-                ),
-
-                /// ========= Button =========
-                SizedBox(height: 20.h),
-                CustomButtonCommon(
-                  title: "Next".tr,
-                  onpress: () {
-                    if (controller.step2formKey.currentState!.validate()) {
-                      controller.onStepTapped(controller.currentStep.value + 1);
-                    }
-                  },
-                ),
-                SizedBox(height: 20.h),
-              ],
-            ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.h),
+            ],
           ),
         ),
       ),

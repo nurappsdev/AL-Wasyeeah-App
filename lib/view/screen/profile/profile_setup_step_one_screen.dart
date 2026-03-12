@@ -47,200 +47,250 @@ class _ProfileSettingStepOneWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return BackgroundImageContainer(
-      child: Obx(() {
-        // Only the top-level loading/error depends on status
-        if (controller.status.value.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (controller.status.value.isError) {
-          return const Center(child: Text("Something went wrong"));
-        }
+    return Obx(() {
+      // Only the top-level loading/error depends on status
+      if (controller.status.value.isLoading) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+      if (controller.status.value.isError) {
+        return const Center(child: Text("Something went wrong"));
+      }
 
-        final form = controller.personalForm.value;
-        return Form(
-          key: controller.step1formKey,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 14.h),
-            child: RefreshIndicator(
-              onRefresh: () => controller.getProfilePageData(),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _sectionTitle("Personal Information"),
-                    // ================= First Name =================
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        CustomText(text: "First Name".tr, fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    CustomTextFormField(
-                      controller: form.firstName,
-                      hint: "First Name".tr,
-                      validator: (value) =>
-                          value!.isEmpty ? "First Name is required" : null,
-                    ),
+      final form = controller.personalForm.value;
+      return Form(
+        key: controller.step1formKey,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 14.h),
+          child: RefreshIndicator(
+            onRefresh: () => controller.getProfilePageData(),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _sectionTitle("Personal Information"),
+                  // ================= First Name =================
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      CustomText(text: "First Name".tr, fontsize: 16.sp),
+                      Text(' *',
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
+                  CustomTextFormField(
+                    controller: form.firstName,
+                    hint: "First Name".tr,
+                    validator: (value) =>
+                        value!.isEmpty ? "First Name is required" : null,
+                  ),
 
-                    SizedBox(height: 16.h),
-                    // ================= Last Name =================
-                    Row(
-                      children: [
-                        CustomText(text: "Last Name".tr, fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    CustomTextFormField(
-                      controller: form.lastName,
-                      hint: "Last Name".tr,
-                      validator: (value) =>
-                          value!.isEmpty ? "Last Name is required" : null,
-                    ),
+                  SizedBox(height: 16.h),
+                  // ================= Last Name =================
+                  Row(
+                    children: [
+                      CustomText(text: "Last Name".tr, fontsize: 16.sp),
+                      Text(' *',
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
+                  CustomTextFormField(
+                    controller: form.lastName,
+                    hint: "Last Name".tr,
+                    validator: (value) =>
+                        value!.isEmpty ? "Last Name is required" : null,
+                  ),
 
-                    SizedBox(height: 16.h),
-                    // ================= Marital Status =================
-                    Row(
-                      children: [
-                        CustomText(text: "Marital Status".tr, fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    Obx(() => CustomDropdown<MaritalModel>(
-                          hint: "Select Marital Status",
-                          items: controller.maritalList,
-                          value: form.selectedMarried.value,
-                          itemToString: (item) => item.maritalType ?? "",
-                          onChanged: (val) => form.selectedMarried.value = val,
-                          validator: (value) => value == null
-                              ? "Marital Status is required"
-                              : null,
-                        )),
+                  SizedBox(height: 16.h),
+                  // ================= Marital Status =================
+                  Row(
+                    children: [
+                      CustomText(text: "Marital Status".tr, fontsize: 16.sp),
+                      Text(' *',
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
+                  Obx(() => CustomDropdown<MaritalModel>(
+                        hint: "Select Marital Status",
+                        items: controller.maritalList,
+                        value: form.selectedMarried.value,
+                        itemToString: (item) => item.maritalType ?? "",
+                        onChanged: (val) => form.selectedMarried.value = val,
+                        validator: (value) =>
+                            value == null ? "Marital Status is required" : null,
+                      )),
 
-                    SizedBox(height: 16.h),
-                    // ================= Profession =================
-                    CustomText(text: "Profession".tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
-                    Obx(() => CustomDropdown<ProfessionModel>(
-                          hint: "Select Profession",
-                          items: controller.professionList,
-                          value: form.selectedProfession.value,
-                          itemToString: (item) => item.profession ?? "",
-                          onChanged: (val) =>
-                              form.selectedProfession.value = val,
-                        )),
+                  SizedBox(height: 16.h),
+                  // ================= Profession =================
+                  CustomText(text: "Profession".tr, fontsize: 16.sp),
+                  SizedBox(height: 4.h),
+                  Obx(() => CustomDropdown<ProfessionModel>(
+                        hint: "Select Profession",
+                        items: controller.professionList,
+                        value: form.selectedProfession.value,
+                        itemToString: (item) => item.profession ?? "",
+                        onChanged: (val) => form.selectedProfession.value = val,
+                      )),
 
-                    SizedBox(height: 16.h),
-                    // ================= Place of Birth =================
-                    Row(
-                      children: [
-                        CustomText(text: "Place of Birth".tr, fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    Obx(() => CustomDropdown<CountryModel>(
-                          hint: "Select Country",
-                          items: controller.countryList,
-                          value: form.selectedCountry.value,
-                          itemToString: (item) => item.country ?? "",
-                          onChanged: (val) => form.selectedCountry.value = val,
-                        )),
+                  SizedBox(height: 16.h),
+                  // ================= Place of Birth =================
+                  Row(
+                    children: [
+                      CustomText(text: "Place of Birth".tr, fontsize: 16.sp),
+                      Text(' *',
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
+                  Obx(() => CustomDropdown<CountryModel>(
+                        hint: "Select Country",
+                        items: controller.countryList,
+                        value: form.selectedCountry.value,
+                        itemToString: (item) => item.country ?? "",
+                        onChanged: (val) => form.selectedCountry.value = val,
+                      )),
 
-                    SizedBox(height: 16.h),
-                    // ================= District/State =================
-                    CustomText(text: "District/State".tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
-                    CustomTextFormField(
-                      controller: form.district,
-                      hint: "District/State".tr,
-                      validator: (value) =>
-                          value!.isEmpty ? "District/State is required" : null,
-                    ),
+                  SizedBox(height: 16.h),
+                  // ================= District/State =================
+                  CustomText(text: "District/State".tr, fontsize: 16.sp),
+                  SizedBox(height: 4.h),
+                  CustomTextFormField(
+                    controller: form.district,
+                    hint: "District/State".tr,
+                    validator: (value) =>
+                        value!.isEmpty ? "District/State is required" : null,
+                  ),
 
-                    SizedBox(height: 16.h),
-                    // ================= Gender =================
-                    Row(
-                      children: [
-                        CustomText(text: "Gender".tr, fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    Obx(() => CustomDropdown<GenderModel>(
-                          hint: "Select Gender",
-                          items: controller.genderList,
-                          value: form.selectedGender.value,
-                          itemToString: (item) => item.gender ?? "",
-                          onChanged: (val) => form.selectedGender.value = val,
-                        )),
+                  SizedBox(height: 16.h),
+                  // ================= Gender =================
+                  Row(
+                    children: [
+                      CustomText(text: "Gender".tr, fontsize: 16.sp),
+                      Text(' *',
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
+                  Obx(() => CustomDropdown<GenderModel>(
+                        hint: "Select Gender",
+                        items: controller.genderList,
+                        value: form.selectedGender.value,
+                        itemToString: (item) => item.gender ?? "",
+                        onChanged: (val) => form.selectedGender.value = val,
+                      )),
 
-                    SizedBox(height: 16.h),
-                    // ================= NID / Passport =================
-                    Row(
-                      children: [
-                        CustomText(text: "NID/Passport No".tr, fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
-                      ],
-                    ),
-                    SizedBox(height: 4.h),
-                    CustomTextFormField(
-                      controller: form.nid,
-                      hint: "NID/Passport No".tr,
-                      validator: (value) =>
-                          value!.isEmpty ? "NID/Passport No is required" : null,
-                    ),
-                    SizedBox(height: 16.h),
-                    CustomText(
-                      text: "NID/Passport Documents".tr,
-                      fontsize: 16.sp,
-                    ),
-                    SizedBox(height: 4.h),
+                  SizedBox(height: 16.h),
+                  // ================= NID / Passport =================
+                  Row(
+                    children: [
+                      CustomText(text: "NID/Passport No".tr, fontsize: 16.sp),
+                      Text(' *',
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
+                  CustomTextFormField(
+                    controller: form.nid,
+                    hint: "NID/Passport No".tr,
+                    validator: (value) =>
+                        value!.isEmpty ? "NID/Passport No is required" : null,
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomText(
+                    text: "NID/Passport Documents".tr,
+                    fontsize: 16.sp,
+                  ),
+                  SizedBox(height: 4.h),
 
-                    Obx(() {
-                      return _buildFileRow(
-                        pickedFile: form.selectedNidFile,
+                  Obx(() {
+                    return _buildFileRow(
+                      pickedFile: form.selectedNidFile,
+                      isDownloading:
+                          (controller.isDownloadingMap['userNidOrPassport'] ??
+                                  false)
+                              .obs,
+                      progress: (controller
+                                  .downloadProgressMap['userNidOrPassport'] ??
+                              0.0)
+                          .obs,
+                      onPickFile: () async {
+                        var result = await FilePickerUtil.pickSingleFile();
+                        if (result != null) form.selectedNidFile.value = result;
+                      },
+                      onDownload: () async {
+                        final isComplete = await controller.downloadFile(
+                          urlPath: controller
+                              .profileModel.value.userProfile?.nidPaperUrl,
+                          filePrefix: 'NID',
+                          type: 'userNidOrPassport',
+                        );
+                        if (isComplete) {
+                          Fluttertoast.showToast(
+                            msg: "NID File downloaded successfully".tr,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.TOP,
+                            timeInSecForIosWeb: 2,
+                            backgroundColor: AppColors.primaryColor,
+                            textColor: AppColors.whiteColor,
+                          );
+                        }
+                      },
+                      fileUrl: controller
+                          .profileModel.value.userProfile?.nidPaperUrl,
+                    );
+                  }),
+                  CustomText(
+                    text: "* Only Pdf,JPEG,PNG file are allowed".tr,
+                    color: AppColors.redColor,
+                    fontsize: 12.sp,
+                  ),
+                  SizedBox(height: 16.h),
+
+                  // ================= TIN =================
+                  CustomText(text: "TIN (Tax Identification Number)".tr),
+                  SizedBox(height: 4.h),
+                  CustomTextFormField(
+                    controller: form.tin,
+                    hint: "TIN".tr,
+                    validator: (value) =>
+                        value!.isEmpty ? "TIN is required" : null,
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomText(
+                    text: "TIN Documents".tr,
+                    fontsize: 16.sp,
+                  ),
+                  SizedBox(height: 4.h),
+
+                  Obx(() => _buildFileRow(
+                        pickedFile: form.selectedTinFile,
                         isDownloading:
-                            (controller.isDownloadingMap['userNidOrPassport'] ??
+                            (controller.isDownloadingMap['userTinOrPassport'] ??
                                     false)
                                 .obs,
                         progress: (controller
-                                    .downloadProgressMap['userNidOrPassport'] ??
+                                    .downloadProgressMap['userTinOrPassport'] ??
                                 0.0)
                             .obs,
                         onPickFile: () async {
                           var result = await FilePickerUtil.pickSingleFile();
                           if (result != null)
-                            form.selectedNidFile.value = result;
+                            form.selectedTinFile.value = result;
                         },
                         onDownload: () async {
                           final isComplete = await controller.downloadFile(
                             urlPath: controller
-                                .profileModel.value.userProfile?.nidPaperUrl,
-                            filePrefix: 'NID',
-                            type: 'userNidOrPassport',
+                                .profileModel.value.userProfile?.tinPaperUrl,
+                            filePrefix: 'TIN',
+                            type: 'userTinOrPassport',
                           );
                           if (isComplete) {
                             Fluttertoast.showToast(
-                              msg: "NID File downloaded successfully".tr,
+                              msg: "TIN File downloaded successfully".tr,
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.TOP,
                               timeInSecForIosWeb: 2,
@@ -250,158 +300,97 @@ class _ProfileSettingStepOneWidgetState
                           }
                         },
                         fileUrl: controller
-                            .profileModel.value.userProfile?.nidPaperUrl,
-                      );
-                    }),
-                    CustomText(
-                      text: "* Only Pdf,JPEG,PNG file are allowed".tr,
-                      color: AppColors.redColor,
-                      fontsize: 12.sp,
-                    ),
-                    SizedBox(height: 16.h),
+                            .profileModel.value.userProfile?.tinPaperUrl,
+                      )),
+                  CustomText(
+                    text: "* Only Pdf,JPEG,PNG file are allowed".tr,
+                    color: AppColors.redColor,
+                    fontsize: 12.sp,
+                  ),
+                  SizedBox(height: 16.h),
 
-                    // ================= TIN =================
-                    CustomText(text: "TIN (Tax Identification Number)".tr),
-                    SizedBox(height: 4.h),
-                    CustomTextFormField(
-                      controller: form.tin,
-                      hint: "TIN".tr,
-                      validator: (value) =>
-                          value!.isEmpty ? "TIN is required" : null,
+                  // ================= Multi Citizenship =================
+                  CustomText(text: "Multi Citizenship".tr),
+                  SizedBox(height: 4.h),
+                  Obx(
+                    () => CustomDropdown<CountryModel>(
+                      hint: "Select Country",
+                      items: controller.countryList,
+                      value: form.selectedMultiCitizenCountry.value,
+                      itemToString: (item) => item.country ?? "",
+                      onChanged: (val) =>
+                          form.selectedMultiCitizenCountry.value = val,
                     ),
-                    SizedBox(height: 16.h),
-                    CustomText(
-                      text: "TIN Documents".tr,
-                      fontsize: 16.sp,
-                    ),
-                    SizedBox(height: 4.h),
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomText(
+                    text: "Profile Picture".tr,
+                    fontsize: 16.sp,
+                  ),
+                  SizedBox(height: 4.h),
 
-                    Obx(() => _buildFileRow(
-                          pickedFile: form.selectedTinFile,
-                          isDownloading: (controller
-                                      .isDownloadingMap['userTinOrPassport'] ??
+                  Obx(
+                    () => _buildFileRow(
+                      isDownloading:
+                          (controller.isDownloadingMap['userProfilePicture'] ??
                                   false)
                               .obs,
-                          progress: (controller.downloadProgressMap[
-                                      'userTinOrPassport'] ??
-                                  0.0)
-                              .obs,
-                          onPickFile: () async {
-                            var result = await FilePickerUtil.pickSingleFile();
-                            if (result != null)
-                              form.selectedTinFile.value = result;
-                          },
-                          onDownload: () async {
-                            final isComplete = await controller.downloadFile(
-                              urlPath: controller
-                                  .profileModel.value.userProfile?.tinPaperUrl,
-                              filePrefix: 'TIN',
-                              type: 'userTinOrPassport',
-                            );
-                            if (isComplete) {
-                              Fluttertoast.showToast(
-                                msg: "TIN File downloaded successfully".tr,
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.TOP,
-                                timeInSecForIosWeb: 2,
-                                backgroundColor: AppColors.primaryColor,
-                                textColor: AppColors.whiteColor,
-                              );
-                            }
-                          },
-                          fileUrl: controller
-                              .profileModel.value.userProfile?.tinPaperUrl,
-                        )),
-                    CustomText(
-                      text: "* Only Pdf,JPEG,PNG file are allowed".tr,
-                      color: AppColors.redColor,
-                      fontsize: 12.sp,
-                    ),
-                    SizedBox(height: 16.h),
-
-                    // ================= Multi Citizenship =================
-                    CustomText(text: "Multi Citizenship".tr),
-                    SizedBox(height: 4.h),
-                    Obx(
-                      () => CustomDropdown<CountryModel>(
-                        hint: "Select Country",
-                        items: controller.countryList,
-                        value: form.selectedMultiCitizenCountry.value,
-                        itemToString: (item) => item.country ?? "",
-                        onChanged: (val) =>
-                            form.selectedMultiCitizenCountry.value = val,
-                      ),
-                    ),
-                    SizedBox(height: 16.h),
-                    CustomText(
-                      text: "Profile Picture".tr,
-                      fontsize: 16.sp,
-                    ),
-                    SizedBox(height: 4.h),
-
-                    Obx(
-                      () => _buildFileRow(
-                        isDownloading: (controller
-                                    .isDownloadingMap['userProfilePicture'] ??
-                                false)
-                            .obs,
-                        progress: (controller.downloadProgressMap[
-                                    'userProfilePicture'] ??
-                                0.0)
-                            .obs,
-                        pickedFile: form.selectedProfilePictureFile,
-                        onPickFile: () async {
-                          var result = await FilePickerUtil.pickSingleFile();
-                          if (result != null)
-                            form.selectedProfilePictureFile.value = result;
-                        },
-                        onDownload: () async {
-                          final isComplete = await controller.downloadFile(
-                            urlPath: controller.profileModel.value.userProfile
-                                ?.profilePictureUrl,
-                            filePrefix: 'ProfilePicture',
-                            type: 'userProfilePicture',
+                      progress: (controller
+                                  .downloadProgressMap['userProfilePicture'] ??
+                              0.0)
+                          .obs,
+                      pickedFile: form.selectedProfilePictureFile,
+                      onPickFile: () async {
+                        var result = await FilePickerUtil.pickSingleFile();
+                        if (result != null)
+                          form.selectedProfilePictureFile.value = result;
+                      },
+                      onDownload: () async {
+                        final isComplete = await controller.downloadFile(
+                          urlPath: controller.profileModel.value.userProfile
+                              ?.profilePictureUrl,
+                          filePrefix: 'ProfilePicture',
+                          type: 'userProfilePicture',
+                        );
+                        if (isComplete) {
+                          Fluttertoast.showToast(
+                            msg: "Profile picture downloaded successfully".tr,
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.TOP,
+                            timeInSecForIosWeb: 2,
+                            backgroundColor: AppColors.primaryColor,
+                            textColor: AppColors.whiteColor,
                           );
-                          if (isComplete) {
-                            Fluttertoast.showToast(
-                              msg: "Profile picture downloaded successfully".tr,
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.TOP,
-                              timeInSecForIosWeb: 2,
-                              backgroundColor: AppColors.primaryColor,
-                              textColor: AppColors.whiteColor,
-                            );
-                          }
-                        },
-                        fileUrl: controller
-                            .profileModel.value.userProfile?.profilePictureUrl,
-                      ),
-                    ),
-                    CustomText(
-                      text: "* Only Pdf,JPEG,PNG file are allowed".tr,
-                      color: AppColors.redColor,
-                      fontsize: 12.sp,
-                    ),
-                    SizedBox(height: 16.h),
-                    // ================= Button =================
-                    CustomButtonCommon(
-                      title: "Next".tr,
-                      onpress: () {
-                        if (controller.step1formKey.currentState!.validate()) {
-                          controller
-                              .onStepTapped(controller.currentStep.value + 1);
                         }
                       },
+                      fileUrl: controller
+                          .profileModel.value.userProfile?.profilePictureUrl,
                     ),
-                    SizedBox(height: 20.h),
-                  ],
-                ),
+                  ),
+                  CustomText(
+                    text: "* Only Pdf,JPEG,PNG file are allowed".tr,
+                    color: AppColors.redColor,
+                    fontsize: 12.sp,
+                  ),
+                  SizedBox(height: 16.h),
+                  // ================= Button =================
+                  CustomButtonCommon(
+                    title: "Next".tr,
+                    onpress: () {
+                      if (controller.step1formKey.currentState!.validate()) {
+                        controller
+                            .onStepTapped(controller.currentStep.value + 1);
+                      }
+                    },
+                  ),
+                  SizedBox(height: 20.h),
+                ],
               ),
             ),
           ),
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 
   // ---------------- File row helper ----------------

@@ -368,7 +368,6 @@ class ProfileController extends GetxController {
     childrenList.clear();
 
     final children = profileModel.value.childInfo;
-    log("Child Info: ${children?.length}");
     if (children != null && children.isNotEmpty) {
       for (final child in children) {
         final form = ChildForm();
@@ -488,9 +487,6 @@ class ProfileController extends GetxController {
 
         siblingList.add(form);
       }
-    } else {
-      /// Always keep one empty sibling form
-      siblingList.add(SiblingForm());
     }
   }
 
@@ -527,8 +523,6 @@ class ProfileController extends GetxController {
         form.accountBalance.text = bank.accBalance?.toString() ?? '';
         bankListForm.add(form);
       }
-    } else {
-      bankListForm.add(BankForm());
     }
   }
 
@@ -584,8 +578,6 @@ class ProfileController extends GetxController {
 
         wealthListForm.add(form);
       }
-    } else {
-      wealthListForm.add(WealthForm());
     }
   }
 
@@ -624,8 +616,6 @@ class ProfileController extends GetxController {
         form.personMobile.text = rec.receivablePersonMobile ?? '';
         receivableListForm.add(form);
       }
-    } else {
-      receivableListForm.add(AccountReceivableForm());
     }
   }
 
@@ -653,8 +643,6 @@ class ProfileController extends GetxController {
         form.personMobile.text = pay.payablePersonMobile ?? '';
         payableListForm.add(form);
       }
-    } else {
-      payableListForm.add(AccountPayableForm());
     }
   }
 

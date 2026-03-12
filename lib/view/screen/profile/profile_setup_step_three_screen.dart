@@ -17,65 +17,78 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ParentForm form = controller.parentForm.value;
-    return BackgroundImageContainer(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 14.h),
-        child: SingleChildScrollView(
-          child: Form(
-            key: controller.step3formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /// ========== Father ==========
-                _parentSection(
-                  title: "Father's Information",
-                  nameController: form.fatherName,
-                  nidController: form.fatherPassOrNID,
-                  selectedProfession: form.selectedFatherProfession,
-                  isAlive: form.isFatherAlive,
-                  fileUrl:
-                      controller.profileModel.value.parentInfo?.fatherNidUrl,
-                  pickedFile: form.selectedFatherFile,
-                  onPickFile: () async {
-                    var result = await FilePickerUtil.pickSingleFile();
-                    if (result != null) form.selectedFatherFile.value = result;
-                  },
-                  downloadType: 'fatherNidOrPassport',
-                  filePrefix: 'FatherNidOrPassport',
-                ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 14.h),
+      child: SingleChildScrollView(
+        child: Form(
+          key: controller.step3formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// ========== Father ==========
+              _parentSection(
+                title: "Father's Information",
+                nameController: form.fatherName,
+                nidController: form.fatherPassOrNID,
+                selectedProfession: form.selectedFatherProfession,
+                isAlive: form.isFatherAlive,
+                fileUrl: controller.profileModel.value.parentInfo?.fatherNidUrl,
+                pickedFile: form.selectedFatherFile,
+                onPickFile: () async {
+                  var result = await FilePickerUtil.pickSingleFile();
+                  if (result != null) form.selectedFatherFile.value = result;
+                },
+                downloadType: 'fatherNidOrPassport',
+                filePrefix: 'FatherNidOrPassport',
+              ),
 
-                SizedBox(height: 24.h),
+              SizedBox(height: 24.h),
 
-                /// ========== Mother ==========
-                _parentSection(
-                  title: "Mother's Information",
-                  nameController: form.motherName,
-                  nidController: form.motherPassOrNID,
-                  selectedProfession: form.selectedMotherProfession,
-                  isAlive: form.isMotherAlive,
-                  fileUrl:
-                      controller.profileModel.value.parentInfo?.motherNidUrl,
-                  pickedFile: form.selectedMotherFile,
-                  onPickFile: () async {
-                    var result = await FilePickerUtil.pickSingleFile();
-                    if (result != null) form.selectedMotherFile.value = result;
-                  },
-                  downloadType: 'motherNidOrPassport',
-                  filePrefix: 'MotherNidOrPassport',
-                ),
+              /// ========== Mother ==========
+              _parentSection(
+                title: "Mother's Information",
+                nameController: form.motherName,
+                nidController: form.motherPassOrNID,
+                selectedProfession: form.selectedMotherProfession,
+                isAlive: form.isMotherAlive,
+                fileUrl: controller.profileModel.value.parentInfo?.motherNidUrl,
+                pickedFile: form.selectedMotherFile,
+                onPickFile: () async {
+                  var result = await FilePickerUtil.pickSingleFile();
+                  if (result != null) form.selectedMotherFile.value = result;
+                },
+                downloadType: 'motherNidOrPassport',
+                filePrefix: 'MotherNidOrPassport',
+              ),
 
-                SizedBox(height: 20.h),
-                CustomButtonCommon(
-                  title: "Next".tr,
-                  onpress: () {
-                    if (controller.step3formKey.currentState!.validate()) {
-                      controller.onStepTapped(controller.currentStep.value + 1);
-                    }
-                  },
-                ),
-                SizedBox(height: 20.h),
-              ],
-            ),
+              SizedBox(height: 20.h),
+              Row(
+                spacing: 16.w,
+                children: [
+                  Expanded(
+                    child: CustomButtonCommon(
+                      title: "Previous".tr,
+                      onpress: () {
+                        controller
+                            .onStepTapped(controller.currentStep.value - 1);
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: CustomButtonCommon(
+                      title: "Next".tr,
+                      onpress: () {
+                        if (controller.step3formKey.currentState!.validate()) {
+                          controller
+                              .onStepTapped(controller.currentStep.value + 1);
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.h),
+            ],
           ),
         ),
       ),

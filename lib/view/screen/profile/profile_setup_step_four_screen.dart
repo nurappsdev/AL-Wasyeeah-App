@@ -38,15 +38,30 @@ class ProfileSettingStepFourWidget extends StatelessWidget {
             // ===== Sibling Information =====
             SiblingWidget(controller: controller),
             SizedBox(height: 20.h),
-            CustomButtonCommon(
-              title: "Next".tr,
-              onpress: () {
-                if (controller.step4formKey.currentState!.validate()) {
-                  controller.onStepTapped(controller.currentStep.value + 1);
-                } else {
-                  log("Not validate");
-                }
-              },
+
+            Row(
+              spacing: 16.w,
+              children: [
+                Expanded(
+                  child: CustomButtonCommon(
+                    title: "Previous".tr,
+                    onpress: () {
+                      controller.onStepTapped(controller.currentStep.value - 1);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: CustomButtonCommon(
+                    title: "Next".tr,
+                    onpress: () {
+                      if (controller.step4formKey.currentState!.validate()) {
+                        controller
+                            .onStepTapped(controller.currentStep.value + 1);
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 20.h),
           ],
@@ -110,7 +125,7 @@ class SiblingWidget extends StatelessWidget {
                     children: [
                       Icon(Icons.add),
                       SizedBox(width: 8.w),
-                      Text("Add More Sibling".tr)
+                      Text("Add Sibling".tr)
                     ],
                   ),
                 ),
@@ -449,7 +464,6 @@ class SiblingWidget extends StatelessWidget {
 
 class _ChildWidget extends StatelessWidget {
   const _ChildWidget({
-    super.key,
     required this.controller,
   });
 
@@ -479,7 +493,7 @@ class _ChildWidget extends StatelessWidget {
                     children: [
                       Icon(Icons.add),
                       SizedBox(width: 8.w),
-                      Text("Add More Child".tr)
+                      Text("Add Child".tr)
                     ],
                   ),
                 ),
@@ -830,7 +844,6 @@ class _ChildWidget extends StatelessWidget {
 
 class _SpouseWidget extends StatelessWidget {
   const _SpouseWidget({
-    super.key,
     required this.controller,
   });
 
@@ -859,7 +872,7 @@ class _SpouseWidget extends StatelessWidget {
                   children: [
                     Icon(Icons.add),
                     SizedBox(width: 8.w),
-                    Text("Add More Spouse".tr)
+                    Text("Add Spouse".tr)
                   ],
                 ),
               ),

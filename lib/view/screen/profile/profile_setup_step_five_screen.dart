@@ -43,16 +43,30 @@ class ProfileSettingStepFiveWidget extends StatelessWidget {
             _PayableWidget(controller: controller),
 
             SizedBox(height: 20.h),
-            CustomButtonCommon(
-              title: "Finish".tr,
-              onpress: () {
-                if (controller.step5formKey.currentState!.validate()) {
-                  controller.submitProfile();
-                } else {
-                  // log("Not validate");
-                }
-              },
+            Row(
+              spacing: 16.w,
+              children: [
+                Expanded(
+                  child: CustomButtonCommon(
+                    title: "Previous".tr,
+                    onpress: () {
+                      controller.onStepTapped(controller.currentStep.value - 1);
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: CustomButtonCommon(
+                    title: "Next".tr,
+                    onpress: () {
+                      if (controller.step5formKey.currentState!.validate()) {
+                        controller.submitProfile();
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
+
             SizedBox(height: 20.h),
           ],
         ),
@@ -91,6 +105,29 @@ class _BankWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        if (controller.bankListForm.isEmpty)
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => controller.addBank(),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                backgroundColor: Colors.white,
+                foregroundColor: AppColors.primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4.r),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.add),
+                  SizedBox(width: 8.w),
+                  Text("Add Bank".tr)
+                ],
+              ),
+            ),
+          ),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -238,6 +275,29 @@ class _WealthWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        if (controller.wealthListForm.isEmpty)
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => controller.addWealth(),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                backgroundColor: Colors.white,
+                foregroundColor: AppColors.primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4.r),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.add),
+                  SizedBox(width: 8.w),
+                  Text("Add Wealth".tr)
+                ],
+              ),
+            ),
+          ),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -430,6 +490,29 @@ class _ReceivableWidget extends StatelessWidget {
     return Obx(() {
       return Column(
         children: [
+          if (controller.receivableListForm.isEmpty)
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => controller.addReceivable(),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                  backgroundColor: Colors.white,
+                  foregroundColor: AppColors.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.r),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.add),
+                    SizedBox(width: 8.w),
+                    Text("Add Receivable".tr)
+                  ],
+                ),
+              ),
+            ),
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -516,7 +599,7 @@ class _ReceivableWidget extends StatelessWidget {
                               Icon(Icons.add),
                               SizedBox(width: 8.w),
                               Expanded(
-                                  child: Text("Add More".tr,
+                                  child: Text("Add More Receivable".tr,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis))
                             ],
@@ -544,6 +627,29 @@ class _PayableWidget extends StatelessWidget {
     return Obx(() {
       return Column(
         children: [
+          if (controller.payableListForm.isEmpty)
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => controller.addPayable(),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                  backgroundColor: Colors.white,
+                  foregroundColor: AppColors.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.r),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.add),
+                    SizedBox(width: 8.w),
+                    Text("Add Payable".tr)
+                  ],
+                ),
+              ),
+            ),
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -630,7 +736,7 @@ class _PayableWidget extends StatelessWidget {
                               Icon(Icons.add),
                               SizedBox(width: 8.w),
                               Expanded(
-                                  child: Text("Add More".tr,
+                                  child: Text("Add More Payable".tr,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis))
                             ],
