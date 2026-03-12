@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ProfileSettingStepOneWidget extends StatefulWidget {
   @override
@@ -55,7 +56,7 @@ class _ProfileSettingStepOneWidgetState
         );
       }
       if (controller.status.value.isError) {
-        return const Center(child: Text("Something went wrong"));
+        return Center(child: Text("Something went wrong".tr));
       }
 
       final form = controller.personalForm.value;
@@ -69,12 +70,12 @@ class _ProfileSettingStepOneWidgetState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _sectionTitle("Personal Information"),
+                  _sectionTitle("Personal Information".tr),
                   // ================= First Name =================
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      CustomText(text: "First Name".tr, fontsize: 16.sp),
+                      CustomText(text: AppLocalizations.of(context)!.first_name, fontsize: 16.sp),
                       Text(' *',
                           style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
@@ -82,16 +83,16 @@ class _ProfileSettingStepOneWidgetState
                   SizedBox(height: 4.h),
                   CustomTextFormField(
                     controller: form.firstName,
-                    hint: "First Name".tr,
+                    hint: AppLocalizations.of(context)!.first_name,
                     validator: (value) =>
-                        value!.isEmpty ? "First Name is required" : null,
+                        value!.isEmpty ? "First Name is required".tr : null,
                   ),
 
                   SizedBox(height: 16.h),
                   // ================= Last Name =================
                   Row(
                     children: [
-                      CustomText(text: "Last Name".tr, fontsize: 16.sp),
+                      CustomText(text: AppLocalizations.of(context)!.last_name, fontsize: 16.sp),
                       Text(' *',
                           style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
@@ -99,37 +100,38 @@ class _ProfileSettingStepOneWidgetState
                   SizedBox(height: 4.h),
                   CustomTextFormField(
                     controller: form.lastName,
-                    hint: "Last Name".tr,
+                    hint: AppLocalizations.of(context)!.last_name,
                     validator: (value) =>
-                        value!.isEmpty ? "Last Name is required" : null,
+                        value!.isEmpty ? "Last Name is required".tr : null,
                   ),
 
                   SizedBox(height: 16.h),
                   // ================= Marital Status =================
                   Row(
                     children: [
-                      CustomText(text: "Marital Status".tr, fontsize: 16.sp),
+                      CustomText(text: AppLocalizations.of(context)!.marital_status, fontsize: 16.sp),
                       Text(' *',
                           style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
                   ),
                   SizedBox(height: 4.h),
                   Obx(() => CustomDropdown<MaritalModel>(
-                        hint: "Select Marital Status",
+                        hint: "Select Marital Status".tr,
                         items: controller.maritalList,
                         value: form.selectedMarried.value,
                         itemToString: (item) => item.maritalType ?? "",
                         onChanged: (val) => form.selectedMarried.value = val,
-                        validator: (value) =>
-                            value == null ? "Marital Status is required" : null,
+                        validator: (value) => value == null
+                            ? "Marital Status is required".tr
+                            : null,
                       )),
 
                   SizedBox(height: 16.h),
                   // ================= Profession =================
-                  CustomText(text: "Profession".tr, fontsize: 16.sp),
+                  CustomText(text: AppLocalizations.of(context)!.profession, fontsize: 16.sp),
                   SizedBox(height: 4.h),
                   Obx(() => CustomDropdown<ProfessionModel>(
-                        hint: "Select Profession",
+                        hint: "Select Profession".tr,
                         items: controller.professionList,
                         value: form.selectedProfession.value,
                         itemToString: (item) => item.profession ?? "",
@@ -147,7 +149,7 @@ class _ProfileSettingStepOneWidgetState
                   ),
                   SizedBox(height: 4.h),
                   Obx(() => CustomDropdown<CountryModel>(
-                        hint: "Select Country",
+                        hint: "Select Country".tr,
                         items: controller.countryList,
                         value: form.selectedCountry.value,
                         itemToString: (item) => item.country ?? "",
@@ -156,27 +158,27 @@ class _ProfileSettingStepOneWidgetState
 
                   SizedBox(height: 16.h),
                   // ================= District/State =================
-                  CustomText(text: "District/State".tr, fontsize: 16.sp),
+                  CustomText(text: AppLocalizations.of(context)!.district_state, fontsize: 16.sp),
                   SizedBox(height: 4.h),
                   CustomTextFormField(
                     controller: form.district,
-                    hint: "District/State".tr,
+                    hint: AppLocalizations.of(context)!.district_state,
                     validator: (value) =>
-                        value!.isEmpty ? "District/State is required" : null,
+                        value!.isEmpty ? "District/State is required".tr : null,
                   ),
 
                   SizedBox(height: 16.h),
                   // ================= Gender =================
                   Row(
                     children: [
-                      CustomText(text: "Gender".tr, fontsize: 16.sp),
+                      CustomText(text: AppLocalizations.of(context)!.gender, fontsize: 16.sp),
                       Text(' *',
                           style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
                   ),
                   SizedBox(height: 4.h),
                   Obx(() => CustomDropdown<GenderModel>(
-                        hint: "Select Gender",
+                        hint: "Select Gender".tr,
                         items: controller.genderList,
                         value: form.selectedGender.value,
                         itemToString: (item) => item.gender ?? "",
@@ -187,7 +189,7 @@ class _ProfileSettingStepOneWidgetState
                   // ================= NID / Passport =================
                   Row(
                     children: [
-                      CustomText(text: "NID/Passport No".tr, fontsize: 16.sp),
+                      CustomText(text: AppLocalizations.of(context)!.nid_passport_no, fontsize: 16.sp),
                       Text(' *',
                           style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
@@ -195,9 +197,10 @@ class _ProfileSettingStepOneWidgetState
                   SizedBox(height: 4.h),
                   CustomTextFormField(
                     controller: form.nid,
-                    hint: "NID/Passport No".tr,
-                    validator: (value) =>
-                        value!.isEmpty ? "NID/Passport No is required" : null,
+                    hint: AppLocalizations.of(context)!.nid_passport_no,
+                    validator: (value) => value!.isEmpty
+                        ? "NID/Passport No is required".tr
+                        : null,
                   ),
                   SizedBox(height: 16.h),
                   CustomText(
@@ -251,13 +254,13 @@ class _ProfileSettingStepOneWidgetState
                   SizedBox(height: 16.h),
 
                   // ================= TIN =================
-                  CustomText(text: "TIN (Tax Identification Number)".tr),
+                  CustomText(text: AppLocalizations.of(context)!.tin_tax_identification_number),
                   SizedBox(height: 4.h),
                   CustomTextFormField(
                     controller: form.tin,
                     hint: "TIN".tr,
                     validator: (value) =>
-                        value!.isEmpty ? "TIN is required" : null,
+                        value!.isEmpty ? "TIN is required".tr : null,
                   ),
                   SizedBox(height: 16.h),
                   CustomText(
@@ -314,7 +317,7 @@ class _ProfileSettingStepOneWidgetState
                   SizedBox(height: 4.h),
                   Obx(
                     () => CustomDropdown<CountryModel>(
-                      hint: "Select Country",
+                      hint: "Select Country".tr,
                       items: controller.countryList,
                       value: form.selectedMultiCitizenCountry.value,
                       itemToString: (item) => item.country ?? "",
@@ -375,7 +378,7 @@ class _ProfileSettingStepOneWidgetState
                   SizedBox(height: 16.h),
                   // ================= Button =================
                   CustomButtonCommon(
-                    title: "Next".tr,
+                    title: AppLocalizations.of(context)!.next,
                     onpress: () {
                       if (controller.step1formKey.currentState!.validate()) {
                         controller
@@ -430,7 +433,7 @@ class _ProfileSettingStepOneWidgetState
 
                     // Choose file text
                     Text(
-                      "Choose file",
+                      "Choose file".tr,
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
@@ -453,7 +456,7 @@ class _ProfileSettingStepOneWidgetState
                       // File name or placeholder
                       Expanded(
                         child: Text(
-                          pickedFile.value?.fileName ?? "No file chosen",
+                          pickedFile.value?.fileName ?? "No file chosen".tr,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(

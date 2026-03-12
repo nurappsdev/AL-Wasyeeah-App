@@ -10,6 +10,7 @@ import '../../../../controllers/controllers.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AddNomineeScreen extends StatelessWidget {
   AddNomineeScreen({super.key});
@@ -21,7 +22,7 @@ class AddNomineeScreen extends StatelessWidget {
     controller.searchNominee();
     TextEditingController searchController = TextEditingController();
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Add Nominee".tr,fontsize: 18. sp,),),
+      appBar: AppBar(title: CustomText(text: AppLocalizations.of(context)!.add_nominee,fontsize: 18. sp,),),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -72,7 +73,7 @@ class AddNomineeScreen extends StatelessWidget {
                               Icon(Icons.visibility, size: 16.0, color: Colors.grey),
                               SizedBox(width: 4.0),
                               Text(
-                                "View Details".tr,
+                                AppLocalizations.of(context)!.view_details,
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ],
@@ -114,7 +115,7 @@ class AddNomineeScreen extends StatelessWidget {
                   //               Icon(Icons.visibility, size: 16.0, color: Colors.grey),
                   //               SizedBox(width: 4.0),
                   //               Text(
-                  //                 "View Details".tr,
+                  //                 AppLocalizations.of(context)!.view_details,
                   //                 style: TextStyle(color: Colors.grey),
                   //               ),
                   //             ],
@@ -131,7 +132,7 @@ class AddNomineeScreen extends StatelessWidget {
 
                   SizedBox(height: 10.h),
                   CustomButton(
-                    title: "+ Add outside Nominee".tr,
+                    title: AppLocalizations.of(context)!.add_outside_nominee,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
                       Get.toNamed(AppRoutes.addOutsideNomineeScreen,preventDuplicates: false);

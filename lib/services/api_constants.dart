@@ -1,9 +1,9 @@
 class ApiConstants {
-  //static const String baseUrl = "https://45b4-203-76-110-10.ngrok-free.app/WASIYYAH/api/v1";
+  static String currentLang = 'en';
+
   static const String baseUrl = "https://api.wasiyyat.com/api/v1";
   static const String imageUrl = "$baseUrl/raw/";
   static const String fileDownloadUrl = "$baseUrl/raw-media-info/";
-
   static const String securityQuestionEndPoint = "/user/securityQuestionList";
   static const String nomineeEndPoint = "/user/get-nominees";
   static const String accessControlEndPoint = "/getUsersByRole?isWitness=";
@@ -18,84 +18,41 @@ class ApiConstants {
   static const String witnessDeletePoint = "/user/remove-witness";
   static const String witnessAssignPoint = "/user/assign-witness";
   static const String nomineeAssignPoint = "/user/assign-nominee";
-
   static const String signUpEndPoint = "/user/register";
   static const String changePassAPI = "user/update/password";
   static const String signInEndPoint = "/user/login";
   static const String forgotEndPoint = "/user/forget-password";
-  static const String zakatEndPoint = "/zakatCalculator?lang=en";
+  static String get zakatEndPoint => "/zakatCalculator?lang=$currentLang";
   static String salatTimeAPI(String lat, String long) =>
       "/mobile/getSalahTime?latitude=$lat&longitude=$long";
   static const String addNomineePoint = "/user/save-nominee";
   static const String addWitnessEndPoint = "/user/save-nominee";
   static const String addFeatureNomineeWitnessPoint =
       "/assignContext?isWitness=";
-  static String allPostCodeEndPoint(String postCode) =>
-      "/suburbs?limit=50&postcode=$postCode";
-  static String singleBusinessEndPoint(String id) => "/businesses/$id";
-  static String singlePortfolioEndPoint(String page, String id) =>
-      "/portfolios?page=$page&businessId=$id";
-  static String serviceWiseBusinessEndPoint(String serviceId, lat, longs) =>
-      "/businesses/?serviceId=$serviceId&limit=50&latitude=$lat&longitude=$longs";
-  static const String allServiceEndPoint = "/services?limit=5000";
-  static const String userCallEndPoint = "/communications";
-  static const String userMessageEndPoint = "/messages";
-
   static const String getUserEndPoint = "/auth/session";
-  static const String getAboutAndPrivacyTermsEndPoint = "/app-data";
-  static String reviews(String id) => "/reviews?businessId=$id";
-
-  static const String verifyEmailEndPoint = "/user/verify-otp";
-  static String getResendOTPEndPoint(String userId) =>
-      "/auth/otp?userId=$userId";
   static const String forgotPassEndPoint = "/auth/forgot";
   static String updateProfileEndPoint(String id) => "/users/$id";
   static String setPasswordEndPoint(String id) => "/users/$id";
-
   static const String resetPassEndPoint = "/user/reset-password";
-
   static const String userMoreInformationEndPoint = "/user/information";
   static const String allMyPmojiEndPoint = "/sticker/my-sticker";
   static const String passCartIdiEndPoint = "/cart/add-to-cart";
   static const String getCartEndPoint = "/cart/my-cart";
-
   static const String changePassEndPoint = "/user/change-password";
-  static const String promoCodePassEndPoint = "/promo-code/use-promo";
-  static const String notificationEndPoint = "/notification/my-notification";
-  static String singleGalleryDeleteEndPoint(String id) => "/portfolios/$id";
-  static String singleJobsDeleteEndPoint(String id) => "/jobs/$id";
-  static String galleryEndPoint(String page, String id) =>
-      "/portfolios?page=$page&businessId=$id";
-  static String providerNotiEndPoint(
-    String page,
-  ) =>
-      "/communications?page=$page";
-  static String customerJobsEndPoint(
-    String page,
-  ) =>
-      "/jobs?page=$page";
-  static String providerBitsEndPoint(
-    String page,
-  ) =>
-      "/bits?page=$page";
-  static String providerJobsEndPoint(String page, String businessId) =>
-      "/jobs?page=$page&businessId=$businessId";
-  static String providerJobsApplicationEndPoint(String page, String jobId) =>
-      "/job-applications?page=$page&jobId=$jobId";
-
   static String maritalList = "/lookup/maritalList";
-  static String professionList = "/lookup/professionList?lang=en";
+  static String get professionList =>
+      "/lookup/professionList?lang=$currentLang";
   static String countryList = "/lookup/countryList";
   static String genderList = "/lookup/gender";
   static String bankList = "/lookup/bankList";
   static String branchList = "/lookup/branchList";
-  static String wealthList = "/lookup/wealthList?lang=en";
+  static String get wealthList => "/lookup/wealthList?lang=$currentLang";
   static String getProfile = "/user/getProfileData";
   static String documentTypeList = "/lookup/documentTypeList";
   static String inappnotificationList = '/get-notification';
   static String profileUpdate = "/lookup/saveProfileData";
-  static String relevantList = "/relevantList?lang=en";
-  static String propertyDistributionCalculationResult =
-      "/propertyDistributeResult?lang=en";
+  static String get relevantList => "/relevantList?lang=$currentLang";
+  static String get propertyDistributionCalculationResult =>
+      "/propertyDistributeResult?lang=$currentLang";
   static String inappNOtificationAcceptRejectRequest = "/accept-reject-request";
 }

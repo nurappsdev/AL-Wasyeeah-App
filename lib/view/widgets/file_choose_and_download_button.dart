@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,7 +50,7 @@ class FileChooseAndDownloadButton extends StatelessWidget {
 
                     // Choose file text
                     Text(
-                      "Choose file",
+                      AppLocalizations.of(context)!.choose_file,
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
@@ -72,7 +73,8 @@ class FileChooseAndDownloadButton extends StatelessWidget {
                       // File name or placeholder
                       Expanded(
                         child: Text(
-                          pickedFile.value?.fileName ?? "No file chosen",
+                          pickedFile.value?.fileName ??
+                              AppLocalizations.of(context)!.no_file_chosen,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(

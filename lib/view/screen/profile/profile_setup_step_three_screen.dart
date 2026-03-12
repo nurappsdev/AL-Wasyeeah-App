@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ProfileSettingStepThreeWidget extends StatelessWidget {
   ProfileSettingStepThreeWidget({super.key});
@@ -76,7 +77,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
                   ),
                   Expanded(
                     child: CustomButtonCommon(
-                      title: "Next".tr,
+                      title: AppLocalizations.of(context)!.next,
                       onpress: () {
                         if (controller.step3formKey.currentState!.validate()) {
                           controller
@@ -207,10 +208,12 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: "Profession".tr, fontsize: 16.sp),
+        CustomText(
+            text: AppLocalizations.of(Get.context!)!.profession,
+            fontsize: 16.sp),
         SizedBox(height: 4.h),
         Obx(() => CustomDropdown<ProfessionModel>(
-              hint: "Profession".tr,
+              hint: AppLocalizations.of(Get.context!)!.profession,
               items: controller.professionList,
               value: selectedProfession.value,
               itemToString: (item) => item.profession ?? "",

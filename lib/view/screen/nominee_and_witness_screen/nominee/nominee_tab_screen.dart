@@ -30,15 +30,15 @@ import '../../screen.dart';
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title:   AppBar(title: CustomText(text: "Nominee".tr,fontsize: 18.sp,),),
+//         title:   AppBar(title: CustomText(text: AppLocalizations.of(context)!.nominee,fontsize: 18.sp,),),
 //         bottom: TabBar(
 //           controller: tabController,
 //           indicatorColor:AppColors.primaryColor,
 //           unselectedLabelColor: Colors.black54,
 //           labelStyle:  TextStyle(color: AppColors.primaryColor,fontWeight: FontWeight.w600,fontSize: 16.sp),
 //           tabs: [
-//             Tab(text: 'Your Nominee'.tr,),
-//             Tab(text:  'Nominated You'.tr,),
+//             Tab(text: AppLocalizations.of(context)!.your_nominee,),
+//             Tab(text:  AppLocalizations.of(context)!.nominated_you,),
 //           ],
 //         ),
 //       ),
@@ -56,6 +56,7 @@ import '../../screen.dart';
 // }
 
 import 'package:flutter/material.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class NomineeTabScreen extends StatefulWidget {
   const NomineeTabScreen({super.key});
@@ -84,7 +85,7 @@ class _NomineeTabScreenState extends State<NomineeTabScreen>
   Widget build(BuildContext context) {
     return ConnectivityWrapper(
       child: Scaffold(
-        appBar: AppBar(title: CustomText(text: "Nominee".tr,fontsize: 20.sp,),),
+        appBar: AppBar(title: CustomText(text: AppLocalizations.of(context)!.nominee,fontsize: 20.sp,),),
         body: Column(
           children: [
             const SizedBox(height: 10),
@@ -122,8 +123,8 @@ class _NomineeTabScreenState extends State<NomineeTabScreen>
         unselectedLabelColor: Colors.black87,
         indicatorSize: TabBarIndicatorSize.tab,
         tabs:  [
-          Tab(text: 'Your Nominee'.tr),
-          Tab(text: 'Nominated You'.tr),
+          Tab(text: AppLocalizations.of(context)!.your_nominee),
+          Tab(text: AppLocalizations.of(context)!.nominated_you),
         ],
       ),
     );

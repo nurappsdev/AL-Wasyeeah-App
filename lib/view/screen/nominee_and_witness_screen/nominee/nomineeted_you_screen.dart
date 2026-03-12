@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,10 +9,11 @@ import '../../../../models/models.dart';
 import '../../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
 import '../witnessess/your_witness_screen.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class NomineetedYouScreen extends StatefulWidget {
   const NomineetedYouScreen({super.key, required this.tabController});
-final TabController tabController;
+  final TabController tabController;
   @override
   State<NomineetedYouScreen> createState() => _NomineetedYouScreenState();
 }
@@ -47,54 +47,73 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
 
                   SizedBox(
                     height: 450.0, // Adjust height as per your needs
-                    child: Obx(()=> nomineeController.isNomineeYou.value ? CustomLoader(): nomineeController.nomineetedYouData.isEmpty ?Center(child: CustomText(text: "No Nominee data",),) :
-                    ListView.builder(
-                      padding: EdgeInsets.all(8.0),
-                      itemCount: nomineeController.nomineetedYouData.length,
-                      itemBuilder: (context, index) {
-                        final user = nomineeController.nomineetedYouData[index];
-                        return Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          elevation: 3.0,
-                          margin: EdgeInsets.symmetric(vertical: 8.0),
-                          child: ListTile(
-                            // leading: CircleAvatar(
-                            //   backgroundImage: AssetImage(user["image"]!),
-                            //   radius: 30,
-                            // ),
-                            title: Text(
-                              user.name ?? "N/A",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Row(
-                              children: [
-                                Icon(Icons.visibility, size: 16.0, color: Colors.grey),
-                                SizedBox(width: 4.0),
-                                Text(
-                                  "View Details".tr,
-                                  style: TextStyle(color: Colors.grey),
+                    child: Obx(
+                      () => nomineeController.isNomineeYou.value
+                          ? CustomLoader()
+                          : nomineeController.nomineetedYouData.isEmpty
+                              ? Center(
+                                  child: CustomText(
+                                    text: "No Nominee data",
+                                  ),
+                                )
+                              : ListView.builder(
+                                  padding: EdgeInsets.all(8.0),
+                                  itemCount: nomineeController
+                                      .nomineetedYouData.length,
+                                  itemBuilder: (context, index) {
+                                    final user = nomineeController
+                                        .nomineetedYouData[index];
+                                    return Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                      elevation: 3.0,
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 8.0),
+                                      child: ListTile(
+                                        // leading: CircleAvatar(
+                                        //   backgroundImage: AssetImage(user["image"]!),
+                                        //   radius: 30,
+                                        // ),
+                                        title: Text(
+                                          user.name ??
+                                              "AppLocalizations.of(context)!.n_a",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        subtitle: Row(
+                                          children: [
+                                            Icon(Icons.visibility,
+                                                size: 16.0, color: Colors.grey),
+                                            SizedBox(width: 4.0),
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .view_details,
+                                              style:
+                                                  TextStyle(color: Colors.grey),
+                                            ),
+                                          ],
+                                        ),
+                                        onTap: () {
+                                          //    showWitnessDetailsDialog(context,user,nomineeController);
+                                          //     Get.to(
+                                          //           () => WitnessDetailsScreens(user: user),
+                                          //       preventDuplicates: false,
+                                          //     );
+                                          Get.toNamed(
+                                              AppRoutes.nomineeDetailsScreen,
+                                              arguments: user,
+                                              preventDuplicates: false);
+                                          print("Tapped on");
+                                        },
+                                      ),
+                                    );
+                                  },
                                 ),
-                              ],
-                            ),
-                            onTap: () {
-                          //    showWitnessDetailsDialog(context,user,nomineeController);
-                          //     Get.to(
-                          //           () => WitnessDetailsScreens(user: user),
-                          //       preventDuplicates: false,
-                          //     );
-                                 Get.toNamed(AppRoutes.nomineeDetailsScreen,arguments: user, preventDuplicates: false);
-                              print("Tapped on");
-                            },
-                          ),
-                        );
-                      },
-                    ),
                     ),
                   ),
                   SizedBox(height: 10.h),
-
                 ],
               ),
             ),
@@ -103,7 +122,9 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
       ),
     );
   }
-  void showWitnessDetailsDialog(BuildContext context, NomineetedResponseModel user, NomineeController nomineeController) {
+
+  void showWitnessDetailsDialog(BuildContext context,
+      NomineetedResponseModel user, NomineeController nomineeController) {
     showDialog(
       context: context,
       builder: (context) {
@@ -111,14 +132,14 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
           backgroundColor: Colors.transparent,
           insetPadding: EdgeInsets.all(16),
           child: Padding(
-            padding:  EdgeInsets.all(8.0.r),
+            padding: EdgeInsets.all(8.0.r),
             child: SingleChildScrollView(
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.blueGrey[900],
                   borderRadius: BorderRadius.circular(12.r),
                 ),
-                padding:  EdgeInsets.all(16.0.r),
+                padding: EdgeInsets.all(16.0.r),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,8 +148,11 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
                       children: [
                         Expanded(
                           child: Text(
-                            user.name ?? "N/A",
-                            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold, color: Colors.white),
+                            user.name ?? "AppLocalizations.of(context)!.n_a",
+                            style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                         ),
                         IconButton(
@@ -138,21 +162,38 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
                       ],
                     ),
                     Divider(color: Colors.white70),
-                    _buildDialogRow(Icons.people, "Relation", user.relation ?? "N/A"),
-                    _buildDialogRow(Icons.email, "Email", user.email ?? "N/A"),
-                    _buildDialogRow(Icons.person, "Father Name", user.fatherName ?? "N/A"),
-                    _buildDialogRow(Icons.phone, "Mobile", user.mobile ?? "N/A"),
-                    _buildDialogRow(Icons.favorite, "Marital Status", user.maritalStatus ?? "N/A"),
-                    _buildDialogRow(Icons.work, "Profession", user.profession ?? "N/A"),
-                    _buildDialogRow(Icons.calendar_today, "Date", "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ?? "N/A"),
+                    _buildDialogRow(Icons.people, "Relation",
+                        user.relation ?? "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(Icons.email, "Email",
+                        user.email ?? "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(Icons.person, "Father Name",
+                        user.fatherName ?? "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(Icons.phone, "Mobile",
+                        user.mobile ?? "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(
+                        Icons.favorite,
+                        "Marital Status",
+                        user.maritalStatus ??
+                            "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(Icons.work, "Profession",
+                        user.profession ?? "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(
+                        Icons.calendar_today,
+                        "Date",
+                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ??
+                            "AppLocalizations.of(context)!.n_a"),
                     SizedBox(height: 20.h),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green),
                       onPressed: () {
                         // Implement remove witness logic
                         Navigator.pop(context);
                       },
-                      child: Text("Ok",style: TextStyle(color: AppColors.whiteColor),),
+                      child: Text(
+                        "Ok",
+                        style: TextStyle(color: AppColors.whiteColor),
+                      ),
                     ),
                   ],
                 ),
@@ -166,13 +207,16 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
 
   Widget _buildDialogRow(IconData icon, String label, String value) {
     return Padding(
-      padding:  EdgeInsets.symmetric(vertical: 6.0.h),
+      padding: EdgeInsets.symmetric(vertical: 6.0.h),
       child: Row(
         children: [
           Icon(icon, color: Colors.orange, size: 18.sp),
           SizedBox(width: 10.w),
-          Text("$label: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          Expanded(child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
+          Text("$label: ",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          Expanded(
+              child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
         ],
       ),
     );

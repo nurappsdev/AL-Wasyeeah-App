@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +27,7 @@ class CustomDropdown<T> extends StatefulWidget {
 
     // SEARCH
     this.showSearchBox = true,
-    this.searchHint = "Search…",
+    this.searchHint,
 
     // COLORS
   });
@@ -46,7 +47,7 @@ class CustomDropdown<T> extends StatefulWidget {
   final double maxMenuHeight;
 
   final bool showSearchBox;
-  final String searchHint;
+  final String? searchHint;
 
   @override
   State<CustomDropdown<T>> createState() => _CustomDropdownState<T>();
@@ -66,7 +67,8 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
   @override
   Widget build(BuildContext context) {
     final Color enabledColor = _hasValue ? Colors.green : Colors.grey[300]!;
-
+    final String searchHint =
+        widget.searchHint ?? "${AppLocalizations.of(context)!.search}...";
     return DropdownSearch<T>(
       enabled: widget.enabled,
       items: (filter, props) => widget.items,
@@ -101,7 +103,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
       popupProps: PopupProps.menu(
         searchFieldProps: TextFieldProps(
           decoration: InputDecoration(
-            hintText: widget.searchHint,
+            hintText: searchHint,
             hintStyle: TextStyle(color: Colors.grey[500]),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius),

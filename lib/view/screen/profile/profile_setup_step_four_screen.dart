@@ -12,6 +12,7 @@ import '../../widgets/file_choose_and_download_button.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ProfileSettingStepFourWidget extends StatelessWidget {
   ProfileSettingStepFourWidget({super.key});
@@ -27,7 +28,7 @@ class ProfileSettingStepFourWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ===== Header =====
-            _sectionTitle("Family Information".tr),
+            _sectionTitle(AppLocalizations.of(context)!.family_information),
 
             // ===== Spouse forms =====
             _SpouseWidget(controller: controller),
@@ -52,7 +53,7 @@ class ProfileSettingStepFourWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: CustomButtonCommon(
-                    title: "Next".tr,
+                    title: AppLocalizations.of(context)!.next,
                     onpress: () {
                       if (controller.step4formKey.currentState!.validate()) {
                         controller
@@ -171,7 +172,7 @@ class SiblingWidget extends StatelessWidget {
                       // Gender
                       Row(
                         children: [
-                          CustomText(text: "Gender".tr, fontsize: 16.sp),
+                          CustomText(text: AppLocalizations.of(context)!.gender, fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -179,7 +180,7 @@ class SiblingWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<GenderModel>(
-                        hint: "Gender".tr,
+                        hint: AppLocalizations.of(context)!.gender,
                         items: controller.genderList,
                         value: form.gender.value,
                         itemToString: (e) => e.gender ?? "",
@@ -188,12 +189,12 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Profession
                       CustomText(
-                        text: "Profession".tr,
+                        text: AppLocalizations.of(context)!.profession,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<ProfessionModel>(
-                        hint: "Profession".tr,
+                        hint: AppLocalizations.of(context)!.profession,
                         items: controller.professionList,
                         value: form.profession.value,
                         itemToString: (e) => e.profession ?? "",
@@ -202,12 +203,12 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Nationality
                       CustomText(
-                        text: "Nationality".tr,
+                        text: AppLocalizations.of(context)!.nationality,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<CountryModel>(
-                        hint: "Nationality".tr,
+                        hint: AppLocalizations.of(context)!.nationality,
                         items: controller.countryList,
                         value: form.nationality.value,
                         itemToString: (e) => e.country ?? "",
@@ -276,13 +277,13 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // NID/Passport No
                       CustomText(
-                        text: "NID/Passport No".tr,
+                        text: AppLocalizations.of(context)!.nid_passport_no,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
                         controller: form.nid,
-                        hint: "NID/Passport No".tr,
+                        hint: AppLocalizations.of(context)!.nid_passport_no,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Please enter NID/Passport No".tr;
@@ -332,13 +333,13 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Mobile
                       CustomText(
-                        text: "Mobile".tr,
+                        text: AppLocalizations.of(context)!.mobile,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
                         controller: form.mobile,
-                        hint: "Mobile".tr,
+                        hint: AppLocalizations.of(context)!.mobile,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Please enter Mobile".tr;
@@ -539,7 +540,7 @@ class _ChildWidget extends StatelessWidget {
                       // Gender
                       Row(
                         children: [
-                          CustomText(text: "Gender".tr, fontsize: 16.sp),
+                          CustomText(text: AppLocalizations.of(context)!.gender, fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -547,7 +548,7 @@ class _ChildWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<GenderModel>(
-                        hint: "Gender".tr,
+                        hint: AppLocalizations.of(context)!.gender,
                         items: controller.genderList,
                         value: form.gender.value,
                         itemToString: (e) => e.gender ?? "",
@@ -557,7 +558,7 @@ class _ChildWidget extends StatelessWidget {
                       // Profession
                       Row(
                         children: [
-                          CustomText(text: "Profession".tr, fontsize: 16.sp),
+                          CustomText(text: AppLocalizations.of(context)!.profession, fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -565,7 +566,7 @@ class _ChildWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<ProfessionModel>(
-                        hint: "Profession".tr,
+                        hint: AppLocalizations.of(context)!.profession,
                         items: controller.professionList,
                         value: form.profession.value,
                         itemToString: (e) => e.profession ?? "",
@@ -575,7 +576,7 @@ class _ChildWidget extends StatelessWidget {
                       // Nationality
                       Row(
                         children: [
-                          CustomText(text: "Nationality".tr, fontsize: 16.sp),
+                          CustomText(text: AppLocalizations.of(context)!.nationality, fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -583,7 +584,7 @@ class _ChildWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 4.h),
                       CustomDropdown<CountryModel>(
-                        hint: "Nationality".tr,
+                        hint: AppLocalizations.of(context)!.nationality,
                         items: controller.countryList,
                         value: form.nationality.value,
                         itemToString: (e) => e.country ?? "",
@@ -653,7 +654,7 @@ class _ChildWidget extends StatelessWidget {
                       Row(
                         children: [
                           CustomText(
-                              text: "NID/Passport No".tr, fontsize: 16.sp),
+                              text: AppLocalizations.of(context)!.nid_passport_no, fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -662,7 +663,7 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 4.h),
                       CustomTextFormField(
                         controller: form.nid,
-                        hint: "NID/Passport No".tr,
+                        hint: AppLocalizations.of(context)!.nid_passport_no,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Please enter NID/Passport No".tr;
@@ -712,13 +713,13 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Mobile
                       CustomText(
-                        text: "Mobile".tr,
+                        text: AppLocalizations.of(context)!.mobile,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
                         controller: form.mobile,
-                        hint: "Mobile".tr,
+                        hint: AppLocalizations.of(context)!.mobile,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Please enter Mobile".tr;
@@ -897,7 +898,7 @@ class _SpouseWidget extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        CustomText(text: "Spouse Name".tr, fontsize: 16.sp),
+                        CustomText(text: AppLocalizations.of(context)!.spouse_name, fontsize: 16.sp),
                         Text(' *',
                             style:
                                 TextStyle(color: Colors.red, fontSize: 16.sp)),
@@ -906,7 +907,7 @@ class _SpouseWidget extends StatelessWidget {
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.name,
-                      hint: "Spouse Name".tr,
+                      hint: AppLocalizations.of(context)!.spouse_name,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Please enter name".tr;
@@ -926,7 +927,7 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     CustomDropdown<ProfessionModel>(
-                      hint: "Profession".tr,
+                      hint: AppLocalizations.of(context)!.profession,
                       items: controller.professionList,
                       value: form.profession.value,
                       itemToString: (e) => e.profession ?? "",
@@ -946,7 +947,7 @@ class _SpouseWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     CustomDropdown<CountryModel>(
-                      hint: "Nationality".tr,
+                      hint: AppLocalizations.of(context)!.nationality,
                       items: controller.countryList,
                       value: form.nationality.value,
                       itemToString: (e) => e.country ?? "",
@@ -1027,7 +1028,7 @@ class _SpouseWidget extends StatelessWidget {
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.nid,
-                      hint: "NID/Passport No".tr,
+                      hint: AppLocalizations.of(context)!.nid_passport_no,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Please enter NID/Passport No".tr;
@@ -1094,7 +1095,7 @@ class _SpouseWidget extends StatelessWidget {
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.mobile,
-                      hint: "Mobile".tr,
+                      hint: AppLocalizations.of(context)!.mobile,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Please enter mobile".tr;

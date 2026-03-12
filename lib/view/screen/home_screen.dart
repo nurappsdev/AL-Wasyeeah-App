@@ -20,6 +20,7 @@ import 'no_internet_screen.dart';
 import 'package:hijri/hijri_calendar.dart';
 
 import 'property_distribution_calculation/property_distribution_calculation_page.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -189,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                           Text(
-                            "Welcome back!".tr,
+                            AppLocalizations.of(context)!.welcome_back,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 12.sp),
@@ -283,61 +284,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 onError: (_) => _notificationIconOnly(),
               ),
               SizedBox(width: 8.h), // Space between the image and text
-              // Column(
-              //   mainAxisSize: MainAxisSize.min,
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     Obx(
-              //           () => userController.isLoadingUserProfile.value
-              //           ? const CustomLoader()
-              //           : Flexible(
-              //         child: CustomText(
-              //           text: userController.userProfile.value?.firstName ?? "N/A",
-              //           fontsize: 16.sp,
-              //           maxline: 1,
-              //           textOverflow:  TextOverflow.ellipsis,
-              //         ),
-              //       ),
-              //     ),
-              //     CustomText(
-              //       text: "Welcome back!".tr,
-              //       fontsize: 14.sp,
-              //     ),
-              //   ],
-              // )
             ],
           ),
         ),
-        //   actions: [
-        //     Padding(
-        //       padding: const EdgeInsets.all(8.0),
-        //       child: Stack(
-        //         children: [
-        //           IconButton(
-        //             icon: Icon(Icons.notifications_none_sharp),
-        //             onPressed: () {
-        //               Get.toNamed(AppRoutes.notificationsScreen,preventDuplicates: false);
-        //               // Handle notification click
-        //             },
-        //           ),
-        //           Positioned(
-        //             right: 14,
-        //             top: 10,
-        //             child: Container(
-        //               height: 10,
-        //               width: 10,
-        //               decoration: BoxDecoration(
-        //                 color: Colors.red,
-        //                 shape: BoxShape.circle,
-        //               ),
-        //             ),
-        //           ),
-        //         ],
-        //
-        //       ),
-        //     ],
-        //   ),
-        // ),
         body: BackgroundImageContainer(
           child: Container(
             height: Get.height,
@@ -375,7 +324,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 80.h,
                             ),
                             CustomText(
-                              text: "Explore your \n Wasyyah".tr,
+                              text: AppLocalizations.of(context)!
+                                  .explore_your_wasyyah,
                               fontsize: 18.sp,
                               color: AppColors.primaryColor,
                             )
@@ -414,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 50.h,
                                   ),
                                   CustomText(
-                                    text: "Witness".tr,
+                                    text: AppLocalizations.of(context)!.witness,
                                     fontsize: 18.sp,
                                     color: AppColors.textColor4E4E4E,
                                   )
@@ -453,7 +403,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 40.h,
                                   ),
                                   CustomText(
-                                    text: "Nominee".tr,
+                                    text: AppLocalizations.of(context)!.nominee,
                                     fontsize: 18.sp,
                                     color: AppColors.textColor4E4E4E,
                                   )
@@ -471,7 +421,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Prayer Times",
+                        Text(AppLocalizations.of(context)!.prayer_times,
                             style: TextStyle(
                                 fontSize: 24.sp,
                                 fontWeight: FontWeight.bold,
@@ -487,8 +437,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontSize: 14.sp, color: Colors.black)),
                             SizedBox(height: 4.h),
                             Text(
-                              todayHijri.toFormat(
-                                  "dd MMMM, yyyy"), // Example: 26 Muharram, 1447
+                              todayHijri.toFormat("dd MMMM, yyyy"),
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 color: Colors.green[800],
@@ -608,8 +557,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Text(
                                       isCurrent
-                                          ? "Upcoming Prayers"
-                                          : "Prayer Time",
+                                          ? AppLocalizations.of(context)!
+                                              .upcoming_prayers
+                                          : AppLocalizations.of(context)!
+                                              .prayer_times,
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.bold,
@@ -887,75 +838,75 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class CustomCard extends StatelessWidget {
-  final String title;
-  final String time;
-  final String imageUrl;
-  final bool isCurrent;
+// class CustomCard extends StatelessWidget {
+//   final String title;
+//   final String time;
+//   final String imageUrl;
+//   final bool isCurrent;
 
-  const CustomCard({
-    required this.title,
-    required this.time,
-    required this.imageUrl,
-    required this.isCurrent,
-    Key? key,
-  }) : super(key: key);
+//   const CustomCard({
+//     required this.title,
+//     required this.time,
+//     required this.imageUrl,
+//     required this.isCurrent,
+//     Key? key,
+//   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-                color: isCurrent ? Colors.green : Colors.orange,
-              ),
-            ),
-            SizedBox(
-              height: 8.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                // SvgPicture.asset(imageUrl, height: 80.h),
-                Image.asset(
-                  imageUrl,
-                  height: 80.h,
-                  width: 80,
-                ),
-                Column(
-                  children: [
-                    Text(
-                      "Isha".tr,
-                      style: const TextStyle(fontSize: 18.0, color: Colors.red),
-                    ),
-                    Text(
-                      time,
-                      style: const TextStyle(fontSize: 18.0),
-                    ),
-                    Switch(
-                      value: true,
-                      activeColor: AppColors.primaryColor,
-                      onChanged: (value) {
-                        // Handle switch logic
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       shape: RoundedRectangleBorder(
+//         borderRadius: BorderRadius.circular(12.0),
+//       ),
+//       child: Padding(
+//         padding: const EdgeInsets.all(8.0),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Text(
+//               title,
+//               style: TextStyle(
+//                 fontSize: 16.0,
+//                 fontWeight: FontWeight.bold,
+//                 color: isCurrent ? Colors.green : Colors.orange,
+//               ),
+//             ),
+//             SizedBox(
+//               height: 8.h,
+//             ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceAround,
+//               children: [
+//                 // SvgPicture.asset(imageUrl, height: 80.h),
+//                 Image.asset(
+//                   imageUrl,
+//                   height: 80.h,
+//                   width: 80,
+//                 ),
+//                 Column(
+//                   children: [
+//                     Text(
+//                       AppLocalizations.of(context)!.isha,
+//                       style: const TextStyle(fontSize: 18.0, color: Colors.red),
+//                     ),
+//                     Text(
+//                       time,
+//                       style: const TextStyle(fontSize: 18.0),
+//                     ),
+//                     Switch(
+//                       value: true,
+//                       activeColor: AppColors.primaryColor,
+//                       onChanged: (value) {
+//                         // Handle switch logic
+//                       },
+//                     ),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

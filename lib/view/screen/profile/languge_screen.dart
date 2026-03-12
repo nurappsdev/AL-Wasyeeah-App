@@ -1,116 +1,48 @@
-//
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
+import 'package:al_wasyeah/main.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-import '../../../controllers/localization_controller.dart';
-
-
-//
-// class LanguageScreen extends StatelessWidget {
-//   LanguageScreen({super.key});
-//
-//   final LocalizationController controller = Get.find<LocalizationController>(); //
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("Language".tr),
-//       ),
-//       body: Padding(
-//         padding: EdgeInsets.all(20.w),
-//         child: Obx(
-//               () => Column(
-//             children: [
-//               _languageTile(
-//                 title: "English",
-//                 value: 'en',
-//               ),
-//               SizedBox(height: 12.h),
-//               _languageTile(
-//                 title: "বাংলা",
-//                 value: 'bn',
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   Widget _languageTile({
-//     required String title,
-//     required String value,
-//   }) {
-//     return Container(
-//       padding: EdgeInsets.symmetric(horizontal: 16.w),
-//       decoration: BoxDecoration(
-//         border: Border.all(color: Colors.green),
-//         borderRadius: BorderRadius.circular(8.r),
-//       ),
-//       child: CheckboxListTile(
-//         contentPadding: EdgeInsets.zero,
-//         title: Text(
-//           title,
-//           style: TextStyle(fontSize: 16.sp),
-//         ),
-//         value: controller.selectedLanguage.value == value,
-//         onChanged: (_) {
-//           controller.changeLanguage(value);
-//         },
-//         controlAffinity: ListTileControlAffinity.trailing,
-//       ),
-//     );
-//   }
-// }
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-
-import '../../../controllers/localization_controller.dart';
-
-class LanguageScreen extends StatelessWidget {
-  LanguageScreen({super.key});
-
-  final LocalizationController controller =
-  Get.find<LocalizationController>();
+class LanguageScreen extends StatefulWidget {
+  const LanguageScreen({super.key});
 
   @override
+  State<LanguageScreen> createState() => _LanguageScreenState();
+}
+
+class _LanguageScreenState extends State<LanguageScreen> {
+  @override
   Widget build(BuildContext context) {
+    bool isEnglish = Localizations.localeOf(context).languageCode == 'en';
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Language".tr),
+        title: Text(AppLocalizations.of(context)!.language),
       ),
-      body: GetBuilder<LocalizationController>(
-        builder: (controller) {
-          return Padding(
-            padding: EdgeInsets.all(20.w),
-            child: Column(
-              children: [
-                _languageTile(
-                  title: "English",
-                  index: 0,
-                  locale: const Locale('en', 'US'),
-                ),
-                SizedBox(height: 12.h),
-                _languageTile(
-                  title: "বাংলা",
-                  index: 1,
-                  locale: const Locale('bd', 'BD'),
-                ),
-              ],
+      body: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          children: [
+            _languageTile(
+              title: "English",
+              isSelected: isEnglish,
+              locale: const Locale('en'),
             ),
-          );
-        },
+            SizedBox(height: 12.h),
+            _languageTile(
+              title: "বাংলা",
+              isSelected: !isEnglish,
+              locale: const Locale('bn'),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _languageTile({
     required String title,
-    required int index,
+    required bool isSelected,
     required Locale locale,
   }) {
     return Container(
@@ -125,10 +57,9 @@ class LanguageScreen extends StatelessWidget {
           title,
           style: TextStyle(fontSize: 16.sp),
         ),
-        value: controller.selectedIndex == index,
+        value: isSelected,
         onChanged: (_) {
-          controller.setSelectIndex(index);
-          controller.setLanguage(locale);
+          MyApp.setLocale(context, locale);
         },
         controlAffinity: ListTileControlAffinity.trailing,
       ),

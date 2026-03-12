@@ -6,6 +6,7 @@ import 'package:get/utils.dart';
 import '../../../widgets/widgets.dart';
 import '../../no_internet_screen.dart';
 import '../../screen.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class WitnessTabScreen extends StatefulWidget {
   const WitnessTabScreen({super.key});
@@ -34,7 +35,7 @@ class _WitnessTabScreenState extends State<WitnessTabScreen>
   Widget build(BuildContext context) {
     return ConnectivityWrapper(
       child: Scaffold(
-        appBar: AppBar(title: CustomText(text: "Witness".tr,fontsize: 20.sp,),),
+        appBar: AppBar(title: CustomText(text: AppLocalizations.of(context)!.witness,fontsize: 20.sp,),),
         body: Column(
           children: [
             const SizedBox(height: 10),
@@ -72,8 +73,8 @@ class _WitnessTabScreenState extends State<WitnessTabScreen>
         unselectedLabelColor: Colors.black87,
         indicatorSize: TabBarIndicatorSize.tab,
         tabs:  [
-          Tab(text:  'Your Witness'.tr,),
-          Tab(text: 'I’m the witness'.tr,),
+          Tab(text:  AppLocalizations.of(context)!.your_witness,),
+          Tab(text: AppLocalizations.of(context)!.i_m_the_witness,),
         ],
       ),
     );

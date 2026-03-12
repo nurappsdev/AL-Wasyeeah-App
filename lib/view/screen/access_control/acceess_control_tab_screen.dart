@@ -26,15 +26,15 @@ import 'package:get/utils.dart';
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title:   AppBar(title: CustomText(text: "Nominee".tr,fontsize: 18.sp,),),
+//         title:   AppBar(title: CustomText(text: AppLocalizations.of(context)!.nominee,fontsize: 18.sp,),),
 //         bottom: TabBar(
 //           controller: tabController,
 //           indicatorColor:AppColors.primaryColor,
 //           unselectedLabelColor: Colors.black54,
 //           labelStyle:  TextStyle(color: AppColors.primaryColor,fontWeight: FontWeight.w600,fontSize: 16.sp),
 //           tabs: [
-//             Tab(text: 'Your Nominee'.tr,),
-//             Tab(text:  'Nominated You'.tr,),
+//             Tab(text: AppLocalizations.of(context)!.your_nominee,),
+//             Tab(text:  AppLocalizations.of(context)!.nominated_you,),
 //           ],
 //         ),
 //       ),
@@ -56,6 +56,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/widgets.dart';
 import '../no_internet_screen.dart';
 import 'nominee_application_menu.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AccessControlTabScreen extends StatefulWidget {
   const AccessControlTabScreen({super.key});
@@ -122,8 +123,8 @@ class _AccessControlTabScreenState extends State<AccessControlTabScreen>
         unselectedLabelColor: Colors.black87,
         indicatorSize: TabBarIndicatorSize.tab,
         tabs:  [
-          Tab(text: 'Witness'.tr),
-          Tab(text: 'Nominee'.tr),
+          Tab(text: AppLocalizations.of(context)!.witness),
+          Tab(text: AppLocalizations.of(context)!.nominee),
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/models/profile_info_model/document_type_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/sibling_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/branch_model.dart';
@@ -199,7 +200,8 @@ class ProfileController extends GetxController {
   Future<List<DocumentTypeForm>> getDocumentTypeList(String wealthId) async {
     try {
       var response = await ApiClient.getData(
-        ApiConstants.documentTypeList + "?lang=en&wealthId=$wealthId",
+        ApiConstants.documentTypeList +
+            "?lang=\${ApiConstants.currentLang}&wealthId=$wealthId",
       );
       return documentTypeListFromJson(jsonEncode(response.body));
     } catch (e) {
@@ -846,10 +848,13 @@ class ProfileController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Fluttertoast.showToast(msg: "Profile updated successfully".tr);
+        Fluttertoast.showToast(
+            msg:
+                AppLocalizations.of(Get.context!)!.profile_update_successfully);
         await getProfile(); // Refresh local data
       } else {
-        Fluttertoast.showToast(msg: "Update failed: ${response.statusText}".tr);
+        Fluttertoast.showToast(
+            msg: "Profile Update Failed: ${response.statusText}".tr);
       }
     } catch (e, s) {
       log("Error during submission: $e\n$s");

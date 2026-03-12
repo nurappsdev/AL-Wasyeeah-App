@@ -9,6 +9,7 @@ import '../../../helpers/helpers.dart';
 import '../../../models/models.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ZakatCalculatorScreen extends StatefulWidget {
   ZakatCalculatorScreen({super.key});
@@ -142,7 +143,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                       //   mainAxisAlignment: MainAxisAlignment.spaceAround,
                       //   children: [
                       //     CustomText(
-                      //       text: "Zakat Calculator".tr,
+                      //       text: AppLocalizations.of(context)!.zakat_calculator,
                       //       fontsize: 18.sp,
                       //     ),
                       //     ElevatedButton(
@@ -151,7 +152,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                       //               preventDuplicates: false);
                       //         },
                       //         child: CustomText(
-                      //           text: "Skip".tr,
+                      //           text: AppLocalizations.of(context)!.skip,
                       //           fontsize: 18.sp,
                       //         ))
                       //   ],
@@ -218,7 +219,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: valueGoldController,
-                                    hintText: "Value of Gold".tr,
+                                    hintText: AppLocalizations.of(context)!.value_of_gold,
                                   ),
                                 ),
                                 SizedBox(
@@ -230,7 +231,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: silverGoldController,
-                                    hintText: "Value of Silver".tr,
+                                    hintText: AppLocalizations.of(context)!.value_of_silver,
                                   ),
                                 ),
                                 SizedBox(
@@ -257,7 +258,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: loanGivenController,
-                                    hintText: "Given out in loans".tr,
+                                    hintText: AppLocalizations.of(context)!.given_out_in_loans,
                                   ),
                                 ),
                                 SizedBox(
@@ -310,7 +311,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                       Obx(
                         () => CustomButtonCommon(
                           loading: zakatController.zakatLoading.value == true,
-                          title: "Result".tr,
+                          title: AppLocalizations.of(context)!.result,
                           onpress: () {
                             // if (_forRegKey.currentState!.validate()) {
 
@@ -350,7 +351,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: CustomText(
-            text: "Result".tr,
+            text: AppLocalizations.of(context)!.result,
             fontsize: 20.sp,
             fontWeight: FontWeight.w600,
           ),
@@ -361,7 +362,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
               children: [
                 Divider(),
                 CustomText(
-                  text: "Total Assets".tr,
+                  text: AppLocalizations.of(context)!.total_assets,
                   fontsize: 20.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.primaryColor,
@@ -379,7 +380,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                   color: AppColors.primaryColor,
                 ),
                 CustomText(
-                  text: "PAYABLE ZAKAT".tr,
+                  text: AppLocalizations.of(context)!.payable_zakat,
                   fontsize: 20.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.primaryColor,
@@ -398,7 +399,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
           ),
           // actions: <Widget>[
           //   TextButton(
-          //     child: CustomText(text:  "Result".tr,),
+          //     child: CustomText(text:  AppLocalizations.of(context)!.result,),
           //     onPressed: () {
           //       Navigator.of(context).pop(); // Close the dialog
           //     },

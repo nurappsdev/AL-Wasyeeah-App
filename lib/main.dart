@@ -1,119 +1,90 @@
-import 'package:al_wasyeah/view/screen/no_internet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'controllers/controllers.dart';
-import 'helpers/di.dart' as di;
 import 'helpers/app_routes.dart';
 import 'themes/theme.dart';
-import 'utils/utils.dart';
-import 'view/screen/screen.dart';
-import 'package:flutter/material.dart';
-import 'package:dropdown_search/dropdown_search.dart';
-// void main() {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   // Stripe.publishableKey = AppConstants.publishAbleKey;
-//   // DependencyInjection di = DependencyInjection();
-//   // di.dependencies();
-//   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-//   runApp(const MyApp());
-//
-// }
-//
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-//
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return ScreenUtilInit(
-//       builder: (context, child) {
-//         return GetMaterialApp(
-//           debugShowCheckedModeBanner: false,
-//           translations: Languages(), // Use your Languages class here
-//           locale: Locale('bn', 'US'), // Default locale
-//           fallbackLocale: Locale('en', 'US'),
-//           title: 'Service App',
-//           home: const SplashScreen(),
-//           getPages: AppRoutes.routes,
-//           theme: light(),
-//           themeMode: ThemeMode.light,
-//         );
-//       },
-//       designSize: const Size(393, 852),
-//     );
-//   }
-// }
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'l10n/app_localizations.dart';
+import 'services/api_constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  Map<String, Map<String, String>> _languages = await di.init();
+  final prefs = await SharedPreferences.getInstance();
+  final String savedLang = prefs.getString('languageCode') ?? 'en';
+  ApiConstants.currentLang = savedLang;
 
   runApp(
-    MyApp(
-      languages: _languages,
-    ),
+    MyApp(initialLang: savedLang),
   );
 }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  final String initialLang;
+  const MyApp({super.key, required this.initialLang});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return ScreenUtilInit(
-//       designSize: Size(360, 690),
-//       // minTextAdapt: true,
-//       // splitScreenMode: true,
-//       builder: (_, child) {
-//         return GetMaterialApp(
-//           translations: Languages(), // Use your Languages class here
-//           locale: Locale('en', 'US'), // Default locale
-//           fallbackLocale: Locale('en', 'US'), // Fallback if locale not found
-//           theme: light(),
-//           debugShowCheckedModeBanner: false,
-//           getPages: RoutePages.routes,
-//           initialRoute: RouteNames.splashScreen,
-//           initialBinding: ControllerBindings(),
-//         );
-//       },
-//     );
-//   }
-// }
+  static void setLocale(BuildContext context, Locale newLocale) {
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.setLocale(newLocale);
+  }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.languages});
-  final Map<String, Map<String, String>> languages;
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+
+  @override
+  void initState() {
+    super.initState();
+    _locale = Locale(widget.initialLang);
+  }
+
+  void setLocale(Locale locale) async {
+    setState(() {
+      _locale = locale;
+    });
+    Get.updateLocale(locale);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('languageCode', locale.languageCode);
+    ApiConstants.currentLang = locale.languageCode;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LocalizationController>(builder: (localizeController) {
-      return ScreenUtilInit(
-          designSize: const Size(393, 852),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (_, child) {
-            return GetMaterialApp(
-              title: "App Name",
-              debugShowCheckedModeBanner: false,
-              navigatorKey: Get.key,
-              theme: light(),
-              getPages: AppRoutes.routes,
-              initialRoute: AppRoutes.firstSplashScreen,
-              initialBinding: ControllerBindings(),
-              // theme: themeController.darkTheme ? dark(): light(),
-
-              defaultTransition: Transition.topLevel,
-              locale: localizeController.locale,
-              translations: Messages(languages: languages),
-              fallbackLocale: Locale(AppConstants.languages[0].languageCode,
-                  AppConstants.languages[0].countryCode),
-              transitionDuration: const Duration(milliseconds: 500),
-            );
-          });
-    });
+    return ScreenUtilInit(
+      designSize: const Size(393, 852),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) {
+        return GetMaterialApp(
+          title: "App Name",
+          debugShowCheckedModeBanner: false,
+          navigatorKey: Get.key,
+          theme: light(),
+          getPages: AppRoutes.routes,
+          initialRoute: AppRoutes.firstSplashScreen,
+          initialBinding: ControllerBindings(),
+          defaultTransition: Transition.topLevel,
+          transitionDuration: const Duration(milliseconds: 500),
+          locale: _locale,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'),
+            Locale('bn'),
+          ],
+        );
+      },
+    );
   }
 }

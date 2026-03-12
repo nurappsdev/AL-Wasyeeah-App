@@ -1,6 +1,9 @@
 import 'dart:developer';
 
 import 'package:al_wasyeah/view/screen/profile/languge_screen.dart';
+import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
+import 'package:al_wasyeah/view/widgets/custom_button.dart';
+import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,10 +13,11 @@ import '../../../controllers/controllers.dart';
 import '../../../helpers/helpers.dart';
 import '../../../helpers/prefs_helper.dart';
 import '../../../utils/utils.dart';
-import '../../widgets/widgets.dart';
+
 import '../../../controllers/notification_controller.dart';
 import '../../../services/api_constants.dart';
 import '../profile/profile_page.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -40,9 +44,10 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: "User Profile".tr,
+          text: AppLocalizations.of(context)!.user_profile,
           fontsize: 18.sp,
         ),
+        leading: Icon(Icons.arrow_back),
       ),
       body: BackgroundImageContainer(
         child: Container(
@@ -117,7 +122,8 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: "Personal Details".tr,
+                                text: AppLocalizations.of(context)!
+                                    .personal_details,
                                 fontsize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
@@ -139,53 +145,6 @@ class _MenuPageState extends State<MenuPage> {
                 SizedBox(
                   height: 20.h,
                 ),
-
-                ///=====================User Setting====================================
-                // Container(
-                //   width: 360.w,
-                //   height: 60.h,
-                //   margin: EdgeInsets.only(left: 2.w),
-                //   decoration: BoxDecoration(
-                //     color: AppColors.whiteColor,
-                //     borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                //     border: Border.all(
-                //       color: Color(0xffB0E3D3),
-                //       width: 2.w,
-                //     ),
-                //   ),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Padding(
-                //         padding: EdgeInsets.symmetric(horizontal: 12.w),
-                //         child: Row(
-                //           children: [
-                //             SvgPicture.asset(
-                //               AppIcons.userSettingIcon,
-                //             ),
-                //             SizedBox(width: 16.w),
-                //             CustomText(
-                //               text: "User Setting".tr,
-                //               fontsize: 16.sp,
-                //               fontWeight: FontWeight.w600,
-                //               color: AppColors.textColor4E4E4E,
-                //             )
-                //           ],
-                //         ),
-                //       ),
-                //       Padding(
-                //         padding: EdgeInsets.symmetric(horizontal: 12.w),
-                //         child: SvgPicture.asset(
-                //           AppIcons.chevronIcon,
-                //           color: AppColors.primaryColor,
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 20.h,
-                // ),
 
                 ///=====================Device History====================================
                 InkWell(
@@ -217,7 +176,8 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: "Change Password".tr,
+                                text: AppLocalizations.of(context)!
+                                    .change_password,
                                 fontsize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
@@ -270,7 +230,8 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: "Access Control Panel".tr,
+                                text: AppLocalizations.of(context)!
+                                    .access_control_panel,
                                 fontsize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
@@ -323,7 +284,7 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: "Language".tr,
+                                text: AppLocalizations.of(context)!.language,
                                 fontsize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
@@ -376,7 +337,7 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: "Log Out".tr,
+                                text: AppLocalizations.of(context)!.log_out,
                                 fontsize: 14.sp,
                                 color: AppColors.textColor4E4E4E,
                               )
@@ -407,7 +368,7 @@ class _MenuPageState extends State<MenuPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomText(
-                    text: AppString.areYouSure,
+                    text: AppLocalizations.of(context)!.are_you_sure,
                     fontsize: 16.sp,
                     fontWeight: FontWeight.w600,
                     maxline: 2,
@@ -434,7 +395,7 @@ class _MenuPageState extends State<MenuPage> {
                           child: CustomButton(
                               color: AppColors.secondaryPrimaryColor,
                               titlecolor: AppColors.primaryColor,
-                              title: 'LogOut',
+                              title: 'Logout',
                               fontSize: 16.h,
                               onpress: () async {
                                 //   profileController.promoCode.value = "";
@@ -468,88 +429,5 @@ class _MenuPageState extends State<MenuPage> {
                   borderRadius: BorderRadius.circular(12.r),
                   side: BorderSide(width: 1.w, color: AppColors.primaryColor)));
         });
-    // Get.defaultDialog(
-    //   title: 'Log Out',
-    //   titleStyle: TextStyle(
-    //       color: Colors.red,
-    //       fontSize: 20.sp,
-    //       fontWeight: FontWeight.bold),
-    //   titlePadding: EdgeInsets.only(top: 20.h),
-    //   contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
-    //   backgroundColor: AppColors.whiteColor,
-    //   radius: 12.r,
-    //   barrierDismissible: false,
-    //   content: SizedBox(
-    //     width: MediaQuery.of(context).size.width * 0.9,
-    //     height: 180.h,
-    //     child: Column(
-    //       mainAxisSize: MainAxisSize.min,
-    //       children: [
-    //         SizedBox(height: 10.h),
-    //         Divider(
-    //           color: AppColors.primaryColor.withOpacity(0.7),
-    //           thickness: 1.h,
-    //           indent: 25.w,
-    //           endIndent: 25.w,
-    //         ),
-    //         SizedBox(height: 10.h),
-    //         CustomText(
-    //           text: 'Are you sure you want to log out of your account?',
-    //           textAlign: TextAlign.center,
-    //           fontsize: 16.sp,
-    //           color: AppColors.textColor4E4E4E,
-    //         ),
-    //         SizedBox(height: 20.h),
-    //         Row(
-    //           mainAxisAlignment: MainAxisAlignment.center,
-    //           children: [
-    //             ElevatedButton(
-    //               onPressed: () {
-    //                 Get.back();
-    //               },
-    //               style: ElevatedButton.styleFrom(
-    //                 foregroundColor: AppColors.primaryColor,
-    //                 overlayColor: Colors.green,
-    //                 backgroundColor: Colors.white,
-    //                 shadowColor: Colors.green,
-    //                 fixedSize: Size(120.5.w, 60.h),
-    //                 shape:  RoundedRectangleBorder(
-    //                   borderRadius: BorderRadius.circular(16.sp),
-    //
-    //                 ),
-    //                 padding: EdgeInsets.symmetric(vertical: 18.h,
-    //                     horizontal: 16.w),
-    //               ),
-    //               child: Text(
-    //                 'Cancel',
-    //                 style: TextStyle(fontSize: 16.sp),
-    //               ),
-    //             ),
-    //             SizedBox(width: 10.w),
-    //             ElevatedButton(
-    //               onPressed: () {
-    //                 //  Get.offAllNamed(AppRoutes.roleScreen);
-    //                 Get.back();
-    //               },
-    //               style: ElevatedButton.styleFrom(
-    //                 foregroundColor: AppColors.whiteColor,
-    //                 backgroundColor: Colors.red,
-    //                 fixedSize: Size(130.5.w, 60.h),
-    //                 shape: RoundedRectangleBorder(
-    //                   borderRadius: BorderRadius.circular(16.sp),
-    //                 ),
-    //                 padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 16.w),
-    //               ),
-    //               child: Text(
-    //                 'Log Out',
-    //                 style: TextStyle(fontSize: 16.sp),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }

@@ -6,6 +6,7 @@ import '../../../../controllers/controllers.dart';
 import '../../../../helpers/helpers.dart';
 import '../../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AddWitnessScreen extends StatefulWidget {
    AddWitnessScreen({super.key});
@@ -25,7 +26,7 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
   Widget build(BuildContext context) {
     final controller = Get.put(WitnessController());
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Add Witness".tr,fontsize: 18. sp,),),
+      appBar: AppBar(title: CustomText(text: AppLocalizations.of(context)!.add_witness,fontsize: 18. sp,),),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -88,7 +89,7 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
                       //         Icon(Icons.visibility, size: 16.0, color: Colors.grey),
                       //         SizedBox(width: 4.0),
                       //         Text(
-                      //           "View Details".tr,
+                      //           AppLocalizations.of(context)!.view_details,
                       //           style: TextStyle(color: Colors.grey),
                       //         ),
                       //       ],
@@ -126,7 +127,7 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
                                   Icon(Icons.visibility, size: 16.0, color: Colors.grey),
                                   SizedBox(width: 4.0),
                                   Text(
-                                    "View Details".tr,
+                                    AppLocalizations.of(context)!.view_details,
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ],
@@ -143,7 +144,7 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
                       }),
                       SizedBox(height: 400.h),
                       CustomButton(
-                        title: "+ Add outside witness".tr,
+                        title: AppLocalizations.of(context)!.add_outside_witness,
                         titlecolor: AppColors.primaryColor,
                         onpress: () {
                           Get.toNamed(AppRoutes.addOutsideWitnessScreen,preventDuplicates: false);

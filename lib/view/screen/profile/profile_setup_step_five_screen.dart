@@ -12,6 +12,7 @@ import '../../widgets/widgets.dart';
 import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/document_type_form.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ProfileSettingStepFiveWidget extends StatelessWidget {
   ProfileSettingStepFiveWidget({super.key});
@@ -27,7 +28,7 @@ class ProfileSettingStepFiveWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ===== Bank Information =====
-            _sectionTitle("Bank Information".tr),
+            _sectionTitle(AppLocalizations.of(context)!.bank_information),
             _BankWidget(controller: controller),
 
             // ===== Wealth Information =====
@@ -56,7 +57,7 @@ class ProfileSettingStepFiveWidget extends StatelessWidget {
                 ),
                 Expanded(
                   child: CustomButtonCommon(
-                    title: "Next".tr,
+                    title: AppLocalizations.of(context)!.next,
                     onpress: () {
                       if (controller.step5formKey.currentState!.validate()) {
                         controller.submitProfile();
@@ -148,7 +149,7 @@ class _BankWidget extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        CustomText(text: "Bank".tr, fontsize: 16.sp),
+                        CustomText(text: AppLocalizations.of(context)!.bank, fontsize: 16.sp),
                         Text(' *',
                             style:
                                 TextStyle(color: Colors.red, fontSize: 16.sp)),
@@ -183,7 +184,7 @@ class _BankWidget extends StatelessWidget {
                     SizedBox(height: 16.h),
                     Row(
                       children: [
-                        CustomText(text: "Account Name".tr, fontsize: 16.sp),
+                        CustomText(text: AppLocalizations.of(context)!.account_name, fontsize: 16.sp),
                         Text(' *',
                             style:
                                 TextStyle(color: Colors.red, fontSize: 16.sp)),
@@ -192,7 +193,7 @@ class _BankWidget extends StatelessWidget {
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.accountName,
-                      hint: "Account Name".tr,
+                      hint: AppLocalizations.of(context)!.account_name,
                       validator: (value) => value!.isEmpty
                           ? "Please enter account name".tr
                           : null,
@@ -318,7 +319,7 @@ class _WealthWidget extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        CustomText(text: "Wealth".tr, fontsize: 16.sp),
+                        CustomText(text: AppLocalizations.of(context)!.wealth, fontsize: 16.sp),
                         Text(' *',
                             style:
                                 TextStyle(color: Colors.red, fontSize: 16.sp)),
@@ -372,11 +373,11 @@ class _WealthWidget extends StatelessWidget {
                           value!.isEmpty ? "Please enter location".tr : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: "Note".tr, fontsize: 16.sp),
+                    CustomText(text: AppLocalizations.of(context)!.note, fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.note,
-                      hint: "Note".tr,
+                      hint: AppLocalizations.of(context)!.note,
                       maxLines: 3,
                     ),
                     SizedBox(height: 16.h),
@@ -554,7 +555,7 @@ class _ReceivableWidget extends StatelessWidget {
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.personMobile,
-                      hint: "Mobile".tr,
+                      hint: AppLocalizations.of(context)!.mobile,
                       keyboardType: TextInputType.phone,
                       validator: (value) =>
                           value!.isEmpty ? "Please enter mobile".tr : null,
@@ -691,7 +692,7 @@ class _PayableWidget extends StatelessWidget {
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.personMobile,
-                      hint: "Mobile".tr,
+                      hint: AppLocalizations.of(context)!.mobile,
                       keyboardType: TextInputType.phone,
                       validator: (value) =>
                           value!.isEmpty ? "Please enter mobile".tr : null,

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../widgets/widgets.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class NotificationScreen extends StatelessWidget {
   NotificationScreen({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class NotificationScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: CustomText(
-            text: "Notifications".tr,
+            text: AppLocalizations.of(context)!.notifications,
             fontsize: 18.sp,
           ),
           leadingWidth: 42.w,

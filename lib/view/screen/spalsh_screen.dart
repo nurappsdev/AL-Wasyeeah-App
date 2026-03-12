@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -8,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/controllers.dart';
-import '../../helpers/prefs_helper.dart';
 import '../../utils/utils.dart';
-
+import 'package:al_wasyeah/l10n/app_localizations.dart';
+import 'package:al_wasyeah/main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,101 +16,94 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-final LocalizationController _localizationController = Get.find<LocalizationController>(); //
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    bool isEnglish = Localizations.localeOf(context).languageCode == 'en';
 
-   body: Container(
-        padding: EdgeInsets.only(right: 10.w,left: 10.w),
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.only(right: 10.w, left: 10.w),
         width: double.infinity,
-        decoration: const BoxDecoration(
-            color: Colors.white
-        ),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Stack(
           children: [
-            Center(child:Image.asset(AppImages.splashImg1,fit: BoxFit.fitHeight,
+            Center(
+                child: Image.asset(
+              AppImages.splashImg1,
+              fit: BoxFit.fitHeight,
               height: double.infinity,
-              width: double.infinity,)),
-           Positioned(
-             top: 330.h,
-             right: 60.w,
-             left: 60,
-             child: Container(
-             height: Get.height,
-               child: CustomText(text: "ayat".tr,maxline: 20,fontsize: 16.sp,),
-             ),
-           ),
+              width: double.infinity,
+            )),
+            Positioned(
+              top: 330.h,
+              right: 60.w,
+              left: 60,
+              child: SizedBox(
+                height: Get.height,
+                child: CustomText(
+                  text: AppLocalizations.of(context)!.ayat,
+                  maxline: 20,
+                  fontsize: 16.sp,
+                ),
+              ),
+            ),
             Positioned(
               top: 30.h,
               right: 4.w,
               child: Row(
                 children: [
                   Text(
-                    'language'.tr,
+                    AppLocalizations.of(context)!.language,
                     style: TextStyle(color: Colors.black, fontSize: 16.sp),
                   ),
                   const SizedBox(width: 8),
-                  // Toggle for language
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
                       children: [
                         GestureDetector(
                           onTap: () {
-                            setState(() {
-                              // isEnglish = false;
-                              // Get.updateLocale(const Locale('bd', 'BD'));
-                            });
+                            MyApp.setLocale(context, const Locale('en'));
                           },
                           child: Text(
                             'Eng',
                             style: TextStyle(
-                              // color: isEnglish ? Colors.grey : Colors.white,
-                              color: _localizationController.isLtr
-                                  ? Colors.grey
-                                  : Colors.white,
+                              color: isEnglish
+                                  ? AppColors.primaryColor
+                                  : Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                         Switch(
-
-                          value:  _localizationController.isLtr,
+                          value: !isEnglish,
                           onChanged: (value) {
-                            setState(() {
-                              // isEnglish = value;
-                              // Get.updateLocale(value ? const Locale('en', 'US') : const Locale('bd', 'BD'));
-                              _localizationController.isLtr
-                                  ? _localizationController
-                                  .setLanguage(const Locale('bd', "BD"))
-                                  : _localizationController
-                                  .setLanguage(const Locale('en', "US"));
-                            });
+                            MyApp.setLocale(
+                                context,
+                                value
+                                    ? const Locale('bn')
+                                    : const Locale('en'));
                           },
                           activeColor: AppColors.primaryColor,
-                          inactiveThumbColor: Colors.white,
-                          inactiveTrackColor: Colors.grey,
+                          inactiveThumbColor: AppColors.primaryColor,
+                          inactiveTrackColor: Colors.grey.shade300,
+                          activeTrackColor: Colors.grey.shade300,
                         ),
                         GestureDetector(
                           onTap: () {
-                            // setState(() {
-                            //   isEnglish = true;
-                            //   Get.updateLocale(const Locale('en', 'US'));
-                            // });
+                            MyApp.setLocale(context, const Locale('bn'));
                           },
                           child: Text(
                             'বাং',
                             style: TextStyle(
-                              color: _localizationController.isLtr
-                                  ? Colors.white
-                                  : Colors.grey,
+                              color: isEnglish
+                                  ? Colors.black
+                                  : AppColors.primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -126,22 +115,18 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             Positioned(
-                bottom: 12,
-                child: Padding(
-                  padding:  EdgeInsets.all(8.r),
-                  child:
-                  CustomButtonCommon(
-
-                      title: "Get Start".tr,
-                      onpress: () {
-                        Get.toNamed(AppRoutes.loginScreen,preventDuplicates: false);
-                      },
-                    ),
-                  ),
-
-
+              bottom: 12,
+              child: Padding(
+                padding: EdgeInsets.all(8.r),
+                child: CustomButtonCommon(
+                  title: AppLocalizations.of(context)!.get_start,
+                  onpress: () {
+                    Get.toNamed(AppRoutes.loginScreen,
+                        preventDuplicates: false);
+                  },
                 ),
-
+              ),
+            ),
           ],
         ),
       ),

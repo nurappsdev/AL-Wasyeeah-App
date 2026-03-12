@@ -10,6 +10,7 @@ import '../../models/models.dart';
 import '../../services/services.dart';
 import '../../utils/utils.dart';
 import '../../view/widgets/widgets.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ZakatController extends GetxController {
   ///==================get Witness===========================
@@ -46,14 +47,14 @@ class ZakatController extends GetxController {
         currencySign.value = nisabRates.first.currencyIcon ?? '';
 
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          cashAndBankController.text =
-              nisabRates.first.nisabAmount.toString();
+          cashAndBankController.text = nisabRates.first.nisabAmount.toString();
         });
       }
     }
 
     isNisabLoading(false);
   }
+
   void onCurrencySelected(GetNisabRatesResponseModel value) {
     selectedCurrency(value);
 
@@ -133,7 +134,7 @@ class ZakatController extends GetxController {
       ToastMessageHelper.successMessageShowToster(
           "RECORD INSERTED SUCCESSFULLY!!");
       print("zakat netAssets${response.body}");
-      showZakatDialog(
+      showZakatDialog(Get.context,
           assetsAccount: "${response.body["netAssets"]}".tr,
           zakatAccount: "${response.body["zakatAmount"]}".tr);
 
@@ -145,12 +146,12 @@ class ZakatController extends GetxController {
     }
   }
 
-  void showZakatDialog(
+  void showZakatDialog(context,
       {required String assetsAccount, required String zakatAccount}) {
     Get.dialog(
       AlertDialog(
         title: CustomText(
-          text: "Result".tr,
+          text: AppLocalizations.of(context)!.result,
           fontsize: 20.sp,
           fontWeight: FontWeight.w600,
         ),
@@ -161,7 +162,7 @@ class ZakatController extends GetxController {
             children: [
               Divider(),
               CustomText(
-                text: "Total Assets".tr,
+                text: AppLocalizations.of(context)!.total_assets,
                 fontsize: 20.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
@@ -175,7 +176,7 @@ class ZakatController extends GetxController {
               ),
               Divider(color: AppColors.primaryColor),
               CustomText(
-                text: "PAYABLE ZAKAT".tr,
+                text: AppLocalizations.of(context)!.payable_zakat,
                 fontsize: 20.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,

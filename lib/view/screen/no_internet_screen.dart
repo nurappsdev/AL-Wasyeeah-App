@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -83,12 +84,12 @@ class _NoInternetScreenState extends State<NoInternetScreen>
             ),
             SizedBox(height: 40),
             Text(
-              "Looks Like You're Lost",
+              AppLocalizations.of(context)!.looks_like_youre_lost,
               style: TextStyle(fontSize: 22, color: Colors.white),
             ),
             SizedBox(height: 10),
             Text(
-              "No Internet Connection",
+              AppLocalizations.of(context)!.no_internet_connection,
               style: TextStyle(fontSize: 20, color: Colors.red),
             ),
             SizedBox(height: 25),
@@ -102,7 +103,7 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                 // Try rechecking connection
                 setState(() {}); // trigger rebuild
               },
-              child: Text("Try Again"),
+              child: Text(AppLocalizations.of(context)!.try_again),
             ),
           ],
         ),
@@ -110,8 +111,6 @@ class _NoInternetScreenState extends State<NoInternetScreen>
     );
   }
 }
-
-
 
 class ConnectivityWrapper extends StatefulWidget {
   final Widget child;
@@ -158,4 +157,3 @@ class _ConnectivityWrapperState extends State<ConnectivityWrapper> {
     return hasInternet ? widget.child : NoInternetScreen();
   }
 }
-

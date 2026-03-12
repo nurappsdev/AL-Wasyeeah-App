@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../utils/utils.dart';
 import '../../../widgets/widgets.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 
 class WitnessScreen extends StatefulWidget {
@@ -53,7 +54,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: CustomText(text: "Witness".tr,fontsize: 18.sp,),),
+      appBar: AppBar(title: CustomText(text: AppLocalizations.of(context)!.witness,fontsize: 18.sp,),),
       body: BackgroundImageContainer(
         child: Container(
           height: Get.height,
@@ -88,14 +89,14 @@ class _WitnessScreenState extends State<WitnessScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              'Your Witness'.tr,
+                              AppLocalizations.of(context)!.your_witness,
                               textAlign: TextAlign.center,
                             ),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              'I’m the witness'.tr,
+                              AppLocalizations.of(context)!.i_m_the_witness,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -131,7 +132,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
                                 Icon(Icons.visibility, size: 16.0, color: Colors.grey),
                                 SizedBox(width: 4.0),
                                 Text(
-                                  "View Details".tr,
+                                  AppLocalizations.of(context)!.view_details,
                                   style: TextStyle(color: Colors.grey),
                                 ),
                               ],
@@ -147,7 +148,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
                   ),
                   SizedBox(height: 10.h),
                   CustomButton(
-                    title: "+ Add more witness".tr,
+                    title: AppLocalizations.of(context)!.add_more_witness,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
                       Get.toNamed(AppRoutes.addWitnessesScreen,preventDuplicates: false);

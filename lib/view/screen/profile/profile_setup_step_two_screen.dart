@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../../controllers/controllers.dart';
 import '../../../utils/utils.dart';
 import '../../widgets/widgets.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ProfileSettingStepTwoWidget extends StatefulWidget {
   const ProfileSettingStepTwoWidget({super.key});
@@ -120,7 +121,7 @@ class _ProfileSettingStepTwoWidgetState
                   ),
                   Expanded(
                     child: CustomButtonCommon(
-                      title: "Next".tr,
+                      title: AppLocalizations.of(context)!.next,
                       onpress: () {
                         if (controller.step2formKey.currentState!.validate()) {
                           controller
@@ -231,7 +232,7 @@ class _ProfileSettingStepTwoWidgetState
 //                     child: Padding(
 //                       padding: EdgeInsets.all(8.0.h),
 //                       child: Text(
-//                         "Present Address".tr,
+//                         AppLocalizations.of(context)!.present_address,
 //                         style: TextStyle(
 //                           color: AppColors.whiteColor,
 //                           fontSize: 24.sp,
@@ -253,13 +254,13 @@ class _ProfileSettingStepTwoWidgetState
 //                   ),
 //                   SizedBox(height: 16.h),
 //                   CustomText(
-//                     text: "Village/House".tr,
+//                     text: AppLocalizations.of(context)!.village_house,
 //                     fontsize: 16.sp,
 //                   ),
 //                   SizedBox(height: 4.h),
 //                   CustomTextFormField(
 //                     controller: controller.presentVillageController.value,
-//                     hint: "Village/House".tr,
+//                     hint: AppLocalizations.of(context)!.village_house,
 //                     validator: (value) =>
 //                         value!.isEmpty ? "Village/House is required" : null,
 //                   ),
@@ -339,7 +340,7 @@ class _ProfileSettingStepTwoWidgetState
 //                           child: Padding(
 //                             padding: EdgeInsets.all(8.0.h),
 //                             child: Text(
-//                               "Permanent Address".tr,
+//                               AppLocalizations.of(context)!.permanent_address,
 //                               style: TextStyle(
 //                                 color: AppColors.whiteColor,
 //                                 fontSize: 24.sp,
@@ -362,14 +363,14 @@ class _ProfileSettingStepTwoWidgetState
 //                         ),
 //                         SizedBox(height: 16.h),
 //                         CustomText(
-//                           text: "Village/House".tr,
+//                           text: AppLocalizations.of(context)!.village_house,
 //                           fontsize: 16.sp,
 //                         ),
 //                         SizedBox(height: 4.h),
 //                         CustomTextFormField(
 //                           controller:
 //                               controller.permanentVillageController.value,
-//                           hint: "Village/House".tr,
+//                           hint: AppLocalizations.of(context)!.village_house,
 //                           validator: (value) => value!.isEmpty
 //                               ? "Village/House is required"
 //                               : null,
@@ -403,7 +404,7 @@ class _ProfileSettingStepTwoWidgetState
 //                     child: Padding(
 //                       padding: EdgeInsets.all(8.0.h),
 //                       child: Text(
-//                         "Overseas Address".tr,
+//                         AppLocalizations.of(context)!.overseas_address,
 //                         style: TextStyle(
 //                           color: AppColors.whiteColor,
 //                           fontSize: 24.sp,
@@ -430,13 +431,13 @@ class _ProfileSettingStepTwoWidgetState
 
 //                   SizedBox(height: 16.h),
 //                   CustomText(
-//                     text: "Village/House".tr,
+//                     text: AppLocalizations.of(context)!.village_house,
 //                     fontsize: 16.sp,
 //                   ),
 //                   SizedBox(height: 4.h),
 //                   CustomTextFormField(
 //                     controller: controller.overseasVillageController.value,
-//                     hint: "Village/House".tr,
+//                     hint: AppLocalizations.of(context)!.village_house,
 //                     validator: (value) =>
 //                         value!.isEmpty ? "Village/House is required" : null,
 //                   ),
@@ -445,7 +446,7 @@ class _ProfileSettingStepTwoWidgetState
 //                   SizedBox(height: 16.h),
 //                   CustomButtonCommon(
 //                     // loading: authController.loadingLoading.value == true,
-//                     title: "Next".tr,
+//                     title: AppLocalizations.of(context)!.next,
 //                     onpress: () {
 //                       if (controller.step2formKey.currentState!.validate()) {
 //                         controller

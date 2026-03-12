@@ -9,18 +9,16 @@ import '../../../../models/models.dart';
 import '../../../../utils/utils.dart';
 import '../../../widgets/background_image_screen_widget.dart';
 import '../../../widgets/widgets.dart';
-
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class NomineeScreen extends StatefulWidget {
   const NomineeScreen({super.key, required this.tabController});
-final TabController tabController;
+  final TabController tabController;
   @override
   State<NomineeScreen> createState() => _NomineeScreenState();
 }
 
 class _NomineeScreenState extends State<NomineeScreen> {
-
-
   NomineeController nomineeController = Get.put(NomineeController());
   @override
   Widget build(BuildContext context) {
@@ -42,57 +40,74 @@ class _NomineeScreenState extends State<NomineeScreen> {
                     title: "+ Add more nominees".tr,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
-                        Get.toNamed(AppRoutes.addNomineeScreen,preventDuplicates: false);
+                      Get.toNamed(AppRoutes.addNomineeScreen,
+                          preventDuplicates: false);
                     },
                   ),
                   SizedBox(height: 10.h),
-
-                     SizedBox(
-                      height: 450.0, // Adjust height as per your needs
-                      child: Obx(()=> nomineeController.isNominee.value ? CustomLoader(): nomineeController.nomineeData.isEmpty ?Center(child: CustomText(text: "No Nominee data",),) :
-                          ListView.builder(
-                          padding: EdgeInsets.all(8.0),
-                          itemCount: nomineeController.nomineeData.length,
-                          itemBuilder: (context, index) {
-                            final user = nomineeController.nomineeData[index];
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              elevation: 3.0,
-                              margin: EdgeInsets.symmetric(vertical: 8.0),
-                              child: ListTile(
-                                // leading: CircleAvatar(
-                                //   backgroundImage: AssetImage(user["image"]!),
-                                //   radius: 30,
-                                // ),
-                                title: Text(
-                                  user.name ?? "N/A",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                  SizedBox(
+                    height: 450.0, // Adjust height as per your needs
+                    child: Obx(
+                      () => nomineeController.isNominee.value
+                          ? CustomLoader()
+                          : nomineeController.nomineeData.isEmpty
+                              ? Center(
+                                  child: CustomText(
+                                    text: "No Nominee data",
+                                  ),
+                                )
+                              : ListView.builder(
+                                  padding: EdgeInsets.all(8.0),
+                                  itemCount:
+                                      nomineeController.nomineeData.length,
+                                  itemBuilder: (context, index) {
+                                    final user =
+                                        nomineeController.nomineeData[index];
+                                    return Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                      elevation: 3.0,
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 8.0),
+                                      child: ListTile(
+                                        // leading: CircleAvatar(
+                                        //   backgroundImage: AssetImage(user["image"]!),
+                                        //   radius: 30,
+                                        // ),
+                                        title: Text(
+                                          user.name ??
+                                              "AppLocalizations.of(context)!.n_a",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        subtitle: Row(
+                                          children: [
+                                            Icon(Icons.visibility,
+                                                size: 16.0, color: Colors.grey),
+                                            SizedBox(width: 4.0),
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .view_details,
+                                              style:
+                                                  TextStyle(color: Colors.grey),
+                                            ),
+                                          ],
+                                        ),
+                                        onTap: () {
+                                          showWitnessDetailsDialog(
+                                              context, user, nomineeController);
+                                          //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
+                                          print("Tapped on");
+                                        },
+                                      ),
+                                    );
+                                  },
                                 ),
-                                subtitle: Row(
-                                  children: [
-                                    Icon(Icons.visibility, size: 16.0, color: Colors.grey),
-                                    SizedBox(width: 4.0),
-                                    Text(
-                                      "View Details".tr,
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
-                                onTap: () {
-                                  showWitnessDetailsDialog(context, user, nomineeController);
-                               //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
-                                  print("Tapped on");
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                      ),
                     ),
+                  ),
                   SizedBox(height: 10.h),
-
                 ],
               ),
             ),
@@ -101,7 +116,12 @@ class _NomineeScreenState extends State<NomineeScreen> {
       ),
     );
   }
-  void showWitnessDetailsDialog(BuildContext context, NomineetedResponseModel user,  NomineeController nomineeController,) {
+
+  void showWitnessDetailsDialog(
+    BuildContext context,
+    NomineetedResponseModel user,
+    NomineeController nomineeController,
+  ) {
     showDialog(
       context: context,
       builder: (context) {
@@ -125,8 +145,11 @@ class _NomineeScreenState extends State<NomineeScreen> {
                       children: [
                         Expanded(
                           child: Text(
-                            user.name ?? "N/A",
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                            user.name ?? "AppLocalizations.of(context)!.n_a",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                         ),
                         IconButton(
@@ -136,26 +159,40 @@ class _NomineeScreenState extends State<NomineeScreen> {
                       ],
                     ),
                     Divider(color: Colors.white70),
-                    _buildDialogRow(Icons.people, "Relation", user.relation ?? "N/A"),
-                    _buildDialogRow(Icons.email, "Email", user.email ?? "N/A"),
-                    _buildDialogRow(Icons.person, "Father Name", user.fatherName ?? "N/A"),
-                    _buildDialogRow(Icons.phone, "Mobile", user.mobile ?? "N/A"),
-                    _buildDialogRow(Icons.favorite, "Marital Status", user.maritalStatus ?? "N/A"),
-                    _buildDialogRow(Icons.work, "Profession", user.profession ?? "N/A"),
-                    _buildDialogRow(Icons.calendar_today, "Date", "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ?? "N/A"),
+                    _buildDialogRow(Icons.people, "Relation",
+                        user.relation ?? "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(Icons.email, "Email",
+                        user.email ?? "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(Icons.person, "Father Name",
+                        user.fatherName ?? "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(Icons.phone, "Mobile",
+                        user.mobile ?? "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(
+                        Icons.favorite,
+                        "Marital Status",
+                        user.maritalStatus ??
+                            "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(Icons.work, "Profession",
+                        user.profession ?? "AppLocalizations.of(context)!.n_a"),
+                    _buildDialogRow(
+                        Icons.calendar_today,
+                        "Date",
+                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ??
+                            "AppLocalizations.of(context)!.n_a"),
                     SizedBox(height: 20),
-
-                  Obx(()=>
-                  CustomButtonCommon(title: "Remove Nominee",
-                      color: AppColors.redColor,
-                      loading: nomineeController.isDelNomineeYou.value == true,
-                      onpress: (){
-                    print(user.requestKey);
-        nomineeController.getNomineeDeleteData(requestKey: user.requestKey);
-        Get.back();
-      })
-               ,
-                  ),
+                    Obx(
+                      () => CustomButtonCommon(
+                          title: "Remove Nominee",
+                          color: AppColors.redColor,
+                          loading:
+                              nomineeController.isDelNomineeYou.value == true,
+                          onpress: () {
+                            print(user.requestKey);
+                            nomineeController.getNomineeDeleteData(
+                                requestKey: user.requestKey);
+                            Get.back();
+                          }),
+                    ),
                   ],
                 ),
               ),
@@ -173,8 +210,11 @@ class _NomineeScreenState extends State<NomineeScreen> {
         children: [
           Icon(icon, color: Colors.orange, size: 18),
           SizedBox(width: 10),
-          Text("$label: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          Expanded(child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
+          Text("$label: ",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          Expanded(
+              child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
         ],
       ),
     );
