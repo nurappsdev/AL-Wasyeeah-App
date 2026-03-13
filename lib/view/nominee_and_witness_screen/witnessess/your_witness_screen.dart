@@ -4,9 +4,9 @@ import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../controllers/controllers.dart';
-import '../../../../helpers/helpers.dart';
-import '../../../../models/models.dart';
+import '../../../controllers/controllers.dart';
+import '../../../helpers/helpers.dart';
+import '../../../models/models.dart';
 
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 

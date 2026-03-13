@@ -1262,4 +1262,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get decimal => 'Decimal';
+
+  @override
+  String get logout => 'Logout';
 }

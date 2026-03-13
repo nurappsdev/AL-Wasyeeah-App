@@ -8,10 +8,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../helpers/helpers.dart';
-import '../../../../models/models.dart';
-import '../../../../utils/utils.dart';
-import '../../../widgets/background_image_screen_widget.dart';
+import '../../../helpers/helpers.dart';
+import '../../../models/models.dart';
+import '../../../utils/utils.dart';
+import '../../widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class NomineeScreen extends StatefulWidget {

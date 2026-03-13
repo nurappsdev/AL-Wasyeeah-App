@@ -1,9 +1,9 @@
-import 'package:al_wasyeah/view/screen/access_control/witness_application_menu.dart';
+import 'package:al_wasyeah/view/access_control/witness_application_menu.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../no_internet_screen.dart';
+import '../home/no_internet_screen.dart';
 import 'nominee_application_menu.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 

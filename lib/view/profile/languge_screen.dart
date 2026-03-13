@@ -1,6 +1,6 @@
+import 'package:al_wasyeah/view/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:al_wasyeah/main.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class LanguageScreen extends StatefulWidget {

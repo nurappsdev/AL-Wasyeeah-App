@@ -6,10 +6,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../controllers/controllers.dart';
-import '../../../../helpers/helpers.dart';
-import '../../../../models/models.dart';
-import '../../../../utils/utils.dart';
+import '../../../controllers/controllers.dart';
+import '../../../helpers/helpers.dart';
+import '../../../models/models.dart';
+import '../../../utils/utils.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class NomineetedYouScreen extends StatefulWidget {

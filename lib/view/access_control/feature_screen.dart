@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-import '../../../controllers/controllers.dart';
+import '../../controllers/controllers.dart';
 
 class FeatureScreen extends StatefulWidget {
   const FeatureScreen({super.key});

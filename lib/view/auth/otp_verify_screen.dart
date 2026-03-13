@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/view/profile/profile_page.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_pin_text_field.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -7,8 +8,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../utils/utils.dart';
-
-import 'profile/profile_page.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class OtpVerifyScreen extends StatelessWidget {

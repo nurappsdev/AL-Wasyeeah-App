@@ -1,7 +1,34 @@
+import 'package:al_wasyeah/view/access_control/feature_screen.dart';
+import 'package:al_wasyeah/view/auth/change_password_screen.dart';
+import 'package:al_wasyeah/view/auth/forgot_pass_screen.dart';
+import 'package:al_wasyeah/view/auth/login_screen.dart';
+import 'package:al_wasyeah/view/auth/otp_verify_screen.dart';
+import 'package:al_wasyeah/view/auth/registration_screen.dart';
+import 'package:al_wasyeah/view/before_login/property_distribution_result.dart';
+import 'package:al_wasyeah/view/before_login/property_distribution_screen.dart';
+import 'package:al_wasyeah/view/before_login/zakat_calculator_screen.dart';
+import 'package:al_wasyeah/view/home/home_screen.dart';
+import 'package:al_wasyeah/view/menu/menu_page.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/nominee/add_nominee_screen.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/nominee/add_outside_nominee.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/nominee/asign_nominee_details.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/nominee/mominee_details_screen.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/nominee/nominee_tab_screen.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/witnessess/add_outside_witness.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/witnessess/add_witness_screen.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/witnessess/witness_details_screen.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/witnessess/witness_phanel_data.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/witnessess/witness_screen.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/witnessess/witness_tab_screen.dart';
+import 'package:al_wasyeah/view/notification/notification_screen.dart';
+import 'package:al_wasyeah/view/splash/first_splash_screen.dart';
+import 'package:al_wasyeah/view/splash/spalsh_screen.dart';
+import 'package:al_wasyeah/view/wasyyah/wasiyah_edit_screen.dart';
+import 'package:al_wasyeah/view/wasyyah/wasiyah_preview_screen.dart';
+import 'package:al_wasyeah/view/wasyyah/wasyyah_screen.dart';
 import 'package:get/get.dart';
 
-import '../view/screen/access_control/acceess_control_tab_screen.dart';
-import '../view/screen/screen.dart';
+import '../view/access_control/acceess_control_tab_screen.dart';
 
 class AppRoutes {
   static const String firstSplashScreen = "/firstSplashScreen.dart";

@@ -507,8 +507,10 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
       // User said "if select 1 or 2 then show like...",
       // usually these are finite.
       String ordinal = controller.getOrdinal(i);
-      String sonKey = "Deceased $ordinal $base's Son";
-      String daughterKey = "Deceased $ordinal $base's Daughter";
+      String sonKey =
+          "Deceased $ordinal ${controller.allRelatives.firstWhere((element) => element.encrypted == base).relative}'s Son";
+      String daughterKey =
+          "Deceased $ordinal ${controller.allRelatives.firstWhere((element) => element.encrypted == base).relative}'s Daughter";
 
       tiles.add(_buildDynamicTile(sonKey, padding: 40));
       tiles.add(_buildDynamicTile(daughterKey, padding: 40));
@@ -516,7 +518,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
     return tiles;
   }
 
-  Widget _buildDynamicTile(String key, {double padding = 0}) {
+  Widget _buildDynamicTile(String name, {double padding = 0}) {
     return Obx(() {
       return Padding(
         padding: EdgeInsets.only(left: padding),
@@ -525,12 +527,12 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
             CheckboxListTile(
               activeColor: AppColors.primaryColor,
               title: Text(
-                key,
+                name,
                 style:
                     const TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
               ),
-              value: controller.dynamicIsChecked[key] ?? false,
-              onChanged: (val) => controller.toggleDynamicCheck(key, val),
+              value: controller.dynamicIsChecked[name] ?? false,
+              onChanged: (val) => controller.toggleDynamicCheck(name, val),
               controlAffinity: ListTileControlAffinity.leading,
             ),
           ],

@@ -1,13 +1,14 @@
 import 'package:al_wasyeah/controllers/controllers.dart';
-import 'package:al_wasyeah/view/screen/profile/profile_setup_step_five_screen.dart';
-import 'package:al_wasyeah/view/screen/profile/profile_setup_step_two_screen.dart';
+import 'package:al_wasyeah/view/profile/profile_setup_step_five_screen.dart';
+import 'package:al_wasyeah/view/profile/profile_setup_step_four_screen.dart';
+import 'package:al_wasyeah/view/profile/profile_setup_step_one_screen.dart';
+import 'package:al_wasyeah/view/profile/profile_setup_step_three_screen.dart';
+import 'package:al_wasyeah/view/profile/profile_setup_step_two_screen.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../screen.dart';
 
 class ProfilePage extends StatefulWidget {
   @override

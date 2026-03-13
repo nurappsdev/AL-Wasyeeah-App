@@ -4,8 +4,8 @@ import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../controllers/nomineee/nominee_controller.dart';
-import '../../../../models/nominee/search_asign_nominee_model.dart';
+import '../../../controllers/nomineee/nominee_controller.dart';
+import '../../../models/nominee/search_asign_nominee_model.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AsignNomineeDetails extends StatelessWidget {

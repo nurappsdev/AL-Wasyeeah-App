@@ -412,5 +412,6 @@
   "ok": "Ok",
   "property_distribution_calculation": "Property Distribution Calculation",
   "count": "Count",
-  "decimal": "Decimal"
+  "decimal": "Decimal",
+  "logout": "Logout"
 }

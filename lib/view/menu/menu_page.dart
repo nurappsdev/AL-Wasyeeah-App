@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:al_wasyeah/view/screen/profile/languge_screen.dart';
+import 'package:al_wasyeah/view/profile/languge_screen.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_button.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -9,13 +9,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/controllers.dart';
-import '../../../helpers/helpers.dart';
-import '../../../helpers/prefs_helper.dart';
-import '../../../utils/utils.dart';
+import '../../controllers/controllers.dart';
+import '../../helpers/helpers.dart';
+import '../../helpers/prefs_helper.dart';
+import '../../utils/utils.dart';
 
-import '../../../controllers/notification_controller.dart';
-import '../../../services/api_constants.dart';
+import '../../controllers/notification_controller.dart';
+import '../../services/api_constants.dart';
 import '../profile/profile_page.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
@@ -39,8 +39,6 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        "user data ${userController.userProfile.value?.userProfile?.firstName}");
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
@@ -309,7 +307,6 @@ class _MenuPageState extends State<MenuPage> {
 
                 GestureDetector(
                   onTap: () {
-                    log("asdasdasd");
                     _showLogoutDialog(context);
                   },
                   child: Container(
@@ -381,7 +378,7 @@ class _MenuPageState extends State<MenuPage> {
                           width: 120.w,
                           height: 40.h,
                           child: CustomButton(
-                            title: 'Cancel',
+                            title: AppLocalizations.of(context)!.cancel,
                             fontSize: 16.h,
                             onpress: () {
                               Get.back();
@@ -395,7 +392,7 @@ class _MenuPageState extends State<MenuPage> {
                           child: CustomButton(
                               color: AppColors.secondaryPrimaryColor,
                               titlecolor: AppColors.primaryColor,
-                              title: 'Logout',
+                              title: AppLocalizations.of(context)!.logout,
                               fontSize: 16.h,
                               onpress: () async {
                                 //   profileController.promoCode.value = "";

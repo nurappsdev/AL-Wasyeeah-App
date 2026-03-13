@@ -8,9 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../helpers/helpers.dart';
-import '../../../../models/models.dart';
-import '../../../../utils/utils.dart';
+import '../../../helpers/helpers.dart';
+import '../../../models/models.dart';
+import '../../../utils/utils.dart';
 
 class WitnessApplicationMenu extends StatefulWidget {
   const WitnessApplicationMenu({super.key, required this.tabController});

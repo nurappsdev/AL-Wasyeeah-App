@@ -2558,6 +2558,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Decimal'**
   String get decimal;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
 }
 
 class _AppLocalizationsDelegate

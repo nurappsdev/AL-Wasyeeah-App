@@ -1,7 +1,5 @@
-import 'dart:convert';
-
-import 'package:al_wasyeah/view/screen/home_screen.dart';
-import 'package:al_wasyeah/view/screen/otp_verify_screen.dart';
+import 'package:al_wasyeah/view/auth/otp_verify_screen.dart';
+import 'package:al_wasyeah/view/home/home_screen.dart';
 import 'package:get/get.dart';
 
 import '../../helpers/helpers.dart';

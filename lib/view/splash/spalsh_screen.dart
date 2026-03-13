@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/helpers/app_routes.dart';
+import 'package:al_wasyeah/view/app.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:get/get.dart';
 
 import '../../utils/utils.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
-import 'package:al_wasyeah/main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

@@ -1,10 +1,10 @@
-import 'package:al_wasyeah/view/screen/nominee_and_witness_screen/nominee/nomineeted_you_screen.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/nominee/nominee_screen.dart';
+import 'package:al_wasyeah/view/nominee_and_witness_screen/nominee/nomineeted_you_screen.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../no_internet_screen.dart';
-import '../../screen.dart';
+import '../../home/no_internet_screen.dart';
 
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 

@@ -2,9 +2,9 @@ import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../controllers/controllers.dart';
+import '../../../controllers/controllers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../utils/utils.dart';
+import '../../../utils/utils.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class WitnessPhanelData extends StatefulWidget {

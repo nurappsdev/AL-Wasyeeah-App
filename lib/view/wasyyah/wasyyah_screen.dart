@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/controllers.dart';
-import '../no_internet_screen.dart';
+import '../../controllers/controllers.dart';
+import '../home/no_internet_screen.dart';
 import 'add_new_washyia_screen.dart';
 import 'wasiyah_preview_screen.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';

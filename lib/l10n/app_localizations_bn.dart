@@ -1272,4 +1272,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get decimal => 'দশমিক';
+
+  @override
+  String get logout => 'লগ আউট';
 }

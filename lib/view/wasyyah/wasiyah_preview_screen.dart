@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../models/models.dart';
-import '../../../utils/utils.dart';
+import '../../models/models.dart';
+import '../../utils/utils.dart';
 
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';

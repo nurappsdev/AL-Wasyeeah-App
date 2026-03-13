@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/controllers.dart';
-import '../../../utils/utils.dart';
+import '../../controllers/controllers.dart';
+import '../../utils/utils.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ProfileSettingStepTwoWidget extends StatefulWidget {

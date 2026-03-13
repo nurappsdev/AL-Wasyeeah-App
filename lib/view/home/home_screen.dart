@@ -20,7 +20,7 @@ import '../../controllers/controllers.dart';
 import 'no_internet_screen.dart';
 import 'package:hijri/hijri_calendar.dart';
 
-import 'property_distribution_calculation/property_distribution_calculation_page.dart';
+import '../property_distribution_calculation/property_distribution_calculation_page.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
