@@ -324,7 +324,8 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                             if (zakatController
                                 .cashAndBankController.text.isEmpty) {
                               ToastMessageHelper.errorMessageShowToster(
-                                  "At least Enter Nisab");
+                                  AppLocalizations.of(context)!
+                                      .at_least_enter_nisab);
                             } else {
                               zakatController.zakatHandle(
                                   cashAndBank: zakatController

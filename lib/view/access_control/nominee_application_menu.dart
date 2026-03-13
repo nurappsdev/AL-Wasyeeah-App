@@ -78,7 +78,7 @@ class _NomineeApplicationMenuState extends State<NomineeApplicationMenu> {
                                         // ),
                                         title: Text(
                                           user.name ??
-                                              "AppLocalizations.of(context)!.n_a",
+                                              AppLocalizations.of(context)!.n_a,
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -119,7 +119,6 @@ class _NomineeApplicationMenuState extends State<NomineeApplicationMenu> {
                                         onTap: () {
                                           // showWitnessDetailsDialog(context, user);
                                           //   Get.toNamed(AppRoutes.nomineeDetailsScreen, preventDuplicates: false);
-                                          print("Tapped on");
                                         },
                                       ),
                                     );
@@ -162,7 +161,7 @@ class _NomineeApplicationMenuState extends State<NomineeApplicationMenu> {
                       children: [
                         Expanded(
                           child: Text(
-                            user.name ?? "AppLocalizations.of(context)!.n_a",
+                            user.name ?? AppLocalizations.of(context)!.n_a,
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -203,9 +202,8 @@ class _NomineeApplicationMenuState extends State<NomineeApplicationMenu> {
                         user.profession ?? AppLocalizations.of(context)!.n_a),
                     _buildDialogRow(
                         Icons.calendar_today,
-                        "Date",
-                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ??
-                            "AppLocalizations.of(context)!.n_a"),
+                        AppLocalizations.of(context)!.date,
+                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}"),
                     SizedBox(height: 20),
                     ElevatedButton(
                       style:
@@ -214,7 +212,7 @@ class _NomineeApplicationMenuState extends State<NomineeApplicationMenu> {
                         // Implement remove witness logic
                         Navigator.pop(context);
                       },
-                      child: Text("Remove Witness"),
+                      child: Text(AppLocalizations.of(context)!.remove_witness),
                     ),
                   ],
                 ),

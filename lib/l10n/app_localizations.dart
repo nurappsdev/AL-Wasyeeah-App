@@ -2564,6 +2564,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Logout'**
   String get logout;
+
+  /// No description provided for @at_least_enter_nisab.
+  ///
+  /// In en, this message translates to:
+  /// **'At least enter your nisab amount'**
+  String get at_least_enter_nisab;
 }
 
 class _AppLocalizationsDelegate

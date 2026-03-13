@@ -1265,4 +1265,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logout => 'Logout';
+
+  @override
+  String get at_least_enter_nisab => 'At least enter your nisab amount';
 }

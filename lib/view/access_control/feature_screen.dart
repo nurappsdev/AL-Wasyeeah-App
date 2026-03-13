@@ -1,6 +1,4 @@
-import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -244,8 +242,6 @@ class _FeatureScreenState extends State<FeatureScreen> {
                                       // remove id
                                       selectedIds.remove(item.id);
                                     }
-
-                                    print("Selected IDs: $selectedIds");
                                   });
                                 },
 
@@ -258,7 +254,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
                             const SizedBox(width: 12),
                             Text(
                               item.contextName ??
-                                  "AppLocalizations.of(context)!.n_a",
+                                  AppLocalizations.of(context)!.n_a,
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.black87,
@@ -277,7 +273,7 @@ class _FeatureScreenState extends State<FeatureScreen> {
             ),
             Obx(
               () => CustomButtonCommon(
-                  title: "Save",
+                  title: AppLocalizations.of(context)!.save,
                   loading: nomineeController.addFeatureLoading.value == true,
                   onpress: () {
                     nomineeController.addFeatureNomineeAndWitness(

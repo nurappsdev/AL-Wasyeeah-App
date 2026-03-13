@@ -424,5 +424,6 @@
   "property_distribution_calculation": "সম্পত্তি বন্টন গণনা",
   "count": "গণনা",
   "decimal": "দশমিক",
-  "logout": "লগ আউট"
+  "logout": "লগ আউট",
+  "at_least_enter_nisab": "অনুগ্রহ করে অন্তত নিসাব পরিমাণ অর্থ লিখুন"
 }

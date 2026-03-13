@@ -75,7 +75,7 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                                       child: ListTile(
                                         title: Text(
                                           user.name ??
-                                              "AppLocalizations.of(context)!.n_a",
+                                              AppLocalizations.of(context)!.n_a,
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -116,8 +116,6 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                                         onTap: () {
                                           Get.toNamed(AppRoutes.featureScreen,
                                               preventDuplicates: false);
-
-                                          print("Card tapped");
                                         },
                                       ),
                                     );
@@ -160,7 +158,7 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                       children: [
                         Expanded(
                           child: Text(
-                            user.name ?? "AppLocalizations.of(context)!.n_a",
+                            user.name ?? AppLocalizations.of(context)!.n_a,
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -201,9 +199,8 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                         user.profession ?? AppLocalizations.of(context)!.n_a),
                     _buildDialogRow(
                         Icons.calendar_today,
-                        "Date",
-                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}" ??
-                            "AppLocalizations.of(context)!.n_a"),
+                        AppLocalizations.of(context)!.date,
+                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}"),
                     SizedBox(height: 20),
                     ElevatedButton(
                       style:
@@ -212,7 +209,7 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                         // Implement remove witness logic
                         Navigator.pop(context);
                       },
-                      child: Text("Remove Witness"),
+                      child: Text(AppLocalizations.of(context)!.remove_witness),
                     ),
                   ],
                 ),

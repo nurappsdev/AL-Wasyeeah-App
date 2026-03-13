@@ -413,5 +413,6 @@
   "property_distribution_calculation": "Property Distribution Calculation",
   "count": "Count",
   "decimal": "Decimal",
-  "logout": "Logout"
+  "logout": "Logout",
+  "at_least_enter_nisab": "At least enter your nisab amount"
 }

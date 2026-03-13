@@ -1275,4 +1275,8 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get logout => 'লগ আউট';
+
+  @override
+  String get at_least_enter_nisab =>
+      'অনুগ্রহ করে অন্তত নিসাব পরিমাণ অর্থ লিখুন';
 }
