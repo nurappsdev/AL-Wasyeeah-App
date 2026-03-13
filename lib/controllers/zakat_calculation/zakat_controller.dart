@@ -132,7 +132,7 @@ class ZakatController extends GetxController {
     print("----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       ToastMessageHelper.successMessageShowToster(
-          "RECORD INSERTED SUCCESSFULLY!!");
+          AppLocalizations.of(Get.context!)!.record_inserted_successfully);
       print("zakat netAssets${response.body}");
       showZakatDialog(Get.context,
           assetsAccount: "${response.body["netAssets"]}".tr,

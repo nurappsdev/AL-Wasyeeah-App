@@ -89,16 +89,16 @@
 //       final response = await http.post(url, headers: headers, body: body);
 //
 //       if (response.statusCode == 200 || response.statusCode == 201) {
-//         ToastMessageHelper.successMessageShowToster("RECORD INSERTED SUCCESSFULLY!!");
+//         ToastMessageHelper.successMessageShowToster(AppLocalizations.of(Get.context!)!.record_inserted_successfully);
 //         getWasyyahData();
 //         Get.back();
 //         update();
 //       } else {
-//         ToastMessageHelper.errorMessageShowToster("error, try again");
+//         ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.try_again);
 //       }
 //     } catch (e) {
 //       print("❗ Exception: $e");
-//       ToastMessageHelper.errorMessageShowToster("Network error occurred");
+//       ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.network_error_occurred);
 //     } finally {
 //       isUpdateWasseya(false);
 //     }
@@ -159,7 +159,7 @@
 //
 //       if (response.statusCode == 200) {
 //         print("✅ Order updated successfully");
-//         ToastMessageHelper.successMessageShowToster("Order updated successfully!");
+//         ToastMessageHelper.successMessageShowToster(AppLocalizations.of(Get.context!)!.order_updated_successfully);
 //         return true;
 //       } else {
 //         // Rollback original orderSeq values
@@ -170,7 +170,7 @@
 //
 //         print("❌ Order update failed: ${response.statusCode}");
 //         print("Response body: ${response.body}");
-//         Get.snackbar("Error", "Failed to update order. Status: ${response.statusCode}");
+//         Get.snackbar(AppLocalizations.of(Get.context!)!.error, "${AppLocalizations.of(Get.context!)!.failed_to_update_order_status}: ${response.statusCode}");
 //         return false;
 //       }
 //     } catch (e) {
@@ -245,7 +245,6 @@
 //   }
 // }
 
-
 import 'dart:convert';
 
 import 'package:al_wasyeah/helpers/helpers.dart';
@@ -256,10 +255,10 @@ import '../../models/models.dart';
 import '../../services/services.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 import '../../utils/app_constant.dart';
 
 class WasyyahController extends GetxController {
-
   @override
   void onInit() {
     getWasyyahData();
@@ -286,7 +285,8 @@ class WasyyahController extends GetxController {
 
       // 3️⃣ API কল করুন
       final response = await http.get(
-        Uri.parse("${ApiConstants.baseUrl}${ApiConstants.wasyyahYouDataYouEndPoint}"),
+        Uri.parse(
+            "${ApiConstants.baseUrl}${ApiConstants.wasyyahYouDataYouEndPoint}"),
         headers: headers,
       );
 
@@ -309,19 +309,20 @@ class WasyyahController extends GetxController {
     isWasyyah(false);
   }
 
- var addWaseeyea = false.obs;
+  var addWaseeyea = false.obs;
   Future<void> addWasyyahData({
     // required int orderSeq,
-   // required String visible,
+    // required String visible,
     required String title,
-  //  required String requestKey,
+    //  required String requestKey,
     required String content,
   }) async {
     addWaseeyea(true);
 
     try {
       final url = Uri.parse("${ApiConstants.baseUrl}/user/saveWasiyyah");
-      String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+      String bearerToken =
+          await PrefsHelper.getString(AppConstants.bearerToken);
       final headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $bearerToken',
@@ -335,28 +336,26 @@ class WasyyahController extends GetxController {
         "content": content,
       });
 
-      final response = await http.post(
-          url,
-          headers: headers,
-          body: body
-      );
+      final response = await http.post(url, headers: headers, body: body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         getWasyyahData();
-        ToastMessageHelper.successMessageShowToster("RECORD INSERTED SUCCESSFULLY!!");
+        ToastMessageHelper.successMessageShowToster(
+            AppLocalizations.of(Get.context!)!.record_inserted_successfully);
         update();
         addWaseeyea(false);
       } else {
-        ToastMessageHelper.errorMessageShowToster("error, try again");
+        ToastMessageHelper.errorMessageShowToster(
+            AppLocalizations.of(Get.context!)!.try_again);
       }
     } catch (e) {
       print("❗ Exception: $e");
-      ToastMessageHelper.errorMessageShowToster("Network error occurred");
+      ToastMessageHelper.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.network_error_occurred);
     } finally {
       addWaseeyea(false);
     }
   }
-
 
   Future<void> updateWasyyahData({
     required int orderSeq,
@@ -369,7 +368,8 @@ class WasyyahController extends GetxController {
 
     try {
       final url = Uri.parse("${ApiConstants.baseUrl}/user/saveWasiyyah");
-      String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+      String bearerToken =
+          await PrefsHelper.getString(AppConstants.bearerToken);
       final headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $bearerToken',
@@ -387,21 +387,24 @@ class WasyyahController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         getWasyyahData();
-        ToastMessageHelper.successMessageShowToster("RECORD INSERTED SUCCESSFULLY!!");
+        ToastMessageHelper.successMessageShowToster(
+            AppLocalizations.of(Get.context!)!.record_inserted_successfully);
         update();
         isUpdateWasseya(false);
       } else {
-        ToastMessageHelper.errorMessageShowToster("error, try again");
+        ToastMessageHelper.errorMessageShowToster(
+            AppLocalizations.of(Get.context!)!.try_again);
       }
     } catch (e) {
       print("❗ Exception: $e");
-      ToastMessageHelper.errorMessageShowToster("Network error occurred");
+      ToastMessageHelper.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.network_error_occurred);
     } finally {
       isUpdateWasseya(false);
     }
   }
 
-///---------------view----------------------
+  ///---------------view----------------------
   void contentVisible(GetWasyyahResponseModel item) async {
     final previousVisibility = item.visible;
     // Toggle visibility: if 'Y' then 'N', else 'Y'
@@ -419,10 +422,10 @@ class WasyyahController extends GetxController {
       // If API call fails, revert visibility
       item.visible = previousVisibility;
       print('❌ Error updating visibility: $e');
-      ToastMessageHelper.errorMessageShowToster("Failed to update visibility.");
+      ToastMessageHelper.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.failed_to_update_visibility);
     }
   }
-
 
   ///-----------------DRAG AND DROP WITH BACKEND UPDATE--------------------------
   var isDragDropLoading = false.obs;
@@ -532,7 +535,6 @@ class WasyyahController extends GetxController {
     }
   }
 
-
   // Main method for updating order sequence
   Future<bool> updateAllOrderSeqHttp() async {
     isLoading.value = true;
@@ -554,9 +556,9 @@ class WasyyahController extends GetxController {
       final payload = {
         "data": wasyyahYouData
             .map((item) => {
-          "requestKey": item.requestKey,
-          "order": item.orderSeq ?? 1,
-        })
+                  "requestKey": item.requestKey,
+                  "order": item.orderSeq ?? 1,
+                })
             .toList(),
       };
 
@@ -564,20 +566,24 @@ class WasyyahController extends GetxController {
 
       // Step 3: Send to backend
       final uri = Uri.parse("${ApiConstants.baseUrl}/user/changeOrder");
-      String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+      String bearerToken =
+          await PrefsHelper.getString(AppConstants.bearerToken);
 
-      final response = await http.post(
-        uri,
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': 'Bearer $bearerToken',
-        },
-        body: jsonEncode(payload),
-      ).timeout(Duration(seconds: 30));
+      final response = await http
+          .post(
+            uri,
+            headers: {
+              "Content-Type": "application/json",
+              'Authorization': 'Bearer $bearerToken',
+            },
+            body: jsonEncode(payload),
+          )
+          .timeout(Duration(seconds: 30));
 
       if (response.statusCode == 200) {
         print("✅ Order updated successfully");
-        ToastMessageHelper.successMessageShowToster("Order updated successfully!");
+        ToastMessageHelper.successMessageShowToster(
+            "Order updated successfully!");
         return true;
       } else {
         // Rollback original orderSeq values
@@ -588,7 +594,8 @@ class WasyyahController extends GetxController {
 
         print("❌ Order update failed: ${response.statusCode}");
         print("Response body: ${response.body}");
-        Get.snackbar("Error", "Failed to update order. Status: ${response.statusCode}");
+        Get.snackbar(
+            "Error", "Failed to update order. Status: ${response.statusCode}");
         return false;
       }
     } catch (e) {
@@ -599,7 +606,8 @@ class WasyyahController extends GetxController {
       wasyyahYouData.refresh();
 
       print("❌ Error updating order: $e");
-      Get.snackbar("Error", "Network error occurred");
+      Get.snackbar(AppLocalizations.of(Get.context!)!.error,
+          AppLocalizations.of(Get.context!)!.network_error_occurred);
       return false;
     } finally {
       isLoading.value = false;
@@ -618,9 +626,9 @@ class WasyyahController extends GetxController {
     final payload = {
       "data": wasyyahYouData
           .map((e) => {
-        "requestKey": e.requestKey,
-        "order": e.orderSeq,
-      })
+                "requestKey": e.requestKey,
+                "order": e.orderSeq,
+              })
           .toList(),
     };
 
@@ -640,15 +648,18 @@ class WasyyahController extends GetxController {
 
       if (response.statusCode == 200) {
         print("✅ Order updated successfully");
-        ToastMessageHelper.successMessageShowToster("Order updated!");
+        ToastMessageHelper.successMessageShowToster(
+            AppLocalizations.of(Get.context!)!.order_updated);
       } else {
         print("❌ Order update failed: ${response.statusCode}");
         print(response.body);
-        ToastMessageHelper.errorMessageShowToster("Failed to update order");
+        ToastMessageHelper.errorMessageShowToster(
+            AppLocalizations.of(Get.context!)!.failed_to_update_order);
       }
     } catch (e) {
       print("❌ Error updating order: $e");
-      ToastMessageHelper.errorMessageShowToster("Network error");
+      ToastMessageHelper.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.network_error);
     }
   }
 

@@ -323,19 +323,19 @@ abstract class AppLocalizations {
   /// No description provided for @dead_son.
   ///
   /// In en, this message translates to:
-  /// **'Dead son'**
+  /// **'Deceased son'**
   String get dead_son;
 
   /// No description provided for @son_of_a_dead_son.
   ///
   /// In en, this message translates to:
-  /// **'Son of a dead son'**
+  /// **'Son of a deceased son'**
   String get son_of_a_dead_son;
 
   /// No description provided for @dead_daughter.
   ///
   /// In en, this message translates to:
-  /// **'Dead daughter'**
+  /// **'Deceased daughter'**
   String get dead_daughter;
 
   /// No description provided for @daughter_of_a_deceased_son.
@@ -1466,6 +1466,1098 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No file chosen'**
   String get no_file_chosen;
+
+  /// No description provided for @something_went_wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get something_went_wrong;
+
+  /// No description provided for @access_control.
+  ///
+  /// In en, this message translates to:
+  /// **'Access Control'**
+  String get access_control;
+
+  /// No description provided for @outside_nominee.
+  ///
+  /// In en, this message translates to:
+  /// **'Outside Nominee'**
+  String get outside_nominee;
+
+  /// No description provided for @outside_witness.
+  ///
+  /// In en, this message translates to:
+  /// **'Outside Witness'**
+  String get outside_witness;
+
+  /// No description provided for @wasyyah_ichanama_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Wasyyah (Ichanama)'**
+  String get wasyyah_ichanama_title;
+
+  /// No description provided for @approve.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get approve;
+
+  /// No description provided for @decline.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get decline;
+
+  /// No description provided for @profile_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Settings'**
+  String get profile_settings;
+
+  /// No description provided for @wealth_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Wealth Information'**
+  String get wealth_information;
+
+  /// No description provided for @account_receivable_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Receivable Information'**
+  String get account_receivable_information;
+
+  /// No description provided for @account_payable_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Payable Information'**
+  String get account_payable_information;
+
+  /// No description provided for @previous.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previous;
+
+  /// No description provided for @add_bank.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Bank'**
+  String get add_bank;
+
+  /// No description provided for @select_bank.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Bank'**
+  String get select_bank;
+
+  /// No description provided for @branch.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get branch;
+
+  /// No description provided for @select_branch.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Branch'**
+  String get select_branch;
+
+  /// No description provided for @please_enter_account_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter account name'**
+  String get please_enter_account_name;
+
+  /// No description provided for @account_balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Balance'**
+  String get account_balance;
+
+  /// No description provided for @please_enter_account_balance.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter account balance'**
+  String get please_enter_account_balance;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @add_wealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Wealth'**
+  String get add_wealth;
+
+  /// No description provided for @select_wealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Wealth'**
+  String get select_wealth;
+
+  /// No description provided for @document_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Document Type'**
+  String get document_type;
+
+  /// No description provided for @select_document_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Document Type'**
+  String get select_document_type;
+
+  /// No description provided for @land_area_shotangsho.
+  ///
+  /// In en, this message translates to:
+  /// **'Land Area (in Shotangsho)'**
+  String get land_area_shotangsho;
+
+  /// No description provided for @land_area.
+  ///
+  /// In en, this message translates to:
+  /// **'Land Area'**
+  String get land_area;
+
+  /// No description provided for @please_enter_land_area.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter land area'**
+  String get please_enter_land_area;
+
+  /// No description provided for @location.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get location;
+
+  /// No description provided for @please_enter_location.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter location'**
+  String get please_enter_location;
+
+  /// No description provided for @wealth_documents.
+  ///
+  /// In en, this message translates to:
+  /// **'Wealth Documents'**
+  String get wealth_documents;
+
+  /// No description provided for @add_more_wealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Add More Wealth'**
+  String get add_more_wealth;
+
+  /// No description provided for @add_receivable.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Receivable'**
+  String get add_receivable;
+
+  /// No description provided for @receivable_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Receivable Amount'**
+  String get receivable_amount;
+
+  /// No description provided for @amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amount;
+
+  /// No description provided for @please_enter_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter amount'**
+  String get please_enter_amount;
+
+  /// No description provided for @receivable_person.
+  ///
+  /// In en, this message translates to:
+  /// **'Receivable Person'**
+  String get receivable_person;
+
+  /// No description provided for @person_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Person Name'**
+  String get person_name;
+
+  /// No description provided for @please_enter_person_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter person name'**
+  String get please_enter_person_name;
+
+  /// No description provided for @receivable_person_mobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Receivable Person Mobile'**
+  String get receivable_person_mobile;
+
+  /// No description provided for @please_enter_mobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter mobile'**
+  String get please_enter_mobile;
+
+  /// No description provided for @add_more_receivable.
+  ///
+  /// In en, this message translates to:
+  /// **'Add More Receivable'**
+  String get add_more_receivable;
+
+  /// No description provided for @add_payable.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Payable'**
+  String get add_payable;
+
+  /// No description provided for @payable_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Payable Amount'**
+  String get payable_amount;
+
+  /// No description provided for @payable_person.
+  ///
+  /// In en, this message translates to:
+  /// **'Payable Person'**
+  String get payable_person;
+
+  /// No description provided for @payable_person_mobile.
+  ///
+  /// In en, this message translates to:
+  /// **'Payable Person Mobile'**
+  String get payable_person_mobile;
+
+  /// No description provided for @add_more_payable.
+  ///
+  /// In en, this message translates to:
+  /// **'Add More Payable'**
+  String get add_more_payable;
+
+  /// No description provided for @children_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Children Information'**
+  String get children_information;
+
+  /// No description provided for @sibling_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Sibling Information'**
+  String get sibling_information;
+
+  /// No description provided for @add_sibling.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Sibling'**
+  String get add_sibling;
+
+  /// No description provided for @sibling_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Sibling Name'**
+  String get sibling_name;
+
+  /// No description provided for @please_enter_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter name'**
+  String get please_enter_name;
+
+  /// No description provided for @sibling_date_of_birth.
+  ///
+  /// In en, this message translates to:
+  /// **'Sibling Date of Birth'**
+  String get sibling_date_of_birth;
+
+  /// No description provided for @select_date_of_birth.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date of Birth'**
+  String get select_date_of_birth;
+
+  /// No description provided for @please_enter_nid_passport_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter NID/Passport No'**
+  String get please_enter_nid_passport_no;
+
+  /// No description provided for @please_enter_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter email'**
+  String get please_enter_email;
+
+  /// No description provided for @sibling_existence_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Sibling Existence Status'**
+  String get sibling_existence_status;
+
+  /// No description provided for @add_more_sibling.
+  ///
+  /// In en, this message translates to:
+  /// **'Add More Sibling'**
+  String get add_more_sibling;
+
+  /// No description provided for @add_child.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Child'**
+  String get add_child;
+
+  /// No description provided for @child_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Child Name'**
+  String get child_name;
+
+  /// No description provided for @child_date_of_birth.
+  ///
+  /// In en, this message translates to:
+  /// **'Child Date of Birth'**
+  String get child_date_of_birth;
+
+  /// No description provided for @child_existence_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Child Existence Status'**
+  String get child_existence_status;
+
+  /// No description provided for @add_more_child.
+  ///
+  /// In en, this message translates to:
+  /// **'Add More Child'**
+  String get add_more_child;
+
+  /// No description provided for @add_spouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Spouse'**
+  String get add_spouse;
+
+  /// No description provided for @spouse_profession.
+  ///
+  /// In en, this message translates to:
+  /// **'Spouse Profession'**
+  String get spouse_profession;
+
+  /// No description provided for @spouse_nationality.
+  ///
+  /// In en, this message translates to:
+  /// **'Spouse Nationality'**
+  String get spouse_nationality;
+
+  /// No description provided for @spouse_date_of_birth.
+  ///
+  /// In en, this message translates to:
+  /// **'Spouse Date of Birth'**
+  String get spouse_date_of_birth;
+
+  /// No description provided for @spouse_nid_passport_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Spouse NID/Passport No'**
+  String get spouse_nid_passport_no;
+
+  /// No description provided for @spouse_nid_passport_documents.
+  ///
+  /// In en, this message translates to:
+  /// **'Spouse NID/Passport Documents'**
+  String get spouse_nid_passport_documents;
+
+  /// No description provided for @spouse_mobile_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Spouse Mobile No'**
+  String get spouse_mobile_no;
+
+  /// No description provided for @spouse_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Spouse Email'**
+  String get spouse_email;
+
+  /// No description provided for @personal_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get personal_information;
+
+  /// No description provided for @first_name_is_required.
+  ///
+  /// In en, this message translates to:
+  /// **'First name is required'**
+  String get first_name_is_required;
+
+  /// No description provided for @last_name_is_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Last name is required'**
+  String get last_name_is_required;
+
+  /// No description provided for @select_marital_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Marital Status'**
+  String get select_marital_status;
+
+  /// No description provided for @marital_status_is_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Marital status is required'**
+  String get marital_status_is_required;
+
+  /// No description provided for @select_profession.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Profession'**
+  String get select_profession;
+
+  /// No description provided for @select_country.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Country'**
+  String get select_country;
+
+  /// No description provided for @district_state_is_required.
+  ///
+  /// In en, this message translates to:
+  /// **'District/State is required'**
+  String get district_state_is_required;
+
+  /// No description provided for @select_gender.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Gender'**
+  String get select_gender;
+
+  /// No description provided for @nid_passport_no_is_required.
+  ///
+  /// In en, this message translates to:
+  /// **'NID/Passport No is required'**
+  String get nid_passport_no_is_required;
+
+  /// No description provided for @nid_passport_documents.
+  ///
+  /// In en, this message translates to:
+  /// **'NID/Passport Documents'**
+  String get nid_passport_documents;
+
+  /// No description provided for @nid_file_downloaded_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'NID File downloaded successfully'**
+  String get nid_file_downloaded_successfully;
+
+  /// No description provided for @only_pdf_jpeg_png_allowed.
+  ///
+  /// In en, this message translates to:
+  /// **'* Only Pdf,JPEG,PNG file are allowed'**
+  String get only_pdf_jpeg_png_allowed;
+
+  /// No description provided for @tin.
+  ///
+  /// In en, this message translates to:
+  /// **'TIN'**
+  String get tin;
+
+  /// No description provided for @tin_is_required.
+  ///
+  /// In en, this message translates to:
+  /// **'TIN is required'**
+  String get tin_is_required;
+
+  /// No description provided for @tin_documents.
+  ///
+  /// In en, this message translates to:
+  /// **'TIN Documents'**
+  String get tin_documents;
+
+  /// No description provided for @tin_file_downloaded_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'TIN File downloaded successfully'**
+  String get tin_file_downloaded_successfully;
+
+  /// No description provided for @multi_citizenship.
+  ///
+  /// In en, this message translates to:
+  /// **'Multi Citizenship'**
+  String get multi_citizenship;
+
+  /// No description provided for @profile_picture.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Picture'**
+  String get profile_picture;
+
+  /// No description provided for @profile_picture_downloaded_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile picture downloaded successfully'**
+  String get profile_picture_downloaded_successfully;
+
+  /// No description provided for @existence_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Existence Status'**
+  String get existence_status;
+
+  /// No description provided for @file_downloaded_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'File downloaded successfully'**
+  String get file_downloaded_successfully;
+
+  /// No description provided for @mark_present_as_permanent.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark Present Address as Permanent Address'**
+  String get mark_present_as_permanent;
+
+  /// No description provided for @relative_list.
+  ///
+  /// In en, this message translates to:
+  /// **'Relative List'**
+  String get relative_list;
+
+  /// No description provided for @calculation_results.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculation Results'**
+  String get calculation_results;
+
+  /// No description provided for @calculate.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate'**
+  String get calculate;
+
+  /// No description provided for @share_portion.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Portion'**
+  String get share_portion;
+
+  /// No description provided for @land_portion.
+  ///
+  /// In en, this message translates to:
+  /// **'Land Portion'**
+  String get land_portion;
+
+  /// No description provided for @gold_portion.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold Portion'**
+  String get gold_portion;
+
+  /// No description provided for @silver_portion.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver Portion'**
+  String get silver_portion;
+
+  /// No description provided for @total_money.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Money'**
+  String get total_money;
+
+  /// No description provided for @property_calculation_section.
+  ///
+  /// In en, this message translates to:
+  /// **'Property Calculation Section'**
+  String get property_calculation_section;
+
+  /// No description provided for @land_in_decimal.
+  ///
+  /// In en, this message translates to:
+  /// **'Land in Deciman'**
+  String get land_in_decimal;
+
+  /// No description provided for @enter_land_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter land amount'**
+  String get enter_land_amount;
+
+  /// No description provided for @gold_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold amount'**
+  String get gold_amount;
+
+  /// No description provided for @enter_gold_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter gold amount'**
+  String get enter_gold_amount;
+
+  /// No description provided for @silver_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver amount'**
+  String get silver_amount;
+
+  /// No description provided for @enter_silver_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter silver amount'**
+  String get enter_silver_amount;
+
+  /// No description provided for @total_money_in_taka.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Money in Taka'**
+  String get total_money_in_taka;
+
+  /// No description provided for @enter_money_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter money amount'**
+  String get enter_money_amount;
+
+  /// No description provided for @deceased_son.
+  ///
+  /// In en, this message translates to:
+  /// **'Deceased Son'**
+  String get deceased_son;
+
+  /// No description provided for @deceased_daughter.
+  ///
+  /// In en, this message translates to:
+  /// **'Deceased Daughter'**
+  String get deceased_daughter;
+
+  /// No description provided for @no_data.
+  ///
+  /// In en, this message translates to:
+  /// **'No Data'**
+  String get no_data;
+
+  /// No description provided for @give_access.
+  ///
+  /// In en, this message translates to:
+  /// **'Give Access'**
+  String get give_access;
+
+  /// No description provided for @access_feature.
+  ///
+  /// In en, this message translates to:
+  /// **'Access Feature'**
+  String get access_feature;
+
+  /// No description provided for @application_menu.
+  ///
+  /// In en, this message translates to:
+  /// **'Application Menu'**
+  String get application_menu;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @bengali.
+  ///
+  /// In en, this message translates to:
+  /// **'বাংলা'**
+  String get bengali;
+
+  /// No description provided for @no_nominee_added.
+  ///
+  /// In en, this message translates to:
+  /// **'No Nominee Added Here'**
+  String get no_nominee_added;
+
+  /// No description provided for @no_witness_added.
+  ///
+  /// In en, this message translates to:
+  /// **'No Witness Added Here'**
+  String get no_witness_added;
+
+  /// No description provided for @remove_nominee_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Nominee'**
+  String get remove_nominee_btn;
+
+  /// No description provided for @remove_witness_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Witness'**
+  String get remove_witness_btn;
+
+  /// No description provided for @gram_vori.
+  ///
+  /// In en, this message translates to:
+  /// **'GRAM/VORI'**
+  String get gram_vori;
+
+  /// No description provided for @taka.
+  ///
+  /// In en, this message translates to:
+  /// **'Taka'**
+  String get taka;
+
+  /// No description provided for @z_k_i.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Zakat Info'**
+  String get z_k_i;
+
+  /// No description provided for @access_panel.
+  ///
+  /// In en, this message translates to:
+  /// **'Access Panel'**
+  String get access_panel;
+
+  /// No description provided for @assign_witness.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign Witness'**
+  String get assign_witness;
+
+  /// No description provided for @assign_nominee.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign Nominee'**
+  String get assign_nominee;
+
+  /// No description provided for @account_create_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Account create successful.\n \nNow you have a user name and password your email'**
+  String get account_create_success;
+
+  /// No description provided for @server_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error! \n Please try later'**
+  String get server_error;
+
+  /// No description provided for @invalid_username_or_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid username or password'**
+  String get invalid_username_or_password;
+
+  /// No description provided for @verification_otp_send_success.
+  ///
+  /// In en, this message translates to:
+  /// **'VERIFICATION OTP SEND SUCCESSFULLY!!'**
+  String get verification_otp_send_success;
+
+  /// No description provided for @unable_data.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable Data'**
+  String get unable_data;
+
+  /// No description provided for @record_updated_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'RECORD UPDATED SUCCESSFULLY!!'**
+  String get record_updated_successfully;
+
+  /// No description provided for @mandatory_fields_cannot_be_null_or_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Mandatory fields cannot be null or empty!'**
+  String get mandatory_fields_cannot_be_null_or_empty;
+
+  /// No description provided for @an_error_occurred.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred'**
+  String get an_error_occurred;
+
+  /// No description provided for @invalid_email_message.
+  ///
+  /// In en, this message translates to:
+  /// **'This is not right email'**
+  String get invalid_email_message;
+
+  /// No description provided for @nominee_add_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Nominee Add Successfully'**
+  String get nominee_add_successfully;
+
+  /// No description provided for @added_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Added failed. Please try again.'**
+  String get added_failed;
+
+  /// No description provided for @nominee_added_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Nominee Added Successfully'**
+  String get nominee_added_successfully;
+
+  /// No description provided for @witness_added_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Witness Added Successfully'**
+  String get witness_added_successfully;
+
+  /// No description provided for @add_failed_try_again.
+  ///
+  /// In en, this message translates to:
+  /// **'Add failed. Please try again.'**
+  String get add_failed_try_again;
+
+  /// No description provided for @nominee_delete_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Nominee Delete Successfully'**
+  String get nominee_delete_successfully;
+
+  /// No description provided for @failed_to_load_contexts_data.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load contexts data'**
+  String get failed_to_load_contexts_data;
+
+  /// No description provided for @profile_update_failed_with_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Update Failed'**
+  String get profile_update_failed_with_status;
+
+  /// No description provided for @husband_and_wife_cant_be_selected_together.
+  ///
+  /// In en, this message translates to:
+  /// **'Husband and wife can\'t be select togather'**
+  String get husband_and_wife_cant_be_selected_together;
+
+  /// No description provided for @calculation_fetched_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculation fetched successfully'**
+  String get calculation_fetched_successfully;
+
+  /// No description provided for @failed_to_fetch_calculation_result.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch calculation result'**
+  String get failed_to_fetch_calculation_result;
+
+  /// No description provided for @record_inserted_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'RECORD INSERTED SUCCESSFULLY!!'**
+  String get record_inserted_successfully;
+
+  /// No description provided for @error_try_again.
+  ///
+  /// In en, this message translates to:
+  /// **'error, try again'**
+  String get error_try_again;
+
+  /// No description provided for @network_error_occurred.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error occurred'**
+  String get network_error_occurred;
+
+  /// No description provided for @order_updated_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Order updated successfully!'**
+  String get order_updated_successfully;
+
+  /// No description provided for @failed_to_update_order_with_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update order'**
+  String get failed_to_update_order_with_status;
+
+  /// No description provided for @order_updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Order updated!'**
+  String get order_updated;
+
+  /// No description provided for @failed_to_update_order.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update order'**
+  String get failed_to_update_order;
+
+  /// No description provided for @network_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error'**
+  String get network_error;
+
+  /// No description provided for @failed_to_update_visibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update visibility.'**
+  String get failed_to_update_visibility;
+
+  /// No description provided for @witness_remove_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'REMOVE THIS WITNESS FROM YOUR SIDE SUCCESSFULLY!!'**
+  String get witness_remove_successfully;
+
+  /// No description provided for @internal_server_error.
+  ///
+  /// In en, this message translates to:
+  /// **'500 Internal Server Error'**
+  String get internal_server_error;
+
+  /// No description provided for @request_failed_with_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Failed'**
+  String get request_failed_with_status;
+
+  /// No description provided for @cant_connect_to_the_internet.
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t connect to the internet!'**
+  String get cant_connect_to_the_internet;
+
+  /// No description provided for @request_timeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Request timeout'**
+  String get request_timeout;
+
+  /// No description provided for @gram.
+  ///
+  /// In en, this message translates to:
+  /// **'Gram'**
+  String get gram;
+
+  /// No description provided for @vori.
+  ///
+  /// In en, this message translates to:
+  /// **'Vori'**
+  String get vori;
+
+  /// No description provided for @ordinal_st.
+  ///
+  /// In en, this message translates to:
+  /// **'st'**
+  String get ordinal_st;
+
+  /// No description provided for @ordinal_nd.
+  ///
+  /// In en, this message translates to:
+  /// **'nd'**
+  String get ordinal_nd;
+
+  /// No description provided for @ordinal_rd.
+  ///
+  /// In en, this message translates to:
+  /// **'rd'**
+  String get ordinal_rd;
+
+  /// No description provided for @ordinal_th.
+  ///
+  /// In en, this message translates to:
+  /// **'th'**
+  String get ordinal_th;
+
+  /// No description provided for @son_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Son 1'**
+  String get son_1;
+
+  /// No description provided for @son_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Son 2'**
+  String get son_2;
+
+  /// No description provided for @plot_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Plot 1'**
+  String get plot_1;
+
+  /// No description provided for @plot_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Plot 2'**
+  String get plot_2;
+
+  /// No description provided for @land_decimal.
+  ///
+  /// In en, this message translates to:
+  /// **'Land (Decimal)'**
+  String get land_decimal;
+
+  /// No description provided for @gold_bhari.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold (Bhari)'**
+  String get gold_bhari;
+
+  /// No description provided for @silver_bhari.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver (Bhari)'**
+  String get silver_bhari;
+
+  /// No description provided for @money_taka.
+  ///
+  /// In en, this message translates to:
+  /// **'Money (Taka)'**
+  String get money_taka;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'Ok'**
+  String get ok;
+
+  /// No description provided for @property_distribution_calculation.
+  ///
+  /// In en, this message translates to:
+  /// **'Property Distribution Calculation'**
+  String get property_distribution_calculation;
+
+  /// No description provided for @count.
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get count;
+
+  /// No description provided for @decimal.
+  ///
+  /// In en, this message translates to:
+  /// **'Decimal'**
+  String get decimal;
 }
 
 class _AppLocalizationsDelegate

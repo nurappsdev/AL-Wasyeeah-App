@@ -854,11 +854,13 @@ class ProfileController extends GetxController {
         await getProfile(); // Refresh local data
       } else {
         Fluttertoast.showToast(
-            msg: "Profile Update Failed: ${response.statusText}".tr);
+            msg:
+                "${AppLocalizations.of(Get.context!)!.profile_update_failed_with_status}: ${response.statusText}");
       }
     } catch (e, s) {
       log("Error during submission: $e\n$s");
-      Fluttertoast.showToast(msg: "Something went wrong".tr);
+      Fluttertoast.showToast(
+          msg: AppLocalizations.of(Get.context!)!.something_went_wrong);
     } finally {
       status(RxStatus.success());
     }

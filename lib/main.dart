@@ -19,24 +19,25 @@ void main() async {
   ApiConstants.currentLang = savedLang;
 
   runApp(
-    MyApp(initialLang: savedLang),
+    WasyeeahApp(initialLang: savedLang),
   );
 }
 
-class MyApp extends StatefulWidget {
+class WasyeeahApp extends StatefulWidget {
   final String initialLang;
-  const MyApp({super.key, required this.initialLang});
+  const WasyeeahApp({super.key, required this.initialLang});
 
   static void setLocale(BuildContext context, Locale newLocale) {
-    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    _WasyeeahAppState? state =
+        context.findAncestorStateOfType<_WasyeeahAppState>();
     state?.setLocale(newLocale);
   }
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<WasyeeahApp> createState() => _WasyeeahAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _WasyeeahAppState extends State<WasyeeahApp> {
   Locale? _locale;
 
   @override

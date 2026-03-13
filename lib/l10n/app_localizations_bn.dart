@@ -126,7 +126,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get dead_son => 'মৃত পুত্র';
 
   @override
-  String get son_of_a_dead_son => 'মৃত পুত্রের পুত্র';
+  String get son_of_a_dead_son => 'মৃত পুত্র  এর পুত্র';
 
   @override
   String get dead_daughter => 'মৃত কন্যা';
@@ -457,7 +457,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get i_m_the_witness => 'আমি সাক্ষী';
 
   @override
-  String get witness_profile_details => 'সাক্ষীর প্রোফাইলের বিস্তারিত';
+  String get witness_profile_details => 'সাক্ষীর প্রোফাইল বিবরণ';
 
   @override
   String get add_more_witness => '+ আরও সাক্ষী যোগ করুন';
@@ -703,4 +703,573 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get no_file_chosen => 'কোন ফাইল নির্বাচন করা হয়নি';
+
+  @override
+  String get something_went_wrong => 'কিছু ভুল হয়েছে';
+
+  @override
+  String get access_control => 'অ্যাক্সেস কন্ট্রোল';
+
+  @override
+  String get outside_nominee => 'বাহিরের নমিনি';
+
+  @override
+  String get outside_witness => 'বাহিরের সাক্ষী';
+
+  @override
+  String get wasyyah_ichanama_title => 'ওসিয়ত (ইচ্ছানামা)';
+
+  @override
+  String get approve => 'অনুমোদন করুন';
+
+  @override
+  String get decline => 'প্রত্যাখ্যান করুন';
+
+  @override
+  String get profile_settings => 'প্রোফাইল সেটিংস';
+
+  @override
+  String get wealth_information => 'সম্পদ তথ্য';
+
+  @override
+  String get account_receivable_information => 'প্রাপ্য হিসাবের তথ্য';
+
+  @override
+  String get account_payable_information => 'প্রদেয় হিসাবের তথ্য';
+
+  @override
+  String get previous => 'পূর্ববর্তী';
+
+  @override
+  String get add_bank => 'ব্যাংক যোগ করুন';
+
+  @override
+  String get select_bank => 'ব্যাংক নির্বাচন করুন';
+
+  @override
+  String get branch => 'শাখা';
+
+  @override
+  String get select_branch => 'শাখা নির্বাচন করুন';
+
+  @override
+  String get please_enter_account_name => 'অনুগ্রহ করে অ্যাকাউন্টের নাম লিখুন';
+
+  @override
+  String get account_balance => 'অ্যাকাউন্টের ব্যালেন্স';
+
+  @override
+  String get please_enter_account_balance =>
+      'অনুগ্রহ করে অ্যাকাউন্টের ব্যালেন্স লিখুন';
+
+  @override
+  String get remove => 'সরিয়ে ফেলুন';
+
+  @override
+  String get add_wealth => 'সম্পদ যোগ করুন';
+
+  @override
+  String get select_wealth => 'সম্পদ নির্বাচন করুন';
+
+  @override
+  String get document_type => 'নথির ধরন';
+
+  @override
+  String get select_document_type => 'নথির ধরন নির্বাচন করুন';
+
+  @override
+  String get land_area_shotangsho => 'জমির পরিমাণ (শতাংশে)';
+
+  @override
+  String get land_area => 'জমির পরিমাণ';
+
+  @override
+  String get please_enter_land_area => 'অনুগ্রহ করে জমির পরিমাণ লিখুন';
+
+  @override
+  String get location => 'অবস্থান';
+
+  @override
+  String get please_enter_location => 'অনুগ্রহ করে অবস্থান লিখুন';
+
+  @override
+  String get wealth_documents => 'সম্পদ সংক্রান্ত নথি';
+
+  @override
+  String get add_more_wealth => 'আরও সম্পদ যোগ করুন';
+
+  @override
+  String get add_receivable => 'প্রাপ্য যোগ করুন';
+
+  @override
+  String get receivable_amount => 'প্রাপ্য পরিমাণ';
+
+  @override
+  String get amount => 'পরিমাণ';
+
+  @override
+  String get please_enter_amount => 'অনুগ্রহ করে পরিমাণ লিখুন';
+
+  @override
+  String get receivable_person => 'প্রাপ্য ব্যক্তি';
+
+  @override
+  String get person_name => 'ব্যক্তির নাম';
+
+  @override
+  String get please_enter_person_name => 'অনুগ্রহ করে ব্যক্তির নাম লিখুন';
+
+  @override
+  String get receivable_person_mobile => 'প্রাপ্য ব্যক্তির মোবাইল';
+
+  @override
+  String get please_enter_mobile => 'অনুগ্রহ করে মোবাইল নম্বর লিখুন';
+
+  @override
+  String get add_more_receivable => 'আরও প্রাপ্য যোগ করুন';
+
+  @override
+  String get add_payable => 'প্রদেয় যোগ করুন';
+
+  @override
+  String get payable_amount => 'প্রদেয় পরিমাণ';
+
+  @override
+  String get payable_person => 'প্রদেয় ব্যক্তি';
+
+  @override
+  String get payable_person_mobile => 'প্রদেয় ব্যক্তির মোবাইল';
+
+  @override
+  String get add_more_payable => 'আরও প্রদেয় যোগ করুন';
+
+  @override
+  String get children_information => 'সন্তানদের তথ্য';
+
+  @override
+  String get sibling_information => 'ভাইবোনদের তথ্য';
+
+  @override
+  String get add_sibling => 'ভাইবোন যোগ করুন';
+
+  @override
+  String get sibling_name => 'ভাইবোনের নাম';
+
+  @override
+  String get please_enter_name => 'অনুগ্রহ করে নাম লিখুন';
+
+  @override
+  String get sibling_date_of_birth => 'ভাইবোনের জন্ম তারিখ';
+
+  @override
+  String get select_date_of_birth => 'জন্ম তারিখ নির্বাচন করুন';
+
+  @override
+  String get please_enter_nid_passport_no =>
+      'অনুগ্রহ করে এনআইডি/পাসপোর্ট নম্বর লিখুন';
+
+  @override
+  String get please_enter_email => 'অনুগ্রহ করে ইমেল লিখুন';
+
+  @override
+  String get sibling_existence_status => 'ভাইবোনের বিদ্যমান অবস্থা';
+
+  @override
+  String get add_more_sibling => 'আরও ভাইবোন যোগ করুন';
+
+  @override
+  String get add_child => 'সন্তান যোগ করুন';
+
+  @override
+  String get child_name => 'সন্তানের নাম';
+
+  @override
+  String get child_date_of_birth => 'সন্তানের জন্ম তারিখ';
+
+  @override
+  String get child_existence_status => 'সন্তানের বিদ্যমান অবস্থা';
+
+  @override
+  String get add_more_child => 'আরও সন্তান যোগ করুন';
+
+  @override
+  String get add_spouse => 'স্ত্রী/স্বামী যোগ করুন';
+
+  @override
+  String get spouse_profession => 'স্ত্রী/স্বামীর পেশা';
+
+  @override
+  String get spouse_nationality => 'স্ত্রী/স্বামীর জাতীয়তা';
+
+  @override
+  String get spouse_date_of_birth => 'স্ত্রী/স্বামীর জন্ম তারিখ';
+
+  @override
+  String get spouse_nid_passport_no => 'স্ত্রী/স্বামীর এনআইডি/পাসপোর্ট নম্বর';
+
+  @override
+  String get spouse_nid_passport_documents =>
+      'স্ত্রী/স্বামীর এনআইডি/পাসপোর্ট নথি';
+
+  @override
+  String get spouse_mobile_no => 'স্ত্রী/স্বামীর মোবাইল নম্বর';
+
+  @override
+  String get spouse_email => 'স্ত্রী/স্বামীর ইমেল';
+
+  @override
+  String get personal_information => 'ব্যক্তিগত তথ্য';
+
+  @override
+  String get first_name_is_required => 'প্রথম নাম প্রয়োজন';
+
+  @override
+  String get last_name_is_required => 'শেষ নাম প্রয়োজন';
+
+  @override
+  String get select_marital_status => 'বৈবাহিক অবস্থা নির্বাচন করুন';
+
+  @override
+  String get marital_status_is_required => 'বৈবাহিক অবস্থা প্রয়োজন';
+
+  @override
+  String get select_profession => 'পেশা নির্বাচন করুন';
+
+  @override
+  String get select_country => 'দেশ নির্বাচন করুন';
+
+  @override
+  String get district_state_is_required => 'জেলা/রাজ্য প্রয়োজন';
+
+  @override
+  String get select_gender => 'লিঙ্গ নির্বাচন করুন';
+
+  @override
+  String get nid_passport_no_is_required => 'এনআইডি/পাসপোর্ট নম্বর প্রয়োজন';
+
+  @override
+  String get nid_passport_documents => 'এনআইডি/পাসপোর্ট নথি';
+
+  @override
+  String get nid_file_downloaded_successfully =>
+      'এনআইডি ফাইল সফলভাবে ডাউনলোড হয়েছে';
+
+  @override
+  String get only_pdf_jpeg_png_allowed =>
+      '* শুধুমাত্র Pdf, JPEG, PNG ফাইল অনুমোদিত';
+
+  @override
+  String get tin => 'টিআইএন (TIN)';
+
+  @override
+  String get tin_is_required => 'টিআইএন প্রয়োজন';
+
+  @override
+  String get tin_documents => 'টিআইএন নথি';
+
+  @override
+  String get tin_file_downloaded_successfully =>
+      'টিআইএন ফাইল সফলভাবে ডাউনলোড হয়েছে';
+
+  @override
+  String get multi_citizenship => 'একাধিক নাগরিকত্ব';
+
+  @override
+  String get profile_picture => 'প্রোফাইল ছবি';
+
+  @override
+  String get profile_picture_downloaded_successfully =>
+      'প্রোফাইল ছবি সফলভাবে ডাউনলোড হয়েছে';
+
+  @override
+  String get existence_status => 'বিদ্যমান অবস্থা';
+
+  @override
+  String get file_downloaded_successfully => 'ফাইল সফলভাবে ডাউনলোড হয়েছে';
+
+  @override
+  String get mark_present_as_permanent =>
+      'বর্তমান ঠিকানাকে স্থায়ী ঠিকানা হিসেবে চিহ্নিত করুন';
+
+  @override
+  String get relative_list => 'আত্মীয় স্বজনের তালিকা';
+
+  @override
+  String get calculation_results => 'গণনার ফলাফল';
+
+  @override
+  String get calculate => 'গণনা করুন';
+
+  @override
+  String get share_portion => 'অংশের ভাগ';
+
+  @override
+  String get land_portion => 'জমির ভাগ';
+
+  @override
+  String get gold_portion => 'স্বর্ণের ভাগ';
+
+  @override
+  String get silver_portion => 'রুপার ভাগ';
+
+  @override
+  String get total_money => 'মোট অর্থ';
+
+  @override
+  String get property_calculation_section => 'সম্পত্তি গণনা বিভাগ';
+
+  @override
+  String get land_in_decimal => 'দশমিকে জমি';
+
+  @override
+  String get enter_land_amount => 'জমির পরিমাণ লিখুন';
+
+  @override
+  String get gold_amount => 'স্বর্ণের পরিমাণ';
+
+  @override
+  String get enter_gold_amount => 'স্বর্ণের পরিমাণ লিখুন';
+
+  @override
+  String get silver_amount => 'রুপার পরিমাণ';
+
+  @override
+  String get enter_silver_amount => 'রুপার পরিমাণ লিখুন';
+
+  @override
+  String get total_money_in_taka => 'টাকায় মোট অর্থ';
+
+  @override
+  String get enter_money_amount => 'টাকার পরিমাণ লিখুন';
+
+  @override
+  String get deceased_son => 'মৃত পুত্র';
+
+  @override
+  String get deceased_daughter => 'মৃত কন্যা';
+
+  @override
+  String get no_data => 'কোন তথ্য নেই';
+
+  @override
+  String get give_access => 'অ্যাক্সেস দিন';
+
+  @override
+  String get access_feature => 'অ্যাক্সেস বৈশিষ্ট্য';
+
+  @override
+  String get application_menu => 'অ্যাপ্লিকেশন মেনু';
+
+  @override
+  String get english => 'ইংরেজি';
+
+  @override
+  String get bengali => 'বাংলা';
+
+  @override
+  String get no_nominee_added => 'এখানে কোন নমিনি যোগ করা হয়নি';
+
+  @override
+  String get no_witness_added => 'এখানে কোন সাক্ষী যোগ করা হয়নি';
+
+  @override
+  String get remove_nominee_btn => 'নমিনি সরিয়ে ফেলুন';
+
+  @override
+  String get remove_witness_btn => 'সাক্ষী সরিয়ে ফেলুন';
+
+  @override
+  String get gram_vori => 'গ্রাম/ভরি';
+
+  @override
+  String get taka => 'টাকা';
+
+  @override
+  String get z_k_i => 'শেষ যাকাতের তথ্য';
+
+  @override
+  String get access_panel => 'অ্যাক্সেস প্যানেল';
+
+  @override
+  String get assign_witness => 'সাক্ষী হিসেবে যুক্ত করুন';
+
+  @override
+  String get assign_nominee => 'নমিনি হিসেবে যুক্ত করুন';
+
+  @override
+  String get account_create_success =>
+      'অ্যাকাউন্ট তৈরি সফল হয়েছে।\n \nএখন আপনার ইমেলে একটি ইউজার নেম এবং পাসওয়ার্ড পাঠানো হয়েছে';
+
+  @override
+  String get server_error => 'সার্ভার এরর! \n অনুগ্রহ করে পরে চেষ্টা করুন';
+
+  @override
+  String get invalid_username_or_password => 'অকার্যকর ইউজার নেম বা পাসওয়ার্ড';
+
+  @override
+  String get verification_otp_send_success =>
+      'ভেরিফিকেশন ওটিপি সফলভাবে পাঠানো হয়েছে!!';
+
+  @override
+  String get unable_data => 'তথ্য পাওয়া যায়নি';
+
+  @override
+  String get record_updated_successfully => 'রেকর্ড সফলভাবে আপডেট করা হয়েছে!!';
+
+  @override
+  String get mandatory_fields_cannot_be_null_or_empty =>
+      'বাধ্যতামূলক ক্ষেত্রগুলো পূরণ করতে হবে!';
+
+  @override
+  String get an_error_occurred => 'একটি এরর ঘটেছে';
+
+  @override
+  String get invalid_email_message => 'এটি সঠিক ইমেল নয়';
+
+  @override
+  String get nominee_add_successfully => 'নমিনী সফলভাবে যোগ করা হয়েছে';
+
+  @override
+  String get added_failed =>
+      'যোগ করা ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
+
+  @override
+  String get nominee_added_successfully => 'নমিনী সফলভাবে যোগ করা হয়েছে';
+
+  @override
+  String get witness_added_successfully => 'সাক্ষী সফলভাবে যোগ করা হয়েছে';
+
+  @override
+  String get add_failed_try_again =>
+      'যোগ করা ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
+
+  @override
+  String get nominee_delete_successfully => 'নমিনী সফলভাবে মুছে ফেলা হয়েছে';
+
+  @override
+  String get failed_to_load_contexts_data =>
+      'কনটেক্সট ডেটা লোড করতে ব্যর্থ হয়েছে';
+
+  @override
+  String get profile_update_failed_with_status =>
+      'প্রোফাইল আপডেট ব্যর্থ হয়েছে';
+
+  @override
+  String get husband_and_wife_cant_be_selected_together =>
+      'স্বামী এবং স্ত্রী একসাথে নির্বাচন করা যাবে না';
+
+  @override
+  String get calculation_fetched_successfully =>
+      'ক্যালকুলেশন সফলভাবে পাওয়া গিয়েছে';
+
+  @override
+  String get failed_to_fetch_calculation_result =>
+      'ক্যালকুলেশন ফলাফল পেতে ব্যর্থ হয়েছে';
+
+  @override
+  String get record_inserted_successfully =>
+      'রেকর্ড সফলভাবে অন্তর্ভুক্ত করা হয়েছে!!';
+
+  @override
+  String get error_try_again => 'এরর, আবার চেষ্টা করুন';
+
+  @override
+  String get network_error_occurred => 'নেটওয়ার্ক সমস্যা দেখা দিয়েছে';
+
+  @override
+  String get order_updated_successfully => 'ক্রম সফলভাবে আপডেট করা হয়েছে!';
+
+  @override
+  String get failed_to_update_order_with_status =>
+      'ক্রম আপডেট করতে ব্যর্থ হয়েছে';
+
+  @override
+  String get order_updated => 'ক্রম আপডেট করা হয়েছে!';
+
+  @override
+  String get failed_to_update_order => 'ক্রম আপডেট করতে ব্যর্থ হয়েছে';
+
+  @override
+  String get network_error => 'নেটওয়ার্ক এরর';
+
+  @override
+  String get failed_to_update_visibility =>
+      'দৃশ্যমানতা আপডেট করতে ব্যর্থ হয়েছে।';
+
+  @override
+  String get witness_remove_successfully =>
+      'সাক্ষী সফলভাবে আপনার পক্ষ থেকে সরানো হয়েছে!!';
+
+  @override
+  String get internal_server_error => '৫০০ ইন্টারনাল সার্ভার এরর';
+
+  @override
+  String get request_failed_with_status => 'অনুরোধ ব্যর্থ হয়েছে';
+
+  @override
+  String get cant_connect_to_the_internet =>
+      'ইন্টারনেটের সাথে সংযোগ স্থাপন করা যাচ্ছে না!';
+
+  @override
+  String get request_timeout => 'অনুরোধের সময় শেষ';
+
+  @override
+  String get gram => 'গ্রাম';
+
+  @override
+  String get vori => 'ভরি';
+
+  @override
+  String get ordinal_st => 'st';
+
+  @override
+  String get ordinal_nd => 'nd';
+
+  @override
+  String get ordinal_rd => 'rd';
+
+  @override
+  String get ordinal_th => 'th';
+
+  @override
+  String get son_1 => 'Son 1';
+
+  @override
+  String get son_2 => 'Son 2';
+
+  @override
+  String get plot_1 => 'Plot 1';
+
+  @override
+  String get plot_2 => 'Plot 2';
+
+  @override
+  String get land_decimal => 'Land (Decimal)';
+
+  @override
+  String get gold_bhari => 'Gold (Bhari)';
+
+  @override
+  String get silver_bhari => 'Silver (Bhari)';
+
+  @override
+  String get money_taka => 'Money (Taka)';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get date => 'তারিখ';
+
+  @override
+  String get ok => 'ঠিক আছে';
+
+  @override
+  String get property_distribution_calculation => 'সম্পত্তি বন্টন গণনা';
+
+  @override
+  String get count => 'গণনা';
+
+  @override
+  String get decimal => 'দশমিক';
 }

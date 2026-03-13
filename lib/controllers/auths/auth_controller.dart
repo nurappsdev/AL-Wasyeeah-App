@@ -9,6 +9,7 @@ import '../../helpers/prefs_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
 import '../../utils/utils.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AuthController extends GetxController {
   @override
@@ -73,11 +74,11 @@ class AuthController extends GetxController {
     if (response.statusCode == 200) {
       // await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
 
-      if(response.body["status"] == false){
+      if (response.body["status"] == false) {
         ToastMessageHelper.errorMessageShowToster(response.body?['message']);
-      }else{
+      } else {
         ToastMessageHelper.successMessageShowToster(
-            "Account create successful.\n \nNow you have a user name and password your email");
+            AppLocalizations.of(Get.context!)!.account_create_success);
         Get.toNamed(
           AppRoutes.loginScreen,
           preventDuplicates: false,
@@ -87,7 +88,7 @@ class AuthController extends GetxController {
     } else if (response.statusCode == 1) {
       signUpLoading(false);
       ToastMessageHelper.errorMessageShowToster(
-          "Server error! \n Please try later");
+          AppLocalizations.of(Get.context!)!.server_error);
     } else {
       ToastMessageHelper.errorMessageShowToster("${response.body["message"]}");
       signUpLoading(false);
@@ -123,12 +124,12 @@ class AuthController extends GetxController {
 
       /// ✅ SUCCESS
       if (response.statusCode == 200 || response.statusCode == 201) {
-
-
-        if(response.body["status"] == false){
-          ToastMessageHelper.errorMessageShowToster(response.body?['message'] ?? 'Invalid username or password',
+        if (response.body["status"] == false) {
+          ToastMessageHelper.errorMessageShowToster(
+            response.body?['message'] ??
+                AppLocalizations.of(Get.context!)!.invalid_username_or_password,
           );
-        }else{
+        } else {
           final token = response.body?['data']['token'];
           print("token::::---------$token");
           await PrefsHelper.setString(
@@ -137,29 +138,32 @@ class AuthController extends GetxController {
           );
 
           ToastMessageHelper.successMessageShowToster(
-            response.body?["message"] ?? "Login successful",
+            response.body?["message"] ??
+                AppLocalizations.of(Get.context!)!.welcome_back,
           );
 
           Get.off(() => HomeScreen(), preventDuplicates: false);
         }
       }
+
       /// ❌ LOGIN FAILED (401, 403, etc)
       else {
-        ToastMessageHelper.errorMessageShowToster(response.body?['message'] ?? 'Invalid username or password',
+        ToastMessageHelper.errorMessageShowToster(
+          response.body?['message'] ??
+              AppLocalizations.of(Get.context!)!.invalid_username_or_password,
         );
       }
     } catch (e) {
       /// 💥 ANY UNEXPECTED ERROR
       print("Login error: $e");
       ToastMessageHelper.errorMessageShowToster(
-        "Something went wrong. Please try again.",
+        AppLocalizations.of(Get.context!)!.something_went_wrong,
       );
     } finally {
       /// 🔁 ALWAYS STOP LOADING
       signInLoading(false);
     }
   }
-
 
   ///==================Save Sign Up===========================
   RxBool forgotLoading = false.obs;
@@ -193,13 +197,14 @@ class AuthController extends GetxController {
       //  await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
       //ToastMessageHelper.successMessageShowToster("${response.body["message"]}");
       ToastMessageHelper.successMessageShowToster(
-          "VERIFICATION OTP SEND SUCCESSFULLY!!");
+          AppLocalizations.of(Get.context!)!.verification_otp_send_success);
 
       Get.off(() => OtpVerifyScreen(), preventDuplicates: false);
       forgotLoading(false);
     } else {
       forgotLoading(false);
-      ToastMessageHelper.errorMessageShowToster("Unable Data");
+      ToastMessageHelper.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.unable_data);
     }
   }
 }

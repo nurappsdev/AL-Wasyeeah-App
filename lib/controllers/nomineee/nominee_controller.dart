@@ -9,6 +9,7 @@ import '../../models/models.dart';
 import '../../models/nominee/search_asign_nominee_model.dart';
 import '../../services/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 import '../../utils/app_constant.dart';
 
@@ -114,16 +115,18 @@ class NomineeController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessageHelper.successMessageShowToster(
-            "RECORD UPDATED SUCCESSFULLY!!");
+            AppLocalizations.of(Get.context!)!.record_updated_successfully);
         // getNomineeAccessData();
         update();
         Get.back();
       } else {
         ToastMessageHelper.errorMessageShowToster(
-            'Mandatory fields cannot be null or empty!');
+            AppLocalizations.of(Get.context!)!
+                .mandatory_fields_cannot_be_null_or_empty);
       }
     } catch (e) {
-      ToastMessageHelper.errorMessageShowToster('An error occurred: $e');
+      ToastMessageHelper.errorMessageShowToster(
+          "${AppLocalizations.of(Get.context!)!.an_error_occurred}: $e");
     } finally {
       addFeatureLoading(false);
     }
@@ -151,7 +154,7 @@ class NomineeController extends GetxController {
   var isLoading = false.obs;
 
   Rx<SearchAsignResponseModel?> nominessData =
-  Rx<SearchAsignResponseModel?>(null);
+      Rx<SearchAsignResponseModel?>(null);
 
   Future<void> searchNominee() async {
     final email = searchController.text.trim();
@@ -181,18 +184,18 @@ class NomineeController extends GetxController {
 
         nominessData.value = SearchAsignResponseModel.fromJson(data);
       } else {
-        Get.snackbar("Error", "This is not right email");
+        Get.snackbar(AppLocalizations.of(Get.context!)!.error,
+            AppLocalizations.of(Get.context!)!.invalid_email_message);
         nominessData.value = null;
       }
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar(AppLocalizations.of(Get.context!)!.error,
+          AppLocalizations.of(Get.context!)!.something_went_wrong);
       nominessData.value = null;
     } finally {
       isLoading.value = false;
     }
   }
-
-
 
   // var isLoading = false.obs;
   // var nominessData = {}.obs;
@@ -320,8 +323,8 @@ class NomineeController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessageHelper.successMessageShowToster(
           isNomineeTrue
-              ? "Nominee Added Successfully"
-              : "Witness Added Successfully",
+              ? AppLocalizations.of(Get.context!)!.nominee_added_successfully
+              : AppLocalizations.of(Get.context!)!.witness_added_successfully,
         );
         isNomineeTrue
             ? Get.toNamed(AppRoutes.addNomineeScreen, preventDuplicates: false)
@@ -329,10 +332,11 @@ class NomineeController extends GetxController {
                 preventDuplicates: false);
       } else {
         ToastMessageHelper.errorMessageShowToster(
-            'Add failed. Please try again.');
+            AppLocalizations.of(Get.context!)!.add_failed_try_again);
       }
     } catch (e) {
-      ToastMessageHelper.errorMessageShowToster('An error occurred: $e');
+      ToastMessageHelper.errorMessageShowToster(
+          "${AppLocalizations.of(Get.context!)!.an_error_occurred}: $e");
     } finally {
       addNomineeLoading(false);
     }
@@ -347,16 +351,16 @@ class NomineeController extends GetxController {
     print("deleteData data ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       ToastMessageHelper.successMessageShowToster(
-        "Nominee Delete Successfully",
+        AppLocalizations.of(Get.context!)!.nominee_delete_successfully,
       );
       getNomineeData();
       isDelNomineeYou(false);
     } else {
       isDelNomineeYou(false);
-      ToastMessageHelper.errorMessageShowToster("Try Again");
+      ToastMessageHelper.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.try_again);
     }
   }
-
 
   ///=================Assign ==========================
   RxBool isAssignYou = false.obs;
@@ -393,8 +397,7 @@ class NomineeController extends GetxController {
     }
   }
 
-
-/// -------POST Assign
+  /// -------POST Assign
   // RxBool isAssignYou = false.obs;
   //
   // Future<void> assignNomineeWitnessData({

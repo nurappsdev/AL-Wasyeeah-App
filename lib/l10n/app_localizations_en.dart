@@ -123,13 +123,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get daughter => 'Daughter';
 
   @override
-  String get dead_son => 'Dead son';
+  String get dead_son => 'Deceased son';
 
   @override
-  String get son_of_a_dead_son => 'Son of a dead son';
+  String get son_of_a_dead_son => 'Son of a deceased son';
 
   @override
-  String get dead_daughter => 'Dead daughter';
+  String get dead_daughter => 'Deceased daughter';
 
   @override
   String get daughter_of_a_deceased_son => 'Daughter of a deceased son';
@@ -703,4 +703,563 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get no_file_chosen => 'No file chosen';
+
+  @override
+  String get something_went_wrong => 'Something went wrong';
+
+  @override
+  String get access_control => 'Access Control';
+
+  @override
+  String get outside_nominee => 'Outside Nominee';
+
+  @override
+  String get outside_witness => 'Outside Witness';
+
+  @override
+  String get wasyyah_ichanama_title => 'Wasyyah (Ichanama)';
+
+  @override
+  String get approve => 'Approve';
+
+  @override
+  String get decline => 'Decline';
+
+  @override
+  String get profile_settings => 'Profile Settings';
+
+  @override
+  String get wealth_information => 'Wealth Information';
+
+  @override
+  String get account_receivable_information => 'Account Receivable Information';
+
+  @override
+  String get account_payable_information => 'Account Payable Information';
+
+  @override
+  String get previous => 'Previous';
+
+  @override
+  String get add_bank => 'Add Bank';
+
+  @override
+  String get select_bank => 'Select Bank';
+
+  @override
+  String get branch => 'Branch';
+
+  @override
+  String get select_branch => 'Select Branch';
+
+  @override
+  String get please_enter_account_name => 'Please enter account name';
+
+  @override
+  String get account_balance => 'Account Balance';
+
+  @override
+  String get please_enter_account_balance => 'Please enter account balance';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get add_wealth => 'Add Wealth';
+
+  @override
+  String get select_wealth => 'Select Wealth';
+
+  @override
+  String get document_type => 'Document Type';
+
+  @override
+  String get select_document_type => 'Select Document Type';
+
+  @override
+  String get land_area_shotangsho => 'Land Area (in Shotangsho)';
+
+  @override
+  String get land_area => 'Land Area';
+
+  @override
+  String get please_enter_land_area => 'Please enter land area';
+
+  @override
+  String get location => 'Location';
+
+  @override
+  String get please_enter_location => 'Please enter location';
+
+  @override
+  String get wealth_documents => 'Wealth Documents';
+
+  @override
+  String get add_more_wealth => 'Add More Wealth';
+
+  @override
+  String get add_receivable => 'Add Receivable';
+
+  @override
+  String get receivable_amount => 'Receivable Amount';
+
+  @override
+  String get amount => 'Amount';
+
+  @override
+  String get please_enter_amount => 'Please enter amount';
+
+  @override
+  String get receivable_person => 'Receivable Person';
+
+  @override
+  String get person_name => 'Person Name';
+
+  @override
+  String get please_enter_person_name => 'Please enter person name';
+
+  @override
+  String get receivable_person_mobile => 'Receivable Person Mobile';
+
+  @override
+  String get please_enter_mobile => 'Please enter mobile';
+
+  @override
+  String get add_more_receivable => 'Add More Receivable';
+
+  @override
+  String get add_payable => 'Add Payable';
+
+  @override
+  String get payable_amount => 'Payable Amount';
+
+  @override
+  String get payable_person => 'Payable Person';
+
+  @override
+  String get payable_person_mobile => 'Payable Person Mobile';
+
+  @override
+  String get add_more_payable => 'Add More Payable';
+
+  @override
+  String get children_information => 'Children Information';
+
+  @override
+  String get sibling_information => 'Sibling Information';
+
+  @override
+  String get add_sibling => 'Add Sibling';
+
+  @override
+  String get sibling_name => 'Sibling Name';
+
+  @override
+  String get please_enter_name => 'Please enter name';
+
+  @override
+  String get sibling_date_of_birth => 'Sibling Date of Birth';
+
+  @override
+  String get select_date_of_birth => 'Select Date of Birth';
+
+  @override
+  String get please_enter_nid_passport_no => 'Please enter NID/Passport No';
+
+  @override
+  String get please_enter_email => 'Please enter email';
+
+  @override
+  String get sibling_existence_status => 'Sibling Existence Status';
+
+  @override
+  String get add_more_sibling => 'Add More Sibling';
+
+  @override
+  String get add_child => 'Add Child';
+
+  @override
+  String get child_name => 'Child Name';
+
+  @override
+  String get child_date_of_birth => 'Child Date of Birth';
+
+  @override
+  String get child_existence_status => 'Child Existence Status';
+
+  @override
+  String get add_more_child => 'Add More Child';
+
+  @override
+  String get add_spouse => 'Add Spouse';
+
+  @override
+  String get spouse_profession => 'Spouse Profession';
+
+  @override
+  String get spouse_nationality => 'Spouse Nationality';
+
+  @override
+  String get spouse_date_of_birth => 'Spouse Date of Birth';
+
+  @override
+  String get spouse_nid_passport_no => 'Spouse NID/Passport No';
+
+  @override
+  String get spouse_nid_passport_documents => 'Spouse NID/Passport Documents';
+
+  @override
+  String get spouse_mobile_no => 'Spouse Mobile No';
+
+  @override
+  String get spouse_email => 'Spouse Email';
+
+  @override
+  String get personal_information => 'Personal Information';
+
+  @override
+  String get first_name_is_required => 'First name is required';
+
+  @override
+  String get last_name_is_required => 'Last name is required';
+
+  @override
+  String get select_marital_status => 'Select Marital Status';
+
+  @override
+  String get marital_status_is_required => 'Marital status is required';
+
+  @override
+  String get select_profession => 'Select Profession';
+
+  @override
+  String get select_country => 'Select Country';
+
+  @override
+  String get district_state_is_required => 'District/State is required';
+
+  @override
+  String get select_gender => 'Select Gender';
+
+  @override
+  String get nid_passport_no_is_required => 'NID/Passport No is required';
+
+  @override
+  String get nid_passport_documents => 'NID/Passport Documents';
+
+  @override
+  String get nid_file_downloaded_successfully =>
+      'NID File downloaded successfully';
+
+  @override
+  String get only_pdf_jpeg_png_allowed =>
+      '* Only Pdf,JPEG,PNG file are allowed';
+
+  @override
+  String get tin => 'TIN';
+
+  @override
+  String get tin_is_required => 'TIN is required';
+
+  @override
+  String get tin_documents => 'TIN Documents';
+
+  @override
+  String get tin_file_downloaded_successfully =>
+      'TIN File downloaded successfully';
+
+  @override
+  String get multi_citizenship => 'Multi Citizenship';
+
+  @override
+  String get profile_picture => 'Profile Picture';
+
+  @override
+  String get profile_picture_downloaded_successfully =>
+      'Profile picture downloaded successfully';
+
+  @override
+  String get existence_status => 'Existence Status';
+
+  @override
+  String get file_downloaded_successfully => 'File downloaded successfully';
+
+  @override
+  String get mark_present_as_permanent =>
+      'Mark Present Address as Permanent Address';
+
+  @override
+  String get relative_list => 'Relative List';
+
+  @override
+  String get calculation_results => 'Calculation Results';
+
+  @override
+  String get calculate => 'Calculate';
+
+  @override
+  String get share_portion => 'Share Portion';
+
+  @override
+  String get land_portion => 'Land Portion';
+
+  @override
+  String get gold_portion => 'Gold Portion';
+
+  @override
+  String get silver_portion => 'Silver Portion';
+
+  @override
+  String get total_money => 'Total Money';
+
+  @override
+  String get property_calculation_section => 'Property Calculation Section';
+
+  @override
+  String get land_in_decimal => 'Land in Deciman';
+
+  @override
+  String get enter_land_amount => 'Enter land amount';
+
+  @override
+  String get gold_amount => 'Gold amount';
+
+  @override
+  String get enter_gold_amount => 'Enter gold amount';
+
+  @override
+  String get silver_amount => 'Silver amount';
+
+  @override
+  String get enter_silver_amount => 'Enter silver amount';
+
+  @override
+  String get total_money_in_taka => 'Total Money in Taka';
+
+  @override
+  String get enter_money_amount => 'Enter money amount';
+
+  @override
+  String get deceased_son => 'Deceased Son';
+
+  @override
+  String get deceased_daughter => 'Deceased Daughter';
+
+  @override
+  String get no_data => 'No Data';
+
+  @override
+  String get give_access => 'Give Access';
+
+  @override
+  String get access_feature => 'Access Feature';
+
+  @override
+  String get application_menu => 'Application Menu';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get bengali => 'বাংলা';
+
+  @override
+  String get no_nominee_added => 'No Nominee Added Here';
+
+  @override
+  String get no_witness_added => 'No Witness Added Here';
+
+  @override
+  String get remove_nominee_btn => 'Remove Nominee';
+
+  @override
+  String get remove_witness_btn => 'Remove Witness';
+
+  @override
+  String get gram_vori => 'GRAM/VORI';
+
+  @override
+  String get taka => 'Taka';
+
+  @override
+  String get z_k_i => 'Last Zakat Info';
+
+  @override
+  String get access_panel => 'Access Panel';
+
+  @override
+  String get assign_witness => 'Assign Witness';
+
+  @override
+  String get assign_nominee => 'Assign Nominee';
+
+  @override
+  String get account_create_success =>
+      'Account create successful.\n \nNow you have a user name and password your email';
+
+  @override
+  String get server_error => 'Server error! \n Please try later';
+
+  @override
+  String get invalid_username_or_password => 'Invalid username or password';
+
+  @override
+  String get verification_otp_send_success =>
+      'VERIFICATION OTP SEND SUCCESSFULLY!!';
+
+  @override
+  String get unable_data => 'Unable Data';
+
+  @override
+  String get record_updated_successfully => 'RECORD UPDATED SUCCESSFULLY!!';
+
+  @override
+  String get mandatory_fields_cannot_be_null_or_empty =>
+      'Mandatory fields cannot be null or empty!';
+
+  @override
+  String get an_error_occurred => 'An error occurred';
+
+  @override
+  String get invalid_email_message => 'This is not right email';
+
+  @override
+  String get nominee_add_successfully => 'Nominee Add Successfully';
+
+  @override
+  String get added_failed => 'Added failed. Please try again.';
+
+  @override
+  String get nominee_added_successfully => 'Nominee Added Successfully';
+
+  @override
+  String get witness_added_successfully => 'Witness Added Successfully';
+
+  @override
+  String get add_failed_try_again => 'Add failed. Please try again.';
+
+  @override
+  String get nominee_delete_successfully => 'Nominee Delete Successfully';
+
+  @override
+  String get failed_to_load_contexts_data => 'Failed to load contexts data';
+
+  @override
+  String get profile_update_failed_with_status => 'Profile Update Failed';
+
+  @override
+  String get husband_and_wife_cant_be_selected_together =>
+      'Husband and wife can\'t be select togather';
+
+  @override
+  String get calculation_fetched_successfully =>
+      'Calculation fetched successfully';
+
+  @override
+  String get failed_to_fetch_calculation_result =>
+      'Failed to fetch calculation result';
+
+  @override
+  String get record_inserted_successfully => 'RECORD INSERTED SUCCESSFULLY!!';
+
+  @override
+  String get error_try_again => 'error, try again';
+
+  @override
+  String get network_error_occurred => 'Network error occurred';
+
+  @override
+  String get order_updated_successfully => 'Order updated successfully!';
+
+  @override
+  String get failed_to_update_order_with_status => 'Failed to update order';
+
+  @override
+  String get order_updated => 'Order updated!';
+
+  @override
+  String get failed_to_update_order => 'Failed to update order';
+
+  @override
+  String get network_error => 'Network error';
+
+  @override
+  String get failed_to_update_visibility => 'Failed to update visibility.';
+
+  @override
+  String get witness_remove_successfully =>
+      'REMOVE THIS WITNESS FROM YOUR SIDE SUCCESSFULLY!!';
+
+  @override
+  String get internal_server_error => '500 Internal Server Error';
+
+  @override
+  String get request_failed_with_status => 'Request Failed';
+
+  @override
+  String get cant_connect_to_the_internet => 'Can\'t connect to the internet!';
+
+  @override
+  String get request_timeout => 'Request timeout';
+
+  @override
+  String get gram => 'Gram';
+
+  @override
+  String get vori => 'Vori';
+
+  @override
+  String get ordinal_st => 'st';
+
+  @override
+  String get ordinal_nd => 'nd';
+
+  @override
+  String get ordinal_rd => 'rd';
+
+  @override
+  String get ordinal_th => 'th';
+
+  @override
+  String get son_1 => 'Son 1';
+
+  @override
+  String get son_2 => 'Son 2';
+
+  @override
+  String get plot_1 => 'Plot 1';
+
+  @override
+  String get plot_2 => 'Plot 2';
+
+  @override
+  String get land_decimal => 'Land (Decimal)';
+
+  @override
+  String get gold_bhari => 'Gold (Bhari)';
+
+  @override
+  String get silver_bhari => 'Silver (Bhari)';
+
+  @override
+  String get money_taka => 'Money (Taka)';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get ok => 'Ok';
+
+  @override
+  String get property_distribution_calculation =>
+      'Property Distribution Calculation';
+
+  @override
+  String get count => 'Count';
+
+  @override
+  String get decimal => 'Decimal';
 }

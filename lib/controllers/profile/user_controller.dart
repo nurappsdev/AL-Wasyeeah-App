@@ -10,6 +10,7 @@ import '../../helpers/prefs_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
 import '../../utils/app_constant.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class UserController extends GetxController {
   @override
@@ -61,12 +62,18 @@ class UserController extends GetxController {
               GetSalatTimeResponseModel.fromJson(response.body);
         }
         prayerTimes.value = {
-          'Fajr': getSalatTimeResponseModel.value?.fajr ?? '',
-          'Sunrise': getSalatTimeResponseModel.value?.sunrise ?? '',
-          'Dhuhr': getSalatTimeResponseModel.value?.dhuhr ?? '',
-          'Asr': getSalatTimeResponseModel.value?.asr ?? '',
-          'Maghrib': getSalatTimeResponseModel.value?.maghrib ?? '',
-          'Isha': getSalatTimeResponseModel.value?.isha ?? '',
+          AppLocalizations.of(Get.context!)!.fajr:
+              getSalatTimeResponseModel.value?.fajr ?? '',
+          AppLocalizations.of(Get.context!)!.sunrise:
+              getSalatTimeResponseModel.value?.sunrise ?? '',
+          AppLocalizations.of(Get.context!)!.dhuhr:
+              getSalatTimeResponseModel.value?.dhuhr ?? '',
+          AppLocalizations.of(Get.context!)!.asr:
+              getSalatTimeResponseModel.value?.asr ?? '',
+          AppLocalizations.of(Get.context!)!.maghrib:
+              getSalatTimeResponseModel.value?.maghrib ?? '',
+          AppLocalizations.of(Get.context!)!.isha:
+              getSalatTimeResponseModel.value?.isha ?? '',
         };
 
         _calculateNextPrayer();
