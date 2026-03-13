@@ -1268,4 +1268,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get at_least_enter_nisab => 'At least enter your nisab amount';
+
+  @override
+  String get land_area_in_shotangsho => 'Land Area (in Shotangsho)';
+
+  @override
+  String get wealth_document_file_downloaded_successfully =>
+      'Wealth Document File downloaded successfully';
+
+  @override
+  String get sibling => 'Sibling';
+
+  @override
+  String get please_enter_mobile_number => 'Please enter mobile number';
+
+  @override
+  String get dead => 'Dead';
+
+  @override
+  String get child => 'Child';
+
+  @override
+  String get spouse => 'Spouse';
 }

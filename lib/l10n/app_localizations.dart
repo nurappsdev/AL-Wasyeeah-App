@@ -2570,6 +2570,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'At least enter your nisab amount'**
   String get at_least_enter_nisab;
+
+  /// No description provided for @land_area_in_shotangsho.
+  ///
+  /// In en, this message translates to:
+  /// **'Land Area (in Shotangsho)'**
+  String get land_area_in_shotangsho;
+
+  /// No description provided for @wealth_document_file_downloaded_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Wealth Document File downloaded successfully'**
+  String get wealth_document_file_downloaded_successfully;
+
+  /// No description provided for @sibling.
+  ///
+  /// In en, this message translates to:
+  /// **'Sibling'**
+  String get sibling;
+
+  /// No description provided for @please_enter_mobile_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter mobile number'**
+  String get please_enter_mobile_number;
+
+  /// No description provided for @dead.
+  ///
+  /// In en, this message translates to:
+  /// **'Dead'**
+  String get dead;
+
+  /// No description provided for @child.
+  ///
+  /// In en, this message translates to:
+  /// **'Child'**
+  String get child;
+
+  /// No description provided for @spouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Spouse'**
+  String get spouse;
 }
 
 class _AppLocalizationsDelegate

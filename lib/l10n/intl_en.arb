@@ -414,5 +414,14 @@
   "count": "Count",
   "decimal": "Decimal",
   "logout": "Logout",
-  "at_least_enter_nisab": "At least enter your nisab amount"
+  "at_least_enter_nisab": "At least enter your nisab amount",
+  "land_area_in_shotangsho": "Land Area (in Shotangsho)",
+  "wealth_document_file_downloaded_successfully": "Wealth Document File downloaded successfully",
+  "nid_file_downloaded_successfully": "NID File downloaded successfully",
+  "sibling": "Sibling",
+  "please_enter_mobile_number":"Please enter mobile number",
+  "dead":"Dead",
+  "child":"Child",
+  "spouse":"Spouse"
+
 }

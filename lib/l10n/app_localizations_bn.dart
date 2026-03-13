@@ -952,7 +952,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get nid_file_downloaded_successfully =>
-      'এনআইডি ফাইল সফলভাবে ডাউনলোড হয়েছে';
+      'এনআইডি ফাইল ডাউনলোড সফলভাবে হয়েছে';
 
   @override
   String get only_pdf_jpeg_png_allowed =>
@@ -1279,4 +1279,26 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get at_least_enter_nisab =>
       'অনুগ্রহ করে অন্তত নিসাব পরিমাণ অর্থ লিখুন';
+
+  @override
+  String get land_area_in_shotangsho => 'জমির পরিমাণ (শতাংশে)';
+
+  @override
+  String get wealth_document_file_downloaded_successfully =>
+      'সম্পত্তি দক্ষিণা ফাইল ডাউনলোড সফলভাবে হয়েছে';
+
+  @override
+  String get sibling => 'ভাইবোন';
+
+  @override
+  String get please_enter_mobile_number => 'Please enter mobile number';
+
+  @override
+  String get dead => 'মৃত';
+
+  @override
+  String get child => 'সন্তান';
+
+  @override
+  String get spouse => 'স্ত্রী';
 }

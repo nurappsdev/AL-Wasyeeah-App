@@ -4,8 +4,7 @@ import 'package:al_wasyeah/view/auth/forgot_pass_screen.dart';
 import 'package:al_wasyeah/view/auth/login_screen.dart';
 import 'package:al_wasyeah/view/auth/otp_verify_screen.dart';
 import 'package:al_wasyeah/view/auth/registration_screen.dart';
-import 'package:al_wasyeah/view/before_login/property_distribution_result.dart';
-import 'package:al_wasyeah/view/before_login/property_distribution_screen.dart';
+=import 'package:al_wasyeah/view/before_login/property_distribution_screen.dart';
 import 'package:al_wasyeah/view/before_login/zakat_calculator_screen.dart';
 import 'package:al_wasyeah/view/home/home_screen.dart';
 import 'package:al_wasyeah/view/menu/menu_page.dart';
@@ -144,9 +143,7 @@ class AppRoutes {
         GetPage(
             name: propertyDistributionScreen,
             page: () => PropertyDistributionScreen()),
-        GetPage(
-            name: propertyDistributionResultScreen,
-            page: () => PropertyDistributionResultScreen()),
+
         GetPage(
             name: zakatCalculatorScreen, page: () => ZakatCalculatorScreen()),
         // GetPage(name: profileSetting1, page: () => ProfileScreen1()),

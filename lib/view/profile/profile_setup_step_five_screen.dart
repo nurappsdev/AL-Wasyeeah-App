@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+
 import '../../helpers/file_picker_util.dart';
 import '../../utils/utils.dart';
 
@@ -36,15 +36,17 @@ class ProfileSettingStepFiveWidget extends StatelessWidget {
             _BankWidget(controller: controller),
 
             // ===== Wealth Information =====
-            _sectionTitle("Wealth Information".tr),
+            _sectionTitle(AppLocalizations.of(context)!.wealth_information),
             _WealthWidget(controller: controller),
 
             // ===== Account Receivable Information =====
-            _sectionTitle("Account Receivable Information".tr),
+            _sectionTitle(
+                AppLocalizations.of(context)!.account_receivable_information),
             _ReceivableWidget(controller: controller),
 
             // ===== Account Payable Information =====
-            _sectionTitle("Account Payable Information".tr),
+            _sectionTitle(
+                AppLocalizations.of(context)!.account_payable_information),
             _PayableWidget(controller: controller),
 
             SizedBox(height: 20.h),
@@ -53,7 +55,7 @@ class ProfileSettingStepFiveWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: CustomButtonCommon(
-                    title: "Previous".tr,
+                    title: AppLocalizations.of(context)!.previous,
                     onpress: () {
                       controller.onStepTapped(controller.currentStep.value - 1);
                     },
@@ -128,7 +130,7 @@ class _BankWidget extends StatelessWidget {
                 children: [
                   Icon(Icons.add),
                   SizedBox(width: 8.w),
-                  Text("Add Bank".tr)
+                  Text(AppLocalizations.of(context)!.add_bank)
                 ],
               ),
             ),
@@ -163,7 +165,7 @@ class _BankWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     CustomDropdown<BankModel>(
-                      hint: "Select Bank".tr,
+                      hint: AppLocalizations.of(context)!.select_bank,
                       items: controller.bankList,
                       value: form.bank.value,
                       itemToString: (e) => e.bankEn ?? "",
@@ -172,7 +174,9 @@ class _BankWidget extends StatelessWidget {
                     SizedBox(height: 16.h),
                     Row(
                       children: [
-                        CustomText(text: "Branch".tr, fontsize: 16.sp),
+                        CustomText(
+                            text: AppLocalizations.of(context)!.branch,
+                            fontsize: 16.sp),
                         Text(' *',
                             style:
                                 TextStyle(color: Colors.red, fontSize: 16.sp)),
@@ -181,7 +185,7 @@ class _BankWidget extends StatelessWidget {
                     SizedBox(height: 4.h),
                     CustomDropdown<BranchModel>(
                       key: ValueKey("branch_${form.bank.value?.bankId}_$index"),
-                      hint: "Select Branch".tr,
+                      hint: AppLocalizations.of(context)!.select_branch,
                       items: form.branchList,
                       value: form.branch.value,
                       itemToString: (e) => e.branchNameEn ?? "",
@@ -203,18 +207,22 @@ class _BankWidget extends StatelessWidget {
                       controller: form.accountName,
                       hint: AppLocalizations.of(context)!.account_name,
                       validator: (value) => value!.isEmpty
-                          ? "Please enter account name".tr
+                          ? AppLocalizations.of(context)!
+                              .please_enter_account_name
                           : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: "Account Balance".tr, fontsize: 16.sp),
+                    CustomText(
+                        text: AppLocalizations.of(context)!.account_balance,
+                        fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.accountBalance,
-                      hint: "Account Balance".tr,
+                      hint: AppLocalizations.of(context)!.account_balance,
                       keyboardType: TextInputType.number,
                       validator: (value) => value!.isEmpty
-                          ? "Please enter account balance".tr
+                          ? AppLocalizations.of(context)!
+                              .please_enter_account_balance
                           : null,
                     ),
                     SizedBox(height: 16.h),
@@ -236,7 +244,7 @@ class _BankWidget extends StatelessWidget {
                               children: [
                                 Icon(Icons.delete_forever, color: Colors.white),
                                 SizedBox(width: 8.w),
-                                Text("Remove".tr)
+                                Text(AppLocalizations.of(context)!.remove)
                               ],
                             ),
                           ),
@@ -257,7 +265,9 @@ class _BankWidget extends StatelessWidget {
                               Icon(Icons.add),
                               SizedBox(width: 8.w),
                               Expanded(
-                                  child: Text("Add More Bank".tr,
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .add_more_bank,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis))
                             ],
@@ -302,7 +312,7 @@ class _WealthWidget extends StatelessWidget {
                 children: [
                   Icon(Icons.add),
                   SizedBox(width: 8.w),
-                  Text("Add Wealth".tr)
+                  Text(AppLocalizations.of(context)!.add_wealth)
                 ],
               ),
             ),
@@ -337,7 +347,7 @@ class _WealthWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     CustomDropdown<WealthModel>(
-                      hint: "Select Wealth".tr,
+                      hint: AppLocalizations.of(context)!.select_wealth,
                       items: controller.wealthList,
                       value: form.wealth.value,
                       itemToString: (e) => e.wealth ?? "",
@@ -346,7 +356,9 @@ class _WealthWidget extends StatelessWidget {
                     SizedBox(height: 16.h),
                     Row(
                       children: [
-                        CustomText(text: "Document Type".tr, fontsize: 16.sp),
+                        CustomText(
+                            text: AppLocalizations.of(context)!.document_type,
+                            fontsize: 16.sp),
                         Text(' *',
                             style:
                                 TextStyle(color: Colors.red, fontSize: 16.sp)),
@@ -356,7 +368,7 @@ class _WealthWidget extends StatelessWidget {
                     CustomDropdown<DocumentTypeForm>(
                       key:
                           ValueKey("doc_${form.wealth.value?.wealthId}_$index"),
-                      hint: "Select Document Type".tr,
+                      hint: AppLocalizations.of(context)!.select_document_type,
                       items: form.documentTypeList,
                       value: form.selectedDocumentType.value,
                       itemToString: (e) => e.documentType ?? "",
@@ -364,23 +376,29 @@ class _WealthWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                        text: "Land Area (in Shotangsho)".tr, fontsize: 16.sp),
+                        text: AppLocalizations.of(context)!
+                            .land_area_in_shotangsho,
+                        fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.landArea,
-                      hint: "Land Area".tr,
+                      hint: AppLocalizations.of(context)!.land_area,
                       keyboardType: TextInputType.number,
-                      validator: (value) =>
-                          value!.isEmpty ? "Please enter land area".tr : null,
+                      validator: (value) => value!.isEmpty
+                          ? AppLocalizations.of(context)!.please_enter_land_area
+                          : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(text: "Location".tr, fontsize: 16.sp),
+                    CustomText(
+                        text: AppLocalizations.of(context)!.location,
+                        fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.location,
-                      hint: "Location".tr,
-                      validator: (value) =>
-                          value!.isEmpty ? "Please enter location".tr : null,
+                      hint: AppLocalizations.of(context)!.location,
+                      validator: (value) => value!.isEmpty
+                          ? AppLocalizations.of(context)!.please_enter_location
+                          : null,
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
@@ -394,7 +412,7 @@ class _WealthWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Wealth Documents".tr,
+                      text: AppLocalizations.of(context)!.wealth_documents,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -421,9 +439,8 @@ class _WealthWidget extends StatelessWidget {
                           );
                           if (isComplete) {
                             Fluttertoast.showToast(
-                              msg:
-                                  "Wealth Document File downloaded successfully"
-                                      .tr,
+                              msg: AppLocalizations.of(context)!
+                                  .wealth_document_file_downloaded_successfully,
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.TOP,
                               timeInSecForIosWeb: 2,
@@ -454,7 +471,7 @@ class _WealthWidget extends StatelessWidget {
                               children: [
                                 Icon(Icons.delete_forever, color: Colors.white),
                                 SizedBox(width: 8.w),
-                                Text("Remove".tr)
+                                Text(AppLocalizations.of(context)!.remove)
                               ],
                             ),
                           ),
@@ -475,7 +492,9 @@ class _WealthWidget extends StatelessWidget {
                               Icon(Icons.add),
                               SizedBox(width: 8.w),
                               Expanded(
-                                  child: Text("Add More Wealth".tr,
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .add_more_wealth,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis))
                             ],
@@ -521,7 +540,7 @@ class _ReceivableWidget extends StatelessWidget {
                   children: [
                     Icon(Icons.add),
                     SizedBox(width: 8.w),
-                    Text("Add Receivable".tr)
+                    Text(AppLocalizations.of(context)!.add_receivable)
                   ],
                 ),
               ),
@@ -543,34 +562,44 @@ class _ReceivableWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(text: "Receivable Amount".tr, fontsize: 16.sp),
+                    CustomText(
+                        text: AppLocalizations.of(context)!.receivable_amount,
+                        fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.amount,
-                      hint: "Amount".tr,
+                      hint: AppLocalizations.of(context)!.amount,
                       keyboardType: TextInputType.number,
-                      validator: (value) =>
-                          value!.isEmpty ? "Please enter amount".tr : null,
-                    ),
-                    SizedBox(height: 16.h),
-                    CustomText(text: "Receivable Person".tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
-                    CustomTextFormField(
-                      controller: form.personName,
-                      hint: "Person Name".tr,
-                      validator: (value) =>
-                          value!.isEmpty ? "Please enter person name".tr : null,
+                      validator: (value) => value!.isEmpty
+                          ? AppLocalizations.of(context)!.please_enter_amount
+                          : null,
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                        text: "Receivable Person Mobile".tr, fontsize: 16.sp),
+                        text: AppLocalizations.of(context)!.receivable_person,
+                        fontsize: 16.sp),
+                    SizedBox(height: 4.h),
+                    CustomTextFormField(
+                      controller: form.personName,
+                      hint: AppLocalizations.of(context)!.person_name,
+                      validator: (value) => value!.isEmpty
+                          ? AppLocalizations.of(context)!
+                              .please_enter_person_name
+                          : null,
+                    ),
+                    SizedBox(height: 16.h),
+                    CustomText(
+                        text: AppLocalizations.of(context)!
+                            .receivable_person_mobile,
+                        fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.personMobile,
                       hint: AppLocalizations.of(context)!.mobile,
                       keyboardType: TextInputType.phone,
-                      validator: (value) =>
-                          value!.isEmpty ? "Please enter mobile".tr : null,
+                      validator: (value) => value!.isEmpty
+                          ? AppLocalizations.of(context)!.please_enter_mobile
+                          : null,
                     ),
                     SizedBox(height: 16.h),
                     Row(
@@ -591,7 +620,7 @@ class _ReceivableWidget extends StatelessWidget {
                               children: [
                                 Icon(Icons.delete_forever, color: Colors.white),
                                 SizedBox(width: 8.w),
-                                Text("Remove".tr)
+                                Text(AppLocalizations.of(context)!.remove)
                               ],
                             ),
                           ),
@@ -612,7 +641,9 @@ class _ReceivableWidget extends StatelessWidget {
                               Icon(Icons.add),
                               SizedBox(width: 8.w),
                               Expanded(
-                                  child: Text("Add More Receivable".tr,
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .add_more_receivable,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis))
                             ],
@@ -658,7 +689,7 @@ class _PayableWidget extends StatelessWidget {
                   children: [
                     Icon(Icons.add),
                     SizedBox(width: 8.w),
-                    Text("Add Payable".tr)
+                    Text(AppLocalizations.of(context)!.add_payable)
                   ],
                 ),
               ),
@@ -680,34 +711,44 @@ class _PayableWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(text: "Payable Amount".tr, fontsize: 16.sp),
+                    CustomText(
+                        text: AppLocalizations.of(context)!.payable_amount,
+                        fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.amount,
-                      hint: "Amount".tr,
+                      hint: AppLocalizations.of(context)!.amount,
                       keyboardType: TextInputType.number,
-                      validator: (value) =>
-                          value!.isEmpty ? "Please enter amount".tr : null,
-                    ),
-                    SizedBox(height: 16.h),
-                    CustomText(text: "Payable Person".tr, fontsize: 16.sp),
-                    SizedBox(height: 4.h),
-                    CustomTextFormField(
-                      controller: form.personName,
-                      hint: "Person Name".tr,
-                      validator: (value) =>
-                          value!.isEmpty ? "Please enter person name".tr : null,
+                      validator: (value) => value!.isEmpty
+                          ? AppLocalizations.of(context)!.please_enter_amount
+                          : null,
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                        text: "Payable Person Mobile".tr, fontsize: 16.sp),
+                        text: AppLocalizations.of(context)!.payable_person,
+                        fontsize: 16.sp),
+                    SizedBox(height: 4.h),
+                    CustomTextFormField(
+                      controller: form.personName,
+                      hint: AppLocalizations.of(context)!.person_name,
+                      validator: (value) => value!.isEmpty
+                          ? AppLocalizations.of(context)!
+                              .please_enter_person_name
+                          : null,
+                    ),
+                    SizedBox(height: 16.h),
+                    CustomText(
+                        text:
+                            AppLocalizations.of(context)!.payable_person_mobile,
+                        fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.personMobile,
                       hint: AppLocalizations.of(context)!.mobile,
                       keyboardType: TextInputType.phone,
-                      validator: (value) =>
-                          value!.isEmpty ? "Please enter mobile".tr : null,
+                      validator: (value) => value!.isEmpty
+                          ? AppLocalizations.of(context)!.please_enter_mobile
+                          : null,
                     ),
                     SizedBox(height: 16.h),
                     Row(
@@ -728,7 +769,7 @@ class _PayableWidget extends StatelessWidget {
                               children: [
                                 Icon(Icons.delete_forever, color: Colors.white),
                                 SizedBox(width: 8.w),
-                                Text("Remove".tr)
+                                Text(AppLocalizations.of(context)!.remove)
                               ],
                             ),
                           ),
@@ -749,7 +790,9 @@ class _PayableWidget extends StatelessWidget {
                               Icon(Icons.add),
                               SizedBox(width: 8.w),
                               Expanded(
-                                  child: Text("Add More Payable".tr,
+                                  child: Text(
+                                      AppLocalizations.of(context)!
+                                          .add_more_payable,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis))
                             ],

@@ -425,5 +425,15 @@
   "count": "গণনা",
   "decimal": "দশমিক",
   "logout": "লগ আউট",
-  "at_least_enter_nisab": "অনুগ্রহ করে অন্তত নিসাব পরিমাণ অর্থ লিখুন"
+  "at_least_enter_nisab": "অনুগ্রহ করে অন্তত নিসাব পরিমাণ অর্থ লিখুন",
+  "land_area_in_shotangsho": "জমির পরিমাণ (শতাংশে)",
+  "wealth_document_file_downloaded_successfully": "সম্পত্তি দক্ষিণা ফাইল ডাউনলোড সফলভাবে হয়েছে",
+  "nid_file_downloaded_successfully": "এনআইডি ফাইল ডাউনলোড সফলভাবে হয়েছে",
+  "sibling": "ভাইবোন",
+   "please_enter_mobile_number":"Please enter mobile number",
+   "dead":"মৃত",
+   "child":"সন্তান",
+   "spouse":"স্ত্রী"
+
+
 }

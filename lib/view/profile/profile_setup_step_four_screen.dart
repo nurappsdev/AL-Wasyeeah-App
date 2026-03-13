@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
@@ -35,10 +34,10 @@ class ProfileSettingStepFourWidget extends StatelessWidget {
 
             // ===== Spouse forms =====
             _SpouseWidget(controller: controller),
-            _sectionTitle("Children Information".tr),
+            _sectionTitle(AppLocalizations.of(context)!.children_information),
             // ===== Children Information =====
             _ChildWidget(controller: controller),
-            _sectionTitle("Sibling Information".tr),
+            _sectionTitle(AppLocalizations.of(context)!.sibling_information),
             // ===== Sibling Information =====
             SiblingWidget(controller: controller),
             SizedBox(height: 20.h),
@@ -48,7 +47,7 @@ class ProfileSettingStepFourWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: CustomButtonCommon(
-                    title: "Previous".tr,
+                    title: AppLocalizations.of(context)!.previous,
                     onpress: () {
                       controller.onStepTapped(controller.currentStep.value - 1);
                     },
@@ -129,7 +128,7 @@ class SiblingWidget extends StatelessWidget {
                     children: [
                       Icon(Icons.add),
                       SizedBox(width: 8.w),
-                      Text("Add Sibling".tr)
+                      Text(AppLocalizations.of(context)!.add_sibling)
                     ],
                   ),
                 ),
@@ -153,7 +152,9 @@ class SiblingWidget extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          CustomText(text: "Sibling Name".tr, fontsize: 16.sp),
+                          CustomText(
+                              text: AppLocalizations.of(context)!.sibling_name,
+                              fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -162,10 +163,11 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 4.h),
                       CustomTextFormField(
                         controller: form.name,
-                        hint: "Sibling Name".tr,
+                        hint: AppLocalizations.of(context)!.sibling_name,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter name".tr;
+                            return AppLocalizations.of(context)!
+                                .please_enter_name;
                           }
                           return null;
                         },
@@ -224,7 +226,8 @@ class SiblingWidget extends StatelessWidget {
                       Row(
                         children: [
                           CustomText(
-                              text: "Sibling Date of Birth".tr,
+                              text: AppLocalizations.of(context)!
+                                  .sibling_date_of_birth,
                               fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
@@ -264,7 +267,8 @@ class SiblingWidget extends StatelessWidget {
                                   form.selectedDob.value != null
                                       ? DateFormat('yyyy-MM-dd')
                                           .format(form.selectedDob.value!)
-                                      : "Select Date of Birth".tr,
+                                      : AppLocalizations.of(context)!
+                                          .select_date_of_birth,
                                   style: TextStyle(
                                     color: form.selectedDob.value != null
                                         ? Colors.black
@@ -291,7 +295,8 @@ class SiblingWidget extends StatelessWidget {
                         hint: AppLocalizations.of(context)!.nid_passport_no,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter NID/Passport No".tr;
+                            return AppLocalizations.of(context)!
+                                .please_enter_nid_passport_no;
                           }
                           return null;
                         },
@@ -322,7 +327,7 @@ class SiblingWidget extends StatelessWidget {
                             if (isComplete) {
                               Fluttertoast.showToast(
                                 msg:
-                                    "Sibling (${form.name.text}) NID File downloaded successfully"
+                                    "${AppLocalizations.of(context)!.sibling} (${form.name.text}) ${AppLocalizations.of(context)!.nid_file_downloaded_successfully}"
                                         .tr,
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.TOP,
@@ -347,7 +352,8 @@ class SiblingWidget extends StatelessWidget {
                         hint: AppLocalizations.of(context)!.mobile,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter Mobile".tr;
+                            return AppLocalizations.of(context)!
+                                .please_enter_mobile_number;
                           }
                           return null;
                         },
@@ -355,16 +361,17 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Email
                       CustomText(
-                        text: "Email".tr,
+                        text: AppLocalizations.of(context)!.email,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
                         controller: form.email,
-                        hint: "Email".tr,
+                        hint: AppLocalizations.of(context)!.email,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter Email".tr;
+                            return AppLocalizations.of(context)!
+                                .please_enter_your_email;
                           }
                           return null;
                         },
@@ -372,7 +379,8 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
 
                       CustomText(
-                        text: "Sibling Existence Status".tr,
+                        text: AppLocalizations.of(context)!
+                            .sibling_existence_status,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -384,14 +392,14 @@ class SiblingWidget extends StatelessWidget {
                           fillColor:
                               form.isAlive.value ? Colors.green : Colors.red,
                           selectedColor: Colors.white,
-                          children: const [
+                          children: [
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 40),
-                              child: Text("Alive"),
+                              child: Text(AppLocalizations.of(context)!.alive),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 40),
-                              child: Text("Dead"),
+                              child: Text(AppLocalizations.of(context)!.dead),
                             ),
                           ],
                         ),
@@ -421,7 +429,7 @@ class SiblingWidget extends StatelessWidget {
                                   Icon(Icons.delete_forever,
                                       color: Colors.white),
                                   SizedBox(width: 8.w),
-                                  Text("Remove".tr)
+                                  Text(AppLocalizations.of(context)!.remove)
                                 ],
                               ),
                             ),
@@ -446,7 +454,8 @@ class SiblingWidget extends StatelessWidget {
                                 SizedBox(width: 8.w),
                                 Expanded(
                                   child: Text(
-                                    "Add More Sibling".tr,
+                                    AppLocalizations.of(context)!
+                                        .add_more_sibling,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -499,7 +508,7 @@ class _ChildWidget extends StatelessWidget {
                     children: [
                       Icon(Icons.add),
                       SizedBox(width: 8.w),
-                      Text("Add Child".tr)
+                      Text(AppLocalizations.of(context)!.add_more_child)
                     ],
                   ),
                 ),
@@ -523,7 +532,9 @@ class _ChildWidget extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          CustomText(text: "Child Name".tr, fontsize: 16.sp),
+                          CustomText(
+                              text: AppLocalizations.of(context)!.child_name,
+                              fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -532,10 +543,11 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 4.h),
                       CustomTextFormField(
                         controller: form.name,
-                        hint: "Child Name".tr,
+                        hint: AppLocalizations.of(context)!.child_name,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter name".tr;
+                            return AppLocalizations.of(context)!
+                                .please_enter_name;
                           }
                           return null;
                         },
@@ -606,7 +618,9 @@ class _ChildWidget extends StatelessWidget {
                       Row(
                         children: [
                           CustomText(
-                              text: "Child Date of Birth".tr, fontsize: 16.sp),
+                              text: AppLocalizations.of(context)!
+                                  .child_date_of_birth,
+                              fontsize: 16.sp),
                           Text(' *',
                               style: TextStyle(
                                   color: Colors.red, fontSize: 16.sp)),
@@ -645,7 +659,8 @@ class _ChildWidget extends StatelessWidget {
                                   form.selectedDob.value != null
                                       ? DateFormat('yyyy-MM-dd')
                                           .format(form.selectedDob.value!)
-                                      : "Select Date of Birth".tr,
+                                      : AppLocalizations.of(context)!
+                                          .select_date_of_birth,
                                   style: TextStyle(
                                     color: form.selectedDob.value != null
                                         ? Colors.black
@@ -679,7 +694,8 @@ class _ChildWidget extends StatelessWidget {
                         hint: AppLocalizations.of(context)!.nid_passport_no,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter NID/Passport No".tr;
+                            return AppLocalizations.of(context)!
+                                .please_enter_nid_passport_no;
                           }
                           return null;
                         },
@@ -710,7 +726,7 @@ class _ChildWidget extends StatelessWidget {
                             if (isComplete) {
                               Fluttertoast.showToast(
                                 msg:
-                                    "Child (${form.name.text}) NID File downloaded successfully"
+                                    "${AppLocalizations.of(context)!.child} (${form.name.text}) ${AppLocalizations.of(context)!.nid_file_downloaded_successfully}"
                                         .tr,
                                 toastLength: Toast.LENGTH_LONG,
                                 gravity: ToastGravity.TOP,
@@ -735,7 +751,8 @@ class _ChildWidget extends StatelessWidget {
                         hint: AppLocalizations.of(context)!.mobile,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter Mobile".tr;
+                            return AppLocalizations.of(context)!
+                                .please_enter_mobile;
                           }
                           return null;
                         },
@@ -743,16 +760,17 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
                       // Email
                       CustomText(
-                        text: "Email".tr,
+                        text: AppLocalizations.of(context)!.email,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
                         controller: form.email,
-                        hint: "Email".tr,
+                        hint: AppLocalizations.of(context)!.email,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return "Please enter Email".tr;
+                            return AppLocalizations.of(context)!
+                                .please_enter_email;
                           }
                           return null;
                         },
@@ -760,7 +778,8 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
 
                       CustomText(
-                        text: "Child Existence Status".tr,
+                        text: AppLocalizations.of(context)!
+                            .child_existence_status,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -772,14 +791,14 @@ class _ChildWidget extends StatelessWidget {
                           fillColor:
                               form.isAlive.value ? Colors.green : Colors.red,
                           selectedColor: Colors.white,
-                          children: const [
+                          children: [
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 40),
-                              child: Text("Alive"),
+                              child: Text(AppLocalizations.of(context)!.alive),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 40),
-                              child: Text("Dead"),
+                              child: Text(AppLocalizations.of(context)!.dead),
                             ),
                           ],
                         ),
@@ -809,7 +828,7 @@ class _ChildWidget extends StatelessWidget {
                                   Icon(Icons.delete_forever,
                                       color: Colors.white),
                                   SizedBox(width: 8.w),
-                                  Text("Remove".tr)
+                                  Text(AppLocalizations.of(context)!.remove)
                                 ],
                               ),
                             ),
@@ -834,7 +853,8 @@ class _ChildWidget extends StatelessWidget {
                                 SizedBox(width: 8.w),
                                 Expanded(
                                   child: Text(
-                                    "Add More Child".tr,
+                                    AppLocalizations.of(context)!
+                                        .add_more_child,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -886,7 +906,7 @@ class _SpouseWidget extends StatelessWidget {
                   children: [
                     Icon(Icons.add),
                     SizedBox(width: 8.w),
-                    Text("Add Spouse".tr)
+                    Text(AppLocalizations.of(context)!.add_spouse)
                   ],
                 ),
               ),
@@ -925,7 +945,8 @@ class _SpouseWidget extends StatelessWidget {
                       hint: AppLocalizations.of(context)!.spouse_name,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter name".tr;
+                          return AppLocalizations.of(context)!
+                              .please_enter_name;
                         }
                         return null;
                       },
@@ -934,7 +955,9 @@ class _SpouseWidget extends StatelessWidget {
                     Row(
                       children: [
                         CustomText(
-                            text: "Spouse Profession".tr, fontsize: 16.sp),
+                            text:
+                                AppLocalizations.of(context)!.spouse_profession,
+                            fontsize: 16.sp),
                         Text(' *',
                             style:
                                 TextStyle(color: Colors.red, fontSize: 16.sp)),
@@ -952,7 +975,8 @@ class _SpouseWidget extends StatelessWidget {
                     Row(
                       children: [
                         CustomText(
-                          text: "Spouse Nationality".tr,
+                          text:
+                              AppLocalizations.of(context)!.spouse_nationality,
                           fontsize: 16.sp,
                         ),
                         Text(' *',
@@ -972,7 +996,8 @@ class _SpouseWidget extends StatelessWidget {
                     Row(
                       children: [
                         CustomText(
-                          text: "Spouse Date of Birth".tr,
+                          text: AppLocalizations.of(context)!
+                              .spouse_date_of_birth,
                           fontsize: 16.sp,
                         ),
                         Text(' *',
@@ -1013,7 +1038,8 @@ class _SpouseWidget extends StatelessWidget {
                                 form.selectedDob.value != null
                                     ? DateFormat('yyyy-MM-dd')
                                         .format(form.selectedDob.value!)
-                                    : "Select Date of Birth".tr,
+                                    : AppLocalizations.of(context)!
+                                        .select_date_of_birth,
                                 style: TextStyle(
                                   color: form.selectedDob.value != null
                                       ? Colors.black
@@ -1032,7 +1058,7 @@ class _SpouseWidget extends StatelessWidget {
                     Row(
                       children: [
                         CustomText(
-                          text: "Spouse NID/Passport No".tr,
+                          text: AppLocalizations.of(context)!.nid_passport_no,
                           fontsize: 16.sp,
                         ),
                         Text(' *',
@@ -1046,14 +1072,16 @@ class _SpouseWidget extends StatelessWidget {
                       hint: AppLocalizations.of(context)!.nid_passport_no,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter NID/Passport No".tr;
+                          return AppLocalizations.of(context)!
+                              .please_enter_nid_passport_no;
                         }
                         return null;
                       },
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Spouse NID/Passport Documents".tr,
+                      text:
+                          AppLocalizations.of(context)!.nid_passport_documents,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -1082,7 +1110,7 @@ class _SpouseWidget extends StatelessWidget {
                           if (isComplete) {
                             Fluttertoast.showToast(
                               msg:
-                                  "Spouse (${form.name.text}) NID File downloaded successfully"
+                                  "${AppLocalizations.of(context)!.spouse} (${form.name.text}) ${AppLocalizations.of(context)!.nid_file_downloaded_successfully}"
                                       .tr,
                               toastLength: Toast.LENGTH_LONG,
                               gravity: ToastGravity.TOP,
@@ -1099,7 +1127,9 @@ class _SpouseWidget extends StatelessWidget {
                     Row(
                       children: [
                         CustomText(
-                          text: "Spouse Mobile No".tr,
+                          text: AppLocalizations.of(context)!.spouse +
+                              " " +
+                              AppLocalizations.of(context)!.mobile,
                           fontsize: 16.sp,
                         ),
                         Text(' *',
@@ -1113,30 +1143,36 @@ class _SpouseWidget extends StatelessWidget {
                       hint: AppLocalizations.of(context)!.mobile,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter mobile".tr;
+                          return AppLocalizations.of(context)!
+                              .please_enter_mobile_number;
                         }
                         return null;
                       },
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Spouse Email".tr,
+                      text: AppLocalizations.of(context)!.spouse +
+                          " " +
+                          AppLocalizations.of(context)!.email,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.email,
-                      hint: "Email".tr,
+                      hint: AppLocalizations.of(context)!.email,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter email".tr;
+                          return AppLocalizations.of(context)!
+                              .please_enter_email;
                         }
                         return null;
                       },
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: "Spouse Existence Status".tr,
+                      text: AppLocalizations.of(context)!.spouse +
+                          " " +
+                          AppLocalizations.of(context)!.existence_status,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -1149,14 +1185,14 @@ class _SpouseWidget extends StatelessWidget {
                           fillColor:
                               form.isAlive.value ? Colors.green : Colors.red,
                           selectedColor: Colors.white,
-                          children: const [
+                          children: [
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 40),
-                              child: Text("Alive"),
+                              child: Text(AppLocalizations.of(context)!.alive),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 40),
-                              child: Text("Dead"),
+                              child: Text(AppLocalizations.of(context)!.dead),
                             ),
                           ],
                         ),
@@ -1186,7 +1222,7 @@ class _SpouseWidget extends StatelessWidget {
                               children: [
                                 Icon(Icons.delete_forever, color: Colors.white),
                                 SizedBox(width: 8.w),
-                                Text("Remove".tr)
+                                Text(AppLocalizations.of(context)!.remove)
                               ],
                             ),
                           ),
@@ -1211,7 +1247,7 @@ class _SpouseWidget extends StatelessWidget {
                               SizedBox(width: 8.w),
                               Expanded(
                                 child: Text(
-                                  "Add More Spouse".tr,
+                                  AppLocalizations.of(context)!.add_more_spouse,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
