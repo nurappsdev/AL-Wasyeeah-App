@@ -36,32 +36,32 @@ class _HomeScreenState extends State<HomeScreen> {
   String upcomingPrayer = "";
   Map<String, String> prayerTimes = {};
 
-  void _calculateNextPrayer() {
-    if (prayerTimes.isEmpty) return;
-    final now = DateTime.now();
-    final today = DateFormat('yyyy-MM-dd').format(now);
-    DateTime? nextTime;
-    String? nextName;
+  // void _calculateNextPrayer() {
+  //   if (prayerTimes.isEmpty) return;
+  //   final now = DateTime.now();
+  //   final today = DateFormat('yyyy-MM-dd').format(now);
+  //   DateTime? nextTime;
+  //   String? nextName;
 
-    for (var entry in prayerTimes.entries) {
-      if (entry.value.isEmpty) continue;
-      try {
-        final time = DateTime.parse("$today ${entry.value}:00");
-        if (time.isAfter(now)) {
-          nextTime = time;
-          nextName = entry.key;
-          break;
-        }
-      } catch (_) {}
-    }
+  //   for (var entry in prayerTimes.entries) {
+  //     if (entry.value.isEmpty) continue;
+  //     try {
+  //       final time = DateTime.parse("$today ${entry.value}:00");
+  //       if (time.isAfter(now)) {
+  //         nextTime = time;
+  //         nextName = entry.key;
+  //         break;
+  //       }
+  //     } catch (_) {}
+  //   }
 
-    if (nextTime != null && nextName != null) {
-      setState(() {
-        timeLeft = nextTime!.difference(now);
-        upcomingPrayer = nextName!;
-      });
-    }
-  }
+  //   if (nextTime != null && nextName != null) {
+  //     setState(() {
+  //       timeLeft = nextTime!.difference(now);
+  //       upcomingPrayer = nextName!;
+  //     });
+  //   }
+  // }
 
   // @override
   // void initState() {
@@ -140,8 +140,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("magrib ${userController.getSalatTimeResponseModel.value?.maghrib}");
-
     return ConnectivityWrapper(
       child: Scaffold(
         appBar: PreferredSize(

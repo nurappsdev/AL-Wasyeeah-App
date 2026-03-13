@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/controllers/controllers.dart';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_five_screen.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_four_screen.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_one_screen.dart';
@@ -28,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: "Profile Settings".tr,
+          text: AppLocalizations.of(context)!.profile_settings,
           fontWeight: FontWeight.w600,
           fontsize: 20.sp,
         ),

@@ -1,4 +1,3 @@
-import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';

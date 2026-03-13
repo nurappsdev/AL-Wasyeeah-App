@@ -4,7 +4,7 @@ import 'package:al_wasyeah/view/auth/forgot_pass_screen.dart';
 import 'package:al_wasyeah/view/auth/login_screen.dart';
 import 'package:al_wasyeah/view/auth/otp_verify_screen.dart';
 import 'package:al_wasyeah/view/auth/registration_screen.dart';
-=import 'package:al_wasyeah/view/before_login/property_distribution_screen.dart';
+import 'package:al_wasyeah/view/before_login/property_distribution_screen.dart';
 import 'package:al_wasyeah/view/before_login/zakat_calculator_screen.dart';
 import 'package:al_wasyeah/view/home/home_screen.dart';
 import 'package:al_wasyeah/view/menu/menu_page.dart';
