@@ -99,10 +99,7 @@ class _NoInternetScreenState extends State<NoInternetScreen>
                 foregroundColor: Colors.black,
                 side: BorderSide(color: Colors.grey),
               ),
-              onPressed: () {
-                // Try rechecking connection
-                setState(() {}); // trigger rebuild
-              },
+              onPressed: () {},
               child: Text(AppLocalizations.of(context)!.try_again),
             ),
           ],
