@@ -430,10 +430,17 @@
   "wealth_document_file_downloaded_successfully": "সম্পত্তি দক্ষিণা ফাইল ডাউনলোড সফলভাবে হয়েছে",
   "nid_file_downloaded_successfully": "এনআইডি ফাইল ডাউনলোড সফলভাবে হয়েছে",
   "sibling": "ভাইবোন",
-   "please_enter_mobile_number":"Please enter mobile number",
-   "dead":"মৃত",
-   "child":"সন্তান",
-   "spouse":"স্ত্রী"
-
-
+  "please_enter_mobile_number":"Please enter mobile number",
+  "dead":"মৃত",
+  "child":"সন্তান",
+  "spouse":"স্ত্রী",
+  "only_pdf_jpeg_png_file_are_allowed": "* শুধুমাত্র PDF, JPEG, PNG ফাইল অনুমোদিত",
+  "tin_tax_identification_number_is_required": "TIN (Tax Identification Number) is required",
+  "father_information": "পিতার তথ্য",
+  "mother_information": "মাতার তথ্য",
+  "is_required": "প্রয়োজন",
+  "road_block_section": "রাস্তা/ব্লক/সেক্টর",
+  "mark_present_address_as_permanent_address": "বর্তমান ঠিকানাকে স্থায়ী ঠিকানা হিসেবে চিহ্নিত করুন",
+  "country": "দেশ",
+  "finish": "শেষ"
 }

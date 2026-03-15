@@ -1290,4 +1290,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get spouse => 'Spouse';
+
+  @override
+  String get only_pdf_jpeg_png_file_are_allowed =>
+      '* Only PDF, JPEG, PNG file are allowed';
+
+  @override
+  String get tin_tax_identification_number_is_required =>
+      'TIN (Tax Identification Number) is required';
+
+  @override
+  String get father_information => 'Father\'s Information';
+
+  @override
+  String get mother_information => 'Mother\'s Information';
+
+  @override
+  String get is_required => 'is required';
+
+  @override
+  String get road_block_section => 'Road/Block/Section';
+
+  @override
+  String get mark_present_address_as_permanent_address =>
+      'Mark Present Address as Permanent Address';
+
+  @override
+  String get country => 'Country';
+
+  @override
+  String get finish => 'Finish';
 }

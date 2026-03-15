@@ -32,7 +32,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
             children: [
               /// ========== Father ==========
               _parentSection(
-                title: "Father's Information",
+                title: AppLocalizations.of(context)!.father_information,
                 nameController: form.fatherName,
                 nidController: form.fatherPassOrNID,
                 selectedProfession: form.selectedFatherProfession,
@@ -51,7 +51,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
 
               /// ========== Mother ==========
               _parentSection(
-                title: "Mother's Information",
+                title: AppLocalizations.of(context)!.mother_information,
                 nameController: form.motherName,
                 nidController: form.motherPassOrNID,
                 selectedProfession: form.selectedMotherProfession,
@@ -72,10 +72,9 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomButtonCommon(
-                      title: "Previous".tr,
+                      title: AppLocalizations.of(context)!.previous,
                       onpress: () {
-                        controller
-                            .onStepTapped(controller.currentStep.value - 1);
+                        controller.onStepTapped(controller.currentStep.value - 1);
                       },
                     ),
                   ),
@@ -84,8 +83,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
                       title: AppLocalizations.of(context)!.next,
                       onpress: () {
                         if (controller.step3formKey.currentState!.validate()) {
-                          controller
-                              .onStepTapped(controller.currentStep.value + 1);
+                          controller.onStepTapped(controller.currentStep.value + 1);
                         }
                       },
                     ),
@@ -140,25 +138,23 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _sectionTitle(title),
-        _textField("Name", nameController),
+        _textField(AppLocalizations.of(Get.context!)!.name, nameController),
         _professionDropdown(selectedProfession),
-        _textField("NID/Passport No", nidController),
+        _textField(AppLocalizations.of(Get.context!)!.nid_passport_no, nidController),
         CustomText(
-          text: "NID/Passport Documents".tr,
+          text: AppLocalizations.of(Get.context!)!.nid_passport_documents,
           fontsize: 16.sp,
         ),
         SizedBox(height: 4.h),
-        if (fileUrl != null)
-          _buildFileRow(
-              fileUrl, pickedFile, onPickFile, downloadType, filePrefix),
+        if (fileUrl != null) _buildFileRow(fileUrl, pickedFile, onPickFile, downloadType, filePrefix),
         CustomText(
-          text: "* Only Pdf, JPEG, PNG file are allowed".tr,
+          text: AppLocalizations.of(Get.context!)!.only_pdf_jpeg_png_file_are_allowed,
           color: AppColors.redColor,
           fontsize: 12.sp,
         ),
         SizedBox(height: 16.h),
         CustomText(
-          text: "Existence Status".tr,
+          text: AppLocalizations.of(Get.context!)!.existence_status,
           fontsize: 16.sp,
         ),
         SizedBox(height: 4.h),
@@ -170,14 +166,14 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               fillColor: isAlive.value ? Colors.green : Colors.red,
               selectedColor: Colors.white,
-              children: const [
+              children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40),
-                  child: Text("Alive"),
+                  child: Text(AppLocalizations.of(Get.context!)!.alive),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40),
-                  child: Text("Dead"),
+                  child: Text(AppLocalizations.of(Get.context!)!.dead),
                 ),
               ],
             ),
@@ -200,8 +196,8 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
         SizedBox(height: 4.h),
         CustomTextFormField(
           controller: controller,
-          hint: label.tr,
-          validator: (value) => value!.isEmpty ? "$label is required" : null,
+          hint: label,
+          validator: (value) => value!.isEmpty ? "$label ${AppLocalizations.of(Get.context!)!.is_required}" : null,
         ),
         SizedBox(height: 16.h),
       ],
@@ -212,9 +208,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(
-            text: AppLocalizations.of(Get.context!)!.profession,
-            fontsize: 16.sp),
+        CustomText(text: AppLocalizations.of(Get.context!)!.profession, fontsize: 16.sp),
         SizedBox(height: 4.h),
         Obx(() => CustomDropdown<ProfessionModel>(
               hint: AppLocalizations.of(Get.context!)!.profession,
@@ -237,8 +231,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
   ) {
     return Obx(() => FileChooseAndDownloadButton(
           pickedFile: pickedFile,
-          isDownloading:
-              (controller.isDownloadingMap[downloadType] ?? false).obs,
+          isDownloading: (controller.isDownloadingMap[downloadType] ?? false).obs,
           progress: (controller.downloadProgressMap[downloadType] ?? 0.0).obs,
           onPickFile: onPickFile,
           onDownload: () async {
@@ -249,7 +242,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
             );
             if (isComplete) {
               Fluttertoast.showToast(
-                msg: "File downloaded successfully".tr,
+                msg: AppLocalizations.of(Get.context!)!.file_downloaded_successfully,
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.TOP,
                 timeInSecForIosWeb: 2,

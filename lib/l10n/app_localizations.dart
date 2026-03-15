@@ -2612,6 +2612,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Spouse'**
   String get spouse;
+
+  /// No description provided for @only_pdf_jpeg_png_file_are_allowed.
+  ///
+  /// In en, this message translates to:
+  /// **'* Only PDF, JPEG, PNG file are allowed'**
+  String get only_pdf_jpeg_png_file_are_allowed;
+
+  /// No description provided for @tin_tax_identification_number_is_required.
+  ///
+  /// In en, this message translates to:
+  /// **'TIN (Tax Identification Number) is required'**
+  String get tin_tax_identification_number_is_required;
+
+  /// No description provided for @father_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Father\'s Information'**
+  String get father_information;
+
+  /// No description provided for @mother_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Mother\'s Information'**
+  String get mother_information;
+
+  /// No description provided for @is_required.
+  ///
+  /// In en, this message translates to:
+  /// **'is required'**
+  String get is_required;
+
+  /// No description provided for @road_block_section.
+  ///
+  /// In en, this message translates to:
+  /// **'Road/Block/Section'**
+  String get road_block_section;
+
+  /// No description provided for @mark_present_address_as_permanent_address.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark Present Address as Permanent Address'**
+  String get mark_present_address_as_permanent_address;
+
+  /// No description provided for @country.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get country;
+
+  /// No description provided for @finish.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get finish;
 }
 
 class _AppLocalizationsDelegate

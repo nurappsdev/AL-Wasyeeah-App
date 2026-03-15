@@ -1301,4 +1301,34 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get spouse => 'স্ত্রী';
+
+  @override
+  String get only_pdf_jpeg_png_file_are_allowed =>
+      '* শুধুমাত্র PDF, JPEG, PNG ফাইল অনুমোদিত';
+
+  @override
+  String get tin_tax_identification_number_is_required =>
+      'TIN (Tax Identification Number) is required';
+
+  @override
+  String get father_information => 'পিতার তথ্য';
+
+  @override
+  String get mother_information => 'মাতার তথ্য';
+
+  @override
+  String get is_required => 'প্রয়োজন';
+
+  @override
+  String get road_block_section => 'রাস্তা/ব্লক/সেক্টর';
+
+  @override
+  String get mark_present_address_as_permanent_address =>
+      'বর্তমান ঠিকানাকে স্থায়ী ঠিকানা হিসেবে চিহ্নিত করুন';
+
+  @override
+  String get country => 'দেশ';
+
+  @override
+  String get finish => 'শেষ';
 }
