@@ -1149,7 +1149,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get husband_and_wife_cant_be_selected_together =>
-      'Husband and wife can\'t be select togather';
+      'You cannot select both Husband and Wife at the same time.';
 
   @override
   String get calculation_fetched_successfully =>
@@ -1320,4 +1320,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get finish => 'Finish';
+
+  @override
+  String get deceased => 'Deceased';
+
+  @override
+  String get s_suffix => '\'s';
 }

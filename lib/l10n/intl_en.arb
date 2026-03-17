@@ -431,5 +431,8 @@
   "road_block_section": "Road/Block/Section",
   "mark_present_address_as_permanent_address": "Mark Present Address as Permanent Address",
   "country": "Country",
-  "finish": "Finish"
+  "finish": "Finish",
+  "deceased":"Deceased",
+  "s_suffix": "'s",
+  "husband_and_wife_cant_be_selected_together":"You cannot select both Husband and Wife at the same time."
 }

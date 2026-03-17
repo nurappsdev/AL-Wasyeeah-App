@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:al_wasyeah/controllers/property_distribution_calculation/property_distribution_calculation_controller.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:intl/intl.dart';
 
 class PropertyDistributionCalculationPage extends StatelessWidget {
   PropertyDistributionCalculationPage({super.key});
@@ -26,7 +28,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
             ),
             padding: EdgeInsets.all(8.h),
             child: Text(
-              title.tr,
+              title,
               style: TextStyle(color: Colors.white, fontSize: 22.sp),
             ),
           ),
@@ -68,8 +70,12 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                       return Column(
                         children: [
                           _buildRelativeTile(relativeId),
-                          if ((relativeId == "aTZX79XB0XkeLgERIo2OIw==" ||
-                                  relativeId == "20wmeXeB57v9gv5lN+jWrA==") &&
+                          if ((relativeId ==
+                                      PropertyDistributionCalculationController
+                                          .deceasedSonId ||
+                                  relativeId ==
+                                      PropertyDistributionCalculationController
+                                          .deceasedDaughterId) &&
                               controller.isChecked[relativeId] == true)
                             ..._buildDynamicTiles(relativeId),
                           const Divider(),
@@ -170,7 +176,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                   return PieChartSectionData(
                     color: _chartColors[index % _chartColors.length],
                     value: percentage,
-                    title: '${percentage.toStringAsFixed(1)}%',
+                    title: '${percentage}%',
                     radius: 60,
                     titleStyle: TextStyle(
                       fontSize: 12.sp,
@@ -207,7 +213,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                   ),
                   SizedBox(width: 4.w),
                   Text(
-                    data.relativeName ?? AppLocalizations.of(Get.context!)!.n_a,
+                    _getRelativeName(data.relativeName),
                     style:
                         TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
                   ),
@@ -218,6 +224,34 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _getRelativeName(String? name) {
+    if (name == null) {
+      return AppLocalizations.of(Get.context!)!.n_a;
+    }
+
+    final locale = Get.locale?.languageCode ?? 'en';
+
+    final match = RegExp(r'\((\d+)\)').firstMatch(name);
+
+    if (match != null) {
+      final numberStr = match.group(1); // "1"
+      final number = int.tryParse(numberStr ?? '');
+
+      if (number != null) {
+        final formattedNumber =
+            NumberFormat.decimalPattern(locale).format(number);
+
+        // Replace (1) → (formattedNumber)
+        return name.replaceFirst(
+          match.group(0)!, // "(1)"
+          '($formattedNumber)',
+        );
+      }
+    }
+
+    return name;
   }
 
   Widget _buildResultCards() {
@@ -247,8 +281,7 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      data.relativeName ??
-                          AppLocalizations.of(Get.context!)!.n_a,
+                      _getRelativeName(data.relativeName),
                       style: TextStyle(
                           fontSize: 18.sp, fontWeight: FontWeight.bold),
                     ),
@@ -256,27 +289,19 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                 ),
                 const Divider(),
                 _resultRow(AppLocalizations.of(Get.context!)!.share_portion,
-                    "${(data.portionPart ?? 0) * 100}%"),
+                    "${((data.portionPart ?? 0) * 100).toLocal()}%"),
                 if (data.landPart != null && data.landPart! > 0)
-                  _resultRow(
-                      AppLocalizations.of(Get.context!)!.land_portion,
-                      "${data.landPart} ${AppLocalizations.of(Get.context!)!.decimal}"
-                          .tr),
+                  _resultRow(AppLocalizations.of(Get.context!)!.land_portion,
+                      "${data.landPart.toLocal()} ${AppLocalizations.of(Get.context!)!.decimal}"),
                 if (data.goldPart != null && data.goldPart! > 0)
-                  _resultRow(
-                      AppLocalizations.of(Get.context!)!.gold_portion,
-                      "${data.goldPart} ${AppLocalizations.of(Get.context!)!.gram_vori}"
-                          .tr),
+                  _resultRow(AppLocalizations.of(Get.context!)!.gold_portion,
+                      "${data.goldPart.toLocal()} ${AppLocalizations.of(Get.context!)!.gram_vori}"),
                 if (data.silverPart != null && data.silverPart! > 0)
-                  _resultRow(
-                      AppLocalizations.of(Get.context!)!.silver_portion,
-                      "${data.silverPart} ${AppLocalizations.of(Get.context!)!.gram_vori}"
-                          .tr),
+                  _resultRow(AppLocalizations.of(Get.context!)!.silver_portion,
+                      "${data.silverPart.toLocal()} ${AppLocalizations.of(Get.context!)!.gram_vori}"),
                 if (data.currencyPart != null && data.currencyPart! > 0)
-                  _resultRow(
-                      AppLocalizations.of(Get.context!)!.total_money,
-                      "${data.currencyPart} ${AppLocalizations.of(Get.context!)!.taka}"
-                          .tr),
+                  _resultRow(AppLocalizations.of(Get.context!)!.total_money,
+                      "${data.currencyPart.toLocal()} ${AppLocalizations.of(Get.context!)!.taka}"),
               ],
             ),
           ),
@@ -385,12 +410,18 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
                           value: unitValue.value,
                           isExpanded: true,
                           items: [
-                            AppLocalizations.of(Get.context!)!.gram,
-                            AppLocalizations.of(Get.context!)!.vori
-                          ].map((String value) {
+                            {
+                              'value': 'gram',
+                              'label': AppLocalizations.of(Get.context!)!.gram
+                            },
+                            {
+                              'value': 'vori',
+                              'label': AppLocalizations.of(Get.context!)!.vori
+                            }
+                          ].map((Map<String, String> item) {
                             return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
+                              value: item['value'],
+                              child: Text(item['label']!),
                             );
                           }).toList(),
                           onChanged: (newValue) {
@@ -458,9 +489,17 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
           controlAffinity: ListTileControlAffinity.leading,
         ),
         if (controller.isChecked[relativeId] == true &&
-            relativeId != "j1mjV6qs9iab4mbEVNyg0A==" &&
-            relativeId != "ES+jQvYP4Jfl7olyUlJ9RQ==" &&
-            relativeId != "zkX+xHUpZv1cdAjWQHiLxg==")
+            relativeId != PropertyDistributionCalculationController.husbandId &&
+            relativeId != PropertyDistributionCalculationController.wifeId &&
+            relativeId != PropertyDistributionCalculationController.fatherId &&
+            relativeId != PropertyDistributionCalculationController.motherId &&
+            relativeId !=
+                PropertyDistributionCalculationController.grandfatherId &&
+            relativeId !=
+                PropertyDistributionCalculationController.deceasedSonsSonId &&
+            relativeId !=
+                PropertyDistributionCalculationController
+                    .deceasedSonsDaughterId)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
@@ -498,27 +537,33 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
   List<Widget> _buildDynamicTiles(String relativeId) {
     int count = controller.counts[relativeId] ?? 0;
     List<Widget> tiles = [];
-    String base = relativeId == "aTZX79XB0XkeLgERIo2OIw=="
-        ? "SMYEnVLnIn1kIwp8wuJnQQ=="
-        : "Eb4fRY9JhIcz7l+KvhqwlA==";
+    String base =
+        relativeId == PropertyDistributionCalculationController.deceasedSonId
+            ? PropertyDistributionCalculationController.sonId
+            : PropertyDistributionCalculationController.daughterId;
 
     for (int i = 1; i <= count; i++) {
-      // Show for up to a reasonable number, or as many as the count indicates.
-      // User said "if select 1 or 2 then show like...",
-      // usually these are finite.
       String ordinal = controller.getOrdinal(i);
-      String sonKey =
-          "Deceased $ordinal ${controller.allRelatives.firstWhere((element) => element.encrypted == base).relative}'s Son";
-      String daughterKey =
-          "Deceased $ordinal ${controller.allRelatives.firstWhere((element) => element.encrypted == base).relative}'s Daughter";
 
-      tiles.add(_buildDynamicTile(sonKey, padding: 40));
-      tiles.add(_buildDynamicTile(daughterKey, padding: 40));
+      // Stable keys for state management
+      String sonKey =
+          "deceased_${relativeId}_${PropertyDistributionCalculationController.sonId}_$i";
+      String daughterKey =
+          "deceased_${relativeId}_${PropertyDistributionCalculationController.daughterId}_$i";
+
+      // Localized labels for display
+      String sonLabel =
+          "${AppLocalizations.of(Get.context!)!.deceased} $ordinal ${controller.allRelatives.firstWhere((element) => element.encrypted == base).relative} ${AppLocalizations.of(Get.context!)!.s_suffix} ${AppLocalizations.of(Get.context!)!.son}";
+      String daughterLabel =
+          "${AppLocalizations.of(Get.context!)!.deceased} $ordinal ${controller.allRelatives.firstWhere((element) => element.encrypted == base).relative} ${AppLocalizations.of(Get.context!)!.s_suffix} ${AppLocalizations.of(Get.context!)!.daughter}";
+
+      tiles.add(_buildDynamicTile(sonKey, sonLabel, padding: 40));
+      tiles.add(_buildDynamicTile(daughterKey, daughterLabel, padding: 40));
     }
     return tiles;
   }
 
-  Widget _buildDynamicTile(String name, {double padding = 0}) {
+  Widget _buildDynamicTile(String key, String label, {double padding = 0}) {
     return Obx(() {
       return Padding(
         padding: EdgeInsets.only(left: padding),
@@ -527,12 +572,12 @@ class PropertyDistributionCalculationPage extends StatelessWidget {
             CheckboxListTile(
               activeColor: AppColors.primaryColor,
               title: Text(
-                name,
+                label,
                 style:
                     const TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
               ),
-              value: controller.dynamicIsChecked[name] ?? false,
-              onChanged: (val) => controller.toggleDynamicCheck(name, val),
+              value: controller.dynamicIsChecked[key] ?? false,
+              onChanged: (val) => controller.toggleDynamicCheck(key, val),
               controlAffinity: ListTileControlAffinity.leading,
             ),
           ],

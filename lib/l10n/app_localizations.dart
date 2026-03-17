@@ -2340,7 +2340,7 @@ abstract class AppLocalizations {
   /// No description provided for @husband_and_wife_cant_be_selected_together.
   ///
   /// In en, this message translates to:
-  /// **'Husband and wife can\'t be select togather'**
+  /// **'You cannot select both Husband and Wife at the same time.'**
   String get husband_and_wife_cant_be_selected_together;
 
   /// No description provided for @calculation_fetched_successfully.
@@ -2666,6 +2666,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Finish'**
   String get finish;
+
+  /// No description provided for @deceased.
+  ///
+  /// In en, this message translates to:
+  /// **'Deceased'**
+  String get deceased;
+
+  /// No description provided for @s_suffix.
+  ///
+  /// In en, this message translates to:
+  /// **'\'s'**
+  String get s_suffix;
 }
 
 class _AppLocalizationsDelegate

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/models/property_distribution_calculation_model/property_destribution_result_model.dart';
 import 'package:flutter/material.dart';
 import 'package:al_wasyeah/helpers/toast_message_helper.dart';
@@ -7,6 +8,7 @@ import 'package:al_wasyeah/services/api_client.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/models/property_distribution_calculation_model/relavant_list_model.dart';
+import 'package:intl/intl.dart';
 
 class PropertyDistributionCalculationController extends GetxController {
   final Rx<RxStatus> status = RxStatus.loading().obs;
@@ -16,7 +18,22 @@ class PropertyDistributionCalculationController extends GetxController {
   RxList<PropertydistributionResultModel> propertyDistributionResult =
       <PropertydistributionResultModel>[].obs;
 
-  // Selection and Counts
+  // Constants for Encrypted Relative IDs
+  static const String husbandId = "j1mjV6qs9iab4mbEVNyg0A==";
+  static const String wifeId = "L3KSP53cxd1tnhTXblgTZw==";
+  static const String fatherId = "ES+jQvYP4Jfl7olyUlJ9RQ==";
+  static const String motherId = "P1EMaXcfDjHvaG3FENSJ0g==";
+  static const String grandfatherId = "zkX+xHUpZv1cdAjWQHiLxg==";
+  static const String deceasedSonId = "aTZX79XB0XkeLgERIo2OIw==";
+  static const String deceasedDaughterId = "20wmeXeB57v9gv5lN+jWrA==";
+  static const String sonId = "SMYEnVLnIn1kIwp8wuJnQQ==";
+  static const String daughterId = "Eb4fRY9JhIcz7l+KvhqwlA==";
+  static const String deceasedSonsSonId = "HpOMjLTogw9LacBtPZnBYw==";
+  static const String deceasedSonsDaughterId = "UX3C0ze3peC15PxKMKcLKw==";
+  static const String deceasedDaughtersSonId = "rKt0JEpkWRnmry8/vxHLHg==";
+  static const String deceasedDaughtersDaughterId = "oWmEwQJfpNvTtt5jYXWsoA==";
+
+  // Selection and Counts - Now using Encrypted ID as key
   RxMap<String, bool> isChecked = <String, bool>{}.obs;
   RxMap<String, int> counts = <String, int>{}.obs;
 
@@ -31,17 +48,17 @@ class PropertyDistributionCalculationController extends GetxController {
   final silverController = TextEditingController();
   final moneyController = TextEditingController();
 
-  RxString goldUnit = "Gram".obs;
-  RxString silverUnit = "Gram".obs;
+  RxString goldUnit = "gram".obs;
+  RxString silverUnit = "gram".obs;
 
   RxBool isCalculateVisible = false.obs;
   RxBool isCalculateLoading = false.obs;
 
-  final List<String> hiddenRelatives = [
-    "Deceased Son's Son",
-    "Deceased Son's Daughter",
-    "Deceased Daughter's Son",
-    "Deceased Daughter's Daughter"
+  final List<String> hiddenRelativeIds = [
+    deceasedSonsSonId,
+    deceasedSonsDaughterId,
+    deceasedDaughtersSonId,
+    deceasedDaughtersDaughterId,
   ];
 
   @override
@@ -92,62 +109,72 @@ class PropertyDistributionCalculationController extends GetxController {
 
   Future<void> loadRelatives() async {
     for (var rel in allRelatives) {
-      isChecked[rel.relative!] = false;
-      counts[rel.relative!] = 0;
+      if (rel.encrypted != null) {
+        isChecked[rel.encrypted!] = false;
+        counts[rel.encrypted!] = 0;
+      }
     }
   }
 
   List<RelativeModelForPropertyDistribution> get filteredRelatives {
     return allRelatives
-        .where((rel) => !hiddenRelatives.contains(rel.relative))
+        .where((rel) => !hiddenRelativeIds.contains(rel.encrypted))
         .toList();
   }
 
-  void toggleCheck(String relative, bool? value) {
+  void toggleCheck(String encryptedId, bool? value) {
     if (value == true) {
-      if (relative == "Husband" && isChecked["Wife"] == true) {
+      if (encryptedId == husbandId && isChecked[wifeId] == true) {
         ToastMessageHelper.errorMessageShowToster(
-            "Husband and wife can't be select togather");
-        isChecked["Wife"] = false;
-        counts["Wife"] = 0;
-      } else if (relative == "Wife" && isChecked["Husband"] == true) {
+            AppLocalizations.of(Get.context!)!
+                .husband_and_wife_cant_be_selected_together);
+        isChecked[wifeId] = false;
+        counts[wifeId] = 0;
+      } else if (encryptedId == wifeId && isChecked[husbandId] == true) {
         ToastMessageHelper.errorMessageShowToster(
-            "Husband and wife can't be select togather");
-        isChecked["Husband"] = false;
-        counts["Husband"] = 0;
+            AppLocalizations.of(Get.context!)!
+                .husband_and_wife_cant_be_selected_together);
+        isChecked[husbandId] = false;
+        counts[husbandId] = 0;
       }
-      isChecked[relative] = true;
-      if (counts[relative] == 0) counts[relative] = 1;
+      isChecked[encryptedId] = true;
+      if ((counts[encryptedId] ?? 0) == 0) counts[encryptedId] = 1;
 
-      // Handle special limit for Husband and Father
-      if ((relative == "Husband" || relative == "Father") &&
-          counts[relative]! > 1) {
-        counts[relative] = 1;
+      // Handle special limit for Husband, Father, Mother, Grandfather
+      if ((encryptedId == husbandId ||
+              encryptedId == fatherId ||
+              encryptedId == motherId ||
+              encryptedId == grandfatherId) &&
+          (counts[encryptedId] ?? 0) > 1) {
+        counts[encryptedId] = 1;
       }
     } else {
-      isChecked[relative] = false;
-      counts[relative] = 0;
+      isChecked[encryptedId] = false;
+      counts[encryptedId] = 0;
     }
     update();
   }
 
-  void increment(String relative) {
-    if (isChecked[relative] != true) return;
+  void increment(String encryptedId) {
+    if (isChecked[encryptedId] != true) return;
 
-    if (relative == "Husband" || relative == "Father") {
-      if (counts[relative]! >= 1) return;
+    if (encryptedId == husbandId ||
+        encryptedId == fatherId ||
+        encryptedId == motherId ||
+        encryptedId == grandfatherId) {
+      if ((counts[encryptedId] ?? 0) >= 1) return;
     }
 
-    counts[relative] = (counts[relative] ?? 0) + 1;
+    counts[encryptedId] = (counts[encryptedId] ?? 0) + 1;
     update();
   }
 
-  void decrement(String relative) {
-    if (isChecked[relative] != true) return;
-    if (counts[relative]! > 0) {
-      counts[relative] = counts[relative]! - 1;
-      if (counts[relative] == 0) {
-        isChecked[relative] = false;
+  void decrement(String encryptedId) {
+    if (isChecked[encryptedId] != true) return;
+    if ((counts[encryptedId] ?? 0) > 0) {
+      counts[encryptedId] = (counts[encryptedId] ?? 0) - 1;
+      if (counts[encryptedId] == 0) {
+        isChecked[encryptedId] = false;
       }
     }
     update();
@@ -172,8 +199,8 @@ class PropertyDistributionCalculationController extends GetxController {
 
   void decrementDynamic(String key) {
     if (dynamicIsChecked[key] != true) return;
-    if (dynamicCounts[key]! > 0) {
-      dynamicCounts[key] = dynamicCounts[key]! - 1;
+    if ((dynamicCounts[key] ?? 0) > 0) {
+      dynamicCounts[key] = (dynamicCounts[key] ?? 0) - 1;
       if (dynamicCounts[key] == 0) {
         dynamicIsChecked[key] = false;
       }
@@ -185,13 +212,12 @@ class PropertyDistributionCalculationController extends GetxController {
     Map<String, int> relatives = {};
 
     // 1. Map standard relatives
-    for (var rel in allRelatives) {
-      String name = rel.relative!;
-      if (isChecked[name] == true) {
-        String key = "relative_no_${rel.encrypted}";
-        relatives[key] = counts[name] ?? 0;
+    isChecked.forEach((encryptedId, isSel) {
+      if (isSel) {
+        String key = "relative_no_$encryptedId";
+        relatives[key] = counts[encryptedId] ?? 0;
       }
-    }
+    });
 
     // 2. Map dynamic (deceased) relatives
     // UI Key example: "Deceased 1st Son's Son"
@@ -212,14 +238,14 @@ class PropertyDistributionCalculationController extends GetxController {
     }
     if (goldController.text.isNotEmpty) {
       double goldVal = double.tryParse(goldController.text) ?? 0;
-      if (goldUnit.value == "Vori") {
+      if (goldUnit.value == "vori") {
         goldVal = goldVal * 11.664;
       }
       finalOutput["propertyGold"] = goldVal;
     }
     if (silverController.text.isNotEmpty) {
       double silverVal = double.tryParse(silverController.text) ?? 0;
-      if (silverUnit.value == "Vori") {
+      if (silverUnit.value == "vori") {
         silverVal = silverVal * 11.664;
       }
       finalOutput["propertySilver"] = silverVal;
@@ -236,20 +262,22 @@ class PropertyDistributionCalculationController extends GetxController {
           ApiConstants.propertyDistributionCalculationResult, finalOutput);
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessageHelper.successMessageShowToster(
-            "Calculation fetched successfully");
+            AppLocalizations.of(Get.context!)!
+                .calculation_fetched_successfully);
         propertyDistributionResult.value =
             propertydistributionResultModelFromJson(jsonEncode(response.body));
 
-        // Reset all inputs after success if needed,
-        // Note: User asked to clean the selected and typed value.
+        // Reset all inputs after success if needed
         resetInputs();
       } else {
         ToastMessageHelper.errorMessageShowToster(
-            "Failed to fetch calculation result");
+            AppLocalizations.of(Get.context!)!
+                .failed_to_fetch_calculation_result);
       }
     } catch (e, s) {
       log("Property Calculation Error: $e\nStacktrace: $s");
-      ToastMessageHelper.errorMessageShowToster("Something went wrong");
+      ToastMessageHelper.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.something_went_wrong);
     } finally {
       isCalculateLoading.value = false;
     }
@@ -264,34 +292,54 @@ class PropertyDistributionCalculationController extends GetxController {
     goldController.clear();
     silverController.clear();
     moneyController.clear();
-    goldUnit.value = "Gram";
-    silverUnit.value = "Gram";
+    goldUnit.value = "gram";
+    silverUnit.value = "gram";
     isCalculateVisible.value = false;
     update();
   }
 
   String _mapDynamicKeyToShortKey(String uiKey) {
-    // Regex to parse "Deceased 1st Son's Son" -> parent: son, child: son, index: 1
-    // Regex to parse "Deceased 2nd Daughter's Daughter" -> parent: daughter, child: daughter, index: 2
+    // Stable Key format: "deceased_parentEnc_childEnc_index"
+    // Example: "deceased_aTZX79XB0XkeLgERIo2OIw==_SMYEnVLnIn1kIwp8wuJnQQ==_1"
 
-    final pattern = RegExp(
-        r"Deceased (\d+)(?:st|nd|rd|th) (Son|Daughter)'s (Son|Daughter)");
-    final match = pattern.firstMatch(uiKey);
-
-    if (match != null) {
-      int index = int.parse(match.group(1)!);
-      String parent = match.group(2)!.toLowerCase();
-      String child = match.group(3)!.toLowerCase();
-      return "relative_no_${parent}_${child}_$index";
+    final parts = uiKey.split('_');
+    if (parts.length == 4 && parts[0] == 'deceased') {
+      String parentEnc = parts[1];
+      String childEnc = parts[2];
+      int index = int.tryParse(parts[3]) ?? 1;
+      return "relative_no_${parentEnc}_${childEnc}_$index";
     }
 
     return uiKey; // Fallback
   }
 
-  String getOrdinal(int n) {
-    if (n == 1) return "1st";
-    if (n == 2) return "2nd";
-    if (n == 3) return "3rd";
-    return "${n}th";
+  String getOrdinal(
+    int n,
+  ) {
+    if (Get.locale!.languageCode == 'bn') {
+      // Bangla Ordinal Logic
+      final String bengaliNumber =
+          NumberFormat.decimalPattern(Get.locale!.languageCode).format(n);
+
+      // Bangla ordinals often use specific words or suffixes (১ম, ২য়, ৩য়, ৪র্থ...)
+      const suffixes = {1: 'ম', 2: 'য়', 3: 'য়', 4: 'র্থ'};
+      return "$bengaliNumber${suffixes[n] ?? 'তম'}";
+    } else {
+      // English Ordinal Logic (Handling 11th, 12th, 13th exceptions)
+      if (n >= 11 && n <= 13) {
+        return "${n}th";
+      }
+
+      switch (n % 10) {
+        case 1:
+          return "${n}st";
+        case 2:
+          return "${n}nd";
+        case 3:
+          return "${n}rd";
+        default:
+          return "${n}th";
+      }
+    }
   }
 }

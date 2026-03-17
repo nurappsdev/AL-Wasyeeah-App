@@ -1331,4 +1331,10 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get finish => 'শেষ';
+
+  @override
+  String get deceased => 'মৃত';
+
+  @override
+  String get s_suffix => 'এর';
 }

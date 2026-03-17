@@ -442,5 +442,8 @@
   "road_block_section": "রাস্তা/ব্লক/সেক্টর",
   "mark_present_address_as_permanent_address": "বর্তমান ঠিকানাকে স্থায়ী ঠিকানা হিসেবে চিহ্নিত করুন",
   "country": "দেশ",
-  "finish": "শেষ"
+  "finish": "শেষ",
+  "deceased":"মৃত",
+  "s_suffix": "এর",
+   "husband_and_wife_cant_be_selected_together":"স্বামী এবং স্ত্রী একসাথে নির্বাচন করা যাবে না"
 }
