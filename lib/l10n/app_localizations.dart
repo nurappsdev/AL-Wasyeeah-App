@@ -2475,54 +2475,6 @@ abstract class AppLocalizations {
   /// **'th'**
   String get ordinal_th;
 
-  /// No description provided for @son_1.
-  ///
-  /// In en, this message translates to:
-  /// **'Son 1'**
-  String get son_1;
-
-  /// No description provided for @son_2.
-  ///
-  /// In en, this message translates to:
-  /// **'Son 2'**
-  String get son_2;
-
-  /// No description provided for @plot_1.
-  ///
-  /// In en, this message translates to:
-  /// **'Plot 1'**
-  String get plot_1;
-
-  /// No description provided for @plot_2.
-  ///
-  /// In en, this message translates to:
-  /// **'Plot 2'**
-  String get plot_2;
-
-  /// No description provided for @land_decimal.
-  ///
-  /// In en, this message translates to:
-  /// **'Land (Decimal)'**
-  String get land_decimal;
-
-  /// No description provided for @gold_bhari.
-  ///
-  /// In en, this message translates to:
-  /// **'Gold (Bhari)'**
-  String get gold_bhari;
-
-  /// No description provided for @silver_bhari.
-  ///
-  /// In en, this message translates to:
-  /// **'Silver (Bhari)'**
-  String get silver_bhari;
-
-  /// No description provided for @money_taka.
-  ///
-  /// In en, this message translates to:
-  /// **'Money (Taka)'**
-  String get money_taka;
-
   /// No description provided for @error.
   ///
   /// In en, this message translates to:
@@ -2774,6 +2726,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Distribute Your Property Properly'**
   String get distribute_your_property_properly;
+
+  /// No description provided for @current_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Time'**
+  String get current_time;
+
+  /// No description provided for @current_prayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Prayer'**
+  String get current_prayer;
+
+  /// No description provided for @previous_prayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous Prayer'**
+  String get previous_prayer;
+
+  /// No description provided for @upcoming_prayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Prayer'**
+  String get upcoming_prayer;
+
+  /// No description provided for @remaining_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining Time'**
+  String get remaining_time;
+
+  /// No description provided for @sunrise_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise Time'**
+  String get sunrise_time;
+
+  /// No description provided for @sunset_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunset Time'**
+  String get sunset_time;
 }
 
 class _AppLocalizationsDelegate

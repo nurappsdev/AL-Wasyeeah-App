@@ -399,14 +399,6 @@
   "access_feature": "Access Feature",
   "application_menu": "Application Menu",
   "give_access": "Give Access",
-  "son_1": "Son 1",
-  "son_2": "Son 2",
-  "plot_1": "Plot 1",
-  "plot_2": "Plot 2",
-  "land_decimal": "Land (Decimal)",
-  "gold_bhari": "Gold (Bhari)",
-  "silver_bhari": "Silver (Bhari)",
-  "money_taka": "Money (Taka)",
   "error": "Error",
   "date": "Date",
   "ok": "Ok",
@@ -450,5 +442,12 @@
   "immediate_liabilities": "Immediate liabilities",
   "distribure_your_property_properly": "Distribute Your Property Properly",
   "calculate_your_zakat": "Calculate Your Zakat",
-  "distribute_your_property_properly": "Distribute Your Property Properly"
+  "distribute_your_property_properly": "Distribute Your Property Properly",
+  "current_time": "Current Time",
+  "current_prayer": "Current Prayer",
+  "previous_prayer": "Previous Prayer",
+  "upcoming_prayer": "Upcoming Prayer",
+  "remaining_time":"Remaining Time",
+  "sunrise_time":"Sunrise Time",
+  "sunset_time":"Sunset Time"
 }

@@ -461,5 +461,12 @@
    "immediate_liabilities": "তাৎক্ষণিক দায়বদ্ধতা",
    "distribure_your_property_properly": "আপনার সম্পত্তি সঠিকভাবে বন্টন করুন",
    "calculate_your_zakat": "আপনার যাকাত গণনা করুন",
-   "distribute_your_property_properly": "আপনার সম্পত্তি সঠিকভাবে বন্টন করুন"
+   "distribute_your_property_properly": "আপনার সম্পত্তি সঠিকভাবে বন্টন করুন",
+   "current_time": "বর্তমান সময়",
+   "current_prayer": "বর্তমান প্রার্থনা",
+   "previous_prayer": "পূর্ববর্তী প্রার্থনা",
+   "upcoming_prayer": "আসন্ন প্রার্থনা",
+   "remaining_time":"অবশিষ্ট সময়",
+   "sunrise_time":"সূর্যোদয়ের সময়",
+   "sunset_time":"সূর্যাস্তের সময়"
 }

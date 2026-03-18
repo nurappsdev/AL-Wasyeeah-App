@@ -866,11 +866,11 @@ class ProfileController extends GetxController {
     }
   }
 
-  // @override
-  // void onInit() async {
-  //   getProfilePageData();
-  //   super.onInit();
-  // }
+  @override
+  void onInit() async {
+    getProfilePageData();
+    super.onInit();
+  }
 
   @override
   void onClose() {

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import '../../helpers/app_routes.dart';
 import '../../helpers/prefs_helper.dart';
 import '../../utils/app_constant.dart';
 import '../../utils/app_image.dart';
-import 'package:http/http.dart' as http;
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class FirstSplashScreen extends StatefulWidget {
@@ -26,7 +24,6 @@ class _FirstSplashScreenState extends State<FirstSplashScreen> {
     super.initState();
     Future.delayed(Duration(seconds: 3), () async {
       try {
-        fetchAndSetLocation();
         String token = await PrefsHelper.getString(AppConstants.bearerToken);
         if (token.isNotEmpty) {
           Get.offAllNamed(AppRoutes.homeScreen);
@@ -38,29 +35,6 @@ class _FirstSplashScreenState extends State<FirstSplashScreen> {
         //    Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM);
       }
     });
-  }
-
-  Future<void> fetchAndSetLocation() async {
-    try {
-      final response = await http.get(Uri.parse('https://ipwho.is/'));
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        final double latitude = data['latitude'];
-        final double longitude = data['longitude'];
-
-        // Save to SharedPreferences using PrefsHelper
-        await PrefsHelper.setString(AppConstants.latitude, latitude.toString());
-        await PrefsHelper.setString(
-            AppConstants.longitude, longitude.toString());
-
-        print('Location saved: lat=$latitude, long=$longitude');
-      } else {
-        print('Failed to fetch location. Status code: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error fetching location: $e');
-    }
   }
 
   bool isEnglish = true;

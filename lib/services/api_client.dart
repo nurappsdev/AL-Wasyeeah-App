@@ -46,7 +46,9 @@ class ApiClient extends GetxService {
       body = response.body;
     }
 
-    final statusText = body is Map && body['message'] != null ? body['message'].toString() : response.reasonPhrase;
+    final statusText = body is Map && body['message'] != null
+        ? body['message'].toString()
+        : response.reasonPhrase;
 
     log('====> API Response: [${response.statusCode}] ${ApiConstants.baseUrl + uri}\nToken:$_bearerToken\nBody\n$body');
 
@@ -88,12 +90,16 @@ class ApiClient extends GetxService {
             headers: headers ?? await _defaultHeaders(),
           )
           .timeout(const Duration(seconds: timeoutInSeconds));
-      log("----******------GET RESPONSE: ${response.body}");
       return _buildResponse(response, uri);
     } on SocketException {
-      return Response(statusCode: 404, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(
+          statusCode: 404,
+          statusText:
+              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     } on TimeoutException {
-      return Response(statusCode: 404, statusText: AppLocalizations.of(Get.context!)!.request_timeout);
+      return Response(
+          statusCode: 404,
+          statusText: AppLocalizations.of(Get.context!)!.request_timeout);
     } catch (e) {
       return Response(statusCode: 404, statusText: e.toString());
     }
@@ -118,9 +124,14 @@ class ApiClient extends GetxService {
 
       return _buildResponse(response, uri);
     } on SocketException {
-      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(
+          statusCode: -1,
+          statusText:
+              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     } on TimeoutException {
-      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.request_timeout);
+      return Response(
+          statusCode: -1,
+          statusText: AppLocalizations.of(Get.context!)!.request_timeout);
     } catch (e) {
       return Response(statusCode: -1, statusText: e.toString());
     }
@@ -144,7 +155,10 @@ class ApiClient extends GetxService {
 
       return _buildResponse(response, uri);
     } catch (_) {
-      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(
+          statusCode: -1,
+          statusText:
+              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     }
   }
 
@@ -166,7 +180,10 @@ class ApiClient extends GetxService {
 
       return _buildResponse(response, uri);
     } catch (_) {
-      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(
+          statusCode: -1,
+          statusText:
+              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     }
   }
 
@@ -188,7 +205,10 @@ class ApiClient extends GetxService {
 
       return _buildResponse(response, uri);
     } catch (_) {
-      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(
+          statusCode: -1,
+          statusText:
+              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     }
   }
 
@@ -202,7 +222,8 @@ class ApiClient extends GetxService {
     try {
       _bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
 
-      final request = http.MultipartRequest('POST', Uri.parse(ApiConstants.baseUrl + uri));
+      final request =
+          http.MultipartRequest('POST', Uri.parse(ApiConstants.baseUrl + uri));
 
       request.headers['Authorization'] = 'Bearer $_bearerToken';
       request.fields.addAll(fields);
@@ -223,7 +244,10 @@ class ApiClient extends GetxService {
 
       return _buildResponse(response, uri);
     } catch (_) {
-      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(
+          statusCode: -1,
+          statusText:
+              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     }
   }
 }

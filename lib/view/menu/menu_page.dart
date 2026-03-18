@@ -29,15 +29,7 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  final userController = Get.put(UserController());
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      userController.getUserProfileData();
-    });
-  }
+  final homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -63,10 +55,13 @@ class _MenuPageState extends State<MenuPage> {
                 ),
                 Center(
                   child: Obx(
-                    () => userController.userProfile.value?.userProfile?.profilePictureUrl != null
+                    () => homeController.profileController.profileModel.value
+                                .userProfile?.profilePictureUrl !=
+                            null
                         ? CircleAvatar(
                             radius: 50,
-                            backgroundImage: NetworkImage("${ApiConstants.imageUrl + "${userController.userProfile.value!.userProfile!.profilePictureUrl}"}"),
+                            backgroundImage: NetworkImage(
+                                "${ApiConstants.imageUrl + "${homeController.profileController.profileModel.value.userProfile?.profilePictureUrl}"}"),
                             backgroundColor: Colors.grey[200],
                           )
                         : CircleAvatar(
@@ -80,7 +75,8 @@ class _MenuPageState extends State<MenuPage> {
                   height: 10.h,
                 ),
                 Obx(() => CustomText(
-                      text: "${userController.userProfile.value?.userProfile?.firstName} ${userController.userProfile.value?.userProfile?.lastName}",
+                      text:
+                          "${homeController.profileController.profileModel.value.userProfile?.firstName} ${homeController.profileController.profileModel.value.userProfile?.lastName}",
                       fontsize: 18.sp,
                       fontWeight: FontWeight.w700,
                     )),
@@ -118,7 +114,8 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: AppLocalizations.of(context)!.personal_details,
+                                text: AppLocalizations.of(context)!
+                                    .personal_details,
                                 fontsize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
@@ -144,7 +141,8 @@ class _MenuPageState extends State<MenuPage> {
                 ///=====================Device History====================================
                 InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.changePassScreen, preventDuplicates: false);
+                    Get.toNamed(AppRoutes.changePassScreen,
+                        preventDuplicates: false);
                   },
                   child: Container(
                     width: 360.w,
@@ -170,7 +168,8 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: AppLocalizations.of(context)!.change_password,
+                                text: AppLocalizations.of(context)!
+                                    .change_password,
                                 fontsize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
@@ -196,7 +195,8 @@ class _MenuPageState extends State<MenuPage> {
                 ///=====================Device History====================================
                 InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.accessControlTabScreen, preventDuplicates: false);
+                    Get.toNamed(AppRoutes.accessControlTabScreen,
+                        preventDuplicates: false);
                   },
                   child: Container(
                     width: 360.w,
@@ -222,7 +222,8 @@ class _MenuPageState extends State<MenuPage> {
                               ),
                               SizedBox(width: 16.w),
                               CustomText(
-                                text: AppLocalizations.of(context)!.access_control_panel,
+                                text: AppLocalizations.of(context)!
+                                    .access_control_panel,
                                 fontsize: 16.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.textColor4E4E4E,
@@ -352,7 +353,8 @@ class _MenuPageState extends State<MenuPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-              contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 26.h),
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 24.w, vertical: 26.h),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -388,19 +390,22 @@ class _MenuPageState extends State<MenuPage> {
                               fontSize: 16.h,
                               onpress: () async {
                                 //   profileController.promoCode.value = "";
-                                await PrefsHelper.remove(AppConstants.bearerToken);
+                                await PrefsHelper.remove(
+                                    AppConstants.bearerToken);
                                 await PrefsHelper.remove(AppConstants.userId);
-                                await PrefsHelper.remove(AppConstants.firstname);
+                                await PrefsHelper.remove(
+                                    AppConstants.firstname);
                                 await PrefsHelper.remove(AppConstants.lastname);
                                 // await PrefsHelper.remove(AppConstants.userName);
                                 await PrefsHelper.remove(AppConstants.phone);
                                 await PrefsHelper.remove(AppConstants.image);
                                 await PrefsHelper.remove(AppConstants.email);
-                                await PrefsHelper.remove(AppConstants.businessID);
+                                await PrefsHelper.remove(
+                                    AppConstants.businessID);
                                 await PrefsHelper.remove(AppConstants.type);
 
                                 // Clear controllers to avoid stale data
-                                Get.delete<UserController>(force: true);
+                                Get.delete<HomeController>(force: true);
                                 Get.delete<NotificationController>(force: true);
                                 Get.delete<ProfileController>(force: true);
 
@@ -411,7 +416,9 @@ class _MenuPageState extends State<MenuPage> {
                 ],
               ),
               elevation: 12.0,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r), side: BorderSide(width: 1.w, color: AppColors.primaryColor)));
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                  side: BorderSide(width: 1.w, color: AppColors.primaryColor)));
         });
   }
 }

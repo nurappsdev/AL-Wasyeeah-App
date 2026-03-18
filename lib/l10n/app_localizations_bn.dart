@@ -1231,30 +1231,6 @@ class AppLocalizationsBn extends AppLocalizations {
   String get ordinal_th => 'th';
 
   @override
-  String get son_1 => 'Son 1';
-
-  @override
-  String get son_2 => 'Son 2';
-
-  @override
-  String get plot_1 => 'Plot 1';
-
-  @override
-  String get plot_2 => 'Plot 2';
-
-  @override
-  String get land_decimal => 'Land (Decimal)';
-
-  @override
-  String get gold_bhari => 'Gold (Bhari)';
-
-  @override
-  String get silver_bhari => 'Silver (Bhari)';
-
-  @override
-  String get money_taka => 'Money (Taka)';
-
-  @override
   String get error => 'Error';
 
   @override
@@ -1388,4 +1364,25 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get distribute_your_property_properly =>
       'আপনার সম্পত্তি সঠিকভাবে বন্টন করুন';
+
+  @override
+  String get current_time => 'বর্তমান সময়';
+
+  @override
+  String get current_prayer => 'বর্তমান প্রার্থনা';
+
+  @override
+  String get previous_prayer => 'পূর্ববর্তী প্রার্থনা';
+
+  @override
+  String get upcoming_prayer => 'আসন্ন প্রার্থনা';
+
+  @override
+  String get remaining_time => 'অবশিষ্ট সময়';
+
+  @override
+  String get sunrise_time => 'সূর্যোদয়ের সময়';
+
+  @override
+  String get sunset_time => 'সূর্যাস্তের সময়';
 }

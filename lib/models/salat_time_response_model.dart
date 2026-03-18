@@ -1,5 +1,16 @@
+// To parse this JSON data, do
+//
+//     final salatTimeResponseModel = salatTimeResponseModelFromJson(jsonString);
 
-class GetSalatTimeResponseModel {
+import 'dart:convert';
+
+SalatTimeResponseModel salatTimeResponseModelFromJson(String str) =>
+    SalatTimeResponseModel.fromJson(json.decode(str));
+
+String salatTimeResponseModelToJson(SalatTimeResponseModel data) =>
+    json.encode(data.toJson());
+
+class SalatTimeResponseModel {
   final String? fajr;
   final String? sunrise;
   final String? dhuhr;
@@ -12,7 +23,7 @@ class GetSalatTimeResponseModel {
   final String? firstthird;
   final String? lastthird;
 
-  GetSalatTimeResponseModel({
+  SalatTimeResponseModel({
     this.fajr,
     this.sunrise,
     this.dhuhr,
@@ -26,31 +37,32 @@ class GetSalatTimeResponseModel {
     this.lastthird,
   });
 
-  factory GetSalatTimeResponseModel.fromJson(Map<String, dynamic> json) => GetSalatTimeResponseModel(
-    fajr: json["Fajr"],
-    sunrise: json["Sunrise"],
-    dhuhr: json["Dhuhr"],
-    asr: json["Asr"],
-    sunset: json["Sunset"],
-    maghrib: json["Maghrib"],
-    isha: json["Isha"],
-    imsak: json["Imsak"],
-    midnight: json["Midnight"],
-    firstthird: json["Firstthird"],
-    lastthird: json["Lastthird"],
-  );
+  factory SalatTimeResponseModel.fromJson(Map<String, dynamic> json) =>
+      SalatTimeResponseModel(
+        fajr: json["Fajr"],
+        sunrise: json["Sunrise"],
+        dhuhr: json["Dhuhr"],
+        asr: json["Asr"],
+        sunset: json["Sunset"],
+        maghrib: json["Maghrib"],
+        isha: json["Isha"],
+        imsak: json["Imsak"],
+        midnight: json["Midnight"],
+        firstthird: json["Firstthird"],
+        lastthird: json["Lastthird"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "Fajr": fajr,
-    "Sunrise": sunrise,
-    "Dhuhr": dhuhr,
-    "Asr": asr,
-    "Sunset": sunset,
-    "Maghrib": maghrib,
-    "Isha": isha,
-    "Imsak": imsak,
-    "Midnight": midnight,
-    "Firstthird": firstthird,
-    "Lastthird": lastthird,
-  };
+        "Fajr": fajr,
+        "Sunrise": sunrise,
+        "Dhuhr": dhuhr,
+        "Asr": asr,
+        "Sunset": sunset,
+        "Maghrib": maghrib,
+        "Isha": isha,
+        "Imsak": imsak,
+        "Midnight": midnight,
+        "Firstthird": firstthird,
+        "Lastthird": lastthird,
+      };
 }

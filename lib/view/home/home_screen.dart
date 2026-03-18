@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' as intl;
 
 import '../../controllers/controllers.dart';
 
@@ -32,79 +32,32 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Timer? timer;
-  Duration? timeLeft;
   String upcomingPrayer = "";
-  Map<String, String> prayerTimes = {};
 
-  // void _calculateNextPrayer() {
-  //   if (prayerTimes.isEmpty) return;
-  //   final now = DateTime.now();
-  //   final today = DateFormat('yyyy-MM-dd').format(now);
-  //   DateTime? nextTime;
-  //   String? nextName;
-
-  //   for (var entry in prayerTimes.entries) {
-  //     if (entry.value.isEmpty) continue;
-  //     try {
-  //       final time = DateTime.parse("$today ${entry.value}:00");
-  //       if (time.isAfter(now)) {
-  //         nextTime = time;
-  //         nextName = entry.key;
-  //         break;
-  //       }
-  //     } catch (_) {}
-  //   }
-
-  //   if (nextTime != null && nextName != null) {
-  //     setState(() {
-  //       timeLeft = nextTime!.difference(now);
-  //       upcomingPrayer = nextName!;
-  //     });
-  //   }
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   userController.getsalatTimeHandle().then((_) {
-  //     final model = userController.getSalatTimeResponseModel.value;
-  //     if (model != null) {
-  //       prayerTimes = {
-  //         'Fajr': model.fajr ?? '',
-  //         'Sunrise': model.sunrise ?? '',
-  //         'Dhuhr': model.dhuhr ?? '',
-  //         'Asr': model.asr ?? '',
-  //         'Maghrib': model.maghrib ?? '',
-  //         'Isha': model.isha ?? '',
-  //       };
-  //       _calculateNextPrayer();
-  //       timer = Timer.periodic(Duration(seconds: 1), (_) => _calculateNextPrayer());
-  //       setState(() {});
-  //     }
-  //   });
-  //   userController.getUserProfileData();
-  // }
   ScrollController? _scrollController;
-  NotificationController notificationController = Get.put(NotificationController());
+  NotificationController notificationController =
+      Get.put(NotificationController());
+  HomeController homeController = Get.put(HomeController());
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
 
-    userController.getsalatTimeHandle().then((_) {
+    homeController.startPrayerTimer();
+    homeController.getsalatTimeHandle().then((_) {
       Future.delayed(Duration(milliseconds: 500), () {
-        final index = userController.prayerTimes.keys.toList().indexOf(userController.upcomingPrayer.value);
-        if (index != -1) {
-          _scrollController?.animateTo(
-            index * 250.h,
+        final index = homeController.prayerTimes.keys
+            .toList()
+            .indexOf(homeController.currentPrayer.value);
+        if (index != -1 && _scrollController?.hasClients == true) {
+          _scrollController!.animateTo(
+            index * (0.6.sw + 32.w),
             duration: Duration(milliseconds: 500),
             curve: Curves.easeInOut,
           );
         }
       });
-      userController.startPrayerTimer();
     });
-    // userController.getUserProfileData(); // Already called in onInit() of UserController
   }
 
   @override
@@ -115,7 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   final todayHijri = HijriCalendar.now();
-  final userController = Get.put(UserController());
 
   Widget _notificationIconOnly() {
     return Padding(
@@ -152,10 +104,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Obx(
                   () => Row(
                     children: [
-                      userController.userProfile.value?.userProfile?.profilePictureUrl != null
+                      homeController.profileController.profileModel.value
+                                  .userProfile?.profilePictureUrl !=
+                              null
                           ? CircleAvatar(
                               radius: 18,
-                              backgroundImage: NetworkImage("${ApiConstants.imageUrl + "${userController.userProfile.value!.userProfile!.profilePictureUrl}"}"),
+                              backgroundImage: NetworkImage(
+                                  "${ApiConstants.imageUrl + "${homeController.profileController.profileModel.value.userProfile?.profilePictureUrl}"}"),
                               backgroundColor: Colors.grey[200],
                             )
                           : CircleAvatar(
@@ -168,7 +123,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          userController.isLoadingUserProfile.value
+                          homeController.profileController.profileModel.value
+                                      .userProfile ==
+                                  null
                               ? SizedBox(
                                   height: 16.sp,
                                   width: 16.sp,
@@ -176,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )
                               : Flexible(
                                   child: Text(
-                                    "${userController.userProfile.value?.userProfile?.firstName} ${userController.userProfile.value?.userProfile?.lastName}",
+                                    "${homeController.profileController.profileModel.value.userProfile?.firstName} ${homeController.profileController.profileModel.value.userProfile?.lastName}",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(fontSize: 14.sp),
@@ -198,7 +155,8 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               notificationController.obx(
                 (data) {
-                  final unreadCount = data!.where((e) => !(e.status != "UNREAD")).length;
+                  final unreadCount =
+                      data!.where((e) => !(e.status != "UNREAD")).length;
 
                   return Padding(
                     padding: const EdgeInsets.only(right: 12),
@@ -210,7 +168,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           icon: Icon(
                             Icons.notifications,
                             size: 26,
-                            color: unreadCount > 0 ? Colors.black : Colors.grey.shade700,
+                            color: unreadCount > 0
+                                ? Colors.black
+                                : Colors.grey.shade700,
                           ),
                           splashRadius: 22,
                           onPressed: () {
@@ -228,7 +188,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             top: 4,
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 250),
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 3),
                               constraints: const BoxConstraints(
                                 minWidth: 12,
                                 minHeight: 12,
@@ -250,7 +211,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  unreadCount > 99 ? "99+" : unreadCount.toString(),
+                                  unreadCount > 99
+                                      ? "99+"
+                                      : unreadCount.toString(),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 8,
@@ -291,7 +254,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     InkWell(
                       onTap: () {
-                        Get.toNamed(AppRoutes.wasyyahScreen, preventDuplicates: false);
+                        Get.toNamed(AppRoutes.wasyyahScreen,
+                            preventDuplicates: false);
                       },
                       child: Container(
                         height: 150.h,
@@ -310,7 +274,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 80.h,
                             ),
                             CustomText(
-                              text: AppLocalizations.of(context)!.explore_your_wasyyah,
+                              text: AppLocalizations.of(context)!
+                                  .explore_your_wasyyah,
                               fontsize: 18.sp,
                               color: AppColors.primaryColor,
                             )
@@ -327,7 +292,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              Get.toNamed(AppRoutes.witnessTabScreen, preventDuplicates: false);
+                              Get.toNamed(AppRoutes.witnessTabScreen,
+                                  preventDuplicates: false);
                             },
                             child: Container(
                               height: 100.h,
@@ -335,10 +301,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
-                                border: Border.all(color: AppColors.primaryColor),
+                                border:
+                                    Border.all(color: AppColors.primaryColor),
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   SvgPicture.asset(
                                     AppIcons.witness,
@@ -363,7 +331,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              Get.toNamed(AppRoutes.nomineeTabScreen, preventDuplicates: false);
+                              Get.toNamed(AppRoutes.nomineeTabScreen,
+                                  preventDuplicates: false);
                             },
                             child: Container(
                               height: 100.h,
@@ -371,10 +340,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
-                                border: Border.all(color: AppColors.primaryColor),
+                                border:
+                                    Border.all(color: AppColors.primaryColor),
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   SvgPicture.asset(
                                     AppIcons.nominee,
@@ -395,216 +366,390 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
 
                     SizedBox(
-                      height: 10.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(AppLocalizations.of(context)!.prayer_times, style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold, color: Colors.green[700])),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            SizedBox(height: 12.h),
-                            Text(DateFormat('dd MMM, yyyy').format(DateTime.now()), style: TextStyle(fontSize: 14.sp, color: Colors.black)),
-                            SizedBox(height: 4.h),
-                            Text(
-                              todayHijri.toFormat("dd MMMM, yyyy"),
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                color: Colors.green[800],
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-
-                    SizedBox(
                       height: 20.h,
                     ),
-                    Obx(() {
-                      final prayers = userController.prayerTimes;
-                      final current = userController.upcomingPrayer.value;
-                      final left = userController.timeLeft.value;
-
-                      if (prayers.isEmpty) {
-                        return SizedBox(
-                          height: 200.h,
-                          child: GridView.builder(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 2,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1,
-                              mainAxisSpacing: 16.0,
-                              childAspectRatio: 0.8,
-                            ),
-                            itemBuilder: (context, index) {
-                              return Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
+                    Container(
+                      padding: EdgeInsets.all(16.w),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                            color: AppColors.primaryColor.withOpacity(0.3)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12.w, vertical: 6.h),
+                                decoration: BoxDecoration(
+                                  color:
+                                      AppColors.primaryColor.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                      color: AppColors.primaryColor
+                                          .withOpacity(0.2)),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(height: 20, width: 120, color: Colors.grey.shade300),
-                                      SizedBox(height: 8.h),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Container(height: 80.h, width: 80, color: Colors.grey.shade300),
-                                          Column(
-                                            children: List.generate(
-                                                4,
-                                                (index) => Padding(
-                                                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                                      child: Container(height: 20, width: 60 + index * 10, color: Colors.grey.shade300),
-                                                    )),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                child: Obx(
+                                  () => CustomText(
+                                    text: homeController.currentTime.value,
+                                    fontsize: 24.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.primaryColor,
                                   ),
                                 ),
-                              );
-                            },
+                              ),
+                              SizedBox(height: 4.h),
+                              CustomText(
+                                text:
+                                    AppLocalizations.of(context)!.current_time,
+                                fontsize: 12.sp,
+                                color: Colors.grey,
+                              ),
+                            ],
                           ),
-                        );
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              // SunRise
+                              SizedBox(height: 4.h),
+                              Row(
+                                children: [
+                                  Icon(Icons.wb_sunny,
+                                      color: Colors.orange, size: 20.sp),
+                                  SizedBox(width: 4.w),
+                                  CustomText(
+                                    text: homeController.formatTime(
+                                        homeController.salatTimeModel.value
+                                                ?.sunrise ??
+                                            ""),
+                                    fontsize: 18.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ],
+                              ),
+                              CustomText(
+                                text:
+                                    AppLocalizations.of(context)!.sunrise_time,
+                                fontsize: 12.sp,
+                                color: Colors.grey,
+                              ),
+                              // Sunset
+                              Row(
+                                children: [
+                                  Icon(Icons.nightlight,
+                                      color: Colors.blueGrey, size: 20.sp),
+                                  SizedBox(width: 4.w),
+                                  CustomText(
+                                    text: homeController.formatTime(
+                                        homeController
+                                                .salatTimeModel.value?.sunset ??
+                                            ""),
+                                    fontsize: 18.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ],
+                              ),
+                              CustomText(
+                                text: AppLocalizations.of(context)!.sunset_time,
+                                fontsize: 12.sp,
+                                color: Colors.grey,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20.h),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(AppLocalizations.of(context)!.prayer_times,
+                          style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green[700])),
+                    ),
+                    SizedBox(height: 20.h),
+
+                    Obx(() {
+                      if (homeController.salatTimeStatus.value.isLoading) {
+                        return const Center(child: CustomLoader());
+                      }
+
+                      if (homeController.salatTimeStatus.value.isError) {
+                        return ErrorWidget(Exception(
+                            "${homeController.salatTimeStatus.value.errorMessage}"));
                       }
 
                       return SizedBox(
-                        height: 200.h,
-                        width: double.infinity,
-                        child: GridView.builder(
+                        height: 220.h,
+                        child: ListView.builder(
                           controller: _scrollController,
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 1,
-                            mainAxisSpacing: 12.0, // Space between cards
-                            childAspectRatio: 0.75, // Adjust to match the width/height ratio in image
-                          ),
-                          itemCount: prayers.length,
+                          physics: BouncingScrollPhysics(),
+                          itemCount: homeController.prayerTimes.length,
                           itemBuilder: (context, index) {
-                            final name = prayers.keys.elementAt(index);
-                            final time = prayers[name]!;
+                            final name = homeController.prayerTimes.keys
+                                .elementAt(index);
+                            final time = homeController.prayerTimes[name]!;
+                            final isCurrent =
+                                name == homeController.currentPrayer.value;
 
-                            // Determine state (Past, Current, or Next) based on your logic
-                            final bool isCurrent = name == current;
-                            final bool isPast = index < prayers.keys.toList().indexOf(current);
+                            // Determine gradient based on status
+                            // Current: Green, Previous: Grey, Upcoming: Amber
+                            // We need to know if it's already passed but not "current".
+                            // Actually, if we follow the 3 states:
+                            // 1. name == currentPrayer -> Green
+                            // 2. index of name < index of currentPrayer -> Grey (already passed)
+                            // 3. index of name > index of currentPrayer -> Amber (next or future)
 
-                            // Define colors based on the image
-                            Color cardBg = Colors.white;
-                            Color borderColor = Colors.grey.shade300;
-                            Color textColor = Colors.black;
-                            String statusText = "Next Prayer";
+                            final prayerNames =
+                                homeController.prayerTimes.keys.toList();
+                            final currentIndex = prayerNames
+                                .indexOf(homeController.currentPrayer.value);
+                            final pIndex = prayerNames.indexOf(name);
 
-                            if (isPast) {
-                              cardBg = const Color(0xffFFF7EE); // Light orange tint
-                              borderColor = Colors.orange;
-                              textColor = Colors.orange;
-                              statusText = "Time was";
-                            } else if (isCurrent) {
-                              cardBg = const Color(0xffFFEBEC); // Light red tint
-                              textColor = Colors.red;
-                              statusText = "Now Time is";
+                            LinearGradient gradient;
+                            LinearGradient borderGradient;
+                            double borderWidth = 1.0;
+                            if (isCurrent) {
+                              // Current Prayer → Modern Light Green with more white layers
+                              gradient = const LinearGradient(
+                                colors: [
+                                  Color(0xFFFFFFFF), // pure white
+                                  Color(0xFFFAFAFA), // ultra light
+                                  Color(0xFFF1F8F2), // very light green-white
+                                  Color(0xFFDFF5DD), // soft green tint
+                                  Color(0xFFC8E6C9), // light green
+                                  Color(0xFFA5D6A7), // soft green
+                                  Color(0xFF81C784), // main green accent
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              );
+
+                              borderGradient = const LinearGradient(
+                                colors: [
+                                  Color(0xFF81C784), // main green accent
+                                  Color(0xFFA5D6A7), // soft green
+                                  Color(0xFFC8E6C9), // light green
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              );
+                            } else if (pIndex < currentIndex &&
+                                currentIndex != -1) {
+                              // Previous Prayer → Soft Cool Grey with more white layers
+                              gradient = const LinearGradient(
+                                colors: [
+                                  Color(0xFFFFFFFF), // pure white
+                                  Color(0xFFFAFAFA), // ultra light
+                                  Color(0xFFF5F5F5), // very light grey
+                                  Color(0xFFEDEDED), // soft light grey
+                                  Color(0xFFE0E0E0), // light grey
+                                  Color(0xFFBDBDBD), // grey accent
+                                  Color(
+                                      0xFF9E9E9E), // slightly darker grey for depth
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              );
+
+                              borderGradient = const LinearGradient(
+                                colors: [
+                                  Color(0xFF9E9E9E), // slightly darker grey
+                                  Color(0xFFBDBDBD), // grey accent
+                                  Color(0xFFE0E0E0), // light grey
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              );
+                            } else {
+                              // Upcoming Prayer → Modern Light Orange with more white layers
+                              gradient = const LinearGradient(
+                                colors: [
+                                  Color(0xFFFFFFFF), // pure white
+                                  Color(0xFFFFFBF0), // ultra light cream
+                                  Color(0xFFFFF8E1), // very light yellow-orange
+                                  Color(0xFFFFF3C4), // soft pale orange
+                                  Color(0xFFFFECB3), // light orange
+                                  Color(0xFFFFD54F), // orange accent
+                                  Color(0xFFFFB300), // richer orange accent
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              );
+
+                              borderGradient = const LinearGradient(
+                                colors: [
+                                  Color(0xFFFFB300), // rich orange
+                                  Color(0xFFFFD54F), // orange accent
+                                  Color(0xFFFFECB3), // light orange
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              );
                             }
 
                             return Container(
-                              decoration: BoxDecoration(
-                                color: cardBg,
-                                borderRadius: BorderRadius.circular(16.0),
-                                border: Border.all(color: borderColor, width: 1.5),
-                              ),
+                              width: 0.6.sw,
+                              margin: EdgeInsets.symmetric(horizontal: 16.w),
                               child: Stack(
                                 children: [
-                                  // 1. The Mosque Image (Positioned Bottom-Left)
-
-                                  Positioned(
-                                    left: 0,
-                                    bottom: 0,
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(16)),
-                                      child: Image.asset(
-                                        AppImages.mosjidIcon,
-                                        height: 150.h, // Adjusted height
-                                        width: 150.w,
-                                        fit: BoxFit.contain,
-                                      ),
+                                  // 1. Gradient Border Layer
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      gradient:
+                                          borderGradient, // darker/more visible
+                                      borderRadius: BorderRadius.circular(16.0),
                                     ),
                                   ),
 
-                                  // 2. The Content Layer
-                                  Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                  // 2. Inner Card with Padding for Border Effect
+                                  Container(
+                                    margin: EdgeInsets.all(
+                                        borderWidth), // creates border space
+                                    decoration: BoxDecoration(
+                                      gradient:
+                                          gradient, // keep the light modern gradient
+                                      borderRadius: BorderRadius.circular(
+                                          16.0 - borderWidth),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.05),
+                                          blurRadius: 4,
+                                          offset: const Offset(2, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Stack(
                                       children: [
-                                        // Top Status Text
-                                        Text(
-                                          statusText,
-                                          style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black,
+                                        // Mosque Image
+                                        Positioned(
+                                          left: 0,
+                                          bottom: 0,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              bottomLeft: Radius.circular(16),
+                                            ),
+                                            child: Image.asset(
+                                              AppImages.mosjidIcon,
+                                              height: 150.h,
+                                              width: 150.w,
+                                              fit: BoxFit.contain,
+                                            ),
                                           ),
                                         ),
 
-                                        const Spacer(),
-
-                                        // Right-aligned Info
-                                        Align(
-                                          alignment: Alignment.bottomRight,
+                                        // Content Layer
+                                        Padding(
+                                          padding: const EdgeInsets.all(12.0),
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
                                             children: [
+                                              // Top Status Text
                                               Text(
-                                                name,
+                                                isCurrent
+                                                    ? AppLocalizations.of(
+                                                            context)!
+                                                        .current_prayer
+                                                    : (pIndex < currentIndex &&
+                                                            currentIndex != -1)
+                                                        ? AppLocalizations.of(
+                                                                context)!
+                                                            .previous_prayer
+                                                        : AppLocalizations.of(
+                                                                context)!
+                                                            .upcoming_prayer,
                                                 style: TextStyle(
-                                                  fontSize: 22.sp,
+                                                  fontSize: 14.sp,
                                                   fontWeight: FontWeight.bold,
-                                                  color: textColor,
+                                                  color: Colors.black,
                                                 ),
                                               ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment: CrossAxisAlignment.baseline,
-                                                textBaseline: TextBaseline.alphabetic,
-                                                children: [
-                                                  Text(
-                                                    formatTime(time).split(' ')[0], // "07:23"
+                                              if (isCurrent)
+                                                Obx(
+                                                  () => Text(
+                                                    homeController
+                                                        .remainingTimeStr.value,
                                                     style: TextStyle(
-                                                      fontSize: 20.sp,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 18.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: Colors.black,
+                                                      letterSpacing: 1.5,
                                                     ),
                                                   ),
-                                                  Text(
-                                                    " ${formatTime(time).split(' ')[1]}", // "PM"
-                                                    style: TextStyle(
-                                                      fontSize: 12.sp,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: Colors.black,
+                                                ),
+                                              const Spacer(),
+                                              Align(
+                                                alignment:
+                                                    Alignment.bottomRight,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Text(
+                                                      name == "Dhuhr"
+                                                          ? AppLocalizations.of(
+                                                                  context)!
+                                                              .dhuhr
+                                                          : name == "Asr"
+                                                              ? AppLocalizations
+                                                                      .of(
+                                                                          context)!
+                                                                  .asr
+                                                              : name ==
+                                                                      "Maghrib"
+                                                                  ? AppLocalizations.of(
+                                                                          context)!
+                                                                      .maghrib
+                                                                  : name ==
+                                                                          "Isha"
+                                                                      ? AppLocalizations.of(
+                                                                              context)!
+                                                                          .isha
+                                                                      : name,
+                                                      style: TextStyle(
+                                                        fontSize: 22.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height: 4.h),
-                                              // Custom sized Switch to match UI scale
-                                              SizedBox(
-                                                height: 30.h,
-                                                width: 50.w,
-                                                child: FittedBox(
-                                                  fit: BoxFit.fill,
-                                                  child: Switch(
-                                                    value: true,
-                                                    activeColor: Colors.greenAccent[400],
-                                                    onChanged: (val) {},
-                                                  ),
+                                                    Text(
+                                                      homeController
+                                                          .formatTime(time),
+                                                      style: TextStyle(
+                                                        fontSize: 20.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 4.h),
+                                                    SizedBox(
+                                                      height: 30.h,
+                                                      width: 50.w,
+                                                      child: FittedBox(
+                                                        fit: BoxFit.fill,
+                                                        child: Switch(
+                                                          value: true,
+                                                          activeColor: Colors
+                                                              .greenAccent[400],
+                                                          onChanged: (val) {},
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
@@ -621,172 +766,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }),
 
-                    // Padding(
-                    //   padding: const EdgeInsets.all(16.0),
-                    //   child: Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       const SizedBox(height: 50),
-                    //       Text("Prayer Times ", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green[700])),
-                    //       const SizedBox(height: 8),
-                    //       Text(DateFormat('d MMM, yyyy').format(DateTime.now()), style: TextStyle(fontSize: 14, color: Colors.black)),
-                    //       const SizedBox(height: 4),
-                    //       Text(
-                    //         todayHijri.toFormat("dd MMMM, yyyy"), // Example: 26 Muharram, 1447
-                    //         style: TextStyle(
-                    //           fontSize: 14,
-                    //           color: Colors.green[800],
-                    //           fontWeight: FontWeight.bold,
-                    //         ),
-                    //       ),
-                    //       const SizedBox(height: 24),
-                    //       if (prayerTimes.isNotEmpty)
-                    //         SizedBox(
-                    //           height: 160,
-                    //           child: ListView.separated(
-                    //             scrollDirection: Axis.horizontal,
-                    //             itemCount: prayerTimes.length,
-                    //             separatorBuilder: (_, __) => SizedBox(width: 12),
-                    //             itemBuilder: (context, index) {
-                    //               String name = prayerTimes.keys.elementAt(index);
-                    //               String time = prayerTimes[name]!;
-                    //
-                    //               bool isActive = name == upcomingPrayer;
-                    //
-                    //               return AnimatedContainer(
-                    //                 duration: Duration(milliseconds: 300),
-                    //                 width: 130,
-                    //                 padding: EdgeInsets.all(12),
-                    //                 decoration: BoxDecoration(
-                    //                   color: isActive ? Colors.black87 : Colors.grey[200],
-                    //                   borderRadius: BorderRadius.circular(12),
-                    //                 ),
-                    //                 child: Column(
-                    //                   mainAxisAlignment: MainAxisAlignment.center,
-                    //                   children: [
-                    //                     Text(
-                    //                       name,
-                    //                       style: TextStyle(
-                    //                         fontSize: 18,
-                    //                         fontWeight: FontWeight.bold,
-                    //                         color: isActive ? Colors.white : Colors.black,
-                    //                       ),
-                    //                     ),
-                    //                     const SizedBox(height: 6),
-                    //                     if (isActive && timeLeft != null)
-                    //                       Column(
-                    //                         children: [
-                    //                           Text(
-                    //                             "Upcoming Prayers",
-                    //                             style: TextStyle(fontSize: 12, color: Colors.white),
-                    //                           ),
-                    //                           Text(
-                    //                             timeLeft!.toString().split(".")[0],
-                    //                             style: TextStyle(fontSize: 18, color: Colors.white),
-                    //                           ),
-                    //                           const SizedBox(height: 4),
-                    //                           Text(
-                    //                             formatTime(time),
-                    //                             style: TextStyle(fontSize: 14, color: Colors.white),
-                    //                           ),
-                    //                         ],
-                    //                       )
-                    //                     else
-                    //                       Text(
-                    //                         formatTime(time),
-                    //                         style: TextStyle(fontSize: 16, color: Colors.black),
-                    //                       ),
-                    //                   ],
-                    //                 ),
-                    //               );
-                    //             },
-                    //           ),
-                    //         )
-                    //       else
-                    //         Center(child: CustomLoader()),
-                    //
-                    //
-                    //
-                    //
-                    //     ],
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: 200.h,
-                    //   width: double.infinity,
-                    //   child: prayerTimes.isNotEmpty
-                    //       ? GridView.builder(
-                    //     controller: _scrollController, // 👉 attach controller here
-                    //     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    //     scrollDirection: Axis.horizontal,
-                    //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    //       crossAxisCount: 1,
-                    //       mainAxisSpacing: 16.0,
-                    //       childAspectRatio: 0.8,
-                    //     ),
-                    //     itemCount: prayerTimes.length,
-                    //     physics: const BouncingScrollPhysics(),
-                    //     itemBuilder: (context, index) {
-                    //       final name = prayerTimes.keys.elementAt(index);
-                    //       final time = prayerTimes[name]!;
-                    //       final isCurrent = name == upcomingPrayer;
-                    //
-                    //       return Card(
-                    //         shape: RoundedRectangleBorder(
-                    //           borderRadius: BorderRadius.circular(12.0),
-                    //         ),
-                    //         child: Padding(
-                    //           padding: const EdgeInsets.all(8.0),
-                    //           child: Column(
-                    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //             children: [
-                    //               Text(
-                    //                 isCurrent ? "Upcoming Prayers" : "Prayer Time",
-                    //                 style: TextStyle(
-                    //                   fontSize: 16.0,
-                    //                   fontWeight: FontWeight.bold,
-                    //                   color: isCurrent ? Colors.green : Colors.orange,
-                    //                 ),
-                    //               ),
-                    //               SizedBox(height: 8.h),
-                    //               Row(
-                    //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //                 children: [
-                    //                   Image.asset(AppImages.mosjidIcon, height: 80.h, width: 80),
-                    //                   Column(
-                    //                     children: [
-                    //                       Text(
-                    //                         name,
-                    //                         style: const TextStyle(fontSize: 18.0, color: Colors.red),
-                    //                       ),
-                    //                       if (isCurrent && timeLeft != null)
-                    //                         Text(
-                    //                           timeLeft!.toString().split(".")[0],
-                    //                           style: TextStyle(fontSize: 18.sp, color: Colors.black87),
-                    //                         ),
-                    //                       Text(
-                    //                         formatTime(time),
-                    //                         style: TextStyle(fontSize: 14.h),
-                    //                       ),
-                    //                       Switch(
-                    //                         value: isCurrent ? true : false,
-                    //                         activeColor: AppColors.primaryColor,
-                    //                         onChanged: (value) {
-                    //                           // notification toggle logic
-                    //                         },
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       );
-                    //     },
-                    //   )
-                    //       : const Center(child: CircularProgressIndicator()),
-                    // ),
                     ///==========================Zakat distribute======================
                     SizedBox(
                       height: 20.h,
@@ -794,7 +773,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     InkWell(
                       onTap: () {
-                        Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
+                        Get.toNamed(AppRoutes.zakatCalculatorScreen,
+                            preventDuplicates: false);
                       },
                       child: Stack(
                         children: [
@@ -825,7 +805,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: SizedBox(
                               width: 60.w,
                               child: Text(
-                                AppLocalizations.of(context)!.calculate_your_zakat,
+                                AppLocalizations.of(context)!
+                                    .calculate_your_zakat,
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   color: Colors.black,
@@ -843,7 +824,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        Get.to(() => PropertyDistributionCalculationPage(), preventDuplicates: false);
+                        Get.to(() => PropertyDistributionCalculationPage(),
+                            preventDuplicates: false);
                       },
                       child: Stack(
                         children: [
@@ -851,7 +833,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 200.h,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage(AppImages.distribureYourPropertyProperlyImage),
+                                image: AssetImage(AppImages
+                                    .distribureYourPropertyProperlyImage),
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -862,7 +845,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: SizedBox(
                               width: 80.w,
                               child: Text(
-                                AppLocalizations.of(context)!.distribute_your_property_properly,
+                                AppLocalizations.of(context)!
+                                    .distribute_your_property_properly,
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   color: Colors.black,
@@ -885,15 +869,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  String formatTime(String time24) {
-    try {
-      final dt = DateFormat("HH:mm").parse(time24);
-      return DateFormat("hh:mm a").format(dt);
-    } catch (e) {
-      return time24;
-    }
   }
 }
 
