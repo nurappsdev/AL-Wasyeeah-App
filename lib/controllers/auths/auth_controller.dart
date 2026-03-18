@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:al_wasyeah/view/auth/otp_verify_screen.dart';
 import 'package:al_wasyeah/view/home/home_screen.dart';
 import 'package:get/get.dart';
@@ -6,7 +7,6 @@ import '../../helpers/helpers.dart';
 import '../../helpers/prefs_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
-import '../../utils/utils.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AuthController extends GetxController {
@@ -18,18 +18,14 @@ class AuthController extends GetxController {
 
   ///==================get Question===========================
   RxBool isQuestion = false.obs;
-  RxList<SecurityQuestionResponseModel> securityQuestionResponseModel =
-      <SecurityQuestionResponseModel>[].obs;
+  RxList<SecurityQuestionResponseModel> securityQuestionResponseModel = <SecurityQuestionResponseModel>[].obs;
 
   getSecurityQuestion() async {
     isQuestion(true);
-    var response =
-        await ApiClient.getData(ApiConstants.securityQuestionEndPoint);
+    var response = await ApiClient.getData(ApiConstants.securityQuestionEndPoint);
     print("getSecurityQuestion data ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
-      securityQuestionResponseModel.value =
-          List<SecurityQuestionResponseModel>.from(response.body
-              .map((x) => SecurityQuestionResponseModel.fromJson(x)));
+      securityQuestionResponseModel.value = List<SecurityQuestionResponseModel>.from(response.body.map((x) => SecurityQuestionResponseModel.fromJson(x)));
       isQuestion(false);
     } else {
       isQuestion(false);
@@ -75,8 +71,7 @@ class AuthController extends GetxController {
       if (response.body["status"] == false) {
         ToastMessageHelper.errorMessageShowToster(response.body?['message']);
       } else {
-        ToastMessageHelper.successMessageShowToster(
-            AppLocalizations.of(Get.context!)!.account_create_success);
+        ToastMessageHelper.successMessageShowToster(AppLocalizations.of(Get.context!)!.account_create_success);
         Get.toNamed(
           AppRoutes.loginScreen,
           preventDuplicates: false,
@@ -85,8 +80,7 @@ class AuthController extends GetxController {
       signUpLoading(false);
     } else if (response.statusCode == 1) {
       signUpLoading(false);
-      ToastMessageHelper.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)!.server_error);
+      ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.server_error);
     } else {
       ToastMessageHelper.errorMessageShowToster("${response.body["message"]}");
       signUpLoading(false);
@@ -124,8 +118,7 @@ class AuthController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (response.body["status"] == false) {
           ToastMessageHelper.errorMessageShowToster(
-            response.body?['message'] ??
-                AppLocalizations.of(Get.context!)!.invalid_username_or_password,
+            response.body?['message'] ?? AppLocalizations.of(Get.context!)!.invalid_username_or_password,
           );
         } else {
           final token = response.body?['data']['token'];
@@ -136,8 +129,7 @@ class AuthController extends GetxController {
           );
 
           ToastMessageHelper.successMessageShowToster(
-            response.body?["message"] ??
-                AppLocalizations.of(Get.context!)!.welcome_back,
+            response.body?["message"] ?? AppLocalizations.of(Get.context!)!.welcome_back,
           );
 
           Get.off(() => HomeScreen(), preventDuplicates: false);
@@ -147,8 +139,7 @@ class AuthController extends GetxController {
       /// ❌ LOGIN FAILED (401, 403, etc)
       else {
         ToastMessageHelper.errorMessageShowToster(
-          response.body?['message'] ??
-              AppLocalizations.of(Get.context!)!.invalid_username_or_password,
+          response.body?['message'] ?? AppLocalizations.of(Get.context!)!.invalid_username_or_password,
         );
       }
     } catch (e) {
@@ -174,17 +165,8 @@ class AuthController extends GetxController {
     required String securityCode,
   }) async {
     forgotLoading(true);
-    var headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    };
-    var body = {
-      "email": email,
-      "mobile": mobile,
-      "dob": dob,
-      "securityAnswer": securityAnswer,
-      "securityCode": securityCode
-    };
+    var headers = {'Content-Type': 'application/json', 'Accept': 'application/json'};
+    var body = {"email": email, "mobile": mobile, "dob": dob, "securityAnswer": securityAnswer, "securityCode": securityCode};
     var response = await ApiClient.postData(
       ApiConstants.forgotEndPoint,
       body,
@@ -194,15 +176,13 @@ class AuthController extends GetxController {
     if (response.statusCode == 200 || response.statusCode == 201) {
       //  await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
       //ToastMessageHelper.successMessageShowToster("${response.body["message"]}");
-      ToastMessageHelper.successMessageShowToster(
-          AppLocalizations.of(Get.context!)!.verification_otp_send_success);
+      ToastMessageHelper.successMessageShowToster(AppLocalizations.of(Get.context!)!.verification_otp_send_success);
 
       Get.off(() => OtpVerifyScreen(), preventDuplicates: false);
       forgotLoading(false);
     } else {
       forgotLoading(false);
-      ToastMessageHelper.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)!.unable_data);
+      ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.unable_data);
     }
   }
 }

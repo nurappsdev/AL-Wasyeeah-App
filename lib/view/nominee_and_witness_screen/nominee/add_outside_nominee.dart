@@ -1,3 +1,5 @@
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -7,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../controllers/controllers.dart';
-import '../../../utils/utils.dart';
+
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AddOutsideNominee extends StatefulWidget {
@@ -76,8 +78,7 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                         height: 16.h,
                       ),
                       CustomText(
-                        text:
-                            AppLocalizations.of(context)!.relation_with_nominee,
+                        text: AppLocalizations.of(context)!.relation_with_nominee,
                         color: AppColors.hitTextColor000000,
                         fontsize: 20.sp,
                       ),
@@ -88,13 +89,11 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
                           controller: relWithController,
-                          hintText: AppLocalizations.of(context)!
-                              .relation_with_nominee,
+                          hintText: AppLocalizations.of(context)!.relation_with_nominee,
                           borderColor: AppColors.secondaryPrimaryColor,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .relation_with_nominee;
+                              return AppLocalizations.of(context)!.relation_with_nominee;
                             }
                             return null;
                           },
@@ -121,8 +120,7 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                           borderColor: AppColors.secondaryPrimaryColor,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .please_enter_name;
+                              return AppLocalizations.of(context)!.please_enter_name;
                             }
                             return null;
                           },
@@ -149,8 +147,7 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                           borderColor: AppColors.secondaryPrimaryColor,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .please_enter_your_mobile_number;
+                              return AppLocalizations.of(context)!.please_enter_your_mobile_number;
                             }
                             return null;
                           },
@@ -182,12 +179,9 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                           // ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .please_enter_your_email;
-                            } else if (!AppConstants.emailValidate
-                                .hasMatch(value)) {
-                              return AppLocalizations.of(context)!
-                                  .invalid_email;
+                              return AppLocalizations.of(context)!.please_enter_your_email;
+                            } else if (!AppConstants.emailValidate.hasMatch(value)) {
+                              return AppLocalizations.of(context)!.invalid_email;
                             }
                             return null;
                           },
@@ -223,8 +217,7 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
 
                             if (selectedDate != null) {
                               birthDate = selectedDate;
-                              dateOfBirthController.text =
-                                  DateFormat('yyyy-MM-dd').format(birthDate!);
+                              dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(birthDate!);
                             }
                             print(dateOfBirthController.text);
                           },
@@ -234,8 +227,7 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .please_write_date_of_birth;
+                              return AppLocalizations.of(context)!.please_write_date_of_birth;
                             }
                             return null;
                           },
@@ -258,14 +250,12 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
                           controller: presentAddressController,
-                          hintText:
-                              AppLocalizations.of(context)!.present_address,
+                          hintText: AppLocalizations.of(context)!.present_address,
                           maxLine: 4,
                           borderColor: AppColors.secondaryPrimaryColor,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .present_address;
+                              return AppLocalizations.of(context)!.present_address;
                             }
                             return null;
                           },
@@ -288,14 +278,12 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
                           controller: permanentAddressController,
-                          hintText:
-                              AppLocalizations.of(context)!.permanent_address,
+                          hintText: AppLocalizations.of(context)!.permanent_address,
                           maxLine: 4,
                           borderColor: AppColors.secondaryPrimaryColor,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .permanent_address;
+                              return AppLocalizations.of(context)!.permanent_address;
                             }
                             return null;
                           },
@@ -307,9 +295,7 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                       ),
                       Obx(
                         () => CustomButtonCommon(
-                            loading:
-                                nomineeController.addNomineeLoading.value ==
-                                    true,
+                            loading: nomineeController.addNomineeLoading.value == true,
                             title: AppLocalizations.of(context)!.save,
                             onpress: () {
                               if (_formKey.currentState!.validate()) {
@@ -320,10 +306,8 @@ class _AddOutsideNomineeState extends State<AddOutsideNominee> {
                                     email: emailController.text,
                                     relationWithUser: relWithController.text,
                                     dob: dateOfBirthController.text,
-                                    presentAddress:
-                                        presentAddressController.text,
-                                    permanentAddress:
-                                        permanentAddressController.text);
+                                    presentAddress: presentAddressController.text,
+                                    permanentAddress: permanentAddressController.text);
                               }
                             }),
                       ),

@@ -1,3 +1,5 @@
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_image.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:barcode_widget/barcode_widget.dart';
@@ -6,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../models/models.dart';
-import '../../utils/utils.dart';
 
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
@@ -126,15 +127,12 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
                                 SizedBox(height: 5.h),
                                 Center(
                                   child: CustomText(
-                                    text: item.title ??
-                                        AppLocalizations.of(context)!
-                                            .own_identity,
+                                    text: item.title ?? AppLocalizations.of(context)!.own_identity,
                                     fontsize: 16.sp,
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 40),
+                                  padding: const EdgeInsets.symmetric(horizontal: 40),
                                   child: Divider(
                                     color: AppColors.primaryColor,
                                     endIndent: 2.2,
@@ -145,9 +143,7 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
                                 CustomText(
                                   fontWeight: FontWeight.w500,
                                   maxline: 100,
-                                  text: item.content ??
-                                      AppLocalizations.of(context)!
-                                          .no_content_available,
+                                  text: item.content ?? AppLocalizations.of(context)!.no_content_available,
                                   textAlign: TextAlign.start,
                                 ),
                                 SizedBox(height: 10.h),

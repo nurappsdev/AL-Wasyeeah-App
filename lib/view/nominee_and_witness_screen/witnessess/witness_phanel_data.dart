@@ -1,10 +1,12 @@
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_image.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/controllers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../utils/utils.dart';
+
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class WitnessPhanelData extends StatefulWidget {
@@ -91,13 +93,11 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                       children: [
                         _infoRow(
                           AppLocalizations.of(context)!.payable_zakat,
-                          witnessController.zakat['zakatAmount']?.toString() ??
-                              AppLocalizations.of(context)!.n_a,
+                          witnessController.zakat['zakatAmount']?.toString() ?? AppLocalizations.of(context)!.n_a,
                         ),
                         _infoRow(
                           AppLocalizations.of(context)!.total_assets,
-                          witnessController.zakat['totalAsset']?.toString() ??
-                              AppLocalizations.of(context)!.n_a,
+                          witnessController.zakat['totalAsset']?.toString() ?? AppLocalizations.of(context)!.n_a,
                         ),
                       ],
                     ),
@@ -106,17 +106,13 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
 
                     /// Property Distribution
                     _buildTile(
-                      title: AppLocalizations.of(context)!
-                          .property_calculation_section,
+                      title: AppLocalizations.of(context)!.property_calculation_section,
                       children: witnessController.propertyResult.isEmpty
                           ? [_emptyText()]
                           : [
-                              _buildPropertyPieChart(
-                                  witnessController.propertyResult),
+                              _buildPropertyPieChart(witnessController.propertyResult),
                               SizedBox(height: 16.h),
-                              ...witnessController.propertyResult
-                                  .map<Widget>((item) => _propertyCard(item))
-                                  .toList(),
+                              ...witnessController.propertyResult.map<Widget>((item) => _propertyCard(item)).toList(),
                             ],
                     ),
 
@@ -144,9 +140,7 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
                       title: AppLocalizations.of(context)!.wasyyah_preview,
                       children: witnessController.wasiyyahContent.isEmpty
                           ? [_emptyText()]
-                          : witnessController.wasiyyahContent
-                              .where((e) => e['visible'] == 'Y')
-                              .map<Widget>((item) {
+                          : witnessController.wasiyyahContent.where((e) => e['visible'] == 'Y').map<Widget>((item) {
                               return Container(
                                 margin: const EdgeInsets.only(bottom: 12),
                                 padding: const EdgeInsets.all(12),
@@ -261,14 +255,10 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
 
           Divider(height: 18.h),
 
-          _propertyRow(
-              AppLocalizations.of(context)!.land_area, item['land_part']),
-          _propertyRow(
-              AppLocalizations.of(context)!.gram_vori, item['gold_part']),
-          _propertyRow(
-              AppLocalizations.of(context)!.gram_vori, item['silver_part']),
-          _propertyRow(
-              AppLocalizations.of(context)!.taka, item['currency_part']),
+          _propertyRow(AppLocalizations.of(context)!.land_area, item['land_part']),
+          _propertyRow(AppLocalizations.of(context)!.gram_vori, item['gold_part']),
+          _propertyRow(AppLocalizations.of(context)!.gram_vori, item['silver_part']),
+          _propertyRow(AppLocalizations.of(context)!.taka, item['currency_part']),
         ],
       ),
     );
@@ -305,8 +295,7 @@ class _WitnessPhanelDataState extends State<WitnessPhanelData> {
           sections: List.generate(list.length, (index) {
             final item = list[index];
 
-            final double share =
-                ((item['portion_part'] ?? 0) as num).toDouble() * 100;
+            final double share = ((item['portion_part'] ?? 0) as num).toDouble() * 100;
 
             final String name = item['relative_name'] ?? '';
 

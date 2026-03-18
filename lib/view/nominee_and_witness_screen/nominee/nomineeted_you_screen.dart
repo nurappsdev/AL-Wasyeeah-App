@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_loader.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -9,7 +10,7 @@ import 'package:intl/intl.dart';
 import '../../../controllers/controllers.dart';
 import '../../../helpers/helpers.dart';
 import '../../../models/models.dart';
-import '../../../utils/utils.dart';
+
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class NomineetedYouScreen extends StatefulWidget {
@@ -59,40 +60,31 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
                                 )
                               : ListView.builder(
                                   padding: EdgeInsets.all(8.0),
-                                  itemCount: nomineeController
-                                      .nomineetedYouData.length,
+                                  itemCount: nomineeController.nomineetedYouData.length,
                                   itemBuilder: (context, index) {
-                                    final user = nomineeController
-                                        .nomineetedYouData[index];
+                                    final user = nomineeController.nomineetedYouData[index];
                                     return Card(
                                       shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
+                                        borderRadius: BorderRadius.circular(15.0),
                                       ),
                                       elevation: 3.0,
-                                      margin:
-                                          EdgeInsets.symmetric(vertical: 8.0),
+                                      margin: EdgeInsets.symmetric(vertical: 8.0),
                                       child: ListTile(
                                         // leading: CircleAvatar(
                                         //   backgroundImage: AssetImage(user["image"]!),
                                         //   radius: 30,
                                         // ),
                                         title: Text(
-                                          user.name ??
-                                              "${AppLocalizations.of(context)!.n_a}",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
+                                          user.name ?? "${AppLocalizations.of(context)!.n_a}",
+                                          style: TextStyle(fontWeight: FontWeight.bold),
                                         ),
                                         subtitle: Row(
                                           children: [
-                                            Icon(Icons.visibility,
-                                                size: 16.0, color: Colors.grey),
+                                            Icon(Icons.visibility, size: 16.0, color: Colors.grey),
                                             SizedBox(width: 4.0),
                                             Text(
-                                              AppLocalizations.of(context)!
-                                                  .view_details,
-                                              style:
-                                                  TextStyle(color: Colors.grey),
+                                              AppLocalizations.of(context)!.view_details,
+                                              style: TextStyle(color: Colors.grey),
                                             ),
                                           ],
                                         ),
@@ -102,10 +94,7 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
                                           //           () => WitnessDetailsScreens(user: user),
                                           //       preventDuplicates: false,
                                           //     );
-                                          Get.toNamed(
-                                              AppRoutes.nomineeDetailsScreen,
-                                              arguments: user,
-                                              preventDuplicates: false);
+                                          Get.toNamed(AppRoutes.nomineeDetailsScreen, arguments: user, preventDuplicates: false);
                                         },
                                       ),
                                     );
@@ -123,8 +112,7 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
     );
   }
 
-  void showWitnessDetailsDialog(BuildContext context,
-      NomineetedResponseModel user, NomineeController nomineeController) {
+  void showWitnessDetailsDialog(BuildContext context, NomineetedResponseModel user, NomineeController nomineeController) {
     showDialog(
       context: context,
       builder: (context) {
@@ -149,10 +137,7 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
                         Expanded(
                           child: Text(
                             user.name ?? AppLocalizations.of(context)!.n_a,
-                            style: TextStyle(
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                         ),
                         IconButton(
@@ -162,39 +147,16 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
                       ],
                     ),
                     Divider(color: Colors.white70),
-                    _buildDialogRow(
-                        Icons.people,
-                        AppLocalizations.of(context)!.relation,
-                        user.relation ?? AppLocalizations.of(context)!.n_a),
-                    _buildDialogRow(
-                        Icons.email,
-                        AppLocalizations.of(context)!.email,
-                        user.email ?? AppLocalizations.of(context)!.n_a),
-                    _buildDialogRow(
-                        Icons.person,
-                        AppLocalizations.of(context)!.father_s_information,
-                        user.fatherName ?? AppLocalizations.of(context)!.n_a),
-                    _buildDialogRow(
-                        Icons.phone,
-                        AppLocalizations.of(context)!.mobile,
-                        user.mobile ?? AppLocalizations.of(context)!.n_a),
-                    _buildDialogRow(
-                        Icons.favorite,
-                        AppLocalizations.of(context)!.marital_status,
-                        user.maritalStatus ??
-                            AppLocalizations.of(context)!.n_a),
-                    _buildDialogRow(
-                        Icons.work,
-                        AppLocalizations.of(context)!.profession,
-                        user.profession ?? AppLocalizations.of(context)!.n_a),
-                    _buildDialogRow(
-                        Icons.calendar_today,
-                        AppLocalizations.of(context)!.date,
-                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}"),
+                    _buildDialogRow(Icons.people, AppLocalizations.of(context)!.relation, user.relation ?? AppLocalizations.of(context)!.n_a),
+                    _buildDialogRow(Icons.email, AppLocalizations.of(context)!.email, user.email ?? AppLocalizations.of(context)!.n_a),
+                    _buildDialogRow(Icons.person, AppLocalizations.of(context)!.father_s_information, user.fatherName ?? AppLocalizations.of(context)!.n_a),
+                    _buildDialogRow(Icons.phone, AppLocalizations.of(context)!.mobile, user.mobile ?? AppLocalizations.of(context)!.n_a),
+                    _buildDialogRow(Icons.favorite, AppLocalizations.of(context)!.marital_status, user.maritalStatus ?? AppLocalizations.of(context)!.n_a),
+                    _buildDialogRow(Icons.work, AppLocalizations.of(context)!.profession, user.profession ?? AppLocalizations.of(context)!.n_a),
+                    _buildDialogRow(Icons.calendar_today, AppLocalizations.of(context)!.date, "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}"),
                     SizedBox(height: 20.h),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                       onPressed: () {
                         // Implement remove witness logic
                         Navigator.pop(context);
@@ -221,11 +183,8 @@ class _NomineetedYouScreenState extends State<NomineetedYouScreen> {
         children: [
           Icon(icon, color: Colors.orange, size: 18.sp),
           SizedBox(width: 10.w),
-          Text("$label: ",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          Expanded(
-              child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
+          Text("$label: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          Expanded(child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
         ],
       ),
     );

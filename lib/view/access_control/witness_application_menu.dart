@@ -1,5 +1,6 @@
 import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
+import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_loader.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -10,7 +11,6 @@ import 'package:intl/intl.dart';
 
 import '../../../helpers/helpers.dart';
 import '../../../models/models.dart';
-import '../../../utils/utils.dart';
 
 class WitnessApplicationMenu extends StatefulWidget {
   const WitnessApplicationMenu({super.key, required this.tabController});
@@ -50,8 +50,7 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                     child: Obx(
                       () => nomineeController.isNomineeAccess.value
                           ? CustomLoader()
-                          : nomineeController
-                                  .accessControllResponseModel.isEmpty
+                          : nomineeController.accessControllResponseModel.isEmpty
                               ? Center(
                                   child: CustomText(
                                     text: AppLocalizations.of(context)!.no_data,
@@ -59,36 +58,27 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                                 )
                               : ListView.builder(
                                   padding: EdgeInsets.all(8.0),
-                                  itemCount: nomineeController
-                                      .accessControllResponseModel.length,
+                                  itemCount: nomineeController.accessControllResponseModel.length,
                                   itemBuilder: (context, index) {
-                                    final user = nomineeController
-                                        .accessControllResponseModel[index];
+                                    final user = nomineeController.accessControllResponseModel[index];
                                     return Card(
                                       shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
+                                        borderRadius: BorderRadius.circular(15.0),
                                       ),
                                       elevation: 3.0,
-                                      margin:
-                                          EdgeInsets.symmetric(vertical: 8.0),
+                                      margin: EdgeInsets.symmetric(vertical: 8.0),
                                       child: ListTile(
                                         title: Text(
-                                          user.name ??
-                                              AppLocalizations.of(context)!.n_a,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
+                                          user.name ?? AppLocalizations.of(context)!.n_a,
+                                          style: TextStyle(fontWeight: FontWeight.bold),
                                         ),
                                         subtitle: Row(
                                           children: [
-                                            Icon(Icons.man,
-                                                size: 16.0, color: Colors.grey),
+                                            Icon(Icons.man, size: 16.0, color: Colors.grey),
                                             SizedBox(width: 4.0),
                                             Text(
-                                              AppLocalizations.of(context)!
-                                                  .select_nominee,
-                                              style:
-                                                  TextStyle(color: Colors.grey),
+                                              AppLocalizations.of(context)!.select_nominee,
+                                              style: TextStyle(color: Colors.grey),
                                             ),
                                           ],
                                         ),
@@ -105,8 +95,7 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                                             // Get.toNamed(AppRoutes.nomineeDetailsScreen);
                                           },
                                           child: Text(
-                                            AppLocalizations.of(context)!
-                                                .give_access,
+                                            AppLocalizations.of(context)!.give_access,
                                             style: TextStyle(
                                               color: Colors.blue,
                                               fontWeight: FontWeight.w600,
@@ -114,8 +103,7 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                                           ),
                                         ),
                                         onTap: () {
-                                          Get.toNamed(AppRoutes.featureScreen,
-                                              preventDuplicates: false);
+                                          Get.toNamed(AppRoutes.featureScreen, preventDuplicates: false);
                                         },
                                       ),
                                     );
@@ -133,8 +121,7 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
     );
   }
 
-  void showWitnessDetailsDialog(
-      BuildContext context, NomineetedResponseModel user) {
+  void showWitnessDetailsDialog(BuildContext context, NomineetedResponseModel user) {
     showDialog(
       context: context,
       builder: (context) {
@@ -159,10 +146,7 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                         Expanded(
                           child: Text(
                             user.name ?? AppLocalizations.of(context)!.n_a,
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                         ),
                         IconButton(
@@ -172,39 +156,16 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
                       ],
                     ),
                     Divider(color: Colors.white70),
-                    _buildDialogRow(
-                        Icons.people,
-                        AppLocalizations.of(context)!.relation,
-                        user.relation ?? AppLocalizations.of(context)!.n_a),
-                    _buildDialogRow(
-                        Icons.email,
-                        AppLocalizations.of(context)!.email,
-                        user.email ?? AppLocalizations.of(context)!.n_a),
-                    _buildDialogRow(
-                        Icons.person,
-                        AppLocalizations.of(context)!.father_s_information,
-                        user.fatherName ?? AppLocalizations.of(context)!.n_a),
-                    _buildDialogRow(
-                        Icons.phone,
-                        AppLocalizations.of(context)!.mobile,
-                        user.mobile ?? AppLocalizations.of(context)!.n_a),
-                    _buildDialogRow(
-                        Icons.favorite,
-                        AppLocalizations.of(context)!.marital_status,
-                        user.maritalStatus ??
-                            AppLocalizations.of(context)!.n_a),
-                    _buildDialogRow(
-                        Icons.work,
-                        AppLocalizations.of(context)!.profession,
-                        user.profession ?? AppLocalizations.of(context)!.n_a),
-                    _buildDialogRow(
-                        Icons.calendar_today,
-                        AppLocalizations.of(context)!.date,
-                        "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}"),
+                    _buildDialogRow(Icons.people, AppLocalizations.of(context)!.relation, user.relation ?? AppLocalizations.of(context)!.n_a),
+                    _buildDialogRow(Icons.email, AppLocalizations.of(context)!.email, user.email ?? AppLocalizations.of(context)!.n_a),
+                    _buildDialogRow(Icons.person, AppLocalizations.of(context)!.father_s_information, user.fatherName ?? AppLocalizations.of(context)!.n_a),
+                    _buildDialogRow(Icons.phone, AppLocalizations.of(context)!.mobile, user.mobile ?? AppLocalizations.of(context)!.n_a),
+                    _buildDialogRow(Icons.favorite, AppLocalizations.of(context)!.marital_status, user.maritalStatus ?? AppLocalizations.of(context)!.n_a),
+                    _buildDialogRow(Icons.work, AppLocalizations.of(context)!.profession, user.profession ?? AppLocalizations.of(context)!.n_a),
+                    _buildDialogRow(Icons.calendar_today, AppLocalizations.of(context)!.date, "${DateFormat('dd-MM-yyyy').format(DateTime.parse(user.wnDate.toString()))}"),
                     SizedBox(height: 20),
                     ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                       onPressed: () {
                         // Implement remove witness logic
                         Navigator.pop(context);
@@ -228,11 +189,8 @@ class _WitnessApplicationMenuState extends State<WitnessApplicationMenu> {
         children: [
           Icon(icon, color: Colors.orange, size: 18),
           SizedBox(width: 10),
-          Text("$label: ",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          Expanded(
-              child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
+          Text("$label: ", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          Expanded(child: Text(value, style: TextStyle(color: Colors.orangeAccent))),
         ],
       ),
     );

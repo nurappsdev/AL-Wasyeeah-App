@@ -1,9 +1,9 @@
 import 'dart:developer';
 
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../utils/utils.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -110,38 +110,24 @@ class _CustomTextFieldState extends State<CustomTextField> {
       onChanged: widget.onChange,
       cursorColor: Color(0xff4A8D74),
       obscureText: widget.isPassword ? obscureText : false,
-      style: TextStyle(
-          color: widget.textColor ?? Colors.black,
-          fontSize: widget.hintextSize ?? 16.h),
+      style: TextStyle(color: widget.textColor ?? Colors.black, fontSize: widget.hintextSize ?? 16.h),
 
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(
-            horizontal: widget.contentPaddingHorizontal ?? 20.w,
-            vertical: widget.contentPaddingVertical ?? 10.h),
+        contentPadding: EdgeInsets.symmetric(horizontal: widget.contentPaddingHorizontal ?? 20.w, vertical: widget.contentPaddingVertical ?? 10.h),
         fillColor: const Color(0xffFFFFFF),
         filled: true,
-        errorStyle: TextStyle(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w500,
-            color: Colors.red,
-            fontFamily: "ComicNeue-Light"),
+        errorStyle: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500, color: Colors.red, fontFamily: "ComicNeue-Light"),
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.isPassword
             ? GestureDetector(
                 onTap: toggle,
-                child: _suffixIcon(obscureText
-                    ? Icons.visibility_off_outlined
-                    : Icons.visibility_outlined),
+                child: _suffixIcon(obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined),
               )
             : widget.suffixIcon,
         prefixIconConstraints: BoxConstraints(minHeight: 24.w, minWidth: 24.w),
         labelText: widget.labelText,
         hintText: widget.hintText,
-        hintStyle: TextStyle(
-            color: widget.hintextColor ?? Colors.black54,
-            fontSize: widget.hintextSize ?? 14.h,
-            fontWeight: FontWeight.w400,
-            fontFamily: "ComicNeue-Light"),
+        hintStyle: TextStyle(color: widget.hintextColor ?? Colors.black54, fontSize: widget.hintextSize ?? 14.h, fontWeight: FontWeight.w400, fontFamily: "ComicNeue-Light"),
         focusedBorder: focusedBorder(),
         enabledBorder: enabledBorder(),
         errorBorder: errorBorder(),
@@ -151,24 +137,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 
   _suffixIcon(IconData icon) {
-    return Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Icon(icon, color: AppColors.iconColor));
+    return Padding(padding: const EdgeInsets.all(12.0), child: Icon(icon, color: AppColors.iconColor));
   }
 
   OutlineInputBorder focusedBorder() {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(widget.borderRadio?.r ?? 16.r),
-      borderSide:
-          BorderSide(color: widget.borderColor ?? AppColors.primaryColor),
+      borderSide: BorderSide(color: widget.borderColor ?? AppColors.primaryColor),
     );
   }
 
   OutlineInputBorder enabledBorder() {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(widget.borderRadio?.r ?? 16.r),
-      borderSide:
-          BorderSide(color: widget.borderColor ?? AppColors.hitTextColor000000),
+      borderSide: BorderSide(color: widget.borderColor ?? AppColors.hitTextColor000000),
     );
   }
 

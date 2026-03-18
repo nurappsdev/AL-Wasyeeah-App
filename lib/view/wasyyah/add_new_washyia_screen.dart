@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/view/widgets/custom_button.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../controllers/controllers.dart';
-import '../../utils/utils.dart';
+
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AddNewWashyiaScreen extends StatefulWidget {
@@ -55,8 +56,7 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                   // Note section
                   SizedBox(height: 16.h),
                   CustomText(
-                    text: AppLocalizations.of(context)!
-                        .add_your_washiya_content_title,
+                    text: AppLocalizations.of(context)!.add_your_washiya_content_title,
                     color: AppColors.hitTextColor000000,
                     fontsize: 16.sp,
                   ),
@@ -65,14 +65,12 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
                       controller: contentController,
-                      hintText: AppLocalizations.of(context)!
-                          .add_your_washiya_content_title,
+                      hintText: AppLocalizations.of(context)!.add_your_washiya_content_title,
                       maxLine: 1,
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!
-                              .add_your_washiya_content_title;
+                          return AppLocalizations.of(context)!.add_your_washiya_content_title;
                         }
                         return null;
                       },
@@ -81,8 +79,7 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                   // Note section
                   SizedBox(height: 16.h),
                   CustomText(
-                    text:
-                        AppLocalizations.of(context)!.add_your_washiya_content,
+                    text: AppLocalizations.of(context)!.add_your_washiya_content,
                     color: AppColors.hitTextColor000000,
                     fontsize: 16.sp,
                   ),
@@ -91,14 +88,12 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
                       controller: titleController,
-                      hintText: AppLocalizations.of(context)!
-                          .add_your_washiya_content,
+                      hintText: AppLocalizations.of(context)!.add_your_washiya_content,
                       maxLine: 10,
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!
-                              .add_your_washiya_content;
+                          return AppLocalizations.of(context)!.add_your_washiya_content;
                         }
                         return null;
                       },
@@ -124,14 +119,11 @@ class _AddNewWashyiaScreenState extends State<AddNewWashyiaScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Obx(
                           () => CustomButton(
-                            loading:
-                                wasyyahController.addWaseeyea.value == true,
+                            loading: wasyyahController.addWaseeyea.value == true,
                             title: AppLocalizations.of(context)!.save,
                             onpress: () {
                               if (_createWasKey.currentState!.validate()) {
-                                wasyyahController.addWasyyahData(
-                                    title: titleController.text,
-                                    content: contentController.text);
+                                wasyyahController.addWasyyahData(title: titleController.text, content: contentController.text);
                               }
                             },
                             width: 100.w,

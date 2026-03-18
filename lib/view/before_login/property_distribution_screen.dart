@@ -1,4 +1,6 @@
 import 'package:al_wasyeah/helpers/app_routes.dart';
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -6,8 +8,6 @@ import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../utils/utils.dart';
 
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
@@ -33,8 +33,7 @@ class PropertyDistributionScreen extends StatelessWidget {
           width: double.infinity,
           height: Get.height,
           child: Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+            padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
             child: SingleChildScrollView(
               child: Form(
                 key: _forProKey,
@@ -53,8 +52,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                         ),
                         ElevatedButton(
                             onPressed: () {
-                              Get.toNamed(AppRoutes.zakatCalculatorScreen,
-                                  preventDuplicates: false);
+                              Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
                             },
                             child: CustomText(
                               text: AppLocalizations.of(context)!.skip,
@@ -130,8 +128,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .son_of_a_dead_son,
+                              hintText: AppLocalizations.of(context)!.son_of_a_dead_son,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -152,8 +149,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: samiCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .daughter_of_a_deceased_son,
+                              hintText: AppLocalizations.of(context)!.daughter_of_a_deceased_son,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -185,8 +181,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText:
-                                  AppLocalizations.of(context)!.dead_daughter,
+                              hintText: AppLocalizations.of(context)!.dead_daughter,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -207,8 +202,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .son_of_the_deceased_daughter,
+                              hintText: AppLocalizations.of(context)!.son_of_the_deceased_daughter,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -229,8 +223,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .the_daughter_of_the_deceased_daughter,
+                              hintText: AppLocalizations.of(context)!.the_daughter_of_the_deceased_daughter,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -273,8 +266,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText:
-                                  AppLocalizations.of(context)!.grandfather,
+                              hintText: AppLocalizations.of(context)!.grandfather,
                               hintextSize: 12.sp,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
@@ -340,8 +332,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .half_brother_bipartite,
+                              hintText: AppLocalizations.of(context)!.half_brother_bipartite,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -352,8 +343,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .half_sister_bilateral,
+                              hintText: AppLocalizations.of(context)!.half_sister_bilateral,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -374,8 +364,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .stepbrother_half_brother,
+                              hintText: AppLocalizations.of(context)!.stepbrother_half_brother,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -386,42 +375,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .half_sister_step_sister,
-                              keyboardType: TextInputType.number,
-                              borderColor: AppColors.secondaryPrimaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 12.h,
-                    ),
-
-                    ///ELEVEN Row========================
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
-                            child: CustomTextField(
-                              controller: wifeCNTR,
-                              hintText:
-                                  AppLocalizations.of(context)!.brother_s_son,
-                              keyboardType: TextInputType.number,
-                              borderColor: AppColors.secondaryPrimaryColor,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.h),
-                            child: CustomTextField(
-                              controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .son_of_half_brother_uncle,
+                              hintText: AppLocalizations.of(context)!.half_sister_step_sister,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -442,8 +396,18 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .brother_s_son_s_son,
+                              hintText: AppLocalizations.of(context)!.brother_s_son,
+                              keyboardType: TextInputType.number,
+                              borderColor: AppColors.secondaryPrimaryColor,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            child: CustomTextField(
+                              controller: wifeCNTR,
+                              hintText: AppLocalizations.of(context)!.son_of_half_brother_uncle,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -464,8 +428,28 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .son_of_half_brother_s_son,
+                              hintText: AppLocalizations.of(context)!.brother_s_son_s_son,
+                              keyboardType: TextInputType.number,
+                              borderColor: AppColors.secondaryPrimaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+
+                    ///ELEVEN Row========================
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4.h),
+                            child: CustomTextField(
+                              controller: wifeCNTR,
+                              hintText: AppLocalizations.of(context)!.son_of_half_brother_s_son,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -497,8 +481,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText:
-                                  AppLocalizations.of(context)!.uncle_bilingual,
+                              hintText: AppLocalizations.of(context)!.uncle_bilingual,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -532,8 +515,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .cousin_bipartite,
+                              hintText: AppLocalizations.of(context)!.cousin_bipartite,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -544,8 +526,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText:
-                                  AppLocalizations.of(context)!.cousin_s_son,
+                              hintText: AppLocalizations.of(context)!.cousin_s_son,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -567,8 +548,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .cousin_s_son_baimatreya,
+                              hintText: AppLocalizations.of(context)!.cousin_s_son_baimatreya,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -579,8 +559,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .cousin_s_son_s_son_s_son,
+                              hintText: AppLocalizations.of(context)!.cousin_s_son_s_son_s_son,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -601,8 +580,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 4.h),
                             child: CustomTextField(
                               controller: wifeCNTR,
-                              hintText: AppLocalizations.of(context)!
-                                  .cousin_s_vaimatreya_s_son_s_son,
+                              hintText: AppLocalizations.of(context)!.cousin_s_vaimatreya_s_son_s_son,
                               keyboardType: TextInputType.number,
                               borderColor: AppColors.secondaryPrimaryColor,
                             ),
@@ -630,14 +608,12 @@ class PropertyDistributionScreen extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: landCNTR,
-                        hintText: AppLocalizations.of(context)!
-                            .land_measurement_unit_percentage,
+                        hintText: AppLocalizations.of(context)!.land_measurement_unit_percentage,
                         borderColor: AppColors.secondaryPrimaryColor,
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .land_measurement_unit_percentage;
+                            return AppLocalizations.of(context)!.land_measurement_unit_percentage;
                           }
                           return null;
                         },
@@ -647,14 +623,12 @@ class PropertyDistributionScreen extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: landCNTR,
-                        hintText: AppLocalizations.of(context)!
-                            .gold_measurement_unit_bhari,
+                        hintText: AppLocalizations.of(context)!.gold_measurement_unit_bhari,
                         borderColor: AppColors.secondaryPrimaryColor,
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .gold_measurement_unit_bhari;
+                            return AppLocalizations.of(context)!.gold_measurement_unit_bhari;
                           }
                           return null;
                         },
@@ -664,14 +638,12 @@ class PropertyDistributionScreen extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: landCNTR,
-                        hintText: AppLocalizations.of(context)!
-                            .silver_measurement_unit_bhari,
+                        hintText: AppLocalizations.of(context)!.silver_measurement_unit_bhari,
                         borderColor: AppColors.secondaryPrimaryColor,
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .silver_measurement_unit_bhari;
+                            return AppLocalizations.of(context)!.silver_measurement_unit_bhari;
                           }
                           return null;
                         },
@@ -681,14 +653,12 @@ class PropertyDistributionScreen extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: landCNTR,
-                        hintText: AppLocalizations.of(context)!
-                            .money_measurement_unit_taka,
+                        hintText: AppLocalizations.of(context)!.money_measurement_unit_taka,
                         borderColor: AppColors.secondaryPrimaryColor,
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .money_measurement_unit_taka;
+                            return AppLocalizations.of(context)!.money_measurement_unit_taka;
                           }
                           return null;
                         },
@@ -703,8 +673,7 @@ class PropertyDistributionScreen extends StatelessWidget {
                       // loading: authController.loadingLoading.value == true,
                       title: AppLocalizations.of(context)!.result,
                       onpress: () {
-                        Get.toNamed(AppRoutes.propertyDistributionResultScreen,
-                            preventDuplicates: false);
+                        Get.toNamed(AppRoutes.propertyDistributionResultScreen, preventDuplicates: false);
                         // if (_forRegKey.currentState!.validate()) {
                         //   // authController.loginHandle(
                         //   //     emailController.text, passController.text);

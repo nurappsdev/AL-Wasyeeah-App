@@ -1,6 +1,7 @@
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
-import 'package:al_wasyeah/view/widgets/custom_button_common.dart'
-    show CustomButtonCommon;
+import 'package:al_wasyeah/view/widgets/custom_button_common.dart' show CustomButtonCommon;
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../controllers/controllers.dart';
-import '../../../utils/utils.dart';
 
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
@@ -22,11 +22,9 @@ class AddOutsideWitness extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
 
-  final TextEditingController presentAddressController =
-      TextEditingController();
+  final TextEditingController presentAddressController = TextEditingController();
 
-  final TextEditingController permanentAddressController =
-      TextEditingController();
+  final TextEditingController permanentAddressController = TextEditingController();
   DateTime? birthDate;
   final NomineeController nomineeController = Get.put(NomineeController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -60,8 +58,7 @@ class AddOutsideWitness extends StatelessWidget {
                         height: 16.h,
                       ),
                       CustomText(
-                        text:
-                            AppLocalizations.of(context)!.relation_with_witness,
+                        text: AppLocalizations.of(context)!.relation_with_witness,
                         color: AppColors.hitTextColor000000,
                         fontsize: 20.sp,
                       ),
@@ -72,13 +69,11 @@ class AddOutsideWitness extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
                           controller: relNameController,
-                          hintText: AppLocalizations.of(context)!
-                              .relation_with_witness,
+                          hintText: AppLocalizations.of(context)!.relation_with_witness,
                           borderColor: AppColors.secondaryPrimaryColor,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .relation_with_witness;
+                              return AppLocalizations.of(context)!.relation_with_witness;
                             }
                             return null;
                           },
@@ -105,8 +100,7 @@ class AddOutsideWitness extends StatelessWidget {
                           borderColor: AppColors.secondaryPrimaryColor,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .please_enter_name;
+                              return AppLocalizations.of(context)!.please_enter_name;
                             }
                             return null;
                           },
@@ -133,8 +127,7 @@ class AddOutsideWitness extends StatelessWidget {
                           borderColor: AppColors.secondaryPrimaryColor,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .please_enter_your_mobile_number;
+                              return AppLocalizations.of(context)!.please_enter_your_mobile_number;
                             }
                             return null;
                           },
@@ -166,12 +159,9 @@ class AddOutsideWitness extends StatelessWidget {
                           // ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .please_enter_your_email;
-                            } else if (!AppConstants.emailValidate
-                                .hasMatch(value)) {
-                              return AppLocalizations.of(context)!
-                                  .invalid_email;
+                              return AppLocalizations.of(context)!.please_enter_your_email;
+                            } else if (!AppConstants.emailValidate.hasMatch(value)) {
+                              return AppLocalizations.of(context)!.invalid_email;
                             }
                             return null;
                           },
@@ -205,8 +195,7 @@ class AddOutsideWitness extends StatelessWidget {
 
                             if (selectedDate != null) {
                               birthDate = selectedDate;
-                              dateOfBirthController.text =
-                                  DateFormat('yyyy-MM-dd').format(birthDate!);
+                              dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(birthDate!);
                             }
                             print(dateOfBirthController.text);
                           },
@@ -216,8 +205,7 @@ class AddOutsideWitness extends StatelessWidget {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .please_write_date_of_birth;
+                              return AppLocalizations.of(context)!.please_write_date_of_birth;
                             }
                             return null;
                           },
@@ -240,14 +228,12 @@ class AddOutsideWitness extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
                           controller: presentAddressController,
-                          hintText:
-                              AppLocalizations.of(context)!.present_address,
+                          hintText: AppLocalizations.of(context)!.present_address,
                           maxLine: 4,
                           borderColor: AppColors.secondaryPrimaryColor,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .present_address;
+                              return AppLocalizations.of(context)!.present_address;
                             }
                             return null;
                           },
@@ -270,14 +256,12 @@ class AddOutsideWitness extends StatelessWidget {
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: CustomTextField(
                           controller: permanentAddressController,
-                          hintText:
-                              AppLocalizations.of(context)!.permanent_address,
+                          hintText: AppLocalizations.of(context)!.permanent_address,
                           maxLine: 4,
                           borderColor: AppColors.secondaryPrimaryColor,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .permanent_address;
+                              return AppLocalizations.of(context)!.permanent_address;
                             }
                             return null;
                           },
@@ -289,9 +273,7 @@ class AddOutsideWitness extends StatelessWidget {
                       ),
                       Obx(
                         () => CustomButtonCommon(
-                            loading:
-                                nomineeController.addNomineeLoading.value ==
-                                    true,
+                            loading: nomineeController.addNomineeLoading.value == true,
                             title: AppLocalizations.of(context)!.save,
                             onpress: () {
                               if (_formKey.currentState!.validate()) {
@@ -302,10 +284,8 @@ class AddOutsideWitness extends StatelessWidget {
                                     email: emailController.text,
                                     relationWithUser: relNameController.text,
                                     dob: dateOfBirthController.text,
-                                    presentAddress:
-                                        presentAddressController.text,
-                                    permanentAddress:
-                                        permanentAddressController.text);
+                                    presentAddress: presentAddressController.text,
+                                    permanentAddress: permanentAddressController.text);
                               }
                             }),
                       ),

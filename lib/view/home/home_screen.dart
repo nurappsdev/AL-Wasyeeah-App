@@ -85,8 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //   userController.getUserProfileData();
   // }
   ScrollController? _scrollController;
-  NotificationController notificationController =
-      Get.put(NotificationController());
+  NotificationController notificationController = Get.put(NotificationController());
   @override
   void initState() {
     super.initState();
@@ -94,9 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     userController.getsalatTimeHandle().then((_) {
       Future.delayed(Duration(milliseconds: 500), () {
-        final index = userController.prayerTimes.keys
-            .toList()
-            .indexOf(userController.upcomingPrayer.value);
+        final index = userController.prayerTimes.keys.toList().indexOf(userController.upcomingPrayer.value);
         if (index != -1) {
           _scrollController?.animateTo(
             index * 250.h,
@@ -155,13 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Obx(
                   () => Row(
                     children: [
-                      userController.userProfile.value?.userProfile
-                                  ?.profilePictureUrl !=
-                              null
+                      userController.userProfile.value?.userProfile?.profilePictureUrl != null
                           ? CircleAvatar(
                               radius: 18,
-                              backgroundImage: NetworkImage(
-                                  "${ApiConstants.imageUrl + "${userController.userProfile.value!.userProfile!.profilePictureUrl}"}"),
+                              backgroundImage: NetworkImage("${ApiConstants.imageUrl + "${userController.userProfile.value!.userProfile!.profilePictureUrl}"}"),
                               backgroundColor: Colors.grey[200],
                             )
                           : CircleAvatar(
@@ -204,8 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               notificationController.obx(
                 (data) {
-                  final unreadCount =
-                      data!.where((e) => !(e.status != "UNREAD")).length;
+                  final unreadCount = data!.where((e) => !(e.status != "UNREAD")).length;
 
                   return Padding(
                     padding: const EdgeInsets.only(right: 12),
@@ -217,9 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           icon: Icon(
                             Icons.notifications,
                             size: 26,
-                            color: unreadCount > 0
-                                ? Colors.black
-                                : Colors.grey.shade700,
+                            color: unreadCount > 0 ? Colors.black : Colors.grey.shade700,
                           ),
                           splashRadius: 22,
                           onPressed: () {
@@ -237,8 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             top: 4,
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 250),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 6, vertical: 3),
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                               constraints: const BoxConstraints(
                                 minWidth: 12,
                                 minHeight: 12,
@@ -260,9 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  unreadCount > 99
-                                      ? "99+"
-                                      : unreadCount.toString(),
+                                  unreadCount > 99 ? "99+" : unreadCount.toString(),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 8,
@@ -303,8 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     InkWell(
                       onTap: () {
-                        Get.toNamed(AppRoutes.wasyyahScreen,
-                            preventDuplicates: false);
+                        Get.toNamed(AppRoutes.wasyyahScreen, preventDuplicates: false);
                       },
                       child: Container(
                         height: 150.h,
@@ -323,8 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 80.h,
                             ),
                             CustomText(
-                              text: AppLocalizations.of(context)!
-                                  .explore_your_wasyyah,
+                              text: AppLocalizations.of(context)!.explore_your_wasyyah,
                               fontsize: 18.sp,
                               color: AppColors.primaryColor,
                             )
@@ -341,8 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              Get.toNamed(AppRoutes.witnessTabScreen,
-                                  preventDuplicates: false);
+                              Get.toNamed(AppRoutes.witnessTabScreen, preventDuplicates: false);
                             },
                             child: Container(
                               height: 100.h,
@@ -350,12 +335,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
-                                border:
-                                    Border.all(color: AppColors.primaryColor),
+                                border: Border.all(color: AppColors.primaryColor),
                               ),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   SvgPicture.asset(
                                     AppIcons.witness,
@@ -380,8 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              Get.toNamed(AppRoutes.nomineeTabScreen,
-                                  preventDuplicates: false);
+                              Get.toNamed(AppRoutes.nomineeTabScreen, preventDuplicates: false);
                             },
                             child: Container(
                               height: 100.h,
@@ -389,12 +371,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.white,
-                                border:
-                                    Border.all(color: AppColors.primaryColor),
+                                border: Border.all(color: AppColors.primaryColor),
                               ),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   SvgPicture.asset(
                                     AppIcons.nominee,
@@ -420,20 +400,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(AppLocalizations.of(context)!.prayer_times,
-                            style: TextStyle(
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.green[700])),
+                        Text(AppLocalizations.of(context)!.prayer_times, style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold, color: Colors.green[700])),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             SizedBox(height: 12.h),
-                            Text(
-                                DateFormat('dd MMM, yyyy')
-                                    .format(DateTime.now()),
-                                style: TextStyle(
-                                    fontSize: 14.sp, color: Colors.black)),
+                            Text(DateFormat('dd MMM, yyyy').format(DateTime.now()), style: TextStyle(fontSize: 14.sp, color: Colors.black)),
                             SizedBox(height: 4.h),
                             Text(
                               todayHijri.toFormat("dd MMMM, yyyy"),
@@ -460,12 +432,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         return SizedBox(
                           height: 200.h,
                           child: GridView.builder(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
                             scrollDirection: Axis.horizontal,
                             itemCount: 2,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1,
                               mainAxisSpacing: 16.0,
                               childAspectRatio: 0.8,
@@ -478,35 +448,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Container(
-                                          height: 20,
-                                          width: 120,
-                                          color: Colors.grey.shade300),
+                                      Container(height: 20, width: 120, color: Colors.grey.shade300),
                                       SizedBox(height: 8.h),
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
-                                          Container(
-                                              height: 80.h,
-                                              width: 80,
-                                              color: Colors.grey.shade300),
+                                          Container(height: 80.h, width: 80, color: Colors.grey.shade300),
                                           Column(
                                             children: List.generate(
                                                 4,
                                                 (index) => Padding(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 4.0),
-                                                      child: Container(
-                                                          height: 20,
-                                                          width:
-                                                              60 + index * 10,
-                                                          color: Colors
-                                                              .grey.shade300),
+                                                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                                      child: Container(height: 20, width: 60 + index * 10, color: Colors.grey.shade300),
                                                     )),
                                           ),
                                         ],
@@ -527,8 +482,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           controller: _scrollController,
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           scrollDirection: Axis.horizontal,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 1,
                             mainAxisSpacing: 16.0,
                             childAspectRatio: 0.8,
@@ -540,9 +494,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             final isCurrent = name == current;
 
                             return Card(
-                              color: isCurrent
-                                  ? Color(0xffFFF0E2)
-                                  : Colors.grey[200],
+                              color: isCurrent ? Color(0xffFFF0E2) : Colors.grey[200],
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
                                   12.0,
@@ -551,46 +503,31 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      isCurrent
-                                          ? AppLocalizations.of(context)!
-                                              .upcoming_prayers
-                                          : AppLocalizations.of(context)!
-                                              .prayer_times,
+                                      isCurrent ? AppLocalizations.of(context)!.upcoming_prayers : AppLocalizations.of(context)!.prayer_times,
                                       style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.bold,
-                                        color: isCurrent
-                                            ? Colors.green
-                                            : Colors.black,
+                                        color: isCurrent ? Colors.green : Colors.black,
                                       ),
                                     ),
                                     SizedBox(height: 8.h),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: [
-                                        Image.asset(AppImages.mosjidIcon,
-                                            height: 80.h, width: 80),
+                                        Image.asset(AppImages.mosjidIcon, height: 80.h, width: 80),
                                         Column(
                                           children: [
                                             Text(
                                               name,
-                                              style: TextStyle(
-                                                  fontSize: 20.sp,
-                                                  color: isCurrent
-                                                      ? Colors.green
-                                                      : Colors.red),
+                                              style: TextStyle(fontSize: 20.sp, color: isCurrent ? Colors.green : Colors.red),
                                             ),
                                             if (isCurrent && left != null)
                                               Text(
                                                 left.toString().split(".")[0],
-                                                style: TextStyle(
-                                                    fontSize: 18.sp,
-                                                    color: Colors.black87),
+                                                style: TextStyle(fontSize: 18.sp, color: Colors.black87),
                                               ),
                                             Text(
                                               formatTime(time),
@@ -598,8 +535,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             Switch(
                                               value: isCurrent,
-                                              activeColor:
-                                                  AppColors.primaryColor,
+                                              activeColor: AppColors.primaryColor,
                                               onChanged: (value) {
                                                 // handle toggle
                                               },
@@ -787,14 +723,49 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
+
                     InkWell(
                       onTap: () {
-                        Get.toNamed(AppRoutes.zakatCalculatorScreen,
-                            preventDuplicates: false);
+                        Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
                       },
-                      child: SizedBox(
-                        height: 200.h,
-                        child: Image.asset(AppImages.zakatImg),
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 220.h,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(AppImages.zakatImg),
+                                fit: BoxFit.fitWidth,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 90.h,
+                            right: 110.w,
+                            child: Transform.rotate(
+                              angle: 90 * 3.141592653589793 / 160,
+                              child: Icon(
+                                Icons.calculate,
+                                size: 50.sp,
+                                color: Color(0xFF2F5ADF),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 70.h,
+                            right: 40.w,
+                            child: SizedBox(
+                              width: 60.w,
+                              child: Text(
+                                AppLocalizations.of(context)!.calculate_your_zakat,
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 
@@ -804,13 +775,34 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        // Get.off(() => PropertyDistributionScreen2(), preventDuplicates: false);
-                        Get.to(() => PropertyDistributionCalculationPage(),
-                            preventDuplicates: false);
+                        Get.to(() => PropertyDistributionCalculationPage(), preventDuplicates: false);
                       },
-                      child: SizedBox(
-                        height: 200.h,
-                        child: Image.asset(AppImages.profirtyImg),
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 200.h,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(AppImages.distribureYourPropertyProperlyImage),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 20.h,
+                            left: 30.w,
+                            child: SizedBox(
+                              width: 80.w,
+                              child: Text(
+                                AppLocalizations.of(context)!.distribute_your_property_properly,
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 

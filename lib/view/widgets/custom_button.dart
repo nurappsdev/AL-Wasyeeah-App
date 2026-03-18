@@ -1,8 +1,7 @@
+import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../utils/utils.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onpress;

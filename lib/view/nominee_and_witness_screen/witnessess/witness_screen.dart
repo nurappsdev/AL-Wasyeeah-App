@@ -1,11 +1,13 @@
 import 'package:al_wasyeah/helpers/app_routes.dart';
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_image.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_button.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../utils/utils.dart';
+
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class WitnessScreen extends StatefulWidget {
@@ -138,8 +140,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
                             ),
                             subtitle: Row(
                               children: [
-                                Icon(Icons.visibility,
-                                    size: 16.0, color: Colors.grey),
+                                Icon(Icons.visibility, size: 16.0, color: Colors.grey),
                                 SizedBox(width: 4.0),
                                 Text(
                                   AppLocalizations.of(context)!.view_details,
@@ -148,8 +149,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
                               ],
                             ),
                             onTap: () {
-                              Get.toNamed(AppRoutes.witnessDetailsScreen,
-                                  preventDuplicates: false);
+                              Get.toNamed(AppRoutes.witnessDetailsScreen, preventDuplicates: false);
                             },
                           ),
                         );
@@ -161,8 +161,7 @@ class _WitnessScreenState extends State<WitnessScreen> {
                     title: AppLocalizations.of(context)!.add_more_witness,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
-                      Get.toNamed(AppRoutes.addWitnessesScreen,
-                          preventDuplicates: false);
+                      Get.toNamed(AppRoutes.addWitnessesScreen, preventDuplicates: false);
                     },
                   ),
                   SizedBox(height: 10.h),

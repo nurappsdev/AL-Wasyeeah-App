@@ -1,4 +1,6 @@
 import 'package:al_wasyeah/helpers/app_routes.dart';
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_image.dart';
 import 'package:al_wasyeah/view/app.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -6,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../utils/utils.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -59,8 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                   const SizedBox(width: 8),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -73,9 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           child: Text(
                             'Eng',
                             style: TextStyle(
-                              color: isEnglish
-                                  ? AppColors.primaryColor
-                                  : Colors.black,
+                              color: isEnglish ? AppColors.primaryColor : Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -83,11 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         Switch(
                           value: !isEnglish,
                           onChanged: (value) {
-                            WasyeeahApp.setLocale(
-                                context,
-                                value
-                                    ? const Locale('bn')
-                                    : const Locale('en'));
+                            WasyeeahApp.setLocale(context, value ? const Locale('bn') : const Locale('en'));
                           },
                           activeColor: AppColors.primaryColor,
                           inactiveThumbColor: AppColors.primaryColor,
@@ -101,9 +95,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           child: Text(
                             'বাং',
                             style: TextStyle(
-                              color: isEnglish
-                                  ? Colors.black
-                                  : AppColors.primaryColor,
+                              color: isEnglish ? Colors.black : AppColors.primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -121,8 +113,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: CustomButtonCommon(
                   title: AppLocalizations.of(context)!.get_start,
                   onpress: () {
-                    Get.toNamed(AppRoutes.loginScreen,
-                        preventDuplicates: false);
+                    Get.toNamed(AppRoutes.loginScreen, preventDuplicates: false);
                   },
                 ),
               ),

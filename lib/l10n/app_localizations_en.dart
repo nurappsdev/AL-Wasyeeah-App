@@ -1326,4 +1326,56 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get s_suffix => '\'s';
+
+  @override
+  String get property_distribution_calculation_saved_successfully =>
+      'Property Distribution Calculation Saved Successfully';
+
+  @override
+  String get property_distribution_calculation_failed_to_save =>
+      'Property Distribution Calculation Failed to Save';
+
+  @override
+  String get download => 'Download';
+
+  @override
+  String get comming_soon => 'Comming Soon';
+
+  @override
+  String get calculate_your_zakat_easily => 'Calculate Your Zakat Easily';
+
+  @override
+  String get currency => 'Currency';
+
+  @override
+  String get nisab => 'Nisab';
+
+  @override
+  String get updated => 'Updated';
+
+  @override
+  String get nisab_amount => 'Nisab amount';
+
+  @override
+  String get future_deposits => 'Future deposits';
+
+  @override
+  String get investment_value => 'Investment value';
+
+  @override
+  String get rental_income => 'Rental income';
+
+  @override
+  String get immediate_liabilities => 'Immediate liabilities';
+
+  @override
+  String get distribure_your_property_properly =>
+      'Distribute Your Property Properly';
+
+  @override
+  String get calculate_your_zakat => 'Calculate Your Zakat';
+
+  @override
+  String get distribute_your_property_properly =>
+      'Distribute Your Property Properly';
 }

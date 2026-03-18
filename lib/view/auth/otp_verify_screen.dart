@@ -1,3 +1,6 @@
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_dimentions.dart';
+import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:al_wasyeah/view/profile/profile_page.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_pin_text_field.dart';
@@ -6,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
-import '../../utils/utils.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class OtpVerifyScreen extends StatelessWidget {
@@ -26,17 +27,14 @@ class OtpVerifyScreen extends StatelessWidget {
         width: double.infinity,
         height: Get.height,
         child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(
                   height: 16.h,
                 ),
-                Center(
-                    child: SvgPicture.asset(AppIcons.otpIcon,
-                        height: 270.h, width: double.infinity)),
+                Center(child: SvgPicture.asset(AppIcons.otpIcon, height: 270.h, width: double.infinity)),
                 SizedBox(
                   height: 16.h,
                 ),
@@ -52,8 +50,7 @@ class OtpVerifyScreen extends StatelessWidget {
                 ),
                 Center(
                     child: CustomText(
-                  text: AppLocalizations.of(context)!
-                      .an_5_digit_code_sent_to_your,
+                  text: AppLocalizations.of(context)!.an_5_digit_code_sent_to_your,
                   fontsize: 16.sp,
                   maxline: 2,
                   textAlign: TextAlign.center,

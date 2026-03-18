@@ -1,22 +1,16 @@
-
-
 class AppImages {
   static const String path = "assets/images";
-
 
   static const String backImg = "$path/background_img.png";
   static const String splashImg1 = "$path/splash_img1.png";
   static const String splashImg2 = "$path/slpash_img.png";
-  static const String zakatImg = "$path/zakatImg.png";
-  static const String profirtyImg = "$path/profirty_icon.png";
+  static const String zakatImg = "$path/calculate_your_zakat.png";
+  static const String distribureYourPropertyProperlyImage = "$path/distribure_your_property_properly.png";
   static const String mosjidIcon = "$path/mosqe_icons.png";
   static const String wasyyahIcon = "$path/priview_img.png";
   static const String wasyyahImg = "$path/priverwImg.png";
   static const String scanImg = "$path/scanImg.png";
   static const String profileIcon = "$path/profile_icon.png";
-
-
-
 
   static const String pmoji = "$path/pmoji.png";
   static const String profileImg = "$path/profile.png";
@@ -37,5 +31,4 @@ class AppImages {
 
   static const String homeDetailsImg = "$path/home_details.png";
   static const String profileImage = "$path/blank_profile.png";
-
 }

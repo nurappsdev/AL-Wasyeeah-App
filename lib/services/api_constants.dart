@@ -23,12 +23,10 @@ class ApiConstants {
   static const String signInEndPoint = "/user/login";
   static const String forgotEndPoint = "/user/forget-password";
   static String get zakatEndPoint => "/zakatCalculator?lang=$currentLang";
-  static String salatTimeAPI(String lat, String long) =>
-      "/mobile/getSalahTime?latitude=$lat&longitude=$long";
+  static String salatTimeAPI(String lat, String long) => "/mobile/getSalahTime?latitude=$lat&longitude=$long";
   static const String addNomineePoint = "/user/save-nominee";
   static const String addWitnessEndPoint = "/user/save-nominee";
-  static const String addFeatureNomineeWitnessPoint =
-      "/assignContext?isWitness=";
+  static const String addFeatureNomineeWitnessPoint = "/assignContext?isWitness=";
   static const String getUserEndPoint = "/auth/session";
   static const String forgotPassEndPoint = "/auth/forgot";
   static String updateProfileEndPoint(String id) => "/users/$id";
@@ -40,8 +38,7 @@ class ApiConstants {
   static const String getCartEndPoint = "/cart/my-cart";
   static const String changePassEndPoint = "/user/change-password";
   static String maritalList = "/lookup/maritalList";
-  static String get professionList =>
-      "/lookup/professionList?lang=$currentLang";
+  static String get professionList => "/lookup/professionList?lang=$currentLang";
   static String countryList = "/lookup/countryList";
   static String genderList = "/lookup/gender";
   static String bankList = "/lookup/bankList";
@@ -52,7 +49,8 @@ class ApiConstants {
   static String inappnotificationList = '/get-notification';
   static String profileUpdate = "/lookup/saveProfileData";
   static String get relevantList => "/relevantList?lang=$currentLang";
-  static String get propertyDistributionCalculationResult =>
-      "/propertyDistributeResult?lang=$currentLang";
+  static String get propertyDistributionCalculationResult => "/propertyDistributeResult?lang=$currentLang";
+  static String get getPropertyDistributionCalculationResult => "/getPropertyDistributeResult";
+  static String get savePropertyDistributionCalculationResult => "/savePropertyDistributeResult";
   static String inappNOtificationAcceptRejectRequest = "/accept-reject-request";
 }

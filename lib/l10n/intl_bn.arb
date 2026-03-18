@@ -445,5 +445,21 @@
   "finish": "শেষ",
   "deceased":"মৃত",
   "s_suffix": "এর",
-   "husband_and_wife_cant_be_selected_together":"স্বামী এবং স্ত্রী একসাথে নির্বাচন করা যাবে না"
+   "husband_and_wife_cant_be_selected_together":"স্বামী এবং স্ত্রী একসাথে নির্বাচন করা যাবে না",
+   "property_distribution_calculation_saved_successfully": "সম্পত্তি বন্টন গণনা সফলভাবে সংরক্ষণ করা হয়েছে",
+   "property_distribution_calculation_failed_to_save": "সম্পত্তি বন্টন গণনা সংরক্ষণ করতে ব্যর্থ হয়েছে",
+   "download": "ডাউনলোড",
+   "comming_soon": "শীঘ্রই আসছে",
+   "calculate_your_zakat_easily": "আপনার যাকাত সহজেই গণনা করুন",
+   "currency": "মুদ্রা",
+   "nisab": "নিসাব",
+   "updated": "আপডেট",
+   "nisab_amount": "নিসাব পরিমাণ",
+   "future_deposits": "ভবিষ্যৎ আমানত",
+   "investment_value": "বিনিয়োগের মূল্য",
+   "rental_income": "ভাড়া থেকে আয়",
+   "immediate_liabilities": "তাৎক্ষণিক দায়বদ্ধতা",
+   "distribure_your_property_properly": "আপনার সম্পত্তি সঠিকভাবে বন্টন করুন",
+   "calculate_your_zakat": "আপনার যাকাত গণনা করুন",
+   "distribute_your_property_properly": "আপনার সম্পত্তি সঠিকভাবে বন্টন করুন"
 }

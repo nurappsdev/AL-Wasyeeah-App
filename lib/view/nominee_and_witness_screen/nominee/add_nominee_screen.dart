@@ -1,3 +1,5 @@
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_image.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_button.dart';
 import 'package:al_wasyeah/view/widgets/custom_loader.dart';
@@ -9,7 +11,7 @@ import 'package:get/get.dart';
 
 import '../../../controllers/controllers.dart';
 import '../../../helpers/helpers.dart';
-import '../../../utils/utils.dart';
+
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class AddNomineeScreen extends StatelessWidget {
@@ -62,9 +64,7 @@ class AddNomineeScreen extends StatelessWidget {
                     if (controller.isLoading.value) {
                       return CustomLoader();
                     } else if (controller.nominessData.value == null) {
-                      return Center(
-                          child: Text(
-                              AppLocalizations.of(context)!.no_nominee_added));
+                      return Center(child: Text(AppLocalizations.of(context)!.no_nominee_added));
                     } else {
                       return Card(
                         shape: RoundedRectangleBorder(
@@ -78,14 +78,12 @@ class AddNomineeScreen extends StatelessWidget {
                             radius: 30,
                           ),
                           title: Text(
-                            controller.nominessData.value?.name ??
-                                AppLocalizations.of(context)!.n_a,
+                            controller.nominessData.value?.name ?? AppLocalizations.of(context)!.n_a,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           subtitle: Row(
                             children: [
-                              Icon(Icons.visibility,
-                                  size: 16.0, color: Colors.grey),
+                              Icon(Icons.visibility, size: 16.0, color: Colors.grey),
                               SizedBox(width: 4.0),
                               Text(
                                 AppLocalizations.of(context)!.view_details,
@@ -94,9 +92,7 @@ class AddNomineeScreen extends StatelessWidget {
                             ],
                           ),
                           onTap: () {
-                            Get.toNamed(AppRoutes.asignNomineeDetails,
-                                arguments: controller.nominessData.value,
-                                preventDuplicates: false);
+                            Get.toNamed(AppRoutes.asignNomineeDetails, arguments: controller.nominessData.value, preventDuplicates: false);
                             // Get.toNamed('/witnessDetailsScreen', preventDuplicates: false);
                             // print("dfkjld");
                           },
@@ -154,8 +150,7 @@ class AddNomineeScreen extends StatelessWidget {
                     title: AppLocalizations.of(context)!.add_outside_nominee,
                     titlecolor: AppColors.primaryColor,
                     onpress: () {
-                      Get.toNamed(AppRoutes.addOutsideNomineeScreen,
-                          preventDuplicates: false);
+                      Get.toNamed(AppRoutes.addOutsideNomineeScreen, preventDuplicates: false);
                     },
                   ),
                   SizedBox(height: 10.h),

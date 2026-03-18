@@ -2678,6 +2678,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'\'s'**
   String get s_suffix;
+
+  /// No description provided for @property_distribution_calculation_saved_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Property Distribution Calculation Saved Successfully'**
+  String get property_distribution_calculation_saved_successfully;
+
+  /// No description provided for @property_distribution_calculation_failed_to_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Property Distribution Calculation Failed to Save'**
+  String get property_distribution_calculation_failed_to_save;
+
+  /// No description provided for @download.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get download;
+
+  /// No description provided for @comming_soon.
+  ///
+  /// In en, this message translates to:
+  /// **'Comming Soon'**
+  String get comming_soon;
+
+  /// No description provided for @calculate_your_zakat_easily.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate Your Zakat Easily'**
+  String get calculate_your_zakat_easily;
+
+  /// No description provided for @currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get currency;
+
+  /// No description provided for @nisab.
+  ///
+  /// In en, this message translates to:
+  /// **'Nisab'**
+  String get nisab;
+
+  /// No description provided for @updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated'**
+  String get updated;
+
+  /// No description provided for @nisab_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Nisab amount'**
+  String get nisab_amount;
+
+  /// No description provided for @future_deposits.
+  ///
+  /// In en, this message translates to:
+  /// **'Future deposits'**
+  String get future_deposits;
+
+  /// No description provided for @investment_value.
+  ///
+  /// In en, this message translates to:
+  /// **'Investment value'**
+  String get investment_value;
+
+  /// No description provided for @rental_income.
+  ///
+  /// In en, this message translates to:
+  /// **'Rental income'**
+  String get rental_income;
+
+  /// No description provided for @immediate_liabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Immediate liabilities'**
+  String get immediate_liabilities;
+
+  /// No description provided for @distribure_your_property_properly.
+  ///
+  /// In en, this message translates to:
+  /// **'Distribute Your Property Properly'**
+  String get distribure_your_property_properly;
+
+  /// No description provided for @calculate_your_zakat.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate Your Zakat'**
+  String get calculate_your_zakat;
+
+  /// No description provided for @distribute_your_property_properly.
+  ///
+  /// In en, this message translates to:
+  /// **'Distribute Your Property Properly'**
+  String get distribute_your_property_properly;
 }
 
 class _AppLocalizationsDelegate

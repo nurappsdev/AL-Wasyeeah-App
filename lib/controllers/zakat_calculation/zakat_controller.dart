@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +11,6 @@ import '../../helpers/helpers.dart';
 import '../../helpers/prefs_helper.dart';
 import '../../models/models.dart';
 import '../../services/services.dart';
-import '../../utils/utils.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ZakatController extends GetxController {
@@ -17,11 +18,9 @@ class ZakatController extends GetxController {
   final cashAndBankController = TextEditingController();
 
   RxBool isNisabLoading = false.obs;
-  RxList<GetNisabRatesResponseModel> nisabRates =
-      <GetNisabRatesResponseModel>[].obs;
+  RxList<GetNisabRatesResponseModel> nisabRates = <GetNisabRatesResponseModel>[].obs;
 
-  Rx<GetNisabRatesResponseModel?> selectedCurrency =
-      Rx<GetNisabRatesResponseModel?>(null);
+  Rx<GetNisabRatesResponseModel?> selectedCurrency = Rx<GetNisabRatesResponseModel?>(null);
 
   @override
   void onInit() {
@@ -108,10 +107,7 @@ class ZakatController extends GetxController {
 
     String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
     print("token-------${bearerToken}");
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $bearerToken'
-    };
+    var headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer $bearerToken'};
     print("token-------${headers}");
     var body = {
       "currencyCode": "bdt",
@@ -131,12 +127,9 @@ class ZakatController extends GetxController {
     );
     print("----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
-      ToastMessageHelper.successMessageShowToster(
-          AppLocalizations.of(Get.context!)!.record_inserted_successfully);
+      ToastMessageHelper.successMessageShowToster(AppLocalizations.of(Get.context!)!.record_inserted_successfully);
       print("zakat netAssets${response.body}");
-      showZakatDialog(Get.context,
-          assetsAccount: "${response.body["netAssets"]}".tr,
-          zakatAccount: "${response.body["zakatAmount"]}".tr);
+      showZakatDialog(Get.context, assetsAccount: "${response.body["netAssets"]}".tr, zakatAccount: "${response.body["zakatAmount"]}".tr);
 
       // Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
       zakatLoading(false);
@@ -146,8 +139,7 @@ class ZakatController extends GetxController {
     }
   }
 
-  void showZakatDialog(context,
-      {required String assetsAccount, required String zakatAccount}) {
+  void showZakatDialog(context, {required String assetsAccount, required String zakatAccount}) {
     Get.dialog(
       AlertDialog(
         title: CustomText(

@@ -1,3 +1,7 @@
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_constant.dart';
+import 'package:al_wasyeah/utils/app_dimentions.dart';
+import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -10,7 +14,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../controllers/controllers.dart';
 import '../../helpers/helpers.dart';
-import '../../utils/utils.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -67,8 +70,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           height: Get.height,
           width: double.infinity,
           child: Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+            padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
             child: SingleChildScrollView(
               child: Form(
                 key: _forRegKey,
@@ -78,9 +80,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     SizedBox(
                       height: 40.h,
                     ),
-                    Center(
-                        child: SvgPicture.asset(AppIcons.logo,
-                            height: 100.h, width: 140.w)),
+                    Center(child: SvgPicture.asset(AppIcons.logo, height: 100.h, width: 140.w)),
                     SizedBox(
                       height: 30.h,
                     ),
@@ -110,8 +110,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_your_first_name;
+                            return AppLocalizations.of(context)!.please_enter_your_first_name;
                           }
                           return null;
                         },
@@ -138,8 +137,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_your_last_name;
+                            return AppLocalizations.of(context)!.please_enter_your_last_name;
                           }
                           return null;
                         },
@@ -167,8 +165,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_your_mobile_number;
+                            return AppLocalizations.of(context)!.please_enter_your_mobile_number;
                           }
                           return null;
                         },
@@ -200,10 +197,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         // ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_your_email;
-                          } else if (!AppConstants.emailValidate
-                              .hasMatch(value)) {
+                            return AppLocalizations.of(context)!.please_enter_your_email;
+                          } else if (!AppConstants.emailValidate.hasMatch(value)) {
                             return AppLocalizations.of(context)!.invalid_email;
                           }
                           return null;
@@ -237,8 +232,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                           if (selectedDate != null) {
                             birthDate = selectedDate;
-                            dateOfBirthController.text =
-                                DateFormat('yyyy-MM-dd').format(birthDate!);
+                            dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(birthDate!);
                           }
                           print(dateOfBirthController.text);
                         },
@@ -248,8 +242,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_write_date_of_birth;
+                            return AppLocalizations.of(context)!.please_write_date_of_birth;
                           }
                           return null;
                         },
@@ -266,24 +259,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Obx(
                       () => DropdownButtonFormField<String>(
                         decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: AppColors.secondaryPrimaryColor),
-                              borderRadius: BorderRadius.circular(14.r)),
+                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryPrimaryColor), borderRadius: BorderRadius.circular(14.r)),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: AppColors.secondaryPrimaryColor,
                               ),
                               borderRadius: BorderRadius.circular(14.r)),
-                          border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: AppColors.primaryColor),
-                              borderRadius: BorderRadius.circular(16.r)),
+                          border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.primaryColor), borderRadius: BorderRadius.circular(16.r)),
                         ),
                         isExpanded: true,
-                        hint: CustomText(
-                            text: AppLocalizations.of(context)!
-                                .select_your_question),
+                        hint: CustomText(text: AppLocalizations.of(context)!.select_your_question),
                         value: _selectedQuestionId,
                         items: authController.securityQuestionResponseModel
                             .map((model) => DropdownMenuItem<String>(
@@ -319,8 +304,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_your_answer;
+                            return AppLocalizations.of(context)!.please_enter_your_answer;
                           }
                           return null;
                         },
@@ -343,16 +327,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         RichText(
                           text: TextSpan(
                             text: AppLocalizations.of(context)!.i_agree_with,
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 12.sp),
+                            style: TextStyle(color: Colors.black, fontSize: 12.sp),
                             children: [
                               TextSpan(
-                                text: AppLocalizations.of(context)!
-                                    .terms_and_conditions,
-                                style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 12.sp),
+                                text: AppLocalizations.of(context)!.terms_and_conditions,
+                                style: TextStyle(color: AppColors.primaryColor, decoration: TextDecoration.underline, fontSize: 12.sp),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     //  Get.toNamed(AppRoutes.termAndConScreen,preventDuplicates: false);
@@ -360,18 +339,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   },
                               ),
                               TextSpan(
-                                text: " " +
-                                    AppLocalizations.of(context)!.and +
-                                    " ",
+                                text: " " + AppLocalizations.of(context)!.and + " ",
                                 style: TextStyle(color: Colors.black),
                               ),
                               TextSpan(
-                                text: AppLocalizations.of(context)!
-                                    .privacy_policy,
-                                style: TextStyle(
-                                    color: AppColors.primaryColor,
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 12.sp),
+                                text: AppLocalizations.of(context)!.privacy_policy,
+                                style: TextStyle(color: AppColors.primaryColor, decoration: TextDecoration.underline, fontSize: 12.sp),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     //  Get.toNamed(AppRoutes.aboutScreen,preventDuplicates: false);
@@ -422,14 +395,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               //  Get.toNamed(AppRoutes.otpVirifyScreen,preventDuplicates: false);
                             },
                             child: CustomText(
-                              text: AppLocalizations.of(context)!
-                                  .already_have_an_account,
+                              text: AppLocalizations.of(context)!.already_have_an_account,
                               fontsize: 18.sp,
                             )),
                         InkWell(
                             onTap: () {
-                              Get.toNamed(AppRoutes.loginScreen,
-                                  preventDuplicates: false);
+                              Get.toNamed(AppRoutes.loginScreen, preventDuplicates: false);
                             },
                             child: CustomText(
                               text: AppLocalizations.of(context)!.sign_in,

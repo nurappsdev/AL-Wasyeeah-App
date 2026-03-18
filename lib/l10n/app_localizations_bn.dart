@@ -1337,4 +1337,56 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get s_suffix => 'এর';
+
+  @override
+  String get property_distribution_calculation_saved_successfully =>
+      'সম্পত্তি বন্টন গণনা সফলভাবে সংরক্ষণ করা হয়েছে';
+
+  @override
+  String get property_distribution_calculation_failed_to_save =>
+      'সম্পত্তি বন্টন গণনা সংরক্ষণ করতে ব্যর্থ হয়েছে';
+
+  @override
+  String get download => 'ডাউনলোড';
+
+  @override
+  String get comming_soon => 'শীঘ্রই আসছে';
+
+  @override
+  String get calculate_your_zakat_easily => 'আপনার যাকাত সহজেই গণনা করুন';
+
+  @override
+  String get currency => 'মুদ্রা';
+
+  @override
+  String get nisab => 'নিসাব';
+
+  @override
+  String get updated => 'আপডেট';
+
+  @override
+  String get nisab_amount => 'নিসাব পরিমাণ';
+
+  @override
+  String get future_deposits => 'ভবিষ্যৎ আমানত';
+
+  @override
+  String get investment_value => 'বিনিয়োগের মূল্য';
+
+  @override
+  String get rental_income => 'ভাড়া থেকে আয়';
+
+  @override
+  String get immediate_liabilities => 'তাৎক্ষণিক দায়বদ্ধতা';
+
+  @override
+  String get distribure_your_property_properly =>
+      'আপনার সম্পত্তি সঠিকভাবে বন্টন করুন';
+
+  @override
+  String get calculate_your_zakat => 'আপনার যাকাত গণনা করুন';
+
+  @override
+  String get distribute_your_property_properly =>
+      'আপনার সম্পত্তি সঠিকভাবে বন্টন করুন';
 }

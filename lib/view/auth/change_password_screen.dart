@@ -1,9 +1,10 @@
 import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../utils/utils.dart';
 import '../widgets/custom_button_common.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/custom_text_field.dart';
@@ -40,8 +41,7 @@ class ChangePasswordScreen extends StatelessWidget {
                 height: 20.h,
               ),
               CustomText(
-                text: AppLocalizations.of(context)!
-                    .please_enter_your_old_and_new_passwords_to_continue,
+                text: AppLocalizations.of(context)!.please_enter_your_old_and_new_passwords_to_continue,
                 maxline: 2,
                 fontsize: 14.sp,
                 fontWeight: FontWeight.w500,
@@ -53,12 +53,7 @@ class ChangePasswordScreen extends StatelessWidget {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(24.r),
-                        topRight: Radius.circular(24.r),
-                        bottomLeft: Radius.circular(24.r),
-                        bottomRight: Radius.circular(24.r)),
-                    color: AppColors.grey),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(24.r), topRight: Radius.circular(24.r), bottomLeft: Radius.circular(24.r), bottomRight: Radius.circular(24.r)), color: AppColors.grey),
                 child: Padding(
                   padding: EdgeInsets.all(16.r),
                   child: Form(
@@ -88,12 +83,9 @@ class ChangePasswordScreen extends StatelessWidget {
                             // ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return AppLocalizations.of(context)!
-                                    .please_enter_your_password;
-                              } else if (value.length < 8 ||
-                                  !AppConstants.validatePassword(value)) {
-                                return AppLocalizations.of(context)!
-                                    .password_8_characters_min_letters_digits_required;
+                                return AppLocalizations.of(context)!.please_enter_your_password;
+                              } else if (value.length < 8 || !AppConstants.validatePassword(value)) {
+                                return AppLocalizations.of(context)!.password_8_characters_min_letters_digits_required;
                               }
                               return null;
                             },
@@ -126,12 +118,9 @@ class ChangePasswordScreen extends StatelessWidget {
                             // ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return AppLocalizations.of(context)!
-                                    .please_enter_your_password;
-                              } else if (value.length < 8 ||
-                                  !AppConstants.validatePassword(value)) {
-                                return AppLocalizations.of(context)!
-                                    .password_8_characters_min_letters_digits_required;
+                                return AppLocalizations.of(context)!.please_enter_your_password;
+                              } else if (value.length < 8 || !AppConstants.validatePassword(value)) {
+                                return AppLocalizations.of(context)!.password_8_characters_min_letters_digits_required;
                               }
                               return null;
                             },
@@ -143,8 +132,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
                         ///============Re password=====>
                         CustomText(
-                          text: AppLocalizations.of(context)!
-                              .re_enter_new_password,
+                          text: AppLocalizations.of(context)!.re_enter_new_password,
                           textAlign: TextAlign.start,
                           fontWeight: FontWeight.w600,
                         ),
@@ -164,11 +152,9 @@ class ChangePasswordScreen extends StatelessWidget {
                             // ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return AppLocalizations.of(context)!
-                                    .please_enter_your_password;
+                                return AppLocalizations.of(context)!.please_enter_your_password;
                               } else if (value != newPass2.text) {
-                                return AppLocalizations.of(context)!
-                                    .passwords_do_not_match;
+                                return AppLocalizations.of(context)!.passwords_do_not_match;
                               }
                               return null;
                             },
@@ -191,20 +177,15 @@ class ChangePasswordScreen extends StatelessWidget {
                           () => Padding(
                             padding: EdgeInsets.all(8.r),
                             child: CustomButtonCommon(
-                              loading:
-                                  profileSetupController.forPassLoading.value,
+                              loading: profileSetupController.forPassLoading.value,
                               color: AppColors.primaryColor,
                               titlecolor: AppColors.whiteColor,
                               onpress: () {
                                 if (formKey.currentState!.validate()) {
-                                  profileSetupController.changePass(
-                                      oldPassCNRL.text,
-                                      newPass2.text,
-                                      conPass3.text);
+                                  profileSetupController.changePass(oldPassCNRL.text, newPass2.text, conPass3.text);
                                 }
                               },
-                              title:
-                                  AppLocalizations.of(context)!.change_password,
+                              title: AppLocalizations.of(context)!.change_password,
                             ),
                           ),
                         )

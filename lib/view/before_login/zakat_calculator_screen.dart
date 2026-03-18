@@ -1,3 +1,5 @@
+import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_loader.dart';
@@ -9,10 +11,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../controllers/controllers.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../helpers/helpers.dart';
 import '../../models/models.dart';
-import '../../utils/utils.dart';
 
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
@@ -40,8 +40,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
 
   TextEditingController rentalIncomeController = TextEditingController();
 
-  TextEditingController immediateLiabilitieseController =
-      TextEditingController();
+  TextEditingController immediateLiabilitieseController = TextEditingController();
 
   ZakatController zakatController = Get.put(ZakatController());
 
@@ -71,9 +70,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
   Widget build(BuildContext context) {
     Widget amountLabel(String title) {
       return Obx(() => CustomText(
-            text: zakatController.currencySign.value.isNotEmpty
-                ? "$title (${zakatController.currencySign.value})".tr
-                : title.tr,
+            text: zakatController.currencySign.value.isNotEmpty ? "$title (${zakatController.currencySign.value})".tr : title.tr,
           ));
     }
 
@@ -81,7 +78,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: "Calculate Your Zakat Easily".tr,
+          text: AppLocalizations.of(context)!.calculate_your_zakat_easily,
           fontsize: 18.sp,
         ),
       ),
@@ -90,8 +87,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
           width: double.infinity,
           height: Get.height,
           child: Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+            padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
             child: SingleChildScrollView(
               child: Form(
                   key: _forProKey,
@@ -105,8 +101,8 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "Currency *",
+                            Text(
+                              "${AppLocalizations.of(context)!.currency} *",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 8),
@@ -114,21 +110,18 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                               isExpanded: true,
                               value: zakatController.selectedCurrency.value,
                               decoration: InputDecoration(
-                                labelText: "Currency",
-                                labelStyle:
-                                    TextStyle(fontWeight: FontWeight.bold),
+                                labelText: AppLocalizations.of(context)!.currency,
+                                labelStyle: TextStyle(fontWeight: FontWeight.bold),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(16.r),
                                 ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 16),
+                                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                               ),
                               items: zakatController.nisabRates.map((model) {
                                 return DropdownMenuItem(
                                   value: model,
                                   child: Text(
                                     "${model.currencyCode} ${model.currencyIcon}",
-                                    style: GoogleFonts.notoSans(),
                                   ),
                                 );
                               }).toList(),
@@ -168,8 +161,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                       ),
                       Obx(() {
                         final currency = zakatController.selectedCurrency.value;
-                        final updatedDate =
-                            DateFormat('dd/MM/yyyy').format(DateTime.now());
+                        final updatedDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
 
                         return Container(
                           height: 100.h,
@@ -179,24 +171,21 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                             border: Border.all(),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: Dimensions.radiusExtraLarge.w),
+                            padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 4.h),
-                                CustomText(
-                                    text: "Nisab (updated $updatedDate)"),
+                                CustomText(text: "${AppLocalizations.of(context)!.nisab} (${AppLocalizations.of(context)!.updated} ${updatedDate})"),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
                                     readOnly: false,
-                                    controller:
-                                        zakatController.cashAndBankController,
+                                    controller: zakatController.cashAndBankController,
                                     // controller: TextEditingController(
                                     //   text: "${currency?.nisabAmount?.toStringAsFixed(0) ?? ''} ${currency?.currencyIcon ?? ''}",
                                     // ),
-                                    hintText: "Nisab amount",
+                                    hintText: AppLocalizations.of(context)!.nisab_amount,
                                   ),
                                 ),
                               ],
@@ -215,95 +204,91 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                           border: Border.all(color: AppColors.primaryColor),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: Dimensions.radiusExtraLarge.w),
+                          padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
                           child: SingleChildScrollView(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 10.h),
-                                amountLabel("Value of Gold"),
+                                amountLabel(AppLocalizations.of(context)!.value_of_gold),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: valueGoldController,
-                                    hintText: AppLocalizations.of(context)!
-                                        .value_of_gold,
+                                    hintText: AppLocalizations.of(context)!.value_of_gold,
                                   ),
                                 ),
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                amountLabel("Value of Silver"),
+                                amountLabel(AppLocalizations.of(context)!.value_of_silver),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: silverGoldController,
-                                    hintText: AppLocalizations.of(context)!
-                                        .value_of_silver,
+                                    hintText: AppLocalizations.of(context)!.value_of_silver,
                                   ),
                                 ),
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                amountLabel("Future deposits"),
+                                amountLabel(AppLocalizations.of(context)!.future_deposits),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: futureDepositsController,
-                                    hintText: "Future deposits".tr,
+                                    hintText: AppLocalizations.of(context)!.future_deposits,
                                   ),
                                 ),
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                amountLabel("Given out in loans"),
+                                amountLabel(AppLocalizations.of(context)!.given_out_in_loans),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: loanGivenController,
-                                    hintText: AppLocalizations.of(context)!
-                                        .given_out_in_loans,
+                                    hintText: AppLocalizations.of(context)!.given_out_in_loans,
                                   ),
                                 ),
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                amountLabel("Investment value"),
+                                amountLabel(AppLocalizations.of(context)!.investment_value),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: investmentValueController,
-                                    hintText: "Investment value".tr,
+                                    hintText: AppLocalizations.of(context)!.investment_value,
                                   ),
                                 ),
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                amountLabel("Rental income"),
+                                amountLabel(AppLocalizations.of(context)!.rental_income),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: rentalIncomeController,
-                                    hintText: "Rental income".tr,
+                                    hintText: AppLocalizations.of(context)!.rental_income,
                                   ),
                                 ),
                                 SizedBox(
                                   height: 20.h,
                                 ),
-                                amountLabel("Immediate liabilities"),
+                                amountLabel(AppLocalizations.of(context)!.immediate_liabilities),
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
                                     keyboardType: TextInputType.number,
                                     controller: immediateLiabilitieseController,
-                                    hintText: "Immediate liabilities".tr,
+                                    hintText: AppLocalizations.of(context)!.immediate_liabilities,
                                   ),
                                 ),
                               ],
@@ -321,21 +306,15 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                           onpress: () {
                             // if (_forRegKey.currentState!.validate()) {
 
-                            if (zakatController
-                                .cashAndBankController.text.isEmpty) {
-                              ToastMessageHelper.errorMessageShowToster(
-                                  AppLocalizations.of(context)!
-                                      .at_least_enter_nisab);
+                            if (zakatController.cashAndBankController.text.isEmpty) {
+                              ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(context)!.at_least_enter_nisab);
                             } else {
                               zakatController.zakatHandle(
-                                  cashAndBank: zakatController
-                                      .cashAndBankController.text,
+                                  cashAndBank: zakatController.cashAndBankController.text,
                                   goldValue: valueGoldController.text,
                                   futureDeposits: futureDepositsController.text,
-                                  immediateLiabilities:
-                                      immediateLiabilitieseController.text,
-                                  investmentValue:
-                                      investmentValueController.text,
+                                  immediateLiabilities: immediateLiabilitieseController.text,
+                                  investmentValue: investmentValueController.text,
                                   loanGiven: loanGivenController.text,
                                   rentalIncome: rentalIncomeController.text,
                                   silverValue: silverGoldController.text);
@@ -350,64 +329,6 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  void _showDialog(BuildContext context,
-      {required String assetsAccount, required String zakatAccount}) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: CustomText(
-            text: AppLocalizations.of(context)!.result,
-            fontsize: 20.sp,
-            fontWeight: FontWeight.w600,
-          ),
-          content: Container(
-            width: double.infinity,
-            height: 200.h,
-            child: Column(
-              children: [
-                Divider(),
-                CustomText(
-                  text: AppLocalizations.of(context)!.total_assets,
-                  fontsize: 20.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primaryColor,
-                ),
-                SizedBox(
-                  height: 12.h,
-                ),
-                CustomText(
-                  text: assetsAccount,
-                  fontsize: 22.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primaryColor,
-                ),
-                Divider(
-                  color: AppColors.primaryColor,
-                ),
-                CustomText(
-                  text: AppLocalizations.of(context)!.payable_zakat,
-                  fontsize: 20.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primaryColor,
-                ),
-                SizedBox(
-                  height: 12.h,
-                ),
-                CustomText(
-                  text: zakatAccount,
-                  fontsize: 22.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primaryColor,
-                ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }

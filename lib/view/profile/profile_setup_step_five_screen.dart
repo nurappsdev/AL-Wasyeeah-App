@@ -1,5 +1,6 @@
 import 'package:al_wasyeah/controllers/controllers.dart';
 import 'package:al_wasyeah/models/profile_info_model/branch_model.dart';
+import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_dropdown.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -11,7 +12,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../../helpers/file_picker_util.dart';
-import '../../utils/utils.dart';
 
 import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';

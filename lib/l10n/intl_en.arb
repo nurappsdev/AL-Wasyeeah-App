@@ -434,5 +434,21 @@
   "finish": "Finish",
   "deceased":"Deceased",
   "s_suffix": "'s",
-  "husband_and_wife_cant_be_selected_together":"You cannot select both Husband and Wife at the same time."
+  "husband_and_wife_cant_be_selected_together":"You cannot select both Husband and Wife at the same time.",
+  "property_distribution_calculation_saved_successfully": "Property Distribution Calculation Saved Successfully",
+  "property_distribution_calculation_failed_to_save": "Property Distribution Calculation Failed to Save",
+  "download": "Download",
+  "comming_soon": "Comming Soon",
+  "calculate_your_zakat_easily": "Calculate Your Zakat Easily",
+  "currency": "Currency",
+  "nisab": "Nisab",
+  "updated": "Updated",
+  "nisab_amount": "Nisab amount",
+  "future_deposits": "Future deposits",
+  "investment_value": "Investment value",
+  "rental_income": "Rental income",
+  "immediate_liabilities": "Immediate liabilities",
+  "distribure_your_property_properly": "Distribute Your Property Properly",
+  "calculate_your_zakat": "Calculate Your Zakat",
+  "distribute_your_property_properly": "Distribute Your Property Properly"
 }

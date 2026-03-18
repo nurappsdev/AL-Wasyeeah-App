@@ -10,13 +10,9 @@ import 'package:get/get.dart';
 import 'package:al_wasyeah/models/property_distribution_calculation_model/relavant_list_model.dart';
 import 'package:intl/intl.dart';
 
-class PropertyDistributionCalculationController extends GetxController {
-  final Rx<RxStatus> status = RxStatus.loading().obs;
-
-  RxList<RelativeModelForPropertyDistribution> allRelatives =
-      <RelativeModelForPropertyDistribution>[].obs;
-  RxList<PropertydistributionResultModel> propertyDistributionResult =
-      <PropertydistributionResultModel>[].obs;
+class PropertyDistributionCalculationController extends GetxController with StateMixin<dynamic> {
+  RxList<RelativeModelForPropertyDistribution> allRelatives = <RelativeModelForPropertyDistribution>[].obs;
+  RxList<PropertydistributionResultModel> propertyDistributionResult = <PropertydistributionResultModel>[].obs;
 
   // Constants for Encrypted Relative IDs
   static const String husbandId = "j1mjV6qs9iab4mbEVNyg0A==";
@@ -74,10 +70,7 @@ class PropertyDistributionCalculationController extends GetxController {
   }
 
   void _checkVisibility() {
-    isCalculateVisible.value = landController.text.isNotEmpty ||
-        goldController.text.isNotEmpty ||
-        silverController.text.isNotEmpty ||
-        moneyController.text.isNotEmpty;
+    isCalculateVisible.value = landController.text.isNotEmpty || goldController.text.isNotEmpty || silverController.text.isNotEmpty || moneyController.text.isNotEmpty;
   }
 
   @override
@@ -90,10 +83,11 @@ class PropertyDistributionCalculationController extends GetxController {
   }
 
   Future<void> initData() async {
-    status.value = RxStatus.loading();
+    change(null, status: RxStatus.loading());
     await getRelevantList();
     await loadRelatives();
-    status.value = RxStatus.success();
+    await getPropertyDistributionCalculationResult();
+    change(null, status: RxStatus.success());
   }
 
   Future<void> getRelevantList() async {
@@ -116,24 +110,64 @@ class PropertyDistributionCalculationController extends GetxController {
     }
   }
 
+  Future<void> getPropertyDistributionCalculationResult() async {
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.getPropertyDistributionCalculationResult,
+      );
+      propertyDistributionResult(propertydistributionResultModelFromJson(jsonEncode(response.body)));
+    } catch (e, s) {
+      log("Property Distribution Calculation Result Error: $e\nStacktrace: $s");
+    }
+  }
+
+  Future<void> savePropertyDistributionCalculationResult() async {
+    //log(.);
+    // List<Map<String, dynamic>> data = [];
+    // propertyDistributionResult.forEach((element) {
+    //   data.add(element.toJson());
+    // });
+
+    try {
+      var response = await ApiClient.postData(
+        ApiConstants.savePropertyDistributionCalculationResult,
+        propertyDistributionResult.toJson(),
+      );
+
+      if (response.statusCode == 200) {
+        ToastMessageHelper.successMessageShowToster(AppLocalizations.of(Get.context!)!.property_distribution_calculation_saved_successfully);
+      } else {
+        ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.property_distribution_calculation_failed_to_save);
+      }
+    } catch (e, s) {
+      log("Property Distribution Calculation Result Error: $e\nStacktrace: $s");
+    }
+  }
+
+  Future<void> downloadPropertyDistributionCalculationResult() async {
+    ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.comming_soon);
+    // try {
+    //   var response = await ApiClient.getData(
+    //     ApiConstants.downloadPropertyDistributionCalculationResult,
+    //   );
+    //   propertyDistributionResult(propertydistributionResultModelFromJson(jsonEncode(response.body)));
+    // } catch (e, s) {
+    //   log("Property Distribution Calculation Result Error: $e\nStacktrace: $s");
+    // }
+  }
+
   List<RelativeModelForPropertyDistribution> get filteredRelatives {
-    return allRelatives
-        .where((rel) => !hiddenRelativeIds.contains(rel.encrypted))
-        .toList();
+    return allRelatives.where((rel) => !hiddenRelativeIds.contains(rel.encrypted)).toList();
   }
 
   void toggleCheck(String encryptedId, bool? value) {
     if (value == true) {
       if (encryptedId == husbandId && isChecked[wifeId] == true) {
-        ToastMessageHelper.errorMessageShowToster(
-            AppLocalizations.of(Get.context!)!
-                .husband_and_wife_cant_be_selected_together);
+        ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.husband_and_wife_cant_be_selected_together);
         isChecked[wifeId] = false;
         counts[wifeId] = 0;
       } else if (encryptedId == wifeId && isChecked[husbandId] == true) {
-        ToastMessageHelper.errorMessageShowToster(
-            AppLocalizations.of(Get.context!)!
-                .husband_and_wife_cant_be_selected_together);
+        ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.husband_and_wife_cant_be_selected_together);
         isChecked[husbandId] = false;
         counts[husbandId] = 0;
       }
@@ -141,11 +175,7 @@ class PropertyDistributionCalculationController extends GetxController {
       if ((counts[encryptedId] ?? 0) == 0) counts[encryptedId] = 1;
 
       // Handle special limit for Husband, Father, Mother, Grandfather
-      if ((encryptedId == husbandId ||
-              encryptedId == fatherId ||
-              encryptedId == motherId ||
-              encryptedId == grandfatherId) &&
-          (counts[encryptedId] ?? 0) > 1) {
+      if ((encryptedId == husbandId || encryptedId == fatherId || encryptedId == motherId || encryptedId == grandfatherId) && (counts[encryptedId] ?? 0) > 1) {
         counts[encryptedId] = 1;
       }
     } else {
@@ -158,10 +188,7 @@ class PropertyDistributionCalculationController extends GetxController {
   void increment(String encryptedId) {
     if (isChecked[encryptedId] != true) return;
 
-    if (encryptedId == husbandId ||
-        encryptedId == fatherId ||
-        encryptedId == motherId ||
-        encryptedId == grandfatherId) {
+    if (encryptedId == husbandId || encryptedId == fatherId || encryptedId == motherId || encryptedId == grandfatherId) {
       if ((counts[encryptedId] ?? 0) >= 1) return;
     }
 
@@ -258,26 +285,19 @@ class PropertyDistributionCalculationController extends GetxController {
 
     try {
       isCalculateLoading.value = true;
-      var response = await ApiClient.postData(
-          ApiConstants.propertyDistributionCalculationResult, finalOutput);
+      var response = await ApiClient.postData(ApiConstants.propertyDistributionCalculationResult, finalOutput);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        ToastMessageHelper.successMessageShowToster(
-            AppLocalizations.of(Get.context!)!
-                .calculation_fetched_successfully);
-        propertyDistributionResult.value =
-            propertydistributionResultModelFromJson(jsonEncode(response.body));
+        ToastMessageHelper.successMessageShowToster(AppLocalizations.of(Get.context!)!.calculation_fetched_successfully);
+        propertyDistributionResult.value = propertydistributionResultModelFromJson(jsonEncode(response.body));
 
         // Reset all inputs after success if needed
         resetInputs();
       } else {
-        ToastMessageHelper.errorMessageShowToster(
-            AppLocalizations.of(Get.context!)!
-                .failed_to_fetch_calculation_result);
+        ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_fetch_calculation_result);
       }
     } catch (e, s) {
       log("Property Calculation Error: $e\nStacktrace: $s");
-      ToastMessageHelper.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)!.something_went_wrong);
+      ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.something_went_wrong);
     } finally {
       isCalculateLoading.value = false;
     }
@@ -318,8 +338,7 @@ class PropertyDistributionCalculationController extends GetxController {
   ) {
     if (Get.locale!.languageCode == 'bn') {
       // Bangla Ordinal Logic
-      final String bengaliNumber =
-          NumberFormat.decimalPattern(Get.locale!.languageCode).format(n);
+      final String bengaliNumber = NumberFormat.decimalPattern(Get.locale!.languageCode).format(n);
 
       // Bangla ordinals often use specific words or suffixes (১ম, ২য়, ৩য়, ৪র্থ...)
       const suffixes = {1: 'ম', 2: 'য়', 3: 'য়', 4: 'র্থ'};
