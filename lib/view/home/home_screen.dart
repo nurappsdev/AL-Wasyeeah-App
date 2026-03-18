@@ -484,68 +484,135 @@ class _HomeScreenState extends State<HomeScreen> {
                           scrollDirection: Axis.horizontal,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 1,
-                            mainAxisSpacing: 16.0,
-                            childAspectRatio: 0.8,
+                            mainAxisSpacing: 12.0, // Space between cards
+                            childAspectRatio: 0.75, // Adjust to match the width/height ratio in image
                           ),
                           itemCount: prayers.length,
                           itemBuilder: (context, index) {
                             final name = prayers.keys.elementAt(index);
                             final time = prayers[name]!;
-                            final isCurrent = name == current;
 
-                            return Card(
-                              color: isCurrent ? Color(0xffFFF0E2) : Colors.grey[200],
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  12.0,
-                                ),
+                            // Determine state (Past, Current, or Next) based on your logic
+                            final bool isCurrent = name == current;
+                            final bool isPast = index < prayers.keys.toList().indexOf(current);
+
+                            // Define colors based on the image
+                            Color cardBg = Colors.white;
+                            Color borderColor = Colors.grey.shade300;
+                            Color textColor = Colors.black;
+                            String statusText = "Next Prayer";
+
+                            if (isPast) {
+                              cardBg = const Color(0xffFFF7EE); // Light orange tint
+                              borderColor = Colors.orange;
+                              textColor = Colors.orange;
+                              statusText = "Time was";
+                            } else if (isCurrent) {
+                              cardBg = const Color(0xffFFEBEC); // Light red tint
+                              textColor = Colors.red;
+                              statusText = "Now Time is";
+                            }
+
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: cardBg,
+                                borderRadius: BorderRadius.circular(16.0),
+                                border: Border.all(color: borderColor, width: 1.5),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      isCurrent ? AppLocalizations.of(context)!.upcoming_prayers : AppLocalizations.of(context)!.prayer_times,
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: isCurrent ? Colors.green : Colors.black,
+                              child: Stack(
+                                children: [
+                                  // 1. The Mosque Image (Positioned Bottom-Left)
+                                  Positioned(
+                                    left: 0,
+                                    bottom: 0,
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(16)),
+                                      child: Image.asset(
+                                        AppImages.mosjidIcon,
+                                        height: 150.h, // Adjusted height
+                                        width: 150.w,
+                                        fit: BoxFit.contain,
                                       ),
                                     ),
-                                    SizedBox(height: 8.h),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  ),
+
+                                  // 2. The Content Layer
+                                  Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Image.asset(AppImages.mosjidIcon, height: 80.h, width: 80),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              name,
-                                              style: TextStyle(fontSize: 20.sp, color: isCurrent ? Colors.green : Colors.red),
-                                            ),
-                                            if (isCurrent && left != null)
+                                        // Top Status Text
+                                        Text(
+                                          statusText,
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+
+                                        const Spacer(),
+
+                                        // Right-aligned Info
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
                                               Text(
-                                                left.toString().split(".")[0],
-                                                style: TextStyle(fontSize: 18.sp, color: Colors.black87),
+                                                name,
+                                                style: TextStyle(
+                                                  fontSize: 22.sp,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: textColor,
+                                                ),
                                               ),
-                                            Text(
-                                              formatTime(time),
-                                              style: TextStyle(fontSize: 14.h),
-                                            ),
-                                            Switch(
-                                              value: isCurrent,
-                                              activeColor: AppColors.primaryColor,
-                                              onChanged: (value) {
-                                                // handle toggle
-                                              },
-                                            ),
-                                          ],
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                                textBaseline: TextBaseline.alphabetic,
+                                                children: [
+                                                  Text(
+                                                    formatTime(time).split(' ')[0], // "07:23"
+                                                    style: TextStyle(
+                                                      fontSize: 20.sp,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    " ${formatTime(time).split(' ')[1]}", // "PM"
+                                                    style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 4.h),
+                                              // Custom sized Switch to match UI scale
+                                              SizedBox(
+                                                height: 30.h,
+                                                width: 50.w,
+                                                child: FittedBox(
+                                                  fit: BoxFit.fill,
+                                                  child: Switch(
+                                                    value: true,
+                                                    activeColor: Colors.greenAccent[400],
+                                                    onChanged: (val) {},
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             );
                           },
