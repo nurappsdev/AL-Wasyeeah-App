@@ -236,21 +236,20 @@ class AppLocalizationsBn extends AppLocalizations {
   String get zakat_calculator => 'যাকাত ক্যালকুলেটর';
 
   @override
-  String get value_of_gold => 'স্বর্ণের মূল্য (৳)';
+  String get value_of_gold => 'স্বর্ণের মূল্য';
 
   @override
-  String get value_of_silver => 'রুপার মূল্য (৳)';
+  String get value_of_silver => 'রুপার মূল্য';
 
   @override
   String get cash_in_hand_and_in_bank_accounts =>
-      'নগদ টাকা এবং ব্যাংক ব্যালেন্স (৳)';
+      'নগদ টাকা এবং ব্যাংক ব্যালেন্স';
 
   @override
-  String get deposited_for_some_future_purpose =>
-      'ভবিষ্যৎ উদ্দেশ্যে জমা অর্থ (৳)';
+  String get deposited_for_some_future_purpose => 'ভবিষ্যৎ উদ্দেশ্যে জমা অর্থ';
 
   @override
-  String get given_out_in_loans => 'প্রদত্ত ঋণ (৳)';
+  String get given_out_in_loans => 'প্রদত্ত ঋণ';
 
   @override
   String get total_assets => 'মোট সম্পদ';

@@ -545,31 +545,31 @@ abstract class AppLocalizations {
   /// No description provided for @value_of_gold.
   ///
   /// In en, this message translates to:
-  /// **'Value of Gold (\\\$)'**
+  /// **'Value of Gold'**
   String get value_of_gold;
 
   /// No description provided for @value_of_silver.
   ///
   /// In en, this message translates to:
-  /// **'Value of Silver (\\\$)'**
+  /// **'Value of Silver'**
   String get value_of_silver;
 
   /// No description provided for @cash_in_hand_and_in_bank_accounts.
   ///
   /// In en, this message translates to:
-  /// **'Cash In hand and in bank accounts(\\\$)'**
+  /// **'Cash In hand and in bank accounts'**
   String get cash_in_hand_and_in_bank_accounts;
 
   /// No description provided for @deposited_for_some_future_purpose.
   ///
   /// In en, this message translates to:
-  /// **'Deposited for some future purpose(\\\$)'**
+  /// **'Deposited for some future purpose'**
   String get deposited_for_some_future_purpose;
 
   /// No description provided for @given_out_in_loans.
   ///
   /// In en, this message translates to:
-  /// **'Given out in loans(\\\$)'**
+  /// **'Given out in loans'**
   String get given_out_in_loans;
 
   /// No description provided for @total_assets.

@@ -16,7 +16,21 @@ import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ZakatController extends GetxController with StateMixin<dynamic> {
   ///==================get Witness===========================
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final cashAndBankController = TextEditingController();
+  final TextEditingController valueGoldController = TextEditingController();
+
+  final TextEditingController valueSilverController = TextEditingController();
+
+  final TextEditingController futureDepositsController = TextEditingController();
+
+  final TextEditingController loanGivenController = TextEditingController();
+
+  final TextEditingController investmentValueController = TextEditingController();
+
+  final TextEditingController rentalIncomeController = TextEditingController();
+
+  final TextEditingController immediateLiabilitieseController = TextEditingController();
 
   RxBool isNisabLoading = false.obs;
   RxList<GetNisabRatesResponseModel> nisabRates = <GetNisabRatesResponseModel>[].obs;
@@ -30,18 +44,39 @@ class ZakatController extends GetxController with StateMixin<dynamic> {
     getNisabRates();
   }
 
+  @override
+  void dispose() {
+    cashAndBankController.dispose();
+    valueGoldController.dispose();
+    valueSilverController.dispose();
+    futureDepositsController.dispose();
+    loanGivenController.dispose();
+    investmentValueController.dispose();
+    rentalIncomeController.dispose();
+    immediateLiabilitieseController.dispose();
+    super.dispose();
+  }
+
   /// Currency sign derived from selectedCurrency
   String get currencySign => selectedCurrency.value?.currencyIcon ?? '';
 
   void getNisabRates() async {
     change(null, status: RxStatus.loading());
 
-    var response = await ApiClient.getData(ApiConstants.nisabEndPoint);
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      nisabRates(getNisabRatesResponseModelFromJson(jsonEncode(response.body)));
-    }
+    try {
+      var response = await ApiClient.getData(ApiConstants.nisabEndPoint);
 
-    change(null, status: RxStatus.success());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = getNisabRatesResponseModelFromJson(jsonEncode(response.body));
+        nisabRates(data);
+
+        change(data, status: RxStatus.success());
+      } else {
+        change(null, status: RxStatus.error("Failed to load"));
+      }
+    } catch (e) {
+      change(null, status: RxStatus.error(e.toString()));
+    }
   }
 
   void onCurrencySelected(GetNisabRatesResponseModel value) {
@@ -54,32 +89,22 @@ class ZakatController extends GetxController with StateMixin<dynamic> {
 
   ///==================Save Sign Up===========================
   RxBool zakatLoading = false.obs;
-  Future<void> zakatHandle({
-    String? goldValue,
-    String? silverValue,
-    String? cashAndBank,
-    String? futureDeposits,
-    String? loanGiven,
-    String? investmentValue,
-    String? rentalIncome,
-    String? immediateLiabilities,
-  }) async {
+  Future<void> calculateZakatAmount() async {
     zakatLoading(true);
 
     String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-    print("token-------${bearerToken}");
+
     var headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer $bearerToken'};
-    print("token-------${headers}");
     var body = {
       "currencyCode": "bdt",
-      "goldValue": goldValue ?? "",
-      "silverValue": silverValue ?? "",
-      "cashAndBank": cashAndBank ?? "",
-      "futureDeposits": futureDeposits ?? "",
-      "loanGiven": loanGiven,
-      "investmentValue": investmentValue,
-      "rentalIncome": rentalIncome,
-      "immediateLiabilities": immediateLiabilities
+      "goldValue": valueGoldController.text,
+      "silverValue": valueSilverController.text,
+      "cashAndBank": cashAndBankController.text,
+      "futureDeposits": futureDepositsController.text,
+      "loanGiven": loanGivenController.text,
+      "investmentValue": investmentValueController.text,
+      "rentalIncome": rentalIncomeController.text,
+      "immediateLiabilities": immediateLiabilitieseController.text
     };
     var response = await ApiClient.postData(
       ApiConstants.zakatEndPoint,
@@ -87,7 +112,6 @@ class ZakatController extends GetxController with StateMixin<dynamic> {
       headers: headers,
     );
 
-    print("----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       zakatCalculationResult(zakatCalculationResultModelFromJson(jsonEncode(response.body)));
       ToastMessageHelper.successMessageShowToster(AppLocalizations.of(Get.context!)!.record_inserted_successfully);
@@ -124,7 +148,7 @@ class ZakatController extends GetxController with StateMixin<dynamic> {
               ),
               SizedBox(height: 12.h),
               CustomText(
-                text: assetsAccount,
+                text: assetsAccount + " (${selectedCurrency.value?.currencyIcon})",
                 fontsize: 22.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
@@ -138,7 +162,7 @@ class ZakatController extends GetxController with StateMixin<dynamic> {
               ),
               SizedBox(height: 12.h),
               CustomText(
-                text: zakatAccount,
+                text: zakatAccount + " (${selectedCurrency.value?.currencyIcon})",
                 fontsize: 22.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,

@@ -238,21 +238,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get zakat_calculator => 'Zakat Calculator';
 
   @override
-  String get value_of_gold => 'Value of Gold (\\\$)';
+  String get value_of_gold => 'Value of Gold';
 
   @override
-  String get value_of_silver => 'Value of Silver (\\\$)';
+  String get value_of_silver => 'Value of Silver';
 
   @override
   String get cash_in_hand_and_in_bank_accounts =>
-      'Cash In hand and in bank accounts(\\\$)';
+      'Cash In hand and in bank accounts';
 
   @override
   String get deposited_for_some_future_purpose =>
-      'Deposited for some future purpose(\\\$)';
+      'Deposited for some future purpose';
 
   @override
-  String get given_out_in_loans => 'Given out in loans(\\\$)';
+  String get given_out_in_loans => 'Given out in loans';
 
   @override
   String get total_assets => 'Total Assets';
