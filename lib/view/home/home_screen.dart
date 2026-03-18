@@ -13,13 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as intl;
-
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../controllers/controllers.dart';
-
 import 'no_internet_screen.dart';
 import 'package:hijri/hijri_calendar.dart';
-
 import '../property_distribution_calculation/property_distribution_calculation_page.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
@@ -31,9 +28,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Timer? timer;
-  String upcomingPrayer = "";
-
   ScrollController? _scrollController;
   NotificationController notificationController =
       Get.put(NotificationController());
@@ -62,7 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    timer?.cancel();
     _scrollController?.dispose();
     super.dispose();
   }
@@ -368,6 +361,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 20.h,
                     ),
+
+                    // Current time, sunset, sunrise
                     Container(
                       padding: EdgeInsets.all(16.w),
                       decoration: BoxDecoration(
@@ -411,59 +406,68 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              // SunRise
-                              SizedBox(height: 4.h),
-                              Row(
+                          Obx(
+                            () => Skeletonizer(
+                              enabled: homeController
+                                  .salatTimeStatus.value.isLoading,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Icon(Icons.wb_sunny,
-                                      color: Colors.orange, size: 20.sp),
-                                  SizedBox(width: 4.w),
+                                  // SunRise
+                                  SizedBox(height: 4.h),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.wb_sunny,
+                                          color: Colors.orange, size: 20.sp),
+                                      SizedBox(width: 4.w),
+                                      CustomText(
+                                        text: homeController.formatTime(
+                                            homeController.salatTimeModel.value
+                                                    ?.sunrise ??
+                                                "06:00"),
+                                        fontsize: 18.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ],
+                                  ),
                                   CustomText(
-                                    text: homeController.formatTime(
-                                        homeController.salatTimeModel.value
-                                                ?.sunrise ??
-                                            ""),
-                                    fontsize: 18.sp,
-                                    fontWeight: FontWeight.bold,
+                                    text: AppLocalizations.of(context)!
+                                        .sunrise_time,
+                                    fontsize: 12.sp,
+                                    color: Colors.grey,
+                                  ),
+                                  // Sunset
+                                  Row(
+                                    children: [
+                                      Icon(Icons.nightlight,
+                                          color: Colors.blueGrey, size: 20.sp),
+                                      SizedBox(width: 4.w),
+                                      CustomText(
+                                        text: homeController.formatTime(
+                                            homeController.salatTimeModel.value
+                                                    ?.sunset ??
+                                                "18:00"),
+                                        fontsize: 18.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ],
+                                  ),
+                                  CustomText(
+                                    text: AppLocalizations.of(context)!
+                                        .sunset_time,
+                                    fontsize: 12.sp,
+                                    color: Colors.grey,
                                   ),
                                 ],
                               ),
-                              CustomText(
-                                text:
-                                    AppLocalizations.of(context)!.sunrise_time,
-                                fontsize: 12.sp,
-                                color: Colors.grey,
-                              ),
-                              // Sunset
-                              Row(
-                                children: [
-                                  Icon(Icons.nightlight,
-                                      color: Colors.blueGrey, size: 20.sp),
-                                  SizedBox(width: 4.w),
-                                  CustomText(
-                                    text: homeController.formatTime(
-                                        homeController
-                                                .salatTimeModel.value?.sunset ??
-                                            ""),
-                                    fontsize: 18.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ],
-                              ),
-                              CustomText(
-                                text: AppLocalizations.of(context)!.sunset_time,
-                                fontsize: 12.sp,
-                                color: Colors.grey,
-                              ),
-                            ],
+                            ),
                           ),
                         ],
                       ),
                     ),
                     SizedBox(height: 20.h),
+
+                    // Prayer times
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(AppLocalizations.of(context)!.prayer_times,
@@ -475,10 +479,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(height: 20.h),
 
                     Obx(() {
-                      if (homeController.salatTimeStatus.value.isLoading) {
-                        return const Center(child: CustomLoader());
-                      }
-
                       if (homeController.salatTimeStatus.value.isError) {
                         return ErrorWidget(Exception(
                             "${homeController.salatTimeStatus.value.errorMessage}"));
@@ -486,282 +486,302 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       return SizedBox(
                         height: 220.h,
-                        child: ListView.builder(
-                          controller: _scrollController,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          physics: BouncingScrollPhysics(),
-                          itemCount: homeController.prayerTimes.length,
-                          itemBuilder: (context, index) {
-                            final name = homeController.prayerTimes.keys
-                                .elementAt(index);
-                            final time = homeController.prayerTimes[name]!;
-                            final isCurrent =
-                                name == homeController.currentPrayer.value;
+                        child: Skeletonizer(
+                          enabled:
+                              homeController.salatTimeStatus.value.isLoading,
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            physics: BouncingScrollPhysics(),
+                            itemCount:
+                                homeController.salatTimeStatus.value.isLoading
+                                    ? 5
+                                    : homeController.prayerTimes.length,
+                            itemBuilder: (context, index) {
+                              final name =
+                                  homeController.salatTimeStatus.value.isLoading
+                                      ? "Prayer Name"
+                                      : homeController.prayerTimes.keys
+                                          .elementAt(index);
+                              final time =
+                                  homeController.salatTimeStatus.value.isLoading
+                                      ? "12:00"
+                                      : homeController.prayerTimes[name]!;
+                              final isCurrent = homeController
+                                      .salatTimeStatus.value.isLoading
+                                  ? (index == 0)
+                                  : name == homeController.currentPrayer.value;
 
-                            // Determine gradient based on status
-                            // Current: Green, Previous: Grey, Upcoming: Amber
-                            // We need to know if it's already passed but not "current".
-                            // Actually, if we follow the 3 states:
-                            // 1. name == currentPrayer -> Green
-                            // 2. index of name < index of currentPrayer -> Grey (already passed)
-                            // 3. index of name > index of currentPrayer -> Amber (next or future)
+                              // Determine gradient based on status
+                              // Current: Green, Previous: Grey, Upcoming: Amber
+                              // We need to know if it's already passed but not "current".
+                              // Actually, if we follow the 3 states:
+                              // 1. name == currentPrayer -> Green
+                              // 2. index of name < index of currentPrayer -> Grey (already passed)
+                              // 3. index of name > index of currentPrayer -> Amber (next or future)
 
-                            final prayerNames =
-                                homeController.prayerTimes.keys.toList();
-                            final currentIndex = prayerNames
-                                .indexOf(homeController.currentPrayer.value);
-                            final pIndex = prayerNames.indexOf(name);
+                              final prayerNames =
+                                  homeController.prayerTimes.keys.toList();
+                              final currentIndex = prayerNames
+                                  .indexOf(homeController.currentPrayer.value);
+                              final pIndex = prayerNames.indexOf(name);
 
-                            LinearGradient gradient;
-                            LinearGradient borderGradient;
-                            double borderWidth = 1.0;
-                            if (isCurrent) {
-                              // Current Prayer → Modern Light Green with more white layers
-                              gradient = const LinearGradient(
-                                colors: [
-                                  Color(0xFFFFFFFF), // pure white
-                                  Color(0xFFFAFAFA), // ultra light
-                                  Color(0xFFF1F8F2), // very light green-white
-                                  Color(0xFFDFF5DD), // soft green tint
-                                  Color(0xFFC8E6C9), // light green
-                                  Color(0xFFA5D6A7), // soft green
-                                  Color(0xFF81C784), // main green accent
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              );
+                              LinearGradient gradient;
+                              LinearGradient borderGradient;
+                              double borderWidth = 1.0;
+                              if (isCurrent) {
+                                // Current Prayer → Modern Light Green with more white layers
+                                gradient = const LinearGradient(
+                                  colors: [
+                                    Color(0xFFFFFFFF), // pure white
+                                    Color(0xFFFAFAFA), // ultra light
+                                    Color(0xFFF1F8F2), // very light green-white
+                                    Color(0xFFDFF5DD), // soft green tint
+                                    Color(0xFFC8E6C9), // light green
+                                    Color(0xFFA5D6A7), // soft green
+                                    Color(0xFF81C784), // main green accent
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                );
 
-                              borderGradient = const LinearGradient(
-                                colors: [
-                                  Color(0xFF81C784), // main green accent
-                                  Color(0xFFA5D6A7), // soft green
-                                  Color(0xFFC8E6C9), // light green
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              );
-                            } else if (pIndex < currentIndex &&
-                                currentIndex != -1) {
-                              // Previous Prayer → Soft Cool Grey with more white layers
-                              gradient = const LinearGradient(
-                                colors: [
-                                  Color(0xFFFFFFFF), // pure white
-                                  Color(0xFFFAFAFA), // ultra light
-                                  Color(0xFFF5F5F5), // very light grey
-                                  Color(0xFFEDEDED), // soft light grey
-                                  Color(0xFFE0E0E0), // light grey
-                                  Color(0xFFBDBDBD), // grey accent
-                                  Color(
-                                      0xFF9E9E9E), // slightly darker grey for depth
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              );
+                                borderGradient = const LinearGradient(
+                                  colors: [
+                                    Color(0xFF81C784), // main green accent
+                                    Color(0xFFA5D6A7), // soft green
+                                    Color(0xFFC8E6C9), // light green
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                );
+                              } else if (pIndex < currentIndex &&
+                                  currentIndex != -1) {
+                                // Previous Prayer → Soft Cool Grey with more white layers
+                                gradient = const LinearGradient(
+                                  colors: [
+                                    Color(0xFFFFFFFF), // pure white
+                                    Color(0xFFFAFAFA), // ultra light
+                                    Color(0xFFF5F5F5), // very light grey
+                                    Color(0xFFEDEDED), // soft light grey
+                                    Color(0xFFE0E0E0), // light grey
+                                    Color(0xFFBDBDBD), // grey accent
+                                    Color(
+                                        0xFF9E9E9E), // slightly darker grey for depth
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                );
 
-                              borderGradient = const LinearGradient(
-                                colors: [
-                                  Color(0xFF9E9E9E), // slightly darker grey
-                                  Color(0xFFBDBDBD), // grey accent
-                                  Color(0xFFE0E0E0), // light grey
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              );
-                            } else {
-                              // Upcoming Prayer → Modern Light Orange with more white layers
-                              gradient = const LinearGradient(
-                                colors: [
-                                  Color(0xFFFFFFFF), // pure white
-                                  Color(0xFFFFFBF0), // ultra light cream
-                                  Color(0xFFFFF8E1), // very light yellow-orange
-                                  Color(0xFFFFF3C4), // soft pale orange
-                                  Color(0xFFFFECB3), // light orange
-                                  Color(0xFFFFD54F), // orange accent
-                                  Color(0xFFFFB300), // richer orange accent
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              );
+                                borderGradient = const LinearGradient(
+                                  colors: [
+                                    Color(0xFF9E9E9E), // slightly darker grey
+                                    Color(0xFFBDBDBD), // grey accent
+                                    Color(0xFFE0E0E0), // light grey
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                );
+                              } else {
+                                // Upcoming Prayer → Modern Light Orange with more white layers
+                                gradient = const LinearGradient(
+                                  colors: [
+                                    Color(0xFFFFFFFF), // pure white
+                                    Color(0xFFFFFBF0), // ultra light cream
+                                    Color(
+                                        0xFFFFF8E1), // very light yellow-orange
+                                    Color(0xFFFFF3C4), // soft pale orange
+                                    Color(0xFFFFECB3), // light orange
+                                    Color(0xFFFFD54F), // orange accent
+                                    Color(0xFFFFB300), // richer orange accent
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                );
 
-                              borderGradient = const LinearGradient(
-                                colors: [
-                                  Color(0xFFFFB300), // rich orange
-                                  Color(0xFFFFD54F), // orange accent
-                                  Color(0xFFFFECB3), // light orange
-                                ],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              );
-                            }
+                                borderGradient = const LinearGradient(
+                                  colors: [
+                                    Color(0xFFFFB300), // rich orange
+                                    Color(0xFFFFD54F), // orange accent
+                                    Color(0xFFFFECB3), // light orange
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                );
+                              }
 
-                            return Container(
-                              width: 0.6.sw,
-                              margin: EdgeInsets.symmetric(horizontal: 16.w),
-                              child: Stack(
-                                children: [
-                                  // 1. Gradient Border Layer
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      gradient:
-                                          borderGradient, // darker/more visible
-                                      borderRadius: BorderRadius.circular(16.0),
+                              return Container(
+                                width: 0.6.sw,
+                                margin: EdgeInsets.symmetric(horizontal: 16.w),
+                                child: Stack(
+                                  children: [
+                                    // 1. Gradient Border Layer
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        gradient:
+                                            borderGradient, // darker/more visible
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
+                                      ),
                                     ),
-                                  ),
 
-                                  // 2. Inner Card with Padding for Border Effect
-                                  Container(
-                                    margin: EdgeInsets.all(
-                                        borderWidth), // creates border space
-                                    decoration: BoxDecoration(
-                                      gradient:
-                                          gradient, // keep the light modern gradient
-                                      borderRadius: BorderRadius.circular(
-                                          16.0 - borderWidth),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.05),
-                                          blurRadius: 4,
-                                          offset: const Offset(2, 2),
-                                        ),
-                                      ],
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        // Mosque Image
-                                        Positioned(
-                                          left: 0,
-                                          bottom: 0,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                              bottomLeft: Radius.circular(16),
-                                            ),
-                                            child: Image.asset(
-                                              AppImages.mosjidIcon,
-                                              height: 150.h,
-                                              width: 150.w,
-                                              fit: BoxFit.contain,
+                                    // 2. Inner Card with Padding for Border Effect
+                                    Container(
+                                      margin: EdgeInsets.all(
+                                          borderWidth), // creates border space
+                                      decoration: BoxDecoration(
+                                        gradient:
+                                            gradient, // keep the light modern gradient
+                                        borderRadius: BorderRadius.circular(
+                                            16.0 - borderWidth),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.05),
+                                            blurRadius: 4,
+                                            offset: const Offset(2, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          // Mosque Image
+                                          Positioned(
+                                            left: 0,
+                                            bottom: 0,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                bottomLeft: Radius.circular(16),
+                                              ),
+                                              child: Image.asset(
+                                                AppImages.mosjidIcon,
+                                                height: 150.h,
+                                                width: 150.w,
+                                                fit: BoxFit.contain,
+                                              ),
                                             ),
                                           ),
-                                        ),
 
-                                        // Content Layer
-                                        Padding(
-                                          padding: const EdgeInsets.all(12.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              // Top Status Text
-                                              Text(
-                                                isCurrent
-                                                    ? AppLocalizations.of(
-                                                            context)!
-                                                        .current_prayer
-                                                    : (pIndex < currentIndex &&
-                                                            currentIndex != -1)
-                                                        ? AppLocalizations.of(
-                                                                context)!
-                                                            .previous_prayer
-                                                        : AppLocalizations.of(
-                                                                context)!
-                                                            .upcoming_prayer,
-                                                style: TextStyle(
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                              if (isCurrent)
-                                                Obx(
-                                                  () => Text(
-                                                    homeController
-                                                        .remainingTimeStr.value,
-                                                    style: TextStyle(
-                                                      fontSize: 18.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black,
-                                                      letterSpacing: 1.5,
-                                                    ),
-                                                  ),
-                                                ),
-                                              const Spacer(),
-                                              Align(
-                                                alignment:
-                                                    Alignment.bottomRight,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Text(
-                                                      name == "Dhuhr"
+                                          // Content Layer
+                                          Padding(
+                                            padding: const EdgeInsets.all(12.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                // Top Status Text
+                                                Text(
+                                                  isCurrent
+                                                      ? AppLocalizations.of(
+                                                              context)!
+                                                          .current_prayer
+                                                      : (pIndex < currentIndex &&
+                                                              currentIndex !=
+                                                                  -1)
                                                           ? AppLocalizations.of(
                                                                   context)!
-                                                              .dhuhr
-                                                          : name == "Asr"
-                                                              ? AppLocalizations
-                                                                      .of(
-                                                                          context)!
-                                                                  .asr
-                                                              : name ==
-                                                                      "Maghrib"
-                                                                  ? AppLocalizations.of(
-                                                                          context)!
-                                                                      .maghrib
-                                                                  : name ==
-                                                                          "Isha"
-                                                                      ? AppLocalizations.of(
-                                                                              context)!
-                                                                          .isha
-                                                                      : name,
-                                                      style: TextStyle(
-                                                        fontSize: 22.sp,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.black,
-                                                      ),
-                                                    ),
-                                                    Text(
+                                                              .previous_prayer
+                                                          : AppLocalizations.of(
+                                                                  context)!
+                                                              .upcoming_prayer,
+                                                  style: TextStyle(
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                if (isCurrent)
+                                                  Obx(
+                                                    () => Text(
                                                       homeController
-                                                          .formatTime(time),
+                                                          .remainingTimeStr
+                                                          .value,
                                                       style: TextStyle(
-                                                        fontSize: 20.sp,
+                                                        fontSize: 18.sp,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         color: Colors.black,
+                                                        letterSpacing: 1.5,
                                                       ),
                                                     ),
-                                                    SizedBox(height: 4.h),
-                                                    SizedBox(
-                                                      height: 30.h,
-                                                      width: 50.w,
-                                                      child: FittedBox(
-                                                        fit: BoxFit.fill,
-                                                        child: Switch(
-                                                          value: true,
-                                                          activeColor: Colors
-                                                              .greenAccent[400],
-                                                          onChanged: (val) {},
+                                                  ),
+                                                const Spacer(),
+                                                Align(
+                                                  alignment:
+                                                      Alignment.bottomRight,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Text(
+                                                        name == "Dhuhr"
+                                                            ? AppLocalizations
+                                                                    .of(
+                                                                        context)!
+                                                                .dhuhr
+                                                            : name == "Asr"
+                                                                ? AppLocalizations.of(
+                                                                        context)!
+                                                                    .asr
+                                                                : name ==
+                                                                        "Maghrib"
+                                                                    ? AppLocalizations.of(
+                                                                            context)!
+                                                                        .maghrib
+                                                                    : name ==
+                                                                            "Isha"
+                                                                        ? AppLocalizations.of(context)!
+                                                                            .isha
+                                                                        : name,
+                                                        style: TextStyle(
+                                                          fontSize: 22.sp,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black,
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                      Text(
+                                                        homeController
+                                                            .formatTime(time),
+                                                        style: TextStyle(
+                                                          fontSize: 20.sp,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 4.h),
+                                                      SizedBox(
+                                                        height: 30.h,
+                                                        width: 50.w,
+                                                        child: FittedBox(
+                                                          fit: BoxFit.fill,
+                                                          child: Switch(
+                                                            value: true,
+                                                            activeColor: Colors
+                                                                    .greenAccent[
+                                                                400],
+                                                            onChanged: (val) {},
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       );
                     }),
