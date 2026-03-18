@@ -130,6 +130,11 @@ class HomeController extends GetxController {
       final now = DateTime.now();
       currentTime.value =
           DateFormat('hh:mm:ss a', Get.locale!.languageCode).format(now);
+      if (Get.locale!.languageCode == 'bn') {
+        currentTime.value = currentTime.value
+            .replaceAll('AM', 'পূর্বাহ্ন')
+            .replaceAll('PM', 'অপরাহ্ন');
+      }
       remainingTimeStr.value = "--:--:--";
       return;
     }
@@ -137,6 +142,11 @@ class HomeController extends GetxController {
     final now = DateTime.now();
     currentTime.value =
         DateFormat('hh:mm:ss a', Get.locale!.languageCode).format(now);
+    if (Get.locale!.languageCode == 'bn') {
+      currentTime.value = currentTime.value
+          .replaceAll('AM', 'পূর্বাহ্ন')
+          .replaceAll('PM', 'অপরাহ্ন');
+    }
 
     List<MapEntry<String, DateTime>> times = [];
 
@@ -167,7 +177,6 @@ class HomeController extends GetxController {
     String? previous;
     DateTime? nextTime;
 
-    // Determine current, previous, next
     for (int i = 0; i < times.length; i++) {
       if (now.isBefore(times[i].value)) {
         upcoming = times[i].key;
@@ -178,7 +187,6 @@ class HomeController extends GetxController {
       }
     }
 
-    // If after Isha (no upcoming today)
     if (upcoming == null) {
       current = "Isha";
       previous = "Maghrib";
@@ -201,12 +209,18 @@ class HomeController extends GetxController {
       final diff = nextTime.difference(now);
       timeLeft.value = diff;
 
-      final hours = diff.inHours;
-      final minutes = diff.inMinutes % 60;
-      final seconds = diff.inSeconds % 60;
+      // Convert Duration to DateTime for formatting
+      final baseDate = DateTime(0).add(diff); // base reference
+      var formattedRemaining =
+          DateFormat('hh:mm:ss a', Get.locale!.languageCode).format(baseDate);
 
-      remainingTimeStr.value =
-          "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
+      if (Get.locale!.languageCode == 'bn') {
+        formattedRemaining = formattedRemaining
+            .replaceAll('AM', 'পূর্বাহ্ন')
+            .replaceAll('PM', 'অপরাহ্ন');
+      }
+
+      remainingTimeStr.value = formattedRemaining;
     } else {
       remainingTimeStr.value = "--:--:--";
     }
@@ -218,7 +232,14 @@ class HomeController extends GetxController {
       final dt = DateFormat(
         "HH:mm",
       ).parse(time24);
-      return DateFormat("hh:mm a", Get.locale!.languageCode).format(dt);
+      var formattedTime =
+          DateFormat("hh:mm a", Get.locale!.languageCode).format(dt);
+      if (Get.locale!.languageCode == 'bn') {
+        formattedTime = formattedTime
+            .replaceAll('AM', 'পূর্বাহ্ন')
+            .replaceAll('PM', 'অপরাহ্ন');
+      }
+      return formattedTime;
     } catch (e) {
       return time24;
     }

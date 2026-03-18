@@ -364,107 +364,133 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     // Current time, sunset, sunrise
                     Container(
-                      padding: EdgeInsets.all(16.w),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.8),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                            color: AppColors.primaryColor.withOpacity(0.3)),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 12.w, vertical: 6.h),
-                                decoration: BoxDecoration(
-                                  color:
-                                      AppColors.primaryColor.withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                      color: AppColors.primaryColor
-                                          .withOpacity(0.2)),
-                                ),
-                                child: Obx(
-                                  () => CustomText(
-                                    text: homeController.currentTime.value,
-                                    fontsize: 24.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                ),
+                        width: 1.sw,
+                        padding: EdgeInsets.all(16.w),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                              color: AppColors.primaryColor.withOpacity(0.3)),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Current Time Column
+                            Container(
+                              width: 1.sw,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12.w, vertical: 6.h),
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryColor.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                    color: AppColors.primaryColor
+                                        .withOpacity(0.2)),
                               ),
-                              SizedBox(height: 4.h),
-                              CustomText(
-                                text:
-                                    AppLocalizations.of(context)!.current_time,
-                                fontsize: 12.sp,
-                                color: Colors.grey,
-                              ),
-                            ],
-                          ),
-                          Obx(
-                            () => Skeletonizer(
-                              enabled: homeController
-                                  .salatTimeStatus.value.isLoading,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  // SunRise
-                                  SizedBox(height: 4.h),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.wb_sunny,
-                                          color: Colors.orange, size: 20.sp),
-                                      SizedBox(width: 4.w),
-                                      CustomText(
-                                        text: homeController.formatTime(
-                                            homeController.salatTimeModel.value
-                                                    ?.sunrise ??
-                                                "06:00"),
-                                        fontsize: 18.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ],
-                                  ),
-                                  CustomText(
-                                    text: AppLocalizations.of(context)!
-                                        .sunrise_time,
-                                    fontsize: 12.sp,
-                                    color: Colors.grey,
-                                  ),
-                                  // Sunset
-                                  Row(
-                                    children: [
-                                      Icon(Icons.nightlight,
-                                          color: Colors.blueGrey, size: 20.sp),
-                                      SizedBox(width: 4.w),
-                                      CustomText(
-                                        text: homeController.formatTime(
-                                            homeController.salatTimeModel.value
-                                                    ?.sunset ??
-                                                "18:00"),
-                                        fontsize: 18.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ],
-                                  ),
-                                  CustomText(
-                                    text: AppLocalizations.of(context)!
-                                        .sunset_time,
-                                    fontsize: 12.sp,
-                                    color: Colors.grey,
-                                  ),
-                                ],
+                              child: Obx(
+                                () => CustomText(
+                                  text: homeController.currentTime.value,
+                                  fontsize: 24.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryColor,
+                                  // maxLines: 1,
+                                  // overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
+                            SizedBox(height: 4.h),
+                            CustomText(
+                              text: AppLocalizations.of(context)!.current_time,
+                              fontsize: 12.sp,
+                              color: Colors.grey,
+                            ),
+
+                            // Sunrise & Sunset Column
+                            Obx(
+                              () => Skeletonizer(
+                                enabled: homeController
+                                    .salatTimeStatus.value.isLoading,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    SizedBox(height: 4.h),
+                                    // Sunrise
+                                    Column(
+                                      children: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(Icons.wb_sunny,
+                                                color: Colors.orange,
+                                                size: 20.sp),
+                                            SizedBox(width: 4.w),
+                                            Flexible(
+                                              child: CustomText(
+                                                text: homeController.formatTime(
+                                                    homeController
+                                                            .salatTimeModel
+                                                            .value
+                                                            ?.sunrise ??
+                                                        "06:00"),
+                                                fontsize: 18.sp,
+                                                fontWeight: FontWeight.bold,
+                                                // maxLines: 1,
+                                                // overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        CustomText(
+                                          text: AppLocalizations.of(context)!
+                                              .sunrise_time,
+                                          fontsize: 12.sp,
+                                          color: Colors.grey,
+                                        ),
+                                      ],
+                                    ),
+
+                                    // Sunset
+                                    Column(
+                                      children: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(Icons.nightlight,
+                                                color: Colors.blueGrey,
+                                                size: 20.sp),
+                                            SizedBox(width: 4.w),
+                                            Flexible(
+                                              child: CustomText(
+                                                text: homeController.formatTime(
+                                                    homeController
+                                                            .salatTimeModel
+                                                            .value
+                                                            ?.sunset ??
+                                                        "18:00"),
+                                                fontsize: 18.sp,
+                                                fontWeight: FontWeight.bold,
+                                                // maxLines: 1,
+                                                // overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        CustomText(
+                                          text: AppLocalizations.of(context)!
+                                              .sunset_time,
+                                          fontsize: 12.sp,
+                                          color: Colors.grey,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
                     SizedBox(height: 20.h),
 
                     // Prayer times
@@ -760,7 +786,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         child: FittedBox(
                                                           fit: BoxFit.fill,
                                                           child: Switch(
-                                                            value: true,
+                                                            value: isCurrent
+                                                                ? true
+                                                                : false,
                                                             activeColor: Colors
                                                                     .greenAccent[
                                                                 400],
@@ -891,76 +919,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-// class CustomCard extends StatelessWidget {
-//   final String title;
-//   final String time;
-//   final String imageUrl;
-//   final bool isCurrent;
-
-//   const CustomCard({
-//     required this.title,
-//     required this.time,
-//     required this.imageUrl,
-//     required this.isCurrent,
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       shape: RoundedRectangleBorder(
-//         borderRadius: BorderRadius.circular(12.0),
-//       ),
-//       child: Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             Text(
-//               title,
-//               style: TextStyle(
-//                 fontSize: 16.0,
-//                 fontWeight: FontWeight.bold,
-//                 color: isCurrent ? Colors.green : Colors.orange,
-//               ),
-//             ),
-//             SizedBox(
-//               height: 8.h,
-//             ),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceAround,
-//               children: [
-//                 // SvgPicture.asset(imageUrl, height: 80.h),
-//                 Image.asset(
-//                   imageUrl,
-//                   height: 80.h,
-//                   width: 80,
-//                 ),
-//                 Column(
-//                   children: [
-//                     Text(
-//                       AppLocalizations.of(context)!.isha,
-//                       style: const TextStyle(fontSize: 18.0, color: Colors.red),
-//                     ),
-//                     Text(
-//                       time,
-//                       style: const TextStyle(fontSize: 18.0),
-//                     ),
-//                     Switch(
-//                       value: true,
-//                       activeColor: AppColors.primaryColor,
-//                       onChanged: (value) {
-//                         // Handle switch logic
-//                       },
-//                     ),
-//                   ],
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
