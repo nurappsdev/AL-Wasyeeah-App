@@ -522,6 +522,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Stack(
                                 children: [
                                   // 1. The Mosque Image (Positioned Bottom-Left)
+
                                   Positioned(
                                     left: 0,
                                     bottom: 0,
