@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:al_wasyeah/models/zakat_cal/zakat_calculation_result_model.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -13,12 +14,13 @@ import '../../models/models.dart';
 import '../../services/services.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-class ZakatController extends GetxController {
+class ZakatController extends GetxController with StateMixin<dynamic> {
   ///==================get Witness===========================
   final cashAndBankController = TextEditingController();
 
   RxBool isNisabLoading = false.obs;
   RxList<GetNisabRatesResponseModel> nisabRates = <GetNisabRatesResponseModel>[].obs;
+  Rx<ZakatCalculationResultModel?> zakatCalculationResult = Rx<ZakatCalculationResultModel?>(null);
 
   Rx<GetNisabRatesResponseModel?> selectedCurrency = Rx<GetNisabRatesResponseModel?>(null);
 
@@ -28,68 +30,27 @@ class ZakatController extends GetxController {
     getNisabRates();
   }
 
-  RxString currencySign = ''.obs;
+  /// Currency sign derived from selectedCurrency
+  String get currencySign => selectedCurrency.value?.currencyIcon ?? '';
 
   void getNisabRates() async {
-    isNisabLoading(true);
+    change(null, status: RxStatus.loading());
 
     var response = await ApiClient.getData(ApiConstants.nisabEndPoint);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      nisabRates.value = List<GetNisabRatesResponseModel>.from(
-        response.body.map((x) => GetNisabRatesResponseModel.fromJson(x)),
-      );
-
-      if (nisabRates.isNotEmpty) {
-        selectedCurrency(nisabRates.first);
-
-        /// 🔥 default currency sign
-        currencySign.value = nisabRates.first.currencyIcon ?? '';
-
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          cashAndBankController.text = nisabRates.first.nisabAmount.toString();
-        });
-      }
+      nisabRates(getNisabRatesResponseModelFromJson(jsonEncode(response.body)));
     }
 
-    isNisabLoading(false);
+    change(null, status: RxStatus.success());
   }
 
   void onCurrencySelected(GetNisabRatesResponseModel value) {
     selectedCurrency(value);
 
-    /// 🔥 update sign when dropdown changes
-    currencySign.value = value.currencyIcon ?? '';
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       cashAndBankController.text = value.nisabAmount.toString();
     });
   }
-
-  // void getNisabRates() async {
-  //   isNisabLoading(true);
-  //   var response = await ApiClient.getData(ApiConstants.nisabEndPoint);
-  //   if (response.statusCode == 200 || response.statusCode == 201) {
-  //     nisabRates.value = List<GetNisabRatesResponseModel>.from(
-  //       response.body.map((x) => GetNisabRatesResponseModel.fromJson(x)),
-  //     );
-  //     if (nisabRates.isNotEmpty) {
-  //       selectedCurrency(nisabRates.first); // Set default
-  //
-  //       // Delay updating controller until widget tree is built
-  //       WidgetsBinding.instance.addPostFrameCallback((_) {
-  //         cashAndBankController.text = nisabRates.first.nisabAmount.toString();
-  //       });
-  //     }
-  //   }
-  //   isNisabLoading(false);
-  // }
-
-  // void onCurrencySelected(GetNisabRatesResponseModel value) {
-  //   selectedCurrency(value);
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     cashAndBankController.text = value.nisabAmount.toString();
-  //   });
-  // }
 
   ///==================Save Sign Up===========================
   RxBool zakatLoading = false.obs;
@@ -125,11 +86,13 @@ class ZakatController extends GetxController {
       body,
       headers: headers,
     );
+
     print("----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
+      zakatCalculationResult(zakatCalculationResultModelFromJson(jsonEncode(response.body)));
       ToastMessageHelper.successMessageShowToster(AppLocalizations.of(Get.context!)!.record_inserted_successfully);
-      print("zakat netAssets${response.body}");
-      showZakatDialog(Get.context, assetsAccount: "${response.body["netAssets"]}".tr, zakatAccount: "${response.body["zakatAmount"]}".tr);
+
+      showZakatDialog(Get.context, assetsAccount: "${zakatCalculationResult.value?.netAssets.toLocal()}", zakatAccount: "${zakatCalculationResult.value?.zakatAmount.toLocal()}");
 
       // Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
       zakatLoading(false);

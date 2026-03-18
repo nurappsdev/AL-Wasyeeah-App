@@ -1,3 +1,12 @@
+// To parse this JSON data, do
+//
+//     final getNisabRatesResponseModel = getNisabRatesResponseModelFromJson(jsonString);
+
+import 'dart:convert';
+
+List<GetNisabRatesResponseModel> getNisabRatesResponseModelFromJson(String str) => List<GetNisabRatesResponseModel>.from(json.decode(str).map((x) => GetNisabRatesResponseModel.fromJson(x)));
+
+String getNisabRatesResponseModelToJson(List<GetNisabRatesResponseModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class GetNisabRatesResponseModel {
   final int? id;
@@ -23,26 +32,26 @@ class GetNisabRatesResponseModel {
   });
 
   factory GetNisabRatesResponseModel.fromJson(Map<String, dynamic> json) => GetNisabRatesResponseModel(
-    id: json["id"],
-    currencyCode: json["currencyCode"],
-    nisabAmount: json["nisabAmount"],
-    currencyIcon: json["currencyIcon"],
-    activeYn: json["activeYn"],
-    insertBy: json["insertBy"],
-    insertAt: json["insertAt"] == null ? null : DateTime.parse(json["insertAt"]),
-    updateBy: json["updateBy"],
-    updateAt: json["updateAt"] == null ? null : DateTime.parse(json["updateAt"]),
-  );
+        id: json["id"],
+        currencyCode: json["currencyCode"],
+        nisabAmount: json["nisabAmount"],
+        currencyIcon: json["currencyIcon"],
+        activeYn: json["activeYn"],
+        insertBy: json["insertBy"],
+        insertAt: json["insertAt"] == null ? null : DateTime.parse(json["insertAt"]),
+        updateBy: json["updateBy"],
+        updateAt: json["updateAt"] == null ? null : DateTime.parse(json["updateAt"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "currencyCode": currencyCode,
-    "nisabAmount": nisabAmount,
-    "currencyIcon": currencyIcon,
-    "activeYn": activeYn,
-    "insertBy": insertBy,
-    "insertAt": insertAt?.toIso8601String(),
-    "updateBy": updateBy,
-    "updateAt": updateAt?.toIso8601String(),
-  };
+        "id": id,
+        "currencyCode": currencyCode,
+        "nisabAmount": nisabAmount,
+        "currencyIcon": currencyIcon,
+        "activeYn": activeYn,
+        "insertBy": insertBy,
+        "insertAt": insertAt?.toIso8601String(),
+        "updateBy": updateBy,
+        "updateAt": updateAt?.toIso8601String(),
+      };
 }

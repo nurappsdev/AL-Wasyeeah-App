@@ -68,13 +68,6 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget amountLabel(String title) {
-      return Obx(() => CustomText(
-            text: zakatController.currencySign.value.isNotEmpty ? "$title (${zakatController.currencySign.value})".tr : title.tr,
-          ));
-    }
-
-    zakatController.getNisabRates();
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
@@ -121,7 +114,7 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                                 return DropdownMenuItem(
                                   value: model,
                                   child: Text(
-                                    "${model.currencyCode} ${model.currencyIcon}",
+                                    "${model.currencyCode} - ${model.currencyIcon}",
                                   ),
                                 );
                               }).toList(),
@@ -161,141 +154,174 @@ class _ZakatCalculatorScreenState extends State<ZakatCalculatorScreen> {
                       ),
                       Obx(() {
                         final currency = zakatController.selectedCurrency.value;
-                        final updatedDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
+                        final bool isDisabled = currency == null;
 
-                        return Container(
-                          height: 100.h,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 4.h),
-                                CustomText(text: "${AppLocalizations.of(context)!.nisab} (${AppLocalizations.of(context)!.updated} ${updatedDate})"),
-                                Padding(
-                                  padding: EdgeInsets.all(4.r),
-                                  child: CustomTextField(
-                                    readOnly: false,
-                                    controller: zakatController.cashAndBankController,
-                                    // controller: TextEditingController(
-                                    //   text: "${currency?.nisabAmount?.toStringAsFixed(0) ?? ''} ${currency?.currencyIcon ?? ''}",
-                                    // ),
-                                    hintText: AppLocalizations.of(context)!.nisab_amount,
-                                  ),
+                        String nisabLabel = AppLocalizations.of(context)!.nisab;
+                        if (!isDisabled) {
+                          final updatedDate = zakatController.nisabRates
+                              .where((element) => element.id == currency.id)
+                              .first
+                              .insertAt;
+                          final formattedDate = DateFormat(
+                            'yyyy-MM-dd',
+                            Get.locale!.languageCode,
+                          ).format(updatedDate!);
+                          nisabLabel = "${AppLocalizations.of(context)!.nisab} (${AppLocalizations.of(context)!.updated} $formattedDate)";
+                        }
+
+                        return IgnorePointer(
+                          ignoring: isDisabled,
+                          child: Opacity(
+                            opacity: isDisabled ? 0.4 : 1.0,
+                            child: Container(
+                              height: 100.h,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.r),
+                                border: Border.all(),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 4.h),
+                                    CustomText(text: nisabLabel),
+                                    Padding(
+                                      padding: EdgeInsets.all(4.r),
+                                      child: CustomTextField(
+                                        readOnly: isDisabled,
+                                        controller: zakatController.cashAndBankController,
+                                        hintText: AppLocalizations.of(context)!.nisab_amount,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         );
                       }),
+
                       SizedBox(
                         height: 20.h,
                       ),
-                      Container(
-                        height: 450.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          border: Border.all(color: AppColors.primaryColor),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 10.h),
-                                amountLabel(AppLocalizations.of(context)!.value_of_gold),
-                                Padding(
-                                  padding: EdgeInsets.all(4.r),
-                                  child: CustomTextField(
-                                    keyboardType: TextInputType.number,
-                                    controller: valueGoldController,
-                                    hintText: AppLocalizations.of(context)!.value_of_gold,
+                      Obx(() {
+                        final bool isDisabled = zakatController.selectedCurrency.value == null;
+                        return IgnorePointer(
+                          ignoring: isDisabled,
+                          child: Opacity(
+                            opacity: isDisabled ? 0.4 : 1.0,
+                            child: Container(
+                              height: 450.h,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.r),
+                                border: Border.all(color: AppColors.primaryColor),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 10.h),
+                                      Text(AppLocalizations.of(context)!.value_of_gold),
+                                      Padding(
+                                        padding: EdgeInsets.all(4.r),
+                                        child: CustomTextField(
+                                          keyboardType: TextInputType.number,
+                                          controller: valueGoldController,
+                                          readOnly: isDisabled,
+                                          hintText: AppLocalizations.of(context)!.value_of_gold,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Text(AppLocalizations.of(context)!.value_of_silver),
+                                      Padding(
+                                        padding: EdgeInsets.all(4.r),
+                                        child: CustomTextField(
+                                          keyboardType: TextInputType.number,
+                                          controller: silverGoldController,
+                                          readOnly: isDisabled,
+                                          hintText: AppLocalizations.of(context)!.value_of_silver,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Text(AppLocalizations.of(context)!.future_deposits),
+                                      Padding(
+                                        padding: EdgeInsets.all(4.r),
+                                        child: CustomTextField(
+                                          keyboardType: TextInputType.number,
+                                          controller: futureDepositsController,
+                                          readOnly: isDisabled,
+                                          hintText: AppLocalizations.of(context)!.future_deposits,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Text(AppLocalizations.of(context)!.given_out_in_loans),
+                                      Padding(
+                                        padding: EdgeInsets.all(4.r),
+                                        child: CustomTextField(
+                                          keyboardType: TextInputType.number,
+                                          controller: loanGivenController,
+                                          readOnly: isDisabled,
+                                          hintText: AppLocalizations.of(context)!.given_out_in_loans,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Text(AppLocalizations.of(context)!.investment_value),
+                                      Padding(
+                                        padding: EdgeInsets.all(4.r),
+                                        child: CustomTextField(
+                                          keyboardType: TextInputType.number,
+                                          controller: investmentValueController,
+                                          readOnly: isDisabled,
+                                          hintText: AppLocalizations.of(context)!.investment_value,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Text(AppLocalizations.of(context)!.rental_income),
+                                      Padding(
+                                        padding: EdgeInsets.all(4.r),
+                                        child: CustomTextField(
+                                          keyboardType: TextInputType.number,
+                                          controller: rentalIncomeController,
+                                          readOnly: isDisabled,
+                                          hintText: AppLocalizations.of(context)!.rental_income,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Text(AppLocalizations.of(context)!.immediate_liabilities),
+                                      Padding(
+                                        padding: EdgeInsets.all(4.r),
+                                        child: CustomTextField(
+                                          keyboardType: TextInputType.number,
+                                          controller: immediateLiabilitieseController,
+                                          readOnly: isDisabled,
+                                          hintText: AppLocalizations.of(context)!.immediate_liabilities,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                amountLabel(AppLocalizations.of(context)!.value_of_silver),
-                                Padding(
-                                  padding: EdgeInsets.all(4.r),
-                                  child: CustomTextField(
-                                    keyboardType: TextInputType.number,
-                                    controller: silverGoldController,
-                                    hintText: AppLocalizations.of(context)!.value_of_silver,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                amountLabel(AppLocalizations.of(context)!.future_deposits),
-                                Padding(
-                                  padding: EdgeInsets.all(4.r),
-                                  child: CustomTextField(
-                                    keyboardType: TextInputType.number,
-                                    controller: futureDepositsController,
-                                    hintText: AppLocalizations.of(context)!.future_deposits,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                amountLabel(AppLocalizations.of(context)!.given_out_in_loans),
-                                Padding(
-                                  padding: EdgeInsets.all(4.r),
-                                  child: CustomTextField(
-                                    keyboardType: TextInputType.number,
-                                    controller: loanGivenController,
-                                    hintText: AppLocalizations.of(context)!.given_out_in_loans,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                amountLabel(AppLocalizations.of(context)!.investment_value),
-                                Padding(
-                                  padding: EdgeInsets.all(4.r),
-                                  child: CustomTextField(
-                                    keyboardType: TextInputType.number,
-                                    controller: investmentValueController,
-                                    hintText: AppLocalizations.of(context)!.investment_value,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                amountLabel(AppLocalizations.of(context)!.rental_income),
-                                Padding(
-                                  padding: EdgeInsets.all(4.r),
-                                  child: CustomTextField(
-                                    keyboardType: TextInputType.number,
-                                    controller: rentalIncomeController,
-                                    hintText: AppLocalizations.of(context)!.rental_income,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                amountLabel(AppLocalizations.of(context)!.immediate_liabilities),
-                                Padding(
-                                  padding: EdgeInsets.all(4.r),
-                                  child: CustomTextField(
-                                    keyboardType: TextInputType.number,
-                                    controller: immediateLiabilitieseController,
-                                    hintText: AppLocalizations.of(context)!.immediate_liabilities,
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      }),
                       SizedBox(
                         height: 12.h,
                       ),
