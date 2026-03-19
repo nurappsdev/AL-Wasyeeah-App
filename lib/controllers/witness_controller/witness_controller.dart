@@ -13,6 +13,8 @@ import '../../services/services.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:al_wasyeah/l10n/app_localizations.dart';
+import 'package:al_wasyeah/view/witnessess/add_outside_witness.dart';
+import 'package:al_wasyeah/view/witnessess/add_witness_screen.dart';
 import '../../utils/app_constant.dart';
 
 class WitnessController extends GetxController
@@ -289,5 +291,37 @@ class WitnessController extends GetxController
     } finally {
       isLoadings.value = false;
     }
+  }
+
+  ///==================Show Add Witness Bottom Sheet===========================
+  void showAddWitnessBottomSheet() {
+    searchController.clear();
+    witnesssData.value = null;
+    Get.bottomSheet(
+      AddWitnessScreen(),
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      isScrollControlled: true,
+    );
+  }
+
+  ///==================Show Add Outside Witness Bottom Sheet===========================
+  void showAddOutsideWitnessBottomSheet() {
+    Get.bottomSheet(
+      AddOutsideWitness(),
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      isScrollControlled: true,
+    );
   }
 }

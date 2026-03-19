@@ -245,7 +245,24 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
                                           .errorMessageShowToster(
                                               "Request key not found");
                                 },
-                              ))
+                              )),
+                        SizedBox(height: 16.h),
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.r),
+                            border: Border.all(color: AppColors.primaryColor),
+                          ),
+                          child: CustomButtonCommon(
+                            title:
+                                AppLocalizations.of(context)!.add_more_witness,
+                            color: Colors.white,
+                            titlecolor: AppColors.primaryColor,
+                            onpress: () {
+                              controller.showAddWitnessBottomSheet();
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),

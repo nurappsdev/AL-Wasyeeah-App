@@ -621,7 +621,7 @@ class WitnessesScreen extends GetView<WitnessController> {
       title: AppLocalizations.of(context)!.add_more_witness,
       titlecolor: Colors.black,
       onpress: () {
-        Get.toNamed(AppRoutes.addWitnessesScreen);
+        controller.showAddWitnessBottomSheet();
       },
     );
   }
