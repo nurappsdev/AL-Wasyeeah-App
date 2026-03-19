@@ -202,29 +202,30 @@ class _WitnessDetailsScreenState extends State<WitnessDetailsScreen> {
                             AppLocalizations.of(context)!.father_s_name_1,
                             witness.fatherName),
                         SizedBox(height: 32.h),
-                        if (!canRemove)
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.r),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      AppColors.primaryColor.withOpacity(0.2),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: CustomButtonCommon(
-                              title: AppLocalizations.of(context)!.access_panel,
-                              onpress: () {
-                                Get.toNamed(AppRoutes.witnessPhanelData,
-                                    arguments: witness.requestKey);
-                              },
-                            ),
-                          )
-                        else
+                        // if (!canRemove)
+                        //   Container(
+                        //     width: double.infinity,
+                        //     decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(12.r),
+                        //       boxShadow: [
+                        //         BoxShadow(
+                        //           color:
+                        //               AppColors.primaryColor.withOpacity(0.2),
+                        //           blurRadius: 10,
+                        //           offset: const Offset(0, 4),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //     child: CustomButtonCommon(
+                        //       title: AppLocalizations.of(context)!.access_panel,
+                        //       onpress: () {
+                        //         // Get.toNamed(AppRoutes.witnessPhanelData,
+                        //         //     arguments: witness.requestKey);
+                        //       },
+                        //     ),
+                        //   )
+                        // else
+                        if (canRemove)
                           Obx(() => CustomButtonCommon(
                                 title: AppLocalizations.of(context)!.remove,
                                 color: AppColors.redColor,

@@ -60,7 +60,7 @@ class AppRoutes {
   static const String profileInfo = "/profile_info_page";
   static const String accessControlTabScreen = "/access_control_tab_page";
   static const String featureScreen = "/feature_page";
-  static const String witnessPhanelData = "/witness_phanel_data_page";
+  // static const String witnessPhanelData = "/witness_phanel_data_page";
   static const String asignNomineeDetails = "/asign_nominee_details_page";
 
   static List<GetPage> get routes => [
@@ -111,7 +111,7 @@ class AppRoutes {
         GetPage(
             name: accessControlTabScreen, page: () => AccessControlTabScreen()),
         GetPage(name: featureScreen, page: () => FeatureScreen()),
-        GetPage(name: witnessPhanelData, page: () => WitnessPhanelData()),
+        // GetPage(name: witnessPhanelData, page: () => WitnessPhanelData()),
         GetPage(name: asignNomineeDetails, page: () => AsignNomineeDetails()),
       ];
 }
