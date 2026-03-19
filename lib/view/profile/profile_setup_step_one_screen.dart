@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
@@ -12,16 +13,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import '../../controllers/controllers.dart';
 
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class ProfileSettingStepOneWidget extends StatefulWidget {
   @override
-  State<ProfileSettingStepOneWidget> createState() => _ProfileSettingStepOneWidgetState();
+  State<ProfileSettingStepOneWidget> createState() =>
+      _ProfileSettingStepOneWidgetState();
 }
 
-class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidget> {
+class _ProfileSettingStepOneWidgetState
+    extends State<ProfileSettingStepOneWidget> {
   final ProfileController controller = Get.find<ProfileController>();
   Widget _sectionTitle(String title) {
     return Column(
@@ -56,7 +58,8 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
         );
       }
       if (controller.status.value.isError) {
-        return Center(child: Text(AppLocalizations.of(context)!.something_went_wrong));
+        return Center(
+            child: Text(AppLocalizations.of(context)!.something_went_wrong));
       }
 
       final form = controller.personalForm.value;
@@ -70,58 +73,78 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _sectionTitle(AppLocalizations.of(context)!.personal_information),
+                  _sectionTitle(
+                      AppLocalizations.of(context)!.personal_information),
                   // ================= First Name =================
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      CustomText(text: AppLocalizations.of(context)!.first_name, fontsize: 16.sp),
-                      Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      CustomText(
+                          text: AppLocalizations.of(context)!.first_name,
+                          fontsize: 16.sp),
+                      Text(' *',
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
                   ),
                   SizedBox(height: 4.h),
                   CustomTextFormField(
                     controller: form.firstName,
                     hint: AppLocalizations.of(context)!.first_name,
-                    validator: (value) => value!.isEmpty ? AppLocalizations.of(context)!.first_name_is_required : null,
+                    validator: (value) => value!.isEmpty
+                        ? AppLocalizations.of(context)!.first_name_is_required
+                        : null,
                   ),
 
                   SizedBox(height: 16.h),
                   // ================= Last Name =================
                   Row(
                     children: [
-                      CustomText(text: AppLocalizations.of(context)!.last_name, fontsize: 16.sp),
-                      Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      CustomText(
+                          text: AppLocalizations.of(context)!.last_name,
+                          fontsize: 16.sp),
+                      Text(' *',
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
                   ),
                   SizedBox(height: 4.h),
                   CustomTextFormField(
                     controller: form.lastName,
                     hint: AppLocalizations.of(context)!.last_name,
-                    validator: (value) => value!.isEmpty ? AppLocalizations.of(context)!.last_name_is_required : null,
+                    validator: (value) => value!.isEmpty
+                        ? AppLocalizations.of(context)!.last_name_is_required
+                        : null,
                   ),
 
                   SizedBox(height: 16.h),
                   // ================= Marital Status =================
                   Row(
                     children: [
-                      CustomText(text: AppLocalizations.of(context)!.marital_status, fontsize: 16.sp),
-                      Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      CustomText(
+                          text: AppLocalizations.of(context)!.marital_status,
+                          fontsize: 16.sp),
+                      Text(' *',
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
                   ),
                   SizedBox(height: 4.h),
                   Obx(() => CustomDropdown<MaritalModel>(
-                        hint: AppLocalizations.of(context)!.select_marital_status,
+                        hint:
+                            AppLocalizations.of(context)!.select_marital_status,
                         items: controller.maritalList,
                         value: form.selectedMarried.value,
                         itemToString: (item) => item.maritalType ?? "",
                         onChanged: (val) => form.selectedMarried.value = val,
-                        validator: (value) => value == null ? AppLocalizations.of(context)!.marital_status_is_required : null,
+                        validator: (value) => value == null
+                            ? AppLocalizations.of(context)!
+                                .marital_status_is_required
+                            : null,
                       )),
 
                   SizedBox(height: 16.h),
                   // ================= Profession =================
-                  CustomText(text: AppLocalizations.of(context)!.profession, fontsize: 16.sp),
+                  CustomText(
+                      text: AppLocalizations.of(context)!.profession,
+                      fontsize: 16.sp),
                   SizedBox(height: 4.h),
                   Obx(() => CustomDropdown<ProfessionModel>(
                         hint: AppLocalizations.of(context)!.select_profession,
@@ -135,8 +158,11 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
                   // ================= Place of Birth =================
                   Row(
                     children: [
-                      CustomText(text: AppLocalizations.of(context)!.place_of_birth, fontsize: 16.sp),
-                      Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      CustomText(
+                          text: AppLocalizations.of(context)!.place_of_birth,
+                          fontsize: 16.sp),
+                      Text(' *',
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
                   ),
                   SizedBox(height: 4.h),
@@ -150,20 +176,28 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
 
                   SizedBox(height: 16.h),
                   // ================= District/State =================
-                  CustomText(text: AppLocalizations.of(context)!.district_state, fontsize: 16.sp),
+                  CustomText(
+                      text: AppLocalizations.of(context)!.district_state,
+                      fontsize: 16.sp),
                   SizedBox(height: 4.h),
                   CustomTextFormField(
                     controller: form.district,
                     hint: AppLocalizations.of(context)!.district_state,
-                    validator: (value) => value!.isEmpty ? AppLocalizations.of(context)!.district_state_is_required : null,
+                    validator: (value) => value!.isEmpty
+                        ? AppLocalizations.of(context)!
+                            .district_state_is_required
+                        : null,
                   ),
 
                   SizedBox(height: 16.h),
                   // ================= Gender =================
                   Row(
                     children: [
-                      CustomText(text: AppLocalizations.of(context)!.gender, fontsize: 16.sp),
-                      Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      CustomText(
+                          text: AppLocalizations.of(context)!.gender,
+                          fontsize: 16.sp),
+                      Text(' *',
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
                   ),
                   SizedBox(height: 4.h),
@@ -179,15 +213,21 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
                   // ================= NID / Passport =================
                   Row(
                     children: [
-                      CustomText(text: AppLocalizations.of(context)!.nid_passport_no, fontsize: 16.sp),
-                      Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      CustomText(
+                          text: AppLocalizations.of(context)!.nid_passport_no,
+                          fontsize: 16.sp),
+                      Text(' *',
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                     ],
                   ),
                   SizedBox(height: 4.h),
                   CustomTextFormField(
                     controller: form.nid,
                     hint: AppLocalizations.of(context)!.nid_passport_no,
-                    validator: (value) => value!.isEmpty ? AppLocalizations.of(context)!.nid_passport_no_is_required : null,
+                    validator: (value) => value!.isEmpty
+                        ? AppLocalizations.of(context)!
+                            .nid_passport_no_is_required
+                        : null,
                   ),
                   SizedBox(height: 16.h),
                   CustomText(
@@ -199,21 +239,29 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
                   Obx(() {
                     return _buildFileRow(
                       pickedFile: form.selectedNidFile,
-                      isDownloading: (controller.isDownloadingMap['userNidOrPassport'] ?? false).obs,
-                      progress: (controller.downloadProgressMap['userNidOrPassport'] ?? 0.0).obs,
+                      isDownloading:
+                          (controller.isDownloadingMap['userNidOrPassport'] ??
+                                  false)
+                              .obs,
+                      progress: (controller
+                                  .downloadProgressMap['userNidOrPassport'] ??
+                              0.0)
+                          .obs,
                       onPickFile: () async {
                         var result = await FilePickerUtil.pickSingleFile();
                         if (result != null) form.selectedNidFile.value = result;
                       },
                       onDownload: () async {
                         final isComplete = await controller.downloadFile(
-                          urlPath: controller.profileModel.value.userProfile?.nidPaperUrl,
+                          urlPath: controller
+                              .profileModel.value.userProfile?.nidPaperUrl,
                           filePrefix: 'NID',
                           type: 'userNidOrPassport',
                         );
                         if (isComplete) {
                           Fluttertoast.showToast(
-                            msg: AppLocalizations.of(context)!.nid_file_downloaded_successfully,
+                            msg: AppLocalizations.of(context)!
+                                .nid_file_downloaded_successfully,
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.TOP,
                             timeInSecForIosWeb: 2,
@@ -222,23 +270,31 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
                           );
                         }
                       },
-                      fileUrl: controller.profileModel.value.userProfile?.nidPaperUrl,
+                      fileUrl: controller
+                          .profileModel.value.userProfile?.nidPaperUrl,
                     );
                   }),
                   CustomText(
-                    text: AppLocalizations.of(context)!.only_pdf_jpeg_png_file_are_allowed,
+                    text: AppLocalizations.of(context)!
+                        .only_pdf_jpeg_png_file_are_allowed,
                     color: AppColors.redColor,
                     fontsize: 12.sp,
                   ),
                   SizedBox(height: 16.h),
 
                   // ================= TIN =================
-                  CustomText(text: AppLocalizations.of(context)!.tin_tax_identification_number),
+                  CustomText(
+                      text: AppLocalizations.of(context)!
+                          .tin_tax_identification_number),
                   SizedBox(height: 4.h),
                   CustomTextFormField(
                     controller: form.tin,
-                    hint: AppLocalizations.of(context)!.tin_tax_identification_number,
-                    validator: (value) => value!.isEmpty ? AppLocalizations.of(context)!.tin_tax_identification_number_is_required : null,
+                    hint: AppLocalizations.of(context)!
+                        .tin_tax_identification_number,
+                    validator: (value) => value!.isEmpty
+                        ? AppLocalizations.of(context)!
+                            .tin_tax_identification_number_is_required
+                        : null,
                   ),
                   SizedBox(height: 16.h),
                   CustomText(
@@ -249,21 +305,30 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
 
                   Obx(() => _buildFileRow(
                         pickedFile: form.selectedTinFile,
-                        isDownloading: (controller.isDownloadingMap['userTinOrPassport'] ?? false).obs,
-                        progress: (controller.downloadProgressMap['userTinOrPassport'] ?? 0.0).obs,
+                        isDownloading:
+                            (controller.isDownloadingMap['userTinOrPassport'] ??
+                                    false)
+                                .obs,
+                        progress: (controller
+                                    .downloadProgressMap['userTinOrPassport'] ??
+                                0.0)
+                            .obs,
                         onPickFile: () async {
                           var result = await FilePickerUtil.pickSingleFile();
-                          if (result != null) form.selectedTinFile.value = result;
+                          if (result != null)
+                            form.selectedTinFile.value = result;
                         },
                         onDownload: () async {
                           final isComplete = await controller.downloadFile(
-                            urlPath: controller.profileModel.value.userProfile?.tinPaperUrl,
+                            urlPath: controller
+                                .profileModel.value.userProfile?.tinPaperUrl,
                             filePrefix: 'TIN',
                             type: 'userTinOrPassport',
                           );
                           if (isComplete) {
                             Fluttertoast.showToast(
-                              msg: AppLocalizations.of(context)!.tin_file_downloaded_successfully,
+                              msg: AppLocalizations.of(context)!
+                                  .tin_file_downloaded_successfully,
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.TOP,
                               timeInSecForIosWeb: 2,
@@ -272,17 +337,20 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
                             );
                           }
                         },
-                        fileUrl: controller.profileModel.value.userProfile?.tinPaperUrl,
+                        fileUrl: controller
+                            .profileModel.value.userProfile?.tinPaperUrl,
                       )),
                   CustomText(
-                    text: AppLocalizations.of(context)!.only_pdf_jpeg_png_file_are_allowed,
+                    text: AppLocalizations.of(context)!
+                        .only_pdf_jpeg_png_file_are_allowed,
                     color: AppColors.redColor,
                     fontsize: 12.sp,
                   ),
                   SizedBox(height: 16.h),
 
                   // ================= Multi Citizenship =================
-                  CustomText(text: AppLocalizations.of(context)!.multi_citizenship),
+                  CustomText(
+                      text: AppLocalizations.of(context)!.multi_citizenship),
                   SizedBox(height: 4.h),
                   Obx(
                     () => CustomDropdown<CountryModel>(
@@ -290,7 +358,8 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
                       items: controller.countryList,
                       value: form.selectedMultiCitizenCountry.value,
                       itemToString: (item) => item.country ?? "",
-                      onChanged: (val) => form.selectedMultiCitizenCountry.value = val,
+                      onChanged: (val) =>
+                          form.selectedMultiCitizenCountry.value = val,
                     ),
                   ),
                   SizedBox(height: 16.h),
@@ -302,22 +371,31 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
 
                   Obx(
                     () => _buildFileRow(
-                      isDownloading: (controller.isDownloadingMap['userProfilePicture'] ?? false).obs,
-                      progress: (controller.downloadProgressMap['userProfilePicture'] ?? 0.0).obs,
+                      isDownloading:
+                          (controller.isDownloadingMap['userProfilePicture'] ??
+                                  false)
+                              .obs,
+                      progress: (controller
+                                  .downloadProgressMap['userProfilePicture'] ??
+                              0.0)
+                          .obs,
                       pickedFile: form.selectedProfilePictureFile,
                       onPickFile: () async {
                         var result = await FilePickerUtil.pickSingleFile();
-                        if (result != null) form.selectedProfilePictureFile.value = result;
+                        if (result != null)
+                          form.selectedProfilePictureFile.value = result;
                       },
                       onDownload: () async {
                         final isComplete = await controller.downloadFile(
-                          urlPath: controller.profileModel.value.userProfile?.profilePictureUrl,
+                          urlPath: controller.profileModel.value.userProfile
+                              ?.profilePictureUrl,
                           filePrefix: 'ProfilePicture',
                           type: 'userProfilePicture',
                         );
                         if (isComplete) {
                           Fluttertoast.showToast(
-                            msg: AppLocalizations.of(context)!.profile_picture_downloaded_successfully,
+                            msg: AppLocalizations.of(context)!
+                                .profile_picture_downloaded_successfully,
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.TOP,
                             timeInSecForIosWeb: 2,
@@ -326,11 +404,13 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
                           );
                         }
                       },
-                      fileUrl: controller.profileModel.value.userProfile?.profilePictureUrl,
+                      fileUrl: controller
+                          .profileModel.value.userProfile?.profilePictureUrl,
                     ),
                   ),
                   CustomText(
-                    text: AppLocalizations.of(context)!.only_pdf_jpeg_png_file_are_allowed,
+                    text: AppLocalizations.of(context)!
+                        .only_pdf_jpeg_png_file_are_allowed,
                     color: AppColors.redColor,
                     fontsize: 12.sp,
                   ),
@@ -340,7 +420,8 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
                     title: AppLocalizations.of(context)!.next,
                     onpress: () {
                       if (controller.step1formKey.currentState!.validate()) {
-                        controller.onStepTapped(controller.currentStep.value + 1);
+                        controller
+                            .onStepTapped(controller.currentStep.value + 1);
                       }
                     },
                   ),
@@ -414,12 +495,15 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
                       // File name or placeholder
                       Expanded(
                         child: Text(
-                          pickedFile.value?.fileName ?? AppLocalizations.of(context)!.no_file_chosen,
+                          pickedFile.value?.fileName ??
+                              AppLocalizations.of(context)!.no_file_chosen,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 13.sp,
-                            color: pickedFile.value == null ? Colors.grey : AppColors.hitTextColor000000,
+                            color: pickedFile.value == null
+                                ? Colors.grey
+                                : AppColors.hitTextColor000000,
                           ),
                         ),
                       ),
@@ -443,7 +527,8 @@ class _ProfileSettingStepOneWidgetState extends State<ProfileSettingStepOneWidge
                   return isDownloading.value
                       ? Center(
                           child: SizedBox(
-                            width: 40.w, // increase size a bit for text visibility
+                            width:
+                                40.w, // increase size a bit for text visibility
                             height: 40.w,
                             child: Stack(
                               alignment: Alignment.center,

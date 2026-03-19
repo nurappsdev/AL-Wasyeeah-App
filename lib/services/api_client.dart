@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'package:mime_type/mime_type.dart';
 
 import '../helpers/prefs_helper.dart';
 import 'api_constants.dart';
@@ -214,42 +213,42 @@ class ApiClient extends GetxService {
 
   // ========================== MULTIPART POST ==========================
 
-  static Future<Response> postMultipartData(
-    String uri,
-    Map<String, String> fields, {
-    required List<MultipartBody> files,
-  }) async {
-    try {
-      _bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+//   static Future<Response> postMultipartData(
+//     String uri,
+//     Map<String, String> fields, {
+//     required List<MultipartBody> files,
+//   }) async {
+//     try {
+//       _bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
 
-      final request =
-          http.MultipartRequest('POST', Uri.parse(ApiConstants.baseUrl + uri));
+//       final request =
+//           http.MultipartRequest('POST', Uri.parse(ApiConstants.baseUrl + uri));
 
-      request.headers['Authorization'] = 'Bearer $_bearerToken';
-      request.fields.addAll(fields);
+//       request.headers['Authorization'] = 'Bearer $_bearerToken';
+//       request.fields.addAll(fields);
 
-      for (final file in files) {
-        final mimeType = mime(file.file.path);
-        request.files.add(
-          await http.MultipartFile.fromPath(
-            file.key,
-            file.file.path,
-            contentType: mimeType != null ? MediaType.parse(mimeType) : null,
-          ),
-        );
-      }
+//       for (final file in files) {
+//         final mimeType = mime(file.file.path);
+//         request.files.add(
+//           await http.MultipartFile.fromPath(
+//             file.key,
+//             file.file.path,
+//             contentType: mimeType != null ? MediaType.parse(mimeType) : null,
+//           ),
+//         );
+//       }
 
-      final streamed = await request.send();
-      final response = await http.Response.fromStream(streamed);
+//       final streamed = await request.send();
+//       final response = await http.Response.fromStream(streamed);
 
-      return _buildResponse(response, uri);
-    } catch (_) {
-      return Response(
-          statusCode: -1,
-          statusText:
-              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
-    }
-  }
+//       return _buildResponse(response, uri);
+//     } catch (_) {
+//       return Response(
+//           statusCode: -1,
+//           statusText:
+//               AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+//     }
+//   }
 }
 
 // ========================== MODELS ==========================

@@ -1,5 +1,5 @@
-import 'dart:developer';
-
+import 'package:al_wasyeah/controllers/profile/home_controller.dart';
+import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
@@ -11,25 +11,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
-import '../../controllers/controllers.dart';
 import '../../helpers/helpers.dart';
 import '../../helpers/prefs_helper.dart';
 
-import '../../controllers/notification_controller.dart';
+import '../../controllers/notification/notification_controller.dart';
 import '../../services/api_constants.dart';
 import '../profile/profile_page.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-class MenuPage extends StatefulWidget {
-  const MenuPage({super.key});
+class MenuPage extends StatelessWidget {
+  MenuPage({super.key});
 
-  @override
-  State<MenuPage> createState() => _MenuPageState();
-}
-
-class _MenuPageState extends State<MenuPage> {
   final homeController = Get.find<HomeController>();
+
+  final profileController = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +50,13 @@ class _MenuPageState extends State<MenuPage> {
                 ),
                 Center(
                   child: Obx(
-                    () => homeController.profileController.profileModel.value
-                                .userProfile?.profilePictureUrl !=
+                    () => profileController.profileModel.value.userProfile
+                                ?.profilePictureUrl !=
                             null
                         ? CircleAvatar(
                             radius: 50,
                             backgroundImage: NetworkImage(
-                                "${ApiConstants.imageUrl + "${homeController.profileController.profileModel.value.userProfile?.profilePictureUrl}"}"),
+                                "${ApiConstants.imageUrl + "${profileController.profileModel.value.userProfile?.profilePictureUrl}"}"),
                             backgroundColor: Colors.grey[200],
                           )
                         : CircleAvatar(
@@ -76,7 +71,7 @@ class _MenuPageState extends State<MenuPage> {
                 ),
                 Obx(() => CustomText(
                       text:
-                          "${homeController.profileController.profileModel.value.userProfile?.firstName} ${homeController.profileController.profileModel.value.userProfile?.lastName}",
+                          "${profileController.profileModel.value.userProfile?.firstName} ${profileController.profileModel.value.userProfile?.lastName}",
                       fontsize: 18.sp,
                       fontWeight: FontWeight.w700,
                     )),

@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/controllers/controllers.dart';
+import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_five_screen.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_four_screen.dart';
@@ -17,12 +17,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final ProfileController controller = Get.put(ProfileController());
-
-  void initState() {
-    super.initState();
-    controller.getProfilePageData();
-  }
+  final ProfileController controller = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {

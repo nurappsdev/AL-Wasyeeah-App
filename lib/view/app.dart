@@ -1,4 +1,3 @@
-import 'package:al_wasyeah/controllers/controller_bindings.dart';
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
@@ -55,8 +54,7 @@ class _WasyeeahAppState extends State<WasyeeahApp> {
           navigatorKey: Get.key,
           theme: light(),
           getPages: AppRoutes.routes,
-          initialRoute: AppRoutes.firstSplashScreen,
-          initialBinding: ControllerBindings(),
+          initialRoute: AppRoutes.splashScreen,
           defaultTransition: Transition.topLevel,
           transitionDuration: const Duration(milliseconds: 500),
           locale: _locale,

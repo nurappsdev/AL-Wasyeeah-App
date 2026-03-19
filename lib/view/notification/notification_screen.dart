@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/controllers/notification_controller.dart';
+import 'package:al_wasyeah/controllers/notification/notification_controller.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_back_button_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';

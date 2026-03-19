@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/controllers/wasyyah/wasyyah_controller.dart';
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/view/widgets/custom_button.dart';
@@ -6,17 +7,13 @@ import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../controllers/controllers.dart';
-import '../home/no_internet_screen.dart';
 import 'add_new_washyia_screen.dart';
-import 'wasiyah_preview_screen.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class WasyyahScreen extends StatelessWidget {
   WasyyahScreen({super.key});
 
-  WasyyahController wasyyahController = Get.put(WasyyahController());
+  final WasyyahController wasyyahController = Get.put(WasyyahController());
 
   @override
   Widget build(BuildContext context) {

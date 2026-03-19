@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/models/profile_info_model/parent_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
@@ -11,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
-import '../../controllers/controllers.dart';
 
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
@@ -74,7 +73,8 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
                     child: CustomButtonCommon(
                       title: AppLocalizations.of(context)!.previous,
                       onpress: () {
-                        controller.onStepTapped(controller.currentStep.value - 1);
+                        controller
+                            .onStepTapped(controller.currentStep.value - 1);
                       },
                     ),
                   ),
@@ -83,7 +83,8 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
                       title: AppLocalizations.of(context)!.next,
                       onpress: () {
                         if (controller.step3formKey.currentState!.validate()) {
-                          controller.onStepTapped(controller.currentStep.value + 1);
+                          controller
+                              .onStepTapped(controller.currentStep.value + 1);
                         }
                       },
                     ),
@@ -140,15 +141,19 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
         _sectionTitle(title),
         _textField(AppLocalizations.of(Get.context!)!.name, nameController),
         _professionDropdown(selectedProfession),
-        _textField(AppLocalizations.of(Get.context!)!.nid_passport_no, nidController),
+        _textField(
+            AppLocalizations.of(Get.context!)!.nid_passport_no, nidController),
         CustomText(
           text: AppLocalizations.of(Get.context!)!.nid_passport_documents,
           fontsize: 16.sp,
         ),
         SizedBox(height: 4.h),
-        if (fileUrl != null) _buildFileRow(fileUrl, pickedFile, onPickFile, downloadType, filePrefix),
+        if (fileUrl != null)
+          _buildFileRow(
+              fileUrl, pickedFile, onPickFile, downloadType, filePrefix),
         CustomText(
-          text: AppLocalizations.of(Get.context!)!.only_pdf_jpeg_png_file_are_allowed,
+          text: AppLocalizations.of(Get.context!)!
+              .only_pdf_jpeg_png_file_are_allowed,
           color: AppColors.redColor,
           fontsize: 12.sp,
         ),
@@ -197,7 +202,9 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
         CustomTextFormField(
           controller: controller,
           hint: label,
-          validator: (value) => value!.isEmpty ? "$label ${AppLocalizations.of(Get.context!)!.is_required}" : null,
+          validator: (value) => value!.isEmpty
+              ? "$label ${AppLocalizations.of(Get.context!)!.is_required}"
+              : null,
         ),
         SizedBox(height: 16.h),
       ],
@@ -208,7 +215,9 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: AppLocalizations.of(Get.context!)!.profession, fontsize: 16.sp),
+        CustomText(
+            text: AppLocalizations.of(Get.context!)!.profession,
+            fontsize: 16.sp),
         SizedBox(height: 4.h),
         Obx(() => CustomDropdown<ProfessionModel>(
               hint: AppLocalizations.of(Get.context!)!.profession,
@@ -231,7 +240,8 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
   ) {
     return Obx(() => FileChooseAndDownloadButton(
           pickedFile: pickedFile,
-          isDownloading: (controller.isDownloadingMap[downloadType] ?? false).obs,
+          isDownloading:
+              (controller.isDownloadingMap[downloadType] ?? false).obs,
           progress: (controller.downloadProgressMap[downloadType] ?? 0.0).obs,
           onPickFile: onPickFile,
           onDownload: () async {
@@ -242,7 +252,8 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
             );
             if (isComplete) {
               Fluttertoast.showToast(
-                msg: AppLocalizations.of(Get.context!)!.file_downloaded_successfully,
+                msg: AppLocalizations.of(Get.context!)!
+                    .file_downloaded_successfully,
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.TOP,
                 timeInSecForIosWeb: 2,

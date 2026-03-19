@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -15,14 +17,43 @@ import '../../utils/app_constant.dart';
 
 class HomeController extends GetxController {
   final Rx<RxStatus> salatTimeStatus = RxStatus.loading().obs;
-  late final ProfileController profileController;
+
+  // Scroller for prayer times
+  late ScrollController scrollController;
+  Worker? _prayerWorker;
 
   @override
   onInit() {
     super.onInit();
     log("Home controller onInit is called.");
-    profileController = Get.put(ProfileController());
+    scrollController = ScrollController();
+
+    // Watch for current prayer changes to auto-scroll
+    _prayerWorker = ever(currentPrayer, (_) {
+      scrollToCurrentPrayer();
+    });
+
     getsalatTimeHandle();
+  }
+
+  void scrollToCurrentPrayer() {
+    if (!scrollController.hasClients) return;
+    if (prayerTimes.isEmpty) return;
+
+    final prayerList = prayerTimes.keys.toList();
+    final index = prayerList.indexOf(currentPrayer.value);
+
+    if (index == -1) return;
+
+    // Exact width calculation based on 0.6.sw + 32.w (margin 16.w * 2)
+    final double itemWidth = (0.6.sw) + (32.w);
+    final double offset = index * itemWidth;
+
+    scrollController.animateTo(
+      offset,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
   }
 
   Rxn<SalatTimeResponseModel?> salatTimeModel =
@@ -40,6 +71,8 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     _prayerTimer?.cancel();
+    _prayerWorker?.dispose();
+    scrollController.dispose();
     super.onClose();
   }
 
@@ -90,7 +123,7 @@ class HomeController extends GetxController {
       final String lat = position.latitude.toString();
       final String long = position.longitude.toString();
       var response = await ApiClient.getData(
-        ApiConstants.salatTimeAPI(lat, long),
+        ApiConstants.salatTimeEndPoint(lat, long),
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -109,6 +142,9 @@ class HomeController extends GetxController {
 
           startPrayerTimer();
           salatTimeStatus(RxStatus.success());
+          Future.delayed(const Duration(milliseconds: 300), () {
+            update(); // optional if needed
+          });
         }
       }
     } catch (e, s) {

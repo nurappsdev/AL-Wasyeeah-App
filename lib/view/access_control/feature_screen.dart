@@ -1,10 +1,9 @@
+import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
-
-import '../../controllers/controllers.dart';
 
 class FeatureScreen extends StatefulWidget {
   const FeatureScreen({super.key});

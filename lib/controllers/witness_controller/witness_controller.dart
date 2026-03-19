@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,46 +14,83 @@ import 'package:http/http.dart' as http;
 
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import '../../utils/app_constant.dart';
-import '../access_phanel/ContextsService.dart';
 
-class WitnessController extends GetxController {
+class WitnessController extends GetxController
+    with GetSingleTickerProviderStateMixin {
+  late TabController tabController;
+
+  /// For "Your Witness"
+  final Rx<RxStatus> witnessStatus = Rx<RxStatus>(RxStatus.loading());
+
+  /// For "I'm Witness"
+  final Rx<RxStatus> witnessesYouStatus = Rx<RxStatus>(RxStatus.loading());
+
+  @override
+  void onInit() async {
+    super.onInit();
+    tabController = TabController(length: 2, vsync: this);
+    getWitnessData();
+    getWitnessesYouData();
+  }
+
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     searchController.clear();
+    tabController.dispose();
+    super.dispose();
   }
 
   ///==================get Witness===========================
-  RxBool isWitness = false.obs;
   RxList<GetWitnessResponseModel> witnessData = <GetWitnessResponseModel>[].obs;
-  getWitnessData() async {
-    isWitness(true);
-    var response = await ApiClient.getData(ApiConstants.witnessEndPoint);
-    print("nomineeData data ------------${response.body}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      witnessData.value = List<GetWitnessResponseModel>.from(
-          response.body.map((x) => GetWitnessResponseModel.fromJson(x)));
-      isWitness(false);
-    } else {
-      isWitness(false);
+
+  Future<void> getWitnessData() async {
+    witnessStatus.value = RxStatus.loading();
+
+    try {
+      var response = await ApiClient.getData(ApiConstants.witnessEndPoint);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        witnessData(getWitnessResponseModelFromJson(jsonEncode(response.body)));
+
+        /// ✅ handle empty vs success
+        if (witnessData.isEmpty) {
+          witnessStatus.value = RxStatus.empty();
+        } else {
+          witnessStatus.value = RxStatus.success();
+        }
+      } else {
+        witnessStatus.value = RxStatus.error("Failed to load data");
+      }
+    } catch (e) {
+      witnessStatus.value = RxStatus.error(e.toString());
     }
   }
 
   ///==================get nominee===========================
-  RxBool isWitnessesYou = false.obs;
   RxList<GetWitnessResponseModel> witnessesYouData =
       <GetWitnessResponseModel>[].obs;
-  getWitnessesYouData() async {
-    isWitnessesYou(true);
-    var response = await ApiClient.getData(ApiConstants.witnessesYouEndPoint);
-    print("witnessesYouData data ------------${response.body}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      witnessesYouData.value = List<GetWitnessResponseModel>.from(
-          response.body.map((x) => GetWitnessResponseModel.fromJson(x)));
-      isWitnessesYou(false);
-    } else {
-      isWitnessesYou(false);
+
+  Future<void> getWitnessesYouData() async {
+    witnessesYouStatus(RxStatus.loading());
+
+    try {
+      var response = await ApiClient.getData(ApiConstants.witnessesYouEndPoint);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        witnessesYouData(
+            getWitnessResponseModelFromJson(jsonEncode(response.body)));
+
+        /// ✅ handle empty vs success
+        if (witnessesYouData.isEmpty) {
+          witnessesYouStatus(RxStatus.empty());
+        } else {
+          witnessesYouStatus(RxStatus.success());
+        }
+      } else {
+        witnessesYouStatus(RxStatus.error("Failed to load data"));
+      }
+    } catch (e) {
+      witnessesYouStatus(RxStatus.error(e.toString()));
     }
   }
 
@@ -142,23 +180,22 @@ class WitnessController extends GetxController {
   }
 
   ///==================get Question===========================
-  RxBool isDelNomineeYou = false.obs;
-  getWitnessDeleteData({String? requestKey}) async {
-    isDelNomineeYou(true);
+  final Rx<RxStatus> deleteWitnessStatus = Rx<RxStatus>(RxStatus.empty());
+  deleteWitness({required String requestKey}) async {
+    deleteWitnessStatus(RxStatus.loading());
     var response = await ApiClient.getData(
-        "${ApiConstants.witnessDeletePoint}?requestKey=${requestKey}");
-    print("deleteData data ------------${response.body}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      ToastMessageHelper.successMessageShowToster(
-        AppLocalizations.of(Get.context!)!.witness_remove_successfully,
-      );
-      getWitnessData();
-      isDelNomineeYou(false);
-    } else if (response.body == 500) {
-      ToastMessageHelper.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)!.internal_server_error);
-    } else {
-      isDelNomineeYou(false);
+        "${ApiConstants.witnessDeletePoint(requestKey)}");
+    log("deleteData data ------------${response.body}");
+    try {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ToastMessageHelper.successMessageShowToster(
+          AppLocalizations.of(Get.context!)!.witness_remove_successfully,
+        );
+        getWitnessData();
+        deleteWitnessStatus(RxStatus.success());
+      }
+    } catch (e) {
+      deleteWitnessStatus(RxStatus.error(e.toString()));
       ToastMessageHelper.errorMessageShowToster(
           AppLocalizations.of(Get.context!)!.try_again);
     }

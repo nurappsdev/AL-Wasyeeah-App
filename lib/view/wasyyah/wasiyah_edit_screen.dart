@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/controllers/wasyyah/wasyyah_controller.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/view/widgets/custom_button.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -5,10 +6,7 @@ import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../controllers/controllers.dart';
 import '../../models/models.dart';
-
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class WasiyahEditScreen extends StatefulWidget {
@@ -19,7 +17,8 @@ class WasiyahEditScreen extends StatefulWidget {
 }
 
 class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
-  GetWasyyahResponseModel waseeyaResponseModel = Get.arguments as GetWasyyahResponseModel;
+  GetWasyyahResponseModel waseeyaResponseModel =
+      Get.arguments as GetWasyyahResponseModel;
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();
   @override
@@ -62,7 +61,8 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
                     maxLine: 2,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.please_enter_your_user_name;
+                        return AppLocalizations.of(context)!
+                            .please_enter_your_user_name;
                       }
                       return null;
                     },
@@ -77,7 +77,8 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
                     maxLine: 20,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.please_enter_your_user_name;
+                        return AppLocalizations.of(context)!
+                            .please_enter_your_user_name;
                       }
                       return null;
                     },
@@ -103,14 +104,18 @@ class _WasiyahEditScreenState extends State<WasiyahEditScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: Obx(
                         () => CustomButton(
-                          loading: wasyyahController.isUpdateWasseya.value == true,
+                          loading:
+                              wasyyahController.isUpdateWasseya.value == true,
                           title: AppLocalizations.of(context)!.save,
                           onpress: () {
                             wasyyahController.updateWasyyahData(
-                                orderSeq: waseeyaResponseModel.orderSeq!.toInt(),
-                                visible: waseeyaResponseModel.visible.toString(),
+                                orderSeq:
+                                    waseeyaResponseModel.orderSeq!.toInt(),
+                                visible:
+                                    waseeyaResponseModel.visible.toString(),
                                 title: titleController.text.toString(),
-                                requestKey: waseeyaResponseModel.requestKey.toString(),
+                                requestKey:
+                                    waseeyaResponseModel.requestKey.toString(),
                                 content: contentController.text);
                           },
                           width: 100.w,

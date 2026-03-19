@@ -200,8 +200,7 @@ class ProfileController extends GetxController {
   Future<List<DocumentTypeForm>> getDocumentTypeList(String wealthId) async {
     try {
       var response = await ApiClient.getData(
-        ApiConstants.documentTypeList +
-            "?lang=\${ApiConstants.currentLang}&wealthId=$wealthId",
+        ApiConstants.documentTypeList(wealthId),
       );
       return documentTypeListFromJson(jsonEncode(response.body));
     } catch (e) {
@@ -508,11 +507,21 @@ class ProfileController extends GetxController {
     bankListForm.clear();
     final banks = profileModel.value.bankInfo;
     if (banks != null && banks.isNotEmpty) {
+      final Map<String, List<BranchModel>> cachedBranches = {};
       for (final bank in banks) {
         final form = BankForm();
         form.bank.value =
             bankList.firstWhereOrNull((e) => e.bankId == bank.bankId);
-        var branches = await getBranchList(bank.bankId.toString());
+
+        final bankIdStr = bank.bankId.toString();
+        List<BranchModel> branches;
+        if (cachedBranches.containsKey(bankIdStr)) {
+          branches = cachedBranches[bankIdStr]!;
+        } else {
+          branches = await getBranchList(bankIdStr);
+          cachedBranches[bankIdStr] = branches;
+        }
+
         form.branchList.value = branches;
 
         if (bank.branchId != null) {
@@ -556,13 +565,21 @@ class ProfileController extends GetxController {
     final wealths = profileModel.value.wealthInfo;
 
     if (wealths != null && wealths.isNotEmpty) {
+      final Map<String, List<DocumentTypeForm>> cachedDocTypes = {};
       for (final wealth in wealths) {
         final form = WealthForm();
         form.wealth.value =
             wealthList.firstWhereOrNull((e) => e.wealthId == wealth.wealthId);
 
         if (wealth.wealthId != null) {
-          var docTypes = await getDocumentTypeList(wealth.wealthId.toString());
+          final wealthIdStr = wealth.wealthId.toString();
+          List<DocumentTypeForm> docTypes;
+          if (cachedDocTypes.containsKey(wealthIdStr)) {
+            docTypes = cachedDocTypes[wealthIdStr]!;
+          } else {
+            docTypes = await getDocumentTypeList(wealthIdStr);
+            cachedDocTypes[wealthIdStr] = docTypes;
+          }
           form.documentTypeList.value = docTypes;
 
           if (wealth.documentTypeId != null) {
