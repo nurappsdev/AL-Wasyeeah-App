@@ -1385,4 +1385,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get sunset_time => 'সূর্যাস্তের সময়';
+
+  @override
+  String get please_fill_all_the_fields => 'দয়া করে সবগুলি ক্ষেত্র পূরণ করুন।';
 }

@@ -2768,6 +2768,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sunset Time'**
   String get sunset_time;
+
+  /// No description provided for @please_fill_all_the_fields.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill all the fileds'**
+  String get please_fill_all_the_fields;
 }
 
 class _AppLocalizationsDelegate

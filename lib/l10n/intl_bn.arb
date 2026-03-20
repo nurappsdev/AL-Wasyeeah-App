@@ -468,5 +468,6 @@
    "upcoming_prayer": "আসন্ন প্রার্থনা",
    "remaining_time":"অবশিষ্ট সময়",
    "sunrise_time":"সূর্যোদয়ের সময়",
-   "sunset_time":"সূর্যাস্তের সময়"
+   "sunset_time":"সূর্যাস্তের সময়",
+  "please_fill_all_the_fields":"দয়া করে সবগুলি ক্ষেত্র পূরণ করুন।"
 }

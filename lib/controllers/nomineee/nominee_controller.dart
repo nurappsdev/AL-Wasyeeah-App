@@ -326,10 +326,10 @@ class NomineeController extends GetxController {
               ? AppLocalizations.of(Get.context!)!.nominee_added_successfully
               : AppLocalizations.of(Get.context!)!.witness_added_successfully,
         );
-        isNomineeTrue
-            ? Get.toNamed(AppRoutes.addNomineeScreen, preventDuplicates: false)
-            : Get.toNamed(AppRoutes.addWitnessesScreen,
-                preventDuplicates: false);
+        // isNomineeTrue
+        //     ? Get.toNamed(AppRoutes.addNomineeScreen, preventDuplicates: false)
+        //     : Get.toNamed(AppRoutes.addWitnessesScreen,
+        //         preventDuplicates: false);
       } else {
         ToastMessageHelper.errorMessageShowToster(
             AppLocalizations.of(Get.context!)!.add_failed_try_again);
