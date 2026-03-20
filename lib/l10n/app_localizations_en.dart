@@ -1375,4 +1375,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sunset_time => 'Sunset Time';
+
+  @override
+  String get please_fill_all_the_fields => 'Please fill all the fileds';
 }

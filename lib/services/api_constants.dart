@@ -60,4 +60,8 @@ class ApiConstants {
   static String savePropertyDistributionCalculationResult =
       "/savePropertyDistributeResult";
   static String inappNOtificationAcceptRejectRequest = "/accept-reject-request";
+  static String searchWitness(String email) =>
+      "/user/search-witness-nominee?email=$email&isWitness=true";
+  static String searchNominee(String email) =>
+      "/user/search-witness-nominee?email=$email&isWitness=false";
 }

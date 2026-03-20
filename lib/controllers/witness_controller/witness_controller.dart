@@ -1,20 +1,16 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../helpers/prefs_helper.dart';
 import '../../helpers/toast_message_helper.dart';
 import '../../models/access_phanel/zakat_property_wasyyah_model.dart';
 import '../../models/models.dart';
 import '../../models/nominee/search_asign_nominee_model.dart';
 import '../../services/services.dart';
-import 'package:http/http.dart' as http;
-
 import 'package:al_wasyeah/l10n/app_localizations.dart';
-import 'package:al_wasyeah/view/witnessess/add_outside_witness.dart';
-import 'package:al_wasyeah/view/witnessess/add_witness_screen.dart';
+import 'package:al_wasyeah/view/witnessess/add_outside_witnesses_widget.dart';
+import 'package:al_wasyeah/view/witnessess/add_witnesses_widget.dart';
 import '../../utils/app_constant.dart';
 
 class WitnessController extends GetxController
@@ -27,6 +23,36 @@ class WitnessController extends GetxController
   /// For "I'm Witness"
   final Rx<RxStatus> witnessesYouStatus = Rx<RxStatus>(RxStatus.loading());
 
+  final Rx<RxStatus> searchWitnessStatus = Rx<RxStatus>(RxStatus.empty());
+
+  final Rx<RxStatus> addWitnessStatus = Rx<RxStatus>(RxStatus.empty());
+  final Rx<RxStatus> deleteWitnessStatus = Rx<RxStatus>(RxStatus.empty());
+  RxBool isZakatPropertyWasiyyah = false.obs;
+  Rx<ZakatPropertyWasiyyahModel?> contextsData =
+      Rx<ZakatPropertyWasiyyahModel?>(null);
+
+  Rx<SearchAsignResponseModel?> witnesssData =
+      Rx<SearchAsignResponseModel?>(null);
+
+  RxList<GetWitnessResponseModel> witnessData = <GetWitnessResponseModel>[].obs;
+  RxList<GetWitnessResponseModel> witnessesYouData =
+      <GetWitnessResponseModel>[].obs;
+  final TextEditingController searchWitnessController = TextEditingController();
+
+  final TextEditingController relNameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController dateOfBirthController = TextEditingController();
+
+  final TextEditingController presentAddressController =
+      TextEditingController();
+
+  final TextEditingController permanentAddressController =
+      TextEditingController();
+  DateTime? birthDate;
+
+  final GlobalKey<FormState> witnessFormKey = GlobalKey<FormState>();
   @override
   void onInit() async {
     super.onInit();
@@ -37,13 +63,12 @@ class WitnessController extends GetxController
 
   @override
   void dispose() {
-    searchController.clear();
+    searchWitnessController.clear();
     tabController.dispose();
     super.dispose();
   }
 
   ///==================get Witness===========================
-  RxList<GetWitnessResponseModel> witnessData = <GetWitnessResponseModel>[].obs;
 
   Future<void> getWitnessData() async {
     witnessStatus.value = RxStatus.loading();
@@ -68,9 +93,7 @@ class WitnessController extends GetxController
     }
   }
 
-  ///==================get nominee===========================
-  RxList<GetWitnessResponseModel> witnessesYouData =
-      <GetWitnessResponseModel>[].obs;
+  ///==================get witness you===========================
 
   Future<void> getWitnessesYouData() async {
     witnessesYouStatus(RxStatus.loading());
@@ -96,93 +119,31 @@ class WitnessController extends GetxController
     }
   }
 
-  final TextEditingController searchController = TextEditingController();
-  // var isLoading = false.obs;
-  // var witnesssData = {}.obs;
-  //
-  // Future<void> searchWitness() async {
-  //   final email = searchController.text.trim();
-  //   if (email.isEmpty) return;
-  //
-  //   isLoading.value = true;
-  //
-  //   final url = Uri.parse(
-  //     '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=true',
-  //   );
-  //   String token = await PrefsHelper.getString(AppConstants.bearerToken);
-  //   try {
-  //     final response = await http.get(
-  //         url,
-  //       headers: {
-  //         'Authorization': 'Bearer $token',
-  //         'Content-Type': 'application/json',
-  //       },
-  //     );
-  //     print("response.body---------------${response.body}");
-  //     if (response.statusCode == 200) {
-  //       final data = json.decode(response.body);
-  //       witnesssData.value = data;
-  //     } else {
-  //       Get.snackbar("Error", "This is not right email");
-  //       witnesssData.value = {};
-  //     }
-  //   } catch (e) {
-  //     Get.snackbar("Error", "Something went wrong");
-  //     witnesssData.value = {};
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-  //
-
-  var isLoading = false.obs;
-
-  Rx<SearchAsignResponseModel?> witnesssData =
-      Rx<SearchAsignResponseModel?>(null);
-
   Future<void> searchWitness() async {
-    final email = searchController.text.trim();
+    final email = searchWitnessController.text.trim();
     if (email.isEmpty) return;
 
-    isLoading.value = true;
+    searchWitnessStatus(RxStatus.loading());
 
-    final url = Uri.parse(
-      '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=true',
-    );
+    var response = await ApiClient.getData(ApiConstants.searchWitness(email));
 
-    String token = await PrefsHelper.getString(AppConstants.bearerToken);
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
 
-    try {
-      final response = await http.get(
-        url,
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-      );
-
-      print("response.body---------------${response.body}");
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-
-        witnesssData.value = SearchAsignResponseModel.fromJson(data);
+      witnesssData.value = SearchAsignResponseModel.fromJson(data);
+      if (data.isEmpty) {
+        searchWitnessStatus(RxStatus.empty());
       } else {
-        Get.snackbar(AppLocalizations.of(Get.context!)!.error,
-            AppLocalizations.of(Get.context!)!.invalid_email_message);
-        witnesssData.value = null;
+        searchWitnessStatus(RxStatus.success());
       }
-    } catch (e) {
-      Get.snackbar(AppLocalizations.of(Get.context!)!.error,
-          AppLocalizations.of(Get.context!)!.something_went_wrong);
-      witnesssData.value = null;
-    } finally {
-      isLoading.value = false;
+    } else {
+      searchWitnessStatus(RxStatus.error(response.body));
+      ToastMessageHelper.errorMessageShowToster(response.body);
     }
   }
 
-  ///==================get Question===========================
-  final Rx<RxStatus> deleteWitnessStatus = Rx<RxStatus>(RxStatus.empty());
+  ///==================delete witness===========================
+
   deleteWitness({required String requestKey}) async {
     deleteWitnessStatus(RxStatus.loading());
     var response = await ApiClient.getData(
@@ -203,11 +164,92 @@ class WitnessController extends GetxController
     }
   }
 
-  RxBool isZakatPropertyWasiyyah = false.obs;
-  Rx<ZakatPropertyWasiyyahModel?> contextsData =
-      Rx<ZakatPropertyWasiyyahModel?>(null);
+  ///==================add witness===========================
+  Future<void> addWitness({
+    required String userName,
+    required String mobileNo,
+    required String email,
+    required String relationWithUser,
+    required String dob,
+    required String presentAddress,
+    required String permanentAddress,
+  }) async {
+    addWitnessStatus(RxStatus.loading());
 
-  /// 🔥 DIRECT API CALL INSIDE CONTROLLER
+    final body = {
+      "name": userName.trim(),
+      "mobile": mobileNo.trim(),
+      "email": email.trim(),
+      "relationWithUser": relationWithUser.trim(),
+      "dob": dob.trim(),
+      "presentAddress": presentAddress.trim(),
+      "permanentAddress": permanentAddress.trim(),
+    };
+
+    final response = await ApiClient.postData(
+      ApiConstants.addWitnessEndPoint,
+      body,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      ToastMessageHelper.successMessageShowToster(
+        AppLocalizations.of(Get.context!)!.witness_added_successfully,
+      );
+      // isNomineeTrue
+      //     ? Get.toNamed(AppRoutes.addNomineeScreen, preventDuplicates: false)
+      //     : Get.toNamed(AppRoutes.addWitnessesScreen,
+      //         preventDuplicates: false);
+    } else {
+      ToastMessageHelper.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.add_failed_try_again);
+    }
+  }
+
+  ///==================Show Add Witness Bottom Sheet===========================
+  void showAddWitnessBottomSheet() {
+    searchWitnessController.clear();
+    witnesssData.value = null;
+    searchWitnessStatus.value = RxStatus.empty();
+    Get.bottomSheet(
+      AddWitnessScreen(),
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      isScrollControlled: true,
+    );
+  }
+
+  ///==================Show Add Outside Witness Bottom Sheet===========================
+  void showAddOutsideWitnessBottomSheet() {
+    Get.bottomSheet(
+      AddOutsideWitness(),
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      isScrollControlled: true,
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* 
+
   Future<void> fetchContextsData(String requestKey) async {
     try {
       isZakatPropertyWasiyyah.value = true;
@@ -215,7 +257,6 @@ class WitnessController extends GetxController
       var response = await ApiClient.getData(
         "${ApiConstants.baseUrl}/getContextsData?requestKey=$requestKey",
       );
-      print("deleteData data ------------${response.body}");
 
       if (response.statusCode != 200 || response.statusCode == 201) {
         final data = jsonDecode(response.body);
@@ -292,36 +333,4 @@ class WitnessController extends GetxController
       isLoadings.value = false;
     }
   }
-
-  ///==================Show Add Witness Bottom Sheet===========================
-  void showAddWitnessBottomSheet() {
-    searchController.clear();
-    witnesssData.value = null;
-    Get.bottomSheet(
-      AddWitnessScreen(),
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-      ),
-      isScrollControlled: true,
-    );
-  }
-
-  ///==================Show Add Outside Witness Bottom Sheet===========================
-  void showAddOutsideWitnessBottomSheet() {
-    Get.bottomSheet(
-      AddOutsideWitness(),
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-      ),
-      isScrollControlled: true,
-    );
-  }
-}
+*/
