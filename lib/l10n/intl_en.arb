@@ -449,5 +449,6 @@
   "upcoming_prayer": "Upcoming Prayer",
   "remaining_time":"Remaining Time",
   "sunrise_time":"Sunrise Time",
-  "sunset_time":"Sunset Time"
+  "sunset_time":"Sunset Time",
+  "please_fill_all_the_fields":"Please fill all the fileds"
 }

@@ -1,6 +1,9 @@
 import 'package:al_wasyeah/controllers/witness_controller/witness_controller.dart';
+import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:al_wasyeah/utils/app_image.dart';
+import 'package:al_wasyeah/view/widgets/app_error_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_button.dart';
 import 'package:al_wasyeah/view/widgets/custom_loader.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -8,24 +11,10 @@ import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../helpers/helpers.dart';
-
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-class AddWitnessScreen extends StatefulWidget {
+class AddWitnessScreen extends StatelessWidget {
   AddWitnessScreen({super.key});
-
-  @override
-  State<AddWitnessScreen> createState() => _AddWitnessScreenState();
-}
-
-class _AddWitnessScreenState extends State<AddWitnessScreen> {
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,114 +28,131 @@ class _AddWitnessScreenState extends State<AddWitnessScreen> {
           topRight: Radius.circular(20.r),
         ),
       ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Center handle for bottom sheet
-            Container(
-              width: 40.w,
-              height: 4.h,
-              margin: EdgeInsets.only(bottom: 20.h),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(10.r),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Center handle for bottom sheet
+          Container(
+            width: 40.w,
+            height: 4.h,
+            margin: EdgeInsets.only(bottom: 20.h),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CustomText(
+                text: AppLocalizations.of(context)!.add_witness,
+                fontsize: 18.sp,
+                fontWeight: FontWeight.bold,
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomText(
-                  text: AppLocalizations.of(context)!.add_witness,
-                  fontsize: 18.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-                IconButton(
-                  onPressed: () => Get.back(),
-                  icon: const Icon(Icons.close),
-                ),
-              ],
-            ),
-            SizedBox(height: 10.h),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ///=============Search Field====================
-                Padding(
-                  padding: EdgeInsets.only(bottom: 16.h),
-                  child: CustomTextField(
-                    controller: controller.searchController,
-                    hintText: AppLocalizations.of(context)!.search,
-                    borderColor: AppColors.secondaryPrimaryColor,
-                    suffixIcon: IconButton(
-                        onPressed: controller.searchWitness,
-                        icon: Icon(
-                          Icons.search_rounded,
-                          color: AppColors.primaryColor,
-                        )),
-                  ),
-                ),
-
-                Obx(() {
-                  if (controller.isLoading.value) {
-                    return CustomLoader();
-                  } else if (controller.witnesssData.value == null) {
-                    return Center(
-                        child: Text(
-                            AppLocalizations.of(context)!.no_witness_added));
-                  } else {
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      elevation: 3.0,
-                      margin: EdgeInsets.symmetric(vertical: 8.0),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: AssetImage(AppImages.profileIcon),
-                          radius: 30,
-                        ),
-                        title: Text(
-                          controller.witnesssData.value?.name ??
-                              AppLocalizations.of(context)!.n_a,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Row(
-                          children: [
-                            Icon(Icons.visibility,
-                                size: 16.0, color: Colors.grey),
-                            SizedBox(width: 4.0),
-                            Text(
-                              AppLocalizations.of(context)!.view_details,
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                        onTap: () {
-                          Get.toNamed(AppRoutes.asignNomineeDetails,
-                              parameters: {
-                                "type": "WITNESS",
-                              },
-                              arguments: controller.witnesssData.value,
-                              preventDuplicates: false);
-                        },
-                      ),
-                    );
-                  }
-                }),
-                SizedBox(height: 20.h),
-                CustomButton(
-                  title: AppLocalizations.of(context)!.add_outside_witness,
-                  titlecolor: AppColors.primaryColor,
-                  onpress: () {
-                    controller.showAddOutsideWitnessBottomSheet();
+              IconButton(
+                onPressed: () => Get.back(),
+                icon: const Icon(Icons.close),
+              ),
+            ],
+          ),
+          SizedBox(height: 10.h),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ///=============Search Field====================
+              Padding(
+                padding: EdgeInsets.only(bottom: 16.h),
+                child: CustomTextField(
+                  controller: controller.searchWitnessController,
+                  hintText: AppLocalizations.of(context)!.search,
+                  borderColor: AppColors.secondaryPrimaryColor,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppLocalizations.of(context)!
+                          .please_enter_your_email;
+                    }
+                    if (!!AppConstants.emailValidate.hasMatch(value)) {
+                      return AppLocalizations.of(context)!.invalid_email;
+                    }
+                    return null;
                   },
+                  suffixIcon: IconButton(
+                      onPressed: controller.searchWitness,
+                      icon: Icon(
+                        Icons.search_rounded,
+                        color: AppColors.primaryColor,
+                      )),
                 ),
-                SizedBox(height: 10.h),
-              ],
-            ),
-          ],
-        ),
+              ),
+
+              Obx(() {
+                if (controller.searchWitnessStatus.value.isLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (controller.searchWitnessStatus.value.isEmpty) {
+                  return Center(
+                      child: Text(AppLocalizations.of(context)!.no_data));
+                } else if (controller.searchWitnessStatus.value.isSuccess) {
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    elevation: 3.0,
+                    margin: EdgeInsets.symmetric(vertical: 8.0),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                          radius: 30,
+                          child: controller.witnesssData.value != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(35.r),
+                                  child: Image.network(
+                                    ApiConstants.imageUrl +
+                                        controller.witnesssData.value!.imageUrl,
+                                    fit: BoxFit.fill,
+                                    width: 70.w,
+                                    height: 70.h,
+                                  ),
+                                )
+                              : Icon(Icons.person,
+                                  color: Colors.white, size: 40.sp)),
+                      title: Text(
+                        controller.witnesssData.value?.name ??
+                            AppLocalizations.of(context)!.n_a,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Row(
+                        children: [
+                          Icon(Icons.visibility,
+                              size: 16.0, color: Colors.grey),
+                          SizedBox(width: 4.0),
+                          Text(
+                            AppLocalizations.of(context)!.view_details,
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        controller.showAddOutsideWitnessBottomSheet();
+                      },
+                    ),
+                  );
+                } else {
+                  return AppErrorWidget(
+                      message: controller.searchWitnessStatus.value.errorMessage
+                          .toString());
+                }
+              }),
+              SizedBox(height: 20.h),
+              CustomButton(
+                title: AppLocalizations.of(context)!.add_outside_witness,
+                titlecolor: AppColors.primaryColor,
+                onpress: () {
+                  controller.showAddOutsideWitnessBottomSheet();
+                },
+              ),
+              SizedBox(height: 10.h),
+            ],
+          ),
+        ],
       ),
     );
   }
