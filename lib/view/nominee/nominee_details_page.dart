@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/controllers/witness_controller/witness_controller.dart';
+import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
 import 'package:al_wasyeah/models/witness/get_witness_response_model.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
@@ -7,30 +7,29 @@ import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-class WitnessDetailsPage extends StatefulWidget {
-  const WitnessDetailsPage({super.key});
+class NomineeDetailsPage extends StatefulWidget {
+  const NomineeDetailsPage({super.key});
 
   @override
-  State<WitnessDetailsPage> createState() => _WitnessDetailsPageState();
+  State<NomineeDetailsPage> createState() => _NomineeDetailsPageState();
 }
 
-class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
+class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
   final data = Get.arguments;
-  final GetWitnessNomineeResponseModel witness = Get.arguments['witness'];
+  final GetWitnessNomineeResponseModel nominee = Get.arguments['nominee'];
   final canRemove = Get.arguments['canRemove'] ?? false;
-  final WitnessController controller = Get.find<WitnessController>();
+  final NomineeController controller = Get.find<NomineeController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: AppLocalizations.of(context)!.witness_profile_details,
+          text: AppLocalizations.of(context)!.nominee_profile_details,
           fontsize: 18.sp,
         ),
       ),
@@ -77,11 +76,11 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                           child: CircleAvatar(
                             backgroundColor: Colors.white.withOpacity(0.2),
                             radius: 35.r,
-                            child: witness.imageUrl != null
+                            child: nominee.imageUrl != null
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(35.r),
                                     child: Image.network(
-                                      ApiConstants.imageUrl + witness.imageUrl!,
+                                      ApiConstants.imageUrl + nominee.imageUrl!,
                                       fit: BoxFit.fill,
                                       width: 70.w,
                                       height: 70.h,
@@ -97,7 +96,7 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                witness.name ?? "",
+                                nominee.name ?? "",
                                 style: TextStyle(
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.bold,
@@ -113,7 +112,7 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                                   borderRadius: BorderRadius.circular(20.r),
                                 ),
                                 child: Text(
-                                  witness.relation ??
+                                  nominee.relation ??
                                       AppLocalizations.of(context)!.n_a,
                                   style: TextStyle(
                                     fontSize: 12.sp,
@@ -178,29 +177,29 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                             context,
                             Icons.phone_android,
                             AppLocalizations.of(context)!.mobile,
-                            witness.mobile),
+                            nominee.mobile),
                         _buildDetailRow(
                             context,
                             Icons.work_outline,
                             AppLocalizations.of(context)!.profession,
-                            witness.profession),
+                            nominee.profession),
                         _buildDetailRow(context, Icons.email_outlined,
-                            AppLocalizations.of(context)!.email, witness.email),
+                            AppLocalizations.of(context)!.email, nominee.email),
                         _buildDetailRow(
                             context,
                             Icons.favorite_border,
                             AppLocalizations.of(context)!.marital_status,
-                            witness.maritalStatus),
+                            nominee.maritalStatus),
                         _buildDetailRow(
                             context,
                             Icons.person_add_disabled_outlined,
                             AppLocalizations.of(context)!.mother_s_name_1,
-                            witness.motherName),
+                            nominee.motherName),
                         _buildDetailRow(
                             context,
                             Icons.person_add_alt_1_outlined,
                             AppLocalizations.of(context)!.father_s_name_1,
-                            witness.fatherName),
+                            nominee.fatherName),
                         SizedBox(height: 32.h),
                         // if (!canRemove)
                         //   Container(
@@ -219,8 +218,8 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                         //     child: CustomButtonCommon(
                         //       title: AppLocalizations.of(context)!.access_panel,
                         //       onpress: () {
-                        //         // Get.toNamed(AppRoutes.witnessPhanelData,
-                        //         //     arguments: witness.requestKey);
+                        //         // Get.toNamed(AppRoutes.nomineePhanelData,
+                        //         //     arguments: nominee.requestKey);
                         //       },
                         //     ),
                         //   )
@@ -230,12 +229,12 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                                 title: AppLocalizations.of(context)!.remove,
                                 color: AppColors.redColor,
                                 loading: controller
-                                    .deleteWitnessStatus.value.isLoading,
+                                    .deleteNomineeStatus.value.isLoading,
                                 onpress: () {
-                                  witness.requestKey != null
+                                  nominee.requestKey != null
                                       ? controller
-                                          .deleteWitness(
-                                              requestKey: witness.requestKey!)
+                                          .deleteNominee(
+                                              requestKey: nominee.requestKey!)
                                           .then((value) {
                                           if (value) {
                                             Get.back();
@@ -255,11 +254,11 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                           ),
                           child: CustomButtonCommon(
                             title:
-                                AppLocalizations.of(context)!.add_more_witness,
+                                AppLocalizations.of(context)!.add_more_nominees,
                             color: Colors.white,
                             titlecolor: AppColors.primaryColor,
                             onpress: () {
-                              controller.showAddWitnessBottomSheet();
+                              controller.showAddNomineeBottomSheet();
                             },
                           ),
                         ),

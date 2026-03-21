@@ -286,7 +286,7 @@ class WasyyahController extends GetxController {
       // 3️⃣ API কল করুন
       final response = await http.get(
         Uri.parse(
-            "${ApiConstants.baseUrl}${ApiConstants.wasyyahYouDataYouEndPoint}"),
+            "${ApiConstants.baseUrl}${ApiConstants.witnessedByAnotherUser}"),
         headers: headers,
       );
 

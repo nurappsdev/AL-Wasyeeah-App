@@ -450,5 +450,15 @@
   "remaining_time":"Remaining Time",
   "sunrise_time":"Sunrise Time",
   "sunset_time":"Sunset Time",
-  "please_fill_all_the_fields":"Please fill all the fileds"
+  "please_fill_all_the_fields":"Please fill all the fileds",
+  "failed_to_delete_witness":"Failded to delete witness",
+  "witness_saved_successfully":"Witness Saved Successfully",
+  "save_failed_try_again":"Save Failed. Please try again.",
+  "add_failed_try_again":"Add Failed. Please try again.",
+  "nominee_remove_successfully":"Nominee Remove Successfully",
+  "failed_to_delete_nominee":"Failded to delete nominee",
+  "nominee_saved_successfully":"Nominee Saved Successfully",
+  "save_failed_try_again":"Save Failed. Please try again.",
+  "add_failed_try_again":"Add Failed. Please try again."
+
 }

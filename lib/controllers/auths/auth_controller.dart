@@ -23,8 +23,7 @@ class AuthController extends GetxController {
 
   getSecurityQuestion() async {
     isQuestion(true);
-    var response =
-        await ApiClient.getData(ApiConstants.securityQuestionEndPoint);
+    var response = await ApiClient.getData(ApiConstants.securityQuestion);
     print("getSecurityQuestion data ------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       securityQuestionResponseModel.value =

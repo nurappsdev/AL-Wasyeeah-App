@@ -1,289 +1,153 @@
 import 'dart:convert';
-
+import 'package:al_wasyeah/view/nominee/add_nominee_widget.dart';
+import 'package:al_wasyeah/view/nominee/add_outside_nominee_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../helpers/helpers.dart';
-import '../../helpers/prefs_helper.dart';
+import '../../helpers/toast_message_helper.dart';
 import '../../models/models.dart';
-import '../../models/nominee/search_asign_nominee_model.dart';
 import '../../services/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-import '../../utils/app_constant.dart';
+class NomineeController extends GetxController
+    with GetSingleTickerProviderStateMixin {
+  late TabController tabController;
 
-class NomineeController extends GetxController {
-  ///==================get nominee===========================
-  RxBool isNominee = false.obs;
-  RxList<NomineetedResponseModel> nomineeData = <NomineetedResponseModel>[].obs;
-  getNomineeData() async {
-    isNominee(true);
-    var response = await ApiClient.getData(ApiConstants.nomineeEndPoint);
-    print("nomineeData data ------------${response.body}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      nomineeData.value = List<NomineetedResponseModel>.from(
-          response.body.map((x) => NomineetedResponseModel.fromJson(x)));
-      isNominee(false);
-    } else {
-      isNominee(false);
-    }
+  /// For "Your Witness"
+  final Rx<RxStatus> nomineeStatus = Rx<RxStatus>(RxStatus.loading());
+
+  /// For "I'm Witness"
+  final Rx<RxStatus> nomineesYouStatus = Rx<RxStatus>(RxStatus.loading());
+
+  final Rx<RxStatus> searchNomineeStatus = Rx<RxStatus>(RxStatus.empty());
+
+  final Rx<RxStatus> addNomineeStatus = Rx<RxStatus>(RxStatus.empty());
+  final Rx<RxStatus> deleteNomineeStatus = Rx<RxStatus>(RxStatus.empty());
+
+  Rx<GetWitnessNomineeResponseModel?> searchedNominee =
+      Rx<GetWitnessNomineeResponseModel?>(null);
+
+  RxList<GetWitnessNomineeResponseModel> nomineeData =
+      <GetWitnessNomineeResponseModel>[].obs;
+  RxList<GetWitnessNomineeResponseModel> nomineesYouData =
+      <GetWitnessNomineeResponseModel>[].obs;
+  final TextEditingController searchNomineeController = TextEditingController();
+
+  final TextEditingController relNameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController dateOfBirthController = TextEditingController();
+
+  final TextEditingController presentAddressController =
+      TextEditingController();
+
+  final TextEditingController permanentAddressController =
+      TextEditingController();
+
+  DateTime? birthDate;
+
+  final GlobalKey<FormState> nomineeFormKey = GlobalKey<FormState>();
+  @override
+  void onInit() async {
+    super.onInit();
+    tabController = TabController(length: 2, vsync: this);
+    getNomineeData();
+    getNomineesYouData();
   }
 
-  ///==================get nominee access control===========================
-  RxBool isNomineeAccess = false.obs;
-  RxList<AccessControllResponseModel> accessControllResponseModel =
-      <AccessControllResponseModel>[].obs;
-  getNomineeAccessData({String? nominee1Witness2}) async {
-    isNominee(true);
-    var response = await ApiClient.getData(
-        "${ApiConstants.accessControlEndPoint}${nominee1Witness2}");
-    print("nomineeData data ------------${response.body}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      accessControllResponseModel.value =
-          List<AccessControllResponseModel>.from(response.body
-              .map((x) => AccessControllResponseModel.fromJson(x)));
-      isNomineeAccess(false);
-    } else {
-      isNomineeAccess(false);
-    }
+  @override
+  void dispose() {
+    searchNomineeController.clear();
+    tabController.dispose();
+    super.dispose();
   }
 
-  ///==================get access Feature List ===========================
-  RxBool isAccessFeature = false.obs;
-  RxList<GetAccessFeatureModel> getAccessFeatureModel =
-      <GetAccessFeatureModel>[].obs;
-  getAccessFeatureData() async {
-    isAccessFeature(true);
-    var response =
-        await ApiClient.getData("${ApiConstants.accessFeatureEndPoint}");
-    print("feature list data  ------------${response.body}");
+  ///==================get Witness===========================
+
+  Future<void> getNomineeData() async {
+    nomineeStatus.value = RxStatus.loading();
+    var response = await ApiClient.getData(ApiConstants.yourNominee);
+
     if (response.statusCode == 200 || response.statusCode == 201) {
-      getAccessFeatureModel.value = List<GetAccessFeatureModel>.from(
-          response.body.map((x) => GetAccessFeatureModel.fromJson(x)));
-      isAccessFeature(false);
-    } else {
-      isAccessFeature(false);
-    }
-  }
+      nomineeData(
+          getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
-  ///==================get select Feature List ===========================
-  RxBool isSelectFeature = false.obs;
-  RxList<SelectFeatureModel> selectFeatureModel = <SelectFeatureModel>[].obs;
-  getSelectFeatureData({String? requestKey}) async {
-    isAccessFeature(true);
-    var response = await ApiClient.getData(
-        "${ApiConstants.accessSelectEndPoint}?requestKey=${requestKey}&trace=false");
-    print("select list data  ------------${response.body}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      selectFeatureModel.value = List<SelectFeatureModel>.from(
-          response.body.map((x) => SelectFeatureModel.fromJson(x)));
-      isAccessFeature(false);
-    } else {
-      isAccessFeature(false);
-    }
-  }
-
-  ///----------save Access Feature------------------------
-  RxBool addFeatureLoading = false.obs;
-
-  Future<void> addFeatureNomineeAndWitness({
-    required String? requestKey,
-    required List contextIds,
-    required String? isWitness,
-  }) async {
-    addFeatureLoading(true);
-    try {
-      final token = await PrefsHelper.getString(AppConstants.bearerToken);
-      final headers = {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      };
-
-      final Map<String, dynamic> body = {
-        "requestKey": requestKey ?? '',
-        "contextIds": contextIds.toList(),
-      };
-
-      final endpoint =
-          "${ApiConstants.addFeatureNomineeWitnessPoint}${isWitness}";
-
-      final response =
-          await ApiClient.postData(endpoint, body, headers: headers);
-
-      print("Response: ${response.body}");
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        ToastMessageHelper.successMessageShowToster(
-            AppLocalizations.of(Get.context!)!.record_updated_successfully);
-        // getNomineeAccessData();
-        update();
-        Get.back();
+      /// ✅ handle empty vs success
+      if (nomineeData.isEmpty) {
+        nomineeStatus.value = RxStatus.empty();
       } else {
-        ToastMessageHelper.errorMessageShowToster(
-            AppLocalizations.of(Get.context!)!
-                .mandatory_fields_cannot_be_null_or_empty);
+        nomineeStatus.value = RxStatus.success();
       }
-    } catch (e) {
-      ToastMessageHelper.errorMessageShowToster(
-          "${AppLocalizations.of(Get.context!)!.an_error_occurred}: $e");
-    } finally {
-      addFeatureLoading(false);
-    }
-  }
-
-  ///==================get Question===========================
-  RxBool isNomineeYou = false.obs;
-  RxList<NomineetedResponseModel> nomineetedYouData =
-      <NomineetedResponseModel>[].obs;
-  getNomineetedData() async {
-    isNomineeYou(true);
-    var response = await ApiClient.getData(ApiConstants.nomineetedYouPoint);
-    print("nomineetedYouData data ------------${response.body}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      nomineetedYouData.value = List<NomineetedResponseModel>.from(
-          response.body.map((x) => NomineetedResponseModel.fromJson(x)));
-      isNomineeYou(false);
     } else {
-      isNomineeYou(false);
+      nomineeStatus(RxStatus.error(response.body));
     }
   }
 
-  final TextEditingController searchController = TextEditingController();
+  ///==================get witness you===========================
 
-  var isLoading = false.obs;
+  Future<void> getNomineesYouData() async {
+    nomineesYouStatus(RxStatus.loading());
 
-  Rx<SearchAsignResponseModel?> nominessData =
-      Rx<SearchAsignResponseModel?>(null);
+    var response = await ApiClient.getData(ApiConstants.nomineedByAnotherUser);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      nomineesYouData(
+          getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
+
+      if (nomineesYouData.isEmpty) {
+        nomineesYouStatus(RxStatus.empty());
+      } else {
+        nomineesYouStatus(RxStatus.success());
+      }
+    } else {
+      nomineesYouStatus(RxStatus.error(response.body));
+    }
+  }
 
   Future<void> searchNominee() async {
-    final email = searchController.text.trim();
+    final email = searchNomineeController.text.trim();
     if (email.isEmpty) return;
 
-    isLoading.value = true;
+    searchNomineeStatus(RxStatus.loading());
 
-    final url = Uri.parse(
-      '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=false',
-    );
+    var response = await ApiClient.getData(ApiConstants.searchNominee(email));
 
-    String token = await PrefsHelper.getString(AppConstants.bearerToken);
-
-    try {
-      final response = await http.get(
-        url,
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-      );
-
-      print("response.body---------------${response.body}");
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-
-        nominessData.value = SearchAsignResponseModel.fromJson(data);
+    if (response.statusCode == 200) {
+      final data = response.body;
+      searchedNominee.value = GetWitnessNomineeResponseModel.fromJson(data);
+      if (data.isEmpty) {
+        searchNomineeStatus(RxStatus.empty());
       } else {
-        Get.snackbar(AppLocalizations.of(Get.context!)!.error,
-            AppLocalizations.of(Get.context!)!.invalid_email_message);
-        nominessData.value = null;
+        searchNomineeStatus(RxStatus.success());
       }
-    } catch (e) {
-      Get.snackbar(AppLocalizations.of(Get.context!)!.error,
-          AppLocalizations.of(Get.context!)!.something_went_wrong);
-      nominessData.value = null;
-    } finally {
-      isLoading.value = false;
+    } else {
+      searchNomineeStatus(RxStatus.error(response.body));
+      ToastMessageHelper.errorMessageShowToster(response.body);
     }
   }
 
-  // var isLoading = false.obs;
-  // var nominessData = {}.obs;
-  //
-  // Future<void> searchNominee() async {
-  //   final email = searchController.text.trim();
-  //   if (email.isEmpty) return;
-  //
-  //   isLoading.value = true;
-  //
-  //   final url = Uri.parse(
-  //     '${ApiConstants.baseUrl}/user/search-witness-nominee?email=$email&isWitness=false',
-  //   );
-  //   String token = await PrefsHelper.getString(AppConstants.bearerToken);
-  //   try {
-  //     final response = await http.get(
-  //       url,
-  //       headers: {
-  //         'Authorization': 'Bearer $token',
-  //         'Content-Type': 'application/json',
-  //       },
-  //     );
-  //     print("response.body---------------${response.body}");
-  //     if (response.statusCode == 200) {
-  //       final data = json.decode(response.body);
-  //       nominessData.value = data;
-  //     } else {
-  //       Get.snackbar("Error", "This is not right email");
-  //       nominessData.value = {};
-  //     }
-  //   } catch (e) {
-  //     Get.snackbar("Error", "Something went wrong");
-  //     nominessData.value = {};
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
+  ///==================delete witness===========================
 
-  ///==================Save nominee Up===========================
-  // bool isNomineeTrue = true;
-  // RxBool addNomineeLoading = false.obs;
-  // Future<void> addNominee({
-  //   required String userName,
-  //   required String mobileNo,
-  //   required String email,
-  //   required String relationWithUser,
-  //   required String dob,
-  //   required String presentAddress,
-  //   required String permanentAddress,
-  //
-  // }) async {
-  //   addNomineeLoading(true);
-  //   String token = await PrefsHelper.getString(AppConstants.bearerToken);
-  //   var headers = {
-  //     'Authorization': 'Bearer $token',
-  //     'Content-Type': 'application/json',};
-  //   var body = {
-  //     "name": userName,
-  //     "mobile": mobileNo,
-  //     "email": email,
-  //     "relationWithUser": relationWithUser,
-  //     "dob": dob,
-  //     "presentAddress": presentAddress,
-  //     "permanentAddress": permanentAddress
-  //   };
-  //   var response = await ApiClient.postData(
-  //  isNomineeTrue ? ApiConstants.addNomineePoint: ApiConstants.addWitnessEndPoint,
-  //     jsonEncode(body),
-  //     headers: headers,
-  //   );
-  //   print("log in-----------------${response.body}");
-  //   if (response.statusCode == 200 || response.statusCode == 201) {
-  //     ToastMessageHelper.successMessageShowToster("Nominee Add Successfully");
-  //     Get.toNamed(AppRoutes.addNomineeScreen,preventDuplicates: false);
-  //     // Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
-  //     //Get.off(() => HomeScreen(), preventDuplicates: false);
-  //     addNomineeLoading(false);
-  //
-  //   } else {
-  //     addNomineeLoading(false);
-  //    ToastMessageHelper.errorMessageShowToster('Added failed. Please try again.');
-  //
-  //   }
-  // }
+  deleteNominee({required String requestKey}) async {
+    deleteNomineeStatus(RxStatus.loading());
+    var response =
+        await ApiClient.getData("${ApiConstants.deleteNominee(requestKey)}");
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      ToastMessageHelper.successMessageShowToster(
+        AppLocalizations.of(Get.context!)!.nominee_remove_successfully,
+      );
+      getNomineeData();
+      deleteNomineeStatus(RxStatus.success());
+    } else {
+      deleteNomineeStatus(RxStatus.error(response.body));
+      ToastMessageHelper.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.failed_to_delete_nominee);
+    }
+    try {} catch (e) {}
+  }
 
-  RxBool addNomineeLoading = false.obs;
-
-  Future<void> addNomineeAndWitness({
+  ///================== Save nominee ===========================
+  Future<void> saveNominee({
     required String userName,
     required String mobileNo,
     required String email,
@@ -291,159 +155,84 @@ class NomineeController extends GetxController {
     required String dob,
     required String presentAddress,
     required String permanentAddress,
-    bool isNomineeTrue = true,
   }) async {
-    addNomineeLoading(true);
-    try {
-      final token = await PrefsHelper.getString(AppConstants.bearerToken);
-      final headers = {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      };
+    addNomineeStatus(RxStatus.loading());
 
-      final body = {
-        "name": userName,
-        "mobile": mobileNo,
-        "email": email,
-        "relationWithUser": relationWithUser,
-        "dob": dob,
-        "presentAddress": presentAddress,
-        "permanentAddress": permanentAddress,
-      };
+    final body = {
+      "name": userName.trim(),
+      "mobile": mobileNo.trim(),
+      "email": email.trim(),
+      "relationWithUser": relationWithUser.trim(),
+      "dob": dob.trim(),
+      "presentAddress": presentAddress.trim(),
+      "permanentAddress": permanentAddress.trim(),
+    };
 
-      final endpoint = isNomineeTrue
-          ? ApiConstants.addNomineePoint
-          : ApiConstants.addWitnessEndPoint;
-
-      final response =
-          await ApiClient.postData(endpoint, body, headers: headers);
-
-      print("Response: ${response.body}");
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        ToastMessageHelper.successMessageShowToster(
-          isNomineeTrue
-              ? AppLocalizations.of(Get.context!)!.nominee_added_successfully
-              : AppLocalizations.of(Get.context!)!.witness_added_successfully,
-        );
-        // isNomineeTrue
-        //     ? Get.toNamed(AppRoutes.addNomineeScreen, preventDuplicates: false)
-        //     : Get.toNamed(AppRoutes.addWitnessesScreen,
-        //         preventDuplicates: false);
-      } else {
-        ToastMessageHelper.errorMessageShowToster(
-            AppLocalizations.of(Get.context!)!.add_failed_try_again);
-      }
-    } catch (e) {
-      ToastMessageHelper.errorMessageShowToster(
-          "${AppLocalizations.of(Get.context!)!.an_error_occurred}: $e");
-    } finally {
-      addNomineeLoading(false);
-    }
-  }
-
-  ///==================get Question===========================
-  RxBool isDelNomineeYou = false.obs;
-  getNomineeDeleteData({String? requestKey}) async {
-    isDelNomineeYou(true);
-    var response = await ApiClient.getData(
-        "${ApiConstants.nomineeDeletePoint}?requestKey=${requestKey}");
-    print("deleteData data ------------${response.body}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      ToastMessageHelper.successMessageShowToster(
-        AppLocalizations.of(Get.context!)!.nominee_delete_successfully,
-      );
-      getNomineeData();
-      isDelNomineeYou(false);
-    } else {
-      isDelNomineeYou(false);
-      ToastMessageHelper.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)!.try_again);
-    }
-  }
-
-  ///=================Assign ==========================
-  RxBool isAssignYou = false.obs;
-
-  Future<void> assignNomineeWitnessData({
-    String? email,
-    required String type,
-  }) async {
-    isAssignYou(true);
-
-    final response = await ApiClient.getData(
-      type == "WITNESS"
-          ? "${ApiConstants.witnessAssignPoint}?email=$email"
-          : "${ApiConstants.nomineeAssignPoint}?email=$email",
+    final response = await ApiClient.postData(
+      ApiConstants.saveNominee,
+      body,
     );
 
-    print("Assign data ------------${response.body}");
-
-    isAssignYou(false);
-
     if (response.statusCode == 200 || response.statusCode == 201) {
-      final message = response.body is Map
-          ? response.body["message"]
-          : response.body.toString();
-
-      ToastMessageHelper.successMessageShowToster(message);
-      getNomineeData();
+      ToastMessageHelper.successMessageShowToster(
+        AppLocalizations.of(Get.context!)!.nominee_saved_successfully,
+      );
     } else {
-      final message = response.body is Map
-          ? response.body["message"]
-          : response.body.toString();
-
-      ToastMessageHelper.errorMessageShowToster(message);
+      ToastMessageHelper.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.save_failed_try_again);
     }
   }
 
-  /// -------POST Assign
-  // RxBool isAssignYou = false.obs;
-  //
-  // Future<void> assignNomineeWitnessData({
-  //   required String? email,
-  //   required String? type, // "WITNESS" or "NOMINEE"
-  // }) async {
-  //   isAssignYou(true);
-  //
-  //   try {
-  //     final token = await PrefsHelper.getString(AppConstants.bearerToken);
-  //
-  //     final headers = {
-  //       'Authorization': 'Bearer $token',
-  //       'Content-Type': 'application/json',
-  //     };
-  //
-  //     /// ✅ Payload / Body
-  //     final body = {
-  //       "email": email,
-  //     };
-  //
-  //     /// ✅ Endpoint select
-  //     final endpoint = type == "WITNESS"
-  //         ? ApiConstants.witnessAssignPoint
-  //         : ApiConstants.nomineeAssignPoint;
-  //
-  //     final response =
-  //     await ApiClient.postData(endpoint, body, headers: headers);
-  //
-  //     print("Assign data ------------ ${response.body}");
-  //
-  //     final message = response.body is Map
-  //         ? response.body["message"]
-  //         : response.body.toString();
-  //
-  //     if (response.statusCode == 200 || response.statusCode == 201) {
-  //       ToastMessageHelper.successMessageShowToster(message);
-  //       getNomineeData();
-  //     } else {
-  //       ToastMessageHelper.errorMessageShowToster(message);
-  //     }
-  //   } catch (e) {
-  //     ToastMessageHelper.errorMessageShowToster("Something went wrong");
-  //     print("Assign error: $e");
-  //   } finally {
-  //     isAssignYou(false);
-  //   }
-  // }
+  ///================== Add  witness ===========================
+  Future<void> addNominee({
+    required String email,
+  }) async {
+    addNomineeStatus(RxStatus.loading());
+
+    final response = await ApiClient.getData(
+      ApiConstants.addYourNominee(email),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      ToastMessageHelper.successMessageShowToster(
+        AppLocalizations.of(Get.context!)!.nominee_added_successfully,
+      );
+    } else {
+      ToastMessageHelper.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.add_failed_try_again);
+    }
+  }
+
+  ///==================Show Add Witness Bottom Sheet===========================
+  void showAddNomineeBottomSheet() {
+    searchNomineeController.clear();
+    searchedNominee.value = null;
+    searchNomineeStatus.value = RxStatus.empty();
+    Get.bottomSheet(
+      AddNomineeWidget(),
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      isScrollControlled: true,
+    );
+  }
+
+  ///==================Show Add Outside Witness Bottom Sheet===========================
+  void showAddOutsideWitnessBottomSheet() {
+    Get.bottomSheet(
+      AddOutsideNomineeWidget(),
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      isScrollControlled: true,
+    );
+  }
 }

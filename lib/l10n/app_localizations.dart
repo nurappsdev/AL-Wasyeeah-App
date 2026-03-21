@@ -2316,7 +2316,7 @@ abstract class AppLocalizations {
   /// No description provided for @add_failed_try_again.
   ///
   /// In en, this message translates to:
-  /// **'Add failed. Please try again.'**
+  /// **'Add Failed. Please try again.'**
   String get add_failed_try_again;
 
   /// No description provided for @nominee_delete_successfully.
@@ -2774,6 +2774,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please fill all the fileds'**
   String get please_fill_all_the_fields;
+
+  /// No description provided for @failed_to_delete_witness.
+  ///
+  /// In en, this message translates to:
+  /// **'Failded to delete witness'**
+  String get failed_to_delete_witness;
+
+  /// No description provided for @witness_saved_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Witness Saved Successfully'**
+  String get witness_saved_successfully;
+
+  /// No description provided for @save_failed_try_again.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Failed. Please try again.'**
+  String get save_failed_try_again;
+
+  /// No description provided for @nominee_remove_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Nominee Remove Successfully'**
+  String get nominee_remove_successfully;
+
+  /// No description provided for @failed_to_delete_nominee.
+  ///
+  /// In en, this message translates to:
+  /// **'Failded to delete nominee'**
+  String get failed_to_delete_nominee;
+
+  /// No description provided for @nominee_saved_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Nominee Saved Successfully'**
+  String get nominee_saved_successfully;
 }
 
 class _AppLocalizationsDelegate

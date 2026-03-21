@@ -11,8 +11,8 @@ import 'package:get/get.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class WitnessesPage extends GetView<WitnessController> {
-  const WitnessesPage({super.key});
+class NomineesPage extends GetView<WitnessController> {
+  const NomineesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -146,8 +146,8 @@ class WitnessesPage extends GetView<WitnessController> {
       child: InkWell(
         borderRadius: BorderRadius.circular(16.r),
         onTap: () {
-          Get.toNamed(AppRoutes.witnessDetailsPage,
-              arguments: {"witness": witness, "canRemove": canEdit});
+          Get.toNamed(AppRoutes.nomineeDetailsPage,
+              arguments: {"nominee": witness, "canRemove": canEdit});
         },
         child: Padding(
           padding: EdgeInsets.all(16.w),

@@ -33,7 +33,7 @@ class WasyyahScreen extends StatelessWidget {
               title: AppLocalizations.of(context)!.preview,
               onpress: () {
                 Get.toNamed(
-                  AppRoutes.wasyyahPriviewScreen,
+                  AppRoutes.wasyyahPriviewPage,
                   preventDuplicates: false,
                   arguments: wasyyahController.wasyyahYouData,
                 );

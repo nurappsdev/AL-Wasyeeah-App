@@ -1136,7 +1136,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get witness_added_successfully => 'Witness Added Successfully';
 
   @override
-  String get add_failed_try_again => 'Add failed. Please try again.';
+  String get add_failed_try_again => 'Add Failed. Please try again.';
 
   @override
   String get nominee_delete_successfully => 'Nominee Delete Successfully';
@@ -1378,4 +1378,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get please_fill_all_the_fields => 'Please fill all the fileds';
+
+  @override
+  String get failed_to_delete_witness => 'Failded to delete witness';
+
+  @override
+  String get witness_saved_successfully => 'Witness Saved Successfully';
+
+  @override
+  String get save_failed_try_again => 'Save Failed. Please try again.';
+
+  @override
+  String get nominee_remove_successfully => 'Nominee Remove Successfully';
+
+  @override
+  String get failed_to_delete_nominee => 'Failded to delete nominee';
+
+  @override
+  String get nominee_saved_successfully => 'Nominee Saved Successfully';
 }

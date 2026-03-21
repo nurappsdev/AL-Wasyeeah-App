@@ -12,14 +12,14 @@ import '../../models/models.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-class WasyyahPreviewScreen extends StatefulWidget {
-  const WasyyahPreviewScreen({super.key});
+class WasyyahPreviewPage extends StatefulWidget {
+  const WasyyahPreviewPage({super.key});
 
   @override
-  State<WasyyahPreviewScreen> createState() => _WasyyahPreviewScreenState();
+  State<WasyyahPreviewPage> createState() => _WasyyahPreviewPageState();
 }
 
-class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
+class _WasyyahPreviewPageState extends State<WasyyahPreviewPage> {
   late final List<GetWasyyahResponseModel> waseeyaList;
 
   @override
@@ -127,12 +127,15 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
                                 SizedBox(height: 5.h),
                                 Center(
                                   child: CustomText(
-                                    text: item.title ?? AppLocalizations.of(context)!.own_identity,
+                                    text: item.title ??
+                                        AppLocalizations.of(context)!
+                                            .own_identity,
                                     fontsize: 16.sp,
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 40),
                                   child: Divider(
                                     color: AppColors.primaryColor,
                                     endIndent: 2.2,
@@ -143,7 +146,9 @@ class _WasyyahPreviewScreenState extends State<WasyyahPreviewScreen> {
                                 CustomText(
                                   fontWeight: FontWeight.w500,
                                   maxline: 100,
-                                  text: item.content ?? AppLocalizations.of(context)!.no_content_available,
+                                  text: item.content ??
+                                      AppLocalizations.of(context)!
+                                          .no_content_available,
                                   textAlign: TextAlign.start,
                                 ),
                                 SizedBox(height: 10.h),

@@ -71,7 +71,8 @@ class ZakatCalculatorController extends GetxController
     change(null, status: RxStatus.loading());
 
     try {
-      var response = await ApiClient.getData(ApiConstants.nisabEndPoint);
+      var response =
+          await ApiClient.getData(ApiConstants.nomineedByAnotherUser);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data =

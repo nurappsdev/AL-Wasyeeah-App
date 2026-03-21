@@ -1,17 +1,13 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../helpers/prefs_helper.dart';
 import '../../helpers/toast_message_helper.dart';
 import '../../models/access_phanel/zakat_property_wasyyah_model.dart';
 import '../../models/models.dart';
-import '../../models/nominee/search_asign_nominee_model.dart';
 import '../../services/services.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/view/witnessess/add_outside_witnesses_widget.dart';
 import 'package:al_wasyeah/view/witnessess/add_witnesses_widget.dart';
-import '../../utils/app_constant.dart';
 
 class WitnessController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -31,12 +27,13 @@ class WitnessController extends GetxController
   Rx<ZakatPropertyWasiyyahModel?> contextsData =
       Rx<ZakatPropertyWasiyyahModel?>(null);
 
-  Rx<SearchAsignResponseModel?> witnesssData =
-      Rx<SearchAsignResponseModel?>(null);
+  Rx<GetWitnessNomineeResponseModel?> searchedWitnesss =
+      Rx<GetWitnessNomineeResponseModel?>(null);
 
-  RxList<GetWitnessResponseModel> witnessData = <GetWitnessResponseModel>[].obs;
-  RxList<GetWitnessResponseModel> witnessesYouData =
-      <GetWitnessResponseModel>[].obs;
+  RxList<GetWitnessNomineeResponseModel> witnessData =
+      <GetWitnessNomineeResponseModel>[].obs;
+  RxList<GetWitnessNomineeResponseModel> witnessesYouData =
+      <GetWitnessNomineeResponseModel>[].obs;
   final TextEditingController searchWitnessController = TextEditingController();
 
   final TextEditingController relNameController = TextEditingController();
@@ -50,6 +47,7 @@ class WitnessController extends GetxController
 
   final TextEditingController permanentAddressController =
       TextEditingController();
+
   DateTime? birthDate;
 
   final GlobalKey<FormState> witnessFormKey = GlobalKey<FormState>();
@@ -72,24 +70,20 @@ class WitnessController extends GetxController
 
   Future<void> getWitnessData() async {
     witnessStatus.value = RxStatus.loading();
+    var response = await ApiClient.getData(ApiConstants.yourWitness);
 
-    try {
-      var response = await ApiClient.getData(ApiConstants.witnessEndPoint);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      witnessData(
+          getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        witnessData(getWitnessResponseModelFromJson(jsonEncode(response.body)));
-
-        /// ✅ handle empty vs success
-        if (witnessData.isEmpty) {
-          witnessStatus.value = RxStatus.empty();
-        } else {
-          witnessStatus.value = RxStatus.success();
-        }
+      /// ✅ handle empty vs success
+      if (witnessData.isEmpty) {
+        witnessStatus.value = RxStatus.empty();
       } else {
-        witnessStatus.value = RxStatus.error("Failed to load data");
+        witnessStatus.value = RxStatus.success();
       }
-    } catch (e) {
-      witnessStatus.value = RxStatus.error(e.toString());
+    } else {
+      witnessStatus(RxStatus.error(response.body));
     }
   }
 
@@ -98,24 +92,19 @@ class WitnessController extends GetxController
   Future<void> getWitnessesYouData() async {
     witnessesYouStatus(RxStatus.loading());
 
-    try {
-      var response = await ApiClient.getData(ApiConstants.witnessesYouEndPoint);
+    var response = await ApiClient.getData(ApiConstants.witnessedByAnotherUser);
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        witnessesYouData(
-            getWitnessResponseModelFromJson(jsonEncode(response.body)));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      witnessesYouData(
+          getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
-        /// ✅ handle empty vs success
-        if (witnessesYouData.isEmpty) {
-          witnessesYouStatus(RxStatus.empty());
-        } else {
-          witnessesYouStatus(RxStatus.success());
-        }
+      if (witnessesYouData.isEmpty) {
+        witnessesYouStatus(RxStatus.empty());
       } else {
-        witnessesYouStatus(RxStatus.error("Failed to load data"));
+        witnessesYouStatus(RxStatus.success());
       }
-    } catch (e) {
-      witnessesYouStatus(RxStatus.error(e.toString()));
+    } else {
+      witnessesYouStatus(RxStatus.error(response.body));
     }
   }
 
@@ -128,9 +117,8 @@ class WitnessController extends GetxController
     var response = await ApiClient.getData(ApiConstants.searchWitness(email));
 
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-
-      witnesssData.value = SearchAsignResponseModel.fromJson(data);
+      final data = response.body;
+      searchedWitnesss.value = GetWitnessNomineeResponseModel.fromJson(data);
       if (data.isEmpty) {
         searchWitnessStatus(RxStatus.empty());
       } else {
@@ -146,26 +134,24 @@ class WitnessController extends GetxController
 
   deleteWitness({required String requestKey}) async {
     deleteWitnessStatus(RxStatus.loading());
-    var response = await ApiClient.getData(
-        "${ApiConstants.witnessDeletePoint(requestKey)}");
-    log("deleteData data ------------${response.body}");
-    try {
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        ToastMessageHelper.successMessageShowToster(
-          AppLocalizations.of(Get.context!)!.witness_remove_successfully,
-        );
-        getWitnessData();
-        deleteWitnessStatus(RxStatus.success());
-      }
-    } catch (e) {
-      deleteWitnessStatus(RxStatus.error(e.toString()));
+    var response =
+        await ApiClient.getData("${ApiConstants.deleteWitness(requestKey)}");
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      ToastMessageHelper.successMessageShowToster(
+        AppLocalizations.of(Get.context!)!.witness_remove_successfully,
+      );
+      getWitnessData();
+      deleteWitnessStatus(RxStatus.success());
+    } else {
+      deleteWitnessStatus(RxStatus.error(response.body));
       ToastMessageHelper.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)!.try_again);
+          AppLocalizations.of(Get.context!)!.failed_to_delete_witness);
     }
+    try {} catch (e) {}
   }
 
-  ///==================add witness===========================
-  Future<void> addWitness({
+  ///================== Save witness ===========================
+  Future<void> saveWitness({
     required String userName,
     required String mobileNo,
     required String email,
@@ -187,18 +173,34 @@ class WitnessController extends GetxController
     };
 
     final response = await ApiClient.postData(
-      ApiConstants.addWitnessEndPoint,
+      ApiConstants.saveWitness,
       body,
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      ToastMessageHelper.successMessageShowToster(
+        AppLocalizations.of(Get.context!)!.witness_saved_successfully,
+      );
+    } else {
+      ToastMessageHelper.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.save_failed_try_again);
+    }
+  }
+
+  ///================== Add  witness ===========================
+  Future<void> addWitness({
+    required String email,
+  }) async {
+    addWitnessStatus(RxStatus.loading());
+
+    final response = await ApiClient.getData(
+      ApiConstants.addYourWitness(email),
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       ToastMessageHelper.successMessageShowToster(
         AppLocalizations.of(Get.context!)!.witness_added_successfully,
       );
-      // isNomineeTrue
-      //     ? Get.toNamed(AppRoutes.addNomineeScreen, preventDuplicates: false)
-      //     : Get.toNamed(AppRoutes.addWitnessesScreen,
-      //         preventDuplicates: false);
     } else {
       ToastMessageHelper.errorMessageShowToster(
           AppLocalizations.of(Get.context!)!.add_failed_try_again);
@@ -208,10 +210,10 @@ class WitnessController extends GetxController
   ///==================Show Add Witness Bottom Sheet===========================
   void showAddWitnessBottomSheet() {
     searchWitnessController.clear();
-    witnesssData.value = null;
+    searchedWitnesss.value = null;
     searchWitnessStatus.value = RxStatus.empty();
     Get.bottomSheet(
-      AddWitnessScreen(),
+      AddWitnesWidget(),
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -226,7 +228,7 @@ class WitnessController extends GetxController
   ///==================Show Add Outside Witness Bottom Sheet===========================
   void showAddOutsideWitnessBottomSheet() {
     Get.bottomSheet(
-      AddOutsideWitness(),
+      AddOutsideWitnessWidget(),
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -238,99 +240,3 @@ class WitnessController extends GetxController
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-/* 
-
-  Future<void> fetchContextsData(String requestKey) async {
-    try {
-      isZakatPropertyWasiyyah.value = true;
-
-      var response = await ApiClient.getData(
-        "${ApiConstants.baseUrl}/getContextsData?requestKey=$requestKey",
-      );
-
-      if (response.statusCode != 200 || response.statusCode == 201) {
-        final data = jsonDecode(response.body);
-
-        contextsData.value = ZakatPropertyWasiyyahModel.fromJson(data);
-      } else {
-        throw Exception(
-            "${AppLocalizations.of(Get.context!)!.request_failed_with_status}: ${response.statusCode}");
-      }
-    } catch (e) {
-      Get.snackbar(AppLocalizations.of(Get.context!)!.error, e.toString());
-    } finally {
-      isZakatPropertyWasiyyah.value = false;
-    }
-  }
-
-  final isLoadings = false.obs;
-  final hasContextsData = false.obs;
-
-  final zakat = <String, dynamic>{}.obs;
-  final propertyResult = <dynamic>[].obs;
-  final wasiyyahContent = <dynamic>[].obs;
-
-  Future<void> getContextsData(String requestKey) async {
-    String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-
-    try {
-      isLoadings.value = true;
-      hasContextsData.value = false;
-
-      final uri = Uri.parse(
-        '${ApiConstants.baseUrl}/getContextsData?requestKey=$requestKey',
-      );
-
-      final response = await http.get(
-        uri,
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $bearerToken',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        // ✅ UTF-8 decode (Bangla safe)
-        final decodedBody = utf8.decode(response.bodyBytes);
-        final Map<String, dynamic> data = jsonDecode(decodedBody);
-
-        /// 🔴 যদি API empty object দেয়
-        if (data.isEmpty) {
-          hasContextsData.value = false;
-          return;
-        }
-
-        // zakat
-        zakat.value = data['zakat'] ?? {};
-
-        // propertyResult (string JSON হলে)
-        propertyResult.value = data['propertyResult'] != null
-            ? jsonDecode(data['propertyResult'])
-            : [];
-
-        // wasiyyahContent
-        wasiyyahContent.value = data['wasiyyahContent'] ?? [];
-
-        /// ✅ data valid
-        hasContextsData.value = true;
-      } else {
-        /// ❌ requestKey match না করলে
-        hasContextsData.value = false;
-      }
-    } catch (e) {
-      hasContextsData.value = false;
-    } finally {
-      isLoadings.value = false;
-    }
-  }
-*/

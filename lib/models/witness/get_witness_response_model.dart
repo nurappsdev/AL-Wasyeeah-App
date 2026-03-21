@@ -1,13 +1,16 @@
 import 'dart:convert';
 
-List<GetWitnessResponseModel> getWitnessResponseModelFromJson(String str) =>
-    List<GetWitnessResponseModel>.from(
-        json.decode(str).map((x) => GetWitnessResponseModel.fromJson(x)));
+List<GetWitnessNomineeResponseModel> getWitnessNomineeResponseModelFromJson(
+        String str) =>
+    List<GetWitnessNomineeResponseModel>.from(json
+        .decode(str)
+        .map((x) => GetWitnessNomineeResponseModel.fromJson(x)));
 
-String getWitnessResponseModelToJson(List<GetWitnessResponseModel> data) =>
+String getWitnessResponseModelToJson(
+        List<GetWitnessNomineeResponseModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class GetWitnessResponseModel {
+class GetWitnessNomineeResponseModel {
   final String? requestKey;
   final dynamic relation;
   final DateTime? wnDate;
@@ -22,7 +25,7 @@ class GetWitnessResponseModel {
   final dynamic registered;
   final dynamic note;
 
-  GetWitnessResponseModel({
+  GetWitnessNomineeResponseModel({
     this.requestKey,
     this.relation,
     this.wnDate,
@@ -38,8 +41,8 @@ class GetWitnessResponseModel {
     this.note,
   });
 
-  factory GetWitnessResponseModel.fromJson(Map<String, dynamic> json) =>
-      GetWitnessResponseModel(
+  factory GetWitnessNomineeResponseModel.fromJson(Map<String, dynamic> json) =>
+      GetWitnessNomineeResponseModel(
         requestKey: json["requestKey"],
         relation: json["relation"],
         wnDate: json["wnDate"] == null ? null : DateTime.parse(json["wnDate"]),

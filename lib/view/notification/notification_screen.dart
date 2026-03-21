@@ -10,8 +10,8 @@ import 'package:intl/intl.dart';
 
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-class NotificationScreen extends StatelessWidget {
-  NotificationScreen({Key? key}) : super(key: key);
+class NotificationPage extends StatelessWidget {
+  NotificationPage({Key? key}) : super(key: key);
   final NotificationController notificationController =
       Get.put(NotificationController());
 

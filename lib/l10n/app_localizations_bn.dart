@@ -1388,4 +1388,23 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get please_fill_all_the_fields => 'দয়া করে সবগুলি ক্ষেত্র পূরণ করুন।';
+
+  @override
+  String get failed_to_delete_witness => 'সাক্ষী মুছে ফেলতে ব্যর্থ হয়েছে';
+
+  @override
+  String get witness_saved_successfully => 'সাক্ষী সফলভাবে সংরক্ষণ করা হয়েছে';
+
+  @override
+  String get save_failed_try_again =>
+      'সংরক্ষণ ব্যর্থ হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।';
+
+  @override
+  String get nominee_remove_successfully => 'নমিনি সফলভাবে সরানো হয়েছে';
+
+  @override
+  String get failed_to_delete_nominee => 'নমিনি মুছে ফেলতে ব্যর্থ হয়েছে';
+
+  @override
+  String get nominee_saved_successfully => 'নমিনি সফলভাবে সংরক্ষণ করা হয়েছে';
 }

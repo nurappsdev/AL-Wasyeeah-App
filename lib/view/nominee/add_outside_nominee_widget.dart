@@ -1,4 +1,3 @@
-import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
 import 'package:al_wasyeah/controllers/witness_controller/witness_controller.dart';
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
@@ -14,8 +13,8 @@ import 'package:intl/intl.dart';
 
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-class AddOutsideWitnessWidget extends StatelessWidget {
-  AddOutsideWitnessWidget({super.key});
+class AddOutsideNomineeWidget extends StatelessWidget {
+  AddOutsideNomineeWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/controllers/witness_controller/witness_controller.dart';
+import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
@@ -11,12 +11,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-class AddWitnesWidget extends StatelessWidget {
-  AddWitnesWidget({super.key});
+class AddNomineeWidget extends StatelessWidget {
+  AddNomineeWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<WitnessController>();
+    final controller = Get.find<NomineeController>();
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
       decoration: BoxDecoration(
@@ -61,7 +61,7 @@ class AddWitnesWidget extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(bottom: 16.h),
                 child: CustomTextField(
-                  controller: controller.searchWitnessController,
+                  controller: controller.searchNomineeController,
                   hintText: AppLocalizations.of(context)!.search,
                   borderColor: AppColors.secondaryPrimaryColor,
                   validator: (value) {
@@ -75,7 +75,7 @@ class AddWitnesWidget extends StatelessWidget {
                     return null;
                   },
                   suffixIcon: IconButton(
-                      onPressed: controller.searchWitness,
+                      onPressed: controller.searchNominee,
                       icon: Icon(
                         Icons.search_rounded,
                         color: AppColors.primaryColor,
@@ -84,12 +84,12 @@ class AddWitnesWidget extends StatelessWidget {
               ),
 
               Obx(() {
-                if (controller.searchWitnessStatus.value.isLoading) {
+                if (controller.searchNomineeStatus.value.isLoading) {
                   return Center(child: CircularProgressIndicator());
-                } else if (controller.searchWitnessStatus.value.isEmpty) {
+                } else if (controller.searchNomineeStatus.value.isEmpty) {
                   return Center(
                       child: Text(AppLocalizations.of(context)!.no_data));
-                } else if (controller.searchWitnessStatus.value.isSuccess) {
+                } else if (controller.searchNomineeStatus.value.isSuccess) {
                   return Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
@@ -99,23 +99,23 @@ class AddWitnesWidget extends StatelessWidget {
                     child: ListTile(
                       leading: CircleAvatar(
                           radius: 30,
-                          child: controller.searchedWitnesss.value?.imageUrl !=
-                                  null
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(35.r),
-                                  child: Image.network(
-                                    ApiConstants.imageUrl +
-                                        controller
-                                            .searchedWitnesss.value!.imageUrl,
-                                    fit: BoxFit.fill,
-                                    width: 70.w,
-                                    height: 70.h,
-                                  ),
-                                )
-                              : Icon(Icons.person,
-                                  color: Colors.white, size: 40.sp)),
+                          child:
+                              controller.searchedNominee.value?.imageUrl != null
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(35.r),
+                                      child: Image.network(
+                                        ApiConstants.imageUrl +
+                                            controller.searchedNominee.value!
+                                                .imageUrl,
+                                        fit: BoxFit.fill,
+                                        width: 70.w,
+                                        height: 70.h,
+                                      ),
+                                    )
+                                  : Icon(Icons.person,
+                                      color: Colors.white, size: 40.sp)),
                       title: Text(
-                        controller.searchedWitnesss.value?.name ??
+                        controller.searchedNominee.value?.name ??
                             AppLocalizations.of(context)!.n_a,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
@@ -131,13 +131,13 @@ class AddWitnesWidget extends StatelessWidget {
                         ],
                       ),
                       onTap: () {
-                        controller.showAddOutsideWitnessBottomSheet();
+                        controller.showAddNomineeBottomSheet();
                       },
                     ),
                   );
                 } else {
                   return AppErrorWidget(
-                      message: controller.searchWitnessStatus.value.errorMessage
+                      message: controller.searchNomineeStatus.value.errorMessage
                           .toString());
                 }
               }),
