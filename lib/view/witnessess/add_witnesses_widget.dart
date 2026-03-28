@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/controllers/witness_controller/witness_controller.dart';
+import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
@@ -59,29 +60,50 @@ class AddWitnesWidget extends StatelessWidget {
             children: [
               ///=============Search Field====================
               Padding(
-                padding: EdgeInsets.only(bottom: 16.h),
-                child: CustomTextField(
-                  controller: controller.searchWitnessController,
-                  hintText: AppLocalizations.of(context)!.search,
-                  borderColor: AppColors.secondaryPrimaryColor,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return AppLocalizations.of(context)!
-                          .please_enter_your_email;
-                    }
-                    if (!!AppConstants.emailValidate.hasMatch(value)) {
-                      return AppLocalizations.of(context)!.invalid_email;
-                    }
-                    return null;
-                  },
-                  suffixIcon: IconButton(
-                      onPressed: controller.searchWitness,
-                      icon: Icon(
-                        Icons.search_rounded,
-                        color: AppColors.primaryColor,
-                      )),
-                ),
-              ),
+                  padding: EdgeInsets.only(bottom: 16.h),
+                  child: Obx(
+                    () => CustomTextField(
+                      controller: controller.searchWitnessController,
+                      hintText: AppLocalizations.of(context)!.search,
+                      borderColor: AppColors.secondaryPrimaryColor,
+                      onChange: (value) {
+                        controller.searchText.value = value;
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppLocalizations.of(context)!
+                              .please_enter_your_email;
+                        }
+                        if (!AppConstants.emailValidate.hasMatch(value)) {
+                          return AppLocalizations.of(context)!.invalid_email;
+                        }
+                        return null;
+                      },
+                      suffixIcon: AppConstants.emailValidate
+                              .hasMatch(controller.searchText.value)
+                          ? Padding(
+                              padding: EdgeInsets.all(8.h),
+                              child: ElevatedButton(
+                                onPressed: controller.searchWitness,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primaryColor,
+                                  foregroundColor: Colors.white,
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 12.w),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                  ),
+                                  visualDensity: VisualDensity.compact,
+                                ),
+                                child: Text(
+                                  AppLocalizations.of(context)!.search,
+                                  style: TextStyle(fontSize: 12.sp),
+                                ),
+                              ),
+                            )
+                          : null,
+                    ),
+                  )),
 
               Obx(() {
                 if (controller.searchWitnessStatus.value.isLoading) {
@@ -106,7 +128,7 @@ class AddWitnesWidget extends StatelessWidget {
                                   child: Image.network(
                                     ApiConstants.imageUrl +
                                         controller
-                                            .searchedWitnesss.value!.imageUrl,
+                                            .searchedWitnesss.value!.imageUrl!,
                                     fit: BoxFit.fill,
                                     width: 70.w,
                                     height: 70.h,
@@ -131,7 +153,15 @@ class AddWitnesWidget extends StatelessWidget {
                         ],
                       ),
                       onTap: () {
-                        controller.showAddOutsideWitnessBottomSheet();
+                        if (controller.searchedWitnesss.value != null) {
+                          Get.toNamed(
+                            AppRoutes.witnessDetailsPage,
+                            arguments: {
+                              'witness': controller.searchedWitnesss.value,
+                              'canRemove': false,
+                            },
+                          );
+                        }
                       },
                     ),
                   );

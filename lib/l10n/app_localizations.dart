@@ -980,6 +980,12 @@ abstract class AppLocalizations {
   /// **'I’m the witness'**
   String get i_m_the_witness;
 
+  /// No description provided for @i_m_the_nominee.
+  ///
+  /// In en, this message translates to:
+  /// **'I’m the nominee'**
+  String get i_m_the_nominee;
+
   /// No description provided for @witness_profile_details.
   ///
   /// In en, this message translates to:

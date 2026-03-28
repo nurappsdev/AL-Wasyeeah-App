@@ -17,7 +17,7 @@ class ApiConstants {
       "/user/search-witness-nominee?email=$email&isWitness=true";
 
   // nominess
-  static const String yourNominee = "/user/get-nominee";
+  static const String yourNominee = "/user/get-nominees";
   static const String nomineedByAnotherUser = "/get-nomineeByAnotherUser";
   static String addYourNominee(String email) =>
       "/user/assign-nominee?email=$email";

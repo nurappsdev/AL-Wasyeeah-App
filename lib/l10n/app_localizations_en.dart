@@ -459,6 +459,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get i_m_the_witness => 'I’m the witness';
 
   @override
+  String get i_m_the_nominee => 'I’m the nominee';
+
+  @override
   String get witness_profile_details => 'Witness Profile Details';
 
   @override

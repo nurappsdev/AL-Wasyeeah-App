@@ -43,7 +43,7 @@ class WitnessesPage extends GetView<WitnessController> {
                   context,
                   status: controller.witnessesYouStatus,
                   data: controller.witnessesYouData,
-                  showAddButton: false,
+                  showAddButton: null,
                 ),
               ],
             ),
@@ -58,14 +58,14 @@ class WitnessesPage extends GetView<WitnessController> {
     BuildContext context, {
     required Rx<RxStatus> status,
     required RxList<GetWitnessNomineeResponseModel> data,
-    required bool showAddButton,
+    bool? showAddButton,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (showAddButton) ...[
+          if (showAddButton != null && showAddButton) ...[
             SizedBox(height: 20.h),
             _buildAddButton(context),
           ],
@@ -82,7 +82,7 @@ class WitnessesPage extends GetView<WitnessController> {
                     itemBuilder: (_, index) {
                       return _buildWitnessCard(
                         context,
-                        GetWitnessNomineeResponseModel(), // empty model
+                        GetWitnessNomineeResponseModel(),
                         true,
                       );
                     },
@@ -130,7 +130,7 @@ class WitnessesPage extends GetView<WitnessController> {
 
   /// ================= CARD =================
   Widget _buildWitnessCard(BuildContext context,
-      GetWitnessNomineeResponseModel witness, bool canEdit) {
+      GetWitnessNomineeResponseModel witness, bool? canEdit) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.h),
       decoration: BoxDecoration(
@@ -145,10 +145,8 @@ class WitnessesPage extends GetView<WitnessController> {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(16.r),
-        onTap: () {
-          Get.toNamed(AppRoutes.witnessDetailsPage,
-              arguments: {"witness": witness, "canRemove": canEdit});
-        },
+        onTap: () => Get.toNamed(AppRoutes.witnessDetailsPage,
+            arguments: {"witness": witness, "canRemove": canEdit}),
         child: Padding(
           padding: EdgeInsets.all(16.w),
           child: Row(

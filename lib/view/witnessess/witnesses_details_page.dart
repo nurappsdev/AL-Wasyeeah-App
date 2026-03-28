@@ -22,7 +22,7 @@ class WitnessDetailsPage extends StatefulWidget {
 class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
   final data = Get.arguments;
   final GetWitnessNomineeResponseModel witness = Get.arguments['witness'];
-  final canRemove = Get.arguments['canRemove'] ?? false;
+  final bool? canRemove = Get.arguments['canRemove'];
   final WitnessController controller = Get.find<WitnessController>();
 
   @override
@@ -225,7 +225,7 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                         //     ),
                         //   )
                         // else
-                        if (canRemove)
+                        if (canRemove != null && canRemove!)
                           Obx(() => CustomButtonCommon(
                                 title: AppLocalizations.of(context)!.remove,
                                 color: AppColors.redColor,
@@ -247,22 +247,28 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                                 },
                               )),
                         SizedBox(height: 16.h),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.r),
-                            border: Border.all(color: AppColors.primaryColor),
+                        if (canRemove != null && !canRemove!)
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.r),
+                              border: Border.all(color: AppColors.primaryColor),
+                            ),
+                            child: Obx(() => CustomButtonCommon(
+                                  title:
+                                      AppLocalizations.of(context)!.add_witness,
+                                  color: Colors.white,
+                                  titlecolor: AppColors.primaryColor,
+                                  loading: controller
+                                      .addWitnessStatus.value.isLoading,
+                                  onpress: witness.email == null
+                                      ? null
+                                      : () {
+                                          controller.addYourWitness(
+                                              email: witness.email!);
+                                        },
+                                )),
                           ),
-                          child: CustomButtonCommon(
-                            title:
-                                AppLocalizations.of(context)!.add_more_witness,
-                            color: Colors.white,
-                            titlecolor: AppColors.primaryColor,
-                            onpress: () {
-                              controller.showAddWitnessBottomSheet();
-                            },
-                          ),
-                        ),
                       ],
                     ),
                   ),

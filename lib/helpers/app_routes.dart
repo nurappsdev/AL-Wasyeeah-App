@@ -5,6 +5,7 @@ import 'package:al_wasyeah/view/auth/login_screen.dart';
 import 'package:al_wasyeah/view/auth/otp_verify_screen.dart';
 import 'package:al_wasyeah/view/auth/registration_screen.dart';
 import 'package:al_wasyeah/view/nominee/nominee_details_page.dart';
+import 'package:al_wasyeah/view/nominee/nominee_page.dart';
 import 'package:al_wasyeah/view/property_distribution_calculation/property_distribution_calculation_page.dart';
 import 'package:al_wasyeah/view/splash/splash_screen.dart';
 import 'package:al_wasyeah/view/zakat_calculator/zakat_calculator_screen.dart';
@@ -38,7 +39,7 @@ class AppRoutes {
   static const String wasyyahEditScreen = "/wasyyah_edit_page";
   static const String wasyyahPriviewPage = "/wasyyah_priview_page";
 
-  static const String nomineePage = "/nominee_page";
+  static const String nomineesPage = "/nominee_page";
   static const String nomineeDetailsPage = "/nominee_details_page";
   static const String witnessesPage = "/witness_page";
   static const String witnessDetailsPage = "/witness_details_page";
@@ -82,6 +83,10 @@ class AppRoutes {
             name: witnessesPage,
             page: () => WitnessesPage(),
             binding: WitnessesBinding()),
+        GetPage(
+            name: nomineesPage,
+            page: () => NomineesPage(),
+            binding: NomineesBinding()),
         GetPage(name: witnessDetailsPage, page: () => WitnessDetailsPage()),
         GetPage(name: nomineeDetailsPage, page: () => NomineeDetailsPage()),
         GetPage(name: notificationsScreen, page: () => NotificationPage()),

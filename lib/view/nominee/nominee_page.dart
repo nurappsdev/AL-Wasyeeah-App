@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
 import 'package:al_wasyeah/controllers/witness_controller/witness_controller.dart';
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/models/witness/get_witness_response_model.dart';
@@ -11,7 +12,7 @@ import 'package:get/get.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class NomineesPage extends GetView<WitnessController> {
+class NomineesPage extends GetView<NomineeController> {
   const NomineesPage({super.key});
 
   @override
@@ -33,16 +34,16 @@ class NomineesPage extends GetView<WitnessController> {
             child: TabBarView(
               controller: controller.tabController,
               children: [
-                _buildWitnessListTab(
+                _buildNomineeListTab(
                   context,
-                  status: controller.witnessStatus,
-                  data: controller.witnessData,
+                  status: controller.nomineeStatus,
+                  data: controller.nomineeData,
                   showAddButton: true,
                 ),
-                _buildWitnessListTab(
+                _buildNomineeListTab(
                   context,
-                  status: controller.witnessesYouStatus,
-                  data: controller.witnessesYouData,
+                  status: controller.nomineesYouStatus,
+                  data: controller.nomineesYouData,
                   showAddButton: false,
                 ),
               ],
@@ -54,7 +55,7 @@ class NomineesPage extends GetView<WitnessController> {
   }
 
   /// ================= LIST TAB =================
-  Widget _buildWitnessListTab(
+  Widget _buildNomineeListTab(
     BuildContext context, {
     required Rx<RxStatus> status,
     required RxList<GetWitnessNomineeResponseModel> data,
@@ -80,7 +81,7 @@ class NomineesPage extends GetView<WitnessController> {
                   child: ListView.builder(
                     itemCount: 6,
                     itemBuilder: (_, index) {
-                      return _buildWitnessCard(
+                      return _buildNomineeCard(
                         context,
                         GetWitnessNomineeResponseModel(), // empty model
                         true,
@@ -107,7 +108,7 @@ class NomineesPage extends GetView<WitnessController> {
                 itemCount: data.length,
                 itemBuilder: (_, index) {
                   final witness = data[index];
-                  return _buildWitnessCard(context, witness, showAddButton);
+                  return _buildNomineeCard(context, witness, showAddButton);
                 },
               );
             }),
@@ -120,16 +121,16 @@ class NomineesPage extends GetView<WitnessController> {
   /// ================= ADD BUTTON =================
   Widget _buildAddButton(BuildContext context) {
     return CustomButton(
-      title: AppLocalizations.of(context)!.add_more_witness,
+      title: AppLocalizations.of(context)!.add_more_nominees,
       titlecolor: Colors.black,
       onpress: () {
-        controller.showAddWitnessBottomSheet();
+        controller.showAddNomineeBottomSheet();
       },
     );
   }
 
   /// ================= CARD =================
-  Widget _buildWitnessCard(BuildContext context,
+  Widget _buildNomineeCard(BuildContext context,
       GetWitnessNomineeResponseModel witness, bool canEdit) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.h),
@@ -226,8 +227,8 @@ class NomineesPage extends GetView<WitnessController> {
           Text(error),
           TextButton(
             onPressed: () {
-              controller.getWitnessData();
-              controller.getWitnessesYouData();
+              controller.getNomineeData();
+              controller.getNomineesYouData();
             },
             child: Text(AppLocalizations.of(context)!.try_again),
           )
@@ -273,8 +274,8 @@ class NomineesPage extends GetView<WitnessController> {
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: Colors.transparent,
         tabs: [
-          Tab(text: AppLocalizations.of(Get.context!)!.your_witness),
-          Tab(text: AppLocalizations.of(Get.context!)!.i_m_the_witness),
+          Tab(text: AppLocalizations.of(Get.context!)!.your_nominee),
+          Tab(text: AppLocalizations.of(Get.context!)!.i_m_the_nominee),
         ],
       ),
     );

@@ -278,7 +278,7 @@ class HomePage extends GetView<HomeController> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            Get.toNamed(AppRoutes.nomineePage,
+                            Get.toNamed(AppRoutes.nomineesPage,
                                 preventDuplicates: false);
                           },
                           child: Container(

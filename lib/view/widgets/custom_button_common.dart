@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButtonCommon extends StatelessWidget {
-  final VoidCallback onpress;
+  final VoidCallback? onpress;
   final String title;
   final Color? color;
   final Color? titlecolor;
@@ -16,7 +16,7 @@ class CustomButtonCommon extends StatelessWidget {
   CustomButtonCommon({
     super.key,
     required this.title,
-    required this.onpress,
+    this.onpress,
     this.color,
     this.height,
     this.width,
@@ -46,9 +46,7 @@ class CustomButtonCommon extends StatelessWidget {
                 ? SizedBox(
                     height: 20.h,
                     width: 20.h,
-                    child: const CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
+                    child: const CircularProgressIndicator(),
                   )
                 : CustomText(
                     text: title,

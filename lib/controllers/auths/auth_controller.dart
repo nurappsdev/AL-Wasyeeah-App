@@ -139,7 +139,7 @@ class AuthController extends GetxController {
                 AppLocalizations.of(Get.context!)!.welcome_back,
           );
 
-          Get.off(() => HomePage(), preventDuplicates: false);
+          Get.offAllNamed(AppRoutes.homePage);
         }
       }
 

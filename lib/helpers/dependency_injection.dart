@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
 import 'package:al_wasyeah/controllers/notification/notification_controller.dart';
 import 'package:al_wasyeah/controllers/profile/home_controller.dart';
 import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
@@ -35,6 +36,13 @@ class WitnessesBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<WitnessController>(() => WitnessController());
+  }
+}
+
+class NomineesBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<NomineeController>(() => NomineeController());
   }
 }
 

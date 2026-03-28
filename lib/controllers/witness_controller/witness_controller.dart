@@ -35,6 +35,7 @@ class WitnessController extends GetxController
   RxList<GetWitnessNomineeResponseModel> witnessesYouData =
       <GetWitnessNomineeResponseModel>[].obs;
   final TextEditingController searchWitnessController = TextEditingController();
+  final RxString searchText = "".obs;
 
   final TextEditingController relNameController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -62,6 +63,7 @@ class WitnessController extends GetxController
   @override
   void dispose() {
     searchWitnessController.clear();
+    searchText.value = "";
     tabController.dispose();
     super.dispose();
   }
@@ -188,7 +190,7 @@ class WitnessController extends GetxController
   }
 
   ///================== Add  witness ===========================
-  Future<void> addWitness({
+  Future<void> addYourWitness({
     required String email,
   }) async {
     addWitnessStatus(RxStatus.loading());
@@ -201,15 +203,19 @@ class WitnessController extends GetxController
       ToastMessageHelper.successMessageShowToster(
         AppLocalizations.of(Get.context!)!.witness_added_successfully,
       );
+      addWitnessStatus(RxStatus.success());
     } else {
       ToastMessageHelper.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)!.add_failed_try_again);
+          /*AppLocalizations.of(Get.context!)!.add_failed_try_again*/ response
+              .body);
+      addWitnessStatus(RxStatus.empty());
     }
   }
 
   ///==================Show Add Witness Bottom Sheet===========================
   void showAddWitnessBottomSheet() {
     searchWitnessController.clear();
+    searchText.value = "";
     searchedWitnesss.value = null;
     searchWitnessStatus.value = RxStatus.empty();
     Get.bottomSheet(

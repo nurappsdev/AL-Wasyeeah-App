@@ -456,6 +456,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get i_m_the_witness => 'আমি সাক্ষী';
 
   @override
+  String get i_m_the_nominee => 'আমি নমিনি';
+
+  @override
   String get witness_profile_details => 'সাক্ষীর প্রোফাইল বিবরণ';
 
   @override
