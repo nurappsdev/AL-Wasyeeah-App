@@ -40,7 +40,14 @@ class HomeController extends GetxController {
   }
 
   void scrollToCurrentPrayer() {
-    if (!scrollController.hasClients) return;
+    if (!scrollController.hasClients) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (scrollController.hasClients) {
+          scrollToCurrentPrayer();
+        }
+      });
+      return;
+    }
     if (prayerTimes.isEmpty) return;
 
     final prayerList = prayerTimes.keys.toList();
@@ -172,6 +179,7 @@ class HomeController extends GetxController {
 
           startPrayerTimer();
           salatTimeStatus(RxStatus.success());
+          scrollToCurrentPrayer();
           Future.delayed(const Duration(milliseconds: 300), () {
             update(); // optional if needed
           });

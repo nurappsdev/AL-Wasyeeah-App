@@ -50,8 +50,6 @@ class _AppWrapperState extends State<AppWrapper> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
-      width: 200,
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage(AppImages.backImg),
