@@ -233,6 +233,15 @@ class WitnessController extends GetxController
 
   ///==================Show Add Outside Witness Bottom Sheet===========================
   void showAddOutsideWitnessBottomSheet() {
+    relNameController.clear();
+    nameController.clear();
+    mobileController.clear();
+    emailController.clear();
+    dateOfBirthController.clear();
+    presentAddressController.clear();
+    permanentAddressController.clear();
+    birthDate = null;
+
     Get.bottomSheet(
       AddOutsideWitnessWidget(),
       backgroundColor: Colors.white,

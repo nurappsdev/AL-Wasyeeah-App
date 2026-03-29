@@ -21,7 +21,7 @@ class NomineeDetailsPage extends StatefulWidget {
 class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
   final data = Get.arguments;
   final GetWitnessNomineeResponseModel nominee = Get.arguments['nominee'];
-  final canRemove = Get.arguments['canRemove'] ?? false;
+  final bool? canRemove = Get.arguments['canRemove'];
   final NomineeController controller = Get.find<NomineeController>();
 
   @override
@@ -224,7 +224,7 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                         //     ),
                         //   )
                         // else
-                        if (canRemove)
+                        if (canRemove != null && canRemove!)
                           Obx(() => CustomButtonCommon(
                                 title: AppLocalizations.of(context)!.remove,
                                 color: AppColors.redColor,
@@ -246,22 +246,25 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                                 },
                               )),
                         SizedBox(height: 16.h),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.r),
-                            border: Border.all(color: AppColors.primaryColor),
+                        if (canRemove != null && !canRemove!)
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.r),
+                              border: Border.all(color: AppColors.primaryColor),
+                            ),
+                            child: CustomButtonCommon(
+                              title: AppLocalizations.of(context)!.add_nominee,
+                              color: Colors.white,
+                              titlecolor: AppColors.primaryColor,
+                              onpress: nominee.email == null
+                                  ? null
+                                  : () {
+                                      controller.addYourNominee(
+                                          email: nominee.email!);
+                                    },
+                            ),
                           ),
-                          child: CustomButtonCommon(
-                            title:
-                                AppLocalizations.of(context)!.add_more_nominees,
-                            color: Colors.white,
-                            titlecolor: AppColors.primaryColor,
-                            onpress: () {
-                              controller.showAddNomineeBottomSheet();
-                            },
-                          ),
-                        ),
                       ],
                     ),
                   ),

@@ -1,5 +1,4 @@
 import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
-import 'package:al_wasyeah/controllers/witness_controller/witness_controller.dart';
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/models/witness/get_witness_response_model.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
@@ -20,7 +19,7 @@ class NomineesPage extends GetView<NomineeController> {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          text: AppLocalizations.of(context)!.witness,
+          text: AppLocalizations.of(context)!.nominee,
           fontsize: 20.sp,
           fontWeight: FontWeight.bold,
         ),
@@ -44,7 +43,7 @@ class NomineesPage extends GetView<NomineeController> {
                   context,
                   status: controller.nomineesYouStatus,
                   data: controller.nomineesYouData,
-                  showAddButton: false,
+                  showAddButton: null,
                 ),
               ],
             ),
@@ -59,14 +58,14 @@ class NomineesPage extends GetView<NomineeController> {
     BuildContext context, {
     required Rx<RxStatus> status,
     required RxList<GetWitnessNomineeResponseModel> data,
-    required bool showAddButton,
+    bool? showAddButton,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (showAddButton) ...[
+          if (showAddButton != null && showAddButton) ...[
             SizedBox(height: 20.h),
             _buildAddButton(context),
           ],
@@ -131,7 +130,7 @@ class NomineesPage extends GetView<NomineeController> {
 
   /// ================= CARD =================
   Widget _buildNomineeCard(BuildContext context,
-      GetWitnessNomineeResponseModel witness, bool canEdit) {
+      GetWitnessNomineeResponseModel witness, bool? canEdit) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.h),
       decoration: BoxDecoration(

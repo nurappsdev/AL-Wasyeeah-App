@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
+import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
@@ -11,12 +12,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-class AddNomineeWidget extends StatelessWidget {
+class AddNomineeWidget extends GetView<NomineeController> {
   AddNomineeWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<NomineeController>();
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
       decoration: BoxDecoration(
@@ -43,7 +43,7 @@ class AddNomineeWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
-                text: AppLocalizations.of(context)!.add_witness,
+                text: AppLocalizations.of(context)!.add_nominee,
                 fontsize: 18.sp,
                 fontWeight: FontWeight.bold,
               ),
@@ -58,28 +58,49 @@ class AddNomineeWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ///=============Search Field====================
-              Padding(
-                padding: EdgeInsets.only(bottom: 16.h),
-                child: CustomTextField(
-                  controller: controller.searchNomineeController,
-                  hintText: AppLocalizations.of(context)!.search,
-                  borderColor: AppColors.secondaryPrimaryColor,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return AppLocalizations.of(context)!
-                          .please_enter_your_email;
-                    }
-                    if (!!AppConstants.emailValidate.hasMatch(value)) {
-                      return AppLocalizations.of(context)!.invalid_email;
-                    }
-                    return null;
-                  },
-                  suffixIcon: IconButton(
-                      onPressed: controller.searchNominee,
-                      icon: Icon(
-                        Icons.search_rounded,
-                        color: AppColors.primaryColor,
-                      )),
+              Obx(
+                () => Padding(
+                  padding: EdgeInsets.only(bottom: 16.h),
+                  child: CustomTextField(
+                    controller: controller.searchNomineeController,
+                    hintText: AppLocalizations.of(context)!.search,
+                    borderColor: AppColors.secondaryPrimaryColor,
+                    onChange: (value) {
+                      controller.searchText.value = value;
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppLocalizations.of(context)!
+                            .please_enter_your_email;
+                      }
+                      if (!AppConstants.emailValidate.hasMatch(value)) {
+                        return AppLocalizations.of(context)!.invalid_email;
+                      }
+                      return null;
+                    },
+                    suffixIcon: AppConstants.emailValidate
+                            .hasMatch(controller.searchText.value)
+                        ? Padding(
+                            padding: EdgeInsets.all(8.h),
+                            child: ElevatedButton(
+                              onPressed: controller.searchNominee,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryColor,
+                                foregroundColor: Colors.white,
+                                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                                visualDensity: VisualDensity.compact,
+                              ),
+                              child: Text(
+                                AppLocalizations.of(context)!.search,
+                                style: TextStyle(fontSize: 12.sp),
+                              ),
+                            ),
+                          )
+                        : null,
+                  ),
                 ),
               ),
 
@@ -130,9 +151,12 @@ class AddNomineeWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onTap: () {
-                        controller.showAddNomineeBottomSheet();
-                      },
+                      onTap: () => Get.toNamed(AppRoutes.nomineeDetailsPage,
+                          preventDuplicates: false,
+                          arguments: {
+                            'nominee': controller.searchedNominee.value,
+                            'canRemove': false,
+                          }),
                     ),
                   );
                 } else {
@@ -143,10 +167,10 @@ class AddNomineeWidget extends StatelessWidget {
               }),
               SizedBox(height: 20.h),
               CustomButton(
-                title: AppLocalizations.of(context)!.add_outside_witness,
+                title: AppLocalizations.of(context)!.add_outside_nominee,
                 titlecolor: AppColors.primaryColor,
                 onpress: () {
-                  controller.showAddOutsideWitnessBottomSheet();
+                  controller.showAddOutsideNomineeBottomSheet();
                 },
               ),
               SizedBox(height: 10.h),

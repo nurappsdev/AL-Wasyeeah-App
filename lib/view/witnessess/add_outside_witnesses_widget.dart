@@ -1,4 +1,3 @@
-import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
 import 'package:al_wasyeah/controllers/witness_controller/witness_controller.dart';
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';

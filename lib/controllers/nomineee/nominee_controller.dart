@@ -31,6 +31,7 @@ class NomineeController extends GetxController
   RxList<GetWitnessNomineeResponseModel> nomineesYouData =
       <GetWitnessNomineeResponseModel>[].obs;
   final TextEditingController searchNomineeController = TextEditingController();
+  final RxString searchText = "".obs;
 
   final TextEditingController relNameController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -58,6 +59,7 @@ class NomineeController extends GetxController
   @override
   void dispose() {
     searchNomineeController.clear();
+    searchText.value = "";
     tabController.dispose();
     super.dispose();
   }
@@ -184,7 +186,7 @@ class NomineeController extends GetxController
   }
 
   ///================== Add  witness ===========================
-  Future<void> addNominee({
+  Future<void> addYourNominee({
     required String email,
   }) async {
     addNomineeStatus(RxStatus.loading());
@@ -206,6 +208,7 @@ class NomineeController extends GetxController
   ///==================Show Add Witness Bottom Sheet===========================
   void showAddNomineeBottomSheet() {
     searchNomineeController.clear();
+    searchText.value = "";
     searchedNominee.value = null;
     searchNomineeStatus.value = RxStatus.empty();
     Get.bottomSheet(
@@ -222,7 +225,16 @@ class NomineeController extends GetxController
   }
 
   ///==================Show Add Outside Witness Bottom Sheet===========================
-  void showAddOutsideWitnessBottomSheet() {
+  void showAddOutsideNomineeBottomSheet() {
+    relNameController.clear();
+    nameController.clear();
+    mobileController.clear();
+    emailController.clear();
+    dateOfBirthController.clear();
+    presentAddressController.clear();
+    permanentAddressController.clear();
+    birthDate = null;
+
     Get.bottomSheet(
       AddOutsideNomineeWidget(),
       backgroundColor: Colors.white,

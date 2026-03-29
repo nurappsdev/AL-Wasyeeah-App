@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/controllers/witness_controller/witness_controller.dart';
+import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
@@ -13,12 +13,11 @@ import 'package:intl/intl.dart';
 
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-class AddOutsideNomineeWidget extends StatelessWidget {
+class AddOutsideNomineeWidget extends GetView<NomineeController> {
   AddOutsideNomineeWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<WitnessController>();
     return SafeArea(
       child: Container(
         height: 0.9.sh,
@@ -64,7 +63,7 @@ class AddOutsideNomineeWidget extends StatelessWidget {
               ),
               SizedBox(height: 10.h),
               Form(
-                key: controller.witnessFormKey,
+                key: controller.nomineeFormKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -260,12 +259,12 @@ class AddOutsideNomineeWidget extends StatelessWidget {
                     SizedBox(height: 10.h),
                     Obx(
                       () => CustomButtonCommon(
-                          loading: controller.addWitnessStatus.value.isLoading,
+                          loading: controller.addNomineeStatus.value.isLoading,
                           title: AppLocalizations.of(context)!.save,
                           onpress: () {
-                            if (controller.witnessFormKey.currentState!
+                            if (controller.nomineeFormKey.currentState!
                                 .validate()) {
-                              controller.saveWitness(
+                              controller.saveNominee(
                                   userName: controller.nameController.text,
                                   mobileNo: controller.mobileController.text,
                                   email: controller.emailController.text,
