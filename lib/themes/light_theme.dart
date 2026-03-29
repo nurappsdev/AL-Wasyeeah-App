@@ -5,7 +5,7 @@ import '../utils/app_colors.dart';
 import '../utils/app_dimentions.dart';
 
 ThemeData light() => ThemeData(
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: Colors.transparent,
     primaryColor: const Color(0xFFFC6A57),
     secondaryHeaderColor: const Color(0xff04B200),
     brightness: Brightness.light,
@@ -19,13 +19,20 @@ ThemeData light() => ThemeData(
       TargetPlatform.fuchsia: ZoomPageTransitionsBuilder(),
     }),
     textTheme: const TextTheme(
-      displayLarge: TextStyle(fontWeight: FontWeight.w300, fontSize: Dimensions.fontSizeDefault),
-      displayMedium: TextStyle(fontWeight: FontWeight.w400, fontSize: Dimensions.fontSizeDefault),
-      displaySmall: TextStyle(fontWeight: FontWeight.w500, fontSize: Dimensions.fontSizeDefault),
-      headlineMedium: TextStyle(fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeDefault),
-      headlineSmall: TextStyle(fontWeight: FontWeight.w700, fontSize: Dimensions.fontSizeDefault),
-      titleLarge: TextStyle(fontWeight: FontWeight.w800, fontSize: Dimensions.fontSizeDefault),
-      bodySmall: TextStyle(fontWeight: FontWeight.w900, fontSize: Dimensions.fontSizeDefault),
+      displayLarge: TextStyle(
+          fontWeight: FontWeight.w300, fontSize: Dimensions.fontSizeDefault),
+      displayMedium: TextStyle(
+          fontWeight: FontWeight.w400, fontSize: Dimensions.fontSizeDefault),
+      displaySmall: TextStyle(
+          fontWeight: FontWeight.w500, fontSize: Dimensions.fontSizeDefault),
+      headlineMedium: TextStyle(
+          fontWeight: FontWeight.w600, fontSize: Dimensions.fontSizeDefault),
+      headlineSmall: TextStyle(
+          fontWeight: FontWeight.w700, fontSize: Dimensions.fontSizeDefault),
+      titleLarge: TextStyle(
+          fontWeight: FontWeight.w800, fontSize: Dimensions.fontSizeDefault),
+      bodySmall: TextStyle(
+          fontWeight: FontWeight.w900, fontSize: Dimensions.fontSizeDefault),
       titleMedium: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500),
       bodyMedium: TextStyle(fontSize: 12.0),
       bodyLarge: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600),

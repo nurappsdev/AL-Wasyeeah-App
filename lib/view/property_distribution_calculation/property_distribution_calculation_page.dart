@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
-import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
+import 'package:al_wasyeah/view/widgets/app_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

@@ -2,6 +2,7 @@ import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/themes/light_theme.dart';
+import 'package:al_wasyeah/view/widgets/app_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,6 +59,9 @@ class _WasyeeahAppState extends State<WasyeeahApp> {
           defaultTransition: Transition.topLevel,
           transitionDuration: const Duration(milliseconds: 500),
           locale: _locale,
+          builder: (context, child) {
+            return AppWrapper(child: child ?? const SizedBox.shrink());
+          },
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,

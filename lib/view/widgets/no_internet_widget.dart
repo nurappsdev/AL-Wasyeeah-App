@@ -5,12 +5,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'dart:async';
 
-class NoInternetScreen extends StatefulWidget {
+class NoInternetWidget extends StatefulWidget {
   @override
-  _NoInternetScreenState createState() => _NoInternetScreenState();
+  _NoInternetWidgetState createState() => _NoInternetWidgetState();
 }
 
-class _NoInternetScreenState extends State<NoInternetScreen>
+class _NoInternetWidgetState extends State<NoInternetWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -151,6 +151,6 @@ class _ConnectivityWrapperState extends State<ConnectivityWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return hasInternet ? widget.child : NoInternetScreen();
+    return hasInternet ? widget.child : NoInternetWidget();
   }
 }

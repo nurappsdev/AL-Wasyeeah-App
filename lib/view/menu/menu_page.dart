@@ -3,7 +3,7 @@ import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
-import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
+import 'package:al_wasyeah/view/widgets/app_wrapper.dart';
 import 'package:al_wasyeah/view/widgets/custom_button.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';

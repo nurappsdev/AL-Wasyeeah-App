@@ -1,7 +1,7 @@
 import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
 import 'package:al_wasyeah/models/witness/get_witness_response_model.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
-import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
+import 'package:al_wasyeah/view/widgets/app_wrapper.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';

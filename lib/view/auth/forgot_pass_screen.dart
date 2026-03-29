@@ -3,7 +3,7 @@ import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
-import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
+import 'package:al_wasyeah/view/widgets/app_wrapper.dart';
 import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
 import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
