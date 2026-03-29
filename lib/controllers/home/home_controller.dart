@@ -40,30 +40,25 @@ class HomeController extends GetxController {
   }
 
   void scrollToCurrentPrayer() {
-    if (!scrollController.hasClients) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (scrollController.hasClients) {
-          scrollToCurrentPrayer();
-        }
-      });
-      return;
-    }
     if (prayerTimes.isEmpty) return;
 
-    final prayerList = prayerTimes.keys.toList();
-    final index = prayerList.indexOf(currentPrayer.value);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!scrollController.hasClients) return;
 
-    if (index == -1) return;
+      final prayerList = prayerTimes.keys.toList();
+      final index = prayerList.indexOf(currentPrayer.value);
 
-    // Exact width calculation based on 0.6.sw + 32.w (margin 16.w * 2)
-    final double itemWidth = (0.6.sw) + (32.w);
-    final double offset = index * itemWidth;
+      if (index == -1) return;
 
-    scrollController.animateTo(
-      offset,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
+      final double itemWidth = (0.6.sw) + (32.w); // card + margin
+      final double offset = index * itemWidth;
+
+      scrollController.animateTo(
+        offset,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeOutCubic,
+      );
+    });
   }
 
   RxList<UserMenus> userMenus = <UserMenus>[].obs;
