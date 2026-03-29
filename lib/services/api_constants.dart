@@ -75,4 +75,5 @@ class ApiConstants {
   static String savePropertyDistributionCalculationResult =
       "/savePropertyDistributeResult";
   static String inappNOtificationAcceptRejectRequest = "/accept-reject-request";
+  static const String getMenus = "/user/menu/getMenus";
 }

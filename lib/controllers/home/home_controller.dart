@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
+import 'package:al_wasyeah/models/menus/user_menus_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
@@ -17,6 +17,7 @@ import '../../utils/app_constant.dart';
 
 class HomeController extends GetxController {
   final Rx<RxStatus> salatTimeStatus = RxStatus.loading().obs;
+  final Rx<RxStatus> getMenusStatus = RxStatus.loading().obs;
 
   // Scroller for prayer times
   late ScrollController scrollController;
@@ -25,7 +26,7 @@ class HomeController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    log("Home controller onInit is called.");
+
     scrollController = ScrollController();
 
     // Watch for current prayer changes to auto-scroll
@@ -34,6 +35,7 @@ class HomeController extends GetxController {
     });
 
     getsalatTimeHandle();
+    getMenus();
   }
 
   void scrollToCurrentPrayer() {
@@ -56,6 +58,7 @@ class HomeController extends GetxController {
     );
   }
 
+  RxList<UserMenus> userMenus = <UserMenus>[].obs;
   Rxn<SalatTimeResponseModel?> salatTimeModel =
       Rxn<SalatTimeResponseModel?>(null);
 
@@ -107,6 +110,32 @@ class HomeController extends GetxController {
       );
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<void> getMenus() async {
+    getMenusStatus(RxStatus.loading());
+
+    try {
+      var response = await ApiClient.getData(
+        ApiConstants.getMenus,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        var data = userMenusFromJson(json.encode(response.body));
+        if (data.isNotEmpty) {
+          userMenus(data);
+          getMenusStatus(RxStatus.success());
+        } else {
+          getMenusStatus(RxStatus.empty());
+        }
+      } else {
+        getMenusStatus(RxStatus.error(response.body));
+      }
+    } catch (e, s) {
+      log("Error is : ${e}");
+      log("Stack trace is : ${s}");
+      getMenusStatus(RxStatus.error(e.toString()));
     }
   }
 

@@ -1,5 +1,5 @@
 import 'package:al_wasyeah/controllers/notification/notification_controller.dart';
-import 'package:al_wasyeah/controllers/profile/home_controller.dart';
+import 'package:al_wasyeah/controllers/home/home_controller.dart';
 import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/services/api_constants.dart';

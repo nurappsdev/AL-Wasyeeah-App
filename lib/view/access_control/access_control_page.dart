@@ -118,7 +118,7 @@ class AccessControlPage extends GetView<AccessControlController> {
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       child: ExpansionTile(
-        title: Text(user.name ?? "Unknown",
+        title: Text(user.name ?? AppLocalizations.of(context)!.n_a,
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp)),
         onExpansionChanged: (expanded) {
           if (expanded && user.requestKey != null) {
@@ -134,9 +134,9 @@ class AccessControlPage extends GetView<AccessControlController> {
               );
             }
             if (controller.allContexts.isEmpty) {
-              return const Padding(
+              return Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Text("No contexts available"),
+                child: Text(AppLocalizations.of(context)!.no_data),
               );
             }
             return Column(
@@ -147,7 +147,8 @@ class AccessControlPage extends GetView<AccessControlController> {
                           ?.contains(contextItem.id) ??
                       false;
                   return CheckboxListTile(
-                    title: Text(contextItem.contextName ?? ""),
+                    title: Text(contextItem.contextName ??
+                        AppLocalizations.of(context)!.n_a),
                     value: isChecked,
                     onChanged: (bool? value) {
                       if (value != null && user.requestKey != null) {

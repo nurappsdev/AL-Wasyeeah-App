@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/controllers/profile/home_controller.dart';
+import 'package:al_wasyeah/controllers/home/home_controller.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';

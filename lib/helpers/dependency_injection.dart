@@ -1,7 +1,7 @@
 import 'package:al_wasyeah/controllers/access_control/access_control_controller.dart';
 import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
 import 'package:al_wasyeah/controllers/notification/notification_controller.dart';
-import 'package:al_wasyeah/controllers/profile/home_controller.dart';
+import 'package:al_wasyeah/controllers/home/home_controller.dart';
 import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
 import 'package:al_wasyeah/controllers/property_distribution_calculation/property_distribution_calculation_controller.dart';
 import 'package:al_wasyeah/controllers/splash/splash_controller.dart';

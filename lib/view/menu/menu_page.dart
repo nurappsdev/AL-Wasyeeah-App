@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/controllers/profile/home_controller.dart';
+import 'package:al_wasyeah/controllers/home/home_controller.dart';
 import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
@@ -24,6 +24,7 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeController = Get.find<HomeController>();
     final profileController = Get.find<ProfileController>();
     return Scaffold(
       appBar: AppBar(
@@ -77,10 +78,8 @@ class MenuPage extends StatelessWidget {
 
                 ///=====================Personal Details====================================
                 GestureDetector(
-                  onTap: () {
-                    Get.off(() => ProfilePage(), preventDuplicates: false);
-                    // Get.off(()=>MultiStepFormScreen(),preventDuplicates: false);
-                  },
+                  onTap: () => Get.toNamed(AppRoutes.profilePage,
+                      preventDuplicates: false),
                   child: Container(
                     width: 360.w,
                     height: 60.h,
@@ -129,12 +128,10 @@ class MenuPage extends StatelessWidget {
                   height: 20.h,
                 ),
 
-                ///=====================Device History====================================
+                ///=====================Change  Password====================================
                 InkWell(
-                  onTap: () {
-                    Get.toNamed(AppRoutes.changePasswordPage,
-                        preventDuplicates: false);
-                  },
+                  onTap: () => Get.toNamed(AppRoutes.changePasswordPage,
+                      preventDuplicates: false),
                   child: Container(
                     width: 360.w,
                     height: 60.h,
@@ -183,7 +180,7 @@ class MenuPage extends StatelessWidget {
                   height: 20.h,
                 ),
 
-                ///=====================Device History====================================
+                ///=====================Access Control====================================
                 InkWell(
                   onTap: () => Get.toNamed(AppRoutes.accessControlPage,
                       preventDuplicates: false),
@@ -235,6 +232,131 @@ class MenuPage extends StatelessWidget {
                 SizedBox(
                   height: 20.h,
                 ),
+
+                ///=====================User Menus====================================
+                ...homeController.userMenus
+                    .where((menu) => menu.activeYn == "Y")
+                    .toList()
+                    .map((menu) {
+                  return Column(
+                    children: [
+                      menu.subMenus.isNotEmpty
+                          ? Container(
+                              margin: EdgeInsets.only(left: 2.w),
+                              decoration: BoxDecoration(
+                                color: AppColors.whiteColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.r)),
+                                border: Border.all(
+                                  color: const Color(0xffB0E3D3),
+                                  width: 2.w,
+                                ),
+                              ),
+                              child: ExpansionTile(
+                                tilePadding:
+                                    EdgeInsets.symmetric(horizontal: 12.w),
+                                shape: const RoundedRectangleBorder(
+                                    side: BorderSide.none),
+                                title: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      AppIcons.accessIcon,
+                                    ),
+                                    SizedBox(width: 16.w),
+                                    CustomText(
+                                      text: menu.menuName,
+                                      fontsize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.textColor4E4E4E,
+                                    )
+                                  ],
+                                ),
+                                trailing: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: AppColors.primaryColor,
+                                  size: 24.sp,
+                                ),
+                                children: menu.subMenus.map((subMenu) {
+                                  return ListTile(
+                                    onTap: () {
+                                      // Handle submenu navigation
+                                    },
+                                    title: CustomText(
+                                      text: subMenu.submenuName,
+                                      fontsize: 14.sp,
+                                      color: AppColors.textColor4E4E4E,
+                                    ),
+                                    trailing: Icon(Icons.arrow_forward_ios,
+                                        size: 14.sp,
+                                        color: AppColors.primaryColor),
+                                  );
+                                }).toList(),
+                              ),
+                            )
+                          : InkWell(
+                              onTap: () {
+                                if (menu.menuId ==
+                                    "A8E6179D0F256C2C79F5F84AE19FAF0D") {
+                                  Get.toNamed(AppRoutes.accessControlPage,
+                                      preventDuplicates: false);
+                                } else {
+                                  Get.toNamed(AppRoutes.accessControlPage,
+                                      preventDuplicates: false);
+                                }
+                              },
+                              child: Container(
+                                width: 360.w,
+                                height: 60.h,
+                                margin: EdgeInsets.only(left: 2.w),
+                                decoration: BoxDecoration(
+                                  color: AppColors.whiteColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.r)),
+                                  border: Border.all(
+                                    color: const Color(0xffB0E3D3),
+                                    width: 2.w,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 12.w),
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            AppIcons.accessIcon,
+                                          ),
+                                          SizedBox(width: 16.w),
+                                          CustomText(
+                                            text: menu.menuName,
+                                            fontsize: 16.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.textColor4E4E4E,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 12.w),
+                                      child: SvgPicture.asset(
+                                        AppIcons.chevronIcon,
+                                        color: AppColors.primaryColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                    ],
+                  );
+                }),
 
                 ///=====================Language====================================
                 Container(
