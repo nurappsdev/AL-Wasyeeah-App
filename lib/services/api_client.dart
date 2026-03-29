@@ -31,7 +31,7 @@ class ApiClient extends GetxService {
 
     // Navigate to login (delay avoids context issues)
     Future.microtask(() {
-      Get.offAllNamed(AppRoutes.loginScreen);
+      Get.offAllNamed(AppRoutes.loginPage);
       _isLoggingOut = false;
     });
   }

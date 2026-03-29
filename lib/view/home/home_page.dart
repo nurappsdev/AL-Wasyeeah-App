@@ -29,7 +29,7 @@ class HomePage extends GetView<HomeController> {
         ),
         onPressed: () {
           Get.toNamed(
-            AppRoutes.notificationsScreen,
+            AppRoutes.notificationPage,
             preventDuplicates: false,
           );
         },
@@ -50,7 +50,7 @@ class HomePage extends GetView<HomeController> {
             padding: const EdgeInsets.only(left: 8.0),
             child: InkWell(
               onTap: () {
-                Get.toNamed(AppRoutes.profileInfo, preventDuplicates: false);
+                Get.toNamed(AppRoutes.menuPage, preventDuplicates: false);
               },
               child: Obx(
                 () => Row(
@@ -124,7 +124,7 @@ class HomePage extends GetView<HomeController> {
                         splashRadius: 22,
                         onPressed: () {
                           Get.toNamed(
-                            AppRoutes.notificationsScreen,
+                            AppRoutes.notificationPage,
                             preventDuplicates: false,
                           );
                         },
@@ -763,7 +763,7 @@ class HomePage extends GetView<HomeController> {
 
                   InkWell(
                     onTap: () {
-                      Get.toNamed(AppRoutes.zakatCalculatorScreen,
+                      Get.toNamed(AppRoutes.zakatCalculatorPage,
                           preventDuplicates: false);
                     },
                     child: Stack(
@@ -814,7 +814,7 @@ class HomePage extends GetView<HomeController> {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.toNamed(AppRoutes.propertyDistributionScreen,
+                      Get.toNamed(AppRoutes.propertyDistributionPage,
                           preventDuplicates: false);
                     },
                     child: Stack(

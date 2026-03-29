@@ -41,7 +41,7 @@ class LoginScreen extends StatelessWidget {
       icon: AppIcons.zakatIcons,
       text: AppLocalizations.of(Get.context!)!.zakat_calculation,
       onTap: () {
-        Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
+        Get.toNamed(AppRoutes.zakatCalculatorPage, preventDuplicates: false);
       },
     ),
     GridItem(
@@ -207,7 +207,7 @@ class LoginScreen extends StatelessWidget {
                       ///=============Forgot====================
                       InkWell(
                           onTap: () {
-                            Get.toNamed(AppRoutes.forgotPassScreen,
+                            Get.toNamed(AppRoutes.forgotPasswordPage,
                                 parameters: {'email': emailController.text});
                           },
                           child: Padding(
@@ -261,7 +261,7 @@ class LoginScreen extends StatelessWidget {
                               )),
                           InkWell(
                               onTap: () {
-                                Get.toNamed(AppRoutes.registrationScreen,
+                                Get.toNamed(AppRoutes.registrationPage,
                                     preventDuplicates: false);
                               },
                               child: CustomText(

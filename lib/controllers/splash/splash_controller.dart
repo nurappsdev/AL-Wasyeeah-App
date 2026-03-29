@@ -19,7 +19,7 @@ class SplashController extends GetxController {
     if (token.isNotEmpty) {
       Get.offAllNamed(AppRoutes.homePage);
     } else {
-      Get.offAllNamed(AppRoutes.onboardingScreen);
+      Get.offAllNamed(AppRoutes.onboardingPage);
     }
   }
 }

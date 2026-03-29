@@ -54,7 +54,7 @@ class _WasyeeahAppState extends State<WasyeeahApp> {
           navigatorKey: Get.key,
           theme: light(),
           getPages: AppRoutes.routes,
-          initialRoute: AppRoutes.splashScreen,
+          initialRoute: AppRoutes.splashPage,
           defaultTransition: Transition.topLevel,
           transitionDuration: const Duration(milliseconds: 500),
           locale: _locale,

@@ -117,8 +117,7 @@ class OnboardingScreen extends StatelessWidget {
                 child: CustomButtonCommon(
                   title: AppLocalizations.of(context)!.get_start,
                   onpress: () {
-                    Get.toNamed(AppRoutes.loginScreen,
-                        preventDuplicates: false);
+                    Get.toNamed(AppRoutes.loginPage, preventDuplicates: false);
                   },
                 ),
               ),

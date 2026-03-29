@@ -77,7 +77,7 @@ class AuthController extends GetxController {
         ToastMessageHelper.successMessageShowToster(
             AppLocalizations.of(Get.context!)!.account_create_success);
         Get.toNamed(
-          AppRoutes.loginScreen,
+          AppRoutes.loginPage,
           preventDuplicates: false,
         );
       }

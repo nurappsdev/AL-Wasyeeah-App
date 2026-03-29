@@ -431,7 +431,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             )),
                         InkWell(
                             onTap: () {
-                              Get.toNamed(AppRoutes.loginScreen,
+                              Get.toNamed(AppRoutes.loginPage,
                                   preventDuplicates: false);
                             },
                             child: CustomText(

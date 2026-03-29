@@ -3,7 +3,6 @@ import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
-import 'package:al_wasyeah/view/profile/languge_screen.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
 import 'package:al_wasyeah/view/widgets/custom_button.dart';
 import 'package:al_wasyeah/view/widgets/custom_text.dart';
@@ -14,27 +13,24 @@ import 'package:get/get.dart';
 import '../../helpers/helpers.dart';
 import '../../helpers/prefs_helper.dart';
 
+import 'package:al_wasyeah/view/app.dart';
 import '../../controllers/notification/notification_controller.dart';
 import '../../services/api_constants.dart';
 import '../profile/profile_page.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class MenuPage extends StatelessWidget {
-  MenuPage({super.key});
-
-  final homeController = Get.find<HomeController>();
-
-  final profileController = Get.find<ProfileController>();
+  const MenuPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final profileController = Get.find<ProfileController>();
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
           text: AppLocalizations.of(context)!.user_profile,
           fontsize: 18.sp,
         ),
-        leading: Icon(Icons.arrow_back),
       ),
       body: BackgroundImageContainer(
         child: Container(
@@ -136,7 +132,7 @@ class MenuPage extends StatelessWidget {
                 ///=====================Device History====================================
                 InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.changePassScreen,
+                    Get.toNamed(AppRoutes.changePasswordPage,
                         preventDuplicates: false);
                   },
                   child: Container(
@@ -241,51 +237,78 @@ class MenuPage extends StatelessWidget {
                 ),
 
                 ///=====================Language====================================
-                InkWell(
-                  onTap: () {
-                    Get.to(() => LanguageScreen());
-                  },
-                  child: Container(
-                    width: 360.w,
-                    height: 60.h,
-                    margin: EdgeInsets.only(left: 2.w),
-                    decoration: BoxDecoration(
-                      color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                      border: Border.all(
-                        color: Color(0xffB0E3D3),
-                        width: 2.w,
+                Container(
+                  width: 360.w,
+                  height: 60.h,
+                  margin: EdgeInsets.only(left: 2.w),
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteColor,
+                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                    border: Border.all(
+                      color: Color(0xffB0E3D3),
+                      width: 2.w,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              AppIcons.languageIcon,
+                            ),
+                            SizedBox(width: 16.w),
+                            CustomText(
+                              text: AppLocalizations.of(context)!.language,
+                              fontsize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textColor4E4E4E,
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                AppIcons.languageIcon,
-                              ),
-                              SizedBox(width: 16.w),
-                              CustomText(
-                                text: AppLocalizations.of(context)!.language,
-                                fontsize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textColor4E4E4E,
-                              )
-                            ],
-                          ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: Row(
+                          children: [
+                            CustomText(
+                              text: "En",
+                              fontsize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Localizations.localeOf(context)
+                                          .languageCode ==
+                                      'en'
+                                  ? AppColors.primaryColor
+                                  : Colors.grey,
+                            ),
+                            Switch(
+                              value: Localizations.localeOf(context)
+                                      .languageCode ==
+                                  'bn',
+                              onChanged: (value) {
+                                Locale newLocale = value
+                                    ? const Locale('bn')
+                                    : const Locale('en');
+                                WasyeeahApp.setLocale(context, newLocale);
+                              },
+                              activeColor: AppColors.primaryColor,
+                            ),
+                            CustomText(
+                              text: "Bn",
+                              fontsize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Localizations.localeOf(context)
+                                          .languageCode ==
+                                      'bn'
+                                  ? AppColors.primaryColor
+                                  : Colors.grey,
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
-                          child: SvgPicture.asset(
-                            AppIcons.chevronIcon,
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -402,7 +425,7 @@ class MenuPage extends StatelessWidget {
                                 Get.delete<NotificationController>(force: true);
                                 Get.delete<ProfileController>(force: true);
 
-                                Get.offAllNamed(AppRoutes.loginScreen);
+                                Get.offAllNamed(AppRoutes.loginPage);
                               })),
                     ],
                   )
