@@ -5,6 +5,7 @@ import 'package:al_wasyeah/view/auth/forgot_pass_screen.dart';
 import 'package:al_wasyeah/view/auth/login_screen.dart';
 import 'package:al_wasyeah/view/auth/otp_verify_screen.dart';
 import 'package:al_wasyeah/view/auth/registration_screen.dart';
+import 'package:al_wasyeah/view/access_control/access_control_panel_page.dart';
 import 'package:al_wasyeah/view/nominee/nominee_details_page.dart';
 import 'package:al_wasyeah/view/nominee/nominee_page.dart';
 import 'package:al_wasyeah/view/property_distribution_calculation/property_distribution_calculation_page.dart';
@@ -46,6 +47,7 @@ class AppRoutes {
   static const String witnessDetailsPage = "/witness_details_page";
   // Access Control
   static const String accessControlPage = "/access_control_page";
+  static const String accessCntrolPanelPage = "/access_control_panel_page";
   // Notification
   static const String notificationPage = "/notification_page";
   // Menu
@@ -105,6 +107,10 @@ class AppRoutes {
           binding: ZakatCalculatorBinding(),
         ),
         GetPage(name: menuPage, page: () => MenuPage()),
+        GetPage(
+            name: accessCntrolPanelPage,
+            page: () => AccessControlPanelPage(),
+            binding: AccessControlBinding()),
         GetPage(name: wasyyahPriviewPage, page: () => WasyyahPreviewPage()),
       ];
 }

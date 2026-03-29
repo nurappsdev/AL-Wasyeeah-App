@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/view/widgets/background_image_screen_widget.dart';
@@ -514,6 +516,7 @@ class PropertyDistributionCalculationPage
   }
 
   Widget _resultRow(String label, String value) {
+    log("Variable Type: ${value.runtimeType}");
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.h),
       child: Row(

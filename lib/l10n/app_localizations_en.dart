@@ -1402,4 +1402,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get please_select_a_role => 'Please select a role';
+
+  @override
+  String get zakat_information => 'Zakat Information';
+
+  @override
+  String get total_asset => 'Total Asset';
+
+  @override
+  String get zakat_amount => 'Zakat Amount';
+
+  @override
+  String get last_calculated => 'Last Calculated';
 }

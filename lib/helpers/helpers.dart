@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 export 'toast_message_helper.dart';
 export 'app_routes.dart';
 
-extension NumberLocalization on dynamic {
+extension NumberLocalization on Object? {
   dynamic toLocal() {
     if (this == null) return '';
 

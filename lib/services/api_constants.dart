@@ -30,7 +30,7 @@ class ApiConstants {
   static const String accessControl = "/getUsersByRole?isWitness=";
   static const String accessFeature = "/getContexts";
   static const String accessSelect = "/getUserContexts";
-
+  static const String accessControlPanelData = "/getContextsData";
   static const String nisab = "/user/getNisabRates";
 
   static const String wasyyahYouDataYou = "/user/getWasiyyah";

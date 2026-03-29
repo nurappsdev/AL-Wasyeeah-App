@@ -1413,4 +1413,16 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get please_select_a_role => 'দয়া করে একটি ভূমিকা নির্বাচন করুন';
+
+  @override
+  String get zakat_information => 'যাকাত তথ্য';
+
+  @override
+  String get total_asset => 'মোট সম্পদ';
+
+  @override
+  String get zakat_amount => 'যাকাত পরিমাণ';
+
+  @override
+  String get last_calculated => 'শেষ গণনা';
 }

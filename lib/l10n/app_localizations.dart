@@ -2822,6 +2822,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please select a role'**
   String get please_select_a_role;
+
+  /// No description provided for @zakat_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat Information'**
+  String get zakat_information;
+
+  /// No description provided for @total_asset.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Asset'**
+  String get total_asset;
+
+  /// No description provided for @zakat_amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat Amount'**
+  String get zakat_amount;
+
+  /// No description provided for @last_calculated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Calculated'**
+  String get last_calculated;
 }
 
 class _AppLocalizationsDelegate

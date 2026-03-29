@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:al_wasyeah/models/access_control/access_control_user_model.dart';
 import 'package:al_wasyeah/models/access_control/context_model.dart';
 import 'package:al_wasyeah/models/access_control/user_context_model.dart';
+import 'package:al_wasyeah/models/access_control/witness_nominee_context_data_model.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/services/api_client.dart';
 import 'package:al_wasyeah/helpers/toast_message_helper.dart';
@@ -20,6 +22,11 @@ class AccessControlController extends GetxController {
   RxMap<String, bool> userHasChanges = <String, bool>{}.obs;
 
   bool get hasAnyChanges => userHasChanges.values.any((changed) => changed);
+
+  final Rx<RxStatus> contextsPanelDataStatus = RxStatus.loading().obs;
+
+  final Rx<WitnessNomineeContextDataModel> witnessNomineeContextData =
+      WitnessNomineeContextDataModel().obs;
 
   RxBool isUsersLoading = false.obs;
   RxBool isSaving = false.obs;
@@ -86,6 +93,29 @@ class AccessControlController extends GetxController {
     }
   }
 
+  Future<void> fetchContextsPanelData(String requestKey) async {
+    contextsPanelDataStatus(RxStatus.loading());
+
+    try {
+      var response = await ApiClient.getData(
+          ApiConstants.accessControlPanelData + "?requestKey=$requestKey");
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        log("Data is : ${response.body}");
+        var data = jsonEncode(response.body);
+        witnessNomineeContextData(witnessNomineeContextDataModelFromJson(data));
+        contextsPanelDataStatus(RxStatus.success());
+        log("Data of access control panel: ${witnessNomineeContextData.value.toJson()}");
+      } else {
+        contextsPanelDataStatus(RxStatus.empty());
+      }
+    } catch (error, stackTrace) {
+      log("Error is : ${error}");
+      log("Stack trace is : ${stackTrace}");
+      contextsPanelDataStatus(RxStatus.error(error.toString()));
+    }
+  }
+
   void toggleContext(String requestKey, int contextId, bool isChecked) {
     List<int> currentSelections =
         List.from(userSelectedContexts[requestKey] ?? []);
@@ -100,10 +130,8 @@ class AccessControlController extends GetxController {
   }
 
   Future<void> saveAllChanges() async {
-    List<String> changedUserKeys = userHasChanges.entries
-        .where((e) => e.value)
-        .map((e) => e.key)
-        .toList();
+    List<String> changedUserKeys =
+        userHasChanges.entries.where((e) => e.value).map((e) => e.key).toList();
 
     if (changedUserKeys.isEmpty) return;
 
@@ -130,12 +158,15 @@ class AccessControlController extends GetxController {
       }
 
       if (allSuccess) {
-        ToastMessageHelper.successMessageShowToster("All changes saved successfully");
+        ToastMessageHelper.successMessageShowToster(
+            "All changes saved successfully");
       } else {
-        ToastMessageHelper.errorMessageShowToster("Some changes failed to save");
+        ToastMessageHelper.errorMessageShowToster(
+            "Some changes failed to save");
       }
     } catch (e) {
-      ToastMessageHelper.errorMessageShowToster("An error occurred while saving");
+      ToastMessageHelper.errorMessageShowToster(
+          "An error occurred while saving");
     } finally {
       isSaving.value = false;
     }
