@@ -460,6 +460,6 @@
   "failed_to_delete_nominee":"Failded to delete nominee",
   "nominee_saved_successfully":"Nominee Saved Successfully",
   "save_failed_try_again":"Save Failed. Please try again.",
-  "add_failed_try_again":"Add Failed. Please try again."
-
+  "add_failed_try_again":"Add Failed. Please try again.",
+  "please_select_a_role": "Please select a role"
 }

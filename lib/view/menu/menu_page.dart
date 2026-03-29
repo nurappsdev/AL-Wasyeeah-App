@@ -189,10 +189,8 @@ class MenuPage extends StatelessWidget {
 
                 ///=====================Device History====================================
                 InkWell(
-                  onTap: () {
-                    // Get.toNamed(AppRoutes.accessControlTabScreen,
-                    //     preventDuplicates: false);
-                  },
+                  onTap: () => Get.toNamed(AppRoutes.accessControlPage,
+                      preventDuplicates: false),
                   child: Container(
                     width: 360.w,
                     height: 60.h,

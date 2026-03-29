@@ -1410,4 +1410,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get nominee_saved_successfully => 'নমিনি সফলভাবে সংরক্ষণ করা হয়েছে';
+
+  @override
+  String get please_select_a_role => 'দয়া করে একটি ভূমিকা নির্বাচন করুন';
 }

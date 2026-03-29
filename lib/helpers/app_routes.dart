@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/helpers/dependency_injection.dart';
+import 'package:al_wasyeah/view/access_control/access_control_page.dart';
 import 'package:al_wasyeah/view/auth/change_password_screen.dart';
 import 'package:al_wasyeah/view/auth/forgot_pass_screen.dart';
 import 'package:al_wasyeah/view/auth/login_screen.dart';
@@ -44,6 +45,8 @@ class AppRoutes {
   static const String witnessesPage = "/witness_page";
   static const String witnessDetailsPage = "/witness_details_page";
 
+  static const String accessControlPage = "/access_control_page";
+
   static const String notificationsScreen = "/notification_page";
   static const String profileInfo = "/profile_info_page";
   static const String featureScreen = "/feature_page";
@@ -83,12 +86,16 @@ class AppRoutes {
             name: witnessesPage,
             page: () => WitnessesPage(),
             binding: WitnessesBinding()),
+        GetPage(name: witnessDetailsPage, page: () => WitnessDetailsPage()),
         GetPage(
             name: nomineesPage,
             page: () => NomineesPage(),
             binding: NomineesBinding()),
-        GetPage(name: witnessDetailsPage, page: () => WitnessDetailsPage()),
         GetPage(name: nomineeDetailsPage, page: () => NomineeDetailsPage()),
+        GetPage(
+            name: accessControlPage,
+            page: () => AccessControlPage(),
+            binding: AccessControlBinding()),
         GetPage(name: notificationsScreen, page: () => NotificationPage()),
         GetPage(name: profileInfo, page: () => MenuPage()),
         GetPage(name: wasyyahPriviewPage, page: () => WasyyahPreviewPage()),

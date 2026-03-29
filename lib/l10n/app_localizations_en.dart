@@ -1399,4 +1399,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nominee_saved_successfully => 'Nominee Saved Successfully';
+
+  @override
+  String get please_select_a_role => 'Please select a role';
 }

@@ -2816,6 +2816,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nominee Saved Successfully'**
   String get nominee_saved_successfully;
+
+  /// No description provided for @please_select_a_role.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a role'**
+  String get please_select_a_role;
 }
 
 class _AppLocalizationsDelegate

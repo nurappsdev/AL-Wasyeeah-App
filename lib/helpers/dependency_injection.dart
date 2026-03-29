@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/controllers/access_control/access_control_controller.dart';
 import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
 import 'package:al_wasyeah/controllers/notification/notification_controller.dart';
 import 'package:al_wasyeah/controllers/profile/home_controller.dart';
@@ -43,6 +44,13 @@ class NomineesBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<NomineeController>(() => NomineeController());
+  }
+}
+
+class AccessControlBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<AccessControlController>(() => AccessControlController());
   }
 }
 
