@@ -1,11 +1,16 @@
+import 'dart:developer';
+
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:al_wasyeah/models/wasyyah/get_wasyyah_response_model.dart';
 import 'package:al_wasyeah/services/api_client.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
+import 'package:al_wasyeah/services/wasyyah_pdf_service.dart';
+import 'package:open_file/open_file.dart';
 import 'package:get/get.dart';
 
 class WasyyahController extends GetxController {
-  final RxList<GetWasyyahResponseModel> wasyyahList = <GetWasyyahResponseModel>[].obs;
+  final RxList<GetWasyyahResponseModel> wasyyahList =
+      <GetWasyyahResponseModel>[].obs;
   final RxBool isLoading = false.obs;
   final RxBool isSaveLoading = false.obs;
 
@@ -25,9 +30,11 @@ class WasyyahController extends GetxController {
             .map((item) => GetWasyyahResponseModel.fromJson(item))
             .toList();
         // Sort items by orderSeq locally
-        wasyyahList.sort((a, b) => (a.orderSeq ?? 0).compareTo(b.orderSeq ?? 0));
+        wasyyahList
+            .sort((a, b) => (a.orderSeq ?? 0).compareTo(b.orderSeq ?? 0));
       } else {
-        ToastMessageHelper.errorMessageShowToster("Failed to load Wasyyah data");
+        ToastMessageHelper.errorMessageShowToster(
+            "Failed to load Wasyyah data");
       }
     } catch (e) {
       ToastMessageHelper.errorMessageShowToster("Network error: $e");
@@ -87,10 +94,12 @@ class WasyyahController extends GetxController {
         payload,
       );
       if (response.statusCode != 200 && response.statusCode != 201) {
-        ToastMessageHelper.errorMessageShowToster("Failed to sync order with server");
+        ToastMessageHelper.errorMessageShowToster(
+            "Failed to sync order with server");
       }
     } catch (e) {
-      ToastMessageHelper.errorMessageShowToster("Network error during reorder: $e");
+      ToastMessageHelper.errorMessageShowToster(
+          "Network error during reorder: $e");
     }
   }
 
@@ -99,8 +108,21 @@ class WasyyahController extends GetxController {
     final item = wasyyahList.removeAt(oldIndex);
     wasyyahList.insert(newIndex, item);
     wasyyahList.refresh();
-    
+
     // Sync with backend
     updateOrder();
+  }
+
+  Future<void> generateAndPreviewPdf() async {
+    isLoading(true);
+    try {
+      final file = await WasyyahPdfService.generateWasyyahPdf(wasyyahList);
+      await OpenFile.open(file.path);
+    } catch (e, s) {
+      log("PDF ISSUE", error: e, stackTrace: s);
+      ToastMessageHelper.errorMessageShowToster("Failed to generate PDF: $e");
+    } finally {
+      isLoading(false);
+    }
   }
 }

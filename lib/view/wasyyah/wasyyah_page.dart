@@ -22,6 +22,18 @@ class WasyyahPage extends GetView<WasyyahController> {
           fontsize: 18.sp,
           fontWeight: FontWeight.w600,
         ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 16.w),
+            child: CustomButton(
+              title: AppLocalizations.of(context)!.preview,
+              onpress: controller.generateAndPreviewPdf,
+              width: 100.w,
+              height: 35.h,
+              color: AppColors.primaryColor,
+            ),
+          ),
+        ],
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
