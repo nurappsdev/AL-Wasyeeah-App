@@ -28,12 +28,10 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
           fontsize: 18.sp,
         ),
       ),
-      body: BackgroundImageContainer(
-        child: controller.obx(
-          (state) => _buildContent(context, isLoading: false),
-          onLoading: _buildContent(context, isLoading: true),
-          onError: (err) => ErrorWidget(Exception(err)),
-        ),
+      body: controller.obx(
+        (state) => _buildContent(context, isLoading: false),
+        onLoading: _buildContent(context, isLoading: true),
+        onError: (err) => ErrorWidget(Exception(err)),
       ),
     );
   }

@@ -33,243 +33,237 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
           fontsize: 18.sp,
         ),
       ),
-      body: BackgroundImageContainer(
-        child: Container(
-          height: Get.height,
-          width: double.infinity,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: 24.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 24.h),
-                  // Profile Header Card
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppColors.primaryColor,
-                          AppColors.primaryColor.withOpacity(0.8)
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+      body: Container(
+        height: Get.height,
+        width: double.infinity,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: 24.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 24.h),
+                // Profile Header Card
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColors.primaryColor,
+                        AppColors.primaryColor.withOpacity(0.8)
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(20.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primaryColor.withOpacity(0.3),
+                        blurRadius: 15,
+                        offset: const Offset(0, 8),
                       ),
-                      borderRadius: BorderRadius.circular(20.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primaryColor.withOpacity(0.3),
-                          blurRadius: 15,
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
-                    ),
-                    padding: EdgeInsets.all(20.w),
-                    child: Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 2),
-                          ),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white.withOpacity(0.2),
-                            radius: 35.r,
-                            child: nominee.imageUrl != null
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(35.r),
-                                    child: Image.network(
-                                      ApiConstants.imageUrl + nominee.imageUrl!,
-                                      fit: BoxFit.fill,
-                                      width: 70.w,
-                                      height: 70.h,
-                                    ),
-                                  )
-                                : Icon(Icons.person,
-                                    color: Colors.white, size: 40.sp),
-                          ),
-                        ),
-                        SizedBox(width: 20.w),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                nominee.name ?? "",
-                                style: TextStyle(
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              SizedBox(height: 4.h),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10.w, vertical: 4.h),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(20.r),
-                                ),
-                                child: Text(
-                                  nominee.relation ??
-                                      AppLocalizations.of(context)!.n_a,
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    ],
                   ),
-                  SizedBox(height: 24.h),
-
-                  // Details Section
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 15,
-                          offset: const Offset(0, 5),
+                  padding: EdgeInsets.all(20.w),
+                  child: Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 2),
                         ),
-                      ],
-                      border: Border.all(color: Colors.grey.shade100),
-                    ),
-                    padding: EdgeInsets.all(20.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white.withOpacity(0.2),
+                          radius: 35.r,
+                          child: nominee.imageUrl != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(35.r),
+                                  child: Image.network(
+                                    ApiConstants.imageUrl + nominee.imageUrl!,
+                                    fit: BoxFit.fill,
+                                    width: 70.w,
+                                    height: 70.h,
+                                  ),
+                                )
+                              : Icon(Icons.person,
+                                  color: Colors.white, size: 40.sp),
+                        ),
+                      ),
+                      SizedBox(width: 20.w),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              padding: EdgeInsets.all(8.w),
-                              decoration: BoxDecoration(
-                                color: AppColors.primaryColor.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
-                              child: Icon(Icons.person_outline,
-                                  color: AppColors.primaryColor, size: 20.sp),
-                            ),
-                            SizedBox(width: 12.w),
                             Text(
-                              AppLocalizations.of(context)!.personal_details,
+                              nominee.name ?? "",
                               style: TextStyle(
-                                fontSize: 18.sp,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black87,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(height: 4.h),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10.w, vertical: 4.h),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(20.r),
+                              ),
+                              child: Text(
+                                nominee.relation ??
+                                    AppLocalizations.of(context)!.n_a,
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 16.h),
-                        const Divider(),
-                        SizedBox(height: 16.h),
-                        _buildDetailRow(
-                            context,
-                            Icons.phone_android,
-                            AppLocalizations.of(context)!.mobile,
-                            nominee.mobile),
-                        _buildDetailRow(
-                            context,
-                            Icons.work_outline,
-                            AppLocalizations.of(context)!.profession,
-                            nominee.profession),
-                        _buildDetailRow(context, Icons.email_outlined,
-                            AppLocalizations.of(context)!.email, nominee.email),
-                        _buildDetailRow(
-                            context,
-                            Icons.favorite_border,
-                            AppLocalizations.of(context)!.marital_status,
-                            nominee.maritalStatus),
-                        _buildDetailRow(
-                            context,
-                            Icons.person_add_disabled_outlined,
-                            AppLocalizations.of(context)!.mother_s_name_1,
-                            nominee.motherName),
-                        _buildDetailRow(
-                            context,
-                            Icons.person_add_alt_1_outlined,
-                            AppLocalizations.of(context)!.father_s_name_1,
-                            nominee.fatherName),
-                        SizedBox(height: 32.h),
-                        // if (!canRemove)
-                        //   Container(
-                        //     width: double.infinity,
-                        //     decoration: BoxDecoration(
-                        //       borderRadius: BorderRadius.circular(12.r),
-                        //       boxShadow: [
-                        //         BoxShadow(
-                        //           color:
-                        //               AppColors.primaryColor.withOpacity(0.2),
-                        //           blurRadius: 10,
-                        //           offset: const Offset(0, 4),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //     child: CustomButtonCommon(
-                        //       title: AppLocalizations.of(context)!.access_panel,
-                        //       onpress: () {
-                        //         // Get.toNamed(AppRoutes.nomineePhanelData,
-                        //         //     arguments: nominee.requestKey);
-                        //       },
-                        //     ),
-                        //   )
-                        // else
-                        if (canRemove != null && canRemove!)
-                          Obx(() => CustomButtonCommon(
-                                title: AppLocalizations.of(context)!.remove,
-                                color: AppColors.redColor,
-                                loading: controller
-                                    .deleteNomineeStatus.value.isLoading,
-                                onpress: () {
-                                  nominee.requestKey != null
-                                      ? controller
-                                          .deleteNominee(
-                                              requestKey: nominee.requestKey!)
-                                          .then((value) {
-                                          if (value) {
-                                            Get.back();
-                                          }
-                                        })
-                                      : ToastMessageHelper
-                                          .errorMessageShowToster(
-                                              "Request key not found");
-                                },
-                              )),
-                        SizedBox(height: 16.h),
-                        if (canRemove != null && !canRemove!)
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 24.h),
+
+                // Details Section
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 15,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                    border: Border.all(color: Colors.grey.shade100),
+                  ),
+                  padding: EdgeInsets.all(20.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
                           Container(
-                            width: double.infinity,
+                            padding: EdgeInsets.all(8.w),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.r),
-                              border: Border.all(color: AppColors.primaryColor),
+                              color: AppColors.primaryColor.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10.r),
                             ),
-                            child: CustomButtonCommon(
-                              title: AppLocalizations.of(context)!.add_nominee,
-                              color: Colors.white,
-                              titlecolor: AppColors.primaryColor,
-                              onpress: nominee.email == null
-                                  ? null
-                                  : () {
-                                      controller.addYourNominee(
-                                          email: nominee.email!);
-                                    },
+                            child: Icon(Icons.person_outline,
+                                color: AppColors.primaryColor, size: 20.sp),
+                          ),
+                          SizedBox(width: 12.w),
+                          Text(
+                            AppLocalizations.of(context)!.personal_details,
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
                             ),
                           ),
-                      ],
-                    ),
+                        ],
+                      ),
+                      SizedBox(height: 16.h),
+                      const Divider(),
+                      SizedBox(height: 16.h),
+                      _buildDetailRow(context, Icons.phone_android,
+                          AppLocalizations.of(context)!.mobile, nominee.mobile),
+                      _buildDetailRow(
+                          context,
+                          Icons.work_outline,
+                          AppLocalizations.of(context)!.profession,
+                          nominee.profession),
+                      _buildDetailRow(context, Icons.email_outlined,
+                          AppLocalizations.of(context)!.email, nominee.email),
+                      _buildDetailRow(
+                          context,
+                          Icons.favorite_border,
+                          AppLocalizations.of(context)!.marital_status,
+                          nominee.maritalStatus),
+                      _buildDetailRow(
+                          context,
+                          Icons.person_add_disabled_outlined,
+                          AppLocalizations.of(context)!.mother_s_name_1,
+                          nominee.motherName),
+                      _buildDetailRow(
+                          context,
+                          Icons.person_add_alt_1_outlined,
+                          AppLocalizations.of(context)!.father_s_name_1,
+                          nominee.fatherName),
+                      SizedBox(height: 32.h),
+                      // if (!canRemove)
+                      //   Container(
+                      //     width: double.infinity,
+                      //     decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(12.r),
+                      //       boxShadow: [
+                      //         BoxShadow(
+                      //           color:
+                      //               AppColors.primaryColor.withOpacity(0.2),
+                      //           blurRadius: 10,
+                      //           offset: const Offset(0, 4),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //     child: CustomButtonCommon(
+                      //       title: AppLocalizations.of(context)!.access_panel,
+                      //       onpress: () {
+                      //         // Get.toNamed(AppRoutes.nomineePhanelData,
+                      //         //     arguments: nominee.requestKey);
+                      //       },
+                      //     ),
+                      //   )
+                      // else
+                      if (canRemove != null && canRemove!)
+                        Obx(() => CustomButtonCommon(
+                              title: AppLocalizations.of(context)!.remove,
+                              color: AppColors.redColor,
+                              loading: controller
+                                  .deleteNomineeStatus.value.isLoading,
+                              onpress: () {
+                                nominee.requestKey != null
+                                    ? controller
+                                        .deleteNominee(
+                                            requestKey: nominee.requestKey!)
+                                        .then((value) {
+                                        if (value) {
+                                          Get.back();
+                                        }
+                                      })
+                                    : ToastMessageHelper.errorMessageShowToster(
+                                        "Request key not found");
+                              },
+                            )),
+                      SizedBox(height: 16.h),
+                      if (canRemove != null && !canRemove!)
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12.r),
+                            border: Border.all(color: AppColors.primaryColor),
+                          ),
+                          child: CustomButtonCommon(
+                            title: AppLocalizations.of(context)!.add_nominee,
+                            color: Colors.white,
+                            titlecolor: AppColors.primaryColor,
+                            onpress: nominee.email == null
+                                ? null
+                                : () {
+                                    controller.addYourNominee(
+                                        email: nominee.email!);
+                                  },
+                          ),
+                        ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

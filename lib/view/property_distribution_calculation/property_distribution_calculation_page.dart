@@ -68,283 +68,278 @@ class PropertyDistributionCalculationPage
         backgroundColor: AppColors.whiteColor,
         // foregroundColor: Colors.black,
       ),
-      body: BackgroundImageContainer(
-        child: Column(
-          children: [
-            Expanded(
-              child: controller.obx(
-                (state) {
-                  return ListView(
-                    children: [
-                      _sectionTitle(
-                          AppLocalizations.of(context)!.relative_list),
-                      ...controller.filteredRelatives.map((rel) {
-                        final relativeId = rel.encrypted!;
-                        return Obx(() {
-                          return Column(
-                            children: [
-                              _buildRelativeTile(relativeId),
-                              if ((relativeId ==
-                                          PropertyDistributionCalculationController
-                                              .deceasedSonId ||
-                                      relativeId ==
-                                          PropertyDistributionCalculationController
-                                              .deceasedDaughterId) &&
-                                  controller.isChecked[relativeId] == true)
-                                ..._buildDynamicTiles(relativeId),
-                              const Divider(),
-                            ],
-                          );
-                        });
-                      }).toList(),
-                      _sectionTitle(AppLocalizations.of(context)!
-                          .property_distribution_calculation),
-                      _buildPropertySection(),
-                      Obx(() {
-                        if (controller.propertyDistributionResult.isEmpty) {
-                          return const SizedBox.shrink();
-                        }
+      body: Column(
+        children: [
+          Expanded(
+            child: controller.obx(
+              (state) {
+                return ListView(
+                  children: [
+                    _sectionTitle(AppLocalizations.of(context)!.relative_list),
+                    ...controller.filteredRelatives.map((rel) {
+                      final relativeId = rel.encrypted!;
+                      return Obx(() {
                         return Column(
                           children: [
-                            _sectionTitle(AppLocalizations.of(context)!
-                                .calculation_results),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primaryColor,
-
-                                    // minimumSize: const Size(double.infinity, 50),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.r),
-                                    ),
-                                  ),
-                                  onPressed: () => controller
-                                      .savePropertyDistributionCalculationResult(),
-                                  child: Text(
-                                    AppLocalizations.of(context)!.save,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 22.sp),
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primaryColor,
-                                    foregroundColor: Colors.white,
-                                    // minimumSize: const Size(double.infinity, 50),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  onPressed: () => controller
-                                      .downloadPropertyDistributionCalculationResult(),
-                                  child: Text(
-                                    AppLocalizations.of(context)!.download,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 22.sp),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            _buildPieChartSection(),
-                            _buildResultCards(),
-                          ],
-                        );
-                      }),
-                    ],
-                  );
-                },
-                onLoading: Skeletonizer(
-                  enabled: true,
-                  child: ListView(
-                    children: [
-                      _sectionTitle("Relative List"),
-
-                      // Dummy Relative Tiles
-                      ...List.generate(5, (index) {
-                        return Column(
-                          children: [
-                            CheckboxListTile(
-                              value: false,
-                              onChanged: null,
-                              title: Text("Relative ${index + 1}"),
-                              controlAffinity: ListTileControlAffinity.leading,
-                            ),
+                            _buildRelativeTile(relativeId),
+                            if ((relativeId ==
+                                        PropertyDistributionCalculationController
+                                            .deceasedSonId ||
+                                    relativeId ==
+                                        PropertyDistributionCalculationController
+                                            .deceasedDaughterId) &&
+                                controller.isChecked[relativeId] == true)
+                              ..._buildDynamicTiles(relativeId),
                             const Divider(),
                           ],
                         );
-                      }),
+                      });
+                    }).toList(),
+                    _sectionTitle(AppLocalizations.of(context)!
+                        .property_distribution_calculation),
+                    _buildPropertySection(),
+                    Obx(() {
+                      if (controller.propertyDistributionResult.isEmpty) {
+                        return const SizedBox.shrink();
+                      }
+                      return Column(
+                        children: [
+                          _sectionTitle(AppLocalizations.of(context)!
+                              .calculation_results),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primaryColor,
 
-                      _sectionTitle("Property Distribution Calculation"),
-
-                      // Dummy Property Section
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            _buildPropertyField(
-                              label: "Land in Decimal",
-                              controller: TextEditingController(text: "100"),
-                              hint: "",
-                            ),
-                            _buildPropertyFieldWithUnit(
-                              label: "Gold Amount",
-                              controller: TextEditingController(text: "50"),
-                              hint: "",
-                              unitValue: "gram".obs,
-                            ),
-                            _buildPropertyFieldWithUnit(
-                              label: "Silver Amount",
-                              controller: TextEditingController(text: "30"),
-                              hint: "",
-                              unitValue: "gram".obs,
-                            ),
-                            _buildPropertyField(
-                              label: "Total Money",
-                              controller: TextEditingController(text: "100000"),
-                              hint: "",
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      _sectionTitle("Calculation Results"),
-
-                      // Dummy Pie Chart Section
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 20.h),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 250.h,
-                              child: PieChart(
-                                PieChartData(
-                                  sections: _dummyResults
-                                      .asMap()
-                                      .entries
-                                      .map((entry) {
-                                    final index = entry.key;
-                                    final data = entry.value;
-                                    final percentage =
-                                        (data["portionPart"]) * 100;
-
-                                    return PieChartSectionData(
-                                      color: _chartColors[
-                                          index % _chartColors.length],
-                                      value: percentage,
-                                      title: '${percentage}%',
-                                      radius: 60,
-                                    );
-                                  }).toList(),
+                                  // minimumSize: const Size(double.infinity, 50),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.r),
+                                  ),
+                                ),
+                                onPressed: () => controller
+                                    .savePropertyDistributionCalculationResult(),
+                                child: Text(
+                                  AppLocalizations.of(context)!.save,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 22.sp),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // Dummy Result Cards
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _dummyResults.length,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 10.h),
-                        itemBuilder: (context, index) {
-                          final data = _dummyResults[index];
-
-                          return Card(
-                            elevation: 4,
-                            margin: EdgeInsets.only(bottom: 16.h),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(16.h),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: 4.w,
-                                        height: 24.h,
-                                        color: _chartColors[
-                                            index % _chartColors.length],
-                                      ),
-                                      SizedBox(width: 8.w),
-                                      Text(
-                                        data["relativeName"],
-                                        style: TextStyle(
-                                          fontSize: 18.sp,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primaryColor,
+                                  foregroundColor: Colors.white,
+                                  // minimumSize: const Size(double.infinity, 50),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  const Divider(),
-                                  _resultRow("Share Portion",
-                                      "${(data["portionPart"] * 100)}%"),
-                                  _resultRow("Land Portion",
-                                      "${data["landPart"]} decimal"),
-                                  _resultRow("Gold Portion",
-                                      "${data["goldPart"]} gram"),
-                                  _resultRow("Silver Portion",
-                                      "${data["silverPart"]} gram"),
-                                  _resultRow("Total Money",
-                                      "${data["currencyPart"]} taka"),
-                                ],
+                                ),
+                                onPressed: () => controller
+                                    .downloadPropertyDistributionCalculationResult(),
+                                child: Text(
+                                  AppLocalizations.of(context)!.download,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 22.sp),
+                                ),
+                              ),
+                            ],
+                          ),
+                          _buildPieChartSection(),
+                          _buildResultCards(),
+                        ],
+                      );
+                    }),
+                  ],
+                );
+              },
+              onLoading: Skeletonizer(
+                enabled: true,
+                child: ListView(
+                  children: [
+                    _sectionTitle("Relative List"),
+
+                    // Dummy Relative Tiles
+                    ...List.generate(5, (index) {
+                      return Column(
+                        children: [
+                          CheckboxListTile(
+                            value: false,
+                            onChanged: null,
+                            title: Text("Relative ${index + 1}"),
+                            controlAffinity: ListTileControlAffinity.leading,
+                          ),
+                          const Divider(),
+                        ],
+                      );
+                    }),
+
+                    _sectionTitle("Property Distribution Calculation"),
+
+                    // Dummy Property Section
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          _buildPropertyField(
+                            label: "Land in Decimal",
+                            controller: TextEditingController(text: "100"),
+                            hint: "",
+                          ),
+                          _buildPropertyFieldWithUnit(
+                            label: "Gold Amount",
+                            controller: TextEditingController(text: "50"),
+                            hint: "",
+                            unitValue: "gram".obs,
+                          ),
+                          _buildPropertyFieldWithUnit(
+                            label: "Silver Amount",
+                            controller: TextEditingController(text: "30"),
+                            hint: "",
+                            unitValue: "gram".obs,
+                          ),
+                          _buildPropertyField(
+                            label: "Total Money",
+                            controller: TextEditingController(text: "100000"),
+                            hint: "",
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    _sectionTitle("Calculation Results"),
+
+                    // Dummy Pie Chart Section
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.w, vertical: 20.h),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 250.h,
+                            child: PieChart(
+                              PieChartData(
+                                sections:
+                                    _dummyResults.asMap().entries.map((entry) {
+                                  final index = entry.key;
+                                  final data = entry.value;
+                                  final percentage =
+                                      (data["portionPart"]) * 100;
+
+                                  return PieChartSectionData(
+                                    color: _chartColors[
+                                        index % _chartColors.length],
+                                    value: percentage,
+                                    title: '${percentage}%',
+                                    radius: 60,
+                                  );
+                                }).toList(),
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                onError: (error) => ErrorWidget(Exception(error)),
-              ),
-            ),
-            Obx(() {
-              if (!controller.isCalculateVisible.value) {
-                return const SizedBox.shrink();
-              }
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  onPressed: controller.isCalculateLoading.value
-                      ? null
-                      : () => controller.submitCalculation(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
-                    minimumSize: const Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: controller.isCalculateLoading.value
-                      ? const SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
                           ),
-                        )
-                      : Text(
-                          AppLocalizations.of(context)!.calculate,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        ],
+                      ),
+                    ),
+
+                    // Dummy Result Cards
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: _dummyResults.length,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.w, vertical: 10.h),
+                      itemBuilder: (context, index) {
+                        final data = _dummyResults[index];
+
+                        return Card(
+                          elevation: 4,
+                          margin: EdgeInsets.only(bottom: 16.h),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(16.h),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 4.w,
+                                      height: 24.h,
+                                      color: _chartColors[
+                                          index % _chartColors.length],
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Text(
+                                      data["relativeName"],
+                                      style: TextStyle(
+                                        fontSize: 18.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Divider(),
+                                _resultRow("Share Portion",
+                                    "${(data["portionPart"] * 100)}%"),
+                                _resultRow("Land Portion",
+                                    "${data["landPart"]} decimal"),
+                                _resultRow(
+                                    "Gold Portion", "${data["goldPart"]} gram"),
+                                _resultRow("Silver Portion",
+                                    "${data["silverPart"]} gram"),
+                                _resultRow("Total Money",
+                                    "${data["currencyPart"]} taka"),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              );
-            }),
-          ],
-        ),
+              ),
+              onError: (error) => ErrorWidget(Exception(error)),
+            ),
+          ),
+          Obx(() {
+            if (!controller.isCalculateVisible.value) {
+              return const SizedBox.shrink();
+            }
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: controller.isCalculateLoading.value
+                    ? null
+                    : () => controller.submitCalculation(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryColor,
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: controller.isCalculateLoading.value
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : Text(
+                        AppLocalizations.of(context)!.calculate,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+              ),
+            );
+          }),
+        ],
       ),
     );
   }

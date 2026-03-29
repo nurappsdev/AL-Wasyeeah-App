@@ -8,6 +8,7 @@ import 'package:al_wasyeah/view/auth/registration_screen.dart';
 import 'package:al_wasyeah/view/access_control/access_control_panel_page.dart';
 import 'package:al_wasyeah/view/nominee/nominee_details_page.dart';
 import 'package:al_wasyeah/view/nominee/nominee_page.dart';
+import 'package:al_wasyeah/view/profile/profile_page.dart';
 import 'package:al_wasyeah/view/property_distribution_calculation/property_distribution_calculation_page.dart';
 import 'package:al_wasyeah/view/splash/splash_screen.dart';
 import 'package:al_wasyeah/view/zakat_calculator/zakat_calculator_screen.dart';
@@ -83,6 +84,7 @@ class AppRoutes {
             page: () => WasyyahScreen(),
             binding: WasyyahBinding()),
         GetPage(name: wasyyahEditScreen, page: () => WasiyahEditScreen()),
+        GetPage(name: profilePage, page: () => ProfilePage()),
         GetPage(
             name: witnessesPage,
             page: () => WitnessesPage(),
