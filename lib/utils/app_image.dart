@@ -8,9 +8,11 @@ class AppImages {
   static const String distribureYourPropertyProperlyImage =
       "$path/distribure_your_property_properly.png";
   static const String mosjidIcon = "$path/mosqe_icons.png";
-  static const String wasyyahIcon = "$path/priview_img.png";
-  static const String wasyyahImg = "$path/priverwImg.png";
-  static const String scanImg = "$path/scanImg.png";
+  static const String firstPdfHeaderImage = "$path/1st_pdf_header.png";
+  static const String secondPdfHeaderImage = "$path/2nd_pdf_header.png";
+  static const String pdfbgImage = "$path/pdf_bg.png";
+  static const String pdfFooterImage = "$path/pdf_footer.png";
+
   static const String profileIcon = "$path/profile_icon.png";
 
   static const String pmoji = "$path/pmoji.png";
