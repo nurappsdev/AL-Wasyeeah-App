@@ -34,6 +34,8 @@ class ApiConstants {
   static const String nisab = "/user/getNisabRates";
 
   static const String wasyyahYouDataYou = "/user/getWasiyyah";
+  static const String saveWasiyyah = "/user/saveWasiyyah";
+  static const String changeOrder = "/user/changeOrder";
 
   static const String signUpEndPoint = "/user/register";
   static const String changePassAPI = "user/update/password";

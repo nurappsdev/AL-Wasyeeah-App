@@ -390,7 +390,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get documents_type => 'Documents Type';
 
   @override
-  String get explore_your_wasyyah => 'Explore your \n Wasyyah';
+  String get explore_your_wasiyyah => 'Explore your \n Wasyyah';
 
   @override
   String get bismillahir_rahmanir_raheem => 'Bismillahir Rahmanir Raheem';
@@ -610,7 +610,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcome_back => 'Welcome Back';
 
   @override
-  String get wasyyah => 'Wasyyah';
+  String get wasiyyah => 'Wasyyah';
 
   @override
   String get edit => 'Edit';
@@ -629,7 +629,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get n_a => 'N/A';
 
   @override
-  String get wasyyah_preview => 'Wasyyah Preview';
+  String get wasiyyah_preview => 'Wasyyah Preview';
 
   @override
   String get own_identity => 'Own Identity';
@@ -638,7 +638,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get no_content_available => 'No content available.';
 
   @override
-  String get wasyyah_edit => 'Wasyyah Edit';
+  String get wasiyyah_edit => 'Wasyyah Edit';
 
   @override
   String get please_enter_your_user_name => 'Please enter your user name';
@@ -720,7 +720,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get outside_witness => 'Outside Witness';
 
   @override
-  String get wasyyah_ichanama_title => 'Wasyyah (Ichanama)';
+  String get wasiyyah_ichanama_title => 'Wasyyah (Ichanama)';
 
   @override
   String get approve => 'Approve';
@@ -1414,4 +1414,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get last_calculated => 'Last Calculated';
+
+  @override
+  String get bismillah_rahmanir_rahim => 'Bismillahir Rahmanir Raheem';
+
+  @override
+  String get assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam =>
+      'Assalamu Alaykum Wa Rahmatullah. Indeed, all praise is for Allah, the Lord of the worlds. Peace and blessings be upon the Messenger of Allah (PBUH).';
+
+  @override
+  String get explore_your_wasyyah => 'Explore Your Wasyyah';
 }

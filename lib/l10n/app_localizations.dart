@@ -842,11 +842,11 @@ abstract class AppLocalizations {
   /// **'Documents Type'**
   String get documents_type;
 
-  /// No description provided for @explore_your_wasyyah.
+  /// No description provided for @explore_your_wasiyyah.
   ///
   /// In en, this message translates to:
   /// **'Explore your \n Wasyyah'**
-  String get explore_your_wasyyah;
+  String get explore_your_wasiyyah;
 
   /// No description provided for @bismillahir_rahmanir_raheem.
   ///
@@ -1281,11 +1281,11 @@ abstract class AppLocalizations {
   /// **'Welcome Back'**
   String get welcome_back;
 
-  /// No description provided for @wasyyah.
+  /// No description provided for @wasiyyah.
   ///
   /// In en, this message translates to:
   /// **'Wasyyah'**
-  String get wasyyah;
+  String get wasiyyah;
 
   /// No description provided for @edit.
   ///
@@ -1317,11 +1317,11 @@ abstract class AppLocalizations {
   /// **'N/A'**
   String get n_a;
 
-  /// No description provided for @wasyyah_preview.
+  /// No description provided for @wasiyyah_preview.
   ///
   /// In en, this message translates to:
   /// **'Wasyyah Preview'**
-  String get wasyyah_preview;
+  String get wasiyyah_preview;
 
   /// No description provided for @own_identity.
   ///
@@ -1335,11 +1335,11 @@ abstract class AppLocalizations {
   /// **'No content available.'**
   String get no_content_available;
 
-  /// No description provided for @wasyyah_edit.
+  /// No description provided for @wasiyyah_edit.
   ///
   /// In en, this message translates to:
   /// **'Wasyyah Edit'**
-  String get wasyyah_edit;
+  String get wasiyyah_edit;
 
   /// No description provided for @please_enter_your_user_name.
   ///
@@ -1497,11 +1497,11 @@ abstract class AppLocalizations {
   /// **'Outside Witness'**
   String get outside_witness;
 
-  /// No description provided for @wasyyah_ichanama_title.
+  /// No description provided for @wasiyyah_ichanama_title.
   ///
   /// In en, this message translates to:
   /// **'Wasyyah (Ichanama)'**
-  String get wasyyah_ichanama_title;
+  String get wasiyyah_ichanama_title;
 
   /// No description provided for @approve.
   ///
@@ -2846,6 +2846,25 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Last Calculated'**
   String get last_calculated;
+
+  /// No description provided for @bismillah_rahmanir_rahim.
+  ///
+  /// In en, this message translates to:
+  /// **'Bismillahir Rahmanir Raheem'**
+  String get bismillah_rahmanir_rahim;
+
+  /// No description provided for @assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam.
+  ///
+  /// In en, this message translates to:
+  /// **'Assalamu Alaykum Wa Rahmatullah. Indeed, all praise is for Allah, the Lord of the worlds. Peace and blessings be upon the Messenger of Allah (PBUH).'**
+  String
+      get assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam;
+
+  /// No description provided for @explore_your_wasyyah.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore Your Wasyyah'**
+  String get explore_your_wasyyah;
 }
 
 class _AppLocalizationsDelegate

@@ -18,9 +18,7 @@ import 'package:al_wasyeah/view/witnessess/witnesses_details_page.dart';
 import 'package:al_wasyeah/view/witnessess/witness_page.dart';
 import 'package:al_wasyeah/view/notification/notification_screen.dart';
 import 'package:al_wasyeah/view/onboarding/onboarding_screen.dart';
-import 'package:al_wasyeah/view/wasyyah/wasiyah_edit_screen.dart';
-import 'package:al_wasyeah/view/wasyyah/wasiyah_preview_screen.dart';
-import 'package:al_wasyeah/view/wasyyah/wasyyah_screen.dart';
+import 'package:al_wasyeah/view/wasyyah/wasyyah_page.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
@@ -37,9 +35,8 @@ class AppRoutes {
 
   // Home
   static const String homePage = "/home_page";
-  static const String wasyyahScreen = "/wasyyah_page";
-  static const String wasyyahEditScreen = "/wasyyah_edit_page";
-  static const String wasyyahPriviewPage = "/wasyyah_priview_page";
+  // Wasyyah
+  static const String wasyyahPage = "/wasyyah_page";
   // Nominee
   static const String nomineesPage = "/nominee_page";
   static const String nomineeDetailsPage = "/nominee_details_page";
@@ -80,10 +77,9 @@ class AppRoutes {
         ),
         GetPage(name: notificationPage, page: () => NotificationPage()),
         GetPage(
-            name: wasyyahScreen,
-            page: () => WasyyahScreen(),
+            name: wasyyahPage,
+            page: () => WasyyahPage(),
             binding: WasyyahBinding()),
-        GetPage(name: wasyyahEditScreen, page: () => WasiyahEditScreen()),
         GetPage(name: profilePage, page: () => ProfilePage()),
         GetPage(
             name: witnessesPage,
@@ -113,6 +109,5 @@ class AppRoutes {
             name: accessCntrolPanelPage,
             page: () => AccessControlPanelPage(),
             binding: AccessControlBinding()),
-        GetPage(name: wasyyahPriviewPage, page: () => WasyyahPreviewPage()),
       ];
 }

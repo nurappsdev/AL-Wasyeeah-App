@@ -387,7 +387,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get documents_type => 'নথির ধরন';
 
   @override
-  String get explore_your_wasyyah => 'আপনার \n ওসিয়ত অন্বেষণ করুন';
+  String get explore_your_wasiyyah => 'আপনার \n ওসিয়ত অন্বেষণ করুন';
 
   @override
   String get bismillahir_rahmanir_raheem => 'বিসমিল্লাহির রহমানির রাহিম';
@@ -608,7 +608,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get welcome_back => 'ফিরে আসার জন্য স্বাগতম';
 
   @override
-  String get wasyyah => 'ওয়াসিয়াহ';
+  String get wasiyyah => 'ওয়াসিয়াহ';
 
   @override
   String get edit => 'সম্পাদনা করুন';
@@ -627,7 +627,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get n_a => 'তথ্য নেই';
 
   @override
-  String get wasyyah_preview => 'ওয়াসিয়াহ প্রিভিউ';
+  String get wasiyyah_preview => 'ওয়াসিয়াহ প্রিভিউ';
 
   @override
   String get own_identity => 'নিজের পরিচিতি';
@@ -636,7 +636,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get no_content_available => 'কোন বিষয়বস্তু উপলব্ধ নেই।';
 
   @override
-  String get wasyyah_edit => 'ওয়াসিয়াহ সম্পাদনা';
+  String get wasiyyah_edit => 'ওয়াসিয়াহ সম্পাদনা';
 
   @override
   String get please_enter_your_user_name =>
@@ -719,7 +719,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get outside_witness => 'বাহিরের সাক্ষী';
 
   @override
-  String get wasyyah_ichanama_title => 'ওসিয়ত (ইচ্ছানামা)';
+  String get wasiyyah_ichanama_title => 'ওসিয়ত (ইচ্ছানামা)';
 
   @override
   String get approve => 'অনুমোদন করুন';
@@ -1425,4 +1425,14 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get last_calculated => 'শেষ গণনা';
+
+  @override
+  String get bismillah_rahmanir_rahim => 'বিসমিল্লাহির রহমানির রাহিম';
+
+  @override
+  String get assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam =>
+      'আসসালামু আলাইকুম ওয়া রাহমাতুল্লা ইন্নালহামদালিল্লাহি রাব্বিল আ\'লামীন ওয়াসসালাতু ওয়াসসালামু আলা রাসুলিল্লাহ (সাল্লাল্লাহু আলাইহিসসালাম)।';
+
+  @override
+  String get explore_your_wasyyah => 'আপনার ওয়াসিয়াহ অন্বেষণ করুন';
 }

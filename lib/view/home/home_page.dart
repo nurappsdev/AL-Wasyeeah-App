@@ -201,7 +201,7 @@ class HomePage extends GetView<HomeController> {
 
                 InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.wasyyahScreen,
+                    Get.toNamed(AppRoutes.wasyyahPage,
                         preventDuplicates: false);
                   },
                   child: Container(
