@@ -156,6 +156,7 @@ class AddWitnesWidget extends StatelessWidget {
                         if (controller.searchedWitnesss.value != null) {
                           Get.toNamed(
                             AppRoutes.witnessDetailsPage,
+                            preventDuplicates: false,
                             arguments: {
                               'witness': controller.searchedWitnesss.value,
                               'canRemove': false,
