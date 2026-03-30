@@ -121,7 +121,7 @@ class MenuPage extends StatelessWidget {
               ),
 
               ///=====================Change  Password====================================
-              InkWell(
+              GestureDetector(
                 onTap: () => Get.toNamed(AppRoutes.changePasswordPage, preventDuplicates: false),
                 child: Container(
                   width: 360.w,
@@ -396,8 +396,10 @@ class MenuPage extends StatelessWidget {
                 height: 20.h,
               ),
 
+              //=====================About Us====================================
+
               GestureDetector(
-                onTap: () => Get.toNamed(AppRoutes.aboutPage),
+                onTap: () => Get.toNamed(AppRoutes.aboutPage, preventDuplicates: false),
                 child: Container(
                   width: 360.w,
                   height: 60.h,
@@ -417,26 +419,47 @@ class MenuPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 12.w),
                         child: Row(
                           children: [
-                            Icon(
-                              Icons.info,
-                              color: AppColors.primaryColor,
+                            Container(
+                              width: 30.w,
+                              height: 30.h,
+                              decoration: BoxDecoration(
+                                color: Color(0xFF39B048),
+                                borderRadius: BorderRadius.all(Radius.circular(50.r)),
+                              ),
+                              child: Icon(
+                                Icons.info_outline,
+                                size: 12.sp,
+                                color: AppColors.whiteColor,
+                              ),
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
                               text: AppLocalizations.of(context)!.about_us,
-                              fontsize: 14.sp,
+                              fontsize: 16.sp,
+                              fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
                             )
                           ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: SvgPicture.asset(
+                          AppIcons.chevronIcon,
+                          color: AppColors.primaryColor,
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
+              SizedBox(
+                height: 20.h,
+              ),
+              //=====================Contact Us====================================
 
               GestureDetector(
-                onTap: () => Get.toNamed(AppRoutes.contactPage),
+                onTap: () => Get.toNamed(AppRoutes.contactPage, preventDuplicates: false),
                 child: Container(
                   width: 360.w,
                   height: 60.h,
@@ -456,26 +479,49 @@ class MenuPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 12.w),
                         child: Row(
                           children: [
-                            Icon(
-                              Icons.contact_page,
-                              color: AppColors.primaryColor,
+                            Container(
+                              width: 30.w,
+                              height: 30.h,
+                              decoration: BoxDecoration(
+                                color: Color(0xFF39B048),
+                                borderRadius: BorderRadius.all(Radius.circular(50.r)),
+                              ),
+                              child: Icon(
+                                Icons.call_outlined,
+                                size: 12.sp,
+                                color: AppColors.whiteColor,
+                              ),
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
                               text: AppLocalizations.of(context)!.contact_us,
-                              fontsize: 14.sp,
+                              fontsize: 16.sp,
+                              fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
                             )
                           ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: SvgPicture.asset(
+                          AppIcons.chevronIcon,
+                          color: AppColors.primaryColor,
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
+              SizedBox(
+                height: 20.h,
+              ),
+              //=====================Logout====================================
 
               GestureDetector(
-                onTap: () => _showLogoutDialog(context),
+                onTap: () {
+                  _showLogoutDialog(context);
+                },
                 child: Container(
                   width: 360.w,
                   height: 60.h,

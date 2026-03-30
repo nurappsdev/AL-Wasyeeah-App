@@ -3,6 +3,8 @@ import 'package:al_wasyeah/core/l10n/app_localizations.dart';
 import 'package:al_wasyeah/core/utils/app_colors.dart';
 import 'package:al_wasyeah/core/utils/app_image.dart';
 import 'package:al_wasyeah/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/view/widgets/custom_app_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AboutUsPage extends StatelessWidget {
   const AboutUsPage({super.key});
@@ -12,9 +14,7 @@ class AboutUsPage extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.about_us),
-      ),
+      appBar: CustomAppBar(title: l10n.about_us),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -121,10 +121,10 @@ class AboutUsPage extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: team.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisSpacing: 16,
-        crossAxisSpacing: 16,
+        mainAxisSpacing: 16.w,
+        crossAxisSpacing: 16.w,
         childAspectRatio: .75,
       ),
       itemBuilder: (context, index) {
@@ -134,9 +134,11 @@ class AboutUsPage extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
+            color: AppColors.whiteColor,
             border: Border.all(color: Colors.grey.shade200),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
                 radius: 35,
@@ -147,18 +149,23 @@ class AboutUsPage extends StatelessWidget {
                 text: item.name,
                 fontWeight: FontWeight.bold,
                 textAlign: TextAlign.center,
+                maxline: 2,
               ),
               const SizedBox(height: 4),
               CustomText(
                 text: item.designation,
                 color: AppColors.primaryColor,
                 textAlign: TextAlign.center,
+                maxline: 2,
               ),
               const SizedBox(height: 6),
-              CustomText(
-                text: item.description,
-                color: Colors.grey,
-                textAlign: TextAlign.center,
+              Expanded(
+                child: CustomText(
+                  text: item.description,
+                  color: Colors.grey,
+                  textAlign: TextAlign.center,
+                  maxline: 4,
+                ),
               ),
             ],
           ),
