@@ -5,6 +5,8 @@ import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/models/profile_info_model/document_type_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/sibling_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/branch_model.dart';
+import 'package:al_wasyeah/services/api_client.dart';
+import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:al_wasyeah/models/profile_info_model/bank_list_model.dart';
@@ -17,7 +19,6 @@ import 'package:al_wasyeah/models/profile_info_model/wealth_list_model.dart';
 import 'package:get/get.dart';
 
 import 'dart:io';
-import '../../services/services.dart';
 import 'package:al_wasyeah/models/profile_info_model/account_payable_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/account_receivable_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/bank_form.dart';
@@ -60,8 +61,7 @@ class ProfileController extends GetxController {
   RxList<BankForm> bankListForm = <BankForm>[].obs;
   RxList<WealthForm> wealthListForm = <WealthForm>[].obs;
   RxList<DocumentTypeForm> documentTypeListForm = <DocumentTypeForm>[].obs;
-  RxList<AccountReceivableForm> receivableListForm =
-      <AccountReceivableForm>[].obs;
+  RxList<AccountReceivableForm> receivableListForm = <AccountReceivableForm>[].obs;
   RxList<AccountPayableForm> payableListForm = <AccountPayableForm>[].obs;
 
   final step1formKey = GlobalKey<FormState>();
@@ -93,8 +93,7 @@ class ProfileController extends GetxController {
 
     final completer = Completer<bool>();
 
-    final String fileName =
-        '${filePrefix}_${profileModel.value.userProfile?.firstName ?? "User"}_'
+    final String fileName = '${filePrefix}_${profileModel.value.userProfile?.firstName ?? "User"}_'
         '${profileModel.value.userProfile?.lastName ?? ""}_'
         '${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}';
 
@@ -253,23 +252,17 @@ class ProfileController extends GetxController {
     personalForm.value.district.text = user.district ?? '';
     personalForm.value.nid.text = user.nid?.toString() ?? '';
     personalForm.value.tin.text = user.tin ?? '';
-    personalForm.value.multiCitizenPassport.text =
-        user.multipleCitizenPassportNo ?? '';
+    personalForm.value.multiCitizenPassport.text = user.multipleCitizenPassportNo ?? '';
 
-    personalForm.value.selectedMarried.value = maritalList
-        .firstWhereOrNull((e) => e.maritalId == user.maritalStatusId);
+    personalForm.value.selectedMarried.value = maritalList.firstWhereOrNull((e) => e.maritalId == user.maritalStatusId);
 
-    personalForm.value.selectedProfession.value = professionList
-        .firstWhereOrNull((e) => e.professionId == user.professionId);
+    personalForm.value.selectedProfession.value = professionList.firstWhereOrNull((e) => e.professionId == user.professionId);
 
-    personalForm.value.selectedCountry.value =
-        countryList.firstWhereOrNull((e) => e.countryId == user.countryCode);
+    personalForm.value.selectedCountry.value = countryList.firstWhereOrNull((e) => e.countryId == user.countryCode);
 
-    personalForm.value.selectedGender.value = genderList
-        .firstWhereOrNull((e) => e.genderId.toString() == user.gender);
+    personalForm.value.selectedGender.value = genderList.firstWhereOrNull((e) => e.genderId.toString() == user.gender);
 
-    personalForm.value.selectedMultiCitizenCountry.value = countryList
-        .firstWhereOrNull((e) => e.countryId == user.multipleCitizenCode);
+    personalForm.value.selectedMultiCitizenCountry.value = countryList.firstWhereOrNull((e) => e.countryId == user.multipleCitizenCode);
 
     personalForm.value.nidUrl = user.nidPaperUrl;
     personalForm.value.tinUrl = user.tinPaperUrl;
@@ -290,8 +283,7 @@ class ProfileController extends GetxController {
 
     addressForm.value.overseasVillage.text = user.overseasVillage ?? '';
 
-    addressForm.value.selectedOverseasCountry.value = countryList
-        .firstWhereOrNull((e) => e.countryId == user.overseasCountryCode);
+    addressForm.value.selectedOverseasCountry.value = countryList.firstWhereOrNull((e) => e.countryId == user.overseasCountryCode);
   }
 
   void _mapParentInfo() {
@@ -304,11 +296,9 @@ class ProfileController extends GetxController {
     parentForm.value.isFatherAlive.value = parent.fatherExisting ?? false;
     parentForm.value.fatherNidUrl = parent.fatherNidUrl;
 
-    parentForm.value.selectedFatherProfession.value = professionList
-        .firstWhereOrNull((e) => e.professionId == parent.fatherProfessionId);
+    parentForm.value.selectedFatherProfession.value = professionList.firstWhereOrNull((e) => e.professionId == parent.fatherProfessionId);
 
-    parentForm.value.selectedFatherCountry.value = countryList
-        .firstWhereOrNull((e) => e.countryId == parent.fatherNationalityId);
+    parentForm.value.selectedFatherCountry.value = countryList.firstWhereOrNull((e) => e.countryId == parent.fatherNationalityId);
 
     // Mother
     parentForm.value.motherName.text = parent.motherName ?? '';
@@ -316,11 +306,9 @@ class ProfileController extends GetxController {
     parentForm.value.isMotherAlive.value = parent.motherExisting ?? false;
     parentForm.value.motherNidUrl = parent.motherNidUrl;
 
-    parentForm.value.selectedMotherProfession.value = professionList
-        .firstWhereOrNull((e) => e.professionId == parent.motherProfessionId);
+    parentForm.value.selectedMotherProfession.value = professionList.firstWhereOrNull((e) => e.professionId == parent.motherProfessionId);
 
-    parentForm.value.selectedMotherCountry.value = countryList
-        .firstWhereOrNull((e) => e.countryId == parent.motherNationalityId);
+    parentForm.value.selectedMotherCountry.value = countryList.firstWhereOrNull((e) => e.countryId == parent.motherNationalityId);
   }
 
   void _mapSpouseInfo() {
@@ -510,8 +498,7 @@ class ProfileController extends GetxController {
       final Map<String, List<BranchModel>> cachedBranches = {};
       for (final bank in banks) {
         final form = BankForm();
-        form.bank.value =
-            bankList.firstWhereOrNull((e) => e.bankId == bank.bankId);
+        form.bank.value = bankList.firstWhereOrNull((e) => e.bankId == bank.bankId);
 
         final bankIdStr = bank.bankId.toString();
         List<BranchModel> branches;
@@ -568,8 +555,7 @@ class ProfileController extends GetxController {
       final Map<String, List<DocumentTypeForm>> cachedDocTypes = {};
       for (final wealth in wealths) {
         final form = WealthForm();
-        form.wealth.value =
-            wealthList.firstWhereOrNull((e) => e.wealthId == wealth.wealthId);
+        form.wealth.value = wealthList.firstWhereOrNull((e) => e.wealthId == wealth.wealthId);
 
         if (wealth.wealthId != null) {
           final wealthIdStr = wealth.wealthId.toString();
@@ -589,8 +575,7 @@ class ProfileController extends GetxController {
           }
         }
 
-        form.landArea.text =
-            wealth.amount ?? ''; // Assuming 'amount' maps to 'Land Area'
+        form.landArea.text = wealth.amount ?? ''; // Assuming 'amount' maps to 'Land Area'
         form.location.text = wealth.location ?? '';
         form.note.text = wealth.note ?? '';
         form.documentUrl = wealth.documentPaperUrl;
@@ -707,11 +692,9 @@ class ProfileController extends GetxController {
         gender: personal.selectedGender.value?.genderId.toString(),
         nid: int.tryParse(personal.nid.text),
         tin: personal.tin.text,
-        multipleCitizenCode:
-            personal.selectedMultiCitizenCountry.value?.countryId,
+        multipleCitizenCode: personal.selectedMultiCitizenCountry.value?.countryId,
         multipleCitizenPassportNo: personal.multiCitizenPassport.text,
-        presentAddress:
-            "${address.presentZipCode.text},${address.presentVillage.text},${address.presentRoad.text}",
+        presentAddress: "${address.presentZipCode.text},${address.presentVillage.text},${address.presentRoad.text}",
         permanentAddress: address.isPresentAddressAsPermanentAddress.value
             ? "${address.presentZipCode.text},${address.presentVillage.text},${address.presentRoad.text}"
             : "${address.permanentZipCode.text},${address.permanentVillage.text},${address.permanentRoad.text}",
@@ -719,10 +702,8 @@ class ProfileController extends GetxController {
         overseasVillage: address.overseasVillage.text,
         nidFile: await _fileToBase64(personal.selectedNidFile.value?.file),
         tinFile: await _fileToBase64(personal.selectedTinFile.value?.file),
-        profileFile: await _fileToBase64(
-            personal.selectedProfilePictureFile.value?.file),
-        passportFile:
-            await _fileToBase64(personal.selectedMultiCitizenFile.value?.file),
+        profileFile: await _fileToBase64(personal.selectedProfilePictureFile.value?.file),
+        passportFile: await _fileToBase64(personal.selectedMultiCitizenFile.value?.file),
       );
 
       // 2. Map ParentInfo
@@ -738,10 +719,8 @@ class ProfileController extends GetxController {
         motherNationalityId: parent.selectedMotherCountry.value?.countryId,
         motherNid: parent.motherPassOrNID.text,
         motherExisting: parent.isMotherAlive.value,
-        fatherNidFile:
-            await _fileToBase64(parent.selectedFatherFile.value?.file),
-        motherNidFile:
-            await _fileToBase64(parent.selectedMotherFile.value?.file),
+        fatherNidFile: await _fileToBase64(parent.selectedFatherFile.value?.file),
+        motherNidFile: await _fileToBase64(parent.selectedMotherFile.value?.file),
       );
 
       // 3. Map SpouseInfo
@@ -758,8 +737,7 @@ class ProfileController extends GetxController {
           email: form.email.text,
           existing: form.isAlive.value,
           spouseNidFile: await _fileToBase64(form.selectedNidFile.value?.file),
-          spousePassportFile:
-              await _fileToBase64(form.selectedPassportFile.value?.file),
+          spousePassportFile: await _fileToBase64(form.selectedPassportFile.value?.file),
         ));
       }
 
@@ -865,19 +843,14 @@ class ProfileController extends GetxController {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Fluttertoast.showToast(
-            msg:
-                AppLocalizations.of(Get.context!)!.profile_update_successfully);
+        Fluttertoast.showToast(msg: AppLocalizations.of(Get.context!)!.profile_update_successfully);
         await getProfile(); // Refresh local data
       } else {
-        Fluttertoast.showToast(
-            msg:
-                "${AppLocalizations.of(Get.context!)!.profile_update_failed_with_status}: ${response.statusText}");
+        Fluttertoast.showToast(msg: "${AppLocalizations.of(Get.context!)!.profile_update_failed_with_status}: ${response.statusText}");
       }
     } catch (e, s) {
       log("Error during submission: $e\n$s");
-      Fluttertoast.showToast(
-          msg: AppLocalizations.of(Get.context!)!.something_went_wrong);
+      Fluttertoast.showToast(msg: AppLocalizations.of(Get.context!)!.something_went_wrong);
     } finally {
       status(RxStatus.success());
     }

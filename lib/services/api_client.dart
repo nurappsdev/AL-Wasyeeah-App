@@ -8,8 +8,6 @@ import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
-
 import '../helpers/prefs_helper.dart';
 import 'api_constants.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
@@ -45,9 +43,7 @@ class ApiClient extends GetxService {
       body = response.body;
     }
 
-    final statusText = body is Map && body['message'] != null
-        ? body['message'].toString()
-        : response.reasonPhrase;
+    final statusText = body is Map && body['message'] != null ? body['message'].toString() : response.reasonPhrase;
 
     log('====> API Response: [${response.statusCode}] ${ApiConstants.baseUrl + uri}\nToken:$_bearerToken\nBody\n$body');
 
@@ -91,14 +87,9 @@ class ApiClient extends GetxService {
           .timeout(const Duration(seconds: timeoutInSeconds));
       return _buildResponse(response, uri);
     } on SocketException {
-      return Response(
-          statusCode: 404,
-          statusText:
-              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(statusCode: 404, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     } on TimeoutException {
-      return Response(
-          statusCode: 404,
-          statusText: AppLocalizations.of(Get.context!)!.request_timeout);
+      return Response(statusCode: 404, statusText: AppLocalizations.of(Get.context!)!.request_timeout);
     } catch (e) {
       return Response(statusCode: 404, statusText: e.toString());
     }
@@ -123,14 +114,9 @@ class ApiClient extends GetxService {
 
       return _buildResponse(response, uri);
     } on SocketException {
-      return Response(
-          statusCode: -1,
-          statusText:
-              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     } on TimeoutException {
-      return Response(
-          statusCode: -1,
-          statusText: AppLocalizations.of(Get.context!)!.request_timeout);
+      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.request_timeout);
     } catch (e) {
       return Response(statusCode: -1, statusText: e.toString());
     }
@@ -154,10 +140,7 @@ class ApiClient extends GetxService {
 
       return _buildResponse(response, uri);
     } catch (_) {
-      return Response(
-          statusCode: -1,
-          statusText:
-              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     }
   }
 
@@ -179,10 +162,7 @@ class ApiClient extends GetxService {
 
       return _buildResponse(response, uri);
     } catch (_) {
-      return Response(
-          statusCode: -1,
-          statusText:
-              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     }
   }
 
@@ -204,10 +184,7 @@ class ApiClient extends GetxService {
 
       return _buildResponse(response, uri);
     } catch (_) {
-      return Response(
-          statusCode: -1,
-          statusText:
-              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     }
   }
 

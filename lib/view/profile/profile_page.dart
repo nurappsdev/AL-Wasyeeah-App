@@ -5,8 +5,7 @@ import 'package:al_wasyeah/view/profile/profile_setup_step_four_screen.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_one_screen.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_three_screen.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_two_screen.dart';
-import 'package:al_wasyeah/view/widgets/app_wrapper.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -56,9 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               width: 30,
                               height: 30,
                               decoration: BoxDecoration(
-                                color: isCompleted || isActive
-                                    ? Colors.green
-                                    : Colors.grey.shade300,
+                                color: isCompleted || isActive ? Colors.green : Colors.grey.shade300,
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: Colors.black26,
@@ -75,9 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             Expanded(
                               child: Container(
                                 height: 2,
-                                color: isCompleted
-                                    ? Colors.green
-                                    : Colors.grey.shade300,
+                                color: isCompleted ? Colors.green : Colors.grey.shade300,
                               ),
                             ),
                         ],

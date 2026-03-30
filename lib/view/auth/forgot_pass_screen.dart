@@ -1,12 +1,10 @@
 import 'package:al_wasyeah/controllers/auths/auth_controller.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
-import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
-import 'package:al_wasyeah/view/widgets/app_wrapper.dart';
-import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
-import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/utils/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -48,8 +46,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
         height: Get.height,
         width: double.infinity,
         child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: SingleChildScrollView(
             child: Form(
               key: _logRegKey,
@@ -59,9 +56,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                   SizedBox(
                     height: 40.h,
                   ),
-                  Center(
-                      child: SvgPicture.asset(AppIcons.logo,
-                          height: 100.h, width: 140.w)),
+                  Center(child: SvgPicture.asset(AppIcons.logo, height: 100.h, width: 140.w)),
                   SizedBox(
                     height: 30.h,
                   ),
@@ -77,8 +72,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                   ),
                   Center(
                       child: CustomText(
-                    text: AppLocalizations.of(context)!
-                        .don_t_worry_it_happens_please_enter_the_address_associate_with_your_account,
+                    text: AppLocalizations.of(context)!.don_t_worry_it_happens_please_enter_the_address_associate_with_your_account,
                     maxline: 2,
                     fontsize: 14.sp,
                     textAlign: TextAlign.center,
@@ -104,8 +98,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!
-                              .please_enter_your_mobile_number;
+                          return AppLocalizations.of(context)!.please_enter_your_mobile_number;
                         }
                         return null;
                       },
@@ -137,10 +130,8 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       // ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!
-                              .please_enter_your_email;
-                        } else if (!AppConstants.emailValidate
-                            .hasMatch(value)) {
+                          return AppLocalizations.of(context)!.please_enter_your_email;
+                        } else if (!AppConstants.emailValidate.hasMatch(value)) {
                           return AppLocalizations.of(context)!.invalid_email;
                         }
                         return null;
@@ -174,8 +165,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
 
                         if (selectedDate != null) {
                           birthDate = selectedDate;
-                          dateOfBirthController.text =
-                              DateFormat('yyyy-MM-dd').format(birthDate!);
+                          dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(birthDate!);
                         }
                         print(dateOfBirthController.text);
                       },
@@ -204,28 +194,20 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                   Obx(
                     () => DropdownButtonFormField<String>(
                       decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: AppColors.secondaryPrimaryColor),
-                            borderRadius: BorderRadius.circular(14.r)),
+                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryPrimaryColor), borderRadius: BorderRadius.circular(14.r)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: AppColors.secondaryPrimaryColor,
                             ),
                             borderRadius: BorderRadius.circular(14.r)),
-                        border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: AppColors.primaryColor),
-                            borderRadius: BorderRadius.circular(16.r)),
+                        border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.primaryColor), borderRadius: BorderRadius.circular(16.r)),
                       ),
                       isExpanded: true,
-                      hint: CustomText(
-                          text: AppLocalizations.of(context)!
-                              .select_your_question),
+                      hint: CustomText(text: AppLocalizations.of(context)!.select_your_question),
                       value: _selectedQuestionId,
                       items: authController.securityQuestionResponseModel
                           .map((model) => DropdownMenuItem<String>(
-                                value: model.questionId.toString(),
+                                value: model?.questionId.toString(),
                                 child: Text(model.questionText.toString()),
                               ))
                           .toList(),
@@ -257,8 +239,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!
-                              .please_enter_your_answer;
+                          return AppLocalizations.of(context)!.please_enter_your_answer;
                         }
                         return null;
                       },
@@ -267,17 +248,13 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
 
                   ///=============Sign In Button====================
                   Obx(
-                    () => CustomButtonCommon(
+                    () => CustomButton(
                       loading: authController.forgotLoading.value == true,
                       title: AppLocalizations.of(context)!.submit,
                       onpress: () {
                         if (_logRegKey.currentState!.validate()) {
                           authController.forgotHandle(
-                              mobile: mobileController.text,
-                              email: emailController.text,
-                              dob: dateOfBirthController.text,
-                              securityAnswer: securityController.text,
-                              securityCode: _selectedQuestionId.toString());
+                              mobile: mobileController.text, email: emailController.text, dob: dateOfBirthController.text, securityAnswer: securityController.text, securityCode: _selectedQuestionId.toString());
                         }
                       },
                     ),

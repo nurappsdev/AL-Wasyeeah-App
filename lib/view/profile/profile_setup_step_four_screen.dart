@@ -1,17 +1,17 @@
 import 'package:al_wasyeah/helpers/file_picker_util.dart';
 import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
-import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/view/widgets/custom_dropdown.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
-import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/utils/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/utils/widgets/custom_dropdown.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../widgets/file_choose_and_download_button.dart';
+import '../../utils/widgets/file_choose_and_download_button.dart';
 import 'package:al_wasyeah/models/profile_info_model/profession_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
 import 'package:al_wasyeah/models/profile_info_model/gender_list_model.dart';
@@ -47,7 +47,7 @@ class ProfileSettingStepFourWidget extends StatelessWidget {
               spacing: 16.w,
               children: [
                 Expanded(
-                  child: CustomButtonCommon(
+                  child: CustomButton(
                     title: AppLocalizations.of(context)!.previous,
                     onpress: () {
                       controller.onStepTapped(controller.currentStep.value - 1);
@@ -55,12 +55,11 @@ class ProfileSettingStepFourWidget extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: CustomButtonCommon(
+                  child: CustomButton(
                     title: AppLocalizations.of(context)!.next,
                     onpress: () {
                       if (controller.step4formKey.currentState!.validate()) {
-                        controller
-                            .onStepTapped(controller.currentStep.value + 1);
+                        controller.onStepTapped(controller.currentStep.value + 1);
                       }
                     },
                   ),
@@ -126,11 +125,7 @@ class SiblingWidget extends StatelessWidget {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.add),
-                      SizedBox(width: 8.w),
-                      Text(AppLocalizations.of(context)!.add_sibling)
-                    ],
+                    children: [Icon(Icons.add), SizedBox(width: 8.w), Text(AppLocalizations.of(context)!.add_sibling)],
                   ),
                 ),
               ),
@@ -143,22 +138,14 @@ class SiblingWidget extends StatelessWidget {
                 return Container(
                   margin: EdgeInsets.only(bottom: 24.h),
                   padding: EdgeInsets.all(16.h),
-                  decoration: BoxDecoration(
-                      color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.circular(24.r),
-                      border: Border.all(
-                          color: Colors.black.withValues(alpha: 0.3))),
+                  decoration: BoxDecoration(color: AppColors.whiteColor, borderRadius: BorderRadius.circular(24.r), border: Border.all(color: Colors.black.withValues(alpha: 0.3))),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          CustomText(
-                              text: AppLocalizations.of(context)!.sibling_name,
-                              fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          CustomText(text: AppLocalizations.of(context)!.sibling_name, fontsize: 16.sp),
+                          Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -167,8 +154,7 @@ class SiblingWidget extends StatelessWidget {
                         hint: AppLocalizations.of(context)!.sibling_name,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_name;
+                            return AppLocalizations.of(context)!.please_enter_name;
                           }
                           return null;
                         },
@@ -178,12 +164,8 @@ class SiblingWidget extends StatelessWidget {
                       // Gender
                       Row(
                         children: [
-                          CustomText(
-                              text: AppLocalizations.of(context)!.gender,
-                              fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          CustomText(text: AppLocalizations.of(context)!.gender, fontsize: 16.sp),
+                          Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -226,13 +208,8 @@ class SiblingWidget extends StatelessWidget {
                       // Date of Birth
                       Row(
                         children: [
-                          CustomText(
-                              text: AppLocalizations.of(context)!
-                                  .sibling_date_of_birth,
-                              fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          CustomText(text: AppLocalizations.of(context)!.sibling_date_of_birth, fontsize: 16.sp),
+                          Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -241,8 +218,7 @@ class SiblingWidget extends StatelessWidget {
                           onTap: () async {
                             DateTime? selectedDate = await showDatePicker(
                               context: context,
-                              initialDate:
-                                  form.selectedDob.value ?? DateTime.now(),
+                              initialDate: form.selectedDob.value ?? DateTime.now(),
                               firstDate: DateTime(1930),
                               lastDate: DateTime.now(),
                             );
@@ -251,34 +227,22 @@ class SiblingWidget extends StatelessWidget {
                             }
                           },
                           child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 16.h),
+                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                             decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: form.selectedDob.value != null
-                                      ? AppColors.primaryColor
-                                      : Colors.grey,
-                                  width: 2.w),
+                              border: Border.all(color: form.selectedDob.value != null ? AppColors.primaryColor : Colors.grey, width: 2.w),
                               borderRadius: BorderRadius.circular(8.r),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  form.selectedDob.value != null
-                                      ? DateFormat('yyyy-MM-dd')
-                                          .format(form.selectedDob.value!)
-                                      : AppLocalizations.of(context)!
-                                          .select_date_of_birth,
+                                  form.selectedDob.value != null ? DateFormat('yyyy-MM-dd').format(form.selectedDob.value!) : AppLocalizations.of(context)!.select_date_of_birth,
                                   style: TextStyle(
-                                    color: form.selectedDob.value != null
-                                        ? Colors.black
-                                        : Colors.black54,
+                                    color: form.selectedDob.value != null ? Colors.black : Colors.black54,
                                     fontSize: 16.sp,
                                   ),
                                 ),
-                                Icon(Icons.calendar_month,
-                                    color: AppColors.primaryColor),
+                                Icon(Icons.calendar_month, color: AppColors.primaryColor),
                               ],
                             ),
                           ),
@@ -296,8 +260,7 @@ class SiblingWidget extends StatelessWidget {
                         hint: AppLocalizations.of(context)!.nid_passport_no,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_nid_passport_no;
+                            return AppLocalizations.of(context)!.please_enter_nid_passport_no;
                           }
                           return null;
                         },
@@ -306,18 +269,11 @@ class SiblingWidget extends StatelessWidget {
                       Obx(
                         () => FileChooseAndDownloadButton(
                           pickedFile: form.selectedNidFile,
-                          isDownloading: (controller.isDownloadingMap[
-                                      'siblingNidOrPassport$index'] ??
-                                  false)
-                              .obs,
-                          progress: (controller.downloadProgressMap[
-                                      'siblingNidOrPassport$index'] ??
-                                  0.0)
-                              .obs,
+                          isDownloading: (controller.isDownloadingMap['siblingNidOrPassport$index'] ?? false).obs,
+                          progress: (controller.downloadProgressMap['siblingNidOrPassport$index'] ?? 0.0).obs,
                           onPickFile: () async {
                             var result = await FilePickerUtil.pickSingleFile();
-                            if (result != null)
-                              form.selectedNidFile.value = result;
+                            if (result != null) form.selectedNidFile.value = result;
                           },
                           onDownload: () async {
                             bool isComplete = await controller.downloadFile(
@@ -327,9 +283,7 @@ class SiblingWidget extends StatelessWidget {
                             );
                             if (isComplete) {
                               Fluttertoast.showToast(
-                                msg:
-                                    "${AppLocalizations.of(context)!.sibling} (${form.name.text}) ${AppLocalizations.of(context)!.nid_file_downloaded_successfully}"
-                                        .tr,
+                                msg: "${AppLocalizations.of(context)!.sibling} (${form.name.text}) ${AppLocalizations.of(context)!.nid_file_downloaded_successfully}".tr,
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.TOP,
                                 timeInSecForIosWeb: 2,
@@ -353,8 +307,7 @@ class SiblingWidget extends StatelessWidget {
                         hint: AppLocalizations.of(context)!.mobile,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_mobile_number;
+                            return AppLocalizations.of(context)!.please_enter_mobile_number;
                           }
                           return null;
                         },
@@ -371,8 +324,7 @@ class SiblingWidget extends StatelessWidget {
                         hint: AppLocalizations.of(context)!.email,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_your_email;
+                            return AppLocalizations.of(context)!.please_enter_your_email;
                           }
                           return null;
                         },
@@ -380,8 +332,7 @@ class SiblingWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
 
                       CustomText(
-                        text: AppLocalizations.of(context)!
-                            .sibling_existence_status,
+                        text: AppLocalizations.of(context)!.sibling_existence_status,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -390,8 +341,7 @@ class SiblingWidget extends StatelessWidget {
                           isSelected: [form.isAlive.value, !form.isAlive.value],
                           onPressed: (i) => form.isAlive.value = i == 0,
                           borderRadius: BorderRadius.circular(8),
-                          fillColor:
-                              form.isAlive.value ? Colors.green : Colors.red,
+                          fillColor: form.isAlive.value ? Colors.green : Colors.red,
                           selectedColor: Colors.white,
                           children: [
                             Padding(
@@ -426,12 +376,7 @@ class SiblingWidget extends StatelessWidget {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.delete_forever,
-                                      color: Colors.white),
-                                  SizedBox(width: 8.w),
-                                  Text(AppLocalizations.of(context)!.remove)
-                                ],
+                                children: [Icon(Icons.delete_forever, color: Colors.white), SizedBox(width: 8.w), Text(AppLocalizations.of(context)!.remove)],
                               ),
                             ),
                           ),
@@ -455,8 +400,7 @@ class SiblingWidget extends StatelessWidget {
                                 SizedBox(width: 8.w),
                                 Expanded(
                                   child: Text(
-                                    AppLocalizations.of(context)!
-                                        .add_more_sibling,
+                                    AppLocalizations.of(context)!.add_more_sibling,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -506,11 +450,7 @@ class _ChildWidget extends StatelessWidget {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.add),
-                      SizedBox(width: 8.w),
-                      Text(AppLocalizations.of(context)!.add_more_child)
-                    ],
+                    children: [Icon(Icons.add), SizedBox(width: 8.w), Text(AppLocalizations.of(context)!.add_more_child)],
                   ),
                 ),
               ),
@@ -523,22 +463,14 @@ class _ChildWidget extends StatelessWidget {
                 return Container(
                   margin: EdgeInsets.only(bottom: 24.h),
                   padding: EdgeInsets.all(16.h),
-                  decoration: BoxDecoration(
-                      color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.circular(24.r),
-                      border: Border.all(
-                          color: Colors.black.withValues(alpha: 0.3))),
+                  decoration: BoxDecoration(color: AppColors.whiteColor, borderRadius: BorderRadius.circular(24.r), border: Border.all(color: Colors.black.withValues(alpha: 0.3))),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          CustomText(
-                              text: AppLocalizations.of(context)!.child_name,
-                              fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          CustomText(text: AppLocalizations.of(context)!.child_name, fontsize: 16.sp),
+                          Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -547,8 +479,7 @@ class _ChildWidget extends StatelessWidget {
                         hint: AppLocalizations.of(context)!.child_name,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_name;
+                            return AppLocalizations.of(context)!.please_enter_name;
                           }
                           return null;
                         },
@@ -558,12 +489,8 @@ class _ChildWidget extends StatelessWidget {
                       // Gender
                       Row(
                         children: [
-                          CustomText(
-                              text: AppLocalizations.of(context)!.gender,
-                              fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          CustomText(text: AppLocalizations.of(context)!.gender, fontsize: 16.sp),
+                          Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -578,12 +505,8 @@ class _ChildWidget extends StatelessWidget {
                       // Profession
                       Row(
                         children: [
-                          CustomText(
-                              text: AppLocalizations.of(context)!.profession,
-                              fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          CustomText(text: AppLocalizations.of(context)!.profession, fontsize: 16.sp),
+                          Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -598,12 +521,8 @@ class _ChildWidget extends StatelessWidget {
                       // Nationality
                       Row(
                         children: [
-                          CustomText(
-                              text: AppLocalizations.of(context)!.nationality,
-                              fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          CustomText(text: AppLocalizations.of(context)!.nationality, fontsize: 16.sp),
+                          Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -618,13 +537,8 @@ class _ChildWidget extends StatelessWidget {
                       // Date of Birth
                       Row(
                         children: [
-                          CustomText(
-                              text: AppLocalizations.of(context)!
-                                  .child_date_of_birth,
-                              fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          CustomText(text: AppLocalizations.of(context)!.child_date_of_birth, fontsize: 16.sp),
+                          Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -633,8 +547,7 @@ class _ChildWidget extends StatelessWidget {
                           onTap: () async {
                             DateTime? selectedDate = await showDatePicker(
                               context: context,
-                              initialDate:
-                                  form.selectedDob.value ?? DateTime.now(),
+                              initialDate: form.selectedDob.value ?? DateTime.now(),
                               firstDate: DateTime(1930),
                               lastDate: DateTime.now(),
                             );
@@ -643,34 +556,22 @@ class _ChildWidget extends StatelessWidget {
                             }
                           },
                           child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.w, vertical: 16.h),
+                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                             decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: form.selectedDob.value != null
-                                      ? AppColors.primaryColor
-                                      : Colors.grey,
-                                  width: 2.w),
+                              border: Border.all(color: form.selectedDob.value != null ? AppColors.primaryColor : Colors.grey, width: 2.w),
                               borderRadius: BorderRadius.circular(8.r),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  form.selectedDob.value != null
-                                      ? DateFormat('yyyy-MM-dd')
-                                          .format(form.selectedDob.value!)
-                                      : AppLocalizations.of(context)!
-                                          .select_date_of_birth,
+                                  form.selectedDob.value != null ? DateFormat('yyyy-MM-dd').format(form.selectedDob.value!) : AppLocalizations.of(context)!.select_date_of_birth,
                                   style: TextStyle(
-                                    color: form.selectedDob.value != null
-                                        ? Colors.black
-                                        : Colors.black54,
+                                    color: form.selectedDob.value != null ? Colors.black : Colors.black54,
                                     fontSize: 16.sp,
                                   ),
                                 ),
-                                Icon(Icons.calendar_month,
-                                    color: AppColors.primaryColor),
+                                Icon(Icons.calendar_month, color: AppColors.primaryColor),
                               ],
                             ),
                           ),
@@ -680,13 +581,8 @@ class _ChildWidget extends StatelessWidget {
                       // NID/Passport No
                       Row(
                         children: [
-                          CustomText(
-                              text:
-                                  AppLocalizations.of(context)!.nid_passport_no,
-                              fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          CustomText(text: AppLocalizations.of(context)!.nid_passport_no, fontsize: 16.sp),
+                          Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -695,8 +591,7 @@ class _ChildWidget extends StatelessWidget {
                         hint: AppLocalizations.of(context)!.nid_passport_no,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_nid_passport_no;
+                            return AppLocalizations.of(context)!.please_enter_nid_passport_no;
                           }
                           return null;
                         },
@@ -705,18 +600,11 @@ class _ChildWidget extends StatelessWidget {
                       Obx(
                         () => FileChooseAndDownloadButton(
                           pickedFile: form.selectedNidFile,
-                          isDownloading: (controller.isDownloadingMap[
-                                      'childNidOrPassport$index'] ??
-                                  false)
-                              .obs,
-                          progress: (controller.downloadProgressMap[
-                                      'childNidOrPassport$index'] ??
-                                  0.0)
-                              .obs,
+                          isDownloading: (controller.isDownloadingMap['childNidOrPassport$index'] ?? false).obs,
+                          progress: (controller.downloadProgressMap['childNidOrPassport$index'] ?? 0.0).obs,
                           onPickFile: () async {
                             var result = await FilePickerUtil.pickSingleFile();
-                            if (result != null)
-                              form.selectedNidFile.value = result;
+                            if (result != null) form.selectedNidFile.value = result;
                           },
                           onDownload: () async {
                             bool isComplete = await controller.downloadFile(
@@ -726,9 +614,7 @@ class _ChildWidget extends StatelessWidget {
                             );
                             if (isComplete) {
                               Fluttertoast.showToast(
-                                msg:
-                                    "${AppLocalizations.of(context)!.child} (${form.name.text}) ${AppLocalizations.of(context)!.nid_file_downloaded_successfully}"
-                                        .tr,
+                                msg: "${AppLocalizations.of(context)!.child} (${form.name.text}) ${AppLocalizations.of(context)!.nid_file_downloaded_successfully}".tr,
                                 toastLength: Toast.LENGTH_LONG,
                                 gravity: ToastGravity.TOP,
                                 timeInSecForIosWeb: 2,
@@ -752,8 +638,7 @@ class _ChildWidget extends StatelessWidget {
                         hint: AppLocalizations.of(context)!.mobile,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_mobile;
+                            return AppLocalizations.of(context)!.please_enter_mobile;
                           }
                           return null;
                         },
@@ -770,8 +655,7 @@ class _ChildWidget extends StatelessWidget {
                         hint: AppLocalizations.of(context)!.email,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_email;
+                            return AppLocalizations.of(context)!.please_enter_email;
                           }
                           return null;
                         },
@@ -779,8 +663,7 @@ class _ChildWidget extends StatelessWidget {
                       SizedBox(height: 16.h),
 
                       CustomText(
-                        text: AppLocalizations.of(context)!
-                            .child_existence_status,
+                        text: AppLocalizations.of(context)!.child_existence_status,
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
@@ -789,8 +672,7 @@ class _ChildWidget extends StatelessWidget {
                           isSelected: [form.isAlive.value, !form.isAlive.value],
                           onPressed: (i) => form.isAlive.value = i == 0,
                           borderRadius: BorderRadius.circular(8),
-                          fillColor:
-                              form.isAlive.value ? Colors.green : Colors.red,
+                          fillColor: form.isAlive.value ? Colors.green : Colors.red,
                           selectedColor: Colors.white,
                           children: [
                             Padding(
@@ -825,12 +707,7 @@ class _ChildWidget extends StatelessWidget {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.delete_forever,
-                                      color: Colors.white),
-                                  SizedBox(width: 8.w),
-                                  Text(AppLocalizations.of(context)!.remove)
-                                ],
+                                children: [Icon(Icons.delete_forever, color: Colors.white), SizedBox(width: 8.w), Text(AppLocalizations.of(context)!.remove)],
                               ),
                             ),
                           ),
@@ -854,8 +731,7 @@ class _ChildWidget extends StatelessWidget {
                                 SizedBox(width: 8.w),
                                 Expanded(
                                   child: Text(
-                                    AppLocalizations.of(context)!
-                                        .add_more_child,
+                                    AppLocalizations.of(context)!.add_more_child,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -904,11 +780,7 @@ class _SpouseWidget extends StatelessWidget {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.add),
-                    SizedBox(width: 8.w),
-                    Text(AppLocalizations.of(context)!.add_spouse)
-                  ],
+                  children: [Icon(Icons.add), SizedBox(width: 8.w), Text(AppLocalizations.of(context)!.add_spouse)],
                 ),
               ),
             ),
@@ -922,22 +794,14 @@ class _SpouseWidget extends StatelessWidget {
               return Container(
                 margin: EdgeInsets.only(bottom: 24.h),
                 padding: EdgeInsets.all(16.h),
-                decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.circular(24.r),
-                    border:
-                        Border.all(color: Colors.black.withValues(alpha: 0.3))),
+                decoration: BoxDecoration(color: AppColors.whiteColor, borderRadius: BorderRadius.circular(24.r), border: Border.all(color: Colors.black.withValues(alpha: 0.3))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        CustomText(
-                            text: AppLocalizations.of(context)!.spouse_name,
-                            fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                        CustomText(text: AppLocalizations.of(context)!.spouse_name, fontsize: 16.sp),
+                        Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
@@ -946,8 +810,7 @@ class _SpouseWidget extends StatelessWidget {
                       hint: AppLocalizations.of(context)!.spouse_name,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return AppLocalizations.of(context)!
-                              .please_enter_name;
+                          return AppLocalizations.of(context)!.please_enter_name;
                         }
                         return null;
                       },
@@ -955,13 +818,8 @@ class _SpouseWidget extends StatelessWidget {
                     SizedBox(height: 16.h),
                     Row(
                       children: [
-                        CustomText(
-                            text:
-                                AppLocalizations.of(context)!.spouse_profession,
-                            fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                        CustomText(text: AppLocalizations.of(context)!.spouse_profession, fontsize: 16.sp),
+                        Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
@@ -976,13 +834,10 @@ class _SpouseWidget extends StatelessWidget {
                     Row(
                       children: [
                         CustomText(
-                          text:
-                              AppLocalizations.of(context)!.spouse_nationality,
+                          text: AppLocalizations.of(context)!.spouse_nationality,
                           fontsize: 16.sp,
                         ),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                        Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
@@ -997,13 +852,10 @@ class _SpouseWidget extends StatelessWidget {
                     Row(
                       children: [
                         CustomText(
-                          text: AppLocalizations.of(context)!
-                              .spouse_date_of_birth,
+                          text: AppLocalizations.of(context)!.spouse_date_of_birth,
                           fontsize: 16.sp,
                         ),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                        Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
@@ -1012,8 +864,7 @@ class _SpouseWidget extends StatelessWidget {
                         onTap: () async {
                           DateTime? selectedDate = await showDatePicker(
                             context: context,
-                            initialDate:
-                                form.selectedDob.value ?? DateTime.now(),
+                            initialDate: form.selectedDob.value ?? DateTime.now(),
                             firstDate: DateTime(1930),
                             lastDate: DateTime.now(),
                           );
@@ -1022,34 +873,22 @@ class _SpouseWidget extends StatelessWidget {
                           }
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16.w, vertical: 16.h),
+                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                           decoration: BoxDecoration(
-                            border: Border.all(
-                                color: form.selectedDob.value != null
-                                    ? AppColors.primaryColor
-                                    : Colors.grey,
-                                width: 2.w),
+                            border: Border.all(color: form.selectedDob.value != null ? AppColors.primaryColor : Colors.grey, width: 2.w),
                             borderRadius: BorderRadius.circular(8.r),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                form.selectedDob.value != null
-                                    ? DateFormat('yyyy-MM-dd')
-                                        .format(form.selectedDob.value!)
-                                    : AppLocalizations.of(context)!
-                                        .select_date_of_birth,
+                                form.selectedDob.value != null ? DateFormat('yyyy-MM-dd').format(form.selectedDob.value!) : AppLocalizations.of(context)!.select_date_of_birth,
                                 style: TextStyle(
-                                  color: form.selectedDob.value != null
-                                      ? Colors.black
-                                      : Colors.black54,
+                                  color: form.selectedDob.value != null ? Colors.black : Colors.black54,
                                   fontSize: 16.sp,
                                 ),
                               ),
-                              Icon(Icons.calendar_month,
-                                  color: AppColors.primaryColor),
+                              Icon(Icons.calendar_month, color: AppColors.primaryColor),
                             ],
                           ),
                         ),
@@ -1062,9 +901,7 @@ class _SpouseWidget extends StatelessWidget {
                           text: AppLocalizations.of(context)!.nid_passport_no,
                           fontsize: 16.sp,
                         ),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                        Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
@@ -1073,34 +910,25 @@ class _SpouseWidget extends StatelessWidget {
                       hint: AppLocalizations.of(context)!.nid_passport_no,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return AppLocalizations.of(context)!
-                              .please_enter_nid_passport_no;
+                          return AppLocalizations.of(context)!.please_enter_nid_passport_no;
                         }
                         return null;
                       },
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text:
-                          AppLocalizations.of(context)!.nid_passport_documents,
+                      text: AppLocalizations.of(context)!.nid_passport_documents,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
                     Obx(
                       () => FileChooseAndDownloadButton(
                         pickedFile: form.selectedNidFile,
-                        isDownloading: (controller.isDownloadingMap[
-                                    'spouseNidOrPassport$index'] ??
-                                false)
-                            .obs,
-                        progress: (controller.downloadProgressMap[
-                                    'spouseNidOrPassport$index'] ??
-                                0.0)
-                            .obs,
+                        isDownloading: (controller.isDownloadingMap['spouseNidOrPassport$index'] ?? false).obs,
+                        progress: (controller.downloadProgressMap['spouseNidOrPassport$index'] ?? 0.0).obs,
                         onPickFile: () async {
                           var result = await FilePickerUtil.pickSingleFile();
-                          if (result != null)
-                            form.selectedNidFile.value = result;
+                          if (result != null) form.selectedNidFile.value = result;
                         },
                         onDownload: () async {
                           bool isComplete = await controller.downloadFile(
@@ -1110,9 +938,7 @@ class _SpouseWidget extends StatelessWidget {
                           );
                           if (isComplete) {
                             Fluttertoast.showToast(
-                              msg:
-                                  "${AppLocalizations.of(context)!.spouse} (${form.name.text}) ${AppLocalizations.of(context)!.nid_file_downloaded_successfully}"
-                                      .tr,
+                              msg: "${AppLocalizations.of(context)!.spouse} (${form.name.text}) ${AppLocalizations.of(context)!.nid_file_downloaded_successfully}".tr,
                               toastLength: Toast.LENGTH_LONG,
                               gravity: ToastGravity.TOP,
                               timeInSecForIosWeb: 2,
@@ -1128,14 +954,10 @@ class _SpouseWidget extends StatelessWidget {
                     Row(
                       children: [
                         CustomText(
-                          text: AppLocalizations.of(context)!.spouse +
-                              " " +
-                              AppLocalizations.of(context)!.mobile,
+                          text: AppLocalizations.of(context)!.spouse + " " + AppLocalizations.of(context)!.mobile,
                           fontsize: 16.sp,
                         ),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                        Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
@@ -1144,17 +966,14 @@ class _SpouseWidget extends StatelessWidget {
                       hint: AppLocalizations.of(context)!.mobile,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return AppLocalizations.of(context)!
-                              .please_enter_mobile_number;
+                          return AppLocalizations.of(context)!.please_enter_mobile_number;
                         }
                         return null;
                       },
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: AppLocalizations.of(context)!.spouse +
-                          " " +
-                          AppLocalizations.of(context)!.email,
+                      text: AppLocalizations.of(context)!.spouse + " " + AppLocalizations.of(context)!.email,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -1163,17 +982,14 @@ class _SpouseWidget extends StatelessWidget {
                       hint: AppLocalizations.of(context)!.email,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return AppLocalizations.of(context)!
-                              .please_enter_email;
+                          return AppLocalizations.of(context)!.please_enter_email;
                         }
                         return null;
                       },
                     ),
                     SizedBox(height: 16.h),
                     CustomText(
-                      text: AppLocalizations.of(context)!.spouse +
-                          " " +
-                          AppLocalizations.of(context)!.existence_status,
+                      text: AppLocalizations.of(context)!.spouse + " " + AppLocalizations.of(context)!.existence_status,
                       fontsize: 16.sp,
                     ),
                     SizedBox(height: 4.h),
@@ -1183,8 +999,7 @@ class _SpouseWidget extends StatelessWidget {
                           isSelected: [form.isAlive.value, !form.isAlive.value],
                           onPressed: (i) => form.isAlive.value = i == 0,
                           borderRadius: BorderRadius.circular(8),
-                          fillColor:
-                              form.isAlive.value ? Colors.green : Colors.red,
+                          fillColor: form.isAlive.value ? Colors.green : Colors.red,
                           selectedColor: Colors.white,
                           children: [
                             Padding(
@@ -1220,11 +1035,7 @@ class _SpouseWidget extends StatelessWidget {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.delete_forever, color: Colors.white),
-                                SizedBox(width: 8.w),
-                                Text(AppLocalizations.of(context)!.remove)
-                              ],
+                              children: [Icon(Icons.delete_forever, color: Colors.white), SizedBox(width: 8.w), Text(AppLocalizations.of(context)!.remove)],
                             ),
                           ),
                         ),

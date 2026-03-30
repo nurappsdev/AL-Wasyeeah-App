@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
-import 'package:al_wasyeah/view/widgets/app_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -12,8 +11,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class PropertyDistributionCalculationPage
-    extends GetView<PropertyDistributionCalculationController> {
+class PropertyDistributionCalculationPage extends GetView<PropertyDistributionCalculationController> {
   PropertyDistributionCalculationPage({super.key});
   final List<dynamic> _dummyResults = List.generate(
     5,
@@ -60,10 +58,7 @@ class PropertyDistributionCalculationPage
         centerTitle: true,
         title: Text(
           AppLocalizations.of(context)!.property_distribution_calculation,
-          style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-              fontSize: 20.sp),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 20.sp),
         ),
         backgroundColor: AppColors.whiteColor,
         // foregroundColor: Colors.black,
@@ -82,12 +77,7 @@ class PropertyDistributionCalculationPage
                         return Column(
                           children: [
                             _buildRelativeTile(relativeId),
-                            if ((relativeId ==
-                                        PropertyDistributionCalculationController
-                                            .deceasedSonId ||
-                                    relativeId ==
-                                        PropertyDistributionCalculationController
-                                            .deceasedDaughterId) &&
+                            if ((relativeId == PropertyDistributionCalculationController.deceasedSonId || relativeId == PropertyDistributionCalculationController.deceasedDaughterId) &&
                                 controller.isChecked[relativeId] == true)
                               ..._buildDynamicTiles(relativeId),
                             const Divider(),
@@ -95,8 +85,7 @@ class PropertyDistributionCalculationPage
                         );
                       });
                     }).toList(),
-                    _sectionTitle(AppLocalizations.of(context)!
-                        .property_distribution_calculation),
+                    _sectionTitle(AppLocalizations.of(context)!.property_distribution_calculation),
                     _buildPropertySection(),
                     Obx(() {
                       if (controller.propertyDistributionResult.isEmpty) {
@@ -104,8 +93,7 @@ class PropertyDistributionCalculationPage
                       }
                       return Column(
                         children: [
-                          _sectionTitle(AppLocalizations.of(context)!
-                              .calculation_results),
+                          _sectionTitle(AppLocalizations.of(context)!.calculation_results),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -118,12 +106,10 @@ class PropertyDistributionCalculationPage
                                     borderRadius: BorderRadius.circular(5.r),
                                   ),
                                 ),
-                                onPressed: () => controller
-                                    .savePropertyDistributionCalculationResult(),
+                                onPressed: () => controller.savePropertyDistributionCalculationResult(),
                                 child: Text(
                                   AppLocalizations.of(context)!.save,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 22.sp),
+                                  style: TextStyle(color: Colors.white, fontSize: 22.sp),
                                 ),
                               ),
                               ElevatedButton(
@@ -135,12 +121,10 @@ class PropertyDistributionCalculationPage
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
-                                onPressed: () => controller
-                                    .downloadPropertyDistributionCalculationResult(),
+                                onPressed: () => controller.downloadPropertyDistributionCalculationResult(),
                                 child: Text(
                                   AppLocalizations.of(context)!.download,
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 22.sp),
+                                  style: TextStyle(color: Colors.white, fontSize: 22.sp),
                                 ),
                               ),
                             ],
@@ -211,24 +195,20 @@ class PropertyDistributionCalculationPage
 
                     // Dummy Pie Chart Section
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 16.w, vertical: 20.h),
+                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
                       child: Column(
                         children: [
                           SizedBox(
                             height: 250.h,
                             child: PieChart(
                               PieChartData(
-                                sections:
-                                    _dummyResults.asMap().entries.map((entry) {
+                                sections: _dummyResults.asMap().entries.map((entry) {
                                   final index = entry.key;
                                   final data = entry.value;
-                                  final percentage =
-                                      (data["portionPart"]) * 100;
+                                  final percentage = (data["portionPart"]) * 100;
 
                                   return PieChartSectionData(
-                                    color: _chartColors[
-                                        index % _chartColors.length],
+                                    color: _chartColors[index % _chartColors.length],
                                     value: percentage,
                                     title: '${percentage}%',
                                     radius: 60,
@@ -246,8 +226,7 @@ class PropertyDistributionCalculationPage
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: _dummyResults.length,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 16.w, vertical: 10.h),
+                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
                       itemBuilder: (context, index) {
                         final data = _dummyResults[index];
 
@@ -267,8 +246,7 @@ class PropertyDistributionCalculationPage
                                     Container(
                                       width: 4.w,
                                       height: 24.h,
-                                      color: _chartColors[
-                                          index % _chartColors.length],
+                                      color: _chartColors[index % _chartColors.length],
                                     ),
                                     SizedBox(width: 8.w),
                                     Text(
@@ -281,16 +259,11 @@ class PropertyDistributionCalculationPage
                                   ],
                                 ),
                                 const Divider(),
-                                _resultRow("Share Portion",
-                                    "${(data["portionPart"] * 100)}%"),
-                                _resultRow("Land Portion",
-                                    "${data["landPart"]} decimal"),
-                                _resultRow(
-                                    "Gold Portion", "${data["goldPart"]} gram"),
-                                _resultRow("Silver Portion",
-                                    "${data["silverPart"]} gram"),
-                                _resultRow("Total Money",
-                                    "${data["currencyPart"]} taka"),
+                                _resultRow("Share Portion", "${(data["portionPart"] * 100)}%"),
+                                _resultRow("Land Portion", "${data["landPart"]} decimal"),
+                                _resultRow("Gold Portion", "${data["goldPart"]} gram"),
+                                _resultRow("Silver Portion", "${data["silverPart"]} gram"),
+                                _resultRow("Total Money", "${data["currencyPart"]} taka"),
                               ],
                             ),
                           ),
@@ -310,9 +283,7 @@ class PropertyDistributionCalculationPage
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
-                onPressed: controller.isCalculateLoading.value
-                    ? null
-                    : () => controller.submitCalculation(),
+                onPressed: controller.isCalculateLoading.value ? null : () => controller.submitCalculation(),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
                   minimumSize: const Size(double.infinity, 50),
@@ -331,10 +302,7 @@ class PropertyDistributionCalculationPage
                       )
                     : Text(
                         AppLocalizations.of(context)!.calculate,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                       ),
               ),
             );
@@ -366,10 +334,7 @@ class PropertyDistributionCalculationPage
             height: 250.h,
             child: PieChart(
               PieChartData(
-                sections: controller.propertyDistributionResult
-                    .asMap()
-                    .entries
-                    .map((entry) {
+                sections: controller.propertyDistributionResult.asMap().entries.map((entry) {
                   final index = entry.key;
                   final data = entry.value;
                   final percentage = (data.portionPart ?? 0) * 100;
@@ -394,10 +359,7 @@ class PropertyDistributionCalculationPage
           Wrap(
             spacing: 16.w,
             runSpacing: 8.h,
-            children: controller.propertyDistributionResult
-                .asMap()
-                .entries
-                .map((entry) {
+            children: controller.propertyDistributionResult.asMap().entries.map((entry) {
               final index = entry.key;
               final data = entry.value;
               return Row(
@@ -414,8 +376,7 @@ class PropertyDistributionCalculationPage
                   SizedBox(width: 4.w),
                   Text(
                     _getRelativeName(data.relativeName),
-                    style:
-                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
                   ),
                 ],
               );
@@ -440,8 +401,7 @@ class PropertyDistributionCalculationPage
       final number = int.tryParse(numberStr ?? '');
 
       if (number != null) {
-        final formattedNumber =
-            NumberFormat.decimalPattern(locale).format(number);
+        final formattedNumber = NumberFormat.decimalPattern(locale).format(number);
 
         // Replace (1) → (formattedNumber)
         return name.replaceFirst(
@@ -465,8 +425,7 @@ class PropertyDistributionCalculationPage
         return Card(
           elevation: 4,
           margin: EdgeInsets.only(bottom: 16.h),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
           child: Padding(
             padding: EdgeInsets.all(16.h),
             child: Column(
@@ -482,26 +441,16 @@ class PropertyDistributionCalculationPage
                     SizedBox(width: 8.w),
                     Text(
                       _getRelativeName(data.relativeName),
-                      style: TextStyle(
-                          fontSize: 18.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
                 const Divider(),
-                _resultRow(AppLocalizations.of(Get.context!)!.share_portion,
-                    "${((data.portionPart ?? 0) * 100).toLocal()}%"),
-                if (data.landPart != null && data.landPart! > 0)
-                  _resultRow(AppLocalizations.of(Get.context!)!.land_portion,
-                      "${data.landPart.toLocal()} ${AppLocalizations.of(Get.context!)!.decimal}"),
-                if (data.goldPart != null && data.goldPart! > 0)
-                  _resultRow(AppLocalizations.of(Get.context!)!.gold_portion,
-                      "${data.goldPart.toLocal()} ${AppLocalizations.of(Get.context!)!.gram_vori}"),
-                if (data.silverPart != null && data.silverPart! > 0)
-                  _resultRow(AppLocalizations.of(Get.context!)!.silver_portion,
-                      "${data.silverPart.toLocal()} ${AppLocalizations.of(Get.context!)!.gram_vori}"),
-                if (data.currencyPart != null && data.currencyPart! > 0)
-                  _resultRow(AppLocalizations.of(Get.context!)!.total_money,
-                      "${data.currencyPart.toLocal()} ${AppLocalizations.of(Get.context!)!.taka}"),
+                _resultRow(AppLocalizations.of(Get.context!)!.share_portion, "${((data.portionPart ?? 0) * 100).toLocal()}%"),
+                if (data.landPart != null && data.landPart! > 0) _resultRow(AppLocalizations.of(Get.context!)!.land_portion, "${data.landPart.toLocal()} ${AppLocalizations.of(Get.context!)!.decimal}"),
+                if (data.goldPart != null && data.goldPart! > 0) _resultRow(AppLocalizations.of(Get.context!)!.gold_portion, "${data.goldPart.toLocal()} ${AppLocalizations.of(Get.context!)!.gram_vori}"),
+                if (data.silverPart != null && data.silverPart! > 0) _resultRow(AppLocalizations.of(Get.context!)!.silver_portion, "${data.silverPart.toLocal()} ${AppLocalizations.of(Get.context!)!.gram_vori}"),
+                if (data.currencyPart != null && data.currencyPart! > 0) _resultRow(AppLocalizations.of(Get.context!)!.total_money, "${data.currencyPart.toLocal()} ${AppLocalizations.of(Get.context!)!.taka}"),
               ],
             ),
           ),
@@ -517,10 +466,8 @@ class PropertyDistributionCalculationPage
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label,
-              style: TextStyle(fontSize: 14.sp, color: Colors.grey[700])),
-          Text(value,
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
+          Text(label, style: TextStyle(fontSize: 14.sp, color: Colors.grey[700])),
+          Text(value, style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
         ],
       ),
     );
@@ -592,8 +539,7 @@ class PropertyDistributionCalculationPage
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
                 ),
               ),
@@ -611,14 +557,8 @@ class PropertyDistributionCalculationPage
                           value: unitValue.value,
                           isExpanded: true,
                           items: [
-                            {
-                              'value': 'gram',
-                              'label': AppLocalizations.of(Get.context!)!.gram
-                            },
-                            {
-                              'value': 'vori',
-                              'label': AppLocalizations.of(Get.context!)!.vori
-                            }
+                            {'value': 'gram', 'label': AppLocalizations.of(Get.context!)!.gram},
+                            {'value': 'vori', 'label': AppLocalizations.of(Get.context!)!.vori}
                           ].map((Map<String, String> item) {
                             return DropdownMenuItem<String>(
                               value: item['value'],
@@ -664,8 +604,7 @@ class PropertyDistributionCalculationPage
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             ),
           ),
         ],
@@ -679,10 +618,7 @@ class PropertyDistributionCalculationPage
         CheckboxListTile(
           activeColor: AppColors.primaryColor,
           title: Text(
-            controller.allRelatives
-                    .firstWhere((element) => element.encrypted == relativeId)
-                    .relative ??
-                AppLocalizations.of(Get.context!)!.n_a,
+            controller.allRelatives.firstWhere((element) => element.encrypted == relativeId).relative ?? AppLocalizations.of(Get.context!)!.n_a,
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           value: controller.isChecked[relativeId] ?? false,
@@ -694,23 +630,17 @@ class PropertyDistributionCalculationPage
             relativeId != PropertyDistributionCalculationController.wifeId &&
             relativeId != PropertyDistributionCalculationController.fatherId &&
             relativeId != PropertyDistributionCalculationController.motherId &&
-            relativeId !=
-                PropertyDistributionCalculationController.grandfatherId &&
-            relativeId !=
-                PropertyDistributionCalculationController.deceasedSonsSonId &&
-            relativeId !=
-                PropertyDistributionCalculationController
-                    .deceasedSonsDaughterId)
+            relativeId != PropertyDistributionCalculationController.grandfatherId &&
+            relativeId != PropertyDistributionCalculationController.deceasedSonsSonId &&
+            relativeId != PropertyDistributionCalculationController.deceasedSonsDaughterId)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text("${AppLocalizations.of(Get.context!)!.count}: ",
-                    style: TextStyle(color: Colors.grey)),
+                Text("${AppLocalizations.of(Get.context!)!.count}: ", style: TextStyle(color: Colors.grey)),
                 IconButton(
-                  icon: const Icon(Icons.remove_circle_outline,
-                      color: AppColors.redColor),
+                  icon: const Icon(Icons.remove_circle_outline, color: AppColors.redColor),
                   onPressed: () => controller.decrement(relativeId),
                 ),
                 SizedBox(
@@ -718,14 +648,12 @@ class PropertyDistributionCalculationPage
                   child: Center(
                     child: Text(
                       controller.counts[relativeId].toString(),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.add_circle_outline,
-                      color: AppColors.primaryColor),
+                  icon: const Icon(Icons.add_circle_outline, color: AppColors.primaryColor),
                   onPressed: () => controller.increment(relativeId),
                 ),
               ],
@@ -738,19 +666,14 @@ class PropertyDistributionCalculationPage
   List<Widget> _buildDynamicTiles(String relativeId) {
     int count = controller.counts[relativeId] ?? 0;
     List<Widget> tiles = [];
-    String base =
-        relativeId == PropertyDistributionCalculationController.deceasedSonId
-            ? PropertyDistributionCalculationController.sonId
-            : PropertyDistributionCalculationController.daughterId;
+    String base = relativeId == PropertyDistributionCalculationController.deceasedSonId ? PropertyDistributionCalculationController.sonId : PropertyDistributionCalculationController.daughterId;
 
     for (int i = 1; i <= count; i++) {
       String ordinal = controller.getOrdinal(i);
 
       // Stable keys for state management
-      String sonKey =
-          "deceased_${relativeId}_${PropertyDistributionCalculationController.sonId}_$i";
-      String daughterKey =
-          "deceased_${relativeId}_${PropertyDistributionCalculationController.daughterId}_$i";
+      String sonKey = "deceased_${relativeId}_${PropertyDistributionCalculationController.sonId}_$i";
+      String daughterKey = "deceased_${relativeId}_${PropertyDistributionCalculationController.daughterId}_$i";
 
       // Localized labels for display
       String sonLabel =
@@ -774,8 +697,7 @@ class PropertyDistributionCalculationPage
               activeColor: AppColors.primaryColor,
               title: Text(
                 label,
-                style:
-                    const TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+                style: const TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
               ),
               value: controller.dynamicIsChecked[key] ?? false,
               onChanged: (val) => controller.toggleDynamicCheck(key, val),

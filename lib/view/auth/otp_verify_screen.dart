@@ -1,10 +1,9 @@
 import 'package:al_wasyeah/utils/app_colors.dart';
-import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:al_wasyeah/view/profile/profile_page.dart';
-import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/view/widgets/custom_pin_text_field.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/utils/widgets/custom_pin_text_field.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -27,7 +26,7 @@ class OtpVerifyScreen extends StatelessWidget {
         width: double.infinity,
         height: Get.height,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -66,7 +65,7 @@ class OtpVerifyScreen extends StatelessWidget {
                 ),
 
                 ///=============Sign In Button====================
-                CustomButtonCommon(
+                CustomButton(
                   // loading: authController.loadingLoading.value == true,
                   title: AppLocalizations.of(context)!.submit,
                   onpress: () {

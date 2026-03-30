@@ -6,8 +6,7 @@ import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:al_wasyeah/utils/app_image.dart';
-import 'package:al_wasyeah/view/widgets/custom_loader.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -54,13 +53,10 @@ class HomePage extends GetView<HomeController> {
               child: Obx(
                 () => Row(
                   children: [
-                    profileController.profileModel.value.userProfile
-                                ?.profilePictureUrl !=
-                            null
+                    profileController.profileModel.value.userProfile?.profilePictureUrl != null
                         ? CircleAvatar(
                             radius: 18,
-                            backgroundImage: NetworkImage(
-                                "${ApiConstants.imageUrl + "${profileController.profileModel.value.userProfile?.profilePictureUrl}"}"),
+                            backgroundImage: NetworkImage("${ApiConstants.imageUrl + "${profileController.profileModel.value.userProfile?.profilePictureUrl}"}"),
                             backgroundColor: Colors.grey[200],
                           )
                         : CircleAvatar(
@@ -77,7 +73,7 @@ class HomePage extends GetView<HomeController> {
                             ? SizedBox(
                                 height: 16.sp,
                                 width: 16.sp,
-                                child: CustomLoader(),
+                                child: CircularProgressIndicator(),
                               )
                             : Flexible(
                                 child: Text(
@@ -103,8 +99,7 @@ class HomePage extends GetView<HomeController> {
           actions: [
             notificationController.obx(
               (data) {
-                final unreadCount =
-                    data!.where((e) => !(e.status != "UNREAD")).length;
+                final unreadCount = data!.where((e) => !(e.status != "UNREAD")).length;
 
                 return Padding(
                   padding: const EdgeInsets.only(right: 12),
@@ -116,9 +111,7 @@ class HomePage extends GetView<HomeController> {
                         icon: Icon(
                           Icons.notifications,
                           size: 26,
-                          color: unreadCount > 0
-                              ? Colors.black
-                              : Colors.grey.shade700,
+                          color: unreadCount > 0 ? Colors.black : Colors.grey.shade700,
                         ),
                         splashRadius: 22,
                         onPressed: () {
@@ -136,8 +129,7 @@ class HomePage extends GetView<HomeController> {
                           top: 4,
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 250),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 6, vertical: 3),
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                             constraints: const BoxConstraints(
                               minWidth: 12,
                               minHeight: 12,
@@ -159,9 +151,7 @@ class HomePage extends GetView<HomeController> {
                             ),
                             child: Center(
                               child: Text(
-                                unreadCount > 99
-                                    ? "99+"
-                                    : unreadCount.toString(),
+                                unreadCount > 99 ? "99+" : unreadCount.toString(),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 8,
@@ -201,8 +191,7 @@ class HomePage extends GetView<HomeController> {
 
                 InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.wasyyahPage,
-                        preventDuplicates: false);
+                    Get.toNamed(AppRoutes.wasyyahPage, preventDuplicates: false);
                   },
                   child: Container(
                     height: 150.h,
@@ -221,8 +210,7 @@ class HomePage extends GetView<HomeController> {
                           height: 80.h,
                         ),
                         CustomText(
-                          text: AppLocalizations.of(context)!
-                              .explore_your_wasyyah,
+                          text: AppLocalizations.of(context)!.explore_your_wasyyah,
                           fontsize: 18.sp,
                           color: AppColors.primaryColor,
                         )
@@ -239,8 +227,7 @@ class HomePage extends GetView<HomeController> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          Get.toNamed(AppRoutes.witnessesPage,
-                              preventDuplicates: false);
+                          Get.toNamed(AppRoutes.witnessesPage, preventDuplicates: false);
                         },
                         child: Container(
                           height: 100.h,
@@ -276,8 +263,7 @@ class HomePage extends GetView<HomeController> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          Get.toNamed(AppRoutes.nomineesPage,
-                              preventDuplicates: false);
+                          Get.toNamed(AppRoutes.nomineesPage, preventDuplicates: false);
                         },
                         child: Container(
                           height: 100.h,
@@ -319,8 +305,7 @@ class HomePage extends GetView<HomeController> {
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.8),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                          color: AppColors.primaryColor.withOpacity(0.3)),
+                      border: Border.all(color: AppColors.primaryColor.withOpacity(0.3)),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -329,13 +314,11 @@ class HomePage extends GetView<HomeController> {
                         // Current Time Column
                         Container(
                           width: 1.sw,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 12.w, vertical: 6.h),
+                          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                           decoration: BoxDecoration(
                             color: AppColors.primaryColor.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                                color: AppColors.primaryColor.withOpacity(0.2)),
+                            border: Border.all(color: AppColors.primaryColor.withOpacity(0.2)),
                           ),
                           child: Obx(
                             () => CustomText(
@@ -369,15 +352,11 @@ class HomePage extends GetView<HomeController> {
                                     Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Icon(Icons.wb_sunny,
-                                            color: Colors.orange, size: 20.sp),
+                                        Icon(Icons.wb_sunny, color: Colors.orange, size: 20.sp),
                                         SizedBox(width: 4.w),
                                         Flexible(
                                           child: CustomText(
-                                            text: controller.formatTime(
-                                                controller.salatTimeModel.value
-                                                        ?.sunrise ??
-                                                    "06:00"),
+                                            text: controller.formatTime(controller.salatTimeModel.value?.sunrise ?? "06:00"),
                                             fontsize: 18.sp,
                                             fontWeight: FontWeight.bold,
                                             // maxLines: 1,
@@ -387,8 +366,7 @@ class HomePage extends GetView<HomeController> {
                                       ],
                                     ),
                                     CustomText(
-                                      text: AppLocalizations.of(context)!
-                                          .sunrise_time,
+                                      text: AppLocalizations.of(context)!.sunrise_time,
                                       fontsize: 12.sp,
                                       color: Colors.grey,
                                     ),
@@ -401,16 +379,11 @@ class HomePage extends GetView<HomeController> {
                                     Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Icon(Icons.nightlight,
-                                            color: Colors.blueGrey,
-                                            size: 20.sp),
+                                        Icon(Icons.nightlight, color: Colors.blueGrey, size: 20.sp),
                                         SizedBox(width: 4.w),
                                         Flexible(
                                           child: CustomText(
-                                            text: controller.formatTime(
-                                                controller.salatTimeModel.value
-                                                        ?.sunset ??
-                                                    "18:00"),
+                                            text: controller.formatTime(controller.salatTimeModel.value?.sunset ?? "18:00"),
                                             fontsize: 18.sp,
                                             fontWeight: FontWeight.bold,
                                             // maxLines: 1,
@@ -420,8 +393,7 @@ class HomePage extends GetView<HomeController> {
                                       ],
                                     ),
                                     CustomText(
-                                      text: AppLocalizations.of(context)!
-                                          .sunset_time,
+                                      text: AppLocalizations.of(context)!.sunset_time,
                                       fontsize: 12.sp,
                                       color: Colors.grey,
                                     ),
@@ -438,18 +410,13 @@ class HomePage extends GetView<HomeController> {
                 // Prayer times
                 Align(
                   alignment: Alignment.topLeft,
-                  child: Text(AppLocalizations.of(context)!.prayer_times,
-                      style: TextStyle(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green[700])),
+                  child: Text(AppLocalizations.of(context)!.prayer_times, style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold, color: Colors.green[700])),
                 ),
                 SizedBox(height: 20.h),
 
                 Obx(() {
                   if (controller.salatTimeStatus.value.isError) {
-                    return ErrorWidget(Exception(
-                        "${controller.salatTimeStatus.value.errorMessage}"));
+                    return ErrorWidget(Exception("${controller.salatTimeStatus.value.errorMessage}"));
                   }
 
                   return SizedBox(
@@ -461,22 +428,11 @@ class HomePage extends GetView<HomeController> {
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         physics: BouncingScrollPhysics(),
-                        itemCount: controller.salatTimeStatus.value.isLoading
-                            ? 5
-                            : controller.prayerTimes.length,
+                        itemCount: controller.salatTimeStatus.value.isLoading ? 5 : controller.prayerTimes.length,
                         itemBuilder: (context, index) {
-                          final name = controller
-                                  .salatTimeStatus.value.isLoading
-                              ? "Prayer Name"
-                              : controller.prayerTimes.keys.elementAt(index);
-                          final time =
-                              controller.salatTimeStatus.value.isLoading
-                                  ? "12:00"
-                                  : controller.prayerTimes[name]!;
-                          final isCurrent =
-                              controller.salatTimeStatus.value.isLoading
-                                  ? (index == 0)
-                                  : name == controller.currentPrayer.value;
+                          final name = controller.salatTimeStatus.value.isLoading ? "Prayer Name" : controller.prayerTimes.keys.elementAt(index);
+                          final time = controller.salatTimeStatus.value.isLoading ? "12:00" : controller.prayerTimes[name]!;
+                          final isCurrent = controller.salatTimeStatus.value.isLoading ? (index == 0) : name == controller.currentPrayer.value;
 
                           // Determine gradient based on status
                           // Current: Green, Previous: Grey, Upcoming: Amber
@@ -486,10 +442,8 @@ class HomePage extends GetView<HomeController> {
                           // 2. index of name < index of currentPrayer -> Grey (already passed)
                           // 3. index of name > index of currentPrayer -> Amber (next or future)
 
-                          final prayerNames =
-                              controller.prayerTimes.keys.toList();
-                          final currentIndex = prayerNames
-                              .indexOf(controller.currentPrayer.value);
+                          final prayerNames = controller.prayerTimes.keys.toList();
+                          final currentIndex = prayerNames.indexOf(controller.currentPrayer.value);
                           final pIndex = prayerNames.indexOf(name);
 
                           LinearGradient gradient;
@@ -520,8 +474,7 @@ class HomePage extends GetView<HomeController> {
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             );
-                          } else if (pIndex < currentIndex &&
-                              currentIndex != -1) {
+                          } else if (pIndex < currentIndex && currentIndex != -1) {
                             // Previous Prayer → Soft Cool Grey with more white layers
                             gradient = const LinearGradient(
                               colors: [
@@ -531,8 +484,7 @@ class HomePage extends GetView<HomeController> {
                                 Color(0xFFEDEDED), // soft light grey
                                 Color(0xFFE0E0E0), // light grey
                                 Color(0xFFBDBDBD), // grey accent
-                                Color(
-                                    0xFF9E9E9E), // slightly darker grey for depth
+                                Color(0xFF9E9E9E), // slightly darker grey for depth
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
@@ -582,21 +534,17 @@ class HomePage extends GetView<HomeController> {
                                 // 1. Gradient Border Layer
                                 Container(
                                   decoration: BoxDecoration(
-                                    gradient:
-                                        borderGradient, // darker/more visible
+                                    gradient: borderGradient, // darker/more visible
                                     borderRadius: BorderRadius.circular(16.0),
                                   ),
                                 ),
 
                                 // 2. Inner Card with Padding for Border Effect
                                 Container(
-                                  margin: EdgeInsets.all(
-                                      borderWidth), // creates border space
+                                  margin: EdgeInsets.all(borderWidth), // creates border space
                                   decoration: BoxDecoration(
-                                    gradient:
-                                        gradient, // keep the light modern gradient
-                                    borderRadius: BorderRadius.circular(
-                                        16.0 - borderWidth),
+                                    gradient: gradient, // keep the light modern gradient
+                                    borderRadius: BorderRadius.circular(16.0 - borderWidth),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.black.withOpacity(0.05),
@@ -628,23 +576,15 @@ class HomePage extends GetView<HomeController> {
                                       Padding(
                                         padding: const EdgeInsets.all(12.0),
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
                                             // Top Status Text
                                             Text(
                                               isCurrent
-                                                  ? AppLocalizations.of(
-                                                          context)!
-                                                      .current_prayer
-                                                  : (pIndex < currentIndex &&
-                                                          currentIndex != -1)
-                                                      ? AppLocalizations.of(
-                                                              context)!
-                                                          .previous_prayer
-                                                      : AppLocalizations.of(
-                                                              context)!
-                                                          .upcoming_prayer,
+                                                  ? AppLocalizations.of(context)!.current_prayer
+                                                  : (pIndex < currentIndex && currentIndex != -1)
+                                                      ? AppLocalizations.of(context)!.previous_prayer
+                                                      : AppLocalizations.of(context)!.upcoming_prayer,
                                               style: TextStyle(
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.bold,
@@ -654,8 +594,7 @@ class HomePage extends GetView<HomeController> {
                                             if (isCurrent)
                                               Obx(
                                                 () => Text(
-                                                  controller
-                                                      .remainingTimeStr.value,
+                                                  controller.remainingTimeStr.value,
                                                   style: TextStyle(
                                                     fontSize: 18.sp,
                                                     fontWeight: FontWeight.bold,
@@ -668,35 +607,22 @@ class HomePage extends GetView<HomeController> {
                                             Align(
                                               alignment: Alignment.bottomRight,
                                               child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                                crossAxisAlignment: CrossAxisAlignment.end,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Text(
                                                     name == "Dhuhr"
-                                                        ? AppLocalizations.of(
-                                                                context)!
-                                                            .dhuhr
+                                                        ? AppLocalizations.of(context)!.dhuhr
                                                         : name == "Asr"
-                                                            ? AppLocalizations
-                                                                    .of(
-                                                                        context)!
-                                                                .asr
+                                                            ? AppLocalizations.of(context)!.asr
                                                             : name == "Maghrib"
-                                                                ? AppLocalizations.of(
-                                                                        context)!
-                                                                    .maghrib
+                                                                ? AppLocalizations.of(context)!.maghrib
                                                                 : name == "Isha"
-                                                                    ? AppLocalizations.of(
-                                                                            context)!
-                                                                        .isha
-                                                                    : AppLocalizations.of(
-                                                                            context)!
-                                                                        .fajr,
+                                                                    ? AppLocalizations.of(context)!.isha
+                                                                    : AppLocalizations.of(context)!.fajr,
                                                     style: TextStyle(
                                                       fontSize: 22.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      fontWeight: FontWeight.bold,
                                                       color: Colors.black,
                                                     ),
                                                   ),
@@ -704,8 +630,7 @@ class HomePage extends GetView<HomeController> {
                                                     controller.formatTime(time),
                                                     style: TextStyle(
                                                       fontSize: 20.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      fontWeight: FontWeight.bold,
                                                       color: Colors.black,
                                                     ),
                                                   ),
@@ -716,11 +641,8 @@ class HomePage extends GetView<HomeController> {
                                                     child: FittedBox(
                                                       fit: BoxFit.fill,
                                                       child: Switch(
-                                                        value: isCurrent
-                                                            ? true
-                                                            : false,
-                                                        activeColor: Colors
-                                                            .greenAccent[400],
+                                                        value: isCurrent ? true : false,
+                                                        activeColor: Colors.greenAccent[400],
                                                         onChanged: (val) {},
                                                       ),
                                                     ),
@@ -750,8 +672,7 @@ class HomePage extends GetView<HomeController> {
 
                 InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.zakatCalculatorPage,
-                        preventDuplicates: false);
+                    Get.toNamed(AppRoutes.zakatCalculatorPage, preventDuplicates: false);
                   },
                   child: Stack(
                     children: [
@@ -800,8 +721,7 @@ class HomePage extends GetView<HomeController> {
                 ),
                 InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.propertyDistributionPage,
-                        preventDuplicates: false);
+                    Get.toNamed(AppRoutes.propertyDistributionPage, preventDuplicates: false);
                   },
                   child: Stack(
                     children: [
@@ -809,8 +729,7 @@ class HomePage extends GetView<HomeController> {
                         height: 200.h,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(
-                                AppImages.distribureYourPropertyProperlyImage),
+                            image: AssetImage(AppImages.distribureYourPropertyProperlyImage),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -821,8 +740,7 @@ class HomePage extends GetView<HomeController> {
                         child: SizedBox(
                           width: 80.w,
                           child: Text(
-                            AppLocalizations.of(context)!
-                                .distribute_your_property_properly,
+                            AppLocalizations.of(context)!.distribute_your_property_properly,
                             style: TextStyle(
                               fontSize: 16.sp,
                               color: Colors.black,

@@ -1,12 +1,11 @@
 import 'package:al_wasyeah/controllers/auths/auth_controller.dart';
+import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
-import 'package:al_wasyeah/utils/app_dimentions.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
-import 'package:al_wasyeah/view/widgets/app_wrapper.dart';
-import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
-import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/utils/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,10 +16,8 @@ import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
-  final TextEditingController emailController =
-      TextEditingController(/*text: "WASY100008"*/);
-  final TextEditingController passController =
-      TextEditingController(/*text: "+oGq#rH^"*/);
+  final TextEditingController emailController = TextEditingController(/*text: "WASY100008"*/);
+  final TextEditingController passController = TextEditingController(/*text: "+oGq#rH^"*/);
   final AuthController authController = Get.put(AuthController());
 
   final GlobalKey<FormState> _logKey = GlobalKey<FormState>();
@@ -65,8 +62,7 @@ class LoginScreen extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       extendBody: true,
       body: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: Dimensions.radiusExtraLarge.w),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(
@@ -81,9 +77,7 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 80.h,
                     ),
-                    Center(
-                        child: SvgPicture.asset(AppIcons.logo,
-                            height: 160.h, width: 200.w)),
+                    Center(child: SvgPicture.asset(AppIcons.logo, height: 160.h, width: 200.w)),
                     SizedBox(
                       height: 24.h,
                     ),
@@ -93,15 +87,11 @@ class LoginScreen extends StatelessWidget {
                       width: double.infinity,
                       height: 120.h, // Increased height to accommodate content
                       child: GridView.builder(
-                        scrollDirection:
-                            Axis.horizontal, // Enables horizontal scrolling
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                        scrollDirection: Axis.horizontal, // Enables horizontal scrolling
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1, // Only one row
-                          mainAxisSpacing:
-                              4, // Spacing between items horizontally
-                          childAspectRatio:
-                              1 / 1.1, // Aspect ratio for each item
+                          mainAxisSpacing: 4, // Spacing between items horizontally
+                          childAspectRatio: 1 / 1.1, // Aspect ratio for each item
                         ),
                         itemCount: items.length,
                         itemBuilder: (context, index) {
@@ -111,8 +101,7 @@ class LoginScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SvgPicture.asset(item.icon,
-                                    height: 60.h, width: 60.w),
+                                SvgPicture.asset(item.icon, height: 60.h, width: 60.w),
                                 SizedBox(height: 4.h),
                                 CustomText(text: item.text),
                               ],
@@ -142,15 +131,11 @@ class LoginScreen extends StatelessWidget {
                         borderColor: AppColors.secondaryPrimaryColor,
                         prefixIcon: Padding(
                           padding: EdgeInsets.only(left: 16.w, right: 12.w),
-                          child: SvgPicture.asset(AppIcons.email,
-                              color: AppColors.primaryColor,
-                              height: 20.h,
-                              width: 20.w),
+                          child: SvgPicture.asset(AppIcons.email, color: AppColors.primaryColor, height: 20.h, width: 20.w),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_your_email;
+                            return AppLocalizations.of(context)!.please_enter_your_email;
                           }
                           if (!!AppConstants.emailValidate.hasMatch(value)) {
                             return AppLocalizations.of(context)!.invalid_email;
@@ -177,24 +162,17 @@ class LoginScreen extends StatelessWidget {
                       child: CustomTextField(
                         controller: passController,
                         isPassword: true,
-                        hintText: AppLocalizations.of(context)!
-                            .please_enter_your_password,
+                        hintText: AppLocalizations.of(context)!.please_enter_your_password,
                         borderColor: AppColors.secondaryPrimaryColor,
                         prefixIcon: Padding(
                           padding: EdgeInsets.only(left: 16.w, right: 12.w),
-                          child: SvgPicture.asset(AppIcons.passIcon,
-                              color: AppColors.primaryColor,
-                              height: 24.h,
-                              width: 24.w),
+                          child: SvgPicture.asset(AppIcons.passIcon, color: AppColors.primaryColor, height: 24.h, width: 24.w),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_your_password;
-                          } else if (value.length < 8 ||
-                              !AppConstants.validatePassword(value)) {
-                            return AppLocalizations.of(context)!
-                                .password_8_characters_min_letters_digits_required;
+                            return AppLocalizations.of(context)!.please_enter_your_password;
+                          } else if (value.length < 8 || !AppConstants.validatePassword(value)) {
+                            return AppLocalizations.of(context)!.password_8_characters_min_letters_digits_required;
                           }
                           return null;
                         },
@@ -204,8 +182,7 @@ class LoginScreen extends StatelessWidget {
                     ///=============Forgot====================
                     InkWell(
                         onTap: () {
-                          Get.toNamed(AppRoutes.forgotPasswordPage,
-                              parameters: {'email': emailController.text});
+                          Get.toNamed(AppRoutes.forgotPasswordPage, parameters: {'email': emailController.text});
                         },
                         child: Padding(
                           padding: EdgeInsets.only(left: 190.w),
@@ -223,15 +200,13 @@ class LoginScreen extends StatelessWidget {
 
                     ///=============Sign In Button====================
                     Obx(
-                      () => CustomButtonCommon(
+                      () => CustomButton(
                         loading: authController.signInLoading.value == true,
                         title: AppLocalizations.of(context)!.sign_in,
                         onpress: () {
                           if (_logKey.currentState!.validate()) {
                             TextInput.finishAutofillContext();
-                            authController.signInHandle(
-                                userName: emailController.text,
-                                password: passController.text);
+                            authController.signInHandle(userName: emailController.text, password: passController.text);
 
                             //  Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
                           }
@@ -251,14 +226,12 @@ class LoginScreen extends StatelessWidget {
                               //  Get.toNamed(AppRoutes.otpVirifyScreen,preventDuplicates: false);
                             },
                             child: CustomText(
-                              text: AppLocalizations.of(context)!
-                                  .don_t_have_an_account,
+                              text: AppLocalizations.of(context)!.don_t_have_an_account,
                               fontsize: 20.sp,
                             )),
                         InkWell(
                             onTap: () {
-                              Get.toNamed(AppRoutes.registrationPage,
-                                  preventDuplicates: false);
+                              Get.toNamed(AppRoutes.registrationPage, preventDuplicates: false);
                             },
                             child: CustomText(
                               text: AppLocalizations.of(context)!.register_now,

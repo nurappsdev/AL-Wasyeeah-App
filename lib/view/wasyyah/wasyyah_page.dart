@@ -1,9 +1,9 @@
 import 'package:al_wasyeah/controllers/wasyyah/wasyyah_controller.dart';
+import 'package:al_wasyeah/helpers/toast_message_helper.dart';
 import 'package:al_wasyeah/models/wasyyah/get_wasyyah_response_model.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
-import 'package:al_wasyeah/view/widgets/custom_button.dart';
-import 'package:al_wasyeah/view/widgets/custom_loader.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -37,13 +37,12 @@ class WasyyahPage extends GetView<WasyyahController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CustomLoader());
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (controller.wasyyahList.isEmpty) {
           return Center(
-            child: CustomText(
-                text: AppLocalizations.of(context)!.no_content_available),
+            child: CustomText(text: AppLocalizations.of(context)!.no_content_available),
           );
         }
 
@@ -61,8 +60,7 @@ class WasyyahPage extends GetView<WasyyahController> {
                 height: 16.h,
               ),
               CustomText(
-                text: AppLocalizations.of(context)!
-                    .assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam,
+                text: AppLocalizations.of(context)!.assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam,
                 // maxline: 3,
                 fontsize: 16.sp,
                 fontWeight: FontWeight.w700,
@@ -94,8 +92,7 @@ class WasyyahPage extends GetView<WasyyahController> {
     );
   }
 
-  Widget _buildWasyyahCard(
-      BuildContext context, GetWasyyahResponseModel item, int index) {
+  Widget _buildWasyyahCard(BuildContext context, GetWasyyahResponseModel item, int index) {
     bool isHidden = item.visible == "N";
 
     return Container(
@@ -178,10 +175,8 @@ class WasyyahPage extends GetView<WasyyahController> {
     );
   }
 
-  void _showEditBottomSheet(
-      BuildContext context, GetWasyyahResponseModel item) {
-    final TextEditingController textController =
-        TextEditingController(text: item.content);
+  void _showEditBottomSheet(BuildContext context, GetWasyyahResponseModel item) {
+    final TextEditingController textController = TextEditingController(text: item.content);
     final RxString currentText = (item.content ?? "").obs;
 
     showModalBottomSheet(
@@ -237,8 +232,7 @@ class WasyyahPage extends GetView<WasyyahController> {
                       bool success = await controller.saveWasiyyah(item);
                       if (success) {
                         Get.back();
-                        ToastMessageHelper.successMessageShowToster(
-                            "Updated successfully");
+                        ToastMessageHelper.successMessageShowToster("Updated successfully");
                       }
                     },
                   ),

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:al_wasyeah/utils/app_image.dart';

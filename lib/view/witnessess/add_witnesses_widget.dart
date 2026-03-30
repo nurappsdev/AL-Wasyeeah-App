@@ -3,10 +3,10 @@ import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
-import 'package:al_wasyeah/view/widgets/app_error_widget.dart';
-import 'package:al_wasyeah/view/widgets/custom_button.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
-import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/utils/widgets/app_error_widget.dart';
+import 'package:al_wasyeah/utils/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -71,16 +71,14 @@ class AddWitnesWidget extends StatelessWidget {
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!
-                              .please_enter_your_email;
+                          return AppLocalizations.of(context)!.please_enter_your_email;
                         }
                         if (!AppConstants.emailValidate.hasMatch(value)) {
                           return AppLocalizations.of(context)!.invalid_email;
                         }
                         return null;
                       },
-                      suffixIcon: AppConstants.emailValidate
-                              .hasMatch(controller.searchText.value)
+                      suffixIcon: AppConstants.emailValidate.hasMatch(controller.searchText.value)
                           ? Padding(
                               padding: EdgeInsets.all(8.h),
                               child: ElevatedButton(
@@ -88,8 +86,7 @@ class AddWitnesWidget extends StatelessWidget {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.primaryColor,
                                   foregroundColor: Colors.white,
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 12.w),
+                                  padding: EdgeInsets.symmetric(horizontal: 12.w),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.r),
                                   ),
@@ -109,8 +106,7 @@ class AddWitnesWidget extends StatelessWidget {
                 if (controller.searchWitnessStatus.value.isLoading) {
                   return Center(child: CircularProgressIndicator());
                 } else if (controller.searchWitnessStatus.value.isEmpty) {
-                  return Center(
-                      child: Text(AppLocalizations.of(context)!.no_data));
+                  return Center(child: Text(AppLocalizations.of(context)!.no_data));
                 } else if (controller.searchWitnessStatus.value.isSuccess) {
                   return Card(
                     shape: RoundedRectangleBorder(
@@ -121,30 +117,24 @@ class AddWitnesWidget extends StatelessWidget {
                     child: ListTile(
                       leading: CircleAvatar(
                           radius: 30,
-                          child: controller.searchedWitnesss.value?.imageUrl !=
-                                  null
+                          child: controller.searchedWitnesss.value?.imageUrl != null
                               ? ClipRRect(
                                   borderRadius: BorderRadius.circular(35.r),
                                   child: Image.network(
-                                    ApiConstants.imageUrl +
-                                        controller
-                                            .searchedWitnesss.value!.imageUrl!,
+                                    ApiConstants.imageUrl + controller.searchedWitnesss.value!.imageUrl!,
                                     fit: BoxFit.fill,
                                     width: 70.w,
                                     height: 70.h,
                                   ),
                                 )
-                              : Icon(Icons.person,
-                                  color: Colors.white, size: 40.sp)),
+                              : Icon(Icons.person, color: Colors.white, size: 40.sp)),
                       title: Text(
-                        controller.searchedWitnesss.value?.name ??
-                            AppLocalizations.of(context)!.n_a,
+                        controller.searchedWitnesss.value?.name ?? AppLocalizations.of(context)!.n_a,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Row(
                         children: [
-                          Icon(Icons.visibility,
-                              size: 16.0, color: Colors.grey),
+                          Icon(Icons.visibility, size: 16.0, color: Colors.grey),
                           SizedBox(width: 4.0),
                           Text(
                             AppLocalizations.of(context)!.view_details,
@@ -167,9 +157,7 @@ class AddWitnesWidget extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return AppErrorWidget(
-                      message: controller.searchWitnessStatus.value.errorMessage
-                          .toString());
+                  return AppErrorWidget(message: controller.searchWitnessStatus.value.errorMessage.toString());
                 }
               }),
               SizedBox(height: 20.h),

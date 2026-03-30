@@ -1,11 +1,11 @@
 import 'package:al_wasyeah/controllers/home/home_controller.dart';
 import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
+import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
-import 'package:al_wasyeah/view/widgets/app_wrapper.dart';
-import 'package:al_wasyeah/view/widgets/custom_button.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -45,13 +45,10 @@ class MenuPage extends StatelessWidget {
               ),
               Center(
                 child: Obx(
-                  () => profileController.profileModel.value.userProfile
-                              ?.profilePictureUrl !=
-                          null
+                  () => profileController.profileModel.value.userProfile?.profilePictureUrl != null
                       ? CircleAvatar(
                           radius: 50,
-                          backgroundImage: NetworkImage(
-                              "${ApiConstants.imageUrl + "${profileController.profileModel.value.userProfile?.profilePictureUrl}"}"),
+                          backgroundImage: NetworkImage("${ApiConstants.imageUrl + "${profileController.profileModel.value.userProfile?.profilePictureUrl}"}"),
                           backgroundColor: Colors.grey[200],
                         )
                       : CircleAvatar(
@@ -65,8 +62,7 @@ class MenuPage extends StatelessWidget {
                 height: 10.h,
               ),
               Obx(() => CustomText(
-                    text:
-                        "${profileController.profileModel.value.userProfile?.firstName} ${profileController.profileModel.value.userProfile?.lastName}",
+                    text: "${profileController.profileModel.value.userProfile?.firstName} ${profileController.profileModel.value.userProfile?.lastName}",
                     fontsize: 18.sp,
                     fontWeight: FontWeight.w700,
                   )),
@@ -76,8 +72,7 @@ class MenuPage extends StatelessWidget {
 
               ///=====================Personal Details====================================
               GestureDetector(
-                onTap: () => Get.toNamed(AppRoutes.profilePage,
-                    preventDuplicates: false),
+                onTap: () => Get.toNamed(AppRoutes.profilePage, preventDuplicates: false),
                 child: Container(
                   width: 360.w,
                   height: 60.h,
@@ -102,8 +97,7 @@ class MenuPage extends StatelessWidget {
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
-                              text: AppLocalizations.of(context)!
-                                  .personal_details,
+                              text: AppLocalizations.of(context)!.personal_details,
                               fontsize: 16.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
@@ -128,8 +122,7 @@ class MenuPage extends StatelessWidget {
 
               ///=====================Change  Password====================================
               InkWell(
-                onTap: () => Get.toNamed(AppRoutes.changePasswordPage,
-                    preventDuplicates: false),
+                onTap: () => Get.toNamed(AppRoutes.changePasswordPage, preventDuplicates: false),
                 child: Container(
                   width: 360.w,
                   height: 60.h,
@@ -154,8 +147,7 @@ class MenuPage extends StatelessWidget {
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
-                              text:
-                                  AppLocalizations.of(context)!.change_password,
+                              text: AppLocalizations.of(context)!.change_password,
                               fontsize: 16.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
@@ -180,8 +172,7 @@ class MenuPage extends StatelessWidget {
 
               ///=====================Access Control====================================
               InkWell(
-                onTap: () => Get.toNamed(AppRoutes.accessControlPage,
-                    preventDuplicates: false),
+                onTap: () => Get.toNamed(AppRoutes.accessControlPage, preventDuplicates: false),
                 child: Container(
                   width: 360.w,
                   height: 60.h,
@@ -206,8 +197,7 @@ class MenuPage extends StatelessWidget {
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
-                              text: AppLocalizations.of(context)!
-                                  .access_control_panel,
+                              text: AppLocalizations.of(context)!.access_control_panel,
                               fontsize: 16.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
@@ -232,10 +222,7 @@ class MenuPage extends StatelessWidget {
               ),
 
               ///=====================User Menus====================================
-              ...homeController.userMenus
-                  .where((menu) => menu.activeYn == "Y")
-                  .toList()
-                  .map((menu) {
+              ...homeController.userMenus.where((menu) => menu.activeYn == "Y").toList().map((menu) {
                 return Column(
                   children: [
                     menu.subMenus.isNotEmpty
@@ -243,18 +230,15 @@ class MenuPage extends StatelessWidget {
                             margin: EdgeInsets.only(left: 2.w),
                             decoration: BoxDecoration(
                               color: AppColors.whiteColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8.r)),
+                              borderRadius: BorderRadius.all(Radius.circular(8.r)),
                               border: Border.all(
                                 color: const Color(0xffB0E3D3),
                                 width: 2.w,
                               ),
                             ),
                             child: ExpansionTile(
-                              tilePadding:
-                                  EdgeInsets.symmetric(horizontal: 12.w),
-                              shape: const RoundedRectangleBorder(
-                                  side: BorderSide.none),
+                              tilePadding: EdgeInsets.symmetric(horizontal: 12.w),
+                              shape: const RoundedRectangleBorder(side: BorderSide.none),
                               title: Row(
                                 children: [
                                   SvgPicture.asset(
@@ -276,17 +260,13 @@ class MenuPage extends StatelessWidget {
                               ),
                               children: menu.subMenus.map((subMenu) {
                                 return ListTile(
-                                  onTap: () => Get.toNamed(
-                                      AppRoutes.accessCntrolPanelPage,
-                                      arguments: subMenu.submenuId),
+                                  onTap: () => Get.toNamed(AppRoutes.accessCntrolPanelPage, arguments: subMenu.submenuId),
                                   title: CustomText(
                                     text: subMenu.submenuName,
                                     fontsize: 14.sp,
                                     color: AppColors.textColor4E4E4E,
                                   ),
-                                  trailing: Icon(Icons.arrow_forward_ios,
-                                      size: 14.sp,
-                                      color: AppColors.primaryColor),
+                                  trailing: Icon(Icons.arrow_forward_ios, size: 14.sp, color: AppColors.primaryColor),
                                 );
                               }).toList(),
                             ),
@@ -340,20 +320,12 @@ class MenuPage extends StatelessWidget {
                             text: "En",
                             fontsize: 14.sp,
                             fontWeight: FontWeight.w600,
-                            color:
-                                Localizations.localeOf(context).languageCode ==
-                                        'en'
-                                    ? AppColors.primaryColor
-                                    : Colors.grey,
+                            color: Localizations.localeOf(context).languageCode == 'en' ? AppColors.primaryColor : Colors.grey,
                           ),
                           Switch(
-                            value:
-                                Localizations.localeOf(context).languageCode ==
-                                    'bn',
+                            value: Localizations.localeOf(context).languageCode == 'bn',
                             onChanged: (value) {
-                              Locale newLocale = value
-                                  ? const Locale('bn')
-                                  : const Locale('en');
+                              Locale newLocale = value ? const Locale('bn') : const Locale('en');
                               WasyeeahApp.setLocale(context, newLocale);
                             },
                             activeColor: AppColors.primaryColor,
@@ -362,11 +334,7 @@ class MenuPage extends StatelessWidget {
                             text: "Bn",
                             fontsize: 14.sp,
                             fontWeight: FontWeight.w600,
-                            color:
-                                Localizations.localeOf(context).languageCode ==
-                                        'bn'
-                                    ? AppColors.primaryColor
-                                    : Colors.grey,
+                            color: Localizations.localeOf(context).languageCode == 'bn' ? AppColors.primaryColor : Colors.grey,
                           ),
                         ],
                       ),
@@ -434,8 +402,7 @@ class MenuPage extends StatelessWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 24.w, vertical: 26.h),
+              contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 26.h),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -471,18 +438,15 @@ class MenuPage extends StatelessWidget {
                               fontSize: 16.h,
                               onpress: () async {
                                 //   profileController.promoCode.value = "";
-                                await PrefsHelper.remove(
-                                    AppConstants.bearerToken);
+                                await PrefsHelper.remove(AppConstants.bearerToken);
                                 await PrefsHelper.remove(AppConstants.userId);
-                                await PrefsHelper.remove(
-                                    AppConstants.firstname);
+                                await PrefsHelper.remove(AppConstants.firstname);
                                 await PrefsHelper.remove(AppConstants.lastname);
                                 // await PrefsHelper.remove(AppConstants.userName);
                                 await PrefsHelper.remove(AppConstants.phone);
                                 await PrefsHelper.remove(AppConstants.image);
                                 await PrefsHelper.remove(AppConstants.email);
-                                await PrefsHelper.remove(
-                                    AppConstants.businessID);
+                                await PrefsHelper.remove(AppConstants.businessID);
                                 await PrefsHelper.remove(AppConstants.type);
 
                                 // Clear controllers to avoid stale data
@@ -497,9 +461,7 @@ class MenuPage extends StatelessWidget {
                 ],
               ),
               elevation: 12.0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  side: BorderSide(width: 1.w, color: AppColors.primaryColor)));
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r), side: BorderSide(width: 1.w, color: AppColors.primaryColor)));
         });
   }
 }

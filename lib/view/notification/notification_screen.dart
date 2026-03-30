@@ -1,7 +1,5 @@
 import 'package:al_wasyeah/controllers/notification/notification_controller.dart';
-import 'package:al_wasyeah/view/widgets/app_wrapper.dart';
-import 'package:al_wasyeah/view/widgets/custom_back_button_widget.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,8 +10,7 @@ import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class NotificationPage extends StatelessWidget {
   NotificationPage({Key? key}) : super(key: key);
-  final NotificationController notificationController =
-      Get.put(NotificationController());
+  final NotificationController notificationController = Get.put(NotificationController());
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,8 +19,6 @@ class NotificationPage extends StatelessWidget {
             text: AppLocalizations.of(context)!.notifications,
             fontsize: 18.sp,
           ),
-          leadingWidth: 42.w,
-          leading: CustomBackButton(),
         ),
         body: notificationController.obx(
           (data) => RefreshIndicator(
@@ -50,9 +45,7 @@ class NotificationPage extends StatelessWidget {
                       color: isUnread ? const Color(0xffF5F9FF) : Colors.white,
                       borderRadius: BorderRadius.circular(18),
                       border: Border.all(
-                        color: isUnread
-                            ? const Color(0xffDCEBFF)
-                            : Colors.grey.shade200,
+                        color: isUnread ? const Color(0xffDCEBFF) : Colors.grey.shade200,
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -93,8 +86,7 @@ class NotificationPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               /// HTML Content
-                              item.message != null &&
-                                      item.message!.contains("<")
+                              item.message != null && item.message!.contains("<")
                                   ? Html(
                                       data: item.message ?? '',
                                     )
@@ -113,8 +105,7 @@ class NotificationPage extends StatelessWidget {
                                   alignment: Alignment.topRight,
                                   child: Text(
                                     textAlign: TextAlign.right,
-                                    DateFormat('M/d/yyyy hh:mm a')
-                                        .format(item.generateAt!),
+                                    DateFormat('M/d/yyyy hh:mm a').format(item.generateAt!),
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.grey.shade500,
@@ -123,56 +114,32 @@ class NotificationPage extends StatelessWidget {
                                   ),
                                 ),
 
-                              if (item.message != null &&
-                                  item.message!.toLowerCase().contains("<") &&
-                                  item.message!
-                                      .toLowerCase()
-                                      .contains("witness"))
+                              if (item.message != null && item.message!.toLowerCase().contains("<") && item.message!.toLowerCase().contains("witness"))
                                 Row(
                                   children: [
                                     Expanded(
                                       child: ElevatedButton(
-                                        onPressed: () => notificationController
-                                            .approveOrDeclienNotification(
-                                                item.requestKey, "Y"),
+                                        onPressed: () => notificationController.approveOrDeclienNotification(item.requestKey, "Y"),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.green,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 12.w, vertical: 4.h),
+                                          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
                                           minimumSize: Size(0, 30.h),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r)),
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
                                         ),
-                                        child: Text(
-                                            AppLocalizations.of(context)!
-                                                .approve,
-                                            style: TextStyle(
-                                                fontSize: 12.sp,
-                                                color: Colors.white)),
+                                        child: Text(AppLocalizations.of(context)!.approve, style: TextStyle(fontSize: 12.sp, color: Colors.white)),
                                       ),
                                     ),
                                     SizedBox(width: 8.w),
                                     Expanded(
                                       child: ElevatedButton(
-                                        onPressed: () => notificationController
-                                            .approveOrDeclienNotification(
-                                                item.requestKey, "N"),
+                                        onPressed: () => notificationController.approveOrDeclienNotification(item.requestKey, "N"),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.red,
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 12.w, vertical: 4.h),
+                                          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
                                           minimumSize: Size(0, 30.h),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r)),
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
                                         ),
-                                        child: Text(
-                                            AppLocalizations.of(context)!
-                                                .decline,
-                                            style: TextStyle(
-                                                fontSize: 12.sp,
-                                                color: Colors.white)),
+                                        child: Text(AppLocalizations.of(context)!.decline, style: TextStyle(fontSize: 12.sp, color: Colors.white)),
                                       ),
                                     ),
                                   ],
@@ -189,8 +156,7 @@ class NotificationPage extends StatelessWidget {
           ),
           onLoading: Center(child: CircularProgressIndicator()),
           onEmpty: Center(child: Text(AppLocalizations.of(context)!.no_data)),
-          onError: (error) => Center(
-              child: Text(AppLocalizations.of(context)!.something_went_wrong)),
+          onError: (error) => Center(child: Text(AppLocalizations.of(context)!.something_went_wrong)),
         ));
   }
 }

@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:al_wasyeah/controllers/access_control/access_control_controller.dart';
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/models/access_control/witness_nominee_context_data_model.dart';
 import 'package:al_wasyeah/models/property_distribution_calculation_model/property_destribution_result_model.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,8 +19,7 @@ class AccessControlPanelPage extends StatefulWidget {
 }
 
 class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
-  final AccessControlController accessControlController =
-      Get.find<AccessControlController>();
+  final AccessControlController accessControlController = Get.find<AccessControlController>();
   @override
   void initState() {
     String data = Get.arguments;
@@ -48,8 +45,7 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
 
         if (status.isEmpty || status.isError) {
           return Center(
-            child: Text(
-                status.errorMessage ?? AppLocalizations.of(context)!.no_data),
+            child: Text(status.errorMessage ?? AppLocalizations.of(context)!.no_data),
           );
         }
 
@@ -61,8 +57,7 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
             children: [
               SizedBox(height: 20.h),
               if (data.zakat != null) _buildZakatCard(data.zakat!, context),
-              if (data.propertyResult != null &&
-                  data.propertyResult!.isNotEmpty) ...[
+              if (data.propertyResult != null && data.propertyResult!.isNotEmpty) ...[
                 _buildPieChartSection(data.propertyResult!),
                 _buildResultCards(data.propertyResult!),
               ],
@@ -98,34 +93,25 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
           children: [
             Row(
               children: [
-                Icon(Icons.account_balance_wallet,
-                    color: AppColors.primaryColor),
+                Icon(Icons.account_balance_wallet, color: AppColors.primaryColor),
                 SizedBox(width: 8.w),
                 Text(
                   AppLocalizations.of(context)!.zakat_information,
-                  style:
-                      TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             const Divider(),
-            _resultRow(AppLocalizations.of(context)!.total_asset,
-                "${zakat.totalAsset?.toLocal()} ${zakat.currencyCode ?? ''}"),
-            _resultRow(AppLocalizations.of(context)!.zakat_amount,
-                "${zakat.zakatAmount?.toLocal()} ${zakat.currencyCode ?? ''}"),
-            if (zakat.lastCalculate != null)
-              _resultRow(
-                  AppLocalizations.of(context)!.last_calculated,
-                  DateFormat('dd MMM yyyy', Get.locale.toString())
-                      .format(zakat.lastCalculate!)),
+            _resultRow(AppLocalizations.of(context)!.total_asset, "${zakat.totalAsset?.toLocal()} ${zakat.currencyCode ?? ''}"),
+            _resultRow(AppLocalizations.of(context)!.zakat_amount, "${zakat.zakatAmount?.toLocal()} ${zakat.currencyCode ?? ''}"),
+            if (zakat.lastCalculate != null) _resultRow(AppLocalizations.of(context)!.last_calculated, DateFormat('dd MMM yyyy', Get.locale.toString()).format(zakat.lastCalculate!)),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildPieChartSection(
-      List<PropertydistributionResultModel> propertyResult) {
+  Widget _buildPieChartSection(List<PropertydistributionResultModel> propertyResult) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 20.h),
       child: Column(
@@ -177,8 +163,7 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                   SizedBox(width: 4.w),
                   Text(
                     _getRelativeName(data.relativeName, context),
-                    style:
-                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
                   ),
                 ],
               );
@@ -189,8 +174,7 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
     );
   }
 
-  Widget _buildResultCards(
-      List<PropertydistributionResultModel> propertyResult) {
+  Widget _buildResultCards(List<PropertydistributionResultModel> propertyResult) {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -201,8 +185,7 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
         return Card(
           elevation: 4,
           margin: EdgeInsets.only(bottom: 16.h),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
           child: Padding(
             padding: EdgeInsets.all(16.h),
             child: Column(
@@ -218,26 +201,16 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                     SizedBox(width: 8.w),
                     Text(
                       _getRelativeName(data.relativeName, context),
-                      style: TextStyle(
-                          fontSize: 18.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
                 const Divider(),
-                _resultRow(AppLocalizations.of(context)!.share_portion,
-                    "${((data.portionPart ?? 0) * 100).toLocal()}%"),
-                if (data.landPart != null && data.landPart! > 0)
-                  _resultRow(AppLocalizations.of(context)!.land_portion,
-                      "${data.landPart?.toLocal()} ${AppLocalizations.of(context)!.decimal}"),
-                if (data.goldPart != null && data.goldPart! > 0)
-                  _resultRow(AppLocalizations.of(context)!.gold_portion,
-                      "${data.goldPart?.toLocal()} ${AppLocalizations.of(context)!.gram_vori}"),
-                if (data.silverPart != null && data.silverPart! > 0)
-                  _resultRow(AppLocalizations.of(context)!.silver_portion,
-                      "${data.silverPart?.toLocal()} ${AppLocalizations.of(context)!.gram_vori}"),
-                if (data.currencyPart != null && data.currencyPart! > 0)
-                  _resultRow(AppLocalizations.of(context)!.total_money,
-                      "${data.currencyPart?.toLocal()} ${AppLocalizations.of(context)!.taka}"),
+                _resultRow(AppLocalizations.of(context)!.share_portion, "${((data.portionPart ?? 0) * 100).toLocal()}%"),
+                if (data.landPart != null && data.landPart! > 0) _resultRow(AppLocalizations.of(context)!.land_portion, "${data.landPart?.toLocal()} ${AppLocalizations.of(context)!.decimal}"),
+                if (data.goldPart != null && data.goldPart! > 0) _resultRow(AppLocalizations.of(context)!.gold_portion, "${data.goldPart?.toLocal()} ${AppLocalizations.of(context)!.gram_vori}"),
+                if (data.silverPart != null && data.silverPart! > 0) _resultRow(AppLocalizations.of(context)!.silver_portion, "${data.silverPart?.toLocal()} ${AppLocalizations.of(context)!.gram_vori}"),
+                if (data.currencyPart != null && data.currencyPart! > 0) _resultRow(AppLocalizations.of(context)!.total_money, "${data.currencyPart?.toLocal()} ${AppLocalizations.of(context)!.taka}"),
               ],
             ),
           ),
@@ -252,10 +225,8 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label,
-              style: TextStyle(fontSize: 14.sp, color: Colors.grey[700])),
-          Text(value,
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
+          Text(label, style: TextStyle(fontSize: 14.sp, color: Colors.grey[700])),
+          Text(value, style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
         ],
       ),
     );
@@ -274,8 +245,7 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
       final number = int.tryParse(numberStr ?? '');
 
       if (number != null) {
-        final formattedNumber =
-            NumberFormat.decimalPattern(locale).format(number);
+        final formattedNumber = NumberFormat.decimalPattern(locale).format(number);
         return name.replaceFirst(
           match.group(0)!,
           '($formattedNumber)',

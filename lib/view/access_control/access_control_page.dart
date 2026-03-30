@@ -2,8 +2,8 @@ import 'package:al_wasyeah/controllers/access_control/access_control_controller.
 import 'package:al_wasyeah/models/access_control/access_control_user_model.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
-import 'package:al_wasyeah/view/widgets/custom_dropdown.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_dropdown.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -37,20 +37,11 @@ class AccessControlPage extends GetView<AccessControlController> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
                     padding: EdgeInsets.symmetric(vertical: 12.h),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
                   ),
                   child: controller.isSaving.value
-                      ? SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: const CircularProgressIndicator(
-                              color: Colors.white))
-                      : Text(AppLocalizations.of(context)!.save,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold)),
+                      ? SizedBox(width: 20, height: 20, child: const CircularProgressIndicator(color: Colors.white))
+                      : Text(AppLocalizations.of(context)!.save, style: TextStyle(color: Colors.white, fontSize: 16.sp, fontWeight: FontWeight.bold)),
                 ),
               ),
             ),
@@ -92,8 +83,7 @@ class AccessControlPage extends GetView<AccessControlController> {
                 if (controller.isUsersLoading.value) {
                   return const Center(child: CircularProgressIndicator());
                 }
-                if (controller.selectedRole.value != null &&
-                    controller.usersList.isEmpty) {
+                if (controller.selectedRole.value != null && controller.usersList.isEmpty) {
                   return const Center(child: Text("No users found"));
                 }
                 return ListView.builder(
@@ -111,15 +101,13 @@ class AccessControlPage extends GetView<AccessControlController> {
     );
   }
 
-  Widget _buildUserExpansionTile(
-      AccessControlUserModel user, BuildContext context) {
+  Widget _buildUserExpansionTile(AccessControlUserModel user, BuildContext context) {
     return Card(
       margin: EdgeInsets.only(bottom: 12.h),
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       child: ExpansionTile(
-        title: Text(user.name ?? AppLocalizations.of(context)!.n_a,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp)),
+        title: Text(user.name ?? AppLocalizations.of(context)!.n_a, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp)),
         onExpansionChanged: (expanded) {
           if (expanded && user.requestKey != null) {
             controller.fetchContextsData(user.requestKey!);
@@ -142,18 +130,13 @@ class AccessControlPage extends GetView<AccessControlController> {
             return Column(
               children: [
                 ...controller.allContexts.map((contextItem) {
-                  bool isChecked = controller
-                          .userSelectedContexts[user.requestKey]
-                          ?.contains(contextItem.id) ??
-                      false;
+                  bool isChecked = controller.userSelectedContexts[user.requestKey]?.contains(contextItem.id) ?? false;
                   return CheckboxListTile(
-                    title: Text(contextItem.contextName ??
-                        AppLocalizations.of(context)!.n_a),
+                    title: Text(contextItem.contextName ?? AppLocalizations.of(context)!.n_a),
                     value: isChecked,
                     onChanged: (bool? value) {
                       if (value != null && user.requestKey != null) {
-                        controller.toggleContext(
-                            user.requestKey!, contextItem.id!, value);
+                        controller.toggleContext(user.requestKey!, contextItem.id!, value);
                       }
                     },
                     controlAffinity: ListTileControlAffinity.leading,

@@ -2,10 +2,10 @@ import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
 import 'package:al_wasyeah/models/profile_info_model/address_form.dart';
 import 'package:al_wasyeah/models/profile_info_model/country_list_model.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
-import 'package:al_wasyeah/view/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/view/widgets/custom_dropdown.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
-import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/utils/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/utils/widgets/custom_dropdown.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,12 +16,10 @@ class ProfileSettingStepTwoWidget extends StatefulWidget {
   const ProfileSettingStepTwoWidget({super.key});
 
   @override
-  State<ProfileSettingStepTwoWidget> createState() =>
-      _ProfileSettingStepTwoWidgetState();
+  State<ProfileSettingStepTwoWidget> createState() => _ProfileSettingStepTwoWidgetState();
 }
 
-class _ProfileSettingStepTwoWidgetState
-    extends State<ProfileSettingStepTwoWidget> {
+class _ProfileSettingStepTwoWidgetState extends State<ProfileSettingStepTwoWidget> {
   final ProfileController controller = Get.find<ProfileController>();
 
   AddressForm get form => controller.addressForm.value;
@@ -68,13 +66,11 @@ class _ProfileSettingStepTwoWidgetState
                       }
                     },
                     title: Text(
-                      AppLocalizations.of(Get.context!)!
-                          .mark_present_address_as_permanent_address,
+                      AppLocalizations.of(Get.context!)!.mark_present_address_as_permanent_address,
                     ),
                   )),
 
-              _sectionTitle(
-                  AppLocalizations.of(Get.context!)!.permanent_address),
+              _sectionTitle(AppLocalizations.of(Get.context!)!.permanent_address),
 
               _textField(
                 label: AppLocalizations.of(Get.context!)!.zip_code,
@@ -90,18 +86,14 @@ class _ProfileSettingStepTwoWidgetState
               ),
 
               /// ========= Overseas Address =========
-              _sectionTitle(
-                  AppLocalizations.of(Get.context!)!.overseas_address),
-              CustomText(
-                  text: AppLocalizations.of(Get.context!)!.country,
-                  fontsize: 16.sp),
+              _sectionTitle(AppLocalizations.of(Get.context!)!.overseas_address),
+              CustomText(text: AppLocalizations.of(Get.context!)!.country, fontsize: 16.sp),
               Obx(() => CustomDropdown<CountryModel>(
                     hint: AppLocalizations.of(Get.context!)!.select_country,
                     items: controller.countryList,
                     value: form.selectedOverseasCountry.value,
                     itemToString: (item) => item.country ?? "",
-                    onChanged: (val) =>
-                        form.selectedOverseasCountry.value = val,
+                    onChanged: (val) => form.selectedOverseasCountry.value = val,
                   )),
 
               _textField(
@@ -117,21 +109,19 @@ class _ProfileSettingStepTwoWidgetState
                 spacing: 16.w,
                 children: [
                   Expanded(
-                    child: CustomButtonCommon(
+                    child: CustomButton(
                       title: "Previous".tr,
                       onpress: () {
-                        controller
-                            .onStepTapped(controller.currentStep.value - 1);
+                        controller.onStepTapped(controller.currentStep.value - 1);
                       },
                     ),
                   ),
                   Expanded(
-                    child: CustomButtonCommon(
+                    child: CustomButton(
                       title: AppLocalizations.of(context)!.next,
                       onpress: () {
                         if (controller.step2formKey.currentState!.validate()) {
-                          controller
-                              .onStepTapped(controller.currentStep.value + 1);
+                          controller.onStepTapped(controller.currentStep.value + 1);
                         }
                       },
                     ),
@@ -182,17 +172,14 @@ class _ProfileSettingStepTwoWidgetState
         Row(
           children: [
             CustomText(text: label.tr, fontsize: 16.sp),
-            if (isRequired)
-              Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
+            if (isRequired) Text(' *', style: TextStyle(color: Colors.red, fontSize: 16.sp)),
           ],
         ),
         SizedBox(height: 4.h),
         CustomTextFormField(
           controller: controller,
           hint: label.tr,
-          validator: isRequired
-              ? (value) => value!.isEmpty ? "$label is required" : null
-              : null,
+          validator: isRequired ? (value) => value!.isEmpty ? "$label is required" : null : null,
         ),
         SizedBox(height: 16.h),
       ],

@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:al_wasyeah/helpers/helpers.dart';
+import 'package:al_wasyeah/helpers/toast_message_helper.dart';
 import 'package:al_wasyeah/models/wasyyah/get_wasyyah_response_model.dart';
 import 'package:al_wasyeah/services/api_client.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
@@ -9,8 +9,7 @@ import 'package:open_file/open_file.dart';
 import 'package:get/get.dart';
 
 class WasyyahController extends GetxController {
-  final RxList<GetWasyyahResponseModel> wasyyahList =
-      <GetWasyyahResponseModel>[].obs;
+  final RxList<GetWasyyahResponseModel> wasyyahList = <GetWasyyahResponseModel>[].obs;
   final RxBool isLoading = false.obs;
   final RxBool isSaveLoading = false.obs;
 
@@ -26,15 +25,11 @@ class WasyyahController extends GetxController {
       final response = await ApiClient.getData(ApiConstants.wasyyahYouDataYou);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> jsonData = response.body;
-        wasyyahList.value = jsonData
-            .map((item) => GetWasyyahResponseModel.fromJson(item))
-            .toList();
+        wasyyahList.value = jsonData.map((item) => GetWasyyahResponseModel.fromJson(item)).toList();
         // Sort items by orderSeq locally
-        wasyyahList
-            .sort((a, b) => (a.orderSeq ?? 0).compareTo(b.orderSeq ?? 0));
+        wasyyahList.sort((a, b) => (a.orderSeq ?? 0).compareTo(b.orderSeq ?? 0));
       } else {
-        ToastMessageHelper.errorMessageShowToster(
-            "Failed to load Wasyyah data");
+        ToastMessageHelper.errorMessageShowToster("Failed to load Wasyyah data");
       }
     } catch (e) {
       ToastMessageHelper.errorMessageShowToster("Network error: $e");
@@ -94,12 +89,10 @@ class WasyyahController extends GetxController {
         payload,
       );
       if (response.statusCode != 200 && response.statusCode != 201) {
-        ToastMessageHelper.errorMessageShowToster(
-            "Failed to sync order with server");
+        ToastMessageHelper.errorMessageShowToster("Failed to sync order with server");
       }
     } catch (e) {
-      ToastMessageHelper.errorMessageShowToster(
-          "Network error during reorder: $e");
+      ToastMessageHelper.errorMessageShowToster("Network error during reorder: $e");
     }
   }
 

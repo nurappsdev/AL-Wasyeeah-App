@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -50,8 +49,7 @@ class FileDownloadUtil {
   //   );
   // }
 
-  static Future<void> downloadFile(
-      String url, String fileName, Function(double) onProgress) async {
+  static Future<void> downloadFile(String url, String fileName, Function(double) onProgress) async {
     final request = http.Request('GET', Uri.parse(url));
     final response = await request.send();
     log("------${url}--*--------------*---------*----------${response.headers}");
@@ -64,8 +62,7 @@ class FileDownloadUtil {
     }
 
     try {
-      String extension =
-          _getExtensionFromContentType(response.headers['content-type']);
+      String extension = _getExtensionFromContentType(response.headers['content-type']);
 
       final file = File('${directory.path}/$fileName$extension');
       final sink = file.openWrite();

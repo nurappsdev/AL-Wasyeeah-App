@@ -3,8 +3,8 @@ import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/models/witness/get_witness_response_model.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
-import 'package:al_wasyeah/view/widgets/custom_button.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -92,8 +92,7 @@ class NomineesPage extends GetView<NomineeController> {
 
               /// ❌ ERROR
               if (currentStatus.isError) {
-                return _buildErrorState(
-                    context, currentStatus.errorMessage ?? "");
+                return _buildErrorState(context, currentStatus.errorMessage ?? "");
               }
 
               /// ❌ EMPTY
@@ -129,8 +128,7 @@ class NomineesPage extends GetView<NomineeController> {
   }
 
   /// ================= CARD =================
-  Widget _buildNomineeCard(BuildContext context,
-      GetWitnessNomineeResponseModel witness, bool? canEdit) {
+  Widget _buildNomineeCard(BuildContext context, GetWitnessNomineeResponseModel witness, bool? canEdit) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.h),
       decoration: BoxDecoration(
@@ -146,8 +144,7 @@ class NomineesPage extends GetView<NomineeController> {
       child: InkWell(
         borderRadius: BorderRadius.circular(16.r),
         onTap: () {
-          Get.toNamed(AppRoutes.nomineeDetailsPage,
-              arguments: {"nominee": witness, "canRemove": canEdit});
+          Get.toNamed(AppRoutes.nomineeDetailsPage, arguments: {"nominee": witness, "canRemove": canEdit});
         },
         child: Padding(
           padding: EdgeInsets.all(16.w),
@@ -268,8 +265,7 @@ class NomineesPage extends GetView<NomineeController> {
         labelColor: Colors.white,
         unselectedLabelColor: Colors.grey.shade500,
         labelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-        unselectedLabelStyle:
-            TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+        unselectedLabelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: Colors.transparent,
         tabs: [

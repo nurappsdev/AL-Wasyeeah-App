@@ -1,11 +1,11 @@
 import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
 import 'package:al_wasyeah/helpers/helpers.dart';
+import 'package:al_wasyeah/helpers/toast_message_helper.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
-import 'package:al_wasyeah/view/widgets/custom_button_common.dart'
-    show CustomButtonCommon;
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
-import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/utils/widgets/custom_button_common.dart' show CustomButton;
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -78,13 +78,11 @@ class AddOutsideNomineeWidget extends GetView<NomineeController> {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: controller.relNameController,
-                        hintText:
-                            AppLocalizations.of(context)!.relation_with_witness,
+                        hintText: AppLocalizations.of(context)!.relation_with_witness,
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .relation_with_witness;
+                            return AppLocalizations.of(context)!.relation_with_witness;
                           }
                           return null;
                         },
@@ -106,8 +104,7 @@ class AddOutsideNomineeWidget extends GetView<NomineeController> {
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_name;
+                            return AppLocalizations.of(context)!.please_enter_name;
                           }
                           return null;
                         },
@@ -129,8 +126,7 @@ class AddOutsideNomineeWidget extends GetView<NomineeController> {
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_your_mobile_number;
+                            return AppLocalizations.of(context)!.please_enter_your_mobile_number;
                           }
                           return null;
                         },
@@ -152,10 +148,8 @@ class AddOutsideNomineeWidget extends GetView<NomineeController> {
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_enter_your_email;
-                          } else if (!AppConstants.emailValidate
-                              .hasMatch(value)) {
+                            return AppLocalizations.of(context)!.please_enter_your_email;
+                          } else if (!AppConstants.emailValidate.hasMatch(value)) {
                             return AppLocalizations.of(context)!.invalid_email;
                           }
                           return null;
@@ -188,9 +182,7 @@ class AddOutsideNomineeWidget extends GetView<NomineeController> {
 
                           if (selectedDate != null) {
                             controller.birthDate = selectedDate;
-                            controller.dateOfBirthController.text = DateFormat(
-                                    'yyyy-MM-dd', Get.locale!.languageCode)
-                                .format(controller.birthDate!);
+                            controller.dateOfBirthController.text = DateFormat('yyyy-MM-dd', Get.locale!.languageCode).format(controller.birthDate!);
                           }
                         },
                         suffixIcon: Icon(
@@ -199,8 +191,7 @@ class AddOutsideNomineeWidget extends GetView<NomineeController> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .please_write_date_of_birth;
+                            return AppLocalizations.of(context)!.please_write_date_of_birth;
                           }
                           return null;
                         },
@@ -223,8 +214,7 @@ class AddOutsideNomineeWidget extends GetView<NomineeController> {
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .present_address;
+                            return AppLocalizations.of(context)!.present_address;
                           }
                           return null;
                         },
@@ -242,14 +232,12 @@ class AddOutsideNomineeWidget extends GetView<NomineeController> {
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
                         controller: controller.permanentAddressController,
-                        hintText:
-                            AppLocalizations.of(context)!.permanent_address,
+                        hintText: AppLocalizations.of(context)!.permanent_address,
                         maxLine: 3,
                         borderColor: AppColors.secondaryPrimaryColor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!
-                                .permanent_address;
+                            return AppLocalizations.of(context)!.permanent_address;
                           }
                           return null;
                         },
@@ -258,27 +246,21 @@ class AddOutsideNomineeWidget extends GetView<NomineeController> {
 
                     SizedBox(height: 10.h),
                     Obx(
-                      () => CustomButtonCommon(
+                      () => CustomButton(
                           loading: controller.addNomineeStatus.value.isLoading,
                           title: AppLocalizations.of(context)!.save,
                           onpress: () {
-                            if (controller.nomineeFormKey.currentState!
-                                .validate()) {
+                            if (controller.nomineeFormKey.currentState!.validate()) {
                               controller.saveNominee(
                                   userName: controller.nameController.text,
                                   mobileNo: controller.mobileController.text,
                                   email: controller.emailController.text,
-                                  relationWithUser:
-                                      controller.relNameController.text,
+                                  relationWithUser: controller.relNameController.text,
                                   dob: controller.dateOfBirthController.text,
-                                  presentAddress:
-                                      controller.presentAddressController.text,
-                                  permanentAddress: controller
-                                      .permanentAddressController.text);
+                                  presentAddress: controller.presentAddressController.text,
+                                  permanentAddress: controller.permanentAddressController.text);
                             } else {
-                              ToastMessageHelper.errorMessageShowToster(
-                                  AppLocalizations.of(context)!
-                                      .please_fill_all_the_fields);
+                              ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(context)!.please_fill_all_the_fields);
                             }
                           }),
                     ),

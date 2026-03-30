@@ -1,16 +1,16 @@
 import 'dart:convert';
+import 'package:al_wasyeah/models/witness/get_witness_response_model.dart';
+import 'package:al_wasyeah/services/api_client.dart';
+import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../helpers/toast_message_helper.dart';
 import '../../models/access_phanel/zakat_property_wasyyah_model.dart';
-import '../../models/models.dart';
-import '../../services/services.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/view/witnessess/add_outside_witnesses_widget.dart';
 import 'package:al_wasyeah/view/witnessess/add_witnesses_widget.dart';
 
-class WitnessController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class WitnessController extends GetxController with GetSingleTickerProviderStateMixin {
   late TabController tabController;
 
   /// For "Your Witness"
@@ -24,16 +24,12 @@ class WitnessController extends GetxController
   final Rx<RxStatus> addWitnessStatus = Rx<RxStatus>(RxStatus.empty());
   final Rx<RxStatus> deleteWitnessStatus = Rx<RxStatus>(RxStatus.empty());
   RxBool isZakatPropertyWasiyyah = false.obs;
-  Rx<ZakatPropertyWasiyyahModel?> contextsData =
-      Rx<ZakatPropertyWasiyyahModel?>(null);
+  Rx<ZakatPropertyWasiyyahModel?> contextsData = Rx<ZakatPropertyWasiyyahModel?>(null);
 
-  Rx<GetWitnessNomineeResponseModel?> searchedWitnesss =
-      Rx<GetWitnessNomineeResponseModel?>(null);
+  Rx<GetWitnessNomineeResponseModel?> searchedWitnesss = Rx<GetWitnessNomineeResponseModel?>(null);
 
-  RxList<GetWitnessNomineeResponseModel> witnessData =
-      <GetWitnessNomineeResponseModel>[].obs;
-  RxList<GetWitnessNomineeResponseModel> witnessesYouData =
-      <GetWitnessNomineeResponseModel>[].obs;
+  RxList<GetWitnessNomineeResponseModel> witnessData = <GetWitnessNomineeResponseModel>[].obs;
+  RxList<GetWitnessNomineeResponseModel> witnessesYouData = <GetWitnessNomineeResponseModel>[].obs;
   final TextEditingController searchWitnessController = TextEditingController();
   final RxString searchText = "".obs;
 
@@ -43,11 +39,9 @@ class WitnessController extends GetxController
   final TextEditingController emailController = TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
 
-  final TextEditingController presentAddressController =
-      TextEditingController();
+  final TextEditingController presentAddressController = TextEditingController();
 
-  final TextEditingController permanentAddressController =
-      TextEditingController();
+  final TextEditingController permanentAddressController = TextEditingController();
 
   DateTime? birthDate;
 
@@ -75,8 +69,7 @@ class WitnessController extends GetxController
     var response = await ApiClient.getData(ApiConstants.yourWitness);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      witnessData(
-          getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
+      witnessData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
       /// ✅ handle empty vs success
       if (witnessData.isEmpty) {
@@ -97,8 +90,7 @@ class WitnessController extends GetxController
     var response = await ApiClient.getData(ApiConstants.witnessedByAnotherUser);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      witnessesYouData(
-          getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
+      witnessesYouData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
       if (witnessesYouData.isEmpty) {
         witnessesYouStatus(RxStatus.empty());
@@ -136,8 +128,7 @@ class WitnessController extends GetxController
 
   deleteWitness({required String requestKey}) async {
     deleteWitnessStatus(RxStatus.loading());
-    var response =
-        await ApiClient.getData("${ApiConstants.deleteWitness(requestKey)}");
+    var response = await ApiClient.getData("${ApiConstants.deleteWitness(requestKey)}");
     if (response.statusCode == 200 || response.statusCode == 201) {
       ToastMessageHelper.successMessageShowToster(
         AppLocalizations.of(Get.context!)!.witness_remove_successfully,
@@ -146,8 +137,7 @@ class WitnessController extends GetxController
       deleteWitnessStatus(RxStatus.success());
     } else {
       deleteWitnessStatus(RxStatus.error(response.body));
-      ToastMessageHelper.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)!.failed_to_delete_witness);
+      ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_delete_witness);
     }
     try {} catch (e) {}
   }
@@ -184,8 +174,7 @@ class WitnessController extends GetxController
         AppLocalizations.of(Get.context!)!.witness_saved_successfully,
       );
     } else {
-      ToastMessageHelper.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)!.save_failed_try_again);
+      ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.save_failed_try_again);
     }
   }
 
@@ -205,9 +194,7 @@ class WitnessController extends GetxController
       );
       addWitnessStatus(RxStatus.success());
     } else {
-      ToastMessageHelper.errorMessageShowToster(
-          /*AppLocalizations.of(Get.context!)!.add_failed_try_again*/ response
-              .body);
+      ToastMessageHelper.errorMessageShowToster(/*AppLocalizations.of(Get.context!)!.add_failed_try_again*/ response.body);
       addWitnessStatus(RxStatus.empty());
     }
   }

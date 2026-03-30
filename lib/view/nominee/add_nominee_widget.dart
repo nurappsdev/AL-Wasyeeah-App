@@ -3,10 +3,10 @@ import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
-import 'package:al_wasyeah/view/widgets/app_error_widget.dart';
-import 'package:al_wasyeah/view/widgets/custom_button.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
-import 'package:al_wasyeah/view/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/utils/widgets/app_error_widget.dart';
+import 'package:al_wasyeah/utils/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -70,16 +70,14 @@ class AddNomineeWidget extends GetView<NomineeController> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!
-                            .please_enter_your_email;
+                        return AppLocalizations.of(context)!.please_enter_your_email;
                       }
                       if (!AppConstants.emailValidate.hasMatch(value)) {
                         return AppLocalizations.of(context)!.invalid_email;
                       }
                       return null;
                     },
-                    suffixIcon: AppConstants.emailValidate
-                            .hasMatch(controller.searchText.value)
+                    suffixIcon: AppConstants.emailValidate.hasMatch(controller.searchText.value)
                         ? Padding(
                             padding: EdgeInsets.all(8.h),
                             child: ElevatedButton(
@@ -108,8 +106,7 @@ class AddNomineeWidget extends GetView<NomineeController> {
                 if (controller.searchNomineeStatus.value.isLoading) {
                   return Center(child: CircularProgressIndicator());
                 } else if (controller.searchNomineeStatus.value.isEmpty) {
-                  return Center(
-                      child: Text(AppLocalizations.of(context)!.no_data));
+                  return Center(child: Text(AppLocalizations.of(context)!.no_data));
                 } else if (controller.searchNomineeStatus.value.isSuccess) {
                   return Card(
                     shape: RoundedRectangleBorder(
@@ -120,30 +117,24 @@ class AddNomineeWidget extends GetView<NomineeController> {
                     child: ListTile(
                       leading: CircleAvatar(
                           radius: 30,
-                          child:
-                              controller.searchedNominee.value?.imageUrl != null
-                                  ? ClipRRect(
-                                      borderRadius: BorderRadius.circular(35.r),
-                                      child: Image.network(
-                                        ApiConstants.imageUrl +
-                                            controller.searchedNominee.value!
-                                                .imageUrl,
-                                        fit: BoxFit.fill,
-                                        width: 70.w,
-                                        height: 70.h,
-                                      ),
-                                    )
-                                  : Icon(Icons.person,
-                                      color: Colors.white, size: 40.sp)),
+                          child: controller.searchedNominee.value?.imageUrl != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(35.r),
+                                  child: Image.network(
+                                    ApiConstants.imageUrl + controller.searchedNominee.value!.imageUrl,
+                                    fit: BoxFit.fill,
+                                    width: 70.w,
+                                    height: 70.h,
+                                  ),
+                                )
+                              : Icon(Icons.person, color: Colors.white, size: 40.sp)),
                       title: Text(
-                        controller.searchedNominee.value?.name ??
-                            AppLocalizations.of(context)!.n_a,
+                        controller.searchedNominee.value?.name ?? AppLocalizations.of(context)!.n_a,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Row(
                         children: [
-                          Icon(Icons.visibility,
-                              size: 16.0, color: Colors.grey),
+                          Icon(Icons.visibility, size: 16.0, color: Colors.grey),
                           SizedBox(width: 4.0),
                           Text(
                             AppLocalizations.of(context)!.view_details,
@@ -151,18 +142,14 @@ class AddNomineeWidget extends GetView<NomineeController> {
                           ),
                         ],
                       ),
-                      onTap: () => Get.toNamed(AppRoutes.nomineeDetailsPage,
-                          preventDuplicates: false,
-                          arguments: {
-                            'nominee': controller.searchedNominee.value,
-                            'canRemove': false,
-                          }),
+                      onTap: () => Get.toNamed(AppRoutes.nomineeDetailsPage, preventDuplicates: false, arguments: {
+                        'nominee': controller.searchedNominee.value,
+                        'canRemove': false,
+                      }),
                     ),
                   );
                 } else {
-                  return AppErrorWidget(
-                      message: controller.searchNomineeStatus.value.errorMessage
-                          .toString());
+                  return AppErrorWidget(message: controller.searchNomineeStatus.value.errorMessage.toString());
                 }
               }),
               SizedBox(height: 20.h),

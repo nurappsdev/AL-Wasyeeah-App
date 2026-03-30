@@ -2,7 +2,7 @@ import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/themes/light_theme.dart';
-import 'package:al_wasyeah/view/widgets/app_wrapper.dart';
+import 'package:al_wasyeah/utils/widgets/app_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,8 +14,7 @@ class WasyeeahApp extends StatefulWidget {
   const WasyeeahApp({super.key, required this.initialLang});
 
   static void setLocale(BuildContext context, Locale newLocale) {
-    _WasyeeahAppState? state =
-        context.findAncestorStateOfType<_WasyeeahAppState>();
+    _WasyeeahAppState? state = context.findAncestorStateOfType<_WasyeeahAppState>();
     state?.setLocale(newLocale);
   }
 

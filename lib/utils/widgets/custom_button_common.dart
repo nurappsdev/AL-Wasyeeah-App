@@ -1,10 +1,10 @@
 import 'package:al_wasyeah/utils/app_colors.dart';
-import 'package:al_wasyeah/view/widgets/custom_text.dart';
+import 'package:al_wasyeah/utils/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButton extends StatelessWidget {
-  final VoidCallback onpress;
+  final VoidCallback? onpress;
   final String title;
   final Color? color;
   final Color? titlecolor;
@@ -16,7 +16,7 @@ class CustomButton extends StatelessWidget {
   CustomButton({
     super.key,
     required this.title,
-    required this.onpress,
+    this.onpress,
     this.color,
     this.height,
     this.width,
@@ -30,13 +30,12 @@ class CustomButton extends StatelessWidget {
     return GestureDetector(
       onTap: loading ? () {} : onpress,
       child: Container(
-        width: width ?? 345.w,
-        height: height ?? 52.h,
-        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+        width: width ?? 355.w,
+        height: height ?? 48.h,
+        padding: EdgeInsets.all(10.r),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.r),
-          border: Border.all(color: AppColors.primaryColor),
-          color: color ?? Colors.white,
+          color: color ?? AppColors.primaryColor,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -47,17 +46,13 @@ class CustomButton extends StatelessWidget {
                 ? SizedBox(
                     height: 20.h,
                     width: 20.h,
-                    child: const CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
+                    child: const CircularProgressIndicator(),
                   )
-                : Center(
-                    child: CustomText(
-                      text: title,
-                      fontsize: fontSize ?? 16.h,
-                      color: titlecolor ?? Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
+                : CustomText(
+                    text: title,
+                    fontsize: fontSize ?? 20.sp,
+                    color: titlecolor ?? Colors.white,
+                    fontWeight: FontWeight.w400,
                   ),
           ],
         ),
