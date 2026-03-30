@@ -635,7 +635,7 @@ class PropertyDistributionCalculationPage extends GetView<PropertyDistributionCa
               children: [
                 Text("${AppLocalizations.of(Get.context!)!.count}: ", style: TextStyle(color: Colors.grey)),
                 IconButton(
-                  icon: const Icon(Icons.remove_circle_outline, color: AppColors.redColor),
+                  icon: Icon(Icons.remove_circle_outline, color: AppColors.redColor),
                   onPressed: () => controller.decrement(relativeId),
                 ),
                 SizedBox(
@@ -648,7 +648,7 @@ class PropertyDistributionCalculationPage extends GetView<PropertyDistributionCa
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.add_circle_outline, color: AppColors.primaryColor),
+                  icon: Icon(Icons.add_circle_outline, color: AppColors.primaryColor),
                   onPressed: () => controller.increment(relativeId),
                 ),
               ],

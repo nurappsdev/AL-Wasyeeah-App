@@ -10,9 +10,10 @@ void main() async {
 
   final prefs = await SharedPreferences.getInstance();
   final String savedLang = prefs.getString('languageCode') ?? 'en';
+  final bool isDarkMode = prefs.getBool('isDarkMode') ?? false;
   ApiConstants.currentLang = savedLang;
 
   runApp(
-    WasyeeahApp(initialLang: savedLang),
+    WasyeeahApp(initialLang: savedLang, initialDarkMode: isDarkMode),
   );
 }

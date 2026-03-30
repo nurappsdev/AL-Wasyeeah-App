@@ -1,6 +1,7 @@
 import 'package:al_wasyeah/controllers/home/home_controller.dart';
 import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
+import 'package:al_wasyeah/controllers/theme_controller.dart';
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
@@ -26,6 +27,7 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final profileController = Get.find<ProfileController>();
+    final themeController = Get.find<ThemeController>();
     return Scaffold(
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.user_profile,
@@ -340,6 +342,56 @@ class MenuPage extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(
+                height: 20.h,
+              ),
+
+              ///=====================Theme Switch====================================
+              // Container(
+              //   width: 360.w,
+              //   height: 60.h,
+              //   margin: EdgeInsets.only(left: 2.w),
+              //   decoration: BoxDecoration(
+              //     color: AppColors.whiteColor,
+              //     borderRadius: BorderRadius.all(Radius.circular(8.r)),
+              //     border: Border.all(
+              //       color: Color(0xffB0E3D3),
+              //       width: 2.w,
+              //     ),
+              //   ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Padding(
+              //         padding: EdgeInsets.symmetric(horizontal: 12.w),
+              //         child: Row(
+              //           children: [
+              //             Icon(Icons.dark_mode_outlined, color: AppColors.primaryColor),
+              //             SizedBox(width: 16.w),
+              //             CustomText(
+              //               text: "Dark Mode",
+              //               fontsize: 16.sp,
+              //               fontWeight: FontWeight.w600,
+              //               color: AppColors.textColor4E4E4E,
+              //             )
+              //           ],
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: EdgeInsets.symmetric(horizontal: 12.w),
+              //         child: Obx(
+              //           () => Switch(
+              //             value: themeController.isDarkMode.value,
+              //             onChanged: (value) {
+              //               themeController.toggleTheme();
+              //             },
+              //             activeColor: AppColors.primaryColor,
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               SizedBox(
                 height: 20.h,
               ),

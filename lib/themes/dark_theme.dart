@@ -10,7 +10,7 @@ ThemeData dark = ThemeData(
   hintColor: const Color(0xFFbebebe),
   disabledColor: const Color(0xffa2a7ad),
   shadowColor: Colors.black.withOpacity(0.4),
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: Colors.transparent,
   appBarTheme: const AppBarTheme(
     elevation: 0,
     scrolledUnderElevation: 0,
