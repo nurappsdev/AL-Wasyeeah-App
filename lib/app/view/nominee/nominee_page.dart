@@ -88,7 +88,8 @@ class NomineesPage extends GetView<NomineeController> {
 
               /// ❌ ERROR
               if (currentStatus.isError) {
-                return _buildErrorState(context, currentStatus.errorMessage ?? "");
+                return _buildErrorState(
+                    context, currentStatus.errorMessage ?? "");
               }
 
               /// ❌ EMPTY
@@ -116,7 +117,7 @@ class NomineesPage extends GetView<NomineeController> {
   Widget _buildAddButton(BuildContext context) {
     return CustomButton(
       title: AppLocalizations.of(context)!.add_more_nominees,
-      titlecolor: Colors.black,
+      titlecolor: Colors.white,
       onpress: () {
         controller.showAddNomineeBottomSheet();
       },
@@ -124,7 +125,8 @@ class NomineesPage extends GetView<NomineeController> {
   }
 
   /// ================= CARD =================
-  Widget _buildNomineeCard(BuildContext context, GetWitnessNomineeResponseModel witness, bool? canEdit) {
+  Widget _buildNomineeCard(BuildContext context,
+      GetWitnessNomineeResponseModel witness, bool? canEdit) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.h),
       decoration: BoxDecoration(
@@ -140,7 +142,8 @@ class NomineesPage extends GetView<NomineeController> {
       child: InkWell(
         borderRadius: BorderRadius.circular(16.r),
         onTap: () {
-          Get.toNamed(AppRoutes.nomineeDetailsPage, arguments: {"nominee": witness, "canRemove": canEdit});
+          Get.toNamed(AppRoutes.nomineeDetailsPage,
+              arguments: {"nominee": witness, "canRemove": canEdit});
         },
         child: Padding(
           padding: EdgeInsets.all(16.w),
@@ -261,7 +264,8 @@ class NomineesPage extends GetView<NomineeController> {
         labelColor: Colors.white,
         unselectedLabelColor: Colors.grey.shade500,
         labelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-        unselectedLabelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+        unselectedLabelStyle:
+            TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: Colors.transparent,
         tabs: [

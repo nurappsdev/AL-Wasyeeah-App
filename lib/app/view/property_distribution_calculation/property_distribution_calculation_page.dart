@@ -623,7 +623,6 @@ class PropertyDistributionCalculationPage extends GetView<PropertyDistributionCa
         ),
         if (controller.isChecked[relativeId] == true &&
             relativeId != PropertyDistributionCalculationController.husbandId &&
-            relativeId != PropertyDistributionCalculationController.wifeId &&
             relativeId != PropertyDistributionCalculationController.fatherId &&
             relativeId != PropertyDistributionCalculationController.motherId &&
             relativeId != PropertyDistributionCalculationController.grandfatherId &&

@@ -88,7 +88,8 @@ class WitnessesPage extends GetView<WitnessController> {
 
               /// ❌ ERROR
               if (currentStatus.isError) {
-                return _buildErrorState(context, currentStatus.errorMessage ?? "");
+                return _buildErrorState(
+                    context, currentStatus.errorMessage ?? "");
               }
 
               /// ❌ EMPTY
@@ -116,7 +117,7 @@ class WitnessesPage extends GetView<WitnessController> {
   Widget _buildAddButton(BuildContext context) {
     return CustomButton(
       title: AppLocalizations.of(context)!.add_more_witness,
-      titlecolor: Colors.black,
+      titlecolor: Colors.white,
       onpress: () {
         controller.showAddWitnessBottomSheet();
       },
@@ -124,7 +125,8 @@ class WitnessesPage extends GetView<WitnessController> {
   }
 
   /// ================= CARD =================
-  Widget _buildWitnessCard(BuildContext context, GetWitnessNomineeResponseModel witness, bool? canEdit) {
+  Widget _buildWitnessCard(BuildContext context,
+      GetWitnessNomineeResponseModel witness, bool? canEdit) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.h),
       decoration: BoxDecoration(
@@ -139,7 +141,8 @@ class WitnessesPage extends GetView<WitnessController> {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(16.r),
-        onTap: () => Get.toNamed(AppRoutes.witnessDetailsPage, arguments: {"witness": witness, "canRemove": canEdit}),
+        onTap: () => Get.toNamed(AppRoutes.witnessDetailsPage,
+            arguments: {"witness": witness, "canRemove": canEdit}),
         child: Padding(
           padding: EdgeInsets.all(16.w),
           child: Row(
@@ -259,7 +262,8 @@ class WitnessesPage extends GetView<WitnessController> {
         labelColor: Colors.white,
         unselectedLabelColor: Colors.grey.shade500,
         labelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-        unselectedLabelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+        unselectedLabelStyle:
+            TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: Colors.transparent,
         tabs: [
