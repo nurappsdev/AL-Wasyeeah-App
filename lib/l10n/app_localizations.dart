@@ -2865,6 +2865,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Explore Your Wasyyah'**
   String get explore_your_wasyyah;
+
+  /// No description provided for @please_select_at_least_one_relative.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select at least one relative'**
+  String get please_select_at_least_one_relative;
 }
 
 class _AppLocalizationsDelegate

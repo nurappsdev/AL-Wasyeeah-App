@@ -487,5 +487,6 @@
   "last_calculated": "শেষ গণনা",
   "bismillah_rahmanir_rahim":"বিসমিল্লাহির রহমানির রাহিম",
   "assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam":"আসসালামু আলাইকুম ওয়া রাহমাতুল্লা ইন্নালহামদালিল্লাহি রাব্বিল আ'লামীন ওয়াসসালাতু ওয়াসসালামু আলা রাসুলিল্লাহ (সাল্লাল্লাহু আলাইহিসসালাম)।",
-  "explore_your_wasyyah":"আপনার ওয়াসিয়াহ অন্বেষণ করুন"
+  "explore_your_wasyyah":"আপনার ওয়াসিয়াহ অন্বেষণ করুন",
+  "please_select_at_least_one_relative":"দয়া করে অন্তত একজন আত্মীয় নির্বাচন করুন"
 }

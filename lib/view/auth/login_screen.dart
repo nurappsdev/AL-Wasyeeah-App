@@ -11,7 +11,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../helpers/helpers.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -30,9 +29,7 @@ class LoginScreen extends StatelessWidget {
     GridItem(
       icon: AppIcons.propertyIcons,
       text: AppLocalizations.of(Get.context!)!.property_distribution,
-      onTap: () {
-        // Get.to(() => PropertyDistributionScreen2(), preventDuplicates: false);
-      },
+      onTap: () => Get.toNamed(AppRoutes.propertyDistributionPage, arguments: {"public": true}, preventDuplicates: false),
     ),
     GridItem(
       icon: AppIcons.zakatIcons,
@@ -41,20 +38,20 @@ class LoginScreen extends StatelessWidget {
         Get.toNamed(AppRoutes.zakatCalculatorPage, preventDuplicates: false);
       },
     ),
-    GridItem(
-      icon: AppIcons.contactIcons,
-      text: AppLocalizations.of(Get.context!)!.contact_us,
-      onTap: () {
-        // Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
-      },
-    ),
-    GridItem(
-      icon: AppIcons.helpsIcons,
-      text: AppLocalizations.of(Get.context!)!.helps,
-      onTap: () {
-        //  Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
-      },
-    ),
+    // GridItem(
+    //   icon: AppIcons.contactIcons,
+    //   text: AppLocalizations.of(Get.context!)!.contact_us,
+    //   onTap: () {
+    //     // Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
+    //   },
+    // ),
+    // GridItem(
+    //   icon: AppIcons.helpsIcons,
+    //   text: AppLocalizations.of(Get.context!)!.helps,
+    //   onTap: () {
+    //     //  Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
+    //   },
+    // ),
   ];
   @override
   Widget build(BuildContext context) {

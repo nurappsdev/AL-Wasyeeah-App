@@ -1424,4 +1424,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get explore_your_wasyyah => 'Explore Your Wasyyah';
+
+  @override
+  String get please_select_at_least_one_relative =>
+      'Please select at least one relative';
 }

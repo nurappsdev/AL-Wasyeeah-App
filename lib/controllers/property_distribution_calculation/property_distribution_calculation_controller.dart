@@ -50,6 +50,8 @@ class PropertyDistributionCalculationController extends GetxController with Stat
   RxBool isCalculateVisible = false.obs;
   RxBool isCalculateLoading = false.obs;
 
+  RxBool isPublic = false.obs;
+
   final List<String> hiddenRelativeIds = [
     deceasedSonsSonId,
     deceasedSonsDaughterId,
@@ -60,6 +62,9 @@ class PropertyDistributionCalculationController extends GetxController with Stat
   @override
   void onInit() {
     super.onInit();
+    if (Get.arguments != null && Get.arguments["public"] == true) {
+      isPublic(true);
+    }
     initData();
 
     // Add listeners to property fields to toggle button visibility
@@ -86,7 +91,7 @@ class PropertyDistributionCalculationController extends GetxController with Stat
     change(null, status: RxStatus.loading());
     await getRelevantList();
     await loadRelatives();
-    await getPropertyDistributionCalculationResult();
+    if (!isPublic.value) await getPropertyDistributionCalculationResult();
     change(null, status: RxStatus.success());
   }
 
@@ -258,6 +263,16 @@ class PropertyDistributionCalculationController extends GetxController with Stat
     Map<String, dynamic> finalOutput = {
       "relative": [relatives],
     };
+
+    if (relatives.isEmpty) {
+      ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.please_select_at_least_one_relative);
+      return;
+    }
+
+    if (landController.text.isEmpty || goldController.text.isEmpty || silverController.text.isEmpty || moneyController.text.isEmpty) {
+      ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.please_fill_all_the_fields);
+      return;
+    }
 
     // 3. Add Property fields
     if (landController.text.isNotEmpty) {

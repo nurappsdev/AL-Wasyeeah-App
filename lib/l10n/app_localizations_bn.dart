@@ -1435,4 +1435,8 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get explore_your_wasyyah => 'আপনার ওয়াসিয়াহ অন্বেষণ করুন';
+
+  @override
+  String get please_select_at_least_one_relative =>
+      'দয়া করে অন্তত একজন আত্মীয় নির্বাচন করুন';
 }

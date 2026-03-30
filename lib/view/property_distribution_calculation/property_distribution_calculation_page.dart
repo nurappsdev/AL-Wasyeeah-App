@@ -89,41 +89,42 @@ class PropertyDistributionCalculationPage extends GetView<PropertyDistributionCa
                       return Column(
                         children: [
                           _sectionTitle(AppLocalizations.of(context)!.calculation_results),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primaryColor,
+                          if (!controller.isPublic.value)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.primaryColor,
 
-                                  // minimumSize: const Size(double.infinity, 50),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.r),
+                                    // minimumSize: const Size(double.infinity, 50),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.r),
+                                    ),
+                                  ),
+                                  onPressed: () => controller.savePropertyDistributionCalculationResult(),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.save,
+                                    style: TextStyle(color: Colors.white, fontSize: 22.sp),
                                   ),
                                 ),
-                                onPressed: () => controller.savePropertyDistributionCalculationResult(),
-                                child: Text(
-                                  AppLocalizations.of(context)!.save,
-                                  style: TextStyle(color: Colors.white, fontSize: 22.sp),
-                                ),
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primaryColor,
-                                  foregroundColor: Colors.white,
-                                  // minimumSize: const Size(double.infinity, 50),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.primaryColor,
+                                    foregroundColor: Colors.white,
+                                    // minimumSize: const Size(double.infinity, 50),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  onPressed: () => controller.downloadPropertyDistributionCalculationResult(),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.download,
+                                    style: TextStyle(color: Colors.white, fontSize: 22.sp),
                                   ),
                                 ),
-                                onPressed: () => controller.downloadPropertyDistributionCalculationResult(),
-                                child: Text(
-                                  AppLocalizations.of(context)!.download,
-                                  style: TextStyle(color: Colors.white, fontSize: 22.sp),
-                                ),
-                              ),
-                            ],
-                          ),
+                              ],
+                            ),
                           _buildPieChartSection(),
                           _buildResultCards(),
                         ],

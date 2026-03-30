@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:al_wasyeah/utils/app_image.dart';
-import 'package:get/get.dart';
 
 import 'no_internet_widget.dart'; // if in separate file
 
