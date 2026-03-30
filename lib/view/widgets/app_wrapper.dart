@@ -49,14 +49,19 @@ class _AppWrapperState extends State<AppWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(AppImages.backImg),
-          fit: BoxFit.cover,
+    return SafeArea(
+      maintainBottomViewPadding: true,
+      top: false,
+      bottom: true,
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(AppImages.backImg),
+            fit: BoxFit.cover,
+          ),
         ),
+        child: hasInternet ? widget.child : NoInternetWidget(),
       ),
-      child: hasInternet ? widget.child : NoInternetWidget(),
     );
   }
 }

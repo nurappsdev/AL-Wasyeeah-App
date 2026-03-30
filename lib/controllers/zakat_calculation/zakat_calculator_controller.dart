@@ -14,8 +14,7 @@ import '../../models/models.dart';
 import '../../services/services.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 
-class ZakatCalculatorController extends GetxController
-    with StateMixin<dynamic> {
+class ZakatCalculatorController extends GetxController with StateMixin<dynamic> {
   ///==================get Witness===========================
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final cashAndBankController = TextEditingController();
@@ -23,27 +22,21 @@ class ZakatCalculatorController extends GetxController
 
   final TextEditingController valueSilverController = TextEditingController();
 
-  final TextEditingController futureDepositsController =
-      TextEditingController();
+  final TextEditingController futureDepositsController = TextEditingController();
 
   final TextEditingController loanGivenController = TextEditingController();
 
-  final TextEditingController investmentValueController =
-      TextEditingController();
+  final TextEditingController investmentValueController = TextEditingController();
 
   final TextEditingController rentalIncomeController = TextEditingController();
 
-  final TextEditingController immediateLiabilitieseController =
-      TextEditingController();
+  final TextEditingController immediateLiabilitieseController = TextEditingController();
 
   RxBool isNisabLoading = false.obs;
-  RxList<GetNisabRatesResponseModel> nisabRates =
-      <GetNisabRatesResponseModel>[].obs;
-  Rx<ZakatCalculationResultModel?> zakatCalculationResult =
-      Rx<ZakatCalculationResultModel?>(null);
+  RxList<GetNisabRatesResponseModel> nisabRates = <GetNisabRatesResponseModel>[].obs;
+  Rx<ZakatCalculationResultModel?> zakatCalculationResult = Rx<ZakatCalculationResultModel?>(null);
 
-  Rx<GetNisabRatesResponseModel?> selectedCurrency =
-      Rx<GetNisabRatesResponseModel?>(null);
+  Rx<GetNisabRatesResponseModel?> selectedCurrency = Rx<GetNisabRatesResponseModel?>(null);
 
   @override
   void onInit() {
@@ -71,12 +64,10 @@ class ZakatCalculatorController extends GetxController
     change(null, status: RxStatus.loading());
 
     try {
-      var response =
-          await ApiClient.getData(ApiConstants.nomineedByAnotherUser);
+      var response = await ApiClient.getData(ApiConstants.nisab);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final data =
-            getNisabRatesResponseModelFromJson(jsonEncode(response.body));
+        final data = getNisabRatesResponseModelFromJson(jsonEncode(response.body));
         nisabRates(data);
 
         change(data, status: RxStatus.success());
@@ -96,17 +87,10 @@ class ZakatCalculatorController extends GetxController
     });
   }
 
-  ///==================Save Sign Up===========================
   RxBool zakatLoading = false.obs;
   Future<void> calculateZakatAmount() async {
     zakatLoading(true);
 
-    String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $bearerToken'
-    };
     var body = {
       "currencyCode": "bdt",
       "goldValue": valueGoldController.text,
@@ -121,30 +105,21 @@ class ZakatCalculatorController extends GetxController
     var response = await ApiClient.postData(
       ApiConstants.zakatEndPoint,
       body,
-      headers: headers,
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      zakatCalculationResult(
-          zakatCalculationResultModelFromJson(jsonEncode(response.body)));
-      ToastMessageHelper.successMessageShowToster(
-          AppLocalizations.of(Get.context!)!.record_inserted_successfully);
+      zakatCalculationResult(zakatCalculationResultModelFromJson(jsonEncode(response.body)));
+      ToastMessageHelper.successMessageShowToster(AppLocalizations.of(Get.context!)!.record_inserted_successfully);
 
-      showZakatDialog(Get.context,
-          assetsAccount: "${zakatCalculationResult.value?.netAssets.toLocal()}",
-          zakatAccount:
-              "${zakatCalculationResult.value?.zakatAmount.toLocal()}");
+      showZakatDialog(Get.context, assetsAccount: "${zakatCalculationResult.value?.netAssets.toLocal()}", zakatAccount: "${zakatCalculationResult.value?.zakatAmount.toLocal()}");
 
-      // Get.off(() => StepNavigationWithPageView(), preventDuplicates: false);
       zakatLoading(false);
     } else {
-      // ToastMessageHelper.errorMessageShowToster("${response.body["message"]}");
       zakatLoading(false);
     }
   }
 
-  void showZakatDialog(context,
-      {required String assetsAccount, required String zakatAccount}) {
+  void showZakatDialog(context, {required String assetsAccount, required String zakatAccount}) {
     Get.dialog(
       AlertDialog(
         title: CustomText(
@@ -166,8 +141,7 @@ class ZakatCalculatorController extends GetxController
               ),
               SizedBox(height: 12.h),
               CustomText(
-                text: assetsAccount +
-                    " (${selectedCurrency.value?.currencyIcon})",
+                text: assetsAccount + " (${selectedCurrency.value?.currencyIcon})",
                 fontsize: 22.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
@@ -181,8 +155,7 @@ class ZakatCalculatorController extends GetxController
               ),
               SizedBox(height: 12.h),
               CustomText(
-                text:
-                    zakatAccount + " (${selectedCurrency.value?.currencyIcon})",
+                text: zakatAccount + " (${selectedCurrency.value?.currencyIcon})",
                 fontsize: 22.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
