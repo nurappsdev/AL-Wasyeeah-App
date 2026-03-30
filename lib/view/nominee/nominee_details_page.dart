@@ -1,9 +1,10 @@
 import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
+import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/helpers/toast_message_helper.dart';
 import 'package:al_wasyeah/models/witness/get_witness_response_model.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
 import 'package:al_wasyeah/utils/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/utils/widgets/custom_text.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -27,11 +28,8 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          text: AppLocalizations.of(context)!.nominee_profile_details,
-          fontsize: 18.sp,
-        ),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.nominee_profile_details,
       ),
       body: Container(
         height: Get.height,

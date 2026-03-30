@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/controllers/home/home_controller.dart';
+import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
@@ -26,11 +27,8 @@ class MenuPage extends StatelessWidget {
     final homeController = Get.find<HomeController>();
     final profileController = Get.find<ProfileController>();
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          text: AppLocalizations.of(context)!.user_profile,
-          fontsize: 18.sp,
-        ),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.user_profile,
       ),
       body: Container(
         height: Get.height,

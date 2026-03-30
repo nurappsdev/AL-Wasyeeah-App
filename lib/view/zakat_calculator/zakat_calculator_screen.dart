@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/controllers/zakat_calculation/zakat_calculator_controller.dart';
+import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/helpers/toast_message_helper.dart';
 import 'package:al_wasyeah/models/zakat_calculation/get_nisab_response_model.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
@@ -20,11 +21,8 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          text: AppLocalizations.of(context)!.calculate_your_zakat_easily,
-          fontsize: 18.sp,
-        ),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.calculate_your_zakat_easily,
       ),
       body: controller.obx(
         (state) => _buildContent(context, isLoading: false),

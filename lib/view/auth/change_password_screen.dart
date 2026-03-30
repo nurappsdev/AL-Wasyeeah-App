@@ -3,6 +3,7 @@ import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../utils/widgets/custom_button_common.dart';
@@ -20,17 +21,8 @@ class ChangePasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-      appBar: AppBar(
-        title: CustomText(
-          text: AppLocalizations.of(context)!.change_password,
-          fontsize: 18.sp,
-          fontWeight: FontWeight.w600,
-          color: AppColors.hitTextColor000000,
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.hitTextColor000000),
-          onPressed: () => Get.back(),
-        ),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.change_password,
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),

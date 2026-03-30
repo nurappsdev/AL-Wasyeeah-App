@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/controllers/notification/notification_controller.dart';
+import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/utils/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -14,11 +15,8 @@ class NotificationPage extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: CustomText(
-            text: AppLocalizations.of(context)!.notifications,
-            fontsize: 18.sp,
-          ),
+        appBar: CustomAppBar(
+          title: AppLocalizations.of(context)!.notifications,
         ),
         body: notificationController.obx(
           (data) => RefreshIndicator(

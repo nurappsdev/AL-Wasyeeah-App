@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
@@ -54,14 +55,8 @@ class PropertyDistributionCalculationPage extends GetView<PropertyDistributionCa
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          AppLocalizations.of(context)!.property_distribution_calculation,
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 20.sp),
-        ),
-        backgroundColor: AppColors.whiteColor,
-        // foregroundColor: Colors.black,
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.property_distribution_calculation,
       ),
       body: Column(
         children: [

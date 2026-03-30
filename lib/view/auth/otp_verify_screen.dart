@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/utils/app_colors.dart';
+import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
 import 'package:al_wasyeah/view/profile/profile_page.dart';
 import 'package:al_wasyeah/utils/widgets/custom_button_common.dart';
@@ -16,11 +17,8 @@ class OtpVerifyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          text: AppLocalizations.of(context)!.otp_verify,
-          fontsize: 18.sp,
-        ),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.otp_verify,
       ),
       body: Container(
         width: double.infinity,

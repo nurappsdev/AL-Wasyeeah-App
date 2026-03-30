@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/controllers/wasyyah/wasyyah_controller.dart';
+import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/helpers/toast_message_helper.dart';
 import 'package:al_wasyeah/models/wasyyah/get_wasyyah_response_model.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
@@ -16,12 +17,8 @@ class WasyyahPage extends GetView<WasyyahController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          text: AppLocalizations.of(context)!.wasiyyah_ichanama_title,
-          fontsize: 18.sp,
-          fontWeight: FontWeight.w600,
-        ),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.wasiyyah_ichanama_title,
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 16.w),

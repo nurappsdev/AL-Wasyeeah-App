@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../utils/app_colors.dart';
@@ -17,10 +18,14 @@ ThemeData light() => ThemeData(
       TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
       TargetPlatform.fuchsia: ZoomPageTransitionsBuilder(),
     }),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
+      elevation: 0,
+      scrolledUnderElevation: 0,
       centerTitle: true,
-      backgroundColor: Colors.white,
-      shadowColor: Colors.black.withOpacity(0.12),
+      backgroundColor: Colors.transparent,
+      iconTheme: IconThemeData(color: Colors.black),
+      titleTextStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
     ),
     datePickerTheme: DatePickerThemeData(
       dayStyle: TextStyle(color: AppColors.primaryColor, fontSize: 14.h),

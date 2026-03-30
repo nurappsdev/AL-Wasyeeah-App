@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/controllers/nomineee/nominee_controller.dart';
+import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/helpers/app_routes.dart';
 import 'package:al_wasyeah/models/witness/get_witness_response_model.dart';
 import 'package:al_wasyeah/services/api_constants.dart';
@@ -17,13 +18,8 @@ class NomineesPage extends GetView<NomineeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          text: AppLocalizations.of(context)!.nominee,
-          fontsize: 20.sp,
-          fontWeight: FontWeight.bold,
-        ),
-        centerTitle: true,
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.nominee,
       ),
       body: Column(
         children: [

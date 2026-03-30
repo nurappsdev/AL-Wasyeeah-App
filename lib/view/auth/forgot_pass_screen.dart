@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/controllers/auths/auth_controller.dart';
+import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
 import 'package:al_wasyeah/utils/app_constant.dart';
 import 'package:al_wasyeah/utils/app_icons.dart';
@@ -36,11 +37,8 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
   Widget build(BuildContext context) {
     authController.getSecurityQuestion();
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          text: AppLocalizations.of(context)!.forgot_password,
-          fontsize: 18.sp,
-        ),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.forgot_password,
       ),
       body: Container(
         height: Get.height,

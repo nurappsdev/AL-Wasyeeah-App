@@ -1,10 +1,11 @@
 import 'package:al_wasyeah/controllers/access_control/access_control_controller.dart';
+import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/helpers/helpers.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/models/access_control/witness_nominee_context_data_model.dart';
 import 'package:al_wasyeah/models/property_distribution_calculation_model/property_destribution_result_model.dart';
 import 'package:al_wasyeah/utils/app_colors.dart';
-import 'package:al_wasyeah/utils/widgets/custom_text.dart';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,11 +31,8 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          text: AppLocalizations.of(context)!.access_control_panel,
-          fontsize: 18.sp,
-        ),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.access_control_panel,
       ),
       body: Obx(() {
         final status = accessControlController.contextsPanelDataStatus.value;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 ThemeData dark = ThemeData(
   fontFamily: 'Rubik',
@@ -11,8 +12,13 @@ ThemeData dark = ThemeData(
   shadowColor: Colors.black.withOpacity(0.4),
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: const AppBarTheme(
+    elevation: 0,
+    scrolledUnderElevation: 0,
     centerTitle: true,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.transparent,
+    iconTheme: IconThemeData(color: Colors.white),
+    titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+    systemOverlayStyle: SystemUiOverlayStyle.light,
   ),
   pageTransitionsTheme: const PageTransitionsTheme(builders: {
     TargetPlatform.android: ZoomPageTransitionsBuilder(),

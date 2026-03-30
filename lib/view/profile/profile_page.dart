@@ -1,11 +1,12 @@
 import 'package:al_wasyeah/controllers/profile/profile_controller.dart';
+import 'package:al_wasyeah/view/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/l10n/app_localizations.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_five_screen.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_four_screen.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_one_screen.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_three_screen.dart';
 import 'package:al_wasyeah/view/profile/profile_setup_step_two_screen.dart';
-import 'package:al_wasyeah/utils/widgets/custom_text.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -21,12 +22,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          text: AppLocalizations.of(context)!.profile_settings,
-          fontWeight: FontWeight.w600,
-          fontsize: 20.sp,
-        ),
+      appBar: CustomAppBar(
+        title: AppLocalizations.of(context)!.profile_settings,
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.h),
