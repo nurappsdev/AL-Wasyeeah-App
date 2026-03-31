@@ -1,11 +1,11 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:al_wasyeah/core/services/toast_message_helper.dart';
 import 'package:al_wasyeah/app/models/wasyyah/get_wasyyah_response_model.dart';
 import 'package:al_wasyeah/core/services/api_client.dart';
 import 'package:al_wasyeah/core/services/api_constants.dart';
 import 'package:al_wasyeah/core/services/wasyyah_pdf_service.dart';
-import 'package:open_file/open_file.dart';
 import 'package:get/get.dart';
 
 class WasyyahController extends GetxController {
@@ -106,15 +106,16 @@ class WasyyahController extends GetxController {
     updateOrder();
   }
 
-  Future<void> generateAndPreviewPdf() async {
+  Future<File?> generatePdfFile() async {
     isLoading(true);
     try {
       final file = await WasyyahHtmlPdfService.generateWasyyahPdf(wasyyahList);
       print('PDF saved at: ${file.path}');
-      await OpenFile.open(file.path);
+      return file;
     } catch (e, s) {
       log("PDF ISSUE", error: e, stackTrace: s);
       ToastMessageHelper.errorMessageShowToster("Failed to generate PDF: $e");
+      return null;
     } finally {
       isLoading(false);
     }

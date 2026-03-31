@@ -21,6 +21,7 @@ import 'package:al_wasyeah/app/view/witnessess/witness_page.dart';
 import 'package:al_wasyeah/app/view/notification/notification_screen.dart';
 import 'package:al_wasyeah/app/view/onboarding/onboarding_screen.dart';
 import 'package:al_wasyeah/app/view/wasyyah/wasyyah_page.dart';
+import 'package:al_wasyeah/app/view/wasyyah/wasyyah_pdf_preview_page.dart';
 import 'package:get/get.dart';
 
 class AppRoutes {
@@ -39,6 +40,7 @@ class AppRoutes {
   static const String homePage = "/home_page";
   // Wasyyah
   static const String wasyyahPage = "/wasyyah_page";
+  static const String wasyyahPdfPreviewPage = "/wasyyah_pdf_preview_page";
   // Nominee
   static const String nomineesPage = "/nominee_page";
   static const String nomineeDetailsPage = "/nominee_details_page";
@@ -83,6 +85,7 @@ class AppRoutes {
         ),
         GetPage(name: notificationPage, page: () => NotificationPage()),
         GetPage(name: wasyyahPage, page: () => WasyyahPage(), binding: WasyyahBinding()),
+        GetPage(name: wasyyahPdfPreviewPage, page: () => const WasyyahPdfPreviewPage()),
         GetPage(name: profilePage, page: () => ProfilePage()),
         GetPage(name: witnessesPage, page: () => WitnessesPage(), binding: WitnessesBinding()),
         GetPage(name: witnessDetailsPage, page: () => WitnessDetailsPage()),

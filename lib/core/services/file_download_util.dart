@@ -3,56 +3,12 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class FileDownloadUtil {
-  // static Future<void> downloadFile(
-  //     String url, String fileName, Function(double) onProgress) async {
-  //   final client = http.Client();
-  //   final request = http.Request('GET', Uri.parse(url));
-  //   final response = await client.send(request);
-
-  //   // Get the total size of the file
-  //   final int totalBytes = response.contentLength ?? 0;
-  //   int receivedBytes = 0;
-  //   List<int> bytes = [];
-
-  //   // Listen to the stream for progress updates
-  //   response.stream.listen(
-  //     (List<int> chunk) {
-  //       bytes.addAll(chunk);
-  //       receivedBytes += chunk.length;
-  //       // Calculate and report progress
-  //       if (totalBytes > 0) {
-  //         double progress = (receivedBytes / totalBytes) * 100;
-  //         onProgress(progress);
-  //       }
-  //     },
-  //     onDone: () async {
-  //       final directory = Directory('/storage/emulated/0/Download');
-
-  //       try {
-  //         String extension =
-  //             _getExtensionFromContentType(response.headers['content-type']);
-
-  //         final file = File('${directory.path}/$fileName$extension');
-
-  //         await file.writeAsBytes(bytes);
-
-  //         log('File saved at: ${file.path}');
-  //         onProgress(100.0);
-  //       } catch (e) {
-  //         log("File save error: $e");
-  //       }
-  //     },
-  //     onError: (error) {
-  //       print('Download error: $error');
-  //     },
-  //     cancelOnError: true,
-  //   );
-  // }
+ 
 
   static Future<void> downloadFile(String url, String fileName, Function(double) onProgress) async {
     final request = http.Request('GET', Uri.parse(url));
     final response = await request.send();
-    log("------${url}--*--------------*---------*----------${response.headers}");
+    
     final int totalBytes = response.contentLength ?? 0;
     int receivedBytes = 0;
 

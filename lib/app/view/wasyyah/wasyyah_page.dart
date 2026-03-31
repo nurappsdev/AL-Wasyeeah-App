@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/core/services/app_routes.dart';
+import 'package:open_file/open_file.dart';
 
 class WasyyahPage extends GetView<WasyyahController> {
   WasyyahPage({super.key});
@@ -23,7 +25,7 @@ class WasyyahPage extends GetView<WasyyahController> {
             padding: EdgeInsets.only(right: 16.w),
             child: CustomButton(
               title: AppLocalizations.of(context)!.preview,
-              onpress: controller.generateAndPreviewPdf,
+              onpress: () => _showPreviewOptions(context),
               width: 100.w,
               // height: 40.h,
               color: AppColors.primaryColor,
@@ -248,4 +250,41 @@ class WasyyahPage extends GetView<WasyyahController> {
       },
     );
   }
+
+  Future<void> _showPreviewOptions(BuildContext context) async {
+    final choice = await showDialog<_PreviewChoice>(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: const Text("Open PDF"),
+          children: [
+            SimpleDialogOption(
+              onPressed: () => Navigator.pop(context, _PreviewChoice.inApp),
+              child: const Text("Open in app"),
+            ),
+            SimpleDialogOption(
+              onPressed: () => Navigator.pop(context, _PreviewChoice.external),
+              child: const Text("Open in other app"),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (choice == null) return;
+
+    final file = await controller.generatePdfFile();
+    if (file == null) return;
+
+    if (choice == _PreviewChoice.inApp) {
+      Get.toNamed(
+        AppRoutes.wasyyahPdfPreviewPage,
+        arguments: {"filePath": file.path},
+      );
+    } else {
+      await OpenFile.open(file.path);
+    }
+  }
 }
+
+enum _PreviewChoice { inApp, external }

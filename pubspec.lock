@@ -57,14 +57,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.4"
-  bidi:
-    dependency: transitive
-    description:
-      name: bidi
-      sha256: "9a712c7ddf708f7c41b1923aa83648a3ed44cfd75b04f72d598c45e5be287f9d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.12"
   boolean_selector:
     dependency: transitive
     description:
@@ -109,10 +101,10 @@ packages:
     dependency: transitive
     description:
       name: checked_yaml
-      sha256: feb6bed21949061731a7a75fc5d2aa727cf160b91af9a3e464c5e3a32e28b5ff
+      sha256: "959525d3162f249993882720d52b7e0c833978df229be20702b33d48d91de70f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.4"
   chewie:
     dependency: transitive
     description:
@@ -169,14 +161,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
-  country_flags:
-    dependency: "direct main"
-    description:
-      name: country_flags
-      sha256: dbc4f76e7c801619b2d841023e0327191ba00663f1f1b4770394e9bc6632c444
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
   cross_file:
     dependency: transitive
     description:
@@ -229,10 +213,10 @@ packages:
     dependency: transitive
     description:
       name: equatable
-      sha256: "567c64b3cb4cf82397aac55f4f0cbd3ca20d77c6c03bedbc4ceaddc08904aef7"
+      sha256: "3e0141505477fd8ad55d6eb4e7776d3fe8430be8e497ccb1521370c3f21a3e2b"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.7"
+    version: "2.0.8"
   fake_async:
     dependency: transitive
     description:
@@ -367,10 +351,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_pdfview
-      sha256: "2e3fa359524e9865ec25a64593b65092b4a9974c5871228c1a771300a003d150"
+      sha256: "5b80e89f3ba6e478d1e897543c9634508284ad73476807febc188378986b69ee"
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.0"
+    version: "1.4.4"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -387,14 +371,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.9.3"
-  flutter_spinkit:
-    dependency: "direct main"
-    description:
-      name: flutter_spinkit
-      sha256: d2696eed13732831414595b98863260e33e8882fc069ee80ec35d4ac9ddb0472
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.2.1"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -565,14 +541,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.8"
-  hijri:
-    dependency: "direct main"
-    description:
-      name: hijri
-      sha256: "203eb7341e32789af6429877e88411b1526ef44c5d157ce4d3b930dd32c37ef1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
   html:
     dependency: transitive
     description:
@@ -677,22 +645,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.20.2"
-  jovial_misc:
-    dependency: transitive
-    description:
-      name: jovial_misc
-      sha256: "4b10a4cac4f492d9692e97699bff775efa84abdba29909124cbccf3126e31cea"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.0"
-  jovial_svg:
-    dependency: transitive
-    description:
-      name: jovial_svg
-      sha256: ca14d42956b9949c36333065c9141f100e930c918f57f4bd8dd59d35581bd3fc
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.24"
   js:
     dependency: transitive
     description:
@@ -705,10 +657,10 @@ packages:
     dependency: transitive
     description:
       name: json_annotation
-      sha256: "1ce844379ca14835a50d2f019a3099f419082cfdd231cd86a142af94dd5c6bb1"
+      sha256: cb09e7dac6210041fad964ed7fbee004f14258b4eca4040f72d1234062ace4c8
       url: "https://pub.dev"
     source: hosted
-    version: "4.9.0"
+    version: "4.11.0"
   just_audio:
     dependency: transitive
     description:
@@ -973,14 +925,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
-  pdf:
-    dependency: "direct main"
-    description:
-      name: pdf
-      sha256: e47a275b267873d5944ad5f5ff0dcc7ac2e36c02b3046a0ffac9b72fd362c44b
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.12.0"
   petitparser:
     dependency: transitive
     description:
@@ -1013,14 +957,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  pool:
-    dependency: "direct main"
-    description:
-      name: pool
-      sha256: "978783255c543aa3586a1b3c21f6e9d720eb315376a915872c61ef8b5c20177d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.2"
   posix:
     dependency: transitive
     description:
@@ -1061,14 +997,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.28.0"
-  searchable_paginated_dropdown:
-    dependency: "direct main"
-    description:
-      name: searchable_paginated_dropdown
-      sha256: "2cc35d7bc747a5d209688e4a3b8c5633385fba1e17a26ff195c1a3e410bdaaef"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.0"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -1222,18 +1150,18 @@ packages:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: f1d2b52697543e13bdefdc62d15868124a265987577f53224a7dbe176c8448f0
+      sha256: "6d2505a8a8f9fcc6a070e07715d7fab06868725bb15b5eaf9432ece807ccd93b"
       url: "https://pub.dev"
     source: hosted
-    version: "28.2.12"
+    version: "33.1.46"
   syncfusion_flutter_pdf:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_pdf
-      sha256: f5e02ac4264bc69eeffa3ec54c9c0ad6e8a9f9161b105451b4a83dd1a317eaf9
+      sha256: fd5a031f5eb44d09f01c5411fbe1f4fc6e1a8de20ecc2415336a12305a959ea3
       url: "https://pub.dev"
     source: hosted
-    version: "28.2.12"
+    version: "33.1.46"
   synchronized:
     dependency: transitive
     description:
@@ -1516,4 +1444,4 @@ packages:
     version: "3.1.3"
 sdks:
   dart: ">=3.9.0 <4.0.0"
-  flutter: ">=3.32.0"
+  flutter: ">=3.35.1"
