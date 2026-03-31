@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:al_wasyeah/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/core/services/helpers.dart';
 import 'package:al_wasyeah/core/services/toast_message_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
@@ -37,41 +39,40 @@ class _WasyyahPdfPreviewPageState extends State<WasyyahPdfPreviewPage> {
     try {
       final source = File(_filePath!);
       if (!await source.exists()) {
-        ToastMessageHelper.errorMessageShowToster("PDF file not found");
+        ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(context)!.no_content_available);
         return;
       }
 
       final targetDir = Directory("/storage/emulated/0/Download/AlWasyeeah");
 
       await targetDir.create(recursive: true);
-      final targetPath =
-          "${targetDir.path}${Platform.pathSeparator}Wasiyyah_legal.pdf";
+      final targetPath = "${targetDir.path}${Platform.pathSeparator}Wasiyyah_legal.pdf";
       await source.copy(targetPath);
       ToastMessageHelper.successMessageShowToster(
-        "Saved to ${targetDir.path}",
+        AppLocalizations.of(context)!.file_downloaded_successfully,
       );
     } catch (e, s) {
       log("Error is $e", error: e, stackTrace: s);
-      ToastMessageHelper.errorMessageShowToster("Download failed: $e");
+      ToastMessageHelper.errorMessageShowToster(e.toString());
     }
   }
 
   @override
   Widget build(BuildContext context) {
     if (_filePath == null) {
-      return const Scaffold(
-        body: Center(child: Text("No PDF found")),
+      return Scaffold(
+        body: Center(child: Text(AppLocalizations.of(context)!.no_data)),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Wasyyah Preview"),
+        title: Text(AppLocalizations.of(context)!.wasiyyah_preview),
         actions: [
           IconButton(
             onPressed: _downloadPdf,
             icon: const Icon(Icons.download),
-            tooltip: "Download",
+            tooltip: AppLocalizations.of(context)!.download,
           ),
         ],
       ),
@@ -93,7 +94,9 @@ class _WasyyahPdfPreviewPageState extends State<WasyyahPdfPreviewPage> {
               setState(() => _error = error.toString());
             },
             onPageError: (page, error) {
-              setState(() => _error = "Page $page: $error");
+              setState(() {
+                _error = "${AppLocalizations.of(context)!.page}" + " $page: $error";
+              });
             },
             onPageChanged: (page, total) {
               setState(() => _currentPage = page ?? 0);
@@ -107,7 +110,7 @@ class _WasyyahPdfPreviewPageState extends State<WasyyahPdfPreviewPage> {
           ? Padding(
               padding: const EdgeInsets.all(12),
               child: Text(
-                "Page ${_currentPage + 1} of $_totalPages",
+                "${AppLocalizations.of(context)!.page} ${(_currentPage + 1).toLocal()} of ${_totalPages.toLocal()}",
                 textAlign: TextAlign.center,
               ),
             )

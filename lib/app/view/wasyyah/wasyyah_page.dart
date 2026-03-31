@@ -29,7 +29,6 @@ class WasyyahPage extends GetView<WasyyahController> {
               width: 100.w,
               // height: 40.h,
               color: AppColors.primaryColor,
-              
             ),
           ),
         ],
@@ -41,8 +40,7 @@ class WasyyahPage extends GetView<WasyyahController> {
 
         if (controller.wasyyahList.isEmpty) {
           return Center(
-            child: CustomText(
-                text: AppLocalizations.of(context)!.no_content_available),
+            child: CustomText(text: AppLocalizations.of(context)!.no_content_available),
           );
         }
 
@@ -60,8 +58,7 @@ class WasyyahPage extends GetView<WasyyahController> {
                 height: 16.h,
               ),
               CustomText(
-                text: AppLocalizations.of(context)!
-                    .assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam,
+                text: AppLocalizations.of(context)!.assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam,
                 // maxline: 3,
                 fontsize: 16.sp,
                 fontWeight: FontWeight.w700,
@@ -93,8 +90,7 @@ class WasyyahPage extends GetView<WasyyahController> {
     );
   }
 
-  Widget _buildWasyyahCard(
-      BuildContext context, GetWasyyahResponseModel item, int index) {
+  Widget _buildWasyyahCard(BuildContext context, GetWasyyahResponseModel item, int index) {
     bool isHidden = item.visible == "N";
 
     return Container(
@@ -162,7 +158,7 @@ class WasyyahPage extends GetView<WasyyahController> {
                       size: 18,
                     ),
                     label: Text(
-                      isHidden ? "Show" : "Hide",
+                      isHidden ? AppLocalizations.of(context)!.show : AppLocalizations.of(context)!.hide,
                     ),
                     style: TextButton.styleFrom(
                       foregroundColor: isHidden ? Colors.green : Colors.grey,
@@ -177,10 +173,8 @@ class WasyyahPage extends GetView<WasyyahController> {
     );
   }
 
-  void _showEditBottomSheet(
-      BuildContext context, GetWasyyahResponseModel item) {
-    final TextEditingController textController =
-        TextEditingController(text: item.content);
+  void _showEditBottomSheet(BuildContext context, GetWasyyahResponseModel item) {
+    final TextEditingController textController = TextEditingController(text: item.content);
     final RxString currentText = (item.content ?? "").obs;
 
     showModalBottomSheet(
@@ -203,7 +197,7 @@ class WasyyahPage extends GetView<WasyyahController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                text: "Edit ${item.title}",
+                text: "${AppLocalizations.of(context)!.edit} ${item.title}",
                 fontsize: 18.sp,
                 fontWeight: FontWeight.w700,
               ),
@@ -213,7 +207,7 @@ class WasyyahPage extends GetView<WasyyahController> {
                 maxLines: 8,
                 onChanged: (val) => currentText.value = val,
                 decoration: InputDecoration(
-                  hintText: "Enter content here...",
+                  hintText: AppLocalizations.of(context)!.enter_the_content_here,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.r),
                   ),
@@ -229,15 +223,14 @@ class WasyyahPage extends GetView<WasyyahController> {
                 return SizedBox(
                   width: double.infinity,
                   child: CustomButton(
-                    title: "Save",
+                    title: "${AppLocalizations.of(context)!.enter_the_content_here}....",
                     color: AppColors.primaryColor,
                     onpress: () async {
                       item.content = currentText.value;
                       bool success = await controller.saveWasiyyah(item);
                       if (success) {
                         Get.back();
-                        ToastMessageHelper.successMessageShowToster(
-                            "Updated successfully");
+                        ToastMessageHelper.successMessageShowToster(AppLocalizations.of(context)!.wasiyyah_update_successfully);
                       }
                     },
                   ),
@@ -256,15 +249,15 @@ class WasyyahPage extends GetView<WasyyahController> {
       context: context,
       builder: (context) {
         return SimpleDialog(
-          title: const Text("Open PDF"),
+          title: Text(AppLocalizations.of(context)!.open_pdf),
           children: [
             SimpleDialogOption(
               onPressed: () => Navigator.pop(context, _PreviewChoice.inApp),
-              child: const Text("Open in app"),
+              child: Text(AppLocalizations.of(context)!.open_in_app),
             ),
             SimpleDialogOption(
               onPressed: () => Navigator.pop(context, _PreviewChoice.external),
-              child: const Text("Open in other app"),
+              child: Text(AppLocalizations.of(context)!.open_in_other_app),
             ),
           ],
         );

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:al_wasyeah/core/l10n/app_localizations.dart';
 import 'package:al_wasyeah/core/services/app_routes.dart';
 import 'package:al_wasyeah/core/utils/app_constant.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,6 @@ import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:http/http.dart' as http;
 import 'prefs_helper.dart';
 import 'api_constants.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
 
 class ApiClient extends GetxService {
   static final http.Client _client = http.Client();

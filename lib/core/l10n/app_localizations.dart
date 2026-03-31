@@ -845,7 +845,7 @@ abstract class AppLocalizations {
   /// No description provided for @explore_your_wasiyyah.
   ///
   /// In en, this message translates to:
-  /// **'Explore your \n Wasyyah'**
+  /// **'Explore Your Waisyyah'**
   String get explore_your_wasiyyah;
 
   /// No description provided for @bismillahir_rahmanir_raheem.
@@ -1284,7 +1284,7 @@ abstract class AppLocalizations {
   /// No description provided for @wasiyyah.
   ///
   /// In en, this message translates to:
-  /// **'Wasyyah'**
+  /// **'Wasiyyah'**
   String get wasiyyah;
 
   /// No description provided for @edit.
@@ -1299,11 +1299,11 @@ abstract class AppLocalizations {
   /// **'View'**
   String get view;
 
-  /// No description provided for @wasiyah_will.
+  /// No description provided for @wassiyah_will.
   ///
   /// In en, this message translates to:
-  /// **'Wasyiah (Will)'**
-  String get wasiyah_will;
+  /// **'Wassyiah (Will)'**
+  String get wassiyah_will;
 
   /// No description provided for @islamic_greeting.
   ///
@@ -1320,7 +1320,7 @@ abstract class AppLocalizations {
   /// No description provided for @wasiyyah_preview.
   ///
   /// In en, this message translates to:
-  /// **'Wasyyah Preview'**
+  /// **'Wasiyyah Preview'**
   String get wasiyyah_preview;
 
   /// No description provided for @own_identity.
@@ -1338,7 +1338,7 @@ abstract class AppLocalizations {
   /// No description provided for @wasiyyah_edit.
   ///
   /// In en, this message translates to:
-  /// **'Wasyyah Edit'**
+  /// **'Wasiyyah Edit'**
   String get wasiyyah_edit;
 
   /// No description provided for @please_enter_your_user_name.
@@ -1500,7 +1500,7 @@ abstract class AppLocalizations {
   /// No description provided for @wasiyyah_ichanama_title.
   ///
   /// In en, this message translates to:
-  /// **'Wasyyah (Ichanama)'**
+  /// **'Wasiyyah (Ichanama)'**
   String get wasiyyah_ichanama_title;
 
   /// No description provided for @approve.
@@ -2860,12 +2860,6 @@ abstract class AppLocalizations {
   String
       get assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam;
 
-  /// No description provided for @explore_your_wasyyah.
-  ///
-  /// In en, this message translates to:
-  /// **'Explore Your Wasyyah'**
-  String get explore_your_wasyyah;
-
   /// No description provided for @please_select_at_least_one_relative.
   ///
   /// In en, this message translates to:
@@ -2929,7 +2923,7 @@ abstract class AppLocalizations {
   /// No description provided for @mission_description.
   ///
   /// In en, this message translates to:
-  /// **'At the core of our mission is the commitment to guiding our community through the sacred process of drafting a wasiyah (will). This important document not only fulfills a religious obligation but also reflects one’s personal values and priorities. We aim to provide clarity and peace of mind by ensuring that your wishes regarding the distribution of your wealth and responsibilities are expressed in accordance with Islamic principles. By doing so, we help prevent disputes among family members and protect the rights of your heirs, ensuring fair asset distribution and upholding Islamic inheritance laws.\n\nOur services are completely free, enabling everyone to build their wasiyah without any cost. We are dedicated to making this important process accessible to all.'**
+  /// **'At the core of our mission is the commitment to guiding our community through the sacred process of drafting a wasiyyah (will). This important document not only fulfills a religious obligation but also reflects one’s personal values and priorities. We aim to provide clarity and peace of mind by ensuring that your wishes regarding the distribution of your wealth and responsibilities are expressed in accordance with Islamic principles. By doing so, we help prevent disputes among family members and protect the rights of your heirs, ensuring fair asset distribution and upholding Islamic inheritance laws.\n\nOur services are completely free, enabling everyone to build their wasiyyah without any cost. We are dedicated to making this important process accessible to all.'**
   String get mission_description;
 
   /// No description provided for @team_title.
@@ -3057,6 +3051,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'About Us'**
   String get about_us;
+
+  /// No description provided for @show.
+  ///
+  /// In en, this message translates to:
+  /// **'Show'**
+  String get show;
+
+  /// No description provided for @hide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide'**
+  String get hide;
+
+  /// No description provided for @enter_the_content_here.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter content here'**
+  String get enter_the_content_here;
+
+  /// No description provided for @wasiyyah_update_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Wasiyyah update_successfully'**
+  String get wasiyyah_update_successfully;
+
+  /// No description provided for @open_pdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Open PDF'**
+  String get open_pdf;
+
+  /// No description provided for @open_in_app.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in app'**
+  String get open_in_app;
+
+  /// No description provided for @open_in_other_app.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in other app'**
+  String get open_in_other_app;
+
+  /// No description provided for @failed_to_generate_pdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to generate PDF'**
+  String get failed_to_generate_pdf;
+
+  /// No description provided for @failed_to_update_wasiyyah.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update Wasiyyah'**
+  String get failed_to_update_wasiyyah;
+
+  /// No description provided for @failed_to_save_wasiyyah.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save Wasiyyah'**
+  String get failed_to_save_wasiyyah;
+
+  /// No description provided for @failed_to_load_wasiyyah_data.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load Wasiyyah data'**
+  String get failed_to_load_wasiyyah_data;
+
+  /// No description provided for @page.
+  ///
+  /// In en, this message translates to:
+  /// **'Page'**
+  String get page;
 }
 
 class _AppLocalizationsDelegate

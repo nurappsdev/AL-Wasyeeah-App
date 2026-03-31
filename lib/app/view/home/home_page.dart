@@ -210,7 +210,7 @@ class HomePage extends GetView<HomeController> {
                           height: 80.h,
                         ),
                         CustomText(
-                          text: AppLocalizations.of(context)!.explore_your_wasyyah,
+                          text: AppLocalizations.of(context)!.explore_your_wasiyyah,
                           fontsize: 18.sp,
                           color: AppColors.primaryColor,
                         )

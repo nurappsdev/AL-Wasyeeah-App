@@ -387,7 +387,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get documents_type => 'নথির ধরন';
 
   @override
-  String get explore_your_wasiyyah => 'আপনার \n ওসিয়ত অন্বেষণ করুন';
+  String get explore_your_wasiyyah => 'আপনার ওয়াসিয়াহ অন্বেষণ করুন';
 
   @override
   String get bismillahir_rahmanir_raheem => 'বিসমিল্লাহির রহমানির রাহিম';
@@ -495,7 +495,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get add_more_content => 'আরও বিষয়বস্তু যোগ করুন';
 
   @override
-  String get add_new_washiyah => 'নতুন ওসিয়ত যোগ করুন';
+  String get add_new_washiyah => 'Add New Washiyah';
 
   @override
   String get contact_us => 'যোগাযোগ করুন';
@@ -507,11 +507,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get forgot_password => 'পাসওয়ার্ড ভুলে গেছি';
 
   @override
-  String get add_your_washiya_content => 'আপনার ওসিয়তের বিষয়বস্তু যোগ করুন';
+  String get add_your_washiya_content => 'add your washiya content';
 
   @override
-  String get add_your_washiya_content_title =>
-      'আপনার ওসিয়তের বিষয়বস্তুর শিরোনাম যোগ করুন';
+  String get add_your_washiya_content_title => 'add your washiya content title';
 
   @override
   String get don_t_worry_it_happens_please_enter_the_address_associate_with_your_account =>
@@ -617,7 +616,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get view => 'দেখুন';
 
   @override
-  String get wasiyah_will => 'ওয়াসিয়াহ (ইচ্ছানামা)';
+  String get wassiyah_will => 'Wassyiah (Will)';
 
   @override
   String get islamic_greeting =>
@@ -627,7 +626,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get n_a => 'তথ্য নেই';
 
   @override
-  String get wasiyyah_preview => 'ওয়াসিয়াহ প্রিভিউ';
+  String get wasiyyah_preview => 'ওসিয়াহ প্রিভিউ';
 
   @override
   String get own_identity => 'নিজের পরিচিতি';
@@ -1434,9 +1433,6 @@ class AppLocalizationsBn extends AppLocalizations {
       'আসসালামু আলাইকুম ওয়া রাহমাতুল্লা ইন্নালহামদালিল্লাহি রাব্বিল আ\'লামীন ওয়াসসালাতু ওয়াসসালামু আলা রাসুলিল্লাহ (সাল্লাল্লাহু আলাইহিসসালাম)।';
 
   @override
-  String get explore_your_wasyyah => 'আপনার ওয়াসিয়াহ অন্বেষণ করুন';
-
-  @override
   String get please_select_at_least_one_relative =>
       'দয়া করে অন্তত একজন আত্মীয় নির্বাচন করুন';
 
@@ -1541,4 +1537,41 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get about_us => 'আমাদের সম্পর্কে';
+
+  @override
+  String get show => 'দেখুন';
+
+  @override
+  String get hide => 'অদৃশ্য করুন';
+
+  @override
+  String get enter_the_content_here => 'এখানে বিষয়বস্তু লিখুন';
+
+  @override
+  String get wasiyyah_update_successfully => 'ওসিয়াহ সফলভাবে আপডেট হয়েছে';
+
+  @override
+  String get open_pdf => 'পিডিএফ খুলুন';
+
+  @override
+  String get open_in_app => 'অ্যাপে খুলুন';
+
+  @override
+  String get open_in_other_app => 'অন্য অ্যাপে খুলুন';
+
+  @override
+  String get failed_to_generate_pdf => 'পিডিএফ তৈরি করতে ব্যর্থ হয়েছে';
+
+  @override
+  String get failed_to_update_wasiyyah => 'ওসিয়াহ আপডেট করতে ব্যর্থ হয়েছে';
+
+  @override
+  String get failed_to_save_wasiyyah => 'ওসিয়াহ সংরক্ষণ করতে ব্যর্থ হয়েছে';
+
+  @override
+  String get failed_to_load_wasiyyah_data =>
+      'ওসিয়াহ ডেটা লোড করতে ব্যর্থ হয়েছে';
+
+  @override
+  String get page => 'পৃষ্ঠা';
 }

@@ -390,7 +390,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get documents_type => 'Documents Type';
 
   @override
-  String get explore_your_wasiyyah => 'Explore your \n Wasyyah';
+  String get explore_your_wasiyyah => 'Explore Your Waisyyah';
 
   @override
   String get bismillahir_rahmanir_raheem => 'Bismillahir Rahmanir Raheem';
@@ -610,7 +610,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcome_back => 'Welcome Back';
 
   @override
-  String get wasiyyah => 'Wasyyah';
+  String get wasiyyah => 'Wasiyyah';
 
   @override
   String get edit => 'Edit';
@@ -619,7 +619,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get view => 'View';
 
   @override
-  String get wasiyah_will => 'Wasyiah (Will)';
+  String get wassiyah_will => 'Wassyiah (Will)';
 
   @override
   String get islamic_greeting =>
@@ -629,7 +629,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get n_a => 'N/A';
 
   @override
-  String get wasiyyah_preview => 'Wasyyah Preview';
+  String get wasiyyah_preview => 'Wasiyyah Preview';
 
   @override
   String get own_identity => 'Own Identity';
@@ -638,7 +638,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get no_content_available => 'No content available.';
 
   @override
-  String get wasiyyah_edit => 'Wasyyah Edit';
+  String get wasiyyah_edit => 'Wasiyyah Edit';
 
   @override
   String get please_enter_your_user_name => 'Please enter your user name';
@@ -720,7 +720,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get outside_witness => 'Outside Witness';
 
   @override
-  String get wasiyyah_ichanama_title => 'Wasyyah (Ichanama)';
+  String get wasiyyah_ichanama_title => 'Wasiyyah (Ichanama)';
 
   @override
   String get approve => 'Approve';
@@ -1423,9 +1423,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Assalamu Alaykum Wa Rahmatullah. Indeed, all praise is for Allah, the Lord of the worlds. Peace and blessings be upon the Messenger of Allah (PBUH).';
 
   @override
-  String get explore_your_wasyyah => 'Explore Your Wasyyah';
-
-  @override
   String get please_select_at_least_one_relative =>
       'Please select at least one relative';
 
@@ -1458,7 +1455,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mission_description =>
-      'At the core of our mission is the commitment to guiding our community through the sacred process of drafting a wasiyah (will). This important document not only fulfills a religious obligation but also reflects one’s personal values and priorities. We aim to provide clarity and peace of mind by ensuring that your wishes regarding the distribution of your wealth and responsibilities are expressed in accordance with Islamic principles. By doing so, we help prevent disputes among family members and protect the rights of your heirs, ensuring fair asset distribution and upholding Islamic inheritance laws.\n\nOur services are completely free, enabling everyone to build their wasiyah without any cost. We are dedicated to making this important process accessible to all.';
+      'At the core of our mission is the commitment to guiding our community through the sacred process of drafting a wasiyyah (will). This important document not only fulfills a religious obligation but also reflects one’s personal values and priorities. We aim to provide clarity and peace of mind by ensuring that your wishes regarding the distribution of your wealth and responsibilities are expressed in accordance with Islamic principles. By doing so, we help prevent disputes among family members and protect the rights of your heirs, ensuring fair asset distribution and upholding Islamic inheritance laws.\n\nOur services are completely free, enabling everyone to build their wasiyyah without any cost. We are dedicated to making this important process accessible to all.';
 
   @override
   String get team_title => 'Meet Our Team';
@@ -1529,4 +1526,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get about_us => 'About Us';
+
+  @override
+  String get show => 'Show';
+
+  @override
+  String get hide => 'Hide';
+
+  @override
+  String get enter_the_content_here => 'Enter content here';
+
+  @override
+  String get wasiyyah_update_successfully => 'Wasiyyah update_successfully';
+
+  @override
+  String get open_pdf => 'Open PDF';
+
+  @override
+  String get open_in_app => 'Open in app';
+
+  @override
+  String get open_in_other_app => 'Open in other app';
+
+  @override
+  String get failed_to_generate_pdf => 'Failed to generate PDF';
+
+  @override
+  String get failed_to_update_wasiyyah => 'Failed to update Wasiyyah';
+
+  @override
+  String get failed_to_save_wasiyyah => 'Failed to save Wasiyyah';
+
+  @override
+  String get failed_to_load_wasiyyah_data => 'Failed to load Wasiyyah data';
+
+  @override
+  String get page => 'Page';
 }

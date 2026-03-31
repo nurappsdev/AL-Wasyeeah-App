@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:al_wasyeah/core/l10n/app_localizations.dart';
 import 'package:al_wasyeah/core/services/toast_message_helper.dart';
 import 'package:al_wasyeah/app/models/wasyyah/get_wasyyah_response_model.dart';
 import 'package:al_wasyeah/core/services/api_client.dart';
@@ -29,10 +30,10 @@ class WasyyahController extends GetxController {
         // Sort items by orderSeq locally
         wasyyahList.sort((a, b) => (a.orderSeq ?? 0).compareTo(b.orderSeq ?? 0));
       } else {
-        ToastMessageHelper.errorMessageShowToster("Failed to load Wasyyah data");
+        ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_load_wasiyyah_data);
       }
     } catch (e) {
-      ToastMessageHelper.errorMessageShowToster("Network error: $e");
+      ToastMessageHelper.errorMessageShowToster(e.toString());
     } finally {
       isLoading(false);
     }
@@ -49,11 +50,11 @@ class WasyyahController extends GetxController {
         getWasyyahData(); // Refresh list to get updated data if needed
         return true;
       } else {
-        ToastMessageHelper.errorMessageShowToster("Failed to save Wasyyah");
+        ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_save_wasiyyah);
         return false;
       }
     } catch (e) {
-      ToastMessageHelper.errorMessageShowToster("Network error: $e");
+      ToastMessageHelper.errorMessageShowToster(e.toString());
       return false;
     } finally {
       isSaveLoading(false);
@@ -74,7 +75,7 @@ class WasyyahController extends GetxController {
     }
   }
 
-  Future<void> updateOrder() async {
+  Future<void> updateWasiyyah() async {
     // Map current local list to the required payload format
     final payload = wasyyahList.asMap().entries.map((entry) {
       return {
@@ -89,10 +90,10 @@ class WasyyahController extends GetxController {
         payload,
       );
       if (response.statusCode != 200 && response.statusCode != 201) {
-        ToastMessageHelper.errorMessageShowToster("Failed to sync order with server");
+        ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_update_wasiyyah);
       }
     } catch (e) {
-      ToastMessageHelper.errorMessageShowToster("Network error during reorder: $e");
+      ToastMessageHelper.errorMessageShowToster(e.toString());
     }
   }
 
@@ -103,18 +104,18 @@ class WasyyahController extends GetxController {
     wasyyahList.refresh();
 
     // Sync with backend
-    updateOrder();
+    updateWasiyyah();
   }
 
   Future<File?> generatePdfFile() async {
     isLoading(true);
     try {
       final file = await WasyyahHtmlPdfService.generateWasyyahPdf(wasyyahList);
-      print('PDF saved at: ${file.path}');
+
       return file;
     } catch (e, s) {
       log("PDF ISSUE", error: e, stackTrace: s);
-      ToastMessageHelper.errorMessageShowToster("Failed to generate PDF: $e");
+      ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_generate_pdf);
       return null;
     } finally {
       isLoading(false);

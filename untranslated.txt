@@ -1,1 +1,8 @@
-{}
+{
+  "bn": [
+    "add_new_washiyah",
+    "add_your_washiya_content",
+    "add_your_washiya_content_title",
+    "wassiyah_will"
+  ]
+}
