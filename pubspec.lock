@@ -347,6 +347,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_native_html_to_pdf:
+    dependency: "direct main"
+    description:
+      name: flutter_native_html_to_pdf
+      sha256: "13f41c44aacd4686d2bb8fa101d3ae5dbd06ce788c6a657c67b69f79f0db35f0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   flutter_native_splash:
     dependency: "direct main"
     description:

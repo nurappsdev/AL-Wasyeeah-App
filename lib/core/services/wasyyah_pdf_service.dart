@@ -1,136 +1,297 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:al_wasyeah/app/models/wasyyah/get_wasyyah_response_model.dart';
 import 'package:al_wasyeah/core/utils/app_image.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_html_to_pdf/flutter_native_html_to_pdf.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
-class WasyyahPdfService {
-  static Future<File> generateWasyyahPdf(List<GetWasyyahResponseModel> wasyyahList) async {
-    final pdf = pw.Document();
+class WasyyahHtmlPdfService {
+  static Future<File> generateWasyyahPdf(
+    List<GetWasyyahResponseModel> wasyyahList,
+  ) async {
+    final outputDir = await getTemporaryDirectory();
 
-    // Load assets
-    final bgImageSrc = await rootBundle.load(AppImages.pdfbgImage);
-    final bgImage = pw.MemoryImage(bgImageSrc.buffer.asUint8List());
+    // Step 1: Build HTML
+    final html = await _buildHtml(wasyyahList);
 
-    final firstHeaderSrc = await rootBundle.load(AppImages.firstPdfHeaderImage);
-    final firstHeader = pw.MemoryImage(firstHeaderSrc.buffer.asUint8List());
-
-    final secondHeaderSrc = await rootBundle.load(AppImages.secondPdfHeaderImage);
-    final secondHeader = pw.MemoryImage(secondHeaderSrc.buffer.asUint8List());
-
-    final footerBgSrc = await rootBundle.load(AppImages.pdfFooterImage);
-    final footerBg = pw.MemoryImage(footerBgSrc.buffer.asUint8List());
-
-    final logoSrc = await rootBundle.load(AppImages.app_logo);
-    final logo = pw.MemoryImage(logoSrc.buffer.asUint8List());
-
-    // Load Bengali Font
-    final fontData = await rootBundle.load("assets/fonts/NotoSansBengali-Regular.ttf");
-    final ttf = pw.Font.ttf(fontData);
-
-    final pageTheme = pw.PageTheme(
-      pageFormat: PdfPageFormat.a4,
-      theme: pw.ThemeData.withFont(
-        base: pw.Font.helvetica(),
-        bold: pw.Font.helveticaBold(),
-        fontFallback: [ttf],
-      ),
-      margin: const pw.EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-      buildBackground: (context) {
-        return pw.FullPage(
-          ignoreMargins: true,
-          child: pw.Image(bgImage, fit: pw.BoxFit.cover),
-        );
-      },
+    // Step 2: Generate PDF bytes from HTML using native WebView
+    final converter = HtmlToPdfConverter();
+    final Uint8List? htmlPdfBytes = await converter.convertHtmlToPdfBytes(
+      html: html,
     );
 
-    pdf.addPage(
-      pw.MultiPage(
-        pageTheme: pageTheme,
-        header: (context) {
-          final isFirstPage = context.pageNumber == 1;
-          return pw.Container(
-            alignment: pw.Alignment.center,
-            margin: const pw.EdgeInsets.only(bottom: 20),
-            child: pw.Image(
-              isFirstPage ? firstHeader : secondHeader,
-              fit: pw.BoxFit.contain,
-              height: 100,
-            ),
-          );
-        },
-        footer: (context) {
-          return pw.Container(
-            height: 100,
-            width: double.infinity,
-            alignment: pw.Alignment.bottomCenter,
-            child: pw.Stack(
-              alignment: pw.Alignment.bottomCenter,
-              children: [
-                pw.Image(footerBg, fit: pw.BoxFit.fill),
-                pw.Padding(
-                  padding: const pw.EdgeInsets.only(left: 40, right: 40, bottom: 20),
-                  child: pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: pw.CrossAxisAlignment.end,
-                    children: [
-                      pw.Text(
-                        'Page ${context.pageNumber} of ${context.pagesCount}',
-                        style: pw.TextStyle(
-                          fontSize: 10,
-                          color: PdfColors.black,
-                        ),
-                      ),
-                      pw.Image(logo, height: 40),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-        build: (context) => [
-          pw.SizedBox(height: 20),
-          ...wasyyahList.where((e) => e.visible == "Y").map((item) {
-            return pw.Container(
-              margin: const pw.EdgeInsets.only(bottom: 20),
-              padding: const pw.EdgeInsets.all(15),
-              decoration: pw.BoxDecoration(
-                border: pw.Border.all(color: PdfColors.green900, width: 1),
-                borderRadius: const pw.BorderRadius.all(pw.Radius.circular(12)),
-                color: const PdfColor(1, 1, 1, 0.8),
-              ),
-              child: pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  pw.Text(
-                    item.title ?? "Untitled",
-                    style: pw.TextStyle(
-                      fontSize: 18,
-                      fontWeight: pw.FontWeight.bold,
-                      color: PdfColors.green900,
-                    ),
-                  ),
-                  pw.Divider(thickness: 2, color: PdfColors.green800),
-                  pw.SizedBox(height: 12),
-                  pw.Text(
-                    item.content ?? "",
-                    style: const pw.TextStyle(fontSize: 14),
-                    textAlign: pw.TextAlign.justify,
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
-        ],
-      ),
-    );
+    if (htmlPdfBytes == null || htmlPdfBytes.isEmpty) {
+      throw Exception('Failed to generate PDF from HTML.');
+    }
 
-    final output = await getTemporaryDirectory();
-    final file = File("${output.path}/Wasyyah.pdf");
-    await file.writeAsBytes(await pdf.save());
+    // Step 3: Add "Page X of Y" to every page footer using Syncfusion
+    final Uint8List finalPdfBytes = await _addPageNumberFooter(htmlPdfBytes);
+
+    // Step 4: Save file
+    final file = File('${outputDir.path}/Wasyyah.pdf');
+    await file.writeAsBytes(finalPdfBytes, flush: true);
     return file;
+  }
+
+  static Future<Uint8List> _addPageNumberFooter(Uint8List inputBytes) async {
+    final PdfDocument document = PdfDocument(inputBytes: inputBytes);
+
+    final ByteData regularFontData = await rootBundle.load(
+      'assets/fonts/NotoSansBengali-Regular.ttf',
+    );
+
+    final PdfFont footerFont = PdfTrueTypeFont(
+      regularFontData.buffer.asUint8List(),
+      10,
+    );
+
+    final int totalPages = document.pages.count;
+
+    // Must match your HTML footer height
+    const double footerHeight = 78;
+
+    // Left padding inside footer image
+    const double leftPadding = 36;
+
+    // Text box size
+    const double textWidth = 120;
+    const double textHeight = 16;
+
+    for (int i = 0; i < totalPages; i++) {
+      final PdfPage page = document.pages[i];
+      final Size pageSize = page.getClientSize();
+
+      final String footerText = 'Page ${i + 1} of $totalPages';
+
+      // Place text inside footer image, left-center vertically
+      final double x = leftPadding;
+      final double y = pageSize.height - footerHeight - textHeight - 5 /*+ ((footerHeight - textHeight) / 2)*/;
+
+      page.graphics.drawString(
+        footerText,
+        footerFont,
+       brush: PdfBrushes.green,
+        bounds: Rect.fromLTWH(x, y, textWidth, textHeight),
+        format: PdfStringFormat(
+          alignment: PdfTextAlignment.left,
+          lineAlignment: PdfVerticalAlignment.middle,
+        ),
+      );
+    }
+
+    final List<int> bytes = await document.save();
+    document.dispose();
+    return Uint8List.fromList(bytes);
+  }
+
+  static Future<String> _buildHtml(
+    List<GetWasyyahResponseModel> wasyyahList,
+  ) async {
+    final bgBase64 = await _assetToBase64(AppImages.pdfbgImage);
+    final firstHeaderBase64 = await _assetToBase64(AppImages.firstPdfHeaderImage);
+    final footerBase64 = await _assetToBase64(AppImages.pdfFooterImage);
+    final logoBase64 = await _assetToBase64(AppImages.transparent_app_logo);
+
+    final regularFontBase64 = await _assetToBase64(
+      'assets/fonts/NotoSansBengali-Regular.ttf',
+    );
+    final boldFontBase64 = await _assetToBase64(
+      'assets/fonts/NotoSansBengali-Bold.ttf',
+    );
+
+    final visibleItems = wasyyahList.where((e) => e.visible == "Y").toList();
+
+    final contentHtml = visibleItems.map((item) {
+      final title = _escapeHtml(
+        (item.title?.trim().isNotEmpty ?? false) ? item.title! : 'Untitled',
+      );
+
+      final content = _escapeHtml(item.content ?? '').replaceAll('\n', '<br>');
+
+      return '''
+        <div class="section-card">
+          <div class="section-title">$title</div>
+          <div class="section-divider"></div>
+          <div class="section-content">$content</div>
+        </div>
+      ''';
+    }).join();
+
+    return '''
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    @font-face {
+      font-family: 'NotoSansBengali';
+      src: url(data:font/ttf;base64,$regularFontBase64) format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'NotoSansBengali';
+      src: url(data:font/ttf;base64,$boldFontBase64) format('truetype');
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    :root {
+      --page-top: 38px;
+      --page-right: 32px;
+      --page-bottom: 90px;
+      --page-left: 32px;
+      --footer-height: 78px;
+      --footer-side-padding: 36px;
+    }
+
+    @page {
+      size: A4;
+      margin: var(--page-top) var(--page-right) var(--page-bottom) var(--page-left);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'NotoSansBengali', sans-serif;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #1a1a1a;
+      background-image: url("data:image/png;base64,$bgBase64");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      word-break: break-word;
+    }
+
+    .page-header {
+      display: block;
+      width: calc(100% + var(--page-left) + var(--page-right));
+      margin-left: calc(-1 * var(--page-left));
+      margin-right: calc(-1 * var(--page-right));
+      margin-top: calc(-1 * var(--page-top));
+      margin-bottom: 18px;
+      padding: 0;
+    }
+
+    .page-header img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: fill;
+    }
+
+    .section-card {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #14532d;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.88);
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #14532d;
+      margin-bottom: 10px;
+    }
+
+    .section-divider {
+      height: 2px;
+      background: #166534;
+      margin-bottom: 12px;
+    }
+
+    .section-content {
+      font-size: 14px;
+      text-align: justify;
+      white-space: normal;
+    }
+
+    .footer-space {
+      height: calc(var(--footer-height) + 20px);
+    }
+
+    .pdf-footer {
+      position: fixed;
+      left: calc(-1 * var(--page-left));
+      right: calc(-1 * var(--page-right));
+      bottom: 0;
+      height: var(--footer-height);
+      background-image: url("data:image/png;base64,$footerBase64");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      z-index: 999;
+    }
+
+    .pdf-footer-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .footer-logo {
+      position: absolute;
+      right: var(--footer-side-padding);
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 36px;
+    }
+
+    .footer-logo img {
+      display: block;
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-header">
+    <img src="data:image/png;base64,$firstHeaderBase64" alt="header" />
+  </div>
+
+  $contentHtml
+
+  <div class="footer-space"></div>
+
+  <div class="pdf-footer">
+    <div class="pdf-footer-inner">
+      <div class="footer-logo">
+        <img src="data:image/png;base64,$logoBase64" alt="logo" />
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+''';
+  }
+
+  static Future<String> _assetToBase64(String assetPath) async {
+    final ByteData data = await rootBundle.load(assetPath);
+    return base64Encode(data.buffer.asUint8List());
+  }
+
+  static String _escapeHtml(String text) {
+    return text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
   }
 }

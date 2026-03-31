@@ -27,6 +27,7 @@ class WasyyahPage extends GetView<WasyyahController> {
               width: 100.w,
               // height: 40.h,
               color: AppColors.primaryColor,
+              
             ),
           ),
         ],

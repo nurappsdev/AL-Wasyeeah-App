@@ -1,6 +1,7 @@
 class AppImages {
   static const String path = "assets/images";
   static const String app_logo = "$path/app_logo.png";
+  static const String transparent_app_logo = "$path/transparent_app_logo.png";
   static const String initialRouteBackgroundImage = "$path/initial_route_bg_image.png";
   static const String backImg = "$path/background_img.png";
   static const String zakatImg = "$path/calculate_your_zakat.png";

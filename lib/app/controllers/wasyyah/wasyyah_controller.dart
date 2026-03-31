@@ -109,7 +109,8 @@ class WasyyahController extends GetxController {
   Future<void> generateAndPreviewPdf() async {
     isLoading(true);
     try {
-      final file = await WasyyahPdfService.generateWasyyahPdf(wasyyahList);
+      final file = await WasyyahHtmlPdfService.generateWasyyahPdf(wasyyahList);
+      print('PDF saved at: ${file.path}');
       await OpenFile.open(file.path);
     } catch (e, s) {
       log("PDF ISSUE", error: e, stackTrace: s);
