@@ -84,6 +84,8 @@ class _WasyyahPdfPreviewPageState extends State<WasyyahPdfPreviewPage> {
             swipeHorizontal: true,
             autoSpacing: false,
             pageFling: true,
+            fitEachPage: true,
+            fitPolicy: FitPolicy.WIDTH,
             onRender: (pages) {
               setState(() {
                 _totalPages = pages ?? 0;

@@ -7,9 +7,12 @@ import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 import 'package:al_wasyeah/app/view/access_control/model/witness_nominee_context_data_model.dart';
 import 'package:al_wasyeah/app/view/property_distribution_calculation/model/property_destribution_result_model.dart';
 import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/services/pdf/pdf_service.dart';
+import 'package:al_wasyeah/app/view/wasyyah/model/wasyyah_model.dart';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +26,14 @@ class AccessControlPanelPage extends StatefulWidget {
 
 class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
   final AccessControlController accessControlController = Get.find<AccessControlController>();
+
+  String? _wasyyahPdfPath;
+  int _pdfTotalPages = 0;
+  int _pdfCurrentPage = 0;
+  bool _pdfIsReady = false;
+  String? _pdfError;
+  bool _isGeneratingPdf = false;
+
   @override
   void initState() {
     String data = Get.arguments;
@@ -50,7 +61,7 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
         }
 
         final data = accessControlController.witnessNomineeContextData.value;
-        log("-------->>>> ${1}");
+       
         return SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
@@ -60,6 +71,12 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
               if (data.propertyResult != null && data.propertyResult!.isNotEmpty) ...[
                 _buildPieChartSection(data.propertyResult!),
                 _buildResultCards(data.propertyResult!),
+              ],
+
+              if (data.wasiyaaContent != null &&
+                  data.wasiyaaContent!.isNotEmpty &&
+                  data.wasiyaaContent!.any((e) => e.visible == "Y")) ...[
+                _buildWasiyyahPdfPreview(data.wasiyaaContent!),
               ],
               
               SizedBox(height: 40.h),
@@ -256,4 +273,113 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
 
     return name;
   }
+
+  Future<void> _ensureWasyyahPdf(List<WasyyahContentModel> content) async {
+    if (_isGeneratingPdf || _wasyyahPdfPath != null) return;
+
+    setState(() {
+      _isGeneratingPdf = true;
+      _pdfError = null;
+      _pdfIsReady = false;
+      _pdfTotalPages = 0;
+      _pdfCurrentPage = 0;
+    });
+
+    try {
+      final file = await PdfService.generateWasyyahPdf(content);
+      if (!mounted) return;
+      setState(() {
+        _wasyyahPdfPath = file.path;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _pdfError = e.toString();
+      });
+    } finally {
+      if (!mounted) return;
+      setState(() {
+        _isGeneratingPdf = false;
+      });
+    }
+  }
+
+  Widget _buildWasiyyahPdfPreview(List<WasyyahContentModel> content) {
+    if (_wasyyahPdfPath == null && !_isGeneratingPdf) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _ensureWasyyahPdf(content);
+        }
+      });
+    }
+
+    return Card(
+      elevation: 4,
+      margin: EdgeInsets.symmetric(vertical: 12.h),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      child: Padding(
+        padding: EdgeInsets.all(12.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              AppLocalizations.of(context)!.wasiyyah_preview,
+              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 12.h),
+            SizedBox(
+              height: 620.h,
+              child: Column(
+                children: [
+                  if (_wasyyahPdfPath != null)
+                    Expanded(
+                      child: PDFView(
+                        filePath: _wasyyahPdfPath!,
+                        enableSwipe: true,
+                        swipeHorizontal: true,
+                        autoSpacing: false,
+                        pageFling: true,
+                        fitEachPage: true,
+                        fitPolicy: FitPolicy.WIDTH,
+                        onRender: (pages) {
+                          setState(() {
+                            _pdfTotalPages = pages ?? 0;
+                            _pdfIsReady = true;
+                          });
+                        },
+                        onError: (error) {
+                          setState(() => _pdfError = error.toString());
+                        },
+                        onPageError: (page, error) {
+                          setState(() {
+                            _pdfError = "${AppLocalizations.of(context)!.page} $page: $error";
+                          });
+                        },
+                        onPageChanged: (page, total) {
+                          setState(() => _pdfCurrentPage = page ?? 0);
+                        },
+                      ),
+                    ),
+                  if ((_isGeneratingPdf || !_pdfIsReady) && _pdfError == null)
+                    Expanded(child: const Center(child: CircularProgressIndicator())),
+                  if (_pdfError != null) Center(child: Text(_pdfError!)),
+                ],
+              ),
+            ),
+           
+          ],
+        ),
+      ),
+    );
+  }
 }
+
+
+ // if (_pdfIsReady)
+            //   Padding(
+            //     padding: EdgeInsets.only(top: 8.h),
+            //     child: Text(
+            //       "${AppLocalizations.of(context)!.page} ${(_pdfCurrentPage + 1).toLocal()} of ${_pdfTotalPages.toLocal()}",
+            //       textAlign: TextAlign.center,
+            //     ),
+            //   ),
