@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:permission_handler/permission_handler.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 import 'package:al_wasyeah/app/core/utils/extensions.dart';
 import 'package:al_wasyeah/app/core/utils/toast_message.dart';
@@ -35,7 +35,11 @@ class _WasiyyahPdfPreviewPageState extends State<WasiyyahPdfPreviewPage> {
 
   Future<void> _downloadPdf() async {
     if (_filePath == null) return;
-
+    final hasPermission = await _requestPermission();
+    if (!hasPermission) {
+      ToastMessage.errorMessageShowToster("Permission denied");
+      return;
+    }
     try {
       final source = File(_filePath!);
       if (!await source.exists()) {
@@ -55,6 +59,11 @@ class _WasiyyahPdfPreviewPageState extends State<WasiyyahPdfPreviewPage> {
       log("Error is $e", error: e, stackTrace: s);
       ToastMessage.errorMessageShowToster(e.toString());
     }
+  }
+
+  Future<bool> _requestPermission() async {
+    final status = await Permission.storage.request();
+    return status.isGranted;
   }
 
   @override

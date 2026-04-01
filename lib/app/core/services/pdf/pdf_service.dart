@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:al_wasyeah/app/view/wasyyah/model/wasyyah_model.dart';
+import 'package:al_wasyeah/app/core/services/qr_barcode/qr_barcode_service.dart';
+import 'package:al_wasyeah/app/view/wasiyyah/model/wasyyah_model.dart';
 import 'package:al_wasyeah/app/core/utils/app_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_html_to_pdf/flutter_native_html_to_pdf.dart';
@@ -10,11 +11,12 @@ import 'package:syncfusion_flutter_pdf/pdf.dart';
 class PdfService {
   static Future<File> generateWasyyahPdf(
     List<WasyyahContentModel> wasyyahList,
+    Map<String, dynamic> qrData,
   ) async {
     final outputDir = await getTemporaryDirectory();
 
     // Step 1: Build HTML
-    final html = await _buildHtml(wasyyahList);
+    final html = await _buildHtml(wasyyahList, qrData);
 
     // Step 2: Generate PDF bytes from HTML using native WebView
     final converter = HtmlToPdfConverter();
@@ -88,7 +90,10 @@ class PdfService {
 
   static Future<String> _buildHtml(
     List<WasyyahContentModel> wasyyahList,
+    Map<String, dynamic> qrData,
   ) async {
+    final qrBase64 = await QrBarcodeService.generateQrBase64(qrData);
+    final barcodeBase64 = await QrBarcodeService.generateBarcodeBase64(qrData);
     final bgBase64 = await _assetToBase64(AppImages.pdfbgImage);
     final firstHeaderBase64 = await _assetToBase64(AppImages.firstPdfHeaderImage);
     final footerBase64 = await _assetToBase64(AppImages.pdfFooterImage);
@@ -178,21 +183,40 @@ class PdfService {
     }
 
     .page-header {
-      display: block;
-      width: calc(100% + var(--page-left) + var(--page-right));
-      margin-left: calc(-1 * var(--page-left));
-      margin-right: calc(-1 * var(--page-right));
-      margin-top: calc(-1 * var(--page-top));
-      margin-bottom: 18px;
-      padding: 0;
-    }
+  position: relative;
+  display: block;
+  width: calc(100% + var(--page-left) + var(--page-right));
+  margin-left: calc(-1 * var(--page-left));
+  margin-right: calc(-1 * var(--page-right));
+  margin-top: calc(-1 * var(--page-top));
+  margin-bottom: 18px;
+}
 
-    .page-header img {
-      display: block;
-      width: 100%;
-      height: auto;
-      object-fit: fill;
-    }
+   .header-qr {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  width: 120px;
+  height: 120px;
+}
+
+.header-qr img {
+  width: 100%;
+  height: 100%;
+}
+
+.header-barcode {
+  position: absolute;
+  left: 30px;
+  top: 10px;
+  width: 120px;
+  height: 120px;
+}
+
+.header-barcode img {
+  width: 100%;
+  height: 100%;
+}
 
     .section-card {
       margin-bottom: 20px;
@@ -266,9 +290,16 @@ class PdfService {
   </style>
 </head>
 <body>
-  <div class="page-header">
-    <img src="data:image/png;base64,$firstHeaderBase64" alt="header" />
+<div class="page-header">
+  <img src="data:image/png;base64,$firstHeaderBase64" alt="header" />
+
+  <div class="header-qr">
+    <img src="data:image/png;base64,$qrBase64" />
   </div>
+  <div class="header-barcode">
+  <img src="data:image/svg+xml;base64,$barcodeBase64" />
+</div>
+</div>
 
   $contentHtml
 

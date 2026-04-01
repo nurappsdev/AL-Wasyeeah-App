@@ -6,7 +6,7 @@ import 'package:al_wasyeah/app/view/home/controller/home_controller.dart';
 import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
 import 'package:al_wasyeah/app/view/property_distribution_calculation/controller/property_distribution_calculation_controller.dart';
 import 'package:al_wasyeah/app/view/splash/controller/splash_controller.dart';
-import 'package:al_wasyeah/app/view/wasyyah/controller/wasyyah_controller.dart';
+import 'package:al_wasyeah/app/view/wasiyyah/controller/wasyyah_controller.dart';
 import 'package:al_wasyeah/app/view/witnessess/controller/witness_controller.dart';
 import 'package:al_wasyeah/app/view/zakat_calculator/controller/zakat_calculator_controller.dart';
 import 'package:get/get.dart';

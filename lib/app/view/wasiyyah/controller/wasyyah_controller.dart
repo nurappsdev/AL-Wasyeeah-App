@@ -3,7 +3,8 @@ import 'dart:io';
 
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 import 'package:al_wasyeah/app/core/utils/toast_message.dart';
-import 'package:al_wasyeah/app/view/wasyyah/model/wasyyah_model.dart';
+import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
+import 'package:al_wasyeah/app/view/wasiyyah/model/wasyyah_model.dart';
 import 'package:al_wasyeah/app/core/services/api/api_service.dart';
 import 'package:al_wasyeah/app/core/utils/api_constants.dart';
 import 'package:al_wasyeah/app/core/services/pdf/pdf_service.dart';
@@ -110,7 +111,25 @@ class WasyyahController extends GetxController {
   Future<File?> generatePdfFile() async {
     isLoading(true);
     try {
-      final file = await PdfService.generateWasyyahPdf(wasyyahList);
+      final profileController = Get.find<ProfileController>();
+      final personalData = profileController.personalForm;
+      final user = profileController.profileModel;
+      final qrData = {
+        "name": "${personalData.value.firstName.text} ${personalData.value.lastName.text}",
+        "email": user.value.userProfile?.email ?? "N/A",
+        "phone": user.value.userProfile?.mobile ?? "N/A",
+        "date_of_birthday": user.value.userProfile?.dob ?? "N/A",
+        "profession": personalData.value.selectedProfession.value?.profession ?? "N/A",
+        "gender": personalData.value.selectedGender.value?.gender ?? "N/A",
+        "maritialStatus": personalData.value.selectedMarried.value?.maritalType ?? "N/A",
+        "permanent_address": user.value.userProfile?.permanentAddress ?? "N/A",
+        "present_address": user.value.userProfile?.presentAddress ?? "N/A",
+        "country": personalData.value.selectedCountry.value?.country ?? "N/A",
+        "nid": personalData.value.nid.text,
+        "tin": personalData.value.tin.text,
+      };
+
+      final file = await PdfService.generateWasyyahPdf(wasyyahList, qrData);
 
       return file;
     } catch (e, s) {

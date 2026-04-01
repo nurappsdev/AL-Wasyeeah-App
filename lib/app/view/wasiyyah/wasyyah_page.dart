@@ -1,7 +1,7 @@
 import 'package:al_wasyeah/app/core/utils/toast_message.dart';
-import 'package:al_wasyeah/app/view/wasyyah/controller/wasyyah_controller.dart';
+import 'package:al_wasyeah/app/view/wasiyyah/controller/wasyyah_controller.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/app/view/wasyyah/model/wasyyah_model.dart';
+import 'package:al_wasyeah/app/view/wasiyyah/model/wasyyah_model.dart';
 import 'package:al_wasyeah/app/core/utils/app_colors.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_text.dart';

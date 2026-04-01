@@ -5,10 +5,11 @@ import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/app/core/utils/extensions.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 import 'package:al_wasyeah/app/view/access_control/model/witness_nominee_context_data_model.dart';
+import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
 import 'package:al_wasyeah/app/view/property_distribution_calculation/model/property_destribution_result_model.dart';
 import 'package:al_wasyeah/app/core/utils/app_colors.dart';
 import 'package:al_wasyeah/app/core/services/pdf/pdf_service.dart';
-import 'package:al_wasyeah/app/view/wasyyah/model/wasyyah_model.dart';
+import 'package:al_wasyeah/app/view/wasiyyah/model/wasyyah_model.dart';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
         }
 
         final data = accessControlController.witnessNomineeContextData.value;
-       
+
         return SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
@@ -72,13 +73,9 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                 _buildPieChartSection(data.propertyResult!),
                 _buildResultCards(data.propertyResult!),
               ],
-
-              if (data.wasiyaaContent != null &&
-                  data.wasiyaaContent!.isNotEmpty &&
-                  data.wasiyaaContent!.any((e) => e.visible == "Y")) ...[
+              if (data.wasiyaaContent != null && data.wasiyaaContent!.isNotEmpty && data.wasiyaaContent!.any((e) => e.visible == "Y")) ...[
                 _buildWasiyyahPdfPreview(data.wasiyaaContent!),
               ],
-              
               SizedBox(height: 40.h),
             ],
           ),
@@ -275,6 +272,24 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
   }
 
   Future<void> _ensureWasyyahPdf(List<WasyyahContentModel> content) async {
+    final profileController = Get.find<ProfileController>();
+    final personalData = profileController.personalForm;
+    final user = profileController.profileModel;
+    final qrData = {
+      "name": "${personalData.value.firstName} ${personalData.value.lastName}",
+      "email": user.value.userProfile?.email ?? "N/A",
+      "phone": user.value.userProfile?.mobile ?? "N/A",
+      "date_of_birthday": user.value.userProfile?.dob ?? "N/A",
+      "profession": personalData.value.selectedProfession.value?.profession ?? "N/A",
+      "gender": personalData.value.selectedGender.value?.gender ?? "N/A",
+      "maritialStatus": personalData.value.selectedMarried.value?.maritalType ?? "N/A",
+      "permanent_address": user.value.userProfile?.permanentAddress ?? "N/A",
+      "present_address": user.value.userProfile?.presentAddress ?? "N/A",
+      "country": personalData.value.selectedCountry.value?.country ?? "N/A",
+      "nid": personalData.value.nid,
+      "tin": personalData.value.tin,
+    };
+
     if (_isGeneratingPdf || _wasyyahPdfPath != null) return;
 
     setState(() {
@@ -286,7 +301,7 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
     });
 
     try {
-      final file = await PdfService.generateWasyyahPdf(content);
+      final file = await PdfService.generateWasyyahPdf(content, qrData);
       if (!mounted) return;
       setState(() {
         _wasyyahPdfPath = file.path;
@@ -360,13 +375,11 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                         },
                       ),
                     ),
-                  if ((_isGeneratingPdf || !_pdfIsReady) && _pdfError == null)
-                    Expanded(child: const Center(child: CircularProgressIndicator())),
+                  if ((_isGeneratingPdf || !_pdfIsReady) && _pdfError == null) Expanded(child: const Center(child: CircularProgressIndicator())),
                   if (_pdfError != null) Center(child: Text(_pdfError!)),
                 ],
               ),
             ),
-           
           ],
         ),
       ),

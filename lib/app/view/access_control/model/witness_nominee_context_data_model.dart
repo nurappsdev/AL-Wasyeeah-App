@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 import 'package:al_wasyeah/app/view/property_distribution_calculation/model/property_destribution_result_model.dart';
-import 'package:al_wasyeah/app/view/wasyyah/model/wasyyah_model.dart';
+import 'package:al_wasyeah/app/view/wasiyyah/model/wasyyah_model.dart';
 
 WitnessNomineeContextDataModel witnessNomineeContextDataModelFromJson(String str) => WitnessNomineeContextDataModel.fromJson(json.decode(str));
 
@@ -24,7 +24,7 @@ class WitnessNomineeContextDataModel {
   factory WitnessNomineeContextDataModel.fromJson(Map<String, dynamic> json) => WitnessNomineeContextDataModel(
         zakat: json["zakat"] == null ? null : Zakat.fromJson(json["zakat"]),
         propertyResult: json["propertyResult"] == null ? null : List<PropertydistributionResultModel>.from(jsonDecode(json["propertyResult"]).map((x) => PropertydistributionResultModel.fromJson(x))),
-        wasiyaaContent: json['wasiyyahContent'] == null ? null : List<WasyyahContentModel>.from(json["wasiyyahContent"].map((x)=> WasyyahContentModel.fromJson(x))),
+        wasiyaaContent: json['wasiyyahContent'] == null ? null : List<WasyyahContentModel>.from(json["wasiyyahContent"].map((x) => WasyyahContentModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

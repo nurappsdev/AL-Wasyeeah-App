@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:al_wasyeah/app/core/utils/toast_message.dart';
-import 'package:al_wasyeah/app/view/wasyyah/model/wasyyah_model.dart';
+import 'package:al_wasyeah/app/view/wasiyyah/model/wasyyah_model.dart';
 import 'package:al_wasyeah/app/view/witnessess/model/get_witness_response_model.dart';
 import 'package:al_wasyeah/app/core/services/api/api_service.dart';
 import 'package:al_wasyeah/app/core/utils/api_constants.dart';
