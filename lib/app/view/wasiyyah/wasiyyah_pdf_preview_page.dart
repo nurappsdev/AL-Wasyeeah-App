@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
 
-class WasyyahPdfPreviewPage extends StatefulWidget {
-  const WasyyahPdfPreviewPage({super.key});
+class WasiyyahPdfPreviewPage extends StatefulWidget {
+  const WasiyyahPdfPreviewPage({super.key});
 
   @override
-  State<WasyyahPdfPreviewPage> createState() => _WasyyahPdfPreviewPageState();
+  State<WasiyyahPdfPreviewPage> createState() => _WasiyyahPdfPreviewPageState();
 }
 
-class _WasyyahPdfPreviewPageState extends State<WasyyahPdfPreviewPage> {
+class _WasiyyahPdfPreviewPageState extends State<WasiyyahPdfPreviewPage> {
   String? _filePath;
   int _totalPages = 0;
   int _currentPage = 0;

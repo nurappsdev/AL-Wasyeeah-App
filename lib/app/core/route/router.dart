@@ -21,8 +21,8 @@ import 'package:al_wasyeah/app/view/witnessess/witnesses_details_page.dart';
 import 'package:al_wasyeah/app/view/witnessess/witness_page.dart';
 import 'package:al_wasyeah/app/view/notification/notification_screen.dart';
 import 'package:al_wasyeah/app/view/onboarding/onboarding_screen.dart';
-import 'package:al_wasyeah/app/view/wasyyah/wasyyah_page.dart';
-import 'package:al_wasyeah/app/view/wasyyah/wasyyah_pdf_preview_page.dart';
+import 'package:al_wasyeah/app/view/wasiyyah/wasyyah_page.dart';
+import 'package:al_wasyeah/app/view/wasiyyah/wasiyyah_pdf_preview_page.dart';
 import 'package:get/get.dart';
 
 class AppRouter {
@@ -45,7 +45,7 @@ class AppRouter {
         ),
         GetPage(name: RouteName.notificationPage, page: () => NotificationPage()),
         GetPage(name: RouteName.wasyyahPage, page: () => WasyyahPage(), binding: WasyyahBinding()),
-        GetPage(name: RouteName.wasyyahPdfPreviewPage, page: () => const WasyyahPdfPreviewPage()),
+        GetPage(name: RouteName.wasyyahPdfPreviewPage, page: () => const WasiyyahPdfPreviewPage()),
         GetPage(name: RouteName.profilePage, page: () => ProfilePage()),
         GetPage(name: RouteName.witnessesPage, page: () => WitnessesPage(), binding: WitnessesBinding()),
         GetPage(name: RouteName.witnessDetailsPage, page: () => WitnessDetailsPage()),
