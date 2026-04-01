@@ -1,11 +1,12 @@
 import 'package:al_wasyeah/app/view/auth/controller/auth_controller.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasyeah/app/core/route/route_names.dart';
 import 'package:al_wasyeah/app/core/utils/app_colors.dart';
 import 'package:al_wasyeah/app/core/utils/app_constant.dart';
 import 'package:al_wasyeah/app/core/utils/app_icons.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_text_field.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,33 +14,55 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
-class ForgotPassScreen extends StatefulWidget {
-  ForgotPassScreen({super.key});
+class RegistrationPage extends StatefulWidget {
+  RegistrationPage({super.key});
 
   @override
-  State<ForgotPassScreen> createState() => _ForgotPassScreenState();
+  State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
-class _ForgotPassScreenState extends State<ForgotPassScreen> {
-  final GlobalKey<FormState> _logRegKey = GlobalKey<FormState>();
+class _RegistrationPageState extends State<RegistrationPage> {
+  final GlobalKey<FormState> _forRegKey = GlobalKey<FormState>();
+
+  TextEditingController firstNameController = TextEditingController();
+
+  TextEditingController secondNameController = TextEditingController();
+
+  TextEditingController mobileController = TextEditingController();
+
+  TextEditingController emailController = TextEditingController();
+
+  TextEditingController dateOfBirthController = TextEditingController();
 
   TextEditingController securityController = TextEditingController();
 
-  TextEditingController mobileController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  final TextEditingController dateOfBirthController = TextEditingController();
-  DateTime? birthDate;
   AuthController authController = Get.put(AuthController());
 
   String? _selectedQuestionId;
+  RxBool isChecked = false.obs;
+  DateTime? birthDate;
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    secondNameController.dispose();
+    mobileController.dispose();
+    emailController.dispose();
+    dateOfBirthController.dispose();
+    securityController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     authController.getSecurityQuestion();
+    print(authController.securityQuestionResponseModel.length);
     return Scaffold(
-      appBar: CustomAppBar(
-        title: AppLocalizations.of(context)!.forgot_password,
-      ),
       body: Container(
         height: Get.height,
         width: double.infinity,
@@ -47,7 +70,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: SingleChildScrollView(
             child: Form(
-              key: _logRegKey,
+              key: _forRegKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -60,21 +83,63 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                   ),
                   Center(
                       child: CustomText(
-                    text: AppLocalizations.of(context)!.forgot_password,
-                    fontsize: 20.sp,
+                    text: AppLocalizations.of(context)!.registration,
+                    fontsize: 28.sp,
                     textAlign: TextAlign.center,
-                    fontWeight: FontWeight.w600,
                   )),
+
                   SizedBox(
                     height: 16.h,
                   ),
-                  Center(
-                      child: CustomText(
-                    text: AppLocalizations.of(context)!.don_t_worry_it_happens_please_enter_the_address_associate_with_your_account,
-                    maxline: 2,
-                    fontsize: 14.sp,
-                    textAlign: TextAlign.center,
-                  )),
+                  CustomText(
+                    text: AppLocalizations.of(context)!.first_name,
+                    color: AppColors.hitTextColor000000,
+                    fontsize: 20.sp,
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 16.h),
+                    child: CustomTextField(
+                      controller: firstNameController,
+                      hintText: AppLocalizations.of(context)!.first_name,
+                      borderColor: AppColors.secondaryPrimaryColor,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppLocalizations.of(context)!.please_enter_your_first_name;
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+
+                  ///=============Last Name====================
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  CustomText(
+                    text: AppLocalizations.of(context)!.last_name,
+                    color: AppColors.hitTextColor000000,
+                    fontsize: 20.sp,
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 16.h),
+                    child: CustomTextField(
+                      controller: secondNameController,
+                      hintText: AppLocalizations.of(context)!.last_name,
+                      borderColor: AppColors.secondaryPrimaryColor,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppLocalizations.of(context)!.please_enter_your_last_name;
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
 
                   ///=============Mobile====================
                   SizedBox(
@@ -92,6 +157,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: CustomTextField(
                       controller: mobileController,
+                      keyboardType: TextInputType.number,
                       hintText: AppLocalizations.of(context)!.mobile,
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
@@ -105,7 +171,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
 
                   ///=============Email====================
                   SizedBox(
-                    height: 20.h,
+                    height: 16.h,
                   ),
                   CustomText(
                     text: AppLocalizations.of(context)!.email,
@@ -172,15 +238,13 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                         color: AppColors.primaryColor,
                       ),
                       validator: (value) {
-                        // if(value == null || value.isEmpty){
-                        //   return 'Please enter a title';
-                        // }
+                        if (value == null || value.isEmpty) {
+                          return AppLocalizations.of(context)!.please_write_date_of_birth;
+                        }
                         return null;
                       },
                     ),
                   ),
-                  SizedBox(height: 10.h),
-
                   SizedBox(height: 10.h),
                   CustomText(
                     text: AppLocalizations.of(context)!.security_question,
@@ -202,10 +266,10 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       ),
                       isExpanded: true,
                       hint: CustomText(text: AppLocalizations.of(context)!.select_your_question),
-                      value: _selectedQuestionId,
+                      initialValue: _selectedQuestionId,
                       items: authController.securityQuestionResponseModel
                           .map((model) => DropdownMenuItem<String>(
-                                value: model?.questionId.toString(),
+                                value: model.questionId.toString(),
                                 child: Text(model.questionText.toString()),
                               ))
                           .toList(),
@@ -244,20 +308,104 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                     ),
                   ),
 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Obx(
+                        () => Checkbox(
+                          checkColor: Colors.white,
+                          activeColor: AppColors.primaryColor,
+                          value: isChecked.value,
+                          onChanged: (value) {
+                            isChecked.value = value!;
+                          },
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: AppLocalizations.of(context)!.i_agree_with,
+                          style: TextStyle(color: Colors.black, fontSize: 12.sp),
+                          children: [
+                            TextSpan(
+                              text: AppLocalizations.of(context)!.terms_and_conditions,
+                              style: TextStyle(color: AppColors.primaryColor, decoration: TextDecoration.underline, fontSize: 12.sp),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  //  Get.toNamed(AppRoutes.termAndConScreen,preventDuplicates: false);
+                                  // Add your custom logic for the Terms & Conditions tap event
+                                },
+                            ),
+                            TextSpan(
+                              text: " " + AppLocalizations.of(context)!.and + " ",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            TextSpan(
+                              text: AppLocalizations.of(context)!.privacy_policy,
+                              style: TextStyle(color: AppColors.primaryColor, decoration: TextDecoration.underline, fontSize: 12.sp),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  //  Get.toNamed(AppRoutes.aboutScreen,preventDuplicates: false);
+                                  // Add your custom logic for the Terms & Conditions tap event
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+
                   ///=============Sign In Button====================
                   Obx(
                     () => CustomButton(
-                      loading: authController.forgotLoading.value == true,
-                      title: AppLocalizations.of(context)!.submit,
+                      loading: authController.signUpLoading.value == true,
+                      title: AppLocalizations.of(context)!.registration,
                       onpress: () {
-                        if (_logRegKey.currentState!.validate()) {
-                          authController.forgotHandle(
-                              mobile: mobileController.text, email: emailController.text, dob: dateOfBirthController.text, securityAnswer: securityController.text, securityCode: _selectedQuestionId.toString());
+                        // Get.toNamed(AppRoutes.otpScreen,preventDuplicates: false);
+                        if (_forRegKey.currentState!.validate()) {
+                          authController.signUpHandle(
+                              firstName: firstNameController.text,
+                              lastName: secondNameController.text,
+                              email: emailController.text,
+                              mobile: mobileController.text,
+                              dob: dateOfBirthController.text,
+                              securityAnswer: securityController.text,
+                              source: "mobile",
+                              securityCode: _selectedQuestionId.toString(),
+                              userTypeId: "2");
                         }
                       },
                     ),
                   ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
 
+                  ///=============SignUp====================
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                          onTap: () {
+                            //  Get.toNamed(AppRoutes.otpVirifyScreen,preventDuplicates: false);
+                          },
+                          child: CustomText(
+                            text: AppLocalizations.of(context)!.already_have_an_account,
+                            fontsize: 18.sp,
+                          )),
+                      InkWell(
+                          onTap: () {
+                            Get.toNamed(RouteName.loginPage, preventDuplicates: false);
+                          },
+                          child: CustomText(
+                            text: AppLocalizations.of(context)!.sign_in,
+                            fontsize: 18.sp,
+                            color: AppColors.primaryColor,
+                          )),
+                    ],
+                  ),
                   SizedBox(
                     height: 20.h,
                   ),

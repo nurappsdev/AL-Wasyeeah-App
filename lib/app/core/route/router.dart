@@ -2,11 +2,11 @@ import 'package:al_wasyeah/app/core/route/route_names.dart';
 import 'package:al_wasyeah/app/view/about_us/about_us_page.dart';
 import 'package:al_wasyeah/app/core/di/dependency_injection.dart';
 import 'package:al_wasyeah/app/view/access_control/access_control_page.dart';
-import 'package:al_wasyeah/app/view/auth/change_password_screen.dart';
-import 'package:al_wasyeah/app/view/auth/forgot_pass_screen.dart';
-import 'package:al_wasyeah/app/view/auth/login_screen.dart';
-import 'package:al_wasyeah/app/view/auth/otp_verify_screen.dart';
-import 'package:al_wasyeah/app/view/auth/registration_screen.dart';
+import 'package:al_wasyeah/app/view/auth/change_password_page.dart';
+import 'package:al_wasyeah/app/view/auth/forgot_pass_page.dart';
+import 'package:al_wasyeah/app/view/auth/login_page.dart';
+import 'package:al_wasyeah/app/view/auth/otp_verify_page.dart';
+import 'package:al_wasyeah/app/view/auth/registration_page.dart';
 import 'package:al_wasyeah/app/view/access_control/access_control_panel_page.dart';
 import 'package:al_wasyeah/app/view/contact_us/contact_us_page.dart';
 import 'package:al_wasyeah/app/view/nominee/nominee_details_page.dart';
@@ -33,11 +33,11 @@ class AppRouter {
           binding: SplashBinding(),
         ),
         GetPage(name: RouteName.onboardingPage, page: () => OnboardingScreen()),
-        GetPage(name: RouteName.loginPage, page: () => LoginScreen()),
-        GetPage(name: RouteName.registrationPage, page: () => RegistrationScreen()),
-        GetPage(name: RouteName.forgotPasswordPage, page: () => ForgotPassScreen()),
-        GetPage(name: RouteName.changePasswordPage, page: () => ChangePasswordScreen()),
-        GetPage(name: RouteName.otpPage, page: () => OtpVerifyScreen()),
+        GetPage(name: RouteName.loginPage, page: () => LoginPage()),
+        GetPage(name: RouteName.registrationPage, page: () => RegistrationPage()),
+        GetPage(name: RouteName.forgotPasswordPage, page: () => ForgotPasswordPage()),
+        GetPage(name: RouteName.changePasswordPage, page: () => ChangePasswordPage()),
+        GetPage(name: RouteName.otpPage, page: () => OtpVerifyPage()),
         GetPage(
           name: RouteName.homePage,
           page: () => HomePage(),

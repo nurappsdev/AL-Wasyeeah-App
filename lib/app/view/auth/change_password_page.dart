@@ -10,8 +10,8 @@ import '../../core/widgets/custom_button_common.dart';
 import '../../core/widgets/custom_text.dart';
 import '../../core/widgets/custom_text_field.dart';
 
-class ChangePasswordScreen extends StatelessWidget {
-  ChangePasswordScreen({super.key});
+class ChangePasswordPage extends StatelessWidget {
+  ChangePasswordPage({super.key});
   final TextEditingController oldPassCNRL = TextEditingController();
   final TextEditingController newPass2 = TextEditingController();
   final TextEditingController conPass3 = TextEditingController();

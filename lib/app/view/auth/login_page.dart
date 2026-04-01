@@ -13,8 +13,8 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginPage extends StatelessWidget {
+  LoginPage({super.key});
   final TextEditingController emailController = TextEditingController(/*text: "WASY100008"*/);
   final TextEditingController passController = TextEditingController(/*text: "+oGq#rH^"*/);
   final AuthController authController = Get.put(AuthController());

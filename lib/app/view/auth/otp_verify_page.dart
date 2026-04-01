@@ -1,21 +1,39 @@
 import 'package:al_wasyeah/app/core/utils/app_colors.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/app/core/utils/app_icons.dart';
-import 'package:al_wasyeah/app/view/profile/profile_page.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_pin_text_field.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/view/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
-class OtpVerifyScreen extends StatelessWidget {
-  OtpVerifyScreen({super.key});
-  final TextEditingController picController = TextEditingController();
+class OtpVerifyPage extends StatefulWidget {
+  OtpVerifyPage({super.key});
+
+  @override
+  State<OtpVerifyPage> createState() => _OtpVerifyPageState();
+}
+
+class _OtpVerifyPageState extends State<OtpVerifyPage> {
+  String email = "", mobile = "";
+  @override
+  void initState() {
+    var data = Get.arguments;
+    if (data != null) {
+      email = data["email"];
+      mobile = data["mobile"];
+    }
+    super.initState();
+    print("otp::::---------${email} ${mobile}");
+  }
+
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.put(AuthController());
     return Scaffold(
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.otp_verify,
@@ -56,7 +74,7 @@ class OtpVerifyScreen extends StatelessWidget {
                   height: 16.h,
                 ),
                 CustomPinCodeTextField(
-                  textEditingController: picController,
+                  textEditingController: authController.otpController,
                 ),
                 SizedBox(
                   height: 16.h,
@@ -67,11 +85,7 @@ class OtpVerifyScreen extends StatelessWidget {
                   // loading: authController.loadingLoading.value == true,
                   title: AppLocalizations.of(context)!.submit,
                   onpress: () {
-                    Get.off(() => ProfilePage());
-                    // if (_forRegKey.currentState!.validate()) {
-                    //   // authController.loginHandle(
-                    //   //     emailController.text, passController.text);
-                    // }
+                    authController.verifyOtp(otp: authController.otpController.text, email: email, mobile: mobile);
                   },
                 ),
                 SizedBox(

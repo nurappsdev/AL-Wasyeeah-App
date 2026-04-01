@@ -582,6 +582,7 @@ class MenuPage extends StatelessWidget {
                   ),
                   SizedBox(height: 24.h),
                   Row(
+                    spacing: 16.w,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(

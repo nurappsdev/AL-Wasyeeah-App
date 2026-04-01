@@ -4,7 +4,18 @@ class ApiConstants {
   static const String baseUrl = "https://api.wasiyyat.com/api/v1";
   static const String imageUrl = "$baseUrl/raw/";
   static const String fileDownloadUrl = "$baseUrl/raw-media-info/";
-  static const String securityQuestion = "/user/securityQuestionList";
+  static String securityQuestion = "/user/securityQuestionList?lang=$currentLang";
+
+  // sign up
+  static const String signUpEndPoint = "/user/register";
+  // change password
+  static const String changePassAPI = "user/update/password";
+  // sign in
+  static const String signInEndPoint = "/user/login";
+  // send otp
+  static const String sendOtpEndPoint = "/user/forget-password";
+  // check otp
+  static const String checkOtpEndPoint = "$sendOtpEndPoint/checkOtp";
   // witness
   static const String yourWitness = "/user/get-witness";
   static const String witnessedByAnotherUser = "/get-witnessByAnotherUser";
@@ -31,16 +42,11 @@ class ApiConstants {
   static const String saveWasiyyah = "/user/saveWasiyyah";
   static const String changeOrder = "/user/changeOrder";
 
-  static const String signUpEndPoint = "/user/register";
-  static const String changePassAPI = "user/update/password";
-  static const String signInEndPoint = "/user/login";
-  static const String forgotEndPoint = "/user/forget-password";
   static String get zakatEndPoint => "/zakatCalculator?lang=$currentLang";
   static String salatTimeEndPoint(String lat, String long) => "/mobile/getSalahTime?latitude=$lat&longitude=$long";
 
   static const String addFeatureNomineeWitnessPoint = "/assignContext?isWitness=";
   static const String getUserEndPoint = "/auth/session";
-  static const String forgotPassEndPoint = "/auth/forgot";
   static String updateProfileEndPoint(String id) => "/users/$id";
   static String setPasswordEndPoint(String id) => "/users/$id";
   static const String resetPassEndPoint = "/user/reset-password";

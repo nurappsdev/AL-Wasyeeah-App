@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:al_wasyeah/app/core/route/route_names.dart';
 import 'package:al_wasyeah/app/core/utils/toast_message.dart';
 import 'package:al_wasyeah/app/view/auth/model/security_question_response_model.dart';
 import 'package:al_wasyeah/app/core/services/api/api_service.dart';
 import 'package:al_wasyeah/app/core/utils/api_constants.dart';
 import 'package:al_wasyeah/app/core/utils/app_constant.dart';
-import 'package:al_wasyeah/app/view/auth/otp_verify_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/services/shared_pref/prefs_service.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
@@ -18,12 +20,14 @@ class AuthController extends GetxController {
 
   ///==================get Question===========================
   RxBool isQuestion = false.obs;
+  RxBool otpStatusLoading = false.obs;
   RxList<SecurityQuestionResponseModel> securityQuestionResponseModel = <SecurityQuestionResponseModel>[].obs;
+  final TextEditingController otpController = TextEditingController();
 
   getSecurityQuestion() async {
     isQuestion(true);
     var response = await ApiService.getData(ApiConstants.securityQuestion);
-    print("getSecurityQuestion data ------------${response.body}");
+
     if (response.statusCode == 200 || response.statusCode == 201) {
       securityQuestionResponseModel.value = List<SecurityQuestionResponseModel>.from(response.body.map((x) => SecurityQuestionResponseModel.fromJson(x)));
       isQuestion(false);
@@ -155,7 +159,7 @@ class AuthController extends GetxController {
   ///==================Save Sign Up===========================
   RxBool forgotLoading = false.obs;
 
-  Future<void> forgotHandle({
+  Future<void> sendOtp({
     required String email,
     required String mobile,
     required String dob,
@@ -163,12 +167,11 @@ class AuthController extends GetxController {
     required String securityCode,
   }) async {
     forgotLoading(true);
-    var headers = {'Content-Type': 'application/json', 'Accept': 'application/json'};
+
     var body = {"email": email, "mobile": mobile, "dob": dob, "securityAnswer": securityAnswer, "securityCode": securityCode};
     var response = await ApiService.postData(
-      ApiConstants.forgotEndPoint,
+      ApiConstants.sendOtpEndPoint,
       body,
-      headers: headers,
     );
     print("log in-----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -176,10 +179,37 @@ class AuthController extends GetxController {
       //ToastMessageHelper.successMessageShowToster("${response.body["message"]}");
       ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!.verification_otp_send_success);
 
-      Get.off(() => OtpVerifyScreen(), preventDuplicates: false);
+      Get.toNamed(RouteName.otpPage, preventDuplicates: false, arguments: {"email": email, "mobile": mobile});
       forgotLoading(false);
     } else {
       forgotLoading(false);
+      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.unable_data);
+    }
+  }
+
+  void verifyOtp({required String otp, required String email, required String mobile}) async {
+    otpStatusLoading(true);
+
+    try {
+      var response = await ApiService.getData(
+        ApiConstants.checkOtpEndPoint + "/?email=$email&mobile=$mobile&otp=$otp",
+      );
+      log("OTP RESULT-----------------${response.body}");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!.verification_otp_send_success);
+
+        Get.toNamed(
+          RouteName.loginPage,
+          preventDuplicates: false,
+        );
+        otpStatusLoading(false);
+      } else {
+        otpStatusLoading(false);
+        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.unable_data);
+      }
+    } catch (e, s) {
+      log("OTP ERROR-----------------${e.toString() + s.toString()}");
+      otpStatusLoading(false);
       ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.unable_data);
     }
   }
