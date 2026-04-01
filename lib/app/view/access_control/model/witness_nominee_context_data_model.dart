@@ -24,7 +24,7 @@ class WitnessNomineeContextDataModel {
   factory WitnessNomineeContextDataModel.fromJson(Map<String, dynamic> json) => WitnessNomineeContextDataModel(
         zakat: json["zakat"] == null ? null : Zakat.fromJson(json["zakat"]),
         propertyResult: json["propertyResult"] == null ? null : List<PropertydistributionResultModel>.from(jsonDecode(json["propertyResult"]).map((x) => PropertydistributionResultModel.fromJson(x))),
-        wasiyaaContent: json['wasiyyahContent'] == null ? null : List<WasyyahContentModel>.from(json["wasiyyahContent"]),
+        wasiyaaContent: json['wasiyyahContent'] == null ? null : List<WasyyahContentModel>.from(json["wasiyyahContent"].map((x)=> WasyyahContentModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
