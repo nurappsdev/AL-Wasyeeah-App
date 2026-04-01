@@ -1,16 +1,16 @@
-import 'package:al_wasyeah/app/controllers/profile/profile_controller.dart';
-import 'package:al_wasyeah/app/models/profile_info_model/address_form.dart';
-import 'package:al_wasyeah/app/models/profile_info_model/country_list_model.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
-import 'package:al_wasyeah/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/core/widgets/custom_dropdown.dart';
-import 'package:al_wasyeah/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/core/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
+import 'package:al_wasyeah/app/view/profile/model/address_form.dart';
+import 'package:al_wasyeah/app/view/profile/model/country_list_model.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_dropdown.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class ProfileSettingStepTwoWidget extends StatefulWidget {
   const ProfileSettingStepTwoWidget({super.key});

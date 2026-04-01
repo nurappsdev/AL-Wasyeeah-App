@@ -1,13 +1,13 @@
-import 'package:al_wasyeah/app/controllers/notification/notification_controller.dart';
-import 'package:al_wasyeah/app/view/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/view/notification/controller/notification_controller.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class NotificationPage extends StatelessWidget {
   NotificationPage({Key? key}) : super(key: key);

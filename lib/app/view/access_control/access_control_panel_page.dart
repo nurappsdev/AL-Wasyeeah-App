@@ -1,10 +1,12 @@
-import 'package:al_wasyeah/app/controllers/access_control/access_control_controller.dart';
-import 'package:al_wasyeah/app/view/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/core/services/helpers.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/models/access_control/witness_nominee_context_data_model.dart';
-import 'package:al_wasyeah/app/models/property_distribution_calculation_model/property_destribution_result_model.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
+import 'dart:developer';
+
+import 'package:al_wasyeah/app/view/access_control/controller/access_control_controller.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasyeah/app/core/utils/extensions.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/view/access_control/model/witness_nominee_context_data_model.dart';
+import 'package:al_wasyeah/app/view/property_distribution_calculation/model/property_destribution_result_model.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +50,7 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
         }
 
         final data = accessControlController.witnessNomineeContextData.value;
-
+        log("-------->>>> ${1}");
         return SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
@@ -59,6 +61,7 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                 _buildPieChartSection(data.propertyResult!),
                 _buildResultCards(data.propertyResult!),
               ],
+              
               SizedBox(height: 40.h),
             ],
           ),

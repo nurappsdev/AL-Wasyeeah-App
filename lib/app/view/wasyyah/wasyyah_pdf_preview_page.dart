@@ -1,9 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/core/services/helpers.dart';
-import 'package:al_wasyeah/core/services/toast_message_helper.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/utils/extensions.dart';
+import 'package:al_wasyeah/app/core/utils/toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
@@ -39,7 +39,7 @@ class _WasyyahPdfPreviewPageState extends State<WasyyahPdfPreviewPage> {
     try {
       final source = File(_filePath!);
       if (!await source.exists()) {
-        ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(context)!.no_content_available);
+        ToastMessage.errorMessageShowToster(AppLocalizations.of(context)!.no_content_available);
         return;
       }
 
@@ -48,12 +48,12 @@ class _WasyyahPdfPreviewPageState extends State<WasyyahPdfPreviewPage> {
       await targetDir.create(recursive: true);
       final targetPath = "${targetDir.path}${Platform.pathSeparator}Wasiyyah_legal.pdf";
       await source.copy(targetPath);
-      ToastMessageHelper.successMessageShowToster(
+      ToastMessage.successMessageShowToster(
         AppLocalizations.of(context)!.file_downloaded_successfully,
       );
     } catch (e, s) {
       log("Error is $e", error: e, stackTrace: s);
-      ToastMessageHelper.errorMessageShowToster(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
     }
   }
 

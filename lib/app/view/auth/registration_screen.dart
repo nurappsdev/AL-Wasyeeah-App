@@ -1,19 +1,19 @@
-import 'package:al_wasyeah/app/controllers/auths/auth_controller.dart';
-import 'package:al_wasyeah/core/services/app_routes.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
-import 'package:al_wasyeah/core/utils/app_constant.dart';
-import 'package:al_wasyeah/core/utils/app_icons.dart';
-import 'package:al_wasyeah/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/core/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/app/view/auth/controller/auth_controller.dart';
+import 'package:al_wasyeah/app/core/route/route_names.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/utils/app_constant.dart';
+import 'package:al_wasyeah/app/core/utils/app_icons.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../../core/services/helpers.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
+import '../../core/utils/extensions.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class RegistrationScreen extends StatefulWidget {
   RegistrationScreen({super.key});
@@ -267,7 +267,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                       isExpanded: true,
                       hint: CustomText(text: AppLocalizations.of(context)!.select_your_question),
-                      value: _selectedQuestionId,
+                      initialValue: _selectedQuestionId,
                       items: authController.securityQuestionResponseModel
                           .map((model) => DropdownMenuItem<String>(
                                 value: model.questionId.toString(),
@@ -398,7 +398,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           )),
                       InkWell(
                           onTap: () {
-                            Get.toNamed(AppRoutes.loginPage, preventDuplicates: false);
+                            Get.toNamed(RouteName.loginPage, preventDuplicates: false);
                           },
                           child: CustomText(
                             text: AppLocalizations.of(context)!.sign_in,

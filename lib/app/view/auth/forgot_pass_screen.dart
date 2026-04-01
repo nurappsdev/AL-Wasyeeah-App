@@ -1,17 +1,17 @@
-import 'package:al_wasyeah/app/controllers/auths/auth_controller.dart';
-import 'package:al_wasyeah/app/view/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
-import 'package:al_wasyeah/core/utils/app_constant.dart';
-import 'package:al_wasyeah/core/utils/app_icons.dart';
-import 'package:al_wasyeah/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/core/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/app/view/auth/controller/auth_controller.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/utils/app_constant.dart';
+import 'package:al_wasyeah/app/core/utils/app_icons.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class ForgotPassScreen extends StatefulWidget {
   ForgotPassScreen({super.key});

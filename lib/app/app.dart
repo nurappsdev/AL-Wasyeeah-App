@@ -1,10 +1,10 @@
-import 'package:al_wasyeah/core/services/app_routes.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/core/services/api_constants.dart';
-import 'package:al_wasyeah/core/themes/light_theme.dart';
-import 'package:al_wasyeah/core/themes/dark_theme.dart';
-import 'package:al_wasyeah/app/controllers/theme_controller.dart';
-import 'package:al_wasyeah/core/widgets/app_wrapper.dart';
+import 'package:al_wasyeah/app/core/route/route_names.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/route/router.dart';
+import 'package:al_wasyeah/app/core/utils/api_constants.dart';
+import 'package:al_wasyeah/app/core/themes/light_theme.dart';
+import 'package:al_wasyeah/app/core/themes/controller/theme_controller.dart';
+import 'package:al_wasyeah/app/core/widgets/app_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,8 +61,8 @@ class _WasyeeahAppState extends State<WasyeeahApp> {
           theme: light,
           // darkTheme: dark,
           themeMode: /*widget.initialDarkMode ? ThemeMode.dark :*/ ThemeMode.light,
-          getPages: AppRoutes.routes,
-          initialRoute: AppRoutes.splashPage,
+          getPages: AppRouter.routes,
+          initialRoute: RouteName.splashPage,
           defaultTransition: Transition.topLevel,
           transitionDuration: const Duration(milliseconds: 500),
           locale: _locale,

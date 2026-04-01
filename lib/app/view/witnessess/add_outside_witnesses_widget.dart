@@ -1,17 +1,16 @@
-import 'package:al_wasyeah/app/controllers/witness_controller/witness_controller.dart';
-import 'package:al_wasyeah/core/services/helpers.dart';
-import 'package:al_wasyeah/core/services/toast_message_helper.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
-import 'package:al_wasyeah/core/utils/app_constant.dart';
-import 'package:al_wasyeah/core/widgets/custom_button_common.dart' show CustomButton;
-import 'package:al_wasyeah/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/core/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/app/view/witnessess/controller/witness_controller.dart';
+import 'package:al_wasyeah/app/core/utils/toast_message.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/utils/app_constant.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart' show CustomButton;
+import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class AddOutsideWitnessWidget extends StatelessWidget {
   AddOutsideWitnessWidget({super.key});
@@ -261,7 +260,7 @@ class AddOutsideWitnessWidget extends StatelessWidget {
                                   presentAddress: controller.presentAddressController.text,
                                   permanentAddress: controller.permanentAddressController.text);
                             } else {
-                              ToastMessageHelper.errorMessageShowToster(AppLocalizations.of(context)!.please_fill_all_the_fields);
+                              ToastMessage.errorMessageShowToster(AppLocalizations.of(context)!.please_fill_all_the_fields);
                             }
                           }),
                     ),

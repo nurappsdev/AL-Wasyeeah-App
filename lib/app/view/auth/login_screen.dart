@@ -1,17 +1,17 @@
-import 'package:al_wasyeah/app/controllers/auths/auth_controller.dart';
-import 'package:al_wasyeah/core/services/app_routes.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
-import 'package:al_wasyeah/core/utils/app_constant.dart';
-import 'package:al_wasyeah/core/utils/app_icons.dart';
-import 'package:al_wasyeah/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/core/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/app/view/auth/controller/auth_controller.dart';
+import 'package:al_wasyeah/app/core/route/route_names.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/utils/app_constant.dart';
+import 'package:al_wasyeah/app/core/utils/app_icons.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -29,19 +29,19 @@ class LoginScreen extends StatelessWidget {
     GridItem(
       icon: AppIcons.propertyIcons,
       text: AppLocalizations.of(Get.context!)!.property_distribution,
-      onTap: () => Get.toNamed(AppRoutes.propertyDistributionPage, arguments: {"public": true}, preventDuplicates: false),
+      onTap: () => Get.toNamed(RouteName.propertyDistributionPage, arguments: {"public": true}, preventDuplicates: false),
     ),
     GridItem(
       icon: AppIcons.zakatIcons,
       text: AppLocalizations.of(Get.context!)!.zakat_calculation,
       onTap: () {
-        Get.toNamed(AppRoutes.zakatCalculatorPage, preventDuplicates: false);
+        Get.toNamed(RouteName.zakatCalculatorPage, preventDuplicates: false);
       },
     ),
     GridItem(
       icon: AppIcons.contactIcons,
       text: AppLocalizations.of(Get.context!)!.contact_us,
-      onTap: () => Get.toNamed(AppRoutes.contactPage, preventDuplicates: false),
+      onTap: () => Get.toNamed(RouteName.contactPage, preventDuplicates: false),
     ),
     // GridItem(
     //   icon: AppIcons.helpsIcons,
@@ -177,7 +177,7 @@ class LoginScreen extends StatelessWidget {
                     ///=============Forgot====================
                     InkWell(
                         onTap: () {
-                          Get.toNamed(AppRoutes.forgotPasswordPage, parameters: {'email': emailController.text});
+                          Get.toNamed(RouteName.forgotPasswordPage, parameters: {'email': emailController.text});
                         },
                         child: Padding(
                           padding: EdgeInsets.only(left: 190.w),
@@ -226,7 +226,7 @@ class LoginScreen extends StatelessWidget {
                             )),
                         InkWell(
                             onTap: () {
-                              Get.toNamed(AppRoutes.registrationPage, preventDuplicates: false);
+                              Get.toNamed(RouteName.registrationPage, preventDuplicates: false);
                             },
                             child: CustomText(
                               text: AppLocalizations.of(context)!.register_now,

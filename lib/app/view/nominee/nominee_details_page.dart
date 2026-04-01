@@ -1,15 +1,14 @@
-import 'package:al_wasyeah/app/controllers/nomineee/nominee_controller.dart';
-import 'package:al_wasyeah/app/view/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/core/services/toast_message_helper.dart';
-import 'package:al_wasyeah/app/models/witness/get_witness_response_model.dart';
-import 'package:al_wasyeah/core/services/api_constants.dart';
-import 'package:al_wasyeah/core/widgets/custom_button_common.dart';
-
+import 'package:al_wasyeah/app/core/utils/toast_message.dart';
+import 'package:al_wasyeah/app/view/nominee/controller/nominee_controller.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasyeah/app/view/witnessess/model/get_witness_response_model.dart';
+import 'package:al_wasyeah/app/core/utils/api_constants.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class NomineeDetailsPage extends StatefulWidget {
   const NomineeDetailsPage({super.key});
@@ -45,10 +44,7 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                 Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        AppColors.primaryColor,
-                        AppColors.primaryColor.withOpacity(0.8)
-                      ],
+                      colors: [AppColors.primaryColor, AppColors.primaryColor.withOpacity(0.8)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -82,8 +78,7 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                                     height: 70.h,
                                   ),
                                 )
-                              : Icon(Icons.person,
-                                  color: Colors.white, size: 40.sp),
+                              : Icon(Icons.person, color: Colors.white, size: 40.sp),
                         ),
                       ),
                       SizedBox(width: 20.w),
@@ -101,15 +96,13 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                             ),
                             SizedBox(height: 4.h),
                             Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10.w, vertical: 4.h),
+                              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                               decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(20.r),
                               ),
                               child: Text(
-                                nominee.relation ??
-                                    AppLocalizations.of(context)!.n_a,
+                                nominee.relation ?? AppLocalizations.of(context)!.n_a,
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   color: Colors.white,
@@ -152,8 +145,7 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                               color: AppColors.primaryColor.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(10.r),
                             ),
-                            child: Icon(Icons.person_outline,
-                                color: AppColors.primaryColor, size: 20.sp),
+                            child: Icon(Icons.person_outline, color: AppColors.primaryColor, size: 20.sp),
                           ),
                           SizedBox(width: 12.w),
                           Text(
@@ -169,30 +161,12 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                       SizedBox(height: 16.h),
                       const Divider(),
                       SizedBox(height: 16.h),
-                      _buildDetailRow(context, Icons.phone_android,
-                          AppLocalizations.of(context)!.mobile, nominee.mobile),
-                      _buildDetailRow(
-                          context,
-                          Icons.work_outline,
-                          AppLocalizations.of(context)!.profession,
-                          nominee.profession),
-                      _buildDetailRow(context, Icons.email_outlined,
-                          AppLocalizations.of(context)!.email, nominee.email),
-                      _buildDetailRow(
-                          context,
-                          Icons.favorite_border,
-                          AppLocalizations.of(context)!.marital_status,
-                          nominee.maritalStatus),
-                      _buildDetailRow(
-                          context,
-                          Icons.person_add_disabled_outlined,
-                          AppLocalizations.of(context)!.mother_s_name_1,
-                          nominee.motherName),
-                      _buildDetailRow(
-                          context,
-                          Icons.person_add_alt_1_outlined,
-                          AppLocalizations.of(context)!.father_s_name_1,
-                          nominee.fatherName),
+                      _buildDetailRow(context, Icons.phone_android, AppLocalizations.of(context)!.mobile, nominee.mobile),
+                      _buildDetailRow(context, Icons.work_outline, AppLocalizations.of(context)!.profession, nominee.profession),
+                      _buildDetailRow(context, Icons.email_outlined, AppLocalizations.of(context)!.email, nominee.email),
+                      _buildDetailRow(context, Icons.favorite_border, AppLocalizations.of(context)!.marital_status, nominee.maritalStatus),
+                      _buildDetailRow(context, Icons.person_add_disabled_outlined, AppLocalizations.of(context)!.mother_s_name_1, nominee.motherName),
+                      _buildDetailRow(context, Icons.person_add_alt_1_outlined, AppLocalizations.of(context)!.father_s_name_1, nominee.fatherName),
                       SizedBox(height: 32.h),
                       // if (!canRemove)
                       //   Container(
@@ -221,20 +195,15 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                         Obx(() => CustomButton(
                               title: AppLocalizations.of(context)!.remove,
                               color: AppColors.redColor,
-                              loading: controller
-                                  .deleteNomineeStatus.value.isLoading,
+                              loading: controller.deleteNomineeStatus.value.isLoading,
                               onpress: () {
                                 nominee.requestKey != null
-                                    ? controller
-                                        .deleteNominee(
-                                            requestKey: nominee.requestKey!)
-                                        .then((value) {
+                                    ? controller.deleteNominee(requestKey: nominee.requestKey!).then((value) {
                                         if (value) {
                                           Get.back();
                                         }
                                       })
-                                    : ToastMessageHelper.errorMessageShowToster(
-                                        "Request key not found");
+                                    : ToastMessage.errorMessageShowToster("Request key not found");
                               },
                             )),
                       SizedBox(height: 16.h),
@@ -248,8 +217,7 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                             onpress: nominee.email == null
                                 ? null
                                 : () {
-                                    controller.addYourNominee(
-                                        email: nominee.email!);
+                                    controller.addYourNominee(email: nominee.email!);
                                   },
                           ),
                         ),
@@ -264,8 +232,7 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
     );
   }
 
-  Widget _buildDetailRow(
-      BuildContext context, IconData icon, String label, String? value) {
+  Widget _buildDetailRow(BuildContext context, IconData icon, String label, String? value) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: Row(

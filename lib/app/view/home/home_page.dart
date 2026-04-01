@@ -1,18 +1,18 @@
-import 'package:al_wasyeah/app/controllers/notification/notification_controller.dart';
-import 'package:al_wasyeah/app/controllers/home/home_controller.dart';
-import 'package:al_wasyeah/app/controllers/profile/profile_controller.dart';
-import 'package:al_wasyeah/core/services/app_routes.dart';
-import 'package:al_wasyeah/core/services/api_constants.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
-import 'package:al_wasyeah/core/utils/app_icons.dart';
-import 'package:al_wasyeah/core/utils/app_image.dart';
-import 'package:al_wasyeah/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/view/notification/controller/notification_controller.dart';
+import 'package:al_wasyeah/app/view/home/controller/home_controller.dart';
+import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
+import 'package:al_wasyeah/app/core/route/route_names.dart';
+import 'package:al_wasyeah/app/core/utils/api_constants.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/utils/app_icons.dart';
+import 'package:al_wasyeah/app/core/utils/app_image.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class HomePage extends GetView<HomeController> {
   HomePage({super.key});
@@ -27,7 +27,7 @@ class HomePage extends GetView<HomeController> {
         ),
         onPressed: () {
           Get.toNamed(
-            AppRoutes.notificationPage,
+            RouteName.notificationPage,
             preventDuplicates: false,
           );
         },
@@ -48,7 +48,7 @@ class HomePage extends GetView<HomeController> {
             padding: const EdgeInsets.only(left: 8.0),
             child: InkWell(
               onTap: () {
-                Get.toNamed(AppRoutes.menuPage, preventDuplicates: false);
+                Get.toNamed(RouteName.menuPage, preventDuplicates: false);
               },
               child: Obx(
                 () => Row(
@@ -116,7 +116,7 @@ class HomePage extends GetView<HomeController> {
                         splashRadius: 22,
                         onPressed: () {
                           Get.toNamed(
-                            AppRoutes.notificationPage,
+                            RouteName.notificationPage,
                             preventDuplicates: false,
                           );
                         },
@@ -191,7 +191,7 @@ class HomePage extends GetView<HomeController> {
 
                 InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.wasyyahPage, preventDuplicates: false);
+                    Get.toNamed(RouteName.wasyyahPage, preventDuplicates: false);
                   },
                   child: Container(
                     height: 150.h,
@@ -227,7 +227,7 @@ class HomePage extends GetView<HomeController> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          Get.toNamed(AppRoutes.witnessesPage, preventDuplicates: false);
+                          Get.toNamed(RouteName.witnessesPage, preventDuplicates: false);
                         },
                         child: Container(
                           height: 100.h,
@@ -263,7 +263,7 @@ class HomePage extends GetView<HomeController> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          Get.toNamed(AppRoutes.nomineesPage, preventDuplicates: false);
+                          Get.toNamed(RouteName.nomineesPage, preventDuplicates: false);
                         },
                         child: Container(
                           height: 100.h,
@@ -642,7 +642,7 @@ class HomePage extends GetView<HomeController> {
                                                       fit: BoxFit.fill,
                                                       child: Switch(
                                                         value: isCurrent ? true : false,
-                                                        activeColor: Colors.greenAccent[400],
+                                                        activeThumbColor: Colors.greenAccent[400],
                                                         onChanged: (val) {},
                                                       ),
                                                     ),
@@ -672,7 +672,7 @@ class HomePage extends GetView<HomeController> {
 
                 InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.zakatCalculatorPage, preventDuplicates: false);
+                    Get.toNamed(RouteName.zakatCalculatorPage, preventDuplicates: false);
                   },
                   child: Stack(
                     children: [
@@ -721,7 +721,7 @@ class HomePage extends GetView<HomeController> {
                 ),
                 InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.propertyDistributionPage, preventDuplicates: false);
+                    Get.toNamed(RouteName.propertyDistributionPage, preventDuplicates: false);
                   },
                   child: Stack(
                     children: [

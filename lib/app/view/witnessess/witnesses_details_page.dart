@@ -1,15 +1,15 @@
-import 'package:al_wasyeah/app/controllers/witness_controller/witness_controller.dart';
-import 'package:al_wasyeah/app/view/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/core/services/toast_message_helper.dart';
-import 'package:al_wasyeah/app/models/witness/get_witness_response_model.dart';
-import 'package:al_wasyeah/core/services/api_constants.dart';
-import 'package:al_wasyeah/core/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/app/core/utils/toast_message.dart';
+import 'package:al_wasyeah/app/view/witnessess/controller/witness_controller.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasyeah/app/view/witnessess/model/get_witness_response_model.dart';
+import 'package:al_wasyeah/app/core/utils/api_constants.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class WitnessDetailsPage extends StatefulWidget {
   const WitnessDetailsPage({super.key});
@@ -45,10 +45,7 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                 Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        AppColors.primaryColor,
-                        AppColors.primaryColor.withOpacity(0.8)
-                      ],
+                      colors: [AppColors.primaryColor, AppColors.primaryColor.withOpacity(0.8)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -82,8 +79,7 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                                     height: 70.h,
                                   ),
                                 )
-                              : Icon(Icons.person,
-                                  color: Colors.white, size: 40.sp),
+                              : Icon(Icons.person, color: Colors.white, size: 40.sp),
                         ),
                       ),
                       SizedBox(width: 20.w),
@@ -101,15 +97,13 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                             ),
                             SizedBox(height: 4.h),
                             Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10.w, vertical: 4.h),
+                              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                               decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(20.r),
                               ),
                               child: Text(
-                                witness.relation ??
-                                    AppLocalizations.of(context)!.n_a,
+                                witness.relation ?? AppLocalizations.of(context)!.n_a,
                                 style: TextStyle(
                                   fontSize: 12.sp,
                                   color: Colors.white,
@@ -152,8 +146,7 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                               color: AppColors.primaryColor.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(10.r),
                             ),
-                            child: Icon(Icons.person_outline,
-                                color: AppColors.primaryColor, size: 20.sp),
+                            child: Icon(Icons.person_outline, color: AppColors.primaryColor, size: 20.sp),
                           ),
                           SizedBox(width: 12.w),
                           Text(
@@ -169,30 +162,12 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                       SizedBox(height: 16.h),
                       const Divider(),
                       SizedBox(height: 16.h),
-                      _buildDetailRow(context, Icons.phone_android,
-                          AppLocalizations.of(context)!.mobile, witness.mobile),
-                      _buildDetailRow(
-                          context,
-                          Icons.work_outline,
-                          AppLocalizations.of(context)!.profession,
-                          witness.profession),
-                      _buildDetailRow(context, Icons.email_outlined,
-                          AppLocalizations.of(context)!.email, witness.email),
-                      _buildDetailRow(
-                          context,
-                          Icons.favorite_border,
-                          AppLocalizations.of(context)!.marital_status,
-                          witness.maritalStatus),
-                      _buildDetailRow(
-                          context,
-                          Icons.person_add_disabled_outlined,
-                          AppLocalizations.of(context)!.mother_s_name_1,
-                          witness.motherName),
-                      _buildDetailRow(
-                          context,
-                          Icons.person_add_alt_1_outlined,
-                          AppLocalizations.of(context)!.father_s_name_1,
-                          witness.fatherName),
+                      _buildDetailRow(context, Icons.phone_android, AppLocalizations.of(context)!.mobile, witness.mobile),
+                      _buildDetailRow(context, Icons.work_outline, AppLocalizations.of(context)!.profession, witness.profession),
+                      _buildDetailRow(context, Icons.email_outlined, AppLocalizations.of(context)!.email, witness.email),
+                      _buildDetailRow(context, Icons.favorite_border, AppLocalizations.of(context)!.marital_status, witness.maritalStatus),
+                      _buildDetailRow(context, Icons.person_add_disabled_outlined, AppLocalizations.of(context)!.mother_s_name_1, witness.motherName),
+                      _buildDetailRow(context, Icons.person_add_alt_1_outlined, AppLocalizations.of(context)!.father_s_name_1, witness.fatherName),
                       SizedBox(height: 32.h),
                       // if (!canRemove)
                       //   Container(
@@ -221,20 +196,15 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                         Obx(() => CustomButton(
                               title: AppLocalizations.of(context)!.remove,
                               color: AppColors.redColor,
-                              loading: controller
-                                  .deleteWitnessStatus.value.isLoading,
+                              loading: controller.deleteWitnessStatus.value.isLoading,
                               onpress: () {
                                 witness.requestKey != null
-                                    ? controller
-                                        .deleteWitness(
-                                            requestKey: witness.requestKey!)
-                                        .then((value) {
+                                    ? controller.deleteWitness(requestKey: witness.requestKey!).then((value) {
                                         if (value) {
                                           Get.back();
                                         }
                                       })
-                                    : ToastMessageHelper.errorMessageShowToster(
-                                        "Request key not found");
+                                    : ToastMessage.errorMessageShowToster("Request key not found");
                               },
                             )),
                       SizedBox(height: 16.h),
@@ -247,17 +217,14 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
                           //   border: Border.all(color: AppColors.primaryColor),
                           // ),
                           child: Obx(() => CustomButton(
-                                title:
-                                    AppLocalizations.of(context)!.add_witness,
+                                title: AppLocalizations.of(context)!.add_witness,
                                 color: AppColors.primaryColor,
                                 titlecolor: AppColors.whiteColor,
-                                loading:
-                                    controller.addWitnessStatus.value.isLoading,
+                                loading: controller.addWitnessStatus.value.isLoading,
                                 onpress: witness.email == null
                                     ? null
                                     : () {
-                                        controller.addYourWitness(
-                                            email: witness.email!);
+                                        controller.addYourWitness(email: witness.email!);
                                       },
                               )),
                         ),
@@ -272,8 +239,7 @@ class _WitnessDetailsPageState extends State<WitnessDetailsPage> {
     );
   }
 
-  Widget _buildDetailRow(
-      BuildContext context, IconData icon, String label, String? value) {
+  Widget _buildDetailRow(BuildContext context, IconData icon, String label, String? value) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: Row(

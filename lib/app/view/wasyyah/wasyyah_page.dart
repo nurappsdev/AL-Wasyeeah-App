@@ -1,15 +1,15 @@
-import 'package:al_wasyeah/app/controllers/wasyyah/wasyyah_controller.dart';
-import 'package:al_wasyeah/app/view/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/core/services/toast_message_helper.dart';
-import 'package:al_wasyeah/app/models/wasyyah/get_wasyyah_response_model.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
-import 'package:al_wasyeah/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/core/utils/toast_message.dart';
+import 'package:al_wasyeah/app/view/wasyyah/controller/wasyyah_controller.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasyeah/app/view/wasyyah/model/wasyyah_model.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/core/services/app_routes.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/route/route_names.dart';
 import 'package:open_file/open_file.dart';
 
 class WasyyahPage extends GetView<WasyyahController> {
@@ -90,7 +90,7 @@ class WasyyahPage extends GetView<WasyyahController> {
     );
   }
 
-  Widget _buildWasyyahCard(BuildContext context, GetWasyyahResponseModel item, int index) {
+  Widget _buildWasyyahCard(BuildContext context, WasyyahContentModel item, int index) {
     bool isHidden = item.visible == "N";
 
     return Container(
@@ -173,7 +173,7 @@ class WasyyahPage extends GetView<WasyyahController> {
     );
   }
 
-  void _showEditBottomSheet(BuildContext context, GetWasyyahResponseModel item) {
+  void _showEditBottomSheet(BuildContext context, WasyyahContentModel item) {
     final TextEditingController textController = TextEditingController(text: item.content);
     final RxString currentText = (item.content ?? "").obs;
 
@@ -230,7 +230,7 @@ class WasyyahPage extends GetView<WasyyahController> {
                       bool success = await controller.saveWasiyyah(item);
                       if (success) {
                         Get.back();
-                        ToastMessageHelper.successMessageShowToster(AppLocalizations.of(context)!.wasiyyah_update_successfully);
+                        ToastMessage.successMessageShowToster(AppLocalizations.of(context)!.wasiyyah_update_successfully);
                       }
                     },
                   ),
@@ -271,7 +271,7 @@ class WasyyahPage extends GetView<WasyyahController> {
 
     if (choice == _PreviewChoice.inApp) {
       Get.toNamed(
-        AppRoutes.wasyyahPdfPreviewPage,
+        RouteName.wasyyahPdfPreviewPage,
         arguments: {"filePath": file.path},
       );
     } else {

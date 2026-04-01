@@ -1,9 +1,9 @@
-import 'package:al_wasyeah/app/controllers/access_control/access_control_controller.dart';
-import 'package:al_wasyeah/app/view/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/app/models/access_control/access_control_user_model.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
-import 'package:al_wasyeah/core/widgets/custom_dropdown.dart';
+import 'package:al_wasyeah/app/view/access_control/controller/access_control_controller.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasyeah/app/view/access_control/model/access_control_user_model.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_dropdown.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,7 +81,7 @@ class AccessControlPage extends GetView<AccessControlController> {
                   return const Center(child: CircularProgressIndicator());
                 }
                 if (controller.selectedRole.value != null && controller.usersList.isEmpty) {
-                  return const Center(child: Text("No users found"));
+                  return  Center(child: Text(AppLocalizations.of(context)!.no_data));
                 }
                 return ListView.builder(
                   itemCount: controller.usersList.length,

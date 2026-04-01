@@ -1,14 +1,14 @@
-import 'package:al_wasyeah/app/controllers/home/home_controller.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
-import 'package:al_wasyeah/core/utils/app_constant.dart';
+import 'package:al_wasyeah/app/view/home/controller/home_controller.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/utils/app_constant.dart';
 import 'package:flutter/material.dart';
-import 'package:al_wasyeah/app/view/widgets/custom_app_bar.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../core/widgets/custom_button_common.dart';
-import '../../../core/widgets/custom_text.dart';
-import '../../../core/widgets/custom_text_field.dart';
+import '../../core/widgets/custom_button_common.dart';
+import '../../core/widgets/custom_text.dart';
+import '../../core/widgets/custom_text_field.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   ChangePasswordScreen({super.key});

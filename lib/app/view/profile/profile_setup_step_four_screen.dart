@@ -1,21 +1,21 @@
-import 'package:al_wasyeah/core/services/file_picker_util.dart';
-import 'package:al_wasyeah/app/controllers/profile/profile_controller.dart';
-import 'package:al_wasyeah/core/utils/app_colors.dart';
-import 'package:al_wasyeah/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/core/widgets/custom_dropdown.dart';
-import 'package:al_wasyeah/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/core/widgets/custom_text_field.dart';
+import 'package:al_wasyeah/app/core/services/picker/file_picker_service.dart';
+import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
+import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_dropdown.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../../core/widgets/file_choose_and_download_button.dart';
-import 'package:al_wasyeah/app/models/profile_info_model/profession_list_model.dart';
-import 'package:al_wasyeah/app/models/profile_info_model/country_list_model.dart';
-import 'package:al_wasyeah/app/models/profile_info_model/gender_list_model.dart';
-import 'package:al_wasyeah/core/l10n/app_localizations.dart';
+import '../../core/widgets/file_choose_and_download_button.dart';
+import 'package:al_wasyeah/app/view/profile/model/profession_list_model.dart';
+import 'package:al_wasyeah/app/view/profile/model/country_list_model.dart';
+import 'package:al_wasyeah/app/view/profile/model/gender_list_model.dart';
+import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class ProfileSettingStepFourWidget extends StatelessWidget {
   ProfileSettingStepFourWidget({super.key});
