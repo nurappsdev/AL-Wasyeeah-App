@@ -35,11 +35,8 @@ class _WasiyyahPdfPreviewPageState extends State<WasiyyahPdfPreviewPage> {
 
   Future<void> _downloadPdf() async {
     if (_filePath == null) return;
-    final hasPermission = await _requestPermission();
-    if (!hasPermission) {
-      ToastMessage.errorMessageShowToster("Permission denied");
-      return;
-    }
+    await requestStoragePermission();
+
     try {
       final source = File(_filePath!);
       if (!await source.exists()) {
@@ -61,9 +58,24 @@ class _WasiyyahPdfPreviewPageState extends State<WasiyyahPdfPreviewPage> {
     }
   }
 
-  Future<bool> _requestPermission() async {
-    final status = await Permission.storage.request();
-    return status.isGranted;
+  Future<void> requestStoragePermission() async {
+    if (Platform.isAndroid) {
+      if (await _isAndroid11OrAbove()) {
+        // For Android 11 and above, request MANAGE_EXTERNAL_STORAGE permission
+        if (!await Permission.manageExternalStorage.isGranted) {
+          await Permission.manageExternalStorage.request();
+        }
+      } else {
+        // For Android versions below 11, request READ/WRITE_EXTERNAL_STORAGE permissions
+        if (!await Permission.storage.isGranted) {
+          await Permission.storage.request();
+        }
+      }
+    }
+  }
+
+  Future<bool> _isAndroid11OrAbove() async {
+    return (await Permission.manageExternalStorage.isGranted) || Platform.version.contains('API 30');
   }
 
   @override
