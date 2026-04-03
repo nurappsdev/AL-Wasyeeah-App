@@ -43,6 +43,7 @@ dependencies:
   flutter_native_html_to_pdf: ^3.0.0
   qr_flutter: ^4.1.0
   permission_handler: ^12.0.1
+  mobile_scanner: ^5.1.1
 
 dev_dependencies:
   flutter_test:

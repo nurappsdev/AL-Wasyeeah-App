@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:typed_data';
-import 'package:barcode_widget/barcode_widget.dart';
+import 'package:barcode_widget/barcode_widget.dart' as bw;
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrBarcodeService {
@@ -20,7 +21,7 @@ class QrBarcodeService {
   }
 
   static Future<String> generateBarcodeBase64(Map<String, dynamic> data) async {
-    final barcode = Barcode.code128();
+    final barcode = bw.Barcode.code128();
     final encodedData = base64Encode(utf8.encode(jsonEncode(data)));
     log("Barcode Data: ${jsonEncode(data)}");
     final svg = barcode.toSvg(
@@ -32,5 +33,20 @@ class QrBarcodeService {
 
     final bytes = utf8.encode(svg);
     return base64Encode(Uint8List.fromList(bytes));
+  }
+
+  static Future<String?> decodeImage(String filePath) async {
+    final controller = MobileScannerController();
+    try {
+      final BarcodeCapture? capture = await controller.analyzeImage(filePath);
+      if (capture != null && capture.barcodes.isNotEmpty) {
+        return capture.barcodes.first.displayValue;
+      }
+    } catch (e) {
+      log("Error decoding image: $e");
+    } finally {
+      controller.dispose();
+    }
+    return null;
   }
 }
