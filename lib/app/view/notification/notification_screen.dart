@@ -11,7 +11,8 @@ import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class NotificationPage extends StatelessWidget {
   NotificationPage({Key? key}) : super(key: key);
-  final NotificationController notificationController = Get.put(NotificationController());
+  final NotificationController notificationController =
+      Get.put(NotificationController());
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,11 +44,13 @@ class NotificationPage extends StatelessWidget {
                       color: isUnread ? const Color(0xffF5F9FF) : Colors.white,
                       borderRadius: BorderRadius.circular(18),
                       border: Border.all(
-                        color: isUnread ? const Color(0xffDCEBFF) : Colors.grey.shade200,
+                        color: isUnread
+                            ? const Color(0xffDCEBFF)
+                            : Colors.grey.shade200,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.04),
+                          color: Colors.black.withValues(alpha: 0.04),
                           blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
@@ -84,7 +87,8 @@ class NotificationPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               /// HTML Content
-                              item.message != null && item.message!.contains("<")
+                              item.message != null &&
+                                      item.message!.contains("<")
                                   ? Html(
                                       data: item.message ?? '',
                                     )
@@ -103,7 +107,8 @@ class NotificationPage extends StatelessWidget {
                                   alignment: Alignment.topRight,
                                   child: Text(
                                     textAlign: TextAlign.right,
-                                    DateFormat('M/d/yyyy hh:mm a').format(item.generateAt!),
+                                    DateFormat('M/d/yyyy hh:mm a')
+                                        .format(item.generateAt!),
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.grey.shade500,
@@ -112,32 +117,56 @@ class NotificationPage extends StatelessWidget {
                                   ),
                                 ),
 
-                              if (item.message != null && item.message!.toLowerCase().contains("<") && item.message!.toLowerCase().contains("witness"))
+                              if (item.message != null &&
+                                  item.message!.toLowerCase().contains("<") &&
+                                  item.message!
+                                      .toLowerCase()
+                                      .contains("witness"))
                                 Row(
                                   children: [
                                     Expanded(
                                       child: ElevatedButton(
-                                        onPressed: () => notificationController.approveOrDeclienNotification(item.requestKey, "Y"),
+                                        onPressed: () => notificationController
+                                            .approveOrDeclienNotification(
+                                                item.requestKey, "Y"),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.green,
-                                          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 12.w, vertical: 4.h),
                                           minimumSize: Size(0, 30.h),
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r)),
                                         ),
-                                        child: Text(AppLocalizations.of(context)!.approve, style: TextStyle(fontSize: 12.sp, color: Colors.white)),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .approve,
+                                            style: TextStyle(
+                                                fontSize: 12.sp,
+                                                color: Colors.white)),
                                       ),
                                     ),
                                     SizedBox(width: 8.w),
                                     Expanded(
                                       child: ElevatedButton(
-                                        onPressed: () => notificationController.approveOrDeclienNotification(item.requestKey, "N"),
+                                        onPressed: () => notificationController
+                                            .approveOrDeclienNotification(
+                                                item.requestKey, "N"),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.red,
-                                          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 12.w, vertical: 4.h),
                                           minimumSize: Size(0, 30.h),
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r)),
                                         ),
-                                        child: Text(AppLocalizations.of(context)!.decline, style: TextStyle(fontSize: 12.sp, color: Colors.white)),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .decline,
+                                            style: TextStyle(
+                                                fontSize: 12.sp,
+                                                color: Colors.white)),
                                       ),
                                     ),
                                   ],
@@ -154,7 +183,8 @@ class NotificationPage extends StatelessWidget {
           ),
           onLoading: Center(child: CircularProgressIndicator()),
           onEmpty: Center(child: Text(AppLocalizations.of(context)!.no_data)),
-          onError: (error) => Center(child: Text(AppLocalizations.of(context)!.something_went_wrong)),
+          onError: (error) => Center(
+              child: Text(AppLocalizations.of(context)!.something_went_wrong)),
         ));
   }
 }

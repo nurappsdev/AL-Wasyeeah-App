@@ -32,7 +32,7 @@
 //                       shape: BoxShape.circle,
 //                       boxShadow: [
 //                         BoxShadow(
-//                           color: Colors.black.withOpacity(0.05),
+//                           color: Colors.black.withValues(alpha:0.05),
 //                           blurRadius: 4,
 //                           offset: const Offset(0, 2),
 //                         ),
@@ -85,7 +85,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         boxShadow: [
           // left + right soft shadow
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 8,
             spreadRadius: 0,
             offset: const Offset(0, 0),
@@ -106,7 +106,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
+                            color: Colors.black.withValues(alpha: 0.05),
                             blurRadius: 4,
                             offset: const Offset(0, 2),
                           ),
@@ -131,5 +131,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 0.0));
+  Size get preferredSize =>
+      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 0.0));
 }

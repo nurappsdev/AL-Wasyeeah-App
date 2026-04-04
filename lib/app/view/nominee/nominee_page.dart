@@ -88,7 +88,8 @@ class NomineesPage extends GetView<NomineeController> {
 
               /// ❌ ERROR
               if (currentStatus.isError) {
-                return _buildErrorState(context, currentStatus.errorMessage ?? "");
+                return _buildErrorState(
+                    context, currentStatus.errorMessage ?? "");
               }
 
               /// ❌ EMPTY
@@ -124,7 +125,8 @@ class NomineesPage extends GetView<NomineeController> {
   }
 
   /// ================= CARD =================
-  Widget _buildNomineeCard(BuildContext context, GetWitnessNomineeResponseModel witness, bool? canEdit) {
+  Widget _buildNomineeCard(BuildContext context,
+      GetWitnessNomineeResponseModel witness, bool? canEdit) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.h),
       decoration: BoxDecoration(
@@ -132,7 +134,7 @@ class NomineesPage extends GetView<NomineeController> {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
           ),
         ],
@@ -140,7 +142,8 @@ class NomineesPage extends GetView<NomineeController> {
       child: InkWell(
         borderRadius: BorderRadius.circular(16.r),
         onTap: () {
-          Get.toNamed(RouteName.nomineeDetailsPage, arguments: {"nominee": witness, "canRemove": canEdit});
+          Get.toNamed(RouteName.nomineeDetailsPage,
+              arguments: {"nominee": witness, "canRemove": canEdit});
         },
         child: Padding(
           padding: EdgeInsets.all(16.w),
@@ -151,7 +154,7 @@ class NomineesPage extends GetView<NomineeController> {
                 width: 50.w,
                 height: 50.w,
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor.withOpacity(0.1),
+                  color: AppColors.primaryColor.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: witness.imageUrl != null && witness.imageUrl!.isNotEmpty
@@ -239,7 +242,7 @@ class NomineesPage extends GetView<NomineeController> {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 10,
             spreadRadius: 2,
           ),
@@ -252,7 +255,7 @@ class NomineesPage extends GetView<NomineeController> {
           color: AppColors.primaryColor,
           boxShadow: [
             BoxShadow(
-              color: AppColors.primaryColor.withOpacity(0.2),
+              color: AppColors.primaryColor.withValues(alpha: 0.2),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -261,7 +264,8 @@ class NomineesPage extends GetView<NomineeController> {
         labelColor: Colors.white,
         unselectedLabelColor: Colors.grey.shade500,
         labelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-        unselectedLabelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+        unselectedLabelStyle:
+            TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: Colors.transparent,
         tabs: [

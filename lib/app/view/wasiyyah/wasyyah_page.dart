@@ -40,7 +40,8 @@ class WasyyahPage extends GetView<WasyyahController> {
 
         if (controller.wasyyahList.isEmpty) {
           return Center(
-            child: CustomText(text: AppLocalizations.of(context)!.no_content_available),
+            child: CustomText(
+                text: AppLocalizations.of(context)!.no_content_available),
           );
         }
 
@@ -58,7 +59,8 @@ class WasyyahPage extends GetView<WasyyahController> {
                 height: 16.h,
               ),
               CustomText(
-                text: AppLocalizations.of(context)!.assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam,
+                text: AppLocalizations.of(context)!
+                    .assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam,
                 // maxline: 3,
                 fontsize: 16.sp,
                 fontWeight: FontWeight.w700,
@@ -90,7 +92,8 @@ class WasyyahPage extends GetView<WasyyahController> {
     );
   }
 
-  Widget _buildWasyyahCard(BuildContext context, WasyyahContentModel item, int index) {
+  Widget _buildWasyyahCard(
+      BuildContext context, WasyyahContentModel item, int index) {
     bool isHidden = item.visible == "N";
 
     return Container(
@@ -101,7 +104,7 @@ class WasyyahPage extends GetView<WasyyahController> {
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -158,7 +161,9 @@ class WasyyahPage extends GetView<WasyyahController> {
                       size: 18,
                     ),
                     label: Text(
-                      isHidden ? AppLocalizations.of(context)!.show : AppLocalizations.of(context)!.hide,
+                      isHidden
+                          ? AppLocalizations.of(context)!.show
+                          : AppLocalizations.of(context)!.hide,
                     ),
                     style: TextButton.styleFrom(
                       foregroundColor: isHidden ? Colors.green : Colors.grey,
@@ -174,7 +179,8 @@ class WasyyahPage extends GetView<WasyyahController> {
   }
 
   void _showEditBottomSheet(BuildContext context, WasyyahContentModel item) {
-    final TextEditingController textController = TextEditingController(text: item.content);
+    final TextEditingController textController =
+        TextEditingController(text: item.content);
     final RxString currentText = (item.content ?? "").obs;
 
     showModalBottomSheet(
@@ -207,7 +213,8 @@ class WasyyahPage extends GetView<WasyyahController> {
                 maxLines: 8,
                 onChanged: (val) => currentText.value = val,
                 decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.enter_the_content_here,
+                  hintText:
+                      AppLocalizations.of(context)!.enter_the_content_here,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.r),
                   ),
@@ -223,14 +230,17 @@ class WasyyahPage extends GetView<WasyyahController> {
                 return SizedBox(
                   width: double.infinity,
                   child: CustomButton(
-                    title: "${AppLocalizations.of(context)!.enter_the_content_here}....",
+                    title:
+                        "${AppLocalizations.of(context)!.enter_the_content_here}....",
                     color: AppColors.primaryColor,
                     onpress: () async {
                       item.content = currentText.value;
                       bool success = await controller.saveWasiyyah(item);
                       if (success) {
                         Get.back();
-                        ToastMessage.successMessageShowToster(AppLocalizations.of(context)!.wasiyyah_update_successfully);
+                        ToastMessage.successMessageShowToster(
+                            AppLocalizations.of(context)!
+                                .wasiyyah_update_successfully);
                       }
                     },
                   ),

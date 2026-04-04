@@ -88,7 +88,8 @@ class WitnessesPage extends GetView<WitnessController> {
 
               /// ❌ ERROR
               if (currentStatus.isError) {
-                return _buildErrorState(context, currentStatus.errorMessage ?? "");
+                return _buildErrorState(
+                    context, currentStatus.errorMessage ?? "");
               }
 
               /// ❌ EMPTY
@@ -124,7 +125,8 @@ class WitnessesPage extends GetView<WitnessController> {
   }
 
   /// ================= CARD =================
-  Widget _buildWitnessCard(BuildContext context, GetWitnessNomineeResponseModel witness, bool? canEdit) {
+  Widget _buildWitnessCard(BuildContext context,
+      GetWitnessNomineeResponseModel witness, bool? canEdit) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.h),
       decoration: BoxDecoration(
@@ -132,14 +134,15 @@ class WitnessesPage extends GetView<WitnessController> {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
           ),
         ],
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(16.r),
-        onTap: () => Get.toNamed(RouteName.witnessDetailsPage, arguments: {"witness": witness, "canRemove": canEdit}),
+        onTap: () => Get.toNamed(RouteName.witnessDetailsPage,
+            arguments: {"witness": witness, "canRemove": canEdit}),
         child: Padding(
           padding: EdgeInsets.all(16.w),
           child: Row(
@@ -149,7 +152,7 @@ class WitnessesPage extends GetView<WitnessController> {
                 width: 50.w,
                 height: 50.w,
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor.withOpacity(0.1),
+                  color: AppColors.primaryColor.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: witness.imageUrl != null && witness.imageUrl!.isNotEmpty
@@ -237,7 +240,7 @@ class WitnessesPage extends GetView<WitnessController> {
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 10,
             spreadRadius: 2,
           ),
@@ -250,7 +253,7 @@ class WitnessesPage extends GetView<WitnessController> {
           color: AppColors.primaryColor,
           boxShadow: [
             BoxShadow(
-              color: AppColors.primaryColor.withOpacity(0.2),
+              color: AppColors.primaryColor.withValues(alpha: 0.2),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -259,7 +262,8 @@ class WitnessesPage extends GetView<WitnessController> {
         labelColor: Colors.white,
         unselectedLabelColor: Colors.grey.shade500,
         labelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-        unselectedLabelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+        unselectedLabelStyle:
+            TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: Colors.transparent,
         tabs: [
