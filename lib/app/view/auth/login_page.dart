@@ -15,8 +15,10 @@ import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  final TextEditingController emailController = TextEditingController(/*text: "WASY100008"*/);
-  final TextEditingController passController = TextEditingController(/*text: "+oGq#rH^"*/);
+  final TextEditingController emailController =
+      TextEditingController(/*text: "WASY100008"*/);
+  final TextEditingController passController =
+      TextEditingController(/*text: "+oGq#rH^"*/);
   final AuthController authController = Get.put(AuthController());
 
   final GlobalKey<FormState> _logKey = GlobalKey<FormState>();
@@ -29,7 +31,8 @@ class LoginPage extends StatelessWidget {
     GridItem(
       icon: AppIcons.propertyIcons,
       text: AppLocalizations.of(Get.context!)!.property_distribution,
-      onTap: () => Get.toNamed(RouteName.propertyDistributionPage, arguments: {"public": true}, preventDuplicates: false),
+      onTap: () => Get.toNamed(RouteName.propertyDistributionPage,
+          arguments: {"public": true}, preventDuplicates: false),
     ),
     GridItem(
       icon: AppIcons.zakatIcons,
@@ -72,7 +75,9 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       height: 80.h,
                     ),
-                    Center(child: SvgPicture.asset(AppIcons.logo, height: 160.h, width: 200.w)),
+                    Center(
+                        child: SvgPicture.asset(AppIcons.logo,
+                            height: 160.h, width: 200.w)),
                     SizedBox(
                       height: 24.h,
                     ),
@@ -82,11 +87,15 @@ class LoginPage extends StatelessWidget {
                       width: double.infinity,
                       height: 120.h, // Increased height to accommodate content
                       child: GridView.builder(
-                        scrollDirection: Axis.horizontal, // Enables horizontal scrolling
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        scrollDirection:
+                            Axis.horizontal, // Enables horizontal scrolling
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1, // Only one row
-                          mainAxisSpacing: 4, // Spacing between items horizontally
-                          childAspectRatio: 1 / 1.1, // Aspect ratio for each item
+                          mainAxisSpacing:
+                              4, // Spacing between items horizontally
+                          childAspectRatio:
+                              1 / 1.1, // Aspect ratio for each item
                         ),
                         itemCount: items.length,
                         itemBuilder: (context, index) {
@@ -96,7 +105,8 @@ class LoginPage extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SvgPicture.asset(item.icon, height: 60.h, width: 60.w),
+                                SvgPicture.asset(item.icon,
+                                    height: 60.h, width: 60.w),
                                 SizedBox(height: 4.h),
                                 CustomText(text: item.text),
                               ],
@@ -126,11 +136,16 @@ class LoginPage extends StatelessWidget {
                         borderColor: AppColors.secondaryPrimaryColor,
                         prefixIcon: Padding(
                           padding: EdgeInsets.only(left: 16.w, right: 12.w),
-                          child: SvgPicture.asset(AppIcons.email, color: AppColors.primaryColor, height: 20.h, width: 20.w),
+                          child: SvgPicture.asset(AppIcons.email,
+                              colorFilter: ColorFilter.mode(
+                                  AppColors.primaryColor, BlendMode.srcIn),
+                              height: 20.h,
+                              width: 20.w),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!.please_enter_your_email;
+                            return AppLocalizations.of(context)!
+                                .please_enter_your_email;
                           }
                           if (!!AppConstants.emailValidate.hasMatch(value)) {
                             return AppLocalizations.of(context)!.invalid_email;
@@ -157,17 +172,25 @@ class LoginPage extends StatelessWidget {
                       child: CustomTextField(
                         controller: passController,
                         isPassword: true,
-                        hintText: AppLocalizations.of(context)!.please_enter_your_password,
+                        hintText: AppLocalizations.of(context)!
+                            .please_enter_your_password,
                         borderColor: AppColors.secondaryPrimaryColor,
                         prefixIcon: Padding(
                           padding: EdgeInsets.only(left: 16.w, right: 12.w),
-                          child: SvgPicture.asset(AppIcons.passIcon, color: AppColors.primaryColor, height: 24.h, width: 24.w),
+                          child: SvgPicture.asset(AppIcons.passIcon,
+                              colorFilter: ColorFilter.mode(
+                                  AppColors.primaryColor, BlendMode.srcIn),
+                              height: 24.h,
+                              width: 24.w),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return AppLocalizations.of(context)!.please_enter_your_password;
-                          } else if (value.length < 8 || !AppConstants.validatePassword(value)) {
-                            return AppLocalizations.of(context)!.password_8_characters_min_letters_digits_required;
+                            return AppLocalizations.of(context)!
+                                .please_enter_your_password;
+                          } else if (value.length < 8 ||
+                              !AppConstants.validatePassword(value)) {
+                            return AppLocalizations.of(context)!
+                                .password_8_characters_min_letters_digits_required;
                           }
                           return null;
                         },
@@ -177,7 +200,8 @@ class LoginPage extends StatelessWidget {
                     ///=============Forgot====================
                     InkWell(
                         onTap: () {
-                          Get.toNamed(RouteName.forgotPasswordPage, parameters: {'email': emailController.text});
+                          Get.toNamed(RouteName.forgotPasswordPage,
+                              parameters: {'email': emailController.text});
                         },
                         child: Padding(
                           padding: EdgeInsets.only(left: 190.w),
@@ -201,7 +225,9 @@ class LoginPage extends StatelessWidget {
                         onpress: () {
                           if (_logKey.currentState!.validate()) {
                             TextInput.finishAutofillContext();
-                            authController.signInHandle(userName: emailController.text, password: passController.text);
+                            authController.signInHandle(
+                                userName: emailController.text,
+                                password: passController.text);
 
                             //  Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
                           }
@@ -221,12 +247,14 @@ class LoginPage extends StatelessWidget {
                               //  Get.toNamed(AppRoutes.otpVirifyScreen,preventDuplicates: false);
                             },
                             child: CustomText(
-                              text: AppLocalizations.of(context)!.don_t_have_an_account,
+                              text: AppLocalizations.of(context)!
+                                  .don_t_have_an_account,
                               fontsize: 20.sp,
                             )),
                         InkWell(
                             onTap: () {
-                              Get.toNamed(RouteName.registrationPage, preventDuplicates: false);
+                              Get.toNamed(RouteName.registrationPage,
+                                  preventDuplicates: false);
                             },
                             child: CustomText(
                               text: AppLocalizations.of(context)!.register_now,

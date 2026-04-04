@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:barcode_widget/barcode_widget.dart' as bw;
+import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -12,10 +14,33 @@ class QrBarcodeService {
       data: jsonEncode(data),
       version: QrVersions.auto,
       gapless: true,
+      errorCorrectionLevel: QrErrorCorrectLevel.M,
     );
 
-    final image = await painter.toImageData(800);
-    final bytes = image!.buffer.asUint8List();
+    // Render QR on a white background with a quiet zone so scanners can detect it
+    const double size = 800;
+    const double padding = 40; // Quiet zone
+    const double qrSize = size - (padding * 2);
+
+    final recorder = ui.PictureRecorder();
+    final canvas = Canvas(recorder, const Rect.fromLTWH(0, 0, size, size));
+
+    // Draw white background
+    canvas.drawRect(
+      const Rect.fromLTWH(0, 0, size, size),
+      Paint()..color = const Color(0xFFFFFFFF),
+    );
+
+    // Draw QR code centered with padding
+    canvas.save();
+    canvas.translate(padding, padding);
+    painter.paint(canvas, const Size(qrSize, qrSize));
+    canvas.restore();
+
+    final picture = recorder.endRecording();
+    final image = await picture.toImage(size.toInt(), size.toInt());
+    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final bytes = byteData!.buffer.asUint8List();
 
     return base64Encode(bytes);
   }

@@ -69,7 +69,10 @@ class PdfService {
 
       // Place text inside footer image, left-center vertically
       final double x = leftPadding;
-      final double y = pageSize.height - footerHeight - textHeight - 5 /*+ ((footerHeight - textHeight) / 2)*/;
+      final double y = pageSize.height -
+          footerHeight -
+          textHeight -
+          5 /*+ ((footerHeight - textHeight) / 2)*/;
 
       page.graphics.drawString(
         footerText,
@@ -95,7 +98,8 @@ class PdfService {
     final qrBase64 = await QrBarcodeService.generateQrBase64(qrData);
     final barcodeBase64 = await QrBarcodeService.generateBarcodeBase64(qrData);
     final bgBase64 = await _assetToBase64(AppImages.pdfbgImage);
-    final firstHeaderBase64 = await _assetToBase64(AppImages.firstPdfHeaderImage);
+    final firstHeaderBase64 =
+        await _assetToBase64(AppImages.firstPdfHeaderImage);
     final footerBase64 = await _assetToBase64(AppImages.pdfFooterImage);
     final logoBase64 = await _assetToBase64(AppImages.transparent_app_logo);
 
@@ -194,28 +198,44 @@ class PdfService {
 
    .header-qr {
   position: absolute;
-  right: 30px;
-  top: 20px;
-  width: 120px;
-  height: 120px;
+  right: 32px;
+  top: 44px;
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  padding: 5px;
+  border: 1px solid #14532d;
+  border-radius: 8px;
 }
 
 .header-qr img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .header-barcode {
   position: absolute;
-  left: 30px;
-  top: 10px;
-  width: 120px;
-  height: 120px;
+  left: 32px;
+  top: 44px;
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  padding: 5px;
+  border: 1px solid #14532d;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header-barcode img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
 }
 
     .section-card {
@@ -323,6 +343,11 @@ class PdfService {
   }
 
   static String _escapeHtml(String text) {
-    return text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+    return text
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
   }
 }

@@ -65,7 +65,7 @@ class FileChooseAndDownloadButton extends StatelessWidget {
                       Container(
                         height: 18.h,
                         width: 1,
-                        color: AppColors.primaryColor.withOpacity(0.4),
+                        color: AppColors.primaryColor.withValues(alpha: 0.4),
                       ),
 
                       SizedBox(width: 12.w),
@@ -73,12 +73,15 @@ class FileChooseAndDownloadButton extends StatelessWidget {
                       // File name or placeholder
                       Expanded(
                         child: Text(
-                          pickedFile.value?.fileName ?? AppLocalizations.of(context)!.no_file_chosen,
+                          pickedFile.value?.fileName ??
+                              AppLocalizations.of(context)!.no_file_chosen,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 13.sp,
-                            color: pickedFile.value == null ? Colors.grey : AppColors.hitTextColor000000,
+                            color: pickedFile.value == null
+                                ? Colors.grey
+                                : AppColors.hitTextColor000000,
                           ),
                         ),
                       ),
@@ -102,7 +105,8 @@ class FileChooseAndDownloadButton extends StatelessWidget {
                   return isDownloading.value
                       ? Center(
                           child: SizedBox(
-                            width: 40.w, // increase size a bit for text visibility
+                            width:
+                                40.w, // increase size a bit for text visibility
                             height: 40.w,
                             child: Stack(
                               alignment: Alignment.center,

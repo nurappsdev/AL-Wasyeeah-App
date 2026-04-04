@@ -115,16 +115,16 @@ class WasyyahController extends GetxController {
       final personalData = profileController.personalForm;
       final user = profileController.profileModel;
       final qrData = {
-        "name": "${personalData.value.firstName.text} ${personalData.value.lastName.text}",
-        "email": user.value.userProfile?.email ?? "N/A",
-        "phone": user.value.userProfile?.mobile ?? "N/A",
-        "date_of_birthday": user.value.userProfile?.dob ?? "N/A",
-        "profession": personalData.value.selectedProfession.value?.profession ?? "N/A",
-        "gender": personalData.value.selectedGender.value?.gender ?? "N/A",
-        "maritialStatus": personalData.value.selectedMarried.value?.maritalType ?? "N/A",
-        "permanent_address": user.value.userProfile?.permanentAddress ?? "N/A",
-        "present_address": user.value.userProfile?.presentAddress ?? "N/A",
-        "country": personalData.value.selectedCountry.value?.country ?? "N/A",
+        "n": "${personalData.value.firstName.text} ${personalData.value.lastName.text}",
+        "e": user.value.userProfile?.email ?? "N/A",
+        "p": user.value.userProfile?.mobile ?? "N/A",
+        "dob": user.value.userProfile?.dob ?? "N/A",
+        "prof": personalData.value.selectedProfession.value?.profession ?? "N/A",
+        "gn": personalData.value.selectedGender.value?.gender ?? "N/A",
+        "ms": personalData.value.selectedMarried.value?.maritalType ?? "N/A",
+        "p_addr": user.value.userProfile?.permanentAddress ?? "N/A",
+        "pr_addr": user.value.userProfile?.presentAddress ?? "N/A",
+        "cnt": personalData.value.selectedCountry.value?.country ?? "N/A",
         "nid": personalData.value.nid.text,
         "tin": personalData.value.tin.text,
       };

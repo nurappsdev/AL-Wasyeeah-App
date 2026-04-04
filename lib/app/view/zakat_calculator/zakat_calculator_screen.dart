@@ -11,8 +11,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import '../../core/utils/extensions.dart';
-
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
@@ -61,20 +59,22 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                         const SizedBox(height: 8),
                         DropdownButtonFormField<GetNisabRatesResponseModel>(
                           isExpanded: true,
-                          value: controller.selectedCurrency.value,
+                          initialValue: controller.selectedCurrency.value,
                           decoration: InputDecoration(
                             labelText: AppLocalizations.of(context)!.currency,
                             labelStyle: TextStyle(fontWeight: FontWeight.w900),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16.r),
                             ),
-                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 16),
                           ),
                           items: controller.nisabRates.map((model) {
                             return DropdownMenuItem(
                               value: model,
                               child: CustomText(
-                                text: "${model.currencyCode} - ${model.currencyIcon}",
+                                text:
+                                    "${model.currencyCode} - ${model.currencyIcon}",
                                 fontsize: 16.sp,
                               ),
                             );
@@ -101,12 +101,16 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
 
                     String nisabLabel = AppLocalizations.of(context)!.nisab;
                     if (!isDisabled) {
-                      final updatedDate = controller.nisabRates.where((element) => element.id == currency.id).first.insertAt;
+                      final updatedDate = controller.nisabRates
+                          .where((element) => element.id == currency.id)
+                          .first
+                          .insertAt;
                       final formattedDate = DateFormat(
                         'yyyy-MM-dd',
                         Get.locale!.languageCode,
                       ).format(updatedDate!);
-                      nisabLabel = "${AppLocalizations.of(context)!.nisab} (${AppLocalizations.of(context)!.updated} $formattedDate)";
+                      nisabLabel =
+                          "${AppLocalizations.of(context)!.nisab} (${AppLocalizations.of(context)!.updated} $formattedDate)";
                     }
 
                     return IgnorePointer(
@@ -135,8 +139,10 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
                                     readOnly: isDisabled,
-                                    controller: controller.cashAndBankController,
-                                    hintText: AppLocalizations.of(context)!.nisab_amount,
+                                    controller:
+                                        controller.cashAndBankController,
+                                    hintText: AppLocalizations.of(context)!
+                                        .nisab_amount,
                                   ),
                                 ),
                               ],
@@ -150,7 +156,8 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                     height: 20.h,
                   ),
                   Obx(() {
-                    final bool isDisabled = controller.selectedCurrency.value == null;
+                    final bool isDisabled =
+                        controller.selectedCurrency.value == null;
                     return IgnorePointer(
                       ignoring: isDisabled,
                       child: Opacity(
@@ -170,7 +177,9 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                 children: [
                                   SizedBox(height: 10.h),
                                   CustomText(
-                                    text: AppLocalizations.of(context)!.value_of_gold + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                    text: AppLocalizations.of(context)!
+                                            .value_of_gold +
+                                        " (${controller.selectedCurrency.value?.currencyIcon})",
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -178,16 +187,21 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                     padding: EdgeInsets.all(4.r),
                                     child: CustomTextField(
                                       keyboardType: TextInputType.number,
-                                      controller: controller.valueGoldController,
+                                      controller:
+                                          controller.valueGoldController,
                                       readOnly: isDisabled,
-                                      hintText: AppLocalizations.of(context)!.value_of_gold + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                      hintText: AppLocalizations.of(context)!
+                                              .value_of_gold +
+                                          " (${controller.selectedCurrency.value?.currencyIcon})",
                                     ),
                                   ),
                                   SizedBox(
                                     height: 20.h,
                                   ),
                                   CustomText(
-                                    text: AppLocalizations.of(context)!.value_of_silver + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                    text: AppLocalizations.of(context)!
+                                            .value_of_silver +
+                                        " (${controller.selectedCurrency.value?.currencyIcon})",
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -195,16 +209,21 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                     padding: EdgeInsets.all(4.r),
                                     child: CustomTextField(
                                       keyboardType: TextInputType.number,
-                                      controller: controller.valueSilverController,
+                                      controller:
+                                          controller.valueSilverController,
                                       readOnly: isDisabled,
-                                      hintText: AppLocalizations.of(context)!.value_of_silver + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                      hintText: AppLocalizations.of(context)!
+                                              .value_of_silver +
+                                          " (${controller.selectedCurrency.value?.currencyIcon})",
                                     ),
                                   ),
                                   SizedBox(
                                     height: 20.h,
                                   ),
                                   CustomText(
-                                    text: AppLocalizations.of(context)!.future_deposits + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                    text: AppLocalizations.of(context)!
+                                            .future_deposits +
+                                        " (${controller.selectedCurrency.value?.currencyIcon})",
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -212,16 +231,21 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                     padding: EdgeInsets.all(4.r),
                                     child: CustomTextField(
                                       keyboardType: TextInputType.number,
-                                      controller: controller.futureDepositsController,
+                                      controller:
+                                          controller.futureDepositsController,
                                       readOnly: isDisabled,
-                                      hintText: AppLocalizations.of(context)!.future_deposits + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                      hintText: AppLocalizations.of(context)!
+                                              .future_deposits +
+                                          " (${controller.selectedCurrency.value?.currencyIcon})",
                                     ),
                                   ),
                                   SizedBox(
                                     height: 20.h,
                                   ),
                                   CustomText(
-                                    text: AppLocalizations.of(context)!.given_out_in_loans + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                    text: AppLocalizations.of(context)!
+                                            .given_out_in_loans +
+                                        " (${controller.selectedCurrency.value?.currencyIcon})",
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -229,16 +253,21 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                     padding: EdgeInsets.all(4.r),
                                     child: CustomTextField(
                                       keyboardType: TextInputType.number,
-                                      controller: controller.loanGivenController,
+                                      controller:
+                                          controller.loanGivenController,
                                       readOnly: isDisabled,
-                                      hintText: AppLocalizations.of(context)!.given_out_in_loans + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                      hintText: AppLocalizations.of(context)!
+                                              .given_out_in_loans +
+                                          " (${controller.selectedCurrency.value?.currencyIcon})",
                                     ),
                                   ),
                                   SizedBox(
                                     height: 20.h,
                                   ),
                                   CustomText(
-                                    text: AppLocalizations.of(context)!.investment_value + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                    text: AppLocalizations.of(context)!
+                                            .investment_value +
+                                        " (${controller.selectedCurrency.value?.currencyIcon})",
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -246,16 +275,20 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                     padding: EdgeInsets.all(4.r),
                                     child: CustomTextField(
                                       keyboardType: TextInputType.number,
-                                      controller: controller.investmentValueController,
+                                      controller:
+                                          controller.investmentValueController,
                                       readOnly: isDisabled,
-                                      hintText: AppLocalizations.of(context)!.investment_value + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                      hintText: AppLocalizations.of(context)!
+                                              .investment_value +
+                                          " (${controller.selectedCurrency.value?.currencyIcon})",
                                     ),
                                   ),
                                   SizedBox(
                                     height: 20.h,
                                   ),
                                   CustomText(
-                                    text: AppLocalizations.of(context)!.rental_income,
+                                    text: AppLocalizations.of(context)!
+                                        .rental_income,
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -263,16 +296,21 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                     padding: EdgeInsets.all(4.r),
                                     child: CustomTextField(
                                       keyboardType: TextInputType.number,
-                                      controller: controller.rentalIncomeController,
+                                      controller:
+                                          controller.rentalIncomeController,
                                       readOnly: isDisabled,
-                                      hintText: AppLocalizations.of(context)!.rental_income + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                      hintText: AppLocalizations.of(context)!
+                                              .rental_income +
+                                          " (${controller.selectedCurrency.value?.currencyIcon})",
                                     ),
                                   ),
                                   SizedBox(
                                     height: 20.h,
                                   ),
                                   CustomText(
-                                    text: AppLocalizations.of(context)!.immediate_liabilities + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                    text: AppLocalizations.of(context)!
+                                            .immediate_liabilities +
+                                        " (${controller.selectedCurrency.value?.currencyIcon})",
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -280,9 +318,12 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                     padding: EdgeInsets.all(4.r),
                                     child: CustomTextField(
                                       keyboardType: TextInputType.number,
-                                      controller: controller.immediateLiabilitieseController,
+                                      controller: controller
+                                          .immediateLiabilitieseController,
                                       readOnly: isDisabled,
-                                      hintText: AppLocalizations.of(context)!.immediate_liabilities + " (${controller.selectedCurrency.value?.currencyIcon})",
+                                      hintText: AppLocalizations.of(context)!
+                                              .immediate_liabilities +
+                                          " (${controller.selectedCurrency.value?.currencyIcon})",
                                     ),
                                   ),
                                 ],
@@ -304,7 +345,9 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                         // if (_forRegKey.currentState!.validate()) {
 
                         if (controller.cashAndBankController.text.isEmpty) {
-                          ToastMessage.errorMessageShowToster(AppLocalizations.of(context)!.at_least_enter_nisab);
+                          ToastMessage.errorMessageShowToster(
+                              AppLocalizations.of(context)!
+                                  .at_least_enter_nisab);
                         } else {
                           controller.calculateZakatAmount();
                         }

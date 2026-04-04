@@ -184,7 +184,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       ),
                       isExpanded: true,
                       hint: CustomText(text: AppLocalizations.of(context)!.select_your_question),
-                      value: _selectedQuestionId,
+                      initialValue: _selectedQuestionId,
                       items: authController.securityQuestionResponseModel
                           .map((model) => DropdownMenuItem<String>(
                                 value: model.questionId.toString(),

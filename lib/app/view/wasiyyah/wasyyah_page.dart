@@ -1,10 +1,13 @@
+import 'package:al_wasyeah/app/core/services/qr_barcode/qr_barcode_service.dart';
 import 'package:al_wasyeah/app/core/utils/toast_message.dart';
 import 'package:al_wasyeah/app/view/wasiyyah/controller/wasyyah_controller.dart';
+import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/app/view/wasiyyah/model/wasyyah_model.dart';
 import 'package:al_wasyeah/app/core/utils/app_colors.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/view/wasiyyah/qr_barcode_test_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -21,6 +24,11 @@ class WasyyahPage extends GetView<WasyyahController> {
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.wasiyyah_ichanama_title,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.qr_code_scanner, color: Colors.black),
+            tooltip: "QR & Barcode Tester",
+            onPressed: () => _openQrBarcodeTestPage(),
+          ),
           Padding(
             padding: EdgeInsets.only(right: 16.w),
             child: CustomButton(
@@ -81,7 +89,7 @@ class WasyyahPage extends GetView<WasyyahController> {
         );
       }),
       // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () {}, // TODO: Connect to AddNewWashyiaScreen if implemented
+      //   onPressed: () {},
       //   backgroundColor: AppColors.primaryColor,
       //   icon: const Icon(Icons.add, color: Colors.white),
       //   label: CustomText(
@@ -90,6 +98,46 @@ class WasyyahPage extends GetView<WasyyahController> {
       //   ),
       // ),
     );
+  }
+
+  Future<void> _openQrBarcodeTestPage() async {
+    try {
+      final profileController = Get.find<ProfileController>();
+      final personalData = profileController.personalForm;
+      final user = profileController.profileModel;
+      final qrData = {
+        "n":
+            "${personalData.value.firstName.text} ${personalData.value.lastName.text}",
+        "e": user.value.userProfile?.email ?? "N/A",
+        "p": user.value.userProfile?.mobile ?? "N/A",
+        "dob": user.value.userProfile?.dob ?? "N/A",
+        "prof":
+            personalData.value.selectedProfession.value?.profession ?? "N/A",
+        "gn":
+            personalData.value.selectedGender.value?.gender ?? "N/A",
+        "ms":
+            personalData.value.selectedMarried.value?.maritalType ?? "N/A",
+        "p_addr":
+            user.value.userProfile?.permanentAddress ?? "N/A",
+        "pr_addr":
+            user.value.userProfile?.presentAddress ?? "N/A",
+        "cnt":
+            personalData.value.selectedCountry.value?.country ?? "N/A",
+        "nid": personalData.value.nid.text,
+        "tin": personalData.value.tin.text,
+      };
+
+      final qrBase64 = await QrBarcodeService.generateQrBase64(qrData);
+      final barcodeBase64 =
+          await QrBarcodeService.generateBarcodeBase64(qrData);
+
+      Get.to(() => QrBarcodeTestPage(
+            qrBase64: qrBase64,
+            barcodeBase64: barcodeBase64,
+          ));
+    } catch (e) {
+      ToastMessage.errorMessageShowToster("Failed to generate QR/Barcode: $e");
+    }
   }
 
   Widget _buildWasyyahCard(

@@ -9,7 +9,7 @@ ThemeData dark = ThemeData(
   cardColor: const Color(0xFF252525),
   hintColor: const Color(0xFFbebebe),
   disabledColor: const Color(0xffa2a7ad),
-  shadowColor: Colors.black.withOpacity(0.4),
+  shadowColor: Colors.black.withValues(alpha: 0.4),
   scaffoldBackgroundColor: Colors.transparent,
   appBarTheme: const AppBarTheme(
     elevation: 0,
@@ -17,7 +17,8 @@ ThemeData dark = ThemeData(
     centerTitle: true,
     backgroundColor: Colors.transparent,
     iconTheme: IconThemeData(color: Colors.white),
-    titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+    titleTextStyle: TextStyle(
+        color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
     systemOverlayStyle: SystemUiOverlayStyle.light,
   ),
   pageTransitionsTheme: const PageTransitionsTheme(builders: {

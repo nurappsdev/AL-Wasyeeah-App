@@ -478,7 +478,8 @@ class MenuPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 12.w),
                         child: SvgPicture.asset(
                           AppIcons.chevronIcon,
-                          color: AppColors.primaryColor,
+                          colorFilter: ColorFilter.mode(
+                              AppColors.primaryColor, BlendMode.srcIn),
                         ),
                       ),
                     ],
@@ -540,7 +541,8 @@ class MenuPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 12.w),
                         child: SvgPicture.asset(
                           AppIcons.chevronIcon,
-                          color: AppColors.primaryColor,
+                          colorFilter: ColorFilter.mode(
+                              AppColors.primaryColor, BlendMode.srcIn),
                         ),
                       ),
                     ],
@@ -577,7 +579,8 @@ class MenuPage extends StatelessWidget {
                           children: [
                             SvgPicture.asset(
                               AppIcons.logoutIcon,
-                              color: AppColors.primaryColor,
+                              colorFilter: ColorFilter.mode(
+                                  AppColors.primaryColor, BlendMode.srcIn),
                             ),
                             SizedBox(width: 16.w),
                             CustomText(

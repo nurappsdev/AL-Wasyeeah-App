@@ -13,7 +13,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../../core/utils/extensions.dart';
 import '../../../core/services/shared_pref/prefs_service.dart';
 import '../../../core/utils/app_constant.dart';
 
