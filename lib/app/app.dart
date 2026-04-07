@@ -1,6 +1,7 @@
 import 'package:al_wasyeah/app/core/route/route_names.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 import 'package:al_wasyeah/app/core/route/router.dart';
+import 'package:al_wasyeah/app/core/themes/dark_theme.dart';
 import 'package:al_wasyeah/app/core/utils/api_constants.dart';
 import 'package:al_wasyeah/app/core/themes/light_theme.dart';
 import 'package:al_wasyeah/app/core/themes/controller/theme_controller.dart';
@@ -14,10 +15,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class WasyeeahApp extends StatefulWidget {
   final String initialLang;
   final bool initialDarkMode;
-  const WasyeeahApp({super.key, required this.initialLang, required this.initialDarkMode});
+  const WasyeeahApp(
+      {super.key, required this.initialLang, required this.initialDarkMode});
 
   static void setLocale(BuildContext context, Locale newLocale) {
-    _WasyeeahAppState? state = context.findAncestorStateOfType<_WasyeeahAppState>();
+    _WasyeeahAppState? state =
+        context.findAncestorStateOfType<_WasyeeahAppState>();
     state?.setLocale(newLocale);
   }
 
@@ -59,8 +62,8 @@ class _WasyeeahAppState extends State<WasyeeahApp> {
           debugShowCheckedModeBanner: false,
           navigatorKey: Get.key,
           theme: light,
-          // darkTheme: dark,
-          themeMode: /*widget.initialDarkMode ? ThemeMode.dark :*/ ThemeMode.light,
+          darkTheme: dark,
+          themeMode: widget.initialDarkMode ? ThemeMode.dark : ThemeMode.light,
           getPages: AppRouter.routes,
           initialRoute: RouteName.splashPage,
           defaultTransition: Transition.topLevel,

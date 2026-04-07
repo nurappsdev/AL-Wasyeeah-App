@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:al_wasyeah/app/core/themes/controller/theme_controller.dart';
+import 'package:al_wasyeah/app/core/utils/extensions.dart';
 import 'package:al_wasyeah/app/view/home/controller/home_controller.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
@@ -25,7 +29,7 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final profileController = Get.find<ProfileController>();
-    // final themeController = Get.find<ThemeController>();
+    final themeController = Get.find<ThemeController>();
     return Scaffold(
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.user_profile,
@@ -76,50 +80,54 @@ class MenuPage extends StatelessWidget {
               GestureDetector(
                 onTap: () => Get.toNamed(RouteName.profilePage,
                     preventDuplicates: false),
-                child: Container(
-                  width: 360.w,
-                  height: 60.h,
-                  margin: EdgeInsets.only(left: 2.w),
-                  decoration: BoxDecoration(
-                    color: AppColors.whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                    border: Border.all(
-                      color: Color(0xffB0E3D3),
-                      width: 2.w,
+                child: Obx(() {
+                  return Container(
+                    width: 360.w,
+                    height: 60.h,
+                    margin: EdgeInsets.only(left: 2.w),
+                    decoration: BoxDecoration(
+                      color: isDarkMode()
+                          ? AppColors.blackColor
+                          : AppColors.whiteColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                      border: Border.all(
+                        color: Color(0xffB0E3D3),
+                        width: 2.w,
+                      ),
                     ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              AppIcons.proIcon,
-                            ),
-                            SizedBox(width: 16.w),
-                            CustomText(
-                              text: AppLocalizations.of(context)!
-                                  .personal_details,
-                              fontsize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.textColor4E4E4E,
-                            )
-                          ],
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(
+                                AppIcons.proIcon,
+                              ),
+                              SizedBox(width: 16.w),
+                              CustomText(
+                                text: AppLocalizations.of(context)!
+                                    .personal_details,
+                                fontsize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textColor4E4E4E,
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        child: SvgPicture.asset(
-                          AppIcons.chevronIcon,
-                          colorFilter: ColorFilter.mode(
-                              AppColors.primaryColor, BlendMode.srcIn),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          child: SvgPicture.asset(
+                            AppIcons.chevronIcon,
+                            colorFilter: ColorFilter.mode(
+                                AppColors.primaryColor, BlendMode.srcIn),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
+                      ],
+                    ),
+                  );
+                }),
               ),
               SizedBox(
                 height: 20.h,
@@ -380,54 +388,57 @@ class MenuPage extends StatelessWidget {
               ),
 
               ///=====================Theme Switch====================================
-              // Container(
-              //   width: 360.w,
-              //   height: 60.h,
-              //   margin: EdgeInsets.only(left: 2.w),
-              //   decoration: BoxDecoration(
-              //     color: AppColors.whiteColor,
-              //     borderRadius: BorderRadius.all(Radius.circular(8.r)),
-              //     border: Border.all(
-              //       color: Color(0xffB0E3D3),
-              //       width: 2.w,
-              //     ),
-              //   ),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Padding(
-              //         padding: EdgeInsets.symmetric(horizontal: 12.w),
-              //         child: Row(
-              //           children: [
-              //             Icon(Icons.dark_mode_outlined, color: AppColors.primaryColor),
-              //             SizedBox(width: 16.w),
-              //             CustomText(
-              //               text: "Dark Mode",
-              //               fontsize: 16.sp,
-              //               fontWeight: FontWeight.w600,
-              //               color: AppColors.textColor4E4E4E,
-              //             )
-              //           ],
-              //         ),
-              //       ),
-              //       Padding(
-              //         padding: EdgeInsets.symmetric(horizontal: 12.w),
-              //         child: Obx(
-              //           () => Switch(
-              //             value: themeController.isDarkMode.value,
-              //             onChanged: (value) {
-              //               themeController.toggleTheme();
-              //             },
-              //             activeColor: AppColors.primaryColor,
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
+              Container(
+                width: 360.w,
+                height: 60.h,
+                margin: EdgeInsets.only(left: 2.w),
+                decoration: BoxDecoration(
+                  color: AppColors.whiteColor,
+                  borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                  border: Border.all(
+                    color: Color(0xffB0E3D3),
+                    width: 2.w,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      child: Row(
+                        children: [
+                          Icon(Icons.dark_mode_outlined,
+                              color: AppColors.primaryColor),
+                          SizedBox(width: 16.w),
+                          CustomText(
+                            text: "Dark Mode",
+                            fontsize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textColor4E4E4E,
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      child: Obx(
+                        () => Switch(
+                          value: themeController.isDarkMode.value,
+                          onChanged: (value) {
+                            themeController.toggleTheme();
+                          },
+                          activeColor: AppColors.primaryColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
               //=====================About Us====================================
-
+              SizedBox(
+                height: 20.h,
+              ),
               GestureDetector(
                 onTap: () =>
                     Get.toNamed(RouteName.aboutPage, preventDuplicates: false),

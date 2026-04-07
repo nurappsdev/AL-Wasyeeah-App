@@ -1,3 +1,4 @@
+import 'package:al_wasyeah/app/core/themes/controller/theme_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -11,4 +12,9 @@ extension NumberLocalization on Object? {
 
     return formatted;
   }
+}
+
+bool isDarkMode() {
+  final themeController = Get.find<ThemeController>();
+  return themeController.isDarkMode.value;
 }

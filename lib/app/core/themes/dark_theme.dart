@@ -3,14 +3,10 @@ import 'package:flutter/services.dart';
 
 ThemeData dark = ThemeData(
   fontFamily: 'Rubik',
-  primaryColor: const Color(0xFFba4f41),
-  secondaryHeaderColor: const Color(0xff04B200),
-  brightness: Brightness.dark,
-  cardColor: const Color(0xFF252525),
+  scaffoldBackgroundColor: Colors.transparent,
   hintColor: const Color(0xFFbebebe),
   disabledColor: const Color(0xffa2a7ad),
   shadowColor: Colors.black.withValues(alpha: 0.4),
-  scaffoldBackgroundColor: Colors.transparent,
   appBarTheme: const AppBarTheme(
     elevation: 0,
     scrolledUnderElevation: 0,

@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'dart:developer';
+import 'package:al_wasyeah/app/core/themes/controller/theme_controller.dart';
+import 'package:al_wasyeah/app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:al_wasyeah/app/core/utils/app_image.dart';
+import 'package:get/get.dart';
 
 import 'no_internet_widget.dart'; // if in separate file
 
@@ -53,7 +57,7 @@ class _AppWrapperState extends State<AppWrapper> {
       top: false,
       bottom: true,
       child: Container(
-        decoration: Theme.of(context).brightness == Brightness.dark
+        decoration: isDarkMode()
             ? const BoxDecoration(color: Color(0xFF121212))
             : const BoxDecoration(
                 image: DecorationImage(
