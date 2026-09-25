@@ -17,6 +17,27 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(":app")
+    val configureAndroid = object : Action<Project> {
+        override fun execute(p: Project) {
+            val extension = p.extensions.findByName("android")
+            if (extension != null) {
+                try {
+                    val method = extension.javaClass.getMethod("setCompileSdk", Int::class.javaPrimitiveType)
+                    method.invoke(extension, 35)
+                } catch (e: Exception) {
+                    try {
+                        val method = extension.javaClass.getMethod("setCompileSdkVersion", Int::class.javaPrimitiveType)
+                        method.invoke(extension, 35)
+                    } catch (e2: Exception) {}
+                }
+            }
+        }
+    }
+    if (state.executed) {
+        configureAndroid.execute(this)
+    } else {
+        afterEvaluate(configureAndroid)
+    }
 }
 
 tasks.register<Delete>("clean") {
