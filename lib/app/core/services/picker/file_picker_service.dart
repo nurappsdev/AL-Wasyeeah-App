@@ -17,9 +17,8 @@ class PickedFileResult {
 class FilePickerUtil {
   static Future<PickedFileResult?> pickSingleFile() async {
     try {
-      final result = await FilePicker.platform.pickFiles(
+      final result = await FilePicker.pickFile(
         type: FileType.custom,
-        allowMultiple: false,
         allowedExtensions: [
           'pdf',
           'png',
@@ -28,17 +27,14 @@ class FilePickerUtil {
         ],
       );
 
-      if (result == null || result.files.single.path == null) {
+      if (result == null || result.path == null) {
         return null;
       }
 
-      final platformFile = result.files.single;
-      final file = File(platformFile.path!);
-
       return PickedFileResult(
-        file: file,
-        fileName: platformFile.name,
-        extension: platformFile.extension ?? '',
+        file: File(result.path!),
+        fileName: result.name,
+        extension: result.extension ?? '',
       );
     } catch (e) {
       log('File picking error: $e');

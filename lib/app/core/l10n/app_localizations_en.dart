@@ -1562,4 +1562,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get page => 'Page';
+
+  @override
+  String get password_reset_success =>
+      'New Password has been Send to your Email Successfully!';
 }

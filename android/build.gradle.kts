@@ -23,11 +23,11 @@ subprojects {
             if (extension != null) {
                 try {
                     val method = extension.javaClass.getMethod("setCompileSdk", Int::class.javaPrimitiveType)
-                    method.invoke(extension, 35)
+                    method.invoke(extension, 37)
                 } catch (e: Exception) {
                     try {
                         val method = extension.javaClass.getMethod("setCompileSdkVersion", Int::class.javaPrimitiveType)
-                        method.invoke(extension, 35)
+                        method.invoke(extension, 37)
                     } catch (e2: Exception) {}
                 }
             }

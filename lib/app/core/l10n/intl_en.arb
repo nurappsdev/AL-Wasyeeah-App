@@ -523,7 +523,7 @@
   "failed_to_save_wasiyyah": "Failed to save Wasiyyah",
   "failed_to_load_wasiyyah_data": "Failed to load Wasiyyah data",
   "wasiyyah_preview": "Wasiyyah Preview",
-  "page": "Page"
-
+  "page": "Page",
+  "password_reset_success" : "New Password has been Send to your Email Successfully!"
 
 }

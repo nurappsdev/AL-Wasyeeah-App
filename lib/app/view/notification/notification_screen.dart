@@ -2,7 +2,7 @@ import 'package:al_wasyeah/app/view/notification/controller/notification_control
 import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -89,8 +89,8 @@ class NotificationPage extends StatelessWidget {
                               /// HTML Content
                               item.message != null &&
                                       item.message!.contains("<")
-                                  ? Html(
-                                      data: item.message ?? '',
+                                  ? HtmlWidget(
+                                      item.message ?? '',
                                     )
                                   : CustomText(
                                       text: item.message ?? "",

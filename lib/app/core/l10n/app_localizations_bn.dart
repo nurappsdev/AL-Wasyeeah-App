@@ -1574,4 +1574,8 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get page => 'পৃষ্ঠা';
+
+  @override
+  String get password_reset_success =>
+      'আপনার ইমেলে সফলভাবে নতুন পাসওয়ার্ড পাঠানো হয়েছে!';
 }

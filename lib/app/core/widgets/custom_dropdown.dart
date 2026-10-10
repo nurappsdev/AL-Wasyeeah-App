@@ -72,7 +72,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
       items: (filter, props) => widget.items,
       selectedItem: widget.value,
       compareFn: (a, b) => a == b,
-      onChanged: widget.onChanged,
+      //onChanged: widget.onChanged,
       itemAsString: (item) => item == null ? "" : widget.itemToString(item),
       validator: widget.validator,
       dropdownBuilder: (context, selectedItem) {
@@ -87,32 +87,32 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
           ),
         );
       },
-      decoratorProps: DropDownDecoratorProps(
-        decoration: InputDecoration(
-          labelText: widget.label,
-          isDense: true,
-          enabledBorder: _border(enabledColor),
-          focusedBorder: _border(Colors.blue),
-          errorBorder: _border(Colors.red),
-          focusedErrorBorder: _border(Colors.red),
-          labelStyle: TextStyle(color: Colors.grey[200]),
-        ),
-      ),
-      popupProps: PopupProps.menu(
-        searchFieldProps: TextFieldProps(
-          decoration: InputDecoration(
-            hintText: searchHint,
-            hintStyle: TextStyle(color: Colors.grey[500]),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(widget.borderRadius),
-              borderSide: BorderSide(color: Colors.grey[300]!),
-            ),
-          ),
-        ),
-        showSelectedItems: true,
-        showSearchBox: widget.showSearchBox,
-        constraints: BoxConstraints(maxHeight: widget.maxMenuHeight),
-      ),
+      // decoratorProps: DropDownDecoratorProps(
+      //   decoration: InputDecoration(
+      //     labelText: widget.label,
+      //     isDense: true,
+      //     enabledBorder: _border(enabledColor),
+      //     focusedBorder: _border(Colors.blue),
+      //     errorBorder: _border(Colors.red),
+      //     focusedErrorBorder: _border(Colors.red),
+      //     labelStyle: TextStyle(color: Colors.grey[200]),
+      //   ),
+      // ),
+      // popupProps: PopupProps.menu(
+      //   searchFieldProps: TextFieldProps(
+      //     decoration: InputDecoration(
+      //       hintText: searchHint,
+      //       hintStyle: TextStyle(color: Colors.grey[500]),
+      //       border: OutlineInputBorder(
+      //         borderRadius: BorderRadius.circular(widget.borderRadius),
+      //         borderSide: BorderSide(color: Colors.grey[300]!),
+      //       ),
+      //     ),
+      //   ),
+      //   showSelectedItems: true,
+      //   showSearchBox: widget.showSearchBox,
+      //   constraints: BoxConstraints(maxHeight: widget.maxMenuHeight),
+      // ),
     );
   }
 }

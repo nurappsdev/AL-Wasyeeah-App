@@ -3123,6 +3123,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Page'**
   String get page;
+
+  /// No description provided for @password_reset_success.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password has been Send to your Email Successfully!'**
+  String get password_reset_success;
 }
 
 class _AppLocalizationsDelegate

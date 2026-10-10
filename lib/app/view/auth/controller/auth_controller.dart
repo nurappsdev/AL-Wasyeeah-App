@@ -192,7 +192,7 @@ class AuthController extends GetxController {
 
     try {
       var response = await ApiService.getData(
-        ApiConstants.checkOtpEndPoint + "/?email=$email&mobile=$mobile&otp=$otp",
+        ApiConstants.checkOtpEndPoint + "?email=$email&mobile=$mobile&otp=$otp",
       );
       log("OTP RESULT-----------------${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
