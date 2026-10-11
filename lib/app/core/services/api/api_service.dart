@@ -36,18 +36,44 @@ class ApiService extends GetxService {
 
   static Response _buildResponse(http.Response response, String uri) {
     dynamic body;
+    String? message;
 
-    try {
-      body = jsonDecode(utf8.decode(response.bodyBytes));
-    } catch (_) {
-      body = response.body;
+    final rawBody = utf8.decode(response.bodyBytes).trim();
+
+    // 1. Parse the response body.
+    if (rawBody.isEmpty) {
+      body = null;
+    } else {
+      try {
+        body = jsonDecode(rawBody);
+      } catch (_) {
+        // The response is not valid JSON.
+        body = rawBody;
+      }
     }
 
-    final statusText = body is Map && body['message'] != null ? body['message'].toString() : response.reasonPhrase;
+    // 2. Extract a meaningful error message.
+    if (body is Map) {
+      final apiMessage = body['message'];
 
-    log('====> API Response: [${response.statusCode}] ${ApiConstants.baseUrl + uri}\nToken:$_bearerToken\nBody\n${jsonEncode(body)}');
+      if (apiMessage != null && apiMessage.toString().trim().isNotEmpty) {
+        message = apiMessage.toString().trim();
+      }
+    } else if (body is String && body.trim().isNotEmpty) {
+      message = body.trim();
+    }
 
-    // 🔴 GLOBAL 401 HANDLING
+    // 3. Use a fallback when the API provides no useful message.
+    final statusText = message ?? 'Something went wrong. Please try again.';
+
+    log(
+      '====> API Response: [${response.statusCode}] '
+      '${ApiConstants.baseUrl + uri}\n'
+      'Token: $_bearerToken\n'
+      'Body:\n${jsonEncode(body)}',
+    );
+
+    // 4. Handle unauthorized responses globally.
     if (response.statusCode == 401) {
       _handleUnauthorized();
     }
@@ -87,9 +113,14 @@ class ApiService extends GetxService {
           .timeout(const Duration(seconds: timeoutInSeconds));
       return _buildResponse(response, uri);
     } on SocketException {
-      return Response(statusCode: 404, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(
+          statusCode: 404,
+          statusText:
+              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     } on TimeoutException {
-      return Response(statusCode: 404, statusText: AppLocalizations.of(Get.context!)!.request_timeout);
+      return Response(
+          statusCode: 404,
+          statusText: AppLocalizations.of(Get.context!)!.request_timeout);
     } catch (e) {
       return Response(statusCode: 404, statusText: e.toString());
     }
@@ -114,9 +145,14 @@ class ApiService extends GetxService {
 
       return _buildResponse(response, uri);
     } on SocketException {
-      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(
+          statusCode: -1,
+          statusText:
+              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     } on TimeoutException {
-      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.request_timeout);
+      return Response(
+          statusCode: -1,
+          statusText: AppLocalizations.of(Get.context!)!.request_timeout);
     } catch (e) {
       return Response(statusCode: -1, statusText: e.toString());
     }
@@ -140,7 +176,10 @@ class ApiService extends GetxService {
 
       return _buildResponse(response, uri);
     } catch (_) {
-      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(
+          statusCode: -1,
+          statusText:
+              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     }
   }
 
@@ -162,7 +201,10 @@ class ApiService extends GetxService {
 
       return _buildResponse(response, uri);
     } catch (_) {
-      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(
+          statusCode: -1,
+          statusText:
+              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     }
   }
 
@@ -184,7 +226,10 @@ class ApiService extends GetxService {
 
       return _buildResponse(response, uri);
     } catch (_) {
-      return Response(statusCode: -1, statusText: AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
+      return Response(
+          statusCode: -1,
+          statusText:
+              AppLocalizations.of(Get.context!)!.cant_connect_to_the_internet);
     }
   }
 

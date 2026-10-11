@@ -14,11 +14,11 @@ class SplashController extends GetxController {
     await Future.delayed(const Duration(milliseconds: 500)); // smooth transition
 
     final token = await PrefsHelper.getString(AppConstants.bearerToken);
-
+    final isOnboardingSelected = await PrefsHelper.getBool(AppConstants.isOnboardingSelected);
     if (token.isNotEmpty) {
       Get.offAllNamed(RouteName.homePage);
     } else {
-      Get.offAllNamed(RouteName.onboardingPage);
+      isOnboardingSelected ? Get.offAllNamed(RouteName.loginPage) : Get.offAllNamed(RouteName.onboardingPage);
     }
   }
 }

@@ -4,11 +4,6 @@
 
 import 'dart:convert';
 
-SalatTimeResponseModel salatTimeResponseModelFromJson(String str) =>
-    SalatTimeResponseModel.fromJson(json.decode(str));
-
-String salatTimeResponseModelToJson(SalatTimeResponseModel data) =>
-    json.encode(data.toJson());
 
 class SalatTimeResponseModel {
   final String? fajr;

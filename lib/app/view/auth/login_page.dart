@@ -16,9 +16,9 @@ import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   final TextEditingController emailController =
-      TextEditingController(/*text: "WASY100008"*/);
+      TextEditingController(/*text: "WASY100001"*/);
   final TextEditingController passController =
-      TextEditingController(/*text: "+oGq#rH^"*/);
+      TextEditingController(/*text: "Asdf.1234"*/);
   final AuthController authController = Get.put(AuthController());
 
   final GlobalKey<FormState> _logKey = GlobalKey<FormState>();
@@ -57,8 +57,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      extendBody: true,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SingleChildScrollView(

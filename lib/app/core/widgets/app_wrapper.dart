@@ -65,7 +65,7 @@ class _AppWrapperState extends State<AppWrapper> {
                   fit: BoxFit.cover,
                 ),
               ),
-        child: hasInternet ? widget.child : NoInternetWidget(),
+        child: hasInternet ? Scaffold(resizeToAvoidBottomInset: false,body: widget.child,) : NoInternetWidget(),
       ),
     );
   }

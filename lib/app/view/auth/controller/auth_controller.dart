@@ -67,6 +67,7 @@ class AuthController extends GetxController {
       body,
     );
 
+    log("response is :${response.body} ${response.body.runtimeType}----------------------------");
     if (response.statusCode == 200) {
       // await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
 
@@ -84,8 +85,8 @@ class AuthController extends GetxController {
       signUpLoading(false);
       ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.server_error);
     } else {
-      ToastMessage.errorMessageShowToster("${response.body["message"]}");
       signUpLoading(false);
+      ToastMessage.errorMessageShowToster("${response.body}");
     }
   }
 
@@ -196,8 +197,7 @@ class AuthController extends GetxController {
       );
       log("OTP RESULT-----------------${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
-        ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!.verification_otp_send_success);
-
+        ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!.password_reset_success);
         Get.toNamed(
           RouteName.loginPage,
           preventDuplicates: false,

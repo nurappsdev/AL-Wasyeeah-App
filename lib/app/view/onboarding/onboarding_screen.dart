@@ -1,5 +1,7 @@
 import 'package:al_wasyeah/app/core/route/route_names.dart';
+import 'package:al_wasyeah/app/core/services/shared_pref/prefs_service.dart';
 import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasyeah/app/core/utils/app_constant.dart';
 import 'package:al_wasyeah/app/core/utils/app_image.dart';
 import 'package:al_wasyeah/app/app.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
@@ -107,8 +109,9 @@ class OnboardingScreen extends StatelessWidget {
                 padding: EdgeInsets.all(8.r),
                 child: CustomButton(
                   title: AppLocalizations.of(context)!.get_start,
-                  onpress: () {
-                    Get.toNamed(RouteName.loginPage, preventDuplicates: false);
+                  onpress: () async{
+                    await PrefsHelper.setBool(AppConstants.isOnboardingSelected, true);
+                    Get.offNamed(RouteName.loginPage, preventDuplicates: false);
                   },
                 ),
               ),

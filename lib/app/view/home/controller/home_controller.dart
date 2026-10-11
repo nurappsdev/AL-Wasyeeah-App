@@ -62,7 +62,8 @@ class HomeController extends GetxController {
   }
 
   RxList<UserMenus> userMenus = <UserMenus>[].obs;
-  Rxn<SalatTimeResponseModel?> salatTimeModel = Rxn<SalatTimeResponseModel?>(null);
+  Rxn<SalatTimeResponseModel?> salatTimeModel =
+      Rxn<SalatTimeResponseModel?>(null);
 
   RxMap<String, String> prayerTimes = <String, String>{}.obs;
   RxString upcomingPrayer = "".obs;
@@ -156,10 +157,11 @@ class HomeController extends GetxController {
       var response = await ApiService.getData(
         ApiConstants.salatTimeEndPoint(lat, long),
       );
-
+      log("=====> ${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (response.body != null) {
-          final model = salatTimeResponseModelFromJson(json.encode(response.body));
+          log("RESPONSE OF PRAYER TIMES: ${response.body}");
+          final model = SalatTimeResponseModel.fromJson(response.body);
           salatTimeModel(model);
           log("Prayer time data is : ${model.toJson()}");
           prayerTimes.value = {
@@ -178,7 +180,11 @@ class HomeController extends GetxController {
           Future.delayed(const Duration(milliseconds: 300), () {
             update(); // optional if needed
           });
+        } else {
+          salatTimeStatus(RxStatus.empty());
         }
+      } else {
+        salatTimeStatus(RxStatus.empty());
       }
     } catch (e, s) {
       log("Error is : ${e}");
@@ -190,31 +196,39 @@ class HomeController extends GetxController {
   void startPrayerTimer() {
     _prayerTimer?.cancel();
     _updatePrayerStatus();
-    _prayerTimer = Timer.periodic(Duration(seconds: 1), (_) => _updatePrayerStatus());
+    _prayerTimer =
+        Timer.periodic(Duration(seconds: 1), (_) => _updatePrayerStatus());
   }
 
   void _updatePrayerStatus() {
     if (salatTimeModel.value == null) {
       final now = DateTime.now();
-      currentTime.value = DateFormat('hh:mm:ss a', Get.locale!.languageCode).format(now);
+      currentTime.value =
+          DateFormat('hh:mm:ss a', Get.locale!.languageCode).format(now);
       if (Get.locale!.languageCode == 'bn') {
-        currentTime.value = currentTime.value.replaceAll('AM', 'পূর্বাহ্ন').replaceAll('PM', 'অপরাহ্ন');
+        currentTime.value = currentTime.value
+            .replaceAll('AM', 'পূর্বাহ্ন')
+            .replaceAll('PM', 'অপরাহ্ন');
       }
       remainingTimeStr.value = "--:--:--";
       return;
     }
 
     final now = DateTime.now();
-    currentTime.value = DateFormat('hh:mm:ss a', Get.locale!.languageCode).format(now);
+    currentTime.value =
+        DateFormat('hh:mm:ss a', Get.locale!.languageCode).format(now);
     if (Get.locale!.languageCode == 'bn') {
-      currentTime.value = currentTime.value.replaceAll('AM', 'পূর্বাহ্ন').replaceAll('PM', 'অপরাহ্ন');
+      currentTime.value = currentTime.value
+          .replaceAll('AM', 'পূর্বাহ্ন')
+          .replaceAll('PM', 'অপরাহ্ন');
     }
 
     final model = salatTimeModel.value!;
 
     DateTime parseTime(String time, DateTime date) {
       final parts = time.split(':');
-      return DateTime(date.year, date.month, date.day, int.parse(parts[0]), int.parse(parts[1]));
+      return DateTime(date.year, date.month, date.day, int.parse(parts[0]),
+          int.parse(parts[1]));
     }
 
     final today = now;
@@ -258,13 +272,17 @@ class HomeController extends GetxController {
 
     // Important Edge Case (Isha)
     // if now >= Isha OR now < Fajr current = Isha
-    if (now.isAfter(ishaStartTime) || now.isAtSameMomentAs(ishaStartTime) || now.isBefore(fajrStartTime)) {
+    if (now.isAfter(ishaStartTime) ||
+        now.isAtSameMomentAs(ishaStartTime) ||
+        now.isBefore(fajrStartTime)) {
       current = prayers.last; // Isha
       previous = prayers[prayers.length - 2]; // Maghrib
       upcoming = prayers[0]; // Fajr
     } else {
       for (int i = 0; i < prayers.length; i++) {
-        if ((now.isAfter(prayers[i].startTime) || now.isAtSameMomentAs(prayers[i].startTime)) && now.isBefore(prayers[i].endTime)) {
+        if ((now.isAfter(prayers[i].startTime) ||
+                now.isAtSameMomentAs(prayers[i].startTime)) &&
+            now.isBefore(prayers[i].endTime)) {
           current = prayers[i];
           previous = i > 0 ? prayers[i - 1] : prayers.last;
           upcoming = i < prayers.length - 1 ? prayers[i + 1] : prayers[0];
@@ -316,9 +334,12 @@ class HomeController extends GetxController {
       final dt = DateFormat(
         "HH:mm",
       ).parse(time24);
-      var formattedTime = DateFormat("hh:mm a", Get.locale!.languageCode).format(dt);
+      var formattedTime =
+          DateFormat("hh:mm a", Get.locale!.languageCode).format(dt);
       if (Get.locale!.languageCode == 'bn') {
-        formattedTime = formattedTime.replaceAll('AM', 'পূর্বাহ্ন').replaceAll('PM', 'অপরাহ্ন');
+        formattedTime = formattedTime
+            .replaceAll('AM', 'পূর্বাহ্ন')
+            .replaceAll('PM', 'অপরাহ্ন');
       }
       return formattedTime;
     } catch (e) {
@@ -327,15 +348,25 @@ class HomeController extends GetxController {
   }
 
   RxBool forPassLoading = false.obs;
-  Future<void> changePass(String oldPassword, String newPassword, String confirmPassword) async {
+  Future<void> changePass(
+      String oldPassword, String newPassword, String confirmPassword) async {
     forPassLoading(true);
     String bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-    var headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer $bearerToken'};
-    var body = {"oldPassword": oldPassword, "newPassword": newPassword, "confirmPassword": confirmPassword};
-    var response = await ApiService.postData("${ApiConstants.changePassAPI}", body, headers: headers);
-    print("dataaaaaaaaaaaaaaa ${response.body}");
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $bearerToken'
+    };
+    var body = {
+      "oldPassword": oldPassword,
+      "newPassword": newPassword,
+      "confirmPassword": confirmPassword
+    };
+    var response = await ApiService.postData(
+        "${ApiConstants.changePassAPI}", body,
+        headers: headers);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      ToastMessage.successMessageShowToster(response.body['message'].toString());
+      ToastMessage.successMessageShowToster(
+          response.body['message'].toString());
       forPassLoading(false);
     } else {
       ToastMessage.errorMessageShowToster(response.body['message'].toString());
