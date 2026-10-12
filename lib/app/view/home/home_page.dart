@@ -46,57 +46,65 @@ class HomePage extends GetView<HomeController> {
           leadingWidth: 200, // Adjust this width to fit your content
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: InkWell(
-              onTap: () {
-                Get.toNamed(RouteName.menuPage, preventDuplicates: false);
-              },
-              child: Obx(
-                () => Row(
-                  children: [
-                    profileController.profileModel.value.userProfile
-                                ?.profilePictureUrl !=
-                            null
-                        ? CircleAvatar(
-                            radius: 18,
-                            backgroundImage: NetworkImage(
-                                "${ApiConstants.imageUrl + "${profileController.profileModel.value.userProfile?.profilePictureUrl}"}"),
-                            backgroundColor: Colors.grey[200],
-                          )
-                        : CircleAvatar(
-                            radius: 18,
-                            child: Icon(Icons.person),
-                            backgroundColor: Colors.grey[200],
-                          ),
-                    SizedBox(width: 8.h),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        profileController.profileModel.value.userProfile == null
-                            ? SizedBox(
-                                height: 16.sp,
-                                width: 16.sp,
-                                child: CircularProgressIndicator(),
-                              )
-                            : Flexible(
-                                child: Text(
-                                  "${profileController.profileModel.value.userProfile?.firstName ?? ''} ${profileController.profileModel.value.userProfile?.lastName ?? ''}".trim(),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontSize: 14.sp),
-                                ),
+            child: GestureDetector(
+              onTap: () =>
+                  Get.toNamed(RouteName.menuPage, preventDuplicates: false),
+              child: Obx(() {
+                final isProfileLoading =
+                    profileController.profileModel.value.userProfile == null;
+                final user = profileController.profileModel.value.userProfile;
+                final fullName =
+                    "${user?.firstName ?? ''} ${user?.lastName ?? ''}".trim();
+
+                return Skeletonizer(
+                  enabled: isProfileLoading,
+                  effect: ShimmerEffect(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                  ),
+                  containersColor: Colors.grey.shade200,
+                  child: Row(
+                    children: [
+                      user?.profilePictureUrl != null
+                          ? CircleAvatar(
+                              radius: 18,
+                              backgroundImage: NetworkImage(
+                                  "${ApiConstants.imageUrl + "${user?.profilePictureUrl}"}"),
+                              backgroundColor: Colors.grey[200],
+                            )
+                          : CircleAvatar(
+                              radius: 18,
+                              child: const Icon(Icons.person),
+                              backgroundColor: Colors.grey[200],
+                            ),
+                      SizedBox(width: 8.h),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              fullName.isNotEmpty ? fullName : "User Name",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.bold,
                               ),
-                        Text(
-                          AppLocalizations.of(context)!.welcome_back,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 12.sp),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+                            ),
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.welcome_back,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 12.sp),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              }),
             ),
           ),
           actions: [
@@ -176,8 +184,56 @@ class HomePage extends GetView<HomeController> {
                 );
               },
 
-              /// When loading / empty / error → just show icon without badge
-              onLoading: _notificationIconOnly(),
+              /// When loading → show skeletonized notification icon + badge
+              onLoading: Skeletonizer(
+                enabled: true,
+                effect: ShimmerEffect(
+                  baseColor: Colors.grey.shade300,
+                  highlightColor: Colors.grey.shade100,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.notifications, size: 26),
+                        onPressed: () {},
+                      ),
+                      Positioned(
+                        right: 4,
+                        top: 4,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 3),
+                          constraints: const BoxConstraints(
+                            minWidth: 12,
+                            minHeight: 12,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "1",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 8,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               onEmpty: _notificationIconOnly(),
               onError: (_) => _notificationIconOnly(),
             ),
@@ -361,6 +417,11 @@ class HomePage extends GetView<HomeController> {
                         Obx(
                           () => Skeletonizer(
                             enabled: controller.salatTimeStatus.value.isLoading,
+                            effect: ShimmerEffect(
+                              baseColor: Colors.grey.shade300,
+                              highlightColor: Colors.grey.shade100,
+                            ),
+                            containersColor: Colors.grey.shade200,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -454,31 +515,125 @@ class HomePage extends GetView<HomeController> {
                         "${controller.salatTimeStatus.value.errorMessage}"));
                   }
 
+                  final isLoading = controller.salatTimeStatus.value.isLoading;
+
                   return SizedBox(
                     height: 220.h,
                     child: Skeletonizer(
-                      enabled: controller.salatTimeStatus.value.isLoading,
+                      enabled: isLoading,
+                      effect: ShimmerEffect(
+                        baseColor: Colors.grey.shade200,
+                        highlightColor: Colors.grey.shade50,
+                        duration: const Duration(milliseconds: 1500),
+                      ),
+                      containersColor: Colors.grey.shade100,
                       child: ListView.builder(
                         controller: controller.scrollController,
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        physics: BouncingScrollPhysics(),
-                        itemCount: controller.salatTimeStatus.value.isLoading
-                            ? 5
-                            : controller.prayerTimes.length,
+                        physics: isLoading
+                            ? const NeverScrollableScrollPhysics()
+                            : const BouncingScrollPhysics(),
+                        itemCount:
+                            isLoading ? 4 : controller.prayerTimes.length,
                         itemBuilder: (context, index) {
-                          final name = controller
-                                  .salatTimeStatus.value.isLoading
-                              ? "Prayer Name"
-                              : controller.prayerTimes.keys.elementAt(index);
-                          final time =
-                              controller.salatTimeStatus.value.isLoading
-                                  ? "12:00"
-                                  : controller.prayerTimes[name]!;
+                          if (isLoading) {
+                            return Container(
+                              width: 0.6.sw,
+                              margin: EdgeInsets.symmetric(horizontal: 16.w),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16.r),
+                                border: Border.all(
+                                  color: Colors.grey.shade200,
+                                  width: 1.2,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.03),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(16.w),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    // Top Prayer Status badge placeholder
+                                    Container(
+                                      width: 110.w,
+                                      height: 16.h,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade300,
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                      ),
+                                    ),
+                                    SizedBox(height: 8.h),
+                                    // Countdown timer placeholder
+                                    Container(
+                                      width: 80.w,
+                                      height: 18.h,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade300,
+                                        borderRadius:
+                                            BorderRadius.circular(6.r),
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    // Bottom right: Prayer Name, Time & Notification Switch
+                                    Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                            width: 75.w,
+                                            height: 20.h,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey.shade300,
+                                              borderRadius:
+                                                  BorderRadius.circular(6.r),
+                                            ),
+                                          ),
+                                          SizedBox(height: 6.h),
+                                          Container(
+                                            width: 60.w,
+                                            height: 18.h,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey.shade300,
+                                              borderRadius:
+                                                  BorderRadius.circular(6.r),
+                                            ),
+                                          ),
+                                          SizedBox(height: 8.h),
+                                          Container(
+                                            height: 26.h,
+                                            width: 48.w,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey.shade300,
+                                              borderRadius:
+                                                  BorderRadius.circular(14.r),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+
+                          final name =
+                              controller.prayerTimes.keys.elementAt(index);
+                          final time = controller.prayerTimes[name]!;
                           final isCurrent =
-                              controller.salatTimeStatus.value.isLoading
-                                  ? (index == 0)
-                                  : name == controller.currentPrayer.value;
+                              name == controller.currentPrayer.value;
 
                           // Determine gradient based on status
                           // Current: Green, Previous: Grey, Upcoming: Amber
