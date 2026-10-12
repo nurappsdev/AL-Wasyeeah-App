@@ -542,5 +542,6 @@
   "failed_to_load_wasiyyah_data": "ওসিয়াহ ডেটা লোড করতে ব্যর্থ হয়েছে",
   "wasiyyah_preview": "ওসিয়াহ প্রিভিউ",
   "page": "পৃষ্ঠা",
-  "password_reset_success": "আপনার ইমেলে সফলভাবে নতুন পাসওয়ার্ড পাঠানো হয়েছে!"
+  "password_reset_success": "আপনার ইমেলে সফলভাবে নতুন পাসওয়ার্ড পাঠানো হয়েছে!",
+  "already_exists": "আগে থেকেই আছে"
 }

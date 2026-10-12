@@ -495,8 +495,9 @@ class _ProfileSettingStepOneWidgetState
                       // File name or placeholder
                       Expanded(
                         child: Text(
-                          pickedFile.value?.fileName ??
-                              AppLocalizations.of(context)!.no_file_chosen,
+                          fileUrl != null
+                              ? AppLocalizations.of(context)!.already_exists
+                              : AppLocalizations.of(context)!.no_file_chosen,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(

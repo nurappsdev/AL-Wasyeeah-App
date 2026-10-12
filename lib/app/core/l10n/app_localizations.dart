@@ -3129,6 +3129,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New Password has been Send to your Email Successfully!'**
   String get password_reset_success;
+
+  /// No description provided for @already_exists.
+  ///
+  /// In en, this message translates to:
+  /// **'Already exists'**
+  String get already_exists;
 }
 
 class _AppLocalizationsDelegate
