@@ -29,6 +29,24 @@ class ParentForm {
   String? fatherNidUrl;
   String? motherNidUrl;
 
+  void clear() {
+    fatherName.clear();
+    fatherPassOrNID.clear();
+    selectedFatherProfession.value = null;
+    selectedFatherCountry.value = null;
+    isFatherAlive.value = false;
+    selectedFatherFile.value = null;
+    fatherNidUrl = null;
+
+    motherName.clear();
+    motherPassOrNID.clear();
+    selectedMotherProfession.value = null;
+    selectedMotherCountry.value = null;
+    isMotherAlive.value = false;
+    selectedMotherFile.value = null;
+    motherNidUrl = null;
+  }
+
   void dispose() {
     fatherName.dispose();
     fatherPassOrNID.dispose();

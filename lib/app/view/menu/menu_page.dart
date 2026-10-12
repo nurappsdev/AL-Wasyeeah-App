@@ -66,12 +66,16 @@ class MenuPage extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              Obx(() => CustomText(
-                    text:
-                        "${profileController.profileModel.value.userProfile?.firstName} ${profileController.profileModel.value.userProfile?.lastName}",
-                    fontsize: 18.sp,
-                    fontWeight: FontWeight.w700,
-                  )),
+              Obx(() {
+                final user = profileController.profileModel.value.userProfile;
+                final fullName =
+                    "${user?.firstName ?? ''} ${user?.lastName ?? ''}".trim();
+                return CustomText(
+                  text: fullName.isNotEmpty ? fullName : '',
+                  fontsize: 18.sp,
+                  fontWeight: FontWeight.w700,
+                );
+              }),
               SizedBox(
                 height: 40.h,
               ),

@@ -80,7 +80,7 @@ class HomePage extends GetView<HomeController> {
                               )
                             : Flexible(
                                 child: Text(
-                                  "${profileController.profileModel.value.userProfile?.firstName} ${profileController.profileModel.value.userProfile?.lastName}",
+                                  "${profileController.profileModel.value.userProfile?.firstName ?? ''} ${profileController.profileModel.value.userProfile?.lastName ?? ''}".trim(),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(fontSize: 14.sp),

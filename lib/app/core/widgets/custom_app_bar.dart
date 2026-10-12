@@ -84,12 +84,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       decoration: BoxDecoration(
         boxShadow: [
           // left + right soft shadow
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
-            blurRadius: 8,
-            spreadRadius: 0,
-            offset: const Offset(0, 0),
-          ),
+          // BoxShadow(
+          //   color: Colors.black.withValues(alpha: 0.06),
+          //   blurRadius: 8,
+          //   spreadRadius: 0,
+          //   offset: const Offset(0, 0),
+          // ),
         ],
       ),
       child: AppBar(
@@ -106,7 +106,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.05),
+                            color: Colors.black.withValues(alpha: 0.5),
                             blurRadius: 4,
                             offset: const Offset(0, 2),
                           ),

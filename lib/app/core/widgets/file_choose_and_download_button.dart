@@ -73,14 +73,16 @@ class FileChooseAndDownloadButton extends StatelessWidget {
                       // File name or placeholder
                       Expanded(
                         child: Text(
-                          fileUrl != null
-                              ? AppLocalizations.of(context)!.already_exists
-                              : AppLocalizations.of(context)!.no_file_chosen,
+                          pickedFile.value != null
+                              ? pickedFile.value!.fileName
+                              : (fileUrl != null
+                                  ? AppLocalizations.of(context)!.already_exists
+                                  : AppLocalizations.of(context)!.no_file_chosen),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 13.sp,
-                            color: pickedFile.value == null
+                            color: pickedFile.value == null && fileUrl == null
                                 ? Colors.grey
                                 : AppColors.hitTextColor000000,
                           ),

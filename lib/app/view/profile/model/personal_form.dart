@@ -36,6 +36,31 @@ class PersonalForm {
   String? multiCitizenUrl;
   String? profilePictureUrl;
 
+  void clear() {
+    firstName.clear();
+    lastName.clear();
+    district.clear();
+    nid.clear();
+    tin.clear();
+    multiCitizenPassport.clear();
+
+    selectedMarried.value = null;
+    selectedProfession.value = null;
+    selectedCountry.value = null;
+    selectedMultiCitizenCountry.value = null;
+    selectedGender.value = null;
+
+    selectedNidFile.value = null;
+    selectedTinFile.value = null;
+    selectedMultiCitizenFile.value = null;
+    selectedProfilePictureFile.value = null;
+
+    nidUrl = null;
+    tinUrl = null;
+    multiCitizenUrl = null;
+    profilePictureUrl = null;
+  }
+
   void dispose() {
     firstName.dispose();
     lastName.dispose();

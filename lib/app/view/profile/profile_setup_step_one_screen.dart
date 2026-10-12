@@ -14,6 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
+import 'package:al_wasyeah/app/core/widgets/file_choose_and_download_button.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
 class ProfileSettingStepOneWidget extends StatefulWidget {
@@ -236,44 +237,19 @@ class _ProfileSettingStepOneWidgetState
                   ),
                   SizedBox(height: 4.h),
 
-                  Obx(() {
-                    return _buildFileRow(
-                      pickedFile: form.selectedNidFile,
-                      isDownloading:
-                          (controller.isDownloadingMap['userNidOrPassport'] ??
-                                  false)
-                              .obs,
-                      progress: (controller
-                                  .downloadProgressMap['userNidOrPassport'] ??
-                              0.0)
-                          .obs,
-                      onPickFile: () async {
-                        var result = await FilePickerUtil.pickSingleFile();
-                        if (result != null) form.selectedNidFile.value = result;
-                      },
-                      onDownload: () async {
-                        final isComplete = await controller.downloadFile(
-                          urlPath: controller
-                              .profileModel.value.userProfile?.nidPaperUrl,
-                          filePrefix: 'NID',
-                          type: 'userNidOrPassport',
-                        );
-                        if (isComplete) {
-                          Fluttertoast.showToast(
-                            msg: AppLocalizations.of(context)!
-                                .nid_file_downloaded_successfully,
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.TOP,
-                            timeInSecForIosWeb: 2,
-                            backgroundColor: AppColors.primaryColor,
-                            textColor: AppColors.whiteColor,
-                          );
-                        }
-                      },
-                      fileUrl: controller
-                          .profileModel.value.userProfile?.nidPaperUrl,
-                    );
-                  }),
+                  _buildFileRow(
+                    pickedFile: form.selectedNidFile,
+                    fileUrl: controller
+                        .profileModel.value.userProfile?.nidPaperUrl,
+                    downloadType: 'userNidOrPassport',
+                    prefix: 'NID',
+                    successMessage: AppLocalizations.of(context)!
+                        .nid_file_downloaded_successfully,
+                    onPickFile: () async {
+                      var result = await FilePickerUtil.pickSingleFile();
+                      if (result != null) form.selectedNidFile.value = result;
+                    },
+                  ),
                   CustomText(
                     text: AppLocalizations.of(context)!
                         .only_pdf_jpeg_png_file_are_allowed,
@@ -303,43 +279,20 @@ class _ProfileSettingStepOneWidgetState
                   ),
                   SizedBox(height: 4.h),
 
-                  Obx(() => _buildFileRow(
-                        pickedFile: form.selectedTinFile,
-                        isDownloading:
-                            (controller.isDownloadingMap['userTinOrPassport'] ??
-                                    false)
-                                .obs,
-                        progress: (controller
-                                    .downloadProgressMap['userTinOrPassport'] ??
-                                0.0)
-                            .obs,
-                        onPickFile: () async {
-                          var result = await FilePickerUtil.pickSingleFile();
-                          if (result != null)
-                            form.selectedTinFile.value = result;
-                        },
-                        onDownload: () async {
-                          final isComplete = await controller.downloadFile(
-                            urlPath: controller
-                                .profileModel.value.userProfile?.tinPaperUrl,
-                            filePrefix: 'TIN',
-                            type: 'userTinOrPassport',
-                          );
-                          if (isComplete) {
-                            Fluttertoast.showToast(
-                              msg: AppLocalizations.of(context)!
-                                  .tin_file_downloaded_successfully,
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.TOP,
-                              timeInSecForIosWeb: 2,
-                              backgroundColor: AppColors.primaryColor,
-                              textColor: AppColors.whiteColor,
-                            );
-                          }
-                        },
-                        fileUrl: controller
-                            .profileModel.value.userProfile?.tinPaperUrl,
-                      )),
+                  _buildFileRow(
+                    pickedFile: form.selectedTinFile,
+                    fileUrl: controller
+                        .profileModel.value.userProfile?.tinPaperUrl,
+                    downloadType: 'userTinOrPassport',
+                    prefix: 'TIN',
+                    successMessage: AppLocalizations.of(context)!
+                        .tin_file_downloaded_successfully,
+                    onPickFile: () async {
+                      var result = await FilePickerUtil.pickSingleFile();
+                      if (result != null)
+                        form.selectedTinFile.value = result;
+                    },
+                  ),
                   CustomText(
                     text: AppLocalizations.of(context)!
                         .only_pdf_jpeg_png_file_are_allowed,
@@ -369,44 +322,19 @@ class _ProfileSettingStepOneWidgetState
                   ),
                   SizedBox(height: 4.h),
 
-                  Obx(
-                    () => _buildFileRow(
-                      isDownloading:
-                          (controller.isDownloadingMap['userProfilePicture'] ??
-                                  false)
-                              .obs,
-                      progress: (controller
-                                  .downloadProgressMap['userProfilePicture'] ??
-                              0.0)
-                          .obs,
-                      pickedFile: form.selectedProfilePictureFile,
-                      onPickFile: () async {
-                        var result = await FilePickerUtil.pickSingleFile();
-                        if (result != null)
-                          form.selectedProfilePictureFile.value = result;
-                      },
-                      onDownload: () async {
-                        final isComplete = await controller.downloadFile(
-                          urlPath: controller.profileModel.value.userProfile
-                              ?.profilePictureUrl,
-                          filePrefix: 'ProfilePicture',
-                          type: 'userProfilePicture',
-                        );
-                        if (isComplete) {
-                          Fluttertoast.showToast(
-                            msg: AppLocalizations.of(context)!
-                                .profile_picture_downloaded_successfully,
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.TOP,
-                            timeInSecForIosWeb: 2,
-                            backgroundColor: AppColors.primaryColor,
-                            textColor: AppColors.whiteColor,
-                          );
-                        }
-                      },
-                      fileUrl: controller
-                          .profileModel.value.userProfile?.profilePictureUrl,
-                    ),
+                  _buildFileRow(
+                    pickedFile: form.selectedProfilePictureFile,
+                    fileUrl: controller
+                        .profileModel.value.userProfile?.profilePictureUrl,
+                    downloadType: 'userProfilePicture',
+                    prefix: 'ProfilePicture',
+                    successMessage: AppLocalizations.of(context)!
+                        .profile_picture_downloaded_successfully,
+                    onPickFile: () async {
+                      var result = await FilePickerUtil.pickSingleFile();
+                      if (result != null)
+                        form.selectedProfilePictureFile.value = result;
+                    },
                   ),
                   CustomText(
                     text: AppLocalizations.of(context)!
@@ -438,125 +366,38 @@ class _ProfileSettingStepOneWidgetState
   // ---------------- File row helper ----------------
   Widget _buildFileRow({
     required Rxn<PickedFileResult> pickedFile,
-    required RxBool isDownloading,
-    required RxDouble progress,
     required VoidCallback onPickFile,
-    required VoidCallback onDownload,
     String? fileUrl,
+    required String downloadType,
+    required String prefix,
+    String? successMessage,
   }) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.primaryColor,
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                side: BorderSide(color: AppColors.primaryColor),
-              ),
-              onPressed: onPickFile,
-              child: Obx(
-                () => Row(
-                  children: [
-                    // Icon
-                    Icon(
-                      Icons.attach_file,
-                      size: 20.sp,
-                      color: AppColors.primaryColor,
-                    ),
-                    SizedBox(width: 8.w),
-
-                    // Choose file text
-                    Text(
-                      AppLocalizations.of(context)!.choose_file,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.primaryColor,
-                      ),
-                    ),
-
-                    ...[
-                      SizedBox(width: 12.w),
-
-                      // Divider
-                      Container(
-                        height: 18.h,
-                        width: 1,
-                        color: AppColors.primaryColor.withValues(alpha: 0.4),
-                      ),
-
-                      SizedBox(width: 12.w),
-
-                      // File name or placeholder
-                      Expanded(
-                        child: Text(
-                          fileUrl != null
-                              ? AppLocalizations.of(context)!.already_exists
-                              : AppLocalizations.of(context)!.no_file_chosen,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 13.sp,
-                            color: pickedFile.value == null
-                                ? Colors.grey
-                                : AppColors.hitTextColor000000,
-                          ),
-                        ),
-                      ),
-                    ]
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(width: 6.w),
-          if (fileUrl != null)
-            InkWell(
-              onTap: isDownloading.value ? null : onDownload,
-              child: Container(
-                width: 48.w,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryColor,
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                child: Obx(() {
-                  return isDownloading.value
-                      ? Center(
-                          child: SizedBox(
-                            width:
-                                40.w, // increase size a bit for text visibility
-                            height: 40.w,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                CircularProgressIndicator(
-                                  value: progress.value / 100,
-                                  strokeWidth: 3,
-                                  color: AppColors.whiteColor,
-                                ),
-                                Text(
-                                  "${progress.value.toInt()}%",
-                                  style: TextStyle(
-                                    fontSize: 10.sp,
-                                    color: AppColors.whiteColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      : Icon(Icons.download, color: AppColors.whiteColor);
-                }),
-              ),
-            ),
-        ],
-      ),
-    );
+    return Obx(() => FileChooseAndDownloadButton(
+          pickedFile: pickedFile,
+          isDownloading:
+              (controller.isDownloadingMap[downloadType] ?? false).obs,
+          progress:
+              (controller.downloadProgressMap[downloadType] ?? 0.0).obs,
+          onPickFile: onPickFile,
+          onDownload: () async {
+            final isComplete = await controller.downloadFile(
+              urlPath: fileUrl,
+              filePrefix: prefix,
+              type: downloadType,
+            );
+            if (isComplete) {
+              Fluttertoast.showToast(
+                msg: successMessage ??
+                    AppLocalizations.of(context)!.file_downloaded_successfully,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.TOP,
+                timeInSecForIosWeb: 2,
+                backgroundColor: AppColors.primaryColor,
+                textColor: AppColors.whiteColor,
+              );
+            }
+          },
+          fileUrl: fileUrl,
+        ));
   }
 }

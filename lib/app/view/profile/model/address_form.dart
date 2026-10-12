@@ -20,6 +20,18 @@ class AddressForm {
   final Rxn<CountryModel> selectedOverseasCountry = Rxn<CountryModel>();
   final RxBool isPresentAddressAsPermanentAddress = false.obs;
 
+  void clear() {
+    presentZipCode.clear();
+    presentVillage.clear();
+    presentRoad.clear();
+    permanentZipCode.clear();
+    permanentVillage.clear();
+    permanentRoad.clear();
+    overseasVillage.clear();
+    selectedOverseasCountry.value = null;
+    isPresentAddressAsPermanentAddress.value = false;
+  }
+
   void dispose() {
     presentZipCode.dispose();
     presentVillage.dispose();
