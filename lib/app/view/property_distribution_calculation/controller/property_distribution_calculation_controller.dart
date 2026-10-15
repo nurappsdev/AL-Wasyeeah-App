@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
@@ -8,11 +9,15 @@ import 'package:al_wasyeah/app/core/services/api/api_service.dart';
 import 'package:al_wasyeah/app/core/utils/api_constants.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/app/view/property_distribution_calculation/model/relavant_list_model.dart';
+import 'package:al_wasyeah/app/core/services/download/file_download_service.dart';
 import 'package:intl/intl.dart';
 
-class PropertyDistributionCalculationController extends GetxController with StateMixin<dynamic> {
-  RxList<RelativeModelForPropertyDistribution> allRelatives = <RelativeModelForPropertyDistribution>[].obs;
-  RxList<PropertydistributionResultModel> propertyDistributionResult = <PropertydistributionResultModel>[].obs;
+class PropertyDistributionCalculationController extends GetxController
+    with StateMixin<dynamic> {
+  RxList<RelativeModelForPropertyDistribution> allRelatives =
+      <RelativeModelForPropertyDistribution>[].obs;
+  RxList<PropertydistributionResultModel> propertyDistributionResult =
+      <PropertydistributionResultModel>[].obs;
 
   // Constants for Encrypted Relative IDs
   static const String husbandId = "j1mjV6qs9iab4mbEVNyg0A==";
@@ -46,9 +51,12 @@ class PropertyDistributionCalculationController extends GetxController with Stat
 
   RxString goldUnit = "gram".obs;
   RxString silverUnit = "gram".obs;
+  RxString certificateDownloadUrl = "".obs;
 
   RxBool isCalculateVisible = false.obs;
   RxBool isCalculateLoading = false.obs;
+  RxBool isDownloading = false.obs;
+  RxDouble downloadProgress = 0.0.obs;
 
   RxBool isPublic = false.obs;
 
@@ -75,7 +83,10 @@ class PropertyDistributionCalculationController extends GetxController with Stat
   }
 
   void _checkVisibility() {
-    isCalculateVisible.value = landController.text.isNotEmpty || goldController.text.isNotEmpty || silverController.text.isNotEmpty || moneyController.text.isNotEmpty;
+    isCalculateVisible.value = landController.text.isNotEmpty ||
+        goldController.text.isNotEmpty ||
+        silverController.text.isNotEmpty ||
+        moneyController.text.isNotEmpty;
   }
 
   @override
@@ -91,8 +102,23 @@ class PropertyDistributionCalculationController extends GetxController with Stat
     change(null, status: RxStatus.loading());
     await getRelevantList();
     await loadRelatives();
-    if (!isPublic.value) await getPropertyDistributionCalculationResult();
+    if (!isPublic.value) {
+      await getPropertyDistributionCalculationResult();
+      await getCertificateDownlaodUrl();
+    }
+
     change(null, status: RxStatus.success());
+  }
+
+  Future<void> getCertificateDownlaodUrl() async {
+    try {
+      var response = await ApiService.getData(
+        ApiConstants.getCertificateInfo,
+      );
+      certificateDownloadUrl.value = response.body["certificateUrl"];
+    } catch (e, s) {
+      log("Certificate Downlaod Url Error: $e\nStacktrace: $s");
+    }
   }
 
   Future<void> getRelevantList() async {
@@ -120,19 +146,14 @@ class PropertyDistributionCalculationController extends GetxController with Stat
       var response = await ApiService.getData(
         ApiConstants.getPropertyDistributionCalculationResult,
       );
-      propertyDistributionResult(propertydistributionResultModelFromJson(jsonEncode(response.body)));
+      propertyDistributionResult(
+          propertydistributionResultModelFromJson(jsonEncode(response.body)));
     } catch (e, s) {
       log("Property Distribution Calculation Result Error: $e\nStacktrace: $s");
     }
   }
 
   Future<void> savePropertyDistributionCalculationResult() async {
-    //log(.);
-    // List<Map<String, dynamic>> data = [];
-    // propertyDistributionResult.forEach((element) {
-    //   data.add(element.toJson());
-    // });
-
     try {
       var response = await ApiService.postData(
         ApiConstants.savePropertyDistributionCalculationResult,
@@ -140,39 +161,74 @@ class PropertyDistributionCalculationController extends GetxController with Stat
       );
 
       if (response.statusCode == 200) {
-        ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!.property_distribution_calculation_saved_successfully);
+        ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!
+            .property_distribution_calculation_saved_successfully);
       } else {
-        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.property_distribution_calculation_failed_to_save);
+        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!
+            .property_distribution_calculation_failed_to_save);
       }
     } catch (e, s) {
       log("Property Distribution Calculation Result Error: $e\nStacktrace: $s");
     }
   }
 
-  Future<void> downloadPropertyDistributionCalculationResult() async {
-    ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.comming_soon);
-    // try {
-    //   var response = await ApiClient.getData(
-    //     ApiConstants.downloadPropertyDistributionCalculationResult,
-    //   );
-    //   propertyDistributionResult(propertydistributionResultModelFromJson(jsonEncode(response.body)));
-    // } catch (e, s) {
-    //   log("Property Distribution Calculation Result Error: $e\nStacktrace: $s");
-    // }
+  Future<bool> downloadFile() async {
+    final urlPath = certificateDownloadUrl.value;
+    if (urlPath.isEmpty) {
+      return false;
+    }
+
+    isDownloading.value = true;
+    downloadProgress.value = 0.0;
+
+    final completer = Completer<bool>();
+    final String fileName = 'Property_Distribution_Calculation_Certificate'
+        '${DateFormat("yyyyMMdd_HHmm").format(DateTime.now())}';
+
+    final String filePath = '${ApiConstants.fileDownloadUrl}$urlPath';
+
+    FileDownloadUtil.downloadFile(
+      filePath,
+      fileName,
+      (progress) {
+        downloadProgress.value = progress;
+
+        if (progress >= 100) {
+          isDownloading.value = false;
+          log("Download Property Distribution Calculation Certificate Successful");
+
+          if (!completer.isCompleted) {
+            completer.complete(true);
+          }
+        }
+      },
+    ).catchError((e) {
+      isDownloading.value = false;
+      log('Download Property Distribution Calculation Certificate failed: $e');
+      if (!completer.isCompleted) {
+        completer.complete(false);
+      }
+    });
+
+    return completer.future;
   }
 
   List<RelativeModelForPropertyDistribution> get filteredRelatives {
-    return allRelatives.where((rel) => !hiddenRelativeIds.contains(rel.encrypted)).toList();
+    return allRelatives
+        .where((rel) => !hiddenRelativeIds.contains(rel.encrypted))
+        .toList();
   }
 
   void toggleCheck(String encryptedId, bool? value) {
     if (value == true) {
       if (encryptedId == husbandId && isChecked[wifeId] == true) {
-        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.husband_and_wife_cant_be_selected_together);
+        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!
+            .husband_and_wife_cant_be_selected_together);
         isChecked[wifeId] = false;
         counts[wifeId] = 0;
       } else if (encryptedId == wifeId && isChecked[husbandId] == true) {
-        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.husband_and_wife_cant_be_selected_together);
+        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!
+            .husband_and_wife_cant_be_selected_together);
         isChecked[husbandId] = false;
         counts[husbandId] = 0;
       }
@@ -180,7 +236,11 @@ class PropertyDistributionCalculationController extends GetxController with Stat
       if ((counts[encryptedId] ?? 0) == 0) counts[encryptedId] = 1;
 
       // Handle special limit for Husband, Father, Mother, Grandfather
-      if ((encryptedId == husbandId || encryptedId == fatherId || encryptedId == motherId || encryptedId == grandfatherId) && (counts[encryptedId] ?? 0) > 1) {
+      if ((encryptedId == husbandId ||
+              encryptedId == fatherId ||
+              encryptedId == motherId ||
+              encryptedId == grandfatherId) &&
+          (counts[encryptedId] ?? 0) > 1) {
         counts[encryptedId] = 1;
       }
     } else {
@@ -193,7 +253,10 @@ class PropertyDistributionCalculationController extends GetxController with Stat
   void increment(String encryptedId) {
     if (isChecked[encryptedId] != true) return;
 
-    if (encryptedId == husbandId || encryptedId == fatherId || encryptedId == motherId || encryptedId == grandfatherId) {
+    if (encryptedId == husbandId ||
+        encryptedId == fatherId ||
+        encryptedId == motherId ||
+        encryptedId == grandfatherId) {
       if ((counts[encryptedId] ?? 0) >= 1) return;
     }
 
@@ -265,12 +328,17 @@ class PropertyDistributionCalculationController extends GetxController with Stat
     };
 
     if (relatives.isEmpty) {
-      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.please_select_at_least_one_relative);
+      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!
+          .please_select_at_least_one_relative);
       return;
     }
 
-    if (landController.text.isEmpty || goldController.text.isEmpty || silverController.text.isEmpty || moneyController.text.isEmpty) {
-      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.please_fill_all_the_fields);
+    if (landController.text.isEmpty ||
+        goldController.text.isEmpty ||
+        silverController.text.isEmpty ||
+        moneyController.text.isEmpty) {
+      ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.please_fill_all_the_fields);
       return;
     }
 
@@ -300,19 +368,24 @@ class PropertyDistributionCalculationController extends GetxController with Stat
 
     try {
       isCalculateLoading.value = true;
-      var response = await ApiService.postData(ApiConstants.propertyDistributionCalculationResult, finalOutput);
+      var response = await ApiService.postData(
+          ApiConstants.propertyDistributionCalculationResult, finalOutput);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!.calculation_fetched_successfully);
-        propertyDistributionResult.value = propertydistributionResultModelFromJson(jsonEncode(response.body));
+        ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!
+            .calculation_fetched_successfully);
+        propertyDistributionResult.value =
+            propertydistributionResultModelFromJson(jsonEncode(response.body));
 
         // Reset all inputs after success if needed
         resetInputs();
       } else {
-        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_fetch_calculation_result);
+        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!
+            .failed_to_fetch_calculation_result);
       }
     } catch (e, s) {
       log("Property Calculation Error: $e\nStacktrace: $s");
-      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.something_went_wrong);
+      ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.something_went_wrong);
     } finally {
       isCalculateLoading.value = false;
     }
@@ -353,7 +426,8 @@ class PropertyDistributionCalculationController extends GetxController with Stat
   ) {
     if (Get.locale!.languageCode == 'bn') {
       // Bangla Ordinal Logic
-      final String bengaliNumber = NumberFormat.decimalPattern(Get.locale!.languageCode).format(n);
+      final String bengaliNumber =
+          NumberFormat.decimalPattern(Get.locale!.languageCode).format(n);
 
       // Bangla ordinals often use specific words or suffixes (১ম, ২য়, ৩য়, ৪র্থ...)
       const suffixes = {1: 'ম', 2: 'য়', 3: 'য়', 4: 'র্থ'};

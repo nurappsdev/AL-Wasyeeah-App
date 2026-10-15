@@ -4,7 +4,8 @@ class ApiConstants {
   static const String baseUrl = "https://api.wasiyyat.com/api/v1";
   static const String imageUrl = "$baseUrl/raw/";
   static const String fileDownloadUrl = "$baseUrl/raw-media-info/";
-  static String securityQuestion = "/user/securityQuestionList?lang=$currentLang";
+  static String securityQuestion =
+      "/user/securityQuestionList?lang=$currentLang";
 
   // sign up
   static const String signUpEndPoint = "/user/register";
@@ -19,18 +20,24 @@ class ApiConstants {
   // witness
   static const String yourWitness = "/user/get-witness";
   static const String witnessedByAnotherUser = "/get-witnessByAnotherUser";
-  static String addYourWitness(String email) => "/user/assign-witness?email=$email";
+  static String addYourWitness(String email) =>
+      "/user/assign-witness?email=$email";
   static const String saveWitness = "/user/save-nominee";
-  static String deleteWitness(String requestKey) => "/user/remove-witness?requestKey=$requestKey";
-  static String searchWitness(String email) => "/user/search-witness-nominee?email=$email&isWitness=true";
+  static String deleteWitness(String requestKey) =>
+      "/user/remove-witness?requestKey=$requestKey";
+  static String searchWitness(String email) =>
+      "/user/search-witness-nominee?email=$email&isWitness=true";
 
   // nominess
   static const String yourNominee = "/user/get-nominees";
   static const String nomineedByAnotherUser = "/get-nomineeByAnotherUser";
-  static String addYourNominee(String email) => "/user/assign-nominee?email=$email";
+  static String addYourNominee(String email) =>
+      "/user/assign-nominee?email=$email";
   static const String saveNominee = "/user/save-nominee";
-  static String deleteNominee(String requestKey) => "/user/remove-nominee?requestKey=$requestKey";
-  static String searchNominee(String email) => "/user/search-witness-nominee?email=$email&isWitness=false";
+  static String deleteNominee(String requestKey) =>
+      "/user/remove-nominee?requestKey=$requestKey";
+  static String searchNominee(String email) =>
+      "/user/search-witness-nominee?email=$email&isWitness=false";
 
   static const String accessControl = "/getUsersByRole?isWitness=";
   static const String accessFeature = "/getContexts";
@@ -43,9 +50,11 @@ class ApiConstants {
   static const String changeOrder = "/user/changeOrder";
 
   static String get zakatEndPoint => "/zakatCalculator?lang=$currentLang";
-  static String salatTimeEndPoint(String lat, String long) => "/mobile/getSalahTime?latitude=$lat&longitude=$long";
+  static String salatTimeEndPoint(String lat, String long) =>
+      "/mobile/getSalahTime?latitude=$lat&longitude=$long";
 
-  static const String addFeatureNomineeWitnessPoint = "/assignContext?isWitness=";
+  static const String addFeatureNomineeWitnessPoint =
+      "/assignContext?isWitness=";
   static const String getUserEndPoint = "/auth/session";
   static String updateProfileEndPoint(String id) => "/users/$id";
   static String setPasswordEndPoint(String id) => "/users/$id";
@@ -63,13 +72,18 @@ class ApiConstants {
   static String branchList = "/lookup/branchList";
   static String wealthList = "/lookup/wealthList?lang=$currentLang";
   static String getProfile = "/user/getProfileData";
-  static String documentTypeList(String wealthId) => "/lookup/documentTypeList?lang=$currentLang&wealthId=$wealthId";
+  static String documentTypeList(String wealthId) =>
+      "/lookup/documentTypeList?lang=$currentLang&wealthId=$wealthId";
   static String inappnotificationList = '/get-notification';
   static String profileUpdate = "/lookup/saveProfileData";
   static String relevantList = "/relevantList?lang=$currentLang";
-  static String propertyDistributionCalculationResult = "/propertyDistributeResult?lang=$currentLang";
-  static String getPropertyDistributionCalculationResult = "/getPropertyDistributeResult";
-  static String savePropertyDistributionCalculationResult = "/savePropertyDistributeResult";
+  static String propertyDistributionCalculationResult =
+      "/propertyDistributeResult?lang=$currentLang";
+  static String getPropertyDistributionCalculationResult =
+      "/getPropertyDistributeResult";
+  static String getCertificateInfo = "/user/getCertificateInfo";
+  static String savePropertyDistributionCalculationResult =
+      "/savePropertyDistributeResult";
   static String inappNOtificationAcceptRejectRequest = "/accept-reject-request";
   static const String getMenus = "/user/menu/getMenus";
   // contact us
