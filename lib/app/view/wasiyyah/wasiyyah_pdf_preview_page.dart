@@ -40,14 +40,16 @@ class _WasiyyahPdfPreviewPageState extends State<WasiyyahPdfPreviewPage> {
     try {
       final source = File(_filePath!);
       if (!await source.exists()) {
-        ToastMessage.errorMessageShowToster(AppLocalizations.of(context)!.no_content_available);
+        ToastMessage.errorMessageShowToster(
+            AppLocalizations.of(context)!.no_content_available);
         return;
       }
 
       final targetDir = Directory("/storage/emulated/0/Download/AlWasyeeah");
 
       await targetDir.create(recursive: true);
-      final targetPath = "${targetDir.path}${Platform.pathSeparator}Wasiyyah_legal.pdf";
+      final targetPath =
+          "${targetDir.path}${Platform.pathSeparator}Wasiyyah_legal.pdf";
       await source.copy(targetPath);
       ToastMessage.successMessageShowToster(
         AppLocalizations.of(context)!.file_downloaded_successfully,
@@ -75,7 +77,8 @@ class _WasiyyahPdfPreviewPageState extends State<WasiyyahPdfPreviewPage> {
   }
 
   Future<bool> _isAndroid11OrAbove() async {
-    return (await Permission.manageExternalStorage.isGranted) || Platform.version.contains('API 30');
+    return (await Permission.manageExternalStorage.isGranted) ||
+        Platform.version.contains('API 30');
   }
 
   @override
@@ -118,14 +121,16 @@ class _WasiyyahPdfPreviewPageState extends State<WasiyyahPdfPreviewPage> {
             },
             onPageError: (page, error) {
               setState(() {
-                _error = "${AppLocalizations.of(context)!.page}" + " $page: $error";
+                _error =
+                    "${AppLocalizations.of(context)!.page}" + " $page: $error";
               });
             },
             onPageChanged: (page, total) {
               setState(() => _currentPage = page ?? 0);
             },
           ),
-          if (!_isReady && _error == null) const Center(child: CircularProgressIndicator()),
+          if (!_isReady && _error == null)
+            const Center(child: CircularProgressIndicator()),
           if (_error != null) Center(child: Text(_error!)),
         ],
       ),

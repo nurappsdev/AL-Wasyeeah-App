@@ -24,11 +24,11 @@ class WasyyahPage extends GetView<WasyyahController> {
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.wasiyyah_ichanama_title,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.qr_code_scanner, color: Colors.black),
-            tooltip: "QR & Barcode Tester",
-            onPressed: () => _openQrBarcodeTestPage(),
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.qr_code_scanner, color: Colors.black),
+          //   tooltip: "QR & Barcode Tester",
+          //   onPressed: () => _openQrBarcodeTestPage(),
+          // ),
           Padding(
             padding: EdgeInsets.only(right: 16.w),
             child: CustomButton(
@@ -113,16 +113,11 @@ class WasyyahPage extends GetView<WasyyahController> {
         "dob": user.value.userProfile?.dob ?? "N/A",
         "prof":
             personalData.value.selectedProfession.value?.profession ?? "N/A",
-        "gn":
-            personalData.value.selectedGender.value?.gender ?? "N/A",
-        "ms":
-            personalData.value.selectedMarried.value?.maritalType ?? "N/A",
-        "p_addr":
-            user.value.userProfile?.permanentAddress ?? "N/A",
-        "pr_addr":
-            user.value.userProfile?.presentAddress ?? "N/A",
-        "cnt":
-            personalData.value.selectedCountry.value?.country ?? "N/A",
+        "gn": personalData.value.selectedGender.value?.gender ?? "N/A",
+        "ms": personalData.value.selectedMarried.value?.maritalType ?? "N/A",
+        "p_addr": user.value.userProfile?.permanentAddress ?? "N/A",
+        "pr_addr": user.value.userProfile?.presentAddress ?? "N/A",
+        "cnt": personalData.value.selectedCountry.value?.country ?? "N/A",
         "nid": personalData.value.nid.text,
         "tin": personalData.value.tin.text,
       };
