@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/app/core/utils/extensions.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
