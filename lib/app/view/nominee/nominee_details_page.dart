@@ -241,17 +241,20 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                       if (canRemove != null && !canRemove!)
                         Container(
                           width: double.infinity,
-                          child: CustomButton(
-                            title: AppLocalizations.of(context)!.add_nominee,
-                            color: AppColors.primaryColor,
-                            titlecolor: AppColors.whiteColor,
-                            onpress: nominee.email == null
-                                ? null
-                                : () {
-                                    controller.addYourNominee(
-                                        email: nominee.email!);
-                                  },
-                          ),
+                          child: Obx(() => CustomButton(
+                                title:
+                                    AppLocalizations.of(context)!.add_nominee,
+                                color: AppColors.primaryColor,
+                                titlecolor: AppColors.whiteColor,
+                                loading: controller
+                                    .addNomineeStatus.value.isLoading,
+                                onpress: nominee.email == null
+                                    ? null
+                                    : () {
+                                        controller.addYourNominee(
+                                            email: nominee.email!);
+                                      },
+                              )),
                         ),
                     ],
                   ),

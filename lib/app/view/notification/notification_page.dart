@@ -211,7 +211,7 @@ class NotificationPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(6.r),
                               ),
                               child: Text(
-                                "Witness Request",
+                                AppLocalizations.of(context)!.witness_request,
                                 style: TextStyle(
                                   fontSize: 10.5.sp,
                                   fontWeight: FontWeight.w600,
@@ -243,7 +243,7 @@ class NotificationPage extends StatelessWidget {
                                   ),
                                   SizedBox(width: 4.w),
                                   Text(
-                                    "NEW",
+                                    AppLocalizations.of(context)!.new_text.toUpperCase(),
                                     style: TextStyle(
                                       fontSize: 9.5.sp,
                                       fontWeight: FontWeight.bold,

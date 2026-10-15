@@ -6,6 +6,7 @@ import 'package:al_wasyeah/app/core/utils/api_constants.dart';
 import 'package:al_wasyeah/app/core/utils/app_colors.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
+import 'package:al_wasyeah/app/core/widgets/app_error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -215,20 +216,12 @@ class NomineesPage extends GetView<NomineeController> {
 
   /// ================= ERROR =================
   Widget _buildErrorState(BuildContext context, String error) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(error),
-          TextButton(
-            onPressed: () {
-              controller.getNomineeData();
-              controller.getNomineesYouData();
-            },
-            child: Text(AppLocalizations.of(context)!.try_again),
-          )
-        ],
-      ),
+    return AppErrorWidget(
+      message: error.isNotEmpty ? error : "Failed to load nominee data",
+      onRetry: () {
+        controller.getNomineeData();
+        controller.getNomineesYouData();
+      },
     );
   }
 

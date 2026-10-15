@@ -543,5 +543,11 @@
   "wasiyyah_preview": "ওসিয়াহ প্রিভিউ",
   "page": "পৃষ্ঠা",
   "password_reset_success": "আপনার ইমেলে সফলভাবে নতুন পাসওয়ার্ড পাঠানো হয়েছে!",
-  "already_exists": "আগে থেকেই আছে"
+  "already_exists": "আগে থেকেই আছে",
+  "create_wasyyah": "ওসিয়াহ তৈরি করুন",
+  "new_text": "নতুন",
+  "witness_request": "সাক্ষীর অনুরোধ",
+  "witness_panel": "সাক্ষী প্যানেল",
+  "nominee_panel": "নমিনী প্যানেল",
+  "dark_mode": "ডার্ক মোড"
 }

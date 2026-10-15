@@ -4,10 +4,12 @@ import 'package:al_wasyeah/app/view/access_control/model/access_control_user_mod
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 import 'package:al_wasyeah/app/core/utils/app_colors.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_dropdown.dart';
+import 'package:al_wasyeah/app/core/widgets/app_error_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class AccessControlPage extends GetView<AccessControlController> {
   const AccessControlPage({super.key});
@@ -77,11 +79,18 @@ class AccessControlPage extends GetView<AccessControlController> {
             SizedBox(height: 16.h),
             Expanded(
               child: Obx(() {
-                if (controller.isUsersLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
+                final status = controller.usersStatus.value;
+                if (controller.isUsersLoading.value || status.isLoading) {
+                  return _buildUsersSkeleton(context);
+                }
+                if (status.isError) {
+                  return AppErrorWidget(
+                    message: status.errorMessage,
+                    onRetry: () => controller.getUsersByRole(),
+                  );
                 }
                 if (controller.selectedRole.value != null && controller.usersList.isEmpty) {
-                  return  Center(child: Text(AppLocalizations.of(context)!.no_data));
+                  return Center(child: Text(AppLocalizations.of(context)!.no_data));
                 }
                 return ListView.builder(
                   itemCount: controller.usersList.length,
@@ -94,6 +103,29 @@ class AccessControlPage extends GetView<AccessControlController> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildUsersSkeleton(BuildContext context) {
+    return Skeletonizer(
+      enabled: true,
+      child: ListView.builder(
+        itemCount: 4,
+        itemBuilder: (context, index) {
+          return Card(
+            margin: EdgeInsets.only(bottom: 12.h),
+            elevation: 2,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+            child: ListTile(
+              title: Text(
+                "Loading User Name...",
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.sp),
+              ),
+              trailing: const Icon(Icons.expand_more),
+            ),
+          );
+        },
       ),
     );
   }
@@ -113,14 +145,24 @@ class AccessControlPage extends GetView<AccessControlController> {
         children: [
           Obx(() {
             if (controller.loadingContextUsers.contains(user.requestKey)) {
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: const Center(child: CircularProgressIndicator()),
+              return Skeletonizer(
+                enabled: true,
+                child: Column(
+                  children: List.generate(
+                    4,
+                    (index) => CheckboxListTile(
+                      title: const Text("Context Feature Option"),
+                      value: false,
+                      onChanged: null,
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                  ),
+                ),
               );
             }
             if (controller.allContexts.isEmpty) {
               return Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Text(AppLocalizations.of(context)!.no_data),
               );
             }
@@ -139,7 +181,7 @@ class AccessControlPage extends GetView<AccessControlController> {
                     controlAffinity: ListTileControlAffinity.leading,
                     activeColor: AppColors.primaryColor,
                   );
-                }).toList(),
+                }),
               ],
             );
           }),

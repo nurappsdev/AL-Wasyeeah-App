@@ -59,43 +59,60 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
     super.dispose();
   }
 
-  ///==================get Witness===========================
+  ///==================get Nominee===========================
 
   Future<void> getNomineeData() async {
     nomineeStatus.value = RxStatus.loading();
-    var response = await ApiService.getData(ApiConstants.yourNominee);
+    try {
+      final response = await ApiService.getData(ApiConstants.yourNominee);
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      nomineeData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        nomineeData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
-      /// ✅ handle empty vs success
-      if (nomineeData.isEmpty) {
-        nomineeStatus.value = RxStatus.empty();
+        /// ✅ handle empty vs success
+        if (nomineeData.isEmpty) {
+          nomineeStatus.value = RxStatus.empty();
+        } else {
+          nomineeStatus.value = RxStatus.success();
+        }
       } else {
-        nomineeStatus.value = RxStatus.success();
+        nomineeStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to load nominee data");
       }
-    } else {
-      nomineeStatus(RxStatus.error(response.body));
+    } catch (e) {
+      nomineeStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+    } finally {
+      if (nomineeStatus.value.isLoading) {
+        nomineeStatus.value = RxStatus.empty();
+      }
     }
   }
 
-  ///==================get witness you===========================
+  ///==================get nominee you===========================
 
   Future<void> getNomineesYouData() async {
-    nomineesYouStatus(RxStatus.loading());
+    nomineesYouStatus.value = RxStatus.loading();
+    try {
+      final response = await ApiService.getData(ApiConstants.nomineedByAnotherUser);
 
-    var response = await ApiService.getData(ApiConstants.nomineedByAnotherUser);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        nomineesYouData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      nomineesYouData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
-
-      if (nomineesYouData.isEmpty) {
-        nomineesYouStatus(RxStatus.empty());
+        if (nomineesYouData.isEmpty) {
+          nomineesYouStatus.value = RxStatus.empty();
+        } else {
+          nomineesYouStatus.value = RxStatus.success();
+        }
       } else {
-        nomineesYouStatus(RxStatus.success());
+        nomineesYouStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to load nominees you data");
       }
-    } else {
-      nomineesYouStatus(RxStatus.error(response.body));
+    } catch (e) {
+      nomineesYouStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+    } finally {
+      if (nomineesYouStatus.value.isLoading) {
+        nomineesYouStatus.value = RxStatus.empty();
+      }
     }
   }
 
@@ -103,44 +120,66 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
     final email = searchNomineeController.text.trim();
     if (email.isEmpty) return;
 
-    searchNomineeStatus(RxStatus.loading());
+    searchNomineeStatus.value = RxStatus.loading();
+    try {
+      final response = await ApiService.getData(ApiConstants.searchNominee(email));
 
-    var response = await ApiService.getData(ApiConstants.searchNominee(email));
-
-    if (response.statusCode == 200) {
-      final data = response.body;
-      searchedNominee.value = GetWitnessNomineeResponseModel.fromJson(data);
-      if (data.isEmpty) {
-        searchNomineeStatus(RxStatus.empty());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = response.body;
+        if (data == null || (data is Map && data.isEmpty)) {
+          searchedNominee.value = null;
+          searchNomineeStatus.value = RxStatus.empty();
+        } else {
+          searchedNominee.value = GetWitnessNomineeResponseModel.fromJson(data);
+          searchNomineeStatus.value = RxStatus.success();
+        }
       } else {
-        searchNomineeStatus(RxStatus.success());
+        searchNomineeStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to search nominee");
+        ToastMessage.errorMessageShowToster(response.body?.toString() ?? "Failed to search nominee");
       }
-    } else {
-      searchNomineeStatus(RxStatus.error(response.body));
-      ToastMessage.errorMessageShowToster(response.body);
+    } catch (e) {
+      searchNomineeStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+    } finally {
+      if (searchNomineeStatus.value.isLoading) {
+        searchNomineeStatus.value = RxStatus.empty();
+      }
     }
   }
 
-  ///==================delete witness===========================
+  ///==================delete nominee===========================
 
-  deleteNominee({required String requestKey}) async {
-    deleteNomineeStatus(RxStatus.loading());
-    var response = await ApiService.getData("${ApiConstants.deleteNominee(requestKey)}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      ToastMessage.successMessageShowToster(
-        AppLocalizations.of(Get.context!)!.nominee_remove_successfully,
-      );
-      getNomineeData();
-      deleteNomineeStatus(RxStatus.success());
-    } else {
-      deleteNomineeStatus(RxStatus.error(response.body));
-      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_delete_nominee);
+  Future<bool> deleteNominee({required String requestKey}) async {
+    deleteNomineeStatus.value = RxStatus.loading();
+    try {
+      final response = await ApiService.getData(ApiConstants.deleteNominee(requestKey));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ToastMessage.successMessageShowToster(
+          AppLocalizations.of(Get.context!)?.nominee_remove_successfully ?? "Nominee removed successfully",
+        );
+        deleteNomineeStatus.value = RxStatus.success();
+        await getNomineeData();
+        return true;
+      } else {
+        deleteNomineeStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to delete nominee");
+        ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)?.failed_to_delete_nominee ?? "Failed to delete nominee",
+        );
+        return false;
+      }
+    } catch (e) {
+      deleteNomineeStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+      return false;
+    } finally {
+      if (deleteNomineeStatus.value.isLoading) {
+        deleteNomineeStatus.value = RxStatus.empty();
+      }
     }
-    try {} catch (e) {}
   }
 
   ///================== Save nominee ===========================
-  Future<void> saveNominee({
+  Future<bool> saveNominee({
     required String userName,
     required String mobileNo,
     required String email,
@@ -149,7 +188,7 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
     required String presentAddress,
     required String permanentAddress,
   }) async {
-    addNomineeStatus(RxStatus.loading());
+    addNomineeStatus.value = RxStatus.loading();
 
     final body = {
       "name": userName.trim(),
@@ -161,36 +200,73 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
       "permanentAddress": permanentAddress.trim(),
     };
 
-    final response = await ApiService.postData(
-      ApiConstants.saveNominee,
-      body,
-    );
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      ToastMessage.successMessageShowToster(
-        AppLocalizations.of(Get.context!)!.nominee_saved_successfully,
+    try {
+      final response = await ApiService.postData(
+        ApiConstants.saveNominee,
+        body,
       );
-    } else {
-      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.save_failed_try_again);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ToastMessage.successMessageShowToster(
+          AppLocalizations.of(Get.context!)?.nominee_saved_successfully ?? "Nominee saved successfully",
+        );
+        addNomineeStatus.value = RxStatus.success();
+        await getNomineeData();
+        Get.back();
+        return true;
+      } else {
+        addNomineeStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to save nominee");
+        ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)?.save_failed_try_again ?? "Save failed, try again",
+        );
+        return false;
+      }
+    } catch (e) {
+      addNomineeStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+      return false;
+    } finally {
+      if (addNomineeStatus.value.isLoading) {
+        addNomineeStatus.value = RxStatus.empty();
+      }
     }
   }
 
-  ///================== Add  witness ===========================
-  Future<void> addYourNominee({
+  ///================== Add nominee ===========================
+  Future<bool> addYourNominee({
     required String email,
   }) async {
-    addNomineeStatus(RxStatus.loading());
+    addNomineeStatus.value = RxStatus.loading();
 
-    final response = await ApiService.getData(
-      ApiConstants.addYourNominee(email),
-    );
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      ToastMessage.successMessageShowToster(
-        AppLocalizations.of(Get.context!)!.nominee_added_successfully,
+    try {
+      final response = await ApiService.getData(
+        ApiConstants.addYourNominee(email),
       );
-    } else {
-      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.add_failed_try_again);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ToastMessage.successMessageShowToster(
+          AppLocalizations.of(Get.context!)?.nominee_added_successfully ?? "Nominee added successfully",
+        );
+        addNomineeStatus.value = RxStatus.success();
+        await getNomineeData();
+        return true;
+      } else {
+        addNomineeStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to add nominee");
+        ToastMessage.errorMessageShowToster(
+          response.body?.toString() ??
+              AppLocalizations.of(Get.context!)?.add_failed_try_again ??
+              "Failed to add nominee",
+        );
+        return false;
+      }
+    } catch (e) {
+      addNomineeStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+      return false;
+    } finally {
+      if (addNomineeStatus.value.isLoading) {
+        addNomineeStatus.value = RxStatus.empty();
+      }
     }
   }
 

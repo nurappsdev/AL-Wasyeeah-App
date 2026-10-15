@@ -180,5 +180,11 @@
   "Personal Details": "personal_details",
   "Language": "language",
   "User Profile": "user_profile",
-  "Log Out": "log_out"
+  "Log Out": "log_out",
+  "Create Wasyyah": "create_wasyyah",
+  "New": "new_text",
+  "Witness Request": "witness_request",
+  "Witness Panel": "witness_panel",
+  "Nominee Panel": "nominee_panel",
+  "Dark Mode": "dark_mode"
 }

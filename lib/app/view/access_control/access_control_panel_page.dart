@@ -9,6 +9,7 @@ import 'package:al_wasyeah/app/view/property_distribution_calculation/model/prop
 import 'package:al_wasyeah/app/core/utils/app_colors.dart';
 import 'package:al_wasyeah/app/core/services/pdf/pdf_service.dart';
 import 'package:al_wasyeah/app/view/wasiyyah/model/wasyyah_model.dart';
+import 'package:al_wasyeah/app/core/widgets/app_error_widget.dart';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class AccessControlPanelPage extends StatefulWidget {
   const AccessControlPanelPage({super.key});
@@ -51,12 +53,24 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
         final status = accessControlController.contextsPanelDataStatus.value;
 
         if (status.isLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return _buildSkeletonLoading(context);
         }
 
-        if (status.isEmpty || status.isError) {
+        if (status.isError) {
+          return AppErrorWidget(
+            message: status.errorMessage,
+            onRetry: () {
+              final arg = Get.arguments;
+              if (arg != null) {
+                accessControlController.fetchContextsPanelData(arg.toString());
+              }
+            },
+          );
+        }
+
+        if (status.isEmpty) {
           return Center(
-            child: Text(status.errorMessage ?? AppLocalizations.of(context)!.no_data),
+            child: Text(AppLocalizations.of(context)!.no_data),
           );
         }
 
@@ -374,24 +388,128 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                         },
                       ),
                     ),
-                  if ((_isGeneratingPdf || !_pdfIsReady) && _pdfError == null) Expanded(child: const Center(child: CircularProgressIndicator())),
+                  if ((_isGeneratingPdf || !_pdfIsReady) && _pdfError == null)
+                    Expanded(
+                      child: Skeletonizer(
+                        enabled: true,
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          margin: EdgeInsets.all(8.w),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                        ),
+                      ),
+                    ),
                   if (_pdfError != null) Center(child: Text(_pdfError!)),
                 ],
               ),
             ),
+            if (_pdfIsReady)
+              Padding(
+                padding: EdgeInsets.only(top: 8.h),
+                child: Center(
+                  child: Text(
+                    "${AppLocalizations.of(context)!.page} ${(_pdfCurrentPage + 1).toLocal()} of ${_pdfTotalPages.toLocal()}",
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSkeletonLoading(BuildContext context) {
+    return Skeletonizer(
+      enabled: true,
+      child: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Column(
+          children: [
+            SizedBox(height: 20.h),
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+              child: Padding(
+                padding: EdgeInsets.all(16.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.account_balance_wallet, color: AppColors.primaryColor),
+                        SizedBox(width: 8.w),
+                        Text(
+                          "Zakat Information Summary",
+                          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    const Divider(),
+                    _resultRow("Total Asset", "100000 USD"),
+                    _resultRow("Zakat Amount", "2500 USD"),
+                    _resultRow("Last Calculated", "01 Jan 2026"),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 20.h),
+            Card(
+              elevation: 4,
+              margin: EdgeInsets.only(bottom: 16.h),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+              child: Padding(
+                padding: EdgeInsets.all(16.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(width: 4.w, height: 24.h, color: Colors.blue),
+                        SizedBox(width: 8.w),
+                        Text("Property Relative Shareholder", style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    const Divider(),
+                    _resultRow("Portion Part", "25%"),
+                    _resultRow("Total Share", "50000 USD"),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 12.h),
+            Card(
+              elevation: 4,
+              margin: EdgeInsets.symmetric(vertical: 12.h),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+              child: Padding(
+                padding: EdgeInsets.all(12.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Wasiyyah Preview", style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                    SizedBox(height: 12.h),
+                    Container(
+                      height: 240.h,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 40.h),
           ],
         ),
       ),
     );
   }
 }
-
-
- // if (_pdfIsReady)
-            //   Padding(
-            //     padding: EdgeInsets.only(top: 8.h),
-            //     child: Text(
-            //       "${AppLocalizations.of(context)!.page} ${(_pdfCurrentPage + 1).toLocal()} of ${_pdfTotalPages.toLocal()}",
-            //       textAlign: TextAlign.center,
-            //     ),
-            //   ),

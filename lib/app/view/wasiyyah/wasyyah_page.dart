@@ -56,7 +56,7 @@ class WasyyahPage extends GetView<WasyyahController> {
                     text: AppLocalizations.of(context)!.no_content_available),
                 SizedBox(height: 16.h),
                 CustomButton(
-                  title: "Create Wasyyah",
+                  title: AppLocalizations.of(context)!.create_wasyyah,
                   onpress: () => _showCreateWasiyyahBottomSheet(context),
                   color: AppColors.primaryColor,
                   width: 200.w,
@@ -101,7 +101,7 @@ class WasyyahPage extends GetView<WasyyahController> {
               Padding(
                 padding: EdgeInsets.only(bottom: 16.h),
                 child: CustomButton(
-                  title: "Create Wasyyah",
+                  title: AppLocalizations.of(context)!.create_wasyyah,
                   width: double.infinity,
                   onpress: () => _showCreateWasiyyahBottomSheet(context),
                   color: AppColors.primaryColor,
@@ -411,7 +411,7 @@ class WasyyahPage extends GetView<WasyyahController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      text: "Create Wasyyah",
+                      text: AppLocalizations.of(context)!.create_wasyyah,
                       fontsize: 18.sp,
                       fontWeight: FontWeight.w700,
                     ),

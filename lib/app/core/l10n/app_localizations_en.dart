@@ -1569,4 +1569,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get already_exists => 'Already exists';
+
+  @override
+  String get create_wasyyah => 'Create Wasyyah';
+
+  @override
+  String get new_text => 'New';
+
+  @override
+  String get witness_request => 'Witness Request';
+
+  @override
+  String get witness_panel => 'Witness Panel';
+
+  @override
+  String get nominee_panel => 'Nominee Panel';
+
+  @override
+  String get dark_mode => 'Dark Mode';
 }

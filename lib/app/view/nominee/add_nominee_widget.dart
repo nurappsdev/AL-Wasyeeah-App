@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class AddNomineeWidget extends GetView<NomineeController> {
   AddNomineeWidget({super.key});
@@ -80,20 +81,33 @@ class AddNomineeWidget extends GetView<NomineeController> {
                     suffixIcon: AppConstants.emailValidate.hasMatch(controller.searchText.value)
                         ? Padding(
                             padding: EdgeInsets.all(8.h),
-                            child: ElevatedButton(
-                              onPressed: controller.searchNominee,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColor,
-                                foregroundColor: Colors.white,
-                                padding: EdgeInsets.symmetric(horizontal: 12.w),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
+                            child: Obx(
+                              () => ElevatedButton(
+                                onPressed: controller.searchNomineeStatus.value.isLoading
+                                    ? null
+                                    : controller.searchNominee,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primaryColor,
+                                  foregroundColor: Colors.white,
+                                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                  ),
+                                  visualDensity: VisualDensity.compact,
                                 ),
-                                visualDensity: VisualDensity.compact,
-                              ),
-                              child: Text(
-                                AppLocalizations.of(context)!.search,
-                                style: TextStyle(fontSize: 12.sp),
+                                child: controller.searchNomineeStatus.value.isLoading
+                                    ? SizedBox(
+                                        width: 16.h,
+                                        height: 16.h,
+                                        child: const CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                        ),
+                                      )
+                                    : Text(
+                                        AppLocalizations.of(context)!.search,
+                                        style: TextStyle(fontSize: 12.sp),
+                                      ),
                               ),
                             ),
                           )
@@ -104,7 +118,42 @@ class AddNomineeWidget extends GetView<NomineeController> {
 
               Obx(() {
                 if (controller.searchNomineeStatus.value.isLoading) {
-                  return Center(child: CircularProgressIndicator());
+                  return Skeletonizer(
+                    enabled: true,
+                    effect: ShimmerEffect(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                    ),
+                    containersColor: Colors.grey.shade200,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 3.0,
+                      margin: EdgeInsets.symmetric(vertical: 8.0),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.grey[200],
+                          child: Icon(Icons.person, color: Colors.white, size: 40.sp),
+                        ),
+                        title: const Text(
+                          "Nominee Name Placeholder",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Row(
+                          children: [
+                            const Icon(Icons.visibility, size: 16.0, color: Colors.grey),
+                            const SizedBox(width: 4.0),
+                            Text(
+                              AppLocalizations.of(context)!.view_details,
+                              style: const TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
                 } else if (controller.searchNomineeStatus.value.isEmpty) {
                   return Center(child: Text(AppLocalizations.of(context)!.no_data));
                 } else if (controller.searchNomineeStatus.value.isSuccess) {
@@ -149,7 +198,11 @@ class AddNomineeWidget extends GetView<NomineeController> {
                     ),
                   );
                 } else {
-                  return AppErrorWidget(message: controller.searchNomineeStatus.value.errorMessage.toString());
+                  return AppErrorWidget(
+                    message: controller.searchNomineeStatus.value.errorMessage?.toString() ??
+                        "Failed to search nominee",
+                    onRetry: controller.searchNominee,
+                  );
                 }
               }),
               SizedBox(height: 20.h),

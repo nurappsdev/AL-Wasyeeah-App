@@ -415,7 +415,7 @@ class MenuPage extends StatelessWidget {
                               color: AppColors.primaryColor),
                           SizedBox(width: 16.w),
                           CustomText(
-                            text: "Dark Mode",
+                            text: AppLocalizations.of(context)!.dark_mode,
                             fontsize: 16.sp,
                             fontWeight: FontWeight.w600,
                             color: AppColors.textColor4E4E4E,

@@ -1581,4 +1581,22 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get already_exists => 'আগে থেকেই আছে';
+
+  @override
+  String get create_wasyyah => 'ওসিয়াহ তৈরি করুন';
+
+  @override
+  String get new_text => 'নতুন';
+
+  @override
+  String get witness_request => 'সাক্ষীর অনুরোধ';
+
+  @override
+  String get witness_panel => 'সাক্ষী প্যানেল';
+
+  @override
+  String get nominee_panel => 'নমিনী প্যানেল';
+
+  @override
+  String get dark_mode => 'ডার্ক মোড';
 }

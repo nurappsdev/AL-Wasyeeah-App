@@ -24,6 +24,7 @@ class AccessControlController extends GetxController {
   bool get hasAnyChanges => userHasChanges.values.any((changed) => changed);
 
   final Rx<RxStatus> contextsPanelDataStatus = RxStatus.loading().obs;
+  final Rx<RxStatus> usersStatus = RxStatus.empty().obs;
 
   final Rx<WitnessNomineeContextDataModel> witnessNomineeContextData = WitnessNomineeContextDataModel().obs;
 
@@ -44,69 +45,104 @@ class AccessControlController extends GetxController {
     if (selectedRole.value == null) return;
 
     isUsersLoading.value = true;
+    usersStatus.value = RxStatus.loading();
     usersList.clear();
     userSelectedContexts.clear();
     userHasChanges.clear();
 
     String isWitnessParam = selectedRole.value == "Witness" ? "1" : "2";
 
-    var response = await ApiService.getData("${ApiConstants.accessControl}$isWitnessParam");
+    try {
+      final response = await ApiService.getData("${ApiConstants.accessControl}$isWitnessParam");
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      var data = jsonEncode(response.body);
-      usersList.value = accessControlUserModelFromJson(data);
-    } else {
-      ToastMessage.errorMessageShowToster("Failed to load users");
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = jsonEncode(response.body);
+        usersList.value = accessControlUserModelFromJson(data);
+        if (usersList.isEmpty) {
+          usersStatus.value = RxStatus.empty();
+        } else {
+          usersStatus.value = RxStatus.success();
+        }
+      } else {
+        usersStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to load users");
+        ToastMessage.errorMessageShowToster("Failed to load users");
+      }
+    } catch (e) {
+      usersStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+    } finally {
+      isUsersLoading.value = false;
+      if (usersStatus.value.isLoading) {
+        usersStatus.value = RxStatus.empty();
+      }
     }
-
-    isUsersLoading.value = false;
   }
 
   Future<void> fetchContextsData(String requestKey) async {
-    if (allContexts.isEmpty) {
-      var response = await ApiService.getData(ApiConstants.accessFeature);
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        var data = jsonEncode(response.body);
-        allContexts.value = contextModelFromJson(data);
-      }
-    }
-
-    if (!userSelectedContexts.containsKey(requestKey)) {
-      loadingContextUsers.add(requestKey);
-      var userContextRes = await ApiService.getData("${ApiConstants.accessSelect}?requestKey=$requestKey&trace=false");
-      if (userContextRes.statusCode == 200 || userContextRes.statusCode == 201) {
-        var data = jsonEncode(userContextRes.body);
-        var userContexts = userContextModelFromJson(data);
-        if (userContexts.isNotEmpty) {
-          userSelectedContexts[requestKey] = userContexts.map((e) => e.key!).toList();
-        } else {
-          userSelectedContexts[requestKey] = [];
+    try {
+      if (allContexts.isEmpty) {
+        final response = await ApiService.getData(ApiConstants.accessFeature);
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          final data = jsonEncode(response.body);
+          allContexts.value = contextModelFromJson(data);
         }
-        userHasChanges[requestKey] = false;
       }
+
+      if (!userSelectedContexts.containsKey(requestKey)) {
+        loadingContextUsers.add(requestKey);
+        final userContextRes = await ApiService.getData("${ApiConstants.accessSelect}?requestKey=$requestKey&trace=false");
+        if (userContextRes.statusCode == 200 || userContextRes.statusCode == 201) {
+          final data = jsonEncode(userContextRes.body);
+          final userContexts = userContextModelFromJson(data);
+          if (userContexts.isNotEmpty) {
+            userSelectedContexts[requestKey] = userContexts.map((e) => e.key!).toList();
+          } else {
+            userSelectedContexts[requestKey] = [];
+          }
+          userHasChanges[requestKey] = false;
+        }
+      }
+    } catch (e) {
+      log("Error fetching contexts for $requestKey: $e");
+      ToastMessage.errorMessageShowToster(e.toString());
+    } finally {
       loadingContextUsers.remove(requestKey);
     }
   }
 
   Future<void> fetchContextsPanelData(String requestKey) async {
-    contextsPanelDataStatus(RxStatus.loading());
+    contextsPanelDataStatus.value = RxStatus.loading();
 
     try {
-      var response = await ApiService.getData(ApiConstants.accessControlPanelData + "?requestKey=$requestKey");
+      final response = await ApiService.getData("${ApiConstants.accessControlPanelData}?requestKey=$requestKey");
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         log("Data is : ${response.body}");
-        var data = jsonEncode(response.body);
-        witnessNomineeContextData(witnessNomineeContextDataModelFromJson(data));
-        contextsPanelDataStatus(RxStatus.success());
+        final data = jsonEncode(response.body);
+        witnessNomineeContextData.value = witnessNomineeContextDataModelFromJson(data);
+
+        final val = witnessNomineeContextData.value;
+        bool hasData = val.zakat != null ||
+            (val.propertyResult != null && val.propertyResult!.isNotEmpty) ||
+            (val.wasiyaaContent != null && val.wasiyaaContent!.isNotEmpty);
+
+        if (hasData) {
+          contextsPanelDataStatus.value = RxStatus.success();
+        } else {
+          contextsPanelDataStatus.value = RxStatus.empty();
+        }
         log("Data of access control panel: ${witnessNomineeContextData.value.toJson()}");
       } else {
-        contextsPanelDataStatus(RxStatus.empty());
+        contextsPanelDataStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to load access control panel data");
       }
     } catch (error, stackTrace) {
-      log("Error is : ${error}");
-      log("Stack trace is : ${stackTrace}");
-      contextsPanelDataStatus(RxStatus.error(error.toString()));
+      log("Error is : $error", error: error, stackTrace: stackTrace);
+      contextsPanelDataStatus.value = RxStatus.error(error.toString());
+      ToastMessage.errorMessageShowToster(error.toString());
+    } finally {
+      if (contextsPanelDataStatus.value.isLoading) {
+        contextsPanelDataStatus.value = RxStatus.empty();
+      }
     }
   }
 

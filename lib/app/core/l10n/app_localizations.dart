@@ -3135,6 +3135,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Already exists'**
   String get already_exists;
+
+  /// No description provided for @create_wasyyah.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Wasyyah'**
+  String get create_wasyyah;
+
+  /// No description provided for @new_text.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get new_text;
+
+  /// No description provided for @witness_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Witness Request'**
+  String get witness_request;
+
+  /// No description provided for @witness_panel.
+  ///
+  /// In en, this message translates to:
+  /// **'Witness Panel'**
+  String get witness_panel;
+
+  /// No description provided for @nominee_panel.
+  ///
+  /// In en, this message translates to:
+  /// **'Nominee Panel'**
+  String get nominee_panel;
+
+  /// No description provided for @dark_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get dark_mode;
 }
 
 class _AppLocalizationsDelegate
