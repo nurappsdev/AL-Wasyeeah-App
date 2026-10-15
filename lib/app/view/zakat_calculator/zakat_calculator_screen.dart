@@ -179,7 +179,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                   CustomText(
                                     text: AppLocalizations.of(context)!
                                             .value_of_gold +
-                                        " (${controller.selectedCurrency.value?.currencyIcon})",
+                                        " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -192,7 +192,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                       readOnly: isDisabled,
                                       hintText: AppLocalizations.of(context)!
                                               .value_of_gold +
-                                          " (${controller.selectedCurrency.value?.currencyIcon})",
+                                          " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     ),
                                   ),
                                   SizedBox(
@@ -201,7 +201,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                   CustomText(
                                     text: AppLocalizations.of(context)!
                                             .value_of_silver +
-                                        " (${controller.selectedCurrency.value?.currencyIcon})",
+                                        " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -214,7 +214,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                       readOnly: isDisabled,
                                       hintText: AppLocalizations.of(context)!
                                               .value_of_silver +
-                                          " (${controller.selectedCurrency.value?.currencyIcon})",
+                                          " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     ),
                                   ),
                                   SizedBox(
@@ -223,7 +223,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                   CustomText(
                                     text: AppLocalizations.of(context)!
                                             .future_deposits +
-                                        " (${controller.selectedCurrency.value?.currencyIcon})",
+                                        " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -236,7 +236,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                       readOnly: isDisabled,
                                       hintText: AppLocalizations.of(context)!
                                               .future_deposits +
-                                          " (${controller.selectedCurrency.value?.currencyIcon})",
+                                          " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     ),
                                   ),
                                   SizedBox(
@@ -245,7 +245,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                   CustomText(
                                     text: AppLocalizations.of(context)!
                                             .given_out_in_loans +
-                                        " (${controller.selectedCurrency.value?.currencyIcon})",
+                                        " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -258,7 +258,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                       readOnly: isDisabled,
                                       hintText: AppLocalizations.of(context)!
                                               .given_out_in_loans +
-                                          " (${controller.selectedCurrency.value?.currencyIcon})",
+                                          " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     ),
                                   ),
                                   SizedBox(
@@ -267,7 +267,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                   CustomText(
                                     text: AppLocalizations.of(context)!
                                             .investment_value +
-                                        " (${controller.selectedCurrency.value?.currencyIcon})",
+                                        " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -280,7 +280,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                       readOnly: isDisabled,
                                       hintText: AppLocalizations.of(context)!
                                               .investment_value +
-                                          " (${controller.selectedCurrency.value?.currencyIcon})",
+                                          " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     ),
                                   ),
                                   SizedBox(
@@ -301,7 +301,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                       readOnly: isDisabled,
                                       hintText: AppLocalizations.of(context)!
                                               .rental_income +
-                                          " (${controller.selectedCurrency.value?.currencyIcon})",
+                                          " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     ),
                                   ),
                                   SizedBox(
@@ -310,7 +310,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                   CustomText(
                                     text: AppLocalizations.of(context)!
                                             .immediate_liabilities +
-                                        " (${controller.selectedCurrency.value?.currencyIcon})",
+                                        " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     fontsize: 16.sp,
                                     fontWeight: FontWeight.w900,
                                   ),
@@ -323,7 +323,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                       readOnly: isDisabled,
                                       hintText: AppLocalizations.of(context)!
                                               .immediate_liabilities +
-                                          " (${controller.selectedCurrency.value?.currencyIcon})",
+                                          " (${controller.selectedCurrency.value?.currencyIcon ?? ""})",
                                     ),
                                   ),
                                 ],
