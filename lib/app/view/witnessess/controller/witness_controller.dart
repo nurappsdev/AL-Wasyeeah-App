@@ -66,39 +66,56 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
 
   Future<void> getWitnessData() async {
     witnessStatus.value = RxStatus.loading();
-    var response = await ApiService.getData(ApiConstants.yourWitness);
+    try {
+      final response = await ApiService.getData(ApiConstants.yourWitness);
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      witnessData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        witnessData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
-      /// ✅ handle empty vs success
-      if (witnessData.isEmpty) {
-        witnessStatus.value = RxStatus.empty();
+        /// ✅ handle empty vs success
+        if (witnessData.isEmpty) {
+          witnessStatus.value = RxStatus.empty();
+        } else {
+          witnessStatus.value = RxStatus.success();
+        }
       } else {
-        witnessStatus.value = RxStatus.success();
+        witnessStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to load witness data");
       }
-    } else {
-      witnessStatus(RxStatus.error(response.body));
+    } catch (e) {
+      witnessStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+    } finally {
+      if (witnessStatus.value.isLoading) {
+        witnessStatus.value = RxStatus.empty();
+      }
     }
   }
 
   ///==================get witness you===========================
 
   Future<void> getWitnessesYouData() async {
-    witnessesYouStatus(RxStatus.loading());
+    witnessesYouStatus.value = RxStatus.loading();
+    try {
+      final response = await ApiService.getData(ApiConstants.witnessedByAnotherUser);
 
-    var response = await ApiService.getData(ApiConstants.witnessedByAnotherUser);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        witnessesYouData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      witnessesYouData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
-
-      if (witnessesYouData.isEmpty) {
-        witnessesYouStatus(RxStatus.empty());
+        if (witnessesYouData.isEmpty) {
+          witnessesYouStatus.value = RxStatus.empty();
+        } else {
+          witnessesYouStatus.value = RxStatus.success();
+        }
       } else {
-        witnessesYouStatus(RxStatus.success());
+        witnessesYouStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to load witnesses you data");
       }
-    } else {
-      witnessesYouStatus(RxStatus.error(response.body));
+    } catch (e) {
+      witnessesYouStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+    } finally {
+      if (witnessesYouStatus.value.isLoading) {
+        witnessesYouStatus.value = RxStatus.empty();
+      }
     }
   }
 
@@ -106,44 +123,66 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
     final email = searchWitnessController.text.trim();
     if (email.isEmpty) return;
 
-    searchWitnessStatus(RxStatus.loading());
+    searchWitnessStatus.value = RxStatus.loading();
+    try {
+      final response = await ApiService.getData(ApiConstants.searchWitness(email));
 
-    var response = await ApiService.getData(ApiConstants.searchWitness(email));
-
-    if (response.statusCode == 200) {
-      final data = response.body;
-      searchedWitnesss.value = GetWitnessNomineeResponseModel.fromJson(data);
-      if (data.isEmpty) {
-        searchWitnessStatus(RxStatus.empty());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = response.body;
+        if (data == null || (data is Map && data.isEmpty)) {
+          searchedWitnesss.value = null;
+          searchWitnessStatus.value = RxStatus.empty();
+        } else {
+          searchedWitnesss.value = GetWitnessNomineeResponseModel.fromJson(data);
+          searchWitnessStatus.value = RxStatus.success();
+        }
       } else {
-        searchWitnessStatus(RxStatus.success());
+        searchWitnessStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to search witness");
+        ToastMessage.errorMessageShowToster(response.body?.toString() ?? "Failed to search witness");
       }
-    } else {
-      searchWitnessStatus(RxStatus.error(response.body));
-      ToastMessage.errorMessageShowToster(response.body);
+    } catch (e) {
+      searchWitnessStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+    } finally {
+      if (searchWitnessStatus.value.isLoading) {
+        searchWitnessStatus.value = RxStatus.empty();
+      }
     }
   }
 
   ///==================delete witness===========================
 
-  deleteWitness({required String requestKey}) async {
-    deleteWitnessStatus(RxStatus.loading());
-    var response = await ApiService.getData("${ApiConstants.deleteWitness(requestKey)}");
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      ToastMessage.successMessageShowToster(
-        AppLocalizations.of(Get.context!)!.witness_remove_successfully,
-      );
-      getWitnessData();
-      deleteWitnessStatus(RxStatus.success());
-    } else {
-      deleteWitnessStatus(RxStatus.error(response.body));
-      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_delete_witness);
+  Future<bool> deleteWitness({required String requestKey}) async {
+    deleteWitnessStatus.value = RxStatus.loading();
+    try {
+      final response = await ApiService.getData(ApiConstants.deleteWitness(requestKey));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ToastMessage.successMessageShowToster(
+          AppLocalizations.of(Get.context!)?.witness_remove_successfully ?? "Witness removed successfully",
+        );
+        deleteWitnessStatus.value = RxStatus.success();
+        await getWitnessData();
+        return true;
+      } else {
+        deleteWitnessStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to delete witness");
+        ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)?.failed_to_delete_witness ?? "Failed to delete witness",
+        );
+        return false;
+      }
+    } catch (e) {
+      deleteWitnessStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+      return false;
+    } finally {
+      if (deleteWitnessStatus.value.isLoading) {
+        deleteWitnessStatus.value = RxStatus.empty();
+      }
     }
-    try {} catch (e) {}
   }
 
   ///================== Save witness ===========================
-  Future<void> saveWitness({
+  Future<bool> saveWitness({
     required String userName,
     required String mobileNo,
     required String email,
@@ -152,7 +191,7 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
     required String presentAddress,
     required String permanentAddress,
   }) async {
-    addWitnessStatus(RxStatus.loading());
+    addWitnessStatus.value = RxStatus.loading();
 
     final body = {
       "name": userName.trim(),
@@ -164,38 +203,73 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
       "permanentAddress": permanentAddress.trim(),
     };
 
-    final response = await ApiService.postData(
-      ApiConstants.saveWitness,
-      body,
-    );
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      ToastMessage.successMessageShowToster(
-        AppLocalizations.of(Get.context!)!.witness_saved_successfully,
+    try {
+      final response = await ApiService.postData(
+        ApiConstants.saveWitness,
+        body,
       );
-    } else {
-      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.save_failed_try_again);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ToastMessage.successMessageShowToster(
+          AppLocalizations.of(Get.context!)?.witness_saved_successfully ?? "Witness saved successfully",
+        );
+        addWitnessStatus.value = RxStatus.success();
+        await getWitnessData();
+        Get.back();
+        return true;
+      } else {
+        addWitnessStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to save witness");
+        ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)?.save_failed_try_again ?? "Save failed, try again",
+        );
+        return false;
+      }
+    } catch (e) {
+      addWitnessStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+      return false;
+    } finally {
+      if (addWitnessStatus.value.isLoading) {
+        addWitnessStatus.value = RxStatus.empty();
+      }
     }
   }
 
   ///================== Add  witness ===========================
-  Future<void> addYourWitness({
+  Future<bool> addYourWitness({
     required String email,
   }) async {
-    addWitnessStatus(RxStatus.loading());
+    addWitnessStatus.value = RxStatus.loading();
 
-    final response = await ApiService.getData(
-      ApiConstants.addYourWitness(email),
-    );
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      ToastMessage.successMessageShowToster(
-        AppLocalizations.of(Get.context!)!.witness_added_successfully,
+    try {
+      final response = await ApiService.getData(
+        ApiConstants.addYourWitness(email),
       );
-      addWitnessStatus(RxStatus.success());
-    } else {
-      ToastMessage.errorMessageShowToster(/*AppLocalizations.of(Get.context!)!.add_failed_try_again*/ response.body);
-      addWitnessStatus(RxStatus.empty());
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        ToastMessage.successMessageShowToster(
+          AppLocalizations.of(Get.context!)?.witness_added_successfully ?? "Witness added successfully",
+        );
+        addWitnessStatus.value = RxStatus.success();
+        await getWitnessData();
+        return true;
+      } else {
+        addWitnessStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to add witness");
+        ToastMessage.errorMessageShowToster(
+          response.body?.toString() ??
+              AppLocalizations.of(Get.context!)?.add_failed_try_again ??
+              "Failed to add witness",
+        );
+        return false;
+      }
+    } catch (e) {
+      addWitnessStatus.value = RxStatus.error(e.toString());
+      ToastMessage.errorMessageShowToster(e.toString());
+      return false;
+    } finally {
+      if (addWitnessStatus.value.isLoading) {
+        addWitnessStatus.value = RxStatus.empty();
+      }
     }
   }
 
