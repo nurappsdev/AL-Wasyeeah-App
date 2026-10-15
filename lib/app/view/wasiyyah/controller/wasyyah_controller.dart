@@ -62,6 +62,40 @@ class WasyyahController extends GetxController {
     }
   }
 
+  Future<bool> createWasiyyah({
+    required String title,
+    required String content,
+  }) async {
+    isSaveLoading(true);
+    try {
+      final payload = {
+        "title": title,
+        "content": content,
+        "visible": "Y",
+        "orderSeq": wasyyahList.length + 1,
+      };
+      final response = await ApiService.postData(
+        ApiConstants.saveWasiyyah,
+        payload,
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        await getWasyyahData();
+        return true;
+      } else {
+        ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)?.failed_to_save_wasiyyah ??
+              "Failed to save wasiyyah",
+        );
+        return false;
+      }
+    } catch (e) {
+      ToastMessage.errorMessageShowToster(e.toString());
+      return false;
+    } finally {
+      isSaveLoading(false);
+    }
+  }
+
   Future<void> toggleVisibility(WasyyahContentModel item) async {
     // Optimistic UI update
     final originalVisibility = item.visible;

@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 import 'package:al_wasyeah/app/core/route/route_names.dart';
 import 'package:open_file/open_file.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class WasyyahPage extends GetView<WasyyahController> {
   WasyyahPage({super.key});
@@ -43,13 +44,25 @@ class WasyyahPage extends GetView<WasyyahController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return _buildSkeletonLoading(context);
         }
 
         if (controller.wasyyahList.isEmpty) {
           return Center(
-            child: CustomText(
-                text: AppLocalizations.of(context)!.no_content_available),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomText(
+                    text: AppLocalizations.of(context)!.no_content_available),
+                SizedBox(height: 16.h),
+                CustomButton(
+                  title: "Create Wasyyah",
+                  onpress: () => _showCreateWasiyyahBottomSheet(context),
+                  color: AppColors.primaryColor,
+                  width: 200.w,
+                ),
+              ],
+            ),
           );
         }
 
@@ -82,6 +95,16 @@ class WasyyahPage extends GetView<WasyyahController> {
                     final item = controller.wasyyahList[index];
                     return _buildWasyyahCard(context, item, index);
                   },
+                ),
+              ),
+              SizedBox(height: 12.h),
+              Padding(
+                padding: EdgeInsets.only(bottom: 16.h),
+                child: CustomButton(
+                  title: "Create Wasyyah",
+                  width: double.infinity,
+                  onpress: () => _showCreateWasiyyahBottomSheet(context),
+                  color: AppColors.primaryColor,
                 ),
               ),
             ],
@@ -133,6 +156,58 @@ class WasyyahPage extends GetView<WasyyahController> {
     } catch (e) {
       ToastMessage.errorMessageShowToster("Failed to generate QR/Barcode: $e");
     }
+  }
+
+  Widget _buildSkeletonLoading(BuildContext context) {
+    return Skeletonizer(
+      enabled: true,
+      effect: ShimmerEffect(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+      ),
+      containersColor: Colors.grey.shade200,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Column(
+          children: [
+            CustomText(
+              text: AppLocalizations.of(context)!.bismillahir_rahmanir_raheem,
+              fontsize: 16.sp,
+              fontWeight: FontWeight.w700,
+            ),
+            SizedBox(
+              height: 16.h,
+            ),
+            CustomText(
+              text: AppLocalizations.of(context)!
+                  .assalamu_alaykum_wa_rahmatullah_innallillah_rabbil_alamin_wassalatu_wassalamu_ala_rasulillah_sallallahu_alaihi_wassallam,
+              fontsize: 16.sp,
+              fontWeight: FontWeight.w700,
+            ),
+            SizedBox(height: 16.h),
+            Expanded(
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  return _buildWasyyahCard(
+                    context,
+                    WasyyahContentModel(
+                      requestKey: "skeleton_$index",
+                      title: "ওয়াসীয়্যাহ / ইচ্ছানামা শিরোনাম",
+                      content:
+                          "এখানে ওয়াসীয়্যাহর বিবরণ বা বিস্তারিত তথ্য থাকবে যা লোডিং অবস্থায় স্কেলিটন ইফেক্ট হিসেবে প্রদর্শিত হবে।",
+                      visible: "Y",
+                    ),
+                    index,
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildWasyyahCard(
@@ -291,6 +366,154 @@ class WasyyahPage extends GetView<WasyyahController> {
               }),
               SizedBox(height: 20.h),
             ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showCreateWasiyyahBottomSheet(BuildContext context) {
+    final TextEditingController titleController = TextEditingController();
+    final TextEditingController contentController = TextEditingController();
+    final RxString titleRx = "".obs;
+    final RxString contentRx = "".obs;
+
+    int countWords(String text) {
+      final trimmed = text.trim();
+      if (trimmed.isEmpty) return 0;
+      return trimmed
+          .split(RegExp(r'\s+'))
+          .where((w) => w.isNotEmpty)
+          .length;
+    }
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom + 16.h,
+            left: 20.w,
+            right: 20.w,
+            top: 20.h,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomText(
+                      text: "Create Wasyyah",
+                      fontsize: 18.sp,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16.h),
+                CustomText(
+                  text: "Title *",
+                  fontsize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+                SizedBox(height: 8.h),
+                TextField(
+                  controller: titleController,
+                  onChanged: (val) => titleRx.value = val,
+                  decoration: InputDecoration(
+                    hintText: "Enter title",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey[50],
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                CustomText(
+                  text: "Content * (Minimum 10 words)",
+                  fontsize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+                SizedBox(height: 8.h),
+                TextField(
+                  controller: contentController,
+                  maxLines: 6,
+                  onChanged: (val) => contentRx.value = val,
+                  decoration: InputDecoration(
+                    hintText:
+                        AppLocalizations.of(context)!.enter_the_content_here,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey[50],
+                  ),
+                ),
+                SizedBox(height: 8.h),
+                Obx(() {
+                  final words = countWords(contentRx.value);
+                  return Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "$words words ${words < 10 ? '(min 10 required)' : '✓'}",
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color:
+                            words >= 10 ? Colors.green : Colors.grey.shade600,
+                        fontWeight:
+                            words >= 10 ? FontWeight.w600 : FontWeight.normal,
+                      ),
+                    ),
+                  );
+                }),
+                SizedBox(height: 20.h),
+                Obx(() {
+                  final title = titleRx.value.trim();
+                  final content = contentRx.value.trim();
+                  final words = countWords(content);
+                  final bool isValid =
+                      title.isNotEmpty && content.isNotEmpty && words >= 10;
+
+                  if (!isValid) return const SizedBox.shrink();
+
+                  return SizedBox(
+                    width: double.infinity,
+                    child: CustomButton(
+                      title: "New Entry",
+                      color: AppColors.primaryColor,
+                      loading: controller.isSaveLoading.value,
+                      onpress: () async {
+                        final success = await controller.createWasiyyah(
+                          title: titleRx.value.trim(),
+                          content: contentRx.value.trim(),
+                        );
+                        if (success) {
+                          Get.back();
+                          ToastMessage.successMessageShowToster(
+                            AppLocalizations.of(context)
+                                    ?.wasiyyah_update_successfully ??
+                                "Wasyyah created successfully",
+                          );
+                        }
+                      },
+                    ),
+                  );
+                }),
+                SizedBox(height: 12.h),
+              ],
+            ),
           ),
         );
       },

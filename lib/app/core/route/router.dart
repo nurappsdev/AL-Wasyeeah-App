@@ -19,10 +19,10 @@ import 'package:al_wasyeah/app/view/home/home_page.dart';
 import 'package:al_wasyeah/app/view/menu/menu_page.dart';
 import 'package:al_wasyeah/app/view/witnessess/witnesses_details_page.dart';
 import 'package:al_wasyeah/app/view/witnessess/witness_page.dart';
-import 'package:al_wasyeah/app/view/notification/notification_screen.dart';
+import 'package:al_wasyeah/app/view/notification/notification_page.dart';
 import 'package:al_wasyeah/app/view/onboarding/onboarding_screen.dart';
 import 'package:al_wasyeah/app/view/wasiyyah/wasyyah_page.dart';
-import 'package:al_wasyeah/app/view/wasiyyah/wasiyyah_pdf_preview_page.dart';
+import 'package:al_wasyeah/app/view/wasiyyah/wasyyah_pdf_preview_page.dart';
 import 'package:get/get.dart';
 
 class AppRouter {
@@ -34,33 +34,66 @@ class AppRouter {
         ),
         GetPage(name: RouteName.onboardingPage, page: () => OnboardingScreen()),
         GetPage(name: RouteName.loginPage, page: () => LoginPage()),
-        GetPage(name: RouteName.registrationPage, page: () => RegistrationPage()),
-        GetPage(name: RouteName.forgotPasswordPage, page: () => ForgotPasswordPage()),
-        GetPage(name: RouteName.changePasswordPage, page: () => ChangePasswordPage()),
+        GetPage(
+            name: RouteName.registrationPage, page: () => RegistrationPage()),
+        GetPage(
+            name: RouteName.forgotPasswordPage,
+            page: () => ForgotPasswordPage()),
+        GetPage(
+            name: RouteName.changePasswordPage,
+            page: () => ChangePasswordPage()),
         GetPage(name: RouteName.otpPage, page: () => OtpVerifyPage()),
         GetPage(
           name: RouteName.homePage,
           page: () => HomePage(),
           binding: HomeBinding(),
         ),
-        GetPage(name: RouteName.notificationPage, page: () => NotificationPage()),
-        GetPage(name: RouteName.wasyyahPage, page: () => WasyyahPage(), binding: WasyyahBinding()),
-        GetPage(name: RouteName.wasyyahPdfPreviewPage, page: () => const WasiyyahPdfPreviewPage()),
+        GetPage(
+            name: RouteName.notificationPage, page: () => NotificationPage()),
+        GetPage(
+            name: RouteName.wasyyahPage,
+            page: () => WasyyahPage(),
+            binding: WasyyahBinding()),
+        GetPage(
+            name: RouteName.wasyyahPdfPreviewPage,
+            page: () => const WasyyahPdfPreviewPage()),
         GetPage(name: RouteName.profilePage, page: () => ProfilePage()),
-        GetPage(name: RouteName.witnessesPage, page: () => WitnessesPage(), binding: WitnessesBinding()),
-        GetPage(name: RouteName.witnessDetailsPage, page: () => WitnessDetailsPage()),
-        GetPage(name: RouteName.nomineesPage, page: () => NomineesPage(), binding: NomineesBinding()),
-        GetPage(name: RouteName.nomineeDetailsPage, page: () => NomineeDetailsPage()),
-        GetPage(name: RouteName.accessControlPage, page: () => AccessControlPage(), binding: AccessControlBinding()),
-        GetPage(name: RouteName.propertyDistributionPage, page: () => PropertyDistributionCalculationPage(), binding: PropertyDistributionCalculationBinding()),
+        GetPage(
+            name: RouteName.witnessesPage,
+            page: () => WitnessesPage(),
+            binding: WitnessesBinding()),
+        GetPage(
+            name: RouteName.witnessDetailsPage,
+            page: () => WitnessDetailsPage()),
+        GetPage(
+            name: RouteName.nomineesPage,
+            page: () => NomineesPage(),
+            binding: NomineesBinding()),
+        GetPage(
+            name: RouteName.nomineeDetailsPage,
+            page: () => NomineeDetailsPage()),
+        GetPage(
+            name: RouteName.accessControlPage,
+            page: () => AccessControlPage(),
+            binding: AccessControlBinding()),
+        GetPage(
+            name: RouteName.propertyDistributionPage,
+            page: () => PropertyDistributionCalculationPage(),
+            binding: PropertyDistributionCalculationBinding()),
         GetPage(
           name: RouteName.zakatCalculatorPage,
           page: () => ZakatCalculatorScreen(),
           binding: ZakatCalculatorBinding(),
         ),
         GetPage(name: RouteName.menuPage, page: () => MenuPage()),
-        GetPage(name: RouteName.accessCntrolPanelPage, page: () => AccessControlPanelPage(), binding: AccessControlBinding()),
-        GetPage(name: RouteName.contactPage, page: () => ContactUsPage(), binding: ContactBinding()),
+        GetPage(
+            name: RouteName.accessCntrolPanelPage,
+            page: () => AccessControlPanelPage(),
+            binding: AccessControlBinding()),
+        GetPage(
+            name: RouteName.contactPage,
+            page: () => ContactUsPage(),
+            binding: ContactBinding()),
         GetPage(name: RouteName.aboutPage, page: () => AboutUsPage()),
       ];
 }
