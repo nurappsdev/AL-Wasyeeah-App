@@ -94,7 +94,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       child: AppBar(
         elevation: 0, // important
-        title: Text(title),
+        title: Text(
+          title,
+          overflow: TextOverflow.ellipsis,
+        ),
         bottom: bottom,
         leading: leading ??
             (showBackButton

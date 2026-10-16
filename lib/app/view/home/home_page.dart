@@ -43,54 +43,53 @@ class HomePage extends GetView<HomeController> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.h),
         child: AppBar(
-          leadingWidth: 200,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: GestureDetector(
-              onTap: () =>
-                  Get.toNamed(RouteName.menuPage, preventDuplicates: false),
-              child: Obx(() {
-                final isProfileLoading =
-                    profileController.profileModel.value.userProfile == null;
-                final user = profileController.profileModel.value.userProfile;
-                final fullName =
-                    "${user?.firstName ?? ''} ${user?.lastName ?? ''}".trim();
+          automaticallyImplyLeading: false,
+          centerTitle: false,
+          titleSpacing: 12.w,
+          title: GestureDetector(
+            onTap: () =>
+                Get.toNamed(RouteName.menuPage, preventDuplicates: false),
+            child: Obx(() {
+              final isProfileLoading =
+                  profileController.profileModel.value.userProfile == null;
+              final user = profileController.profileModel.value.userProfile;
+              final fullName =
+                  "${user?.firstName ?? ''} ${user?.lastName ?? ''}".trim();
 
-                return Skeletonizer(
-                  enabled: isProfileLoading,
-                  effect: ShimmerEffect(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade100,
-                  ),
-                  containersColor: Colors.grey.shade200,
-                  child: Row(
-                    children: [
-                      user?.profilePictureUrl != null
-                          ? CircleAvatar(
-                              radius: 18,
-                              backgroundImage: NetworkImage(
-                                  "${ApiConstants.imageUrl + "${user?.profilePictureUrl}"}"),
-                              backgroundColor: Colors.grey[200],
-                            )
-                          : CircleAvatar(
-                              radius: 18,
-                              child: const Icon(Icons.person),
-                              backgroundColor: Colors.grey[200],
-                            ),
-                      SizedBox(width: 8.h),
-                      Column(
+              return Skeletonizer(
+                enabled: isProfileLoading,
+                effect: ShimmerEffect(
+                  baseColor: Colors.grey.shade300,
+                  highlightColor: Colors.grey.shade100,
+                ),
+                containersColor: Colors.grey.shade200,
+                child: Row(
+                  children: [
+                    user?.profilePictureUrl != null
+                        ? CircleAvatar(
+                            radius: 18,
+                            backgroundImage: NetworkImage(
+                                "${ApiConstants.imageUrl + "${user?.profilePictureUrl}"}"),
+                            backgroundColor: Colors.grey[200],
+                          )
+                        : CircleAvatar(
+                            radius: 18,
+                            child: const Icon(Icons.person),
+                            backgroundColor: Colors.grey[200],
+                          ),
+                    SizedBox(width: 8.w),
+                    Expanded(
+                      child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Flexible(
-                            child: Text(
-                              fullName.isNotEmpty ? fullName : "User Name",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          Text(
+                            fullName.isNotEmpty ? fullName : "User Name",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
@@ -101,11 +100,11 @@ class HomePage extends GetView<HomeController> {
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                );
-              }),
-            ),
+                    ),
+                  ],
+                ),
+              );
+            }),
           ),
           actions: [
             notificationController.obx(

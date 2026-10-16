@@ -253,12 +253,19 @@ class MenuPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 12.w),
                         child: Row(
                           children: [
-                            SvgPicture.asset(
-                              AppIcons.deleteIcon,
+                            CircleAvatar(
+                              backgroundColor: Color(0xFF39B048),
+                              child: SvgPicture.asset(
+                                AppIcons.deleteIcon,
+                                color: AppColors.whiteColor,
+                                width: 22.w,
+                                height: 22.h,
+                              ),
                             ),
                             SizedBox(width: 16.w),
                             CustomText(
-                              text: AppLocalizations.of(context)!.delete,
+                              text:
+                                  AppLocalizations.of(context)!.delete_account,
                               fontsize: 16.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textColor4E4E4E,
