@@ -10,7 +10,8 @@ import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 import 'package:al_wasyeah/app/view/witnessess/add_outside_witnesses_widget.dart';
 import 'package:al_wasyeah/app/view/witnessess/add_witnesses_widget.dart';
 
-class WitnessController extends GetxController with GetSingleTickerProviderStateMixin {
+class WitnessController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   late TabController tabController;
 
   /// For "Your Witness"
@@ -26,10 +27,13 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
   RxBool isZakatPropertyWasiyyah = false.obs;
   Rx<WasyyahContentModel?> contextsData = Rx<WasyyahContentModel?>(null);
 
-  Rx<GetWitnessNomineeResponseModel?> searchedWitnesss = Rx<GetWitnessNomineeResponseModel?>(null);
+  Rx<GetWitnessNomineeResponseModel?> searchedWitnesss =
+      Rx<GetWitnessNomineeResponseModel?>(null);
 
-  RxList<GetWitnessNomineeResponseModel> witnessData = <GetWitnessNomineeResponseModel>[].obs;
-  RxList<GetWitnessNomineeResponseModel> witnessesYouData = <GetWitnessNomineeResponseModel>[].obs;
+  RxList<GetWitnessNomineeResponseModel> witnessData =
+      <GetWitnessNomineeResponseModel>[].obs;
+  RxList<GetWitnessNomineeResponseModel> witnessesYouData =
+      <GetWitnessNomineeResponseModel>[].obs;
   final TextEditingController searchWitnessController = TextEditingController();
   final RxString searchText = "".obs;
 
@@ -39,9 +43,11 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
   final TextEditingController emailController = TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
 
-  final TextEditingController presentAddressController = TextEditingController();
+  final TextEditingController presentAddressController =
+      TextEditingController();
 
-  final TextEditingController permanentAddressController = TextEditingController();
+  final TextEditingController permanentAddressController =
+      TextEditingController();
 
   DateTime? birthDate;
 
@@ -70,7 +76,8 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
       final response = await ApiService.getData(ApiConstants.yourWitness);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        witnessData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
+        witnessData(
+            getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
         /// ✅ handle empty vs success
         if (witnessData.isEmpty) {
@@ -79,7 +86,8 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
           witnessStatus.value = RxStatus.success();
         }
       } else {
-        witnessStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to load witness data");
+        witnessStatus.value = RxStatus.error(
+            response.body?.toString() ?? "Failed to load witness data");
       }
     } catch (e) {
       witnessStatus.value = RxStatus.error(e.toString());
@@ -96,10 +104,12 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
   Future<void> getWitnessesYouData() async {
     witnessesYouStatus.value = RxStatus.loading();
     try {
-      final response = await ApiService.getData(ApiConstants.witnessedByAnotherUser);
+      final response =
+          await ApiService.getData(ApiConstants.witnessedByAnotherUser);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        witnessesYouData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
+        witnessesYouData(
+            getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
         if (witnessesYouData.isEmpty) {
           witnessesYouStatus.value = RxStatus.empty();
@@ -107,7 +117,8 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
           witnessesYouStatus.value = RxStatus.success();
         }
       } else {
-        witnessesYouStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to load witnesses you data");
+        witnessesYouStatus.value = RxStatus.error(
+            response.body?.toString() ?? "Failed to load witnesses you data");
       }
     } catch (e) {
       witnessesYouStatus.value = RxStatus.error(e.toString());
@@ -125,7 +136,8 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
 
     searchWitnessStatus.value = RxStatus.loading();
     try {
-      final response = await ApiService.getData(ApiConstants.searchWitness(email));
+      final response =
+          await ApiService.getData(ApiConstants.searchWitness(email));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = response.body;
@@ -133,12 +145,15 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
           searchedWitnesss.value = null;
           searchWitnessStatus.value = RxStatus.empty();
         } else {
-          searchedWitnesss.value = GetWitnessNomineeResponseModel.fromJson(data);
+          searchedWitnesss.value =
+              GetWitnessNomineeResponseModel.fromJson(data);
           searchWitnessStatus.value = RxStatus.success();
         }
       } else {
-        searchWitnessStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to search witness");
-        ToastMessage.errorMessageShowToster(response.body?.toString() ?? "Failed to search witness");
+        searchWitnessStatus.value = RxStatus.error(
+            response.body?.toString() ?? "Failed to search witness");
+        ToastMessage.errorMessageShowToster(
+            response.body?.toString() ?? "Failed to search witness");
       }
     } catch (e) {
       searchWitnessStatus.value = RxStatus.error(e.toString());
@@ -155,18 +170,22 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
   Future<bool> deleteWitness({required String requestKey}) async {
     deleteWitnessStatus.value = RxStatus.loading();
     try {
-      final response = await ApiService.getData(ApiConstants.deleteWitness(requestKey));
+      final response =
+          await ApiService.getData(ApiConstants.deleteWitness(requestKey));
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessage.successMessageShowToster(
-          AppLocalizations.of(Get.context!)?.witness_remove_successfully ?? "Witness removed successfully",
+          AppLocalizations.of(Get.context!)?.witness_remove_successfully ??
+              "Witness removed successfully",
         );
         deleteWitnessStatus.value = RxStatus.success();
         await getWitnessData();
         return true;
       } else {
-        deleteWitnessStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to delete witness");
+        deleteWitnessStatus.value = RxStatus.error(
+            response.body?.toString() ?? "Failed to delete witness");
         ToastMessage.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)?.failed_to_delete_witness ?? "Failed to delete witness",
+          AppLocalizations.of(Get.context!)?.failed_to_delete_witness ??
+              "Failed to delete witness",
         );
         return false;
       }
@@ -206,21 +225,24 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
     try {
       final response = await ApiService.postData(
         ApiConstants.saveWitness,
-        body,
+        body: body,
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessage.successMessageShowToster(
-          AppLocalizations.of(Get.context!)?.witness_saved_successfully ?? "Witness saved successfully",
+          AppLocalizations.of(Get.context!)?.witness_saved_successfully ??
+              "Witness saved successfully",
         );
         addWitnessStatus.value = RxStatus.success();
         await getWitnessData();
         Get.back();
         return true;
       } else {
-        addWitnessStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to save witness");
+        addWitnessStatus.value = RxStatus.error(
+            response.body?.toString() ?? "Failed to save witness");
         ToastMessage.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)?.save_failed_try_again ?? "Save failed, try again",
+          AppLocalizations.of(Get.context!)?.save_failed_try_again ??
+              "Save failed, try again",
         );
         return false;
       }
@@ -248,13 +270,15 @@ class WitnessController extends GetxController with GetSingleTickerProviderState
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessage.successMessageShowToster(
-          AppLocalizations.of(Get.context!)?.witness_added_successfully ?? "Witness added successfully",
+          AppLocalizations.of(Get.context!)?.witness_added_successfully ??
+              "Witness added successfully",
         );
         addWitnessStatus.value = RxStatus.success();
         await getWitnessData();
         return true;
       } else {
-        addWitnessStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to add witness");
+        addWitnessStatus.value = RxStatus.error(
+            response.body?.toString() ?? "Failed to add witness");
         ToastMessage.errorMessageShowToster(
           response.body?.toString() ??
               AppLocalizations.of(Get.context!)?.add_failed_try_again ??

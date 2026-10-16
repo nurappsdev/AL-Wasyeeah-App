@@ -574,5 +574,7 @@
   "terms_governing_law_title": "Governing Law",
   "terms_governing_law_desc": "These terms and conditions are governed by and construed in accordance with the laws of the jurisdiction in which Wasiyah.com operates. You agree to submit to the exclusive jurisdiction of the courts located within that jurisdiction.",
   "terms_modifications_title": "Modifications to Terms",
-  "terms_modifications_desc": "We may revise these terms and conditions at any time without prior notice. By continuing to use Wasiyah.com after any changes are made, you agree to be bound by the revised terms. It is your responsibility to review these terms periodically."
+  "terms_modifications_desc": "We may revise these terms and conditions at any time without prior notice. By continuing to use Wasiyah.com after any changes are made, you agree to be bound by the revised terms. It is your responsibility to review these terms periodically.",
+  "incorrect_password": "Incorrect password",
+  "enter_your_password": "Enter your password"
 }

@@ -361,10 +361,10 @@ class HomeController extends GetxController {
       "newPassword": newPassword,
       "confirmPassword": confirmPassword
     };
-    var response = await ApiService.postData(
-        "${ApiConstants.changePassAPI}", body,
-        headers: headers);
+    var response = await ApiService.postData("${ApiConstants.changePassAPI}",
+        body: body, headers: headers);
     if (response.statusCode == 200 || response.statusCode == 201) {
+      await PrefsHelper.setString(AppConstants.password, newPassword);
       ToastMessage.successMessageShowToster(
           response.body['message'].toString());
       forPassLoading(false);

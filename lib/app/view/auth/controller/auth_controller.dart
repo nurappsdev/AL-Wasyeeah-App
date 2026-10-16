@@ -67,7 +67,7 @@ class AuthController extends GetxController {
     };
     var response = await ApiService.postData(
       ApiConstants.signUpEndPoint,
-      body,
+      body: body,
     );
 
     log("response is :${response.body} ${response.body.runtimeType}----------------------------");
@@ -116,7 +116,7 @@ class AuthController extends GetxController {
 
       var response = await ApiService.postData(
         ApiConstants.signInEndPoint,
-        body,
+        body: body,
         headers: headers,
       );
 
@@ -135,6 +135,10 @@ class AuthController extends GetxController {
           await PrefsHelper.setString(
             AppConstants.bearerToken,
             token.toString(),
+          );
+          await PrefsHelper.setString(
+            AppConstants.password,
+            password,
           );
 
           ToastMessage.successMessageShowToster(
@@ -186,7 +190,7 @@ class AuthController extends GetxController {
     };
     var response = await ApiService.postData(
       ApiConstants.sendOtpEndPoint,
-      body,
+      body: body,
     );
     print("log in-----------------${response.body}");
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -241,7 +245,7 @@ class AuthController extends GetxController {
   Future<void> deleteAccount(String currentPassword) async {
     try {
       isDeletingAccount(true);
-      var response = await ApiService.getData(
+      var response = await ApiService.postData(
           ApiConstants.deleteAccount + "?currentPassword=$currentPassword");
       if (response.statusCode == 200) {
         await PrefsHelper.removeAll();
@@ -249,10 +253,16 @@ class AuthController extends GetxController {
             AppLocalizations.of(Get.context!)!.delete_success);
         isDeletingAccount(false);
         Get.offAllNamed(RouteName.loginPage);
+      } else {
+        isDeletingAccount(false);
+        ToastMessage.errorMessageShowToster(response.body?['message'] ??
+            AppLocalizations.of(Get.context!)!.delete_fail);
       }
     } catch (e, s) {
       isDeletingAccount(false);
       log("Error: $e\nStacktrace: $s");
+      ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.delete_fail);
     }
   }
 }

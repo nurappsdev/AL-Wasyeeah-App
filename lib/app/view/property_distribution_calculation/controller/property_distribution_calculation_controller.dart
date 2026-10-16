@@ -157,7 +157,7 @@ class PropertyDistributionCalculationController extends GetxController
     try {
       var response = await ApiService.postData(
         ApiConstants.savePropertyDistributionCalculationResult,
-        propertyDistributionResult.toJson(),
+        body: propertyDistributionResult.toJson(),
       );
 
       if (response.statusCode == 200) {
@@ -369,7 +369,8 @@ class PropertyDistributionCalculationController extends GetxController
     try {
       isCalculateLoading.value = true;
       var response = await ApiService.postData(
-          ApiConstants.propertyDistributionCalculationResult, finalOutput);
+          ApiConstants.propertyDistributionCalculationResult,
+          body: finalOutput);
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!
             .calculation_fetched_successfully);

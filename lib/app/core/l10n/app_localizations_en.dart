@@ -1739,4 +1739,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get terms_modifications_desc =>
       'We may revise these terms and conditions at any time without prior notice. By continuing to use Wasiyah.com after any changes are made, you agree to be bound by the revised terms. It is your responsibility to review these terms periodically.';
+
+  @override
+  String get incorrect_password => 'Incorrect password';
+
+  @override
+  String get enter_your_password => 'Enter your password';
 }

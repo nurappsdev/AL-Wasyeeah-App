@@ -32,15 +32,21 @@ class ContactUsController extends GetxController {
       print('Message: ${messageController.text}');
 
       try {
-        var body = {"name": nameController.text.trim(), "mobile": phoneController.text.trim(), "email": emailController.text.trim(), "message": messageController.text.trim()};
+        var body = {
+          "name": nameController.text.trim(),
+          "mobile": phoneController.text.trim(),
+          "email": emailController.text.trim(),
+          "message": messageController.text.trim()
+        };
         var response = await ApiService.postData(
           ApiConstants.contactUsEndPoint,
-          body,
+          body: body,
         );
         if (response.statusCode == 200 || response.statusCode == 201) {
           // await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
 
-          ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!.message_send_success);
+          ToastMessage.successMessageShowToster(
+              AppLocalizations.of(Get.context!)!.message_send_success);
           status(RxStatus.success());
         }
       } catch (error, stackTrace) {

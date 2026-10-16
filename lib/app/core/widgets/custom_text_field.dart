@@ -70,6 +70,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return TextFormField(
       onTap: widget.onTap != null
           ? () {
@@ -108,28 +109,51 @@ class _CustomTextFieldState extends State<CustomTextField> {
           },
 
       onChanged: widget.onChange,
-      cursorColor: Color(0xff4A8D74),
+      cursorColor: const Color(0xff4A8D74),
       obscureText: widget.isPassword ? obscureText : false,
-      style: TextStyle(color: widget.textColor ?? Colors.black, fontSize: widget.hintextSize ?? 16.h),
+      style: TextStyle(
+        color: widget.textColor ?? (isDark ? Colors.white : Colors.black),
+        fontSize: widget.hintextSize ?? 16.h,
+      ),
 
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: widget.contentPaddingHorizontal ?? 20.w, vertical: widget.contentPaddingVertical ?? 10.h),
-        fillColor: const Color(0xffFFFFFF),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: widget.contentPaddingHorizontal ?? 20.w,
+          vertical: widget.contentPaddingVertical ?? 10.h,
+        ),
+        fillColor: widget.filColor ??
+            (isDark ? const Color(0xFF25282B) : const Color(0xffFFFFFF)),
         filled: true,
-        errorStyle: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500, color: Colors.red, fontFamily: "ComicNeue-Light"),
+        errorStyle: TextStyle(
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w500,
+          color: Colors.red,
+          fontFamily: "ComicNeue-Light",
+        ),
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.isPassword
             ? GestureDetector(
                 onTap: toggle,
-                child: _suffixIcon(obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined),
+                child: _suffixIcon(obscureText
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined),
               )
             : widget.suffixIcon,
         prefixIconConstraints: BoxConstraints(minHeight: 24.w, minWidth: 24.w),
         labelText: widget.labelText,
+        labelStyle: TextStyle(
+          color: isDark ? Colors.white70 : Colors.black87,
+        ),
         hintText: widget.hintText,
-        hintStyle: TextStyle(color: widget.hintextColor ?? Colors.black54, fontSize: widget.hintextSize ?? 14.h, fontWeight: FontWeight.w400, fontFamily: "ComicNeue-Light"),
+        hintStyle: TextStyle(
+          color: widget.hintextColor ??
+              (isDark ? Colors.white54 : Colors.black54),
+          fontSize: widget.hintextSize ?? 14.h,
+          fontWeight: FontWeight.w400,
+          fontFamily: "ComicNeue-Light",
+        ),
         focusedBorder: focusedBorder(),
-        enabledBorder: enabledBorder(),
+        enabledBorder: enabledBorder(isDark),
         errorBorder: errorBorder(),
         border: focusedBorder(),
       ),
@@ -137,20 +161,27 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 
   _suffixIcon(IconData icon) {
-    return Padding(padding: const EdgeInsets.all(12.0), child: Icon(icon, color: AppColors.iconColor));
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Icon(icon, color: AppColors.iconColor),
+    );
   }
 
   OutlineInputBorder focusedBorder() {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(widget.borderRadio?.r ?? 16.r),
-      borderSide: BorderSide(color: widget.borderColor ?? AppColors.primaryColor),
+      borderSide:
+          BorderSide(color: widget.borderColor ?? AppColors.primaryColor),
     );
   }
 
-  OutlineInputBorder enabledBorder() {
+  OutlineInputBorder enabledBorder(bool isDark) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(widget.borderRadio?.r ?? 16.r),
-      borderSide: BorderSide(color: widget.borderColor ?? AppColors.hitTextColor000000),
+      borderSide: BorderSide(
+        color: widget.borderColor ??
+            (isDark ? const Color(0xFF384046) : AppColors.hitTextColor000000),
+      ),
     );
   }
 
@@ -240,36 +271,39 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     _hasValue = widget.controller?.text.isNotEmpty ?? false;
-    log("----${widget.controller?.text}");
-    final Color enabledColor = _hasValue ? Colors.green : Colors.grey[300]!;
+    final Color enabledColor =
+        _hasValue ? Colors.green : (isDark ? Colors.grey[700]! : Colors.grey[300]!);
 
     return TextFormField(
       controller: widget.controller,
-      //initialValue: widget.controller == null ? null : widget.controller?.text,
       enabled: widget.enabled,
       obscureText: widget.obscureText,
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
-      style: TextStyle(color: Colors.black, fontSize: 12.sp),
+      style: TextStyle(
+        color: isDark ? Colors.white : Colors.black,
+        fontSize: 12.sp,
+      ),
       onChanged: (value) {
         setState(() => _hasValue = value.isNotEmpty);
         widget.onChanged?.call(value);
       },
       validator: widget.validator,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: isDark ? const Color(0xFF25282B) : Colors.white,
         labelText: widget.label,
         hintText: widget.hint,
-        //isDense: true,
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
-        labelStyle: TextStyle(color: Colors.grey[500]),
-        hintStyle: TextStyle(color: Colors.grey[500]),
-        //border: _border(enabledColor),
+        labelStyle: TextStyle(color: isDark ? Colors.grey[400] : Colors.grey[500]),
+        hintStyle: TextStyle(color: isDark ? Colors.grey[400] : Colors.grey[500]),
         enabledBorder: _border(enabledColor),
-        focusedBorder: _border(Colors.blue),
+        focusedBorder: _border(AppColors.primaryColor),
         errorBorder: _border(Colors.red),
         focusedErrorBorder: _border(Colors.red),
       ),

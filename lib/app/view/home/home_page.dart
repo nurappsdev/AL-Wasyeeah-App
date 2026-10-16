@@ -39,6 +39,7 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final notificationController = Get.find<NotificationController>();
     final profileController = Get.find<ProfileController>();
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.h),

@@ -27,11 +27,14 @@ class WasyyahController extends GetxController {
       final response = await ApiService.getData(ApiConstants.wasyyahYouDataYou);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> jsonData = response.body;
-        wasyyahList.value = jsonData.map((item) => WasyyahContentModel.fromJson(item)).toList();
+        wasyyahList.value =
+            jsonData.map((item) => WasyyahContentModel.fromJson(item)).toList();
         // Sort items by orderSeq locally
-        wasyyahList.sort((a, b) => (a.orderSeq ?? 0).compareTo(b.orderSeq ?? 0));
+        wasyyahList
+            .sort((a, b) => (a.orderSeq ?? 0).compareTo(b.orderSeq ?? 0));
       } else {
-        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_load_wasiyyah_data);
+        ToastMessage.errorMessageShowToster(
+            AppLocalizations.of(Get.context!)!.failed_to_load_wasiyyah_data);
       }
     } catch (e) {
       ToastMessage.errorMessageShowToster(e.toString());
@@ -45,13 +48,14 @@ class WasyyahController extends GetxController {
     try {
       final response = await ApiService.postData(
         ApiConstants.saveWasiyyah,
-        model.toJson(),
+        body: model.toJson(),
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         getWasyyahData(); // Refresh list to get updated data if needed
         return true;
       } else {
-        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_save_wasiyyah);
+        ToastMessage.errorMessageShowToster(
+            AppLocalizations.of(Get.context!)!.failed_to_save_wasiyyah);
         return false;
       }
     } catch (e) {
@@ -76,7 +80,7 @@ class WasyyahController extends GetxController {
       };
       final response = await ApiService.postData(
         ApiConstants.saveWasiyyah,
-        payload,
+        body: payload,
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         await getWasyyahData();
@@ -122,10 +126,11 @@ class WasyyahController extends GetxController {
     try {
       final response = await ApiService.postData(
         ApiConstants.changeOrder,
-        payload,
+        body: payload,
       );
       if (response.statusCode != 200 && response.statusCode != 201) {
-        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_update_wasiyyah);
+        ToastMessage.errorMessageShowToster(
+            AppLocalizations.of(Get.context!)!.failed_to_update_wasiyyah);
       }
     } catch (e) {
       ToastMessage.errorMessageShowToster(e.toString());
@@ -149,11 +154,13 @@ class WasyyahController extends GetxController {
       final personalData = profileController.personalForm;
       final user = profileController.profileModel;
       final qrData = {
-        "n": "${personalData.value.firstName.text} ${personalData.value.lastName.text}",
+        "n":
+            "${personalData.value.firstName.text} ${personalData.value.lastName.text}",
         "e": user.value.userProfile?.email ?? "N/A",
         "p": user.value.userProfile?.mobile ?? "N/A",
         "dob": user.value.userProfile?.dob ?? "N/A",
-        "prof": personalData.value.selectedProfession.value?.profession ?? "N/A",
+        "prof":
+            personalData.value.selectedProfession.value?.profession ?? "N/A",
         "gn": personalData.value.selectedGender.value?.gender ?? "N/A",
         "ms": personalData.value.selectedMarried.value?.maritalType ?? "N/A",
         "p_addr": user.value.userProfile?.permanentAddress ?? "N/A",
@@ -168,7 +175,8 @@ class WasyyahController extends GetxController {
       return file;
     } catch (e, s) {
       log("PDF ISSUE", error: e, stackTrace: s);
-      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.failed_to_generate_pdf);
+      ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.failed_to_generate_pdf);
       return null;
     } finally {
       isLoading(false);

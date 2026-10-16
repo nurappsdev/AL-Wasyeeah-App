@@ -35,14 +35,22 @@ class CustomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final defaultColor = isDark ? Colors.white : AppColors.textColor4E4E4E;
     return Padding(
       padding: EdgeInsets.only(left: left, right: right, top: top, bottom: bottom),
       child: Text(
         textAlign: textAlign,
         text,
         maxLines: maxline,
-        overflow: textOverflow ?? null,
-        style: TextStyle(fontSize: fontsize ?? 14.h, fontFamily: fontName ?? "Poppins-Regular", fontWeight: fontWeight, color: color ?? AppColors.textColor4E4E4E),
+        overflow: textOverflow,
+        style: TextStyle(
+          fontSize: fontsize ?? 14.h,
+          fontFamily: fontName ?? "Poppins-Regular",
+          fontWeight: fontWeight,
+          color: color ?? defaultColor,
+          height: textHeight,
+        ),
       ),
     );
   }

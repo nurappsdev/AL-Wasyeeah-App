@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
-class NomineeController extends GetxController with GetSingleTickerProviderStateMixin {
+class NomineeController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   late TabController tabController;
 
   /// For "Your Witness"
@@ -23,10 +24,13 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
   final Rx<RxStatus> addNomineeStatus = Rx<RxStatus>(RxStatus.empty());
   final Rx<RxStatus> deleteNomineeStatus = Rx<RxStatus>(RxStatus.empty());
 
-  Rx<GetWitnessNomineeResponseModel?> searchedNominee = Rx<GetWitnessNomineeResponseModel?>(null);
+  Rx<GetWitnessNomineeResponseModel?> searchedNominee =
+      Rx<GetWitnessNomineeResponseModel?>(null);
 
-  RxList<GetWitnessNomineeResponseModel> nomineeData = <GetWitnessNomineeResponseModel>[].obs;
-  RxList<GetWitnessNomineeResponseModel> nomineesYouData = <GetWitnessNomineeResponseModel>[].obs;
+  RxList<GetWitnessNomineeResponseModel> nomineeData =
+      <GetWitnessNomineeResponseModel>[].obs;
+  RxList<GetWitnessNomineeResponseModel> nomineesYouData =
+      <GetWitnessNomineeResponseModel>[].obs;
   final TextEditingController searchNomineeController = TextEditingController();
   final RxString searchText = "".obs;
 
@@ -36,9 +40,11 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
   final TextEditingController emailController = TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
 
-  final TextEditingController presentAddressController = TextEditingController();
+  final TextEditingController presentAddressController =
+      TextEditingController();
 
-  final TextEditingController permanentAddressController = TextEditingController();
+  final TextEditingController permanentAddressController =
+      TextEditingController();
 
   DateTime? birthDate;
 
@@ -67,7 +73,8 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
       final response = await ApiService.getData(ApiConstants.yourNominee);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        nomineeData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
+        nomineeData(
+            getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
         /// ✅ handle empty vs success
         if (nomineeData.isEmpty) {
@@ -76,7 +83,8 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
           nomineeStatus.value = RxStatus.success();
         }
       } else {
-        nomineeStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to load nominee data");
+        nomineeStatus.value = RxStatus.error(
+            response.body?.toString() ?? "Failed to load nominee data");
       }
     } catch (e) {
       nomineeStatus.value = RxStatus.error(e.toString());
@@ -93,10 +101,12 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
   Future<void> getNomineesYouData() async {
     nomineesYouStatus.value = RxStatus.loading();
     try {
-      final response = await ApiService.getData(ApiConstants.nomineedByAnotherUser);
+      final response =
+          await ApiService.getData(ApiConstants.nomineedByAnotherUser);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        nomineesYouData(getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
+        nomineesYouData(
+            getWitnessNomineeResponseModelFromJson(jsonEncode(response.body)));
 
         if (nomineesYouData.isEmpty) {
           nomineesYouStatus.value = RxStatus.empty();
@@ -104,7 +114,8 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
           nomineesYouStatus.value = RxStatus.success();
         }
       } else {
-        nomineesYouStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to load nominees you data");
+        nomineesYouStatus.value = RxStatus.error(
+            response.body?.toString() ?? "Failed to load nominees you data");
       }
     } catch (e) {
       nomineesYouStatus.value = RxStatus.error(e.toString());
@@ -122,7 +133,8 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
 
     searchNomineeStatus.value = RxStatus.loading();
     try {
-      final response = await ApiService.getData(ApiConstants.searchNominee(email));
+      final response =
+          await ApiService.getData(ApiConstants.searchNominee(email));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = response.body;
@@ -134,8 +146,10 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
           searchNomineeStatus.value = RxStatus.success();
         }
       } else {
-        searchNomineeStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to search nominee");
-        ToastMessage.errorMessageShowToster(response.body?.toString() ?? "Failed to search nominee");
+        searchNomineeStatus.value = RxStatus.error(
+            response.body?.toString() ?? "Failed to search nominee");
+        ToastMessage.errorMessageShowToster(
+            response.body?.toString() ?? "Failed to search nominee");
       }
     } catch (e) {
       searchNomineeStatus.value = RxStatus.error(e.toString());
@@ -152,18 +166,22 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
   Future<bool> deleteNominee({required String requestKey}) async {
     deleteNomineeStatus.value = RxStatus.loading();
     try {
-      final response = await ApiService.getData(ApiConstants.deleteNominee(requestKey));
+      final response =
+          await ApiService.getData(ApiConstants.deleteNominee(requestKey));
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessage.successMessageShowToster(
-          AppLocalizations.of(Get.context!)?.nominee_remove_successfully ?? "Nominee removed successfully",
+          AppLocalizations.of(Get.context!)?.nominee_remove_successfully ??
+              "Nominee removed successfully",
         );
         deleteNomineeStatus.value = RxStatus.success();
         await getNomineeData();
         return true;
       } else {
-        deleteNomineeStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to delete nominee");
+        deleteNomineeStatus.value = RxStatus.error(
+            response.body?.toString() ?? "Failed to delete nominee");
         ToastMessage.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)?.failed_to_delete_nominee ?? "Failed to delete nominee",
+          AppLocalizations.of(Get.context!)?.failed_to_delete_nominee ??
+              "Failed to delete nominee",
         );
         return false;
       }
@@ -203,21 +221,24 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
     try {
       final response = await ApiService.postData(
         ApiConstants.saveNominee,
-        body,
+        body: body,
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessage.successMessageShowToster(
-          AppLocalizations.of(Get.context!)?.nominee_saved_successfully ?? "Nominee saved successfully",
+          AppLocalizations.of(Get.context!)?.nominee_saved_successfully ??
+              "Nominee saved successfully",
         );
         addNomineeStatus.value = RxStatus.success();
         await getNomineeData();
         Get.back();
         return true;
       } else {
-        addNomineeStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to save nominee");
+        addNomineeStatus.value = RxStatus.error(
+            response.body?.toString() ?? "Failed to save nominee");
         ToastMessage.errorMessageShowToster(
-          AppLocalizations.of(Get.context!)?.save_failed_try_again ?? "Save failed, try again",
+          AppLocalizations.of(Get.context!)?.save_failed_try_again ??
+              "Save failed, try again",
         );
         return false;
       }
@@ -245,13 +266,15 @@ class NomineeController extends GetxController with GetSingleTickerProviderState
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         ToastMessage.successMessageShowToster(
-          AppLocalizations.of(Get.context!)?.nominee_added_successfully ?? "Nominee added successfully",
+          AppLocalizations.of(Get.context!)?.nominee_added_successfully ??
+              "Nominee added successfully",
         );
         addNomineeStatus.value = RxStatus.success();
         await getNomineeData();
         return true;
       } else {
-        addNomineeStatus.value = RxStatus.error(response.body?.toString() ?? "Failed to add nominee");
+        addNomineeStatus.value = RxStatus.error(
+            response.body?.toString() ?? "Failed to add nominee");
         ToastMessage.errorMessageShowToster(
           response.body?.toString() ??
               AppLocalizations.of(Get.context!)?.add_failed_try_again ??

@@ -3423,6 +3423,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We may revise these terms and conditions at any time without prior notice. By continuing to use Wasiyah.com after any changes are made, you agree to be bound by the revised terms. It is your responsibility to review these terms periodically.'**
   String get terms_modifications_desc;
+
+  /// No description provided for @incorrect_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect password'**
+  String get incorrect_password;
+
+  /// No description provided for @enter_your_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get enter_your_password;
 }
 
 class _AppLocalizationsDelegate

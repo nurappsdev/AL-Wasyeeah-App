@@ -129,8 +129,8 @@ class ApiService extends GetxService {
   // ========================== POST ==========================
 
   static Future<Response> postData(
-    String uri,
-    dynamic body, {
+    String uri, {
+    dynamic body,
     Map<String, String>? headers,
   }) async {
     log('====> API Request: [POST] ${ApiConstants.baseUrl + uri}\n$headers\n$body');

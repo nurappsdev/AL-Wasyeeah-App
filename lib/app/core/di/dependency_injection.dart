@@ -1,4 +1,5 @@
 import 'package:al_wasyeah/app/view/access_control/controller/access_control_controller.dart';
+import 'package:al_wasyeah/app/view/auth/controller/auth_controller.dart';
 import 'package:al_wasyeah/app/view/contact_us/controller/contact_us_controller.dart';
 import 'package:al_wasyeah/app/view/nominee/controller/nominee_controller.dart';
 import 'package:al_wasyeah/app/view/notification/controller/notification_controller.dart';
@@ -21,9 +22,10 @@ class SplashBinding extends Bindings {
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<HomeController>(() => HomeController());
-    Get.lazyPut<ProfileController>(() => ProfileController());
-    Get.lazyPut<NotificationController>(() => NotificationController());
+    Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
+    Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
+    Get.lazyPut<NotificationController>(() => NotificationController(), fenix: true);
+    Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
   }
 }
 
@@ -58,7 +60,8 @@ class AccessControlBinding extends Bindings {
 class PropertyDistributionCalculationBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<PropertyDistributionCalculationController>(() => PropertyDistributionCalculationController());
+    Get.lazyPut<PropertyDistributionCalculationController>(
+        () => PropertyDistributionCalculationController());
   }
 }
 

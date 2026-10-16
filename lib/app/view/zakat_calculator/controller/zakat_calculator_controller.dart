@@ -14,7 +14,8 @@ import 'package:get/get.dart';
 import '../../../core/utils/extensions.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
 
-class ZakatCalculatorController extends GetxController with StateMixin<dynamic> {
+class ZakatCalculatorController extends GetxController
+    with StateMixin<dynamic> {
   ///==================get Witness===========================
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final cashAndBankController = TextEditingController();
@@ -22,21 +23,27 @@ class ZakatCalculatorController extends GetxController with StateMixin<dynamic> 
 
   final TextEditingController valueSilverController = TextEditingController();
 
-  final TextEditingController futureDepositsController = TextEditingController();
+  final TextEditingController futureDepositsController =
+      TextEditingController();
 
   final TextEditingController loanGivenController = TextEditingController();
 
-  final TextEditingController investmentValueController = TextEditingController();
+  final TextEditingController investmentValueController =
+      TextEditingController();
 
   final TextEditingController rentalIncomeController = TextEditingController();
 
-  final TextEditingController immediateLiabilitieseController = TextEditingController();
+  final TextEditingController immediateLiabilitieseController =
+      TextEditingController();
 
   RxBool isNisabLoading = false.obs;
-  RxList<GetNisabRatesResponseModel> nisabRates = <GetNisabRatesResponseModel>[].obs;
-  Rx<ZakatCalculationResultModel?> zakatCalculationResult = Rx<ZakatCalculationResultModel?>(null);
+  RxList<GetNisabRatesResponseModel> nisabRates =
+      <GetNisabRatesResponseModel>[].obs;
+  Rx<ZakatCalculationResultModel?> zakatCalculationResult =
+      Rx<ZakatCalculationResultModel?>(null);
 
-  Rx<GetNisabRatesResponseModel?> selectedCurrency = Rx<GetNisabRatesResponseModel?>(null);
+  Rx<GetNisabRatesResponseModel?> selectedCurrency =
+      Rx<GetNisabRatesResponseModel?>(null);
 
   @override
   void onInit() {
@@ -67,7 +74,8 @@ class ZakatCalculatorController extends GetxController with StateMixin<dynamic> 
       var response = await ApiService.getData(ApiConstants.nisab);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final data = getNisabRatesResponseModelFromJson(jsonEncode(response.body));
+        final data =
+            getNisabRatesResponseModelFromJson(jsonEncode(response.body));
         nisabRates(data);
 
         change(data, status: RxStatus.success());
@@ -104,14 +112,19 @@ class ZakatCalculatorController extends GetxController with StateMixin<dynamic> 
     };
     var response = await ApiService.postData(
       ApiConstants.zakatEndPoint,
-      body,
+      body: body,
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      zakatCalculationResult(zakatCalculationResultModelFromJson(jsonEncode(response.body)));
-      ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!.record_inserted_successfully);
+      zakatCalculationResult(
+          zakatCalculationResultModelFromJson(jsonEncode(response.body)));
+      ToastMessage.successMessageShowToster(
+          AppLocalizations.of(Get.context!)!.record_inserted_successfully);
 
-      showZakatDialog(Get.context, assetsAccount: "${zakatCalculationResult.value?.netAssets.toLocal()}", zakatAccount: "${zakatCalculationResult.value?.zakatAmount.toLocal()}");
+      showZakatDialog(Get.context,
+          assetsAccount: "${zakatCalculationResult.value?.netAssets.toLocal()}",
+          zakatAccount:
+              "${zakatCalculationResult.value?.zakatAmount.toLocal()}");
 
       zakatLoading(false);
     } else {
@@ -119,7 +132,8 @@ class ZakatCalculatorController extends GetxController with StateMixin<dynamic> 
     }
   }
 
-  void showZakatDialog(context, {required String assetsAccount, required String zakatAccount}) {
+  void showZakatDialog(context,
+      {required String assetsAccount, required String zakatAccount}) {
     Get.dialog(
       AlertDialog(
         title: CustomText(
@@ -141,7 +155,8 @@ class ZakatCalculatorController extends GetxController with StateMixin<dynamic> 
               ),
               SizedBox(height: 12.h),
               CustomText(
-                text: assetsAccount + " (${selectedCurrency.value?.currencyIcon})",
+                text: assetsAccount +
+                    " (${selectedCurrency.value?.currencyIcon})",
                 fontsize: 22.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
@@ -155,7 +170,8 @@ class ZakatCalculatorController extends GetxController with StateMixin<dynamic> 
               ),
               SizedBox(height: 12.h),
               CustomText(
-                text: zakatAccount + " (${selectedCurrency.value?.currencyIcon})",
+                text:
+                    zakatAccount + " (${selectedCurrency.value?.currencyIcon})",
                 fontsize: 22.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,

@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
-import 'package:al_wasyeah/app/core/themes/controller/theme_controller.dart';
 import 'package:al_wasyeah/app/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -56,17 +54,25 @@ class _AppWrapperState extends State<AppWrapper> {
       maintainBottomViewPadding: true,
       top: false,
       bottom: true,
-      child: Container(
-        decoration: isDarkMode()
-            ? const BoxDecoration(color: Color(0xFF121212))
-            : const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AppImages.backImg),
-                  fit: BoxFit.cover,
+      child: Obx(() {
+        final dark = isDarkMode();
+        return Container(
+          decoration: dark
+              ? const BoxDecoration(color: Color(0xFF121212))
+              : const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(AppImages.backImg),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-        child: hasInternet ? Scaffold(resizeToAvoidBottomInset: false,body: widget.child,) : NoInternetWidget(),
-      ),
+          child: hasInternet
+              ? Scaffold(
+                  resizeToAvoidBottomInset: false,
+                  body: widget.child,
+                )
+              : NoInternetWidget(),
+        );
+      }),
     );
   }
 }

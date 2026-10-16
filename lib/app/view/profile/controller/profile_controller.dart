@@ -919,7 +919,7 @@ class ProfileController extends GetxController {
 
       var response = await ApiService.postData(
         ApiConstants.profileUpdate,
-        submitData.toJson(),
+        body: submitData.toJson(),
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {

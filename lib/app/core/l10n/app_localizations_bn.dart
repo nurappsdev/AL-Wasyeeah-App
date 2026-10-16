@@ -1751,4 +1751,10 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get terms_modifications_desc =>
       'আমরা পূর্ব বিজ্ঞপ্তি ছাড়াই যেকোনো সময় এই শর্তাবলী সংশোধন করতে পারি। কোনো পরিবর্তনের পর Wasiyah.com ব্যবহার অব্যাহত রাখার মাধ্যমে, আপনি সংশোধিত শর্তাবলীতে সম্মত হচ্ছেন। এই শর্তাবলী পর্যায়ক্রমে পর্যালোচনা করা আপনার দায়িত্ব।';
+
+  @override
+  String get incorrect_password => 'ভুল পাসওয়ার্ড';
+
+  @override
+  String get enter_your_password => 'আপনার পাসওয়ার্ড লিখুন';
 }

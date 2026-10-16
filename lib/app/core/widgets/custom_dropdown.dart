@@ -153,7 +153,9 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final Color enabledColor = _hasValue ? Colors.green : Colors.grey[300]!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final Color enabledColor =
+        _hasValue ? Colors.green : (isDark ? Colors.grey[700]! : Colors.grey[300]!);
 
     return CompositedTransformTarget(
       link: _layerLink,
@@ -164,7 +166,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
           final hasError = state.hasError;
           final borderColor = hasError
               ? Colors.red
-              : (_isOpen ? Colors.blue : enabledColor);
+              : (_isOpen ? const Color(0xff058240) : enabledColor);
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,6 +179,8 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                   isEmpty: !_hasValue,
                   decoration: InputDecoration(
                     labelText: widget.label,
+                    filled: true,
+                    fillColor: isDark ? const Color(0xFF25282B) : Colors.white,
                     isDense: true,
                     enabled: widget.enabled,
                     contentPadding: EdgeInsets.symmetric(
@@ -184,16 +188,18 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                       vertical: 12.h,
                     ),
                     enabledBorder: _border(borderColor),
-                    focusedBorder: _border(Colors.blue),
-                    disabledBorder: _border(Colors.grey[200]!),
+                    focusedBorder: _border(const Color(0xff058240)),
+                    disabledBorder: _border(isDark ? Colors.grey[800]! : Colors.grey[200]!),
                     errorBorder: _border(Colors.red),
                     focusedErrorBorder: _border(Colors.red),
-                    labelStyle: TextStyle(color: Colors.grey[600]),
+                    labelStyle: TextStyle(
+                      color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    ),
                     suffixIcon: Icon(
                       _isOpen
                           ? Icons.arrow_drop_up_rounded
                           : Icons.arrow_drop_down_rounded,
-                      color: Colors.grey[600],
+                      color: isDark ? Colors.grey[400] : Colors.grey[600],
                       size: 26.sp,
                     ),
                   ),
@@ -207,7 +213,9 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                       fontSize: 12.sp,
                       fontWeight:
                           _hasValue ? FontWeight.bold : FontWeight.w400,
-                      color: _hasValue ? Colors.black : Colors.grey[500],
+                      color: _hasValue
+                          ? (isDark ? Colors.white : Colors.black)
+                          : (isDark ? Colors.grey[400] : Colors.grey[500]),
                     ),
                   ),
                 ),
@@ -292,11 +300,14 @@ class _DropdownOverlayContentState<T> extends State<_DropdownOverlayContent<T>> 
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final borderColor = isDark ? const Color(0xFF384046) : Colors.grey[300]!;
+
     return Material(
       elevation: 6,
       shadowColor: Colors.black26,
       borderRadius: BorderRadius.circular(widget.borderRadius.r),
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       child: ConstrainedBox(
         constraints: BoxConstraints(
           maxWidth: widget.targetWidth,
@@ -313,17 +324,20 @@ class _DropdownOverlayContentState<T> extends State<_DropdownOverlayContent<T>> 
                   child: TextField(
                     controller: _searchController,
                     autofocus: true,
-                    style: TextStyle(fontSize: 13.sp),
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      color: isDark ? Colors.white : Colors.black87,
+                    ),
                     decoration: InputDecoration(
                       hintText: widget.searchHint,
                       hintStyle: TextStyle(
-                        color: Colors.grey[500],
+                        color: isDark ? Colors.grey[400] : Colors.grey[500],
                         fontSize: 12.sp,
                       ),
                       prefixIcon: Icon(
                         Icons.search,
                         size: 18.sp,
-                        color: Colors.grey[600],
+                        color: isDark ? Colors.grey[400] : Colors.grey[600],
                       ),
                       contentPadding: EdgeInsets.symmetric(
                         horizontal: 12.w,
@@ -333,17 +347,17 @@ class _DropdownOverlayContentState<T> extends State<_DropdownOverlayContent<T>> 
                       border: OutlineInputBorder(
                         borderRadius:
                             BorderRadius.circular(widget.borderRadius.r),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
+                        borderSide: BorderSide(color: borderColor),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius:
                             BorderRadius.circular(widget.borderRadius.r),
-                        borderSide: BorderSide(color: Colors.grey[300]!),
+                        borderSide: BorderSide(color: borderColor),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius:
                             BorderRadius.circular(widget.borderRadius.r),
-                        borderSide: const BorderSide(color: Colors.blue),
+                        borderSide: const BorderSide(color: Color(0xff058240)),
                       ),
                     ),
                     onChanged: _onSearchChanged,
@@ -375,7 +389,9 @@ class _DropdownOverlayContentState<T> extends State<_DropdownOverlayContent<T>> 
                             onTap: () => widget.onSelected(item),
                             child: Container(
                               color: isSelected
-                                  ? Colors.grey.withValues(alpha: 0.08)
+                                  ? (isDark
+                                      ? Colors.white.withValues(alpha: 0.08)
+                                      : Colors.grey.withValues(alpha: 0.08))
                                   : Colors.transparent,
                               padding: EdgeInsets.symmetric(
                                 horizontal: 14.w,
@@ -392,8 +408,10 @@ class _DropdownOverlayContentState<T> extends State<_DropdownOverlayContent<T>> 
                                             ? FontWeight.bold
                                             : FontWeight.w400,
                                         color: isSelected
-                                            ? Colors.blue
-                                            : Colors.black87,
+                                            ? const Color(0xff058240)
+                                            : (isDark
+                                                ? Colors.white
+                                                : Colors.black87),
                                       ),
                                     ),
                                   ),
@@ -401,7 +419,7 @@ class _DropdownOverlayContentState<T> extends State<_DropdownOverlayContent<T>> 
                                     Icon(
                                       Icons.check,
                                       size: 16.sp,
-                                      color: Colors.blue,
+                                      color: const Color(0xff058240),
                                     ),
                                 ],
                               ),

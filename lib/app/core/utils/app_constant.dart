@@ -14,6 +14,7 @@ class AppConstants {
   static String lastname = 'lastName';
   static String image = '';
   static String phone = '';
+  static String password = 'password';
   static String isOnboardingSelected = 'isOnboardingSelected';
 
 
