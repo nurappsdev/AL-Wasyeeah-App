@@ -3171,6 +3171,258 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark Mode'**
   String get dark_mode;
+
+  /// No description provided for @delete_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get delete_account;
+
+  /// No description provided for @sure_you_want_to_delete_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account?'**
+  String get sure_you_want_to_delete_account;
+
+  /// No description provided for @delete_account_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'By deleting your account, all your data will be permanently removed from our servers. This action cannot be undone.'**
+  String get delete_account_desc;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @delete_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deleted successfully'**
+  String get delete_success;
+
+  /// No description provided for @delete_fail.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete your account'**
+  String get delete_fail;
+
+  /// No description provided for @i_agree.
+  ///
+  /// In en, this message translates to:
+  /// **'I Agree'**
+  String get i_agree;
+
+  /// No description provided for @terms_general_title.
+  ///
+  /// In en, this message translates to:
+  /// **'General Terms'**
+  String get terms_general_title;
+
+  /// No description provided for @terms_general_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'These Terms govern your use of Wasiyah.com (\"Platform\"). By accessing it, you agree to these Terms and our Privacy Policy.'**
+  String get terms_general_desc;
+
+  /// No description provided for @terms_general_bullet_1.
+  ///
+  /// In en, this message translates to:
+  /// **'All registration information you submit will be true, accurate, current, and complete.'**
+  String get terms_general_bullet_1;
+
+  /// No description provided for @terms_general_bullet_2.
+  ///
+  /// In en, this message translates to:
+  /// **'You will not use the Services for any illegal or unauthorized purpose.'**
+  String get terms_general_bullet_2;
+
+  /// No description provided for @terms_general_bullet_3.
+  ///
+  /// In en, this message translates to:
+  /// **'Your use of the Services will not violate any applicable law or regulation.'**
+  String get terms_general_bullet_3;
+
+  /// No description provided for @terms_general_bullet_4.
+  ///
+  /// In en, this message translates to:
+  /// **'You will not create accounts through unauthorized means, including but not limited to, by using an automated device, script, bot, spider, crawler or scraper.'**
+  String get terms_general_bullet_4;
+
+  /// No description provided for @terms_general_bullet_5.
+  ///
+  /// In en, this message translates to:
+  /// **'You are solely responsible for your conduct and any data, text, files, information, usernames, images, graphics, photos, profiles, audio and video clips, sounds, musical works, events, works of authorship, applications, links and other content or materials (collectively, \"Content\") that you submit, post or display on or via our products.'**
+  String get terms_general_bullet_5;
+
+  /// No description provided for @terms_general_bullet_6.
+  ///
+  /// In en, this message translates to:
+  /// **'You must not interfere with or disrupt the service or servers or networks connected to the Services, including by transmitting any viruses, spyware, malware or any other code of a destructive or disruptive nature.'**
+  String get terms_general_bullet_6;
+
+  /// No description provided for @terms_eligibility_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Eligibility'**
+  String get terms_eligibility_title;
+
+  /// No description provided for @terms_eligibility_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Our services are intended for users who are at least 18 years old. By using Wasiyah.com, you represent and warrant that you meet this age requirement and have the legal capacity to enter into a binding agreement.'**
+  String get terms_eligibility_desc;
+
+  /// No description provided for @terms_account_registration_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Registration'**
+  String get terms_account_registration_title;
+
+  /// No description provided for @terms_account_registration_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'To access certain features, you may be required to register for an account. You agree to:'**
+  String get terms_account_registration_desc;
+
+  /// No description provided for @terms_account_registration_bullet_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Provide accurate, current, and complete information during the registration process.'**
+  String get terms_account_registration_bullet_1;
+
+  /// No description provided for @terms_account_registration_bullet_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain and promptly update your account information to keep it accurate and complete.'**
+  String get terms_account_registration_bullet_2;
+
+  /// No description provided for @terms_account_registration_bullet_3.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain the security of your password and accept all risks of unauthorized access to your account.'**
+  String get terms_account_registration_bullet_3;
+
+  /// No description provided for @terms_account_registration_bullet_4.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify us immediately of any unauthorized use of your account.'**
+  String get terms_account_registration_bullet_4;
+
+  /// No description provided for @terms_platform_use_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Use of the Platform'**
+  String get terms_platform_use_title;
+
+  /// No description provided for @terms_platform_use_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'You agree to use Wasiyah.com only for lawful purposes and in a way that does not infringe the rights of, restrict, or inhibit anyone else\'s use and enjoyment of the platform. Prohibited behavior includes:'**
+  String get terms_platform_use_desc;
+
+  /// No description provided for @terms_platform_use_bullet_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Engaging in any unlawful or fraudulent activities.'**
+  String get terms_platform_use_bullet_1;
+
+  /// No description provided for @terms_platform_use_bullet_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Transmitting any harmful, threatening, defamatory, obscene, or otherwise objectionable material.'**
+  String get terms_platform_use_bullet_2;
+
+  /// No description provided for @terms_platform_use_bullet_3.
+  ///
+  /// In en, this message translates to:
+  /// **'Interfering with the operation of the platform or accessing it using automated means.'**
+  String get terms_platform_use_bullet_3;
+
+  /// No description provided for @terms_zakat_calculation_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Zakat Calculation'**
+  String get terms_zakat_calculation_title;
+
+  /// No description provided for @terms_zakat_calculation_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'The Zakat Calculator provided on Wasiyah.com is intended as a general guide based on Islamic principles. While we strive for accuracy, you are responsible for ensuring the correctness of your inputs and understanding that this tool does not constitute professional financial advice.'**
+  String get terms_zakat_calculation_desc;
+
+  /// No description provided for @terms_payments_donations_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments and Donations'**
+  String get terms_payments_donations_title;
+
+  /// No description provided for @terms_payments_donations_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'All payments and donations made through Wasiyah.com are processed securely via third-party payment providers. You agree to provide accurate billing information and authorize us to charge your payment method for any transactions made. We are not responsible for any errors or issues arising from the payment process.'**
+  String get terms_payments_donations_desc;
+
+  /// No description provided for @terms_intellectual_property_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Intellectual Property'**
+  String get terms_intellectual_property_title;
+
+  /// No description provided for @terms_intellectual_property_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'All content on Wasiyah.com, including text, graphics, logos, and software, is the property of Wasiyah.com or its content suppliers and is protected by intellectual property laws. You may not reproduce, distribute, or create derivative works from any content without our express written permission.'**
+  String get terms_intellectual_property_desc;
+
+  /// No description provided for @terms_limitation_liability_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Limitation of Liability'**
+  String get terms_limitation_liability_title;
+
+  /// No description provided for @terms_limitation_liability_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'We are not liable for indirect damages or inaccuracies in Zakat calculations. Always consult a scholar if in doubt.'**
+  String get terms_limitation_liability_desc;
+
+  /// No description provided for @terms_termination_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Termination'**
+  String get terms_termination_title;
+
+  /// No description provided for @terms_termination_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'We reserve the right to suspend or terminate your access to Wasiyah.com at our sole discretion, without notice, for conduct that we believe violates these terms or is harmful to other users of the platform, us, or third parties, or for any other reason.'**
+  String get terms_termination_desc;
+
+  /// No description provided for @terms_governing_law_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Governing Law'**
+  String get terms_governing_law_title;
+
+  /// No description provided for @terms_governing_law_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'These terms and conditions are governed by and construed in accordance with the laws of the jurisdiction in which Wasiyah.com operates. You agree to submit to the exclusive jurisdiction of the courts located within that jurisdiction.'**
+  String get terms_governing_law_desc;
+
+  /// No description provided for @terms_modifications_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Modifications to Terms'**
+  String get terms_modifications_title;
+
+  /// No description provided for @terms_modifications_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'We may revise these terms and conditions at any time without prior notice. By continuing to use Wasiyah.com after any changes are made, you agree to be bound by the revised terms. It is your responsibility to review these terms periodically.'**
+  String get terms_modifications_desc;
 }
 
 class _AppLocalizationsDelegate

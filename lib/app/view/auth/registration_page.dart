@@ -13,6 +13,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasyeah/app/view/auth/widgets/terms_and_conditions_dialog.dart';
 
 class RegistrationPage extends StatefulWidget {
   RegistrationPage({super.key});
@@ -331,8 +332,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               style: TextStyle(color: AppColors.primaryColor, decoration: TextDecoration.underline, fontSize: 12.sp),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  //  Get.toNamed(AppRoutes.termAndConScreen,preventDuplicates: false);
-                                  // Add your custom logic for the Terms & Conditions tap event
+                                  TermsAndConditionsDialog.show(
+                                    context,
+                                    onAccept: () {
+                                      isChecked.value = true;
+                                    },
+                                  );
                                 },
                             ),
                             TextSpan(

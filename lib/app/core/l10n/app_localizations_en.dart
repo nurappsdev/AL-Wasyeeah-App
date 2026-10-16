@@ -1587,4 +1587,156 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dark_mode => 'Dark Mode';
+
+  @override
+  String get delete_account => 'Delete Account';
+
+  @override
+  String get sure_you_want_to_delete_account =>
+      'Are you sure you want to delete your account?';
+
+  @override
+  String get delete_account_desc =>
+      'By deleting your account, all your data will be permanently removed from our servers. This action cannot be undone.';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get delete_success => 'Your account has been deleted successfully';
+
+  @override
+  String get delete_fail => 'Failed to delete your account';
+
+  @override
+  String get i_agree => 'I Agree';
+
+  @override
+  String get terms_general_title => 'General Terms';
+
+  @override
+  String get terms_general_desc =>
+      'These Terms govern your use of Wasiyah.com (\"Platform\"). By accessing it, you agree to these Terms and our Privacy Policy.';
+
+  @override
+  String get terms_general_bullet_1 =>
+      'All registration information you submit will be true, accurate, current, and complete.';
+
+  @override
+  String get terms_general_bullet_2 =>
+      'You will not use the Services for any illegal or unauthorized purpose.';
+
+  @override
+  String get terms_general_bullet_3 =>
+      'Your use of the Services will not violate any applicable law or regulation.';
+
+  @override
+  String get terms_general_bullet_4 =>
+      'You will not create accounts through unauthorized means, including but not limited to, by using an automated device, script, bot, spider, crawler or scraper.';
+
+  @override
+  String get terms_general_bullet_5 =>
+      'You are solely responsible for your conduct and any data, text, files, information, usernames, images, graphics, photos, profiles, audio and video clips, sounds, musical works, events, works of authorship, applications, links and other content or materials (collectively, \"Content\") that you submit, post or display on or via our products.';
+
+  @override
+  String get terms_general_bullet_6 =>
+      'You must not interfere with or disrupt the service or servers or networks connected to the Services, including by transmitting any viruses, spyware, malware or any other code of a destructive or disruptive nature.';
+
+  @override
+  String get terms_eligibility_title => 'Eligibility';
+
+  @override
+  String get terms_eligibility_desc =>
+      'Our services are intended for users who are at least 18 years old. By using Wasiyah.com, you represent and warrant that you meet this age requirement and have the legal capacity to enter into a binding agreement.';
+
+  @override
+  String get terms_account_registration_title => 'Account Registration';
+
+  @override
+  String get terms_account_registration_desc =>
+      'To access certain features, you may be required to register for an account. You agree to:';
+
+  @override
+  String get terms_account_registration_bullet_1 =>
+      'Provide accurate, current, and complete information during the registration process.';
+
+  @override
+  String get terms_account_registration_bullet_2 =>
+      'Maintain and promptly update your account information to keep it accurate and complete.';
+
+  @override
+  String get terms_account_registration_bullet_3 =>
+      'Maintain the security of your password and accept all risks of unauthorized access to your account.';
+
+  @override
+  String get terms_account_registration_bullet_4 =>
+      'Notify us immediately of any unauthorized use of your account.';
+
+  @override
+  String get terms_platform_use_title => 'Use of the Platform';
+
+  @override
+  String get terms_platform_use_desc =>
+      'You agree to use Wasiyah.com only for lawful purposes and in a way that does not infringe the rights of, restrict, or inhibit anyone else\'s use and enjoyment of the platform. Prohibited behavior includes:';
+
+  @override
+  String get terms_platform_use_bullet_1 =>
+      'Engaging in any unlawful or fraudulent activities.';
+
+  @override
+  String get terms_platform_use_bullet_2 =>
+      'Transmitting any harmful, threatening, defamatory, obscene, or otherwise objectionable material.';
+
+  @override
+  String get terms_platform_use_bullet_3 =>
+      'Interfering with the operation of the platform or accessing it using automated means.';
+
+  @override
+  String get terms_zakat_calculation_title => 'Zakat Calculation';
+
+  @override
+  String get terms_zakat_calculation_desc =>
+      'The Zakat Calculator provided on Wasiyah.com is intended as a general guide based on Islamic principles. While we strive for accuracy, you are responsible for ensuring the correctness of your inputs and understanding that this tool does not constitute professional financial advice.';
+
+  @override
+  String get terms_payments_donations_title => 'Payments and Donations';
+
+  @override
+  String get terms_payments_donations_desc =>
+      'All payments and donations made through Wasiyah.com are processed securely via third-party payment providers. You agree to provide accurate billing information and authorize us to charge your payment method for any transactions made. We are not responsible for any errors or issues arising from the payment process.';
+
+  @override
+  String get terms_intellectual_property_title => 'Intellectual Property';
+
+  @override
+  String get terms_intellectual_property_desc =>
+      'All content on Wasiyah.com, including text, graphics, logos, and software, is the property of Wasiyah.com or its content suppliers and is protected by intellectual property laws. You may not reproduce, distribute, or create derivative works from any content without our express written permission.';
+
+  @override
+  String get terms_limitation_liability_title => 'Limitation of Liability';
+
+  @override
+  String get terms_limitation_liability_desc =>
+      'We are not liable for indirect damages or inaccuracies in Zakat calculations. Always consult a scholar if in doubt.';
+
+  @override
+  String get terms_termination_title => 'Termination';
+
+  @override
+  String get terms_termination_desc =>
+      'We reserve the right to suspend or terminate your access to Wasiyah.com at our sole discretion, without notice, for conduct that we believe violates these terms or is harmful to other users of the platform, us, or third parties, or for any other reason.';
+
+  @override
+  String get terms_governing_law_title => 'Governing Law';
+
+  @override
+  String get terms_governing_law_desc =>
+      'These terms and conditions are governed by and construed in accordance with the laws of the jurisdiction in which Wasiyah.com operates. You agree to submit to the exclusive jurisdiction of the courts located within that jurisdiction.';
+
+  @override
+  String get terms_modifications_title => 'Modifications to Terms';
+
+  @override
+  String get terms_modifications_desc =>
+      'We may revise these terms and conditions at any time without prior notice. By continuing to use Wasiyah.com after any changes are made, you agree to be bound by the revised terms. It is your responsibility to review these terms periodically.';
 }

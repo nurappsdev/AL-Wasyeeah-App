@@ -190,6 +190,99 @@ class MenuPage extends StatelessWidget {
                 height: 20.h,
               ),
 
+              //====================== Delete Account ====================================
+              GestureDetector(
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: CustomText(
+                        text: AppLocalizations.of(context)!
+                            .sure_you_want_to_delete_account,
+                        fontsize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textColor4E4E4E,
+                      ),
+                      content: CustomText(
+                        text: AppLocalizations.of(context)!.delete_account_desc,
+                        fontsize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textColor4E4E4E,
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Get.back(),
+                          child: CustomText(
+                            text: AppLocalizations.of(context)!.cancel,
+                            fontsize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textColor4E4E4E,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: CustomText(
+                            text: AppLocalizations.of(context)!.delete,
+                            fontsize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textColor4E4E4E,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                child: Container(
+                  width: 360.w,
+                  height: 60.h,
+                  margin: EdgeInsets.only(left: 2.w),
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteColor,
+                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                    border: Border.all(
+                      color: Color(0xffB0E3D3),
+                      width: 2.w,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              AppIcons.deleteIcon,
+                            ),
+                            SizedBox(width: 16.w),
+                            CustomText(
+                              text: AppLocalizations.of(context)!.delete,
+                              fontsize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textColor4E4E4E,
+                            )
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: SvgPicture.asset(
+                          AppIcons.chevronIcon,
+                          colorFilter: ColorFilter.mode(
+                              AppColors.primaryColor, BlendMode.srcIn),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                height: 20.h,
+              ),
+
               ///=====================Access Control====================================
               InkWell(
                 onTap: () => Get.toNamed(RouteName.accessControlPage,

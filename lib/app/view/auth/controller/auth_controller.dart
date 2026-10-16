@@ -15,13 +15,13 @@ class AuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    //
   }
 
   ///==================get Question===========================
   RxBool isQuestion = false.obs;
   RxBool otpStatusLoading = false.obs;
-  RxList<SecurityQuestionResponseModel> securityQuestionResponseModel = <SecurityQuestionResponseModel>[].obs;
+  RxList<SecurityQuestionResponseModel> securityQuestionResponseModel =
+      <SecurityQuestionResponseModel>[].obs;
   final TextEditingController otpController = TextEditingController();
 
   getSecurityQuestion() async {
@@ -29,7 +29,9 @@ class AuthController extends GetxController {
     var response = await ApiService.getData(ApiConstants.securityQuestion);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      securityQuestionResponseModel.value = List<SecurityQuestionResponseModel>.from(response.body.map((x) => SecurityQuestionResponseModel.fromJson(x)));
+      securityQuestionResponseModel.value =
+          List<SecurityQuestionResponseModel>.from(response.body
+              .map((x) => SecurityQuestionResponseModel.fromJson(x)));
       isQuestion(false);
     } else {
       isQuestion(false);
@@ -74,7 +76,8 @@ class AuthController extends GetxController {
       if (response.body["status"] == false) {
         ToastMessage.errorMessageShowToster(response.body?['message']);
       } else {
-        ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!.account_create_success);
+        ToastMessage.successMessageShowToster(
+            AppLocalizations.of(Get.context!)!.account_create_success);
         Get.toNamed(
           RouteName.loginPage,
           preventDuplicates: false,
@@ -83,7 +86,8 @@ class AuthController extends GetxController {
       signUpLoading(false);
     } else if (response.statusCode == 1) {
       signUpLoading(false);
-      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.server_error);
+      ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.server_error);
     } else {
       signUpLoading(false);
       ToastMessage.errorMessageShowToster("${response.body}");
@@ -121,7 +125,8 @@ class AuthController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (response.body["status"] == false) {
           ToastMessage.errorMessageShowToster(
-            response.body?['message'] ?? AppLocalizations.of(Get.context!)!.invalid_username_or_password,
+            response.body?['message'] ??
+                AppLocalizations.of(Get.context!)!.invalid_username_or_password,
           );
         } else {
           final token = response.body?['data']['token'];
@@ -132,7 +137,8 @@ class AuthController extends GetxController {
           );
 
           ToastMessage.successMessageShowToster(
-            response.body?["message"] ?? AppLocalizations.of(Get.context!)!.welcome_back,
+            response.body?["message"] ??
+                AppLocalizations.of(Get.context!)!.welcome_back,
           );
 
           Get.offAllNamed(RouteName.homePage);
@@ -142,7 +148,8 @@ class AuthController extends GetxController {
       /// ❌ LOGIN FAILED (401, 403, etc)
       else {
         ToastMessage.errorMessageShowToster(
-          response.body?['message'] ?? AppLocalizations.of(Get.context!)!.invalid_username_or_password,
+          response.body?['message'] ??
+              AppLocalizations.of(Get.context!)!.invalid_username_or_password,
         );
       }
     } catch (e) {
@@ -169,7 +176,13 @@ class AuthController extends GetxController {
   }) async {
     forgotLoading(true);
 
-    var body = {"email": email, "mobile": mobile, "dob": dob, "securityAnswer": securityAnswer, "securityCode": securityCode};
+    var body = {
+      "email": email,
+      "mobile": mobile,
+      "dob": dob,
+      "securityAnswer": securityAnswer,
+      "securityCode": securityCode
+    };
     var response = await ApiService.postData(
       ApiConstants.sendOtpEndPoint,
       body,
@@ -178,17 +191,24 @@ class AuthController extends GetxController {
     if (response.statusCode == 200 || response.statusCode == 201) {
       //  await PrefsHelper.setString(AppConstants.bearerToken, response.body['data']['token'].toString());
       //ToastMessageHelper.successMessageShowToster("${response.body["message"]}");
-      ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!.verification_otp_send_success);
+      ToastMessage.successMessageShowToster(
+          AppLocalizations.of(Get.context!)!.verification_otp_send_success);
 
-      Get.toNamed(RouteName.otpPage, preventDuplicates: false, arguments: {"email": email, "mobile": mobile});
+      Get.toNamed(RouteName.otpPage,
+          preventDuplicates: false,
+          arguments: {"email": email, "mobile": mobile});
       forgotLoading(false);
     } else {
       forgotLoading(false);
-      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.unable_data);
+      ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.unable_data);
     }
   }
 
-  void verifyOtp({required String otp, required String email, required String mobile}) async {
+  void verifyOtp(
+      {required String otp,
+      required String email,
+      required String mobile}) async {
     otpStatusLoading(true);
 
     try {
@@ -197,7 +217,8 @@ class AuthController extends GetxController {
       );
       log("OTP RESULT-----------------${response.body}");
       if (response.statusCode == 200 || response.statusCode == 201) {
-        ToastMessage.successMessageShowToster(AppLocalizations.of(Get.context!)!.password_reset_success);
+        ToastMessage.successMessageShowToster(
+            AppLocalizations.of(Get.context!)!.password_reset_success);
         Get.toNamed(
           RouteName.loginPage,
           preventDuplicates: false,
@@ -205,12 +226,31 @@ class AuthController extends GetxController {
         otpStatusLoading(false);
       } else {
         otpStatusLoading(false);
-        ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.unable_data);
+        ToastMessage.errorMessageShowToster(
+            AppLocalizations.of(Get.context!)!.unable_data);
       }
     } catch (e, s) {
       log("OTP ERROR-----------------${e.toString() + s.toString()}");
       otpStatusLoading(false);
-      ToastMessage.errorMessageShowToster(AppLocalizations.of(Get.context!)!.unable_data);
+      ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.unable_data);
+    }
+  }
+
+  Future<void> deleteAccount(String currentPassword) async {
+    try {
+      var response = await ApiService.postData(
+        ApiConstants.deleteAccount + "?currentPassword=$currentPassword",
+        {},
+      );
+      if (response.statusCode == 200) {
+        await PrefsHelper.removeAll();
+        ToastMessage.successMessageShowToster(
+            AppLocalizations.of(Get.context!)!.delete_success);
+        Get.offAllNamed(RouteName.loginPage);
+      }
+    } catch (e, s) {
+      log("Error: $e\nStacktrace: $s");
     }
   }
 }

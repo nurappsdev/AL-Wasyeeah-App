@@ -72,6 +72,7 @@ class ApiConstants {
   static String branchList = "/lookup/branchList";
   static String wealthList = "/lookup/wealthList?lang=$currentLang";
   static String getProfile = "/user/getProfileData";
+  static String deleteAccount = "/user/delete-user";
   static String documentTypeList(String wealthId) =>
       "/lookup/documentTypeList?lang=$currentLang&wealthId=$wealthId";
   static String inappnotificationList = '/get-notification';

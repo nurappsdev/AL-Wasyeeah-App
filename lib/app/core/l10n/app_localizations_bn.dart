@@ -1599,4 +1599,156 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get dark_mode => 'ডার্ক মোড';
+
+  @override
+  String get delete_account => 'Delete Account';
+
+  @override
+  String get sure_you_want_to_delete_account =>
+      'আপনি কি আপনার অ্যাকাউন্ট মুছে ফেলতে চান?';
+
+  @override
+  String get delete_account_desc =>
+      'আপনার অ্যাকাউন্ট মুছে ফেললে, আপনার সমস্ত ডেটা আমাদের সার্ভার থেকে স্থায়ীভাবে মুছে ফেলা হবে। এই কাজটি আর ফিরিয়ে আনা সম্ভব নয়।';
+
+  @override
+  String get delete => 'মুছে ফেলুন';
+
+  @override
+  String get delete_success => 'আপনার অ্যাকাউন্ট সফলভাবে মুছে ফেলা হয়েছে';
+
+  @override
+  String get delete_fail => 'আপনার অ্যাকাউন্ট মুছে ফেলতে ব্যর্থ হয়েছে';
+
+  @override
+  String get i_agree => 'আমি সম্মত';
+
+  @override
+  String get terms_general_title => 'সাধারণ শর্তাবলী';
+
+  @override
+  String get terms_general_desc =>
+      'এই শর্তাবলী Wasiyah.com (\"প্ল্যাটফর্ম\") এর ব্যবহার নিয়ন্ত্রণ করে। এটি ব্যবহারের মাধ্যমে আপনি এই শর্তাবলী এবং আমাদের গোপনীয়তা নীতিতে সম্মত হচ্ছেন।';
+
+  @override
+  String get terms_general_bullet_1 =>
+      'আপনার জমা দেওয়া সমস্ত নিবন্ধনের তথ্য সত্য, সঠিক, বর্তমান এবং সম্পূর্ণ হতে হবে।';
+
+  @override
+  String get terms_general_bullet_2 =>
+      'আপনি কোনো অবৈধ বা অননুমোদিত উদ্দেশ্যে এই সেবাগুলো ব্যবহার করবেন না।';
+
+  @override
+  String get terms_general_bullet_3 =>
+      'সেবাগুলোর ব্যবহার কোনো প্রযোজ্য আইন বা বিধি লঙ্ঘন করবে না।';
+
+  @override
+  String get terms_general_bullet_4 =>
+      'আপনি স্বয়ংক্রিয় ডিভাইস, স্ক্রিপ্ট, বট, স্পাইডার, ক্রলার বা স্ক্র্যাপার ব্যবহারের মতো কোনো অননুমোদিত উপায়ে অ্যাকাউন্ট তৈরি করবেন না।';
+
+  @override
+  String get terms_general_bullet_5 =>
+      'আমাদের পণ্যের মাধ্যমে বা সেগুলোতে আপনার আচরণ এবং আপনার দ্বারা জমা দেওয়া, পোস্ট করা বা প্রদর্শিত যেকোনো ডেটা, টেক্সট, ফাইল, তথ্য, ব্যবহারকারীর নাম, ছবি, গ্রাফিক্স, প্রোফাইল, অডিও ও ভিডিও ক্লিপ, শব্দ, অ্যাপ্লিকেশন, লিঙ্ক এবং অন্যান্য সামগ্রীর (একত্রে \"কন্টেন্ট\") জন্য আপনি এককভাবে দায়ী থাকবেন।';
+
+  @override
+  String get terms_general_bullet_6 =>
+      'আপনি কোনো ভাইরাস, স্পাইওয়্যার, ম্যালওয়্যার বা ক্ষতিকর কোড প্রেরণের মাধ্যমে সেবায় বা এর সাথে সংযুক্ত সার্ভার বা নেটওয়ার্কে হস্তক্ষেপ বা বিঘ্ন সৃষ্টি করবেন না।';
+
+  @override
+  String get terms_eligibility_title => 'যোগ্যতা';
+
+  @override
+  String get terms_eligibility_desc =>
+      'আমাদের সেবাগুলো কমপক্ষে ১৮ বছর বা তার বেশি বয়সী ব্যবহারকারীদের জন্য তৈরি। Wasiyah.com ব্যবহার করার মাধ্যমে, আপনি নিশ্চিত করছেন যে আপনি এই বয়সসীমা পূরণ করেছেন এবং একটি চুক্তি সম্পাদনের আইনি ক্ষমতা রাখেন।';
+
+  @override
+  String get terms_account_registration_title => 'অ্যাকাউন্ট নিবন্ধন';
+
+  @override
+  String get terms_account_registration_desc =>
+      'নির্দিষ্ট সুবিধা পেতে আপনাকে একটি অ্যাকাউন্ট নিবন্ধন করতে হতে পারে। আপনি নিম্নোক্ত বিষয়ে সম্মত হন:';
+
+  @override
+  String get terms_account_registration_bullet_1 =>
+      'নিবন্ধন প্রক্রিয়ার সময় সঠিক, বর্তমান এবং সম্পূর্ণ তথ্য প্রদান করতে হবে।';
+
+  @override
+  String get terms_account_registration_bullet_2 =>
+      'আপনার অ্যাকাউন্টের তথ্য সঠিক এবং সম্পূর্ণ রাখতে তা নিয়মিত আপডেট করতে হবে।';
+
+  @override
+  String get terms_account_registration_bullet_3 =>
+      'আপনার পাসওয়ার্ডের নিরাপত্তা বজায় রাখতে হবে এবং অ্যাকাউন্টে যেকোনো অননুমোদিত অ্যাক্সেসের সম্পূর্ণ ঝুঁকি গ্রহণ করতে হবে।';
+
+  @override
+  String get terms_account_registration_bullet_4 =>
+      'আপনার অ্যাকাউন্টের কোনো অননুমোদিত ব্যবহার হলে তা অবিলম্বে আমাদের অবহিত করতে হবে।';
+
+  @override
+  String get terms_platform_use_title => 'প্ল্যাটফর্মের ব্যবহার';
+
+  @override
+  String get terms_platform_use_desc =>
+      'আপনি Wasiyah.com কেবলমাত্র বৈধ উদ্দেশ্যে এবং অন্য কারও অধিকার ক্ষুণ্ণ না করে বা কারও ব্যবহারে বাধা সৃষ্টি না করে ব্যবহার করতে সম্মত হন। নিষিদ্ধ আচরণের অন্তর্ভুক্ত:';
+
+  @override
+  String get terms_platform_use_bullet_1 =>
+      'যেকোনো বেআইনি বা প্রতারণামূলক কার্যকলাপে লিপ্ত হওয়া।';
+
+  @override
+  String get terms_platform_use_bullet_2 =>
+      'যেকোনো ক্ষতিকর, হুমকিস্বরূপ, মানহানিকর, অশ্লীল বা আপত্তিকর উপাদান প্রেরণ করা।';
+
+  @override
+  String get terms_platform_use_bullet_3 =>
+      'প্ল্যাটফর্মের কার্যক্রমে হস্তক্ষেপ করা বা স্বয়ংক্রিয় উপায়ে এটি অ্যাক্সেস করা।';
+
+  @override
+  String get terms_zakat_calculation_title => 'যাকাত গণনা';
+
+  @override
+  String get terms_zakat_calculation_desc =>
+      'Wasiyah.com-এ প্রদত্ত যাকাত ক্যালকুলেটরটি ইসলামিক নীতির ওপর ভিত্তি করে একটি সাধারণ নির্দেশিকা হিসেবে দেওয়া হয়েছে। আমরা নির্ভুলতার জন্য যথাসাধ্য চেষ্টা করলেও, আপনার ইনপুটগুলোর সঠিকতা নিশ্চিত করার দায়িত্ব আপনার এবং এটি কোনো পেশাদার আর্থিক পরামর্শ নয়।';
+
+  @override
+  String get terms_payments_donations_title => 'পেমেন্ট এবং অনুদান';
+
+  @override
+  String get terms_payments_donations_desc =>
+      'Wasiyah.com-এর মাধ্যমে করা সমস্ত পেমেন্ট এবং অনুদান তৃতীয় পক্ষের পেমেন্ট গেটওয়ের মাধ্যমে নিরাপদে প্রক্রিয়া করা হয়। আপনি সঠিক বিলিং তথ্য প্রদান করতে এবং যেকোনো লেনদেনের জন্য আপনার পেমেন্ট মাধ্যম চার্জ করার অনুমতি প্রদানে সম্মত হন। পেমেন্ট প্রক্রিয়াকরণে কোনো ত্রুটি বা সমস্যার জন্য আমরা দায়ী থাকব না।';
+
+  @override
+  String get terms_intellectual_property_title => 'মেধাসম্পদ';
+
+  @override
+  String get terms_intellectual_property_desc =>
+      'Wasiyah.com-এর সমস্ত কন্টেন্ট, যার মধ্যে টেক্সট, গ্রাফিক্স, লোগো এবং সফটওয়্যার অন্তর্ভুক্ত, Wasiyah.com বা এর কন্টেন্ট সরবরাহকারীদের সম্পত্তি এবং বৌদ্ধিক সম্পত্তি আইন দ্বারা সুরক্ষিত। আমাদের স্পষ্ট লিখিত অনুমতি ছাড়া আপনি কোনো কন্টেন্ট পুনরুৎপাদন, বিতরণ বা ডেরিভেটিভ কাজ তৈরি করতে পারবেন না।';
+
+  @override
+  String get terms_limitation_liability_title => 'দায়বদ্ধতার সীমাবদ্ধতা';
+
+  @override
+  String get terms_limitation_liability_desc =>
+      'আমরা কোনো পরোক্ষ ক্ষতি বা যাকাত গণনার ভুলের জন্য দায়ী নই। কোনো সন্দেহ থাকলে সর্বদা বিজ্ঞ আলেমের পরামর্শ নিন।';
+
+  @override
+  String get terms_termination_title => 'বাতিলকরণ';
+
+  @override
+  String get terms_termination_desc =>
+      'আমাদের বিবেচনায় এই শর্তাবলী লঙ্ঘন করে এমন আচরণ, বা প্ল্যাটফর্মের অন্যান্য ব্যবহারকারী, আমাদের বা তৃতীয় পক্ষের জন্য ক্ষতিকর কোনো আচরণের ক্ষেত্রে অথবা অন্য যেকোনো কারণে কোনো নোটিশ ছাড়াই আপনার Wasiyah.com ব্যবহারের সুবিধা স্থগিত বা বাতিল করার অধিকার আমরা সংরক্ষণ করি।';
+
+  @override
+  String get terms_governing_law_title => 'প্রযোজ্য আইন';
+
+  @override
+  String get terms_governing_law_desc =>
+      'এই শর্তাবলী যে বিচারক্ষেত্রের অধীনে Wasiyah.com পরিচালিত হয় তার আইন দ্বারা পরিচালিত এবং ব্যাখ্যা করা হবে। আপনি সেই বিচারক্ষেত্রের আদালতের একচ্ছত্র এখতিয়ারের অধীনে আসতে সম্মত হন।';
+
+  @override
+  String get terms_modifications_title => 'শর্তাবলীর পরিবর্তন';
+
+  @override
+  String get terms_modifications_desc =>
+      'আমরা পূর্ব বিজ্ঞপ্তি ছাড়াই যেকোনো সময় এই শর্তাবলী সংশোধন করতে পারি। কোনো পরিবর্তনের পর Wasiyah.com ব্যবহার অব্যাহত রাখার মাধ্যমে, আপনি সংশোধিত শর্তাবলীতে সম্মত হচ্ছেন। এই শর্তাবলী পর্যায়ক্রমে পর্যালোচনা করা আপনার দায়িত্ব।';
 }

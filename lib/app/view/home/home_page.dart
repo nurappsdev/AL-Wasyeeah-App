@@ -43,7 +43,7 @@ class HomePage extends GetView<HomeController> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.h),
         child: AppBar(
-          leadingWidth: 200, // Adjust this width to fit your content
+          leadingWidth: 200,
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: GestureDetector(
@@ -85,7 +85,7 @@ class HomePage extends GetView<HomeController> {
                           Flexible(
                             child: Text(
                               fullName.isNotEmpty ? fullName : "User Name",
-                              maxLines: 1,
+                              maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 14.sp,

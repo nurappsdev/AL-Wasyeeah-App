@@ -44,6 +44,7 @@ class AppIcons {
   static const String locationIcon = "$path/location_icon.svg";
   // static const String editIcons = "$path/edit_icons.svg";
   static const String editIcons = "$path/editIcon.svg";
+  static const String deleteIcon = "$path/deleteIcon.svg";
 
   ///================service bottomBar icon===========================
   static const String homeSelectIcons = "$path/homeselected.svg";
