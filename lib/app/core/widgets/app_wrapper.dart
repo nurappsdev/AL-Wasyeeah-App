@@ -58,7 +58,12 @@ class _AppWrapperState extends State<AppWrapper> {
         final dark = isDarkMode();
         return Container(
           decoration: dark
-              ? const BoxDecoration(color: Color(0xFF121212))
+              ? const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(AppImages.backImgDark),
+                    fit: BoxFit.cover,
+                  ),
+                )
               : const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(AppImages.backImg),
