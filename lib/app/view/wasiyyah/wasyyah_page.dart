@@ -1,18 +1,18 @@
-import 'package:al_wasyeah/app/core/services/qr_barcode/qr_barcode_service.dart';
-import 'package:al_wasyeah/app/core/utils/toast_message.dart';
-import 'package:al_wasyeah/app/view/wasiyyah/controller/wasyyah_controller.dart';
-import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/app/view/wasiyyah/model/wasyyah_model.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/app/view/wasiyyah/qr_barcode_test_page.dart';
+import 'package:al_wasiyyath/app/core/services/qr_barcode/qr_barcode_service.dart';
+import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
+import 'package:al_wasiyyath/app/view/wasiyyah/controller/wasyyah_controller.dart';
+import 'package:al_wasiyyath/app/view/profile/controller/profile_controller.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasiyyath/app/view/wasiyyah/model/wasyyah_model.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
+import 'package:al_wasiyyath/app/view/wasiyyah/qr_barcode_test_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/core/route/route_names.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/route/route_names.dart';
 import 'package:open_file/open_file.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -159,13 +159,15 @@ class WasyyahPage extends GetView<WasyyahController> {
   }
 
   Widget _buildSkeletonLoading(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Skeletonizer(
       enabled: true,
       effect: ShimmerEffect(
-        baseColor: Colors.grey.shade300,
-        highlightColor: Colors.grey.shade100,
+        baseColor: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+        highlightColor: isDark ? Colors.grey.shade700 : Colors.grey.shade100,
       ),
-      containersColor: Colors.grey.shade200,
+      containersColor: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
@@ -212,17 +214,21 @@ class WasyyahPage extends GetView<WasyyahController> {
 
   Widget _buildWasyyahCard(
       BuildContext context, WasyyahContentModel item, int index) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     bool isHidden = item.visible == "N";
 
     return Container(
       key: ValueKey(item.requestKey ?? index.toString()),
       margin: EdgeInsets.only(bottom: 16.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
         borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(
+          color: isDark ? const Color(0xFF2C3E35) : Colors.transparent,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -241,18 +247,24 @@ class WasyyahPage extends GetView<WasyyahController> {
                   Expanded(
                     child: CustomText(
                       text: item.title ?? "",
-                      // maxline: 3,
                       fontsize: 16.sp,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.primaryColor,
+                      color: isDark
+                          ? const Color(0xFF4ADE80)
+                          : AppColors.primaryColor,
                     ),
                   ),
-                  const Icon(Icons.drag_indicator, color: Colors.grey),
+                  Icon(
+                    Icons.drag_indicator,
+                    color: isDark ? Colors.grey.shade400 : Colors.grey,
+                  ),
                 ],
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.h),
-                child: const Divider(),
+                child: Divider(
+                  color: isDark ? const Color(0xFF2C3E35) : null,
+                ),
               ),
               CustomText(
                 text: item.content ?? "",
@@ -269,7 +281,10 @@ class WasyyahPage extends GetView<WasyyahController> {
                       onPressed: () => _showEditBottomSheet(context, item),
                       icon: const Icon(Icons.edit, size: 18),
                       label: Text(AppLocalizations.of(context)!.edit),
-                      style: TextButton.styleFrom(foregroundColor: Colors.blue),
+                      style: TextButton.styleFrom(
+                        foregroundColor:
+                            isDark ? const Color(0xFF60A5FA) : Colors.blue,
+                      ),
                     ),
                   SizedBox(width: 8.w),
                   TextButton.icon(
@@ -284,7 +299,9 @@ class WasyyahPage extends GetView<WasyyahController> {
                           : AppLocalizations.of(context)!.hide,
                     ),
                     style: TextButton.styleFrom(
-                      foregroundColor: isHidden ? Colors.green : Colors.grey,
+                      foregroundColor: isHidden
+                          ? (isDark ? const Color(0xFF4ADE80) : Colors.green)
+                          : (isDark ? Colors.grey.shade400 : Colors.grey),
                     ),
                   ),
                 ],
@@ -297,6 +314,7 @@ class WasyyahPage extends GetView<WasyyahController> {
   }
 
   void _showEditBottomSheet(BuildContext context, WasyyahContentModel item) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final TextEditingController textController =
         TextEditingController(text: item.content);
     final RxString currentText = (item.content ?? "").obs;
@@ -304,7 +322,7 @@ class WasyyahPage extends GetView<WasyyahController> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
+      backgroundColor: isDark ? const Color(0xFF1E1E1E) : Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
@@ -329,15 +347,34 @@ class WasyyahPage extends GetView<WasyyahController> {
               TextField(
                 controller: textController,
                 maxLines: 8,
+                style: TextStyle(
+                  color: isDark ? Colors.white : Colors.black,
+                ),
                 onChanged: (val) => currentText.value = val,
                 decoration: InputDecoration(
                   hintText:
                       AppLocalizations.of(context)!.enter_the_content_here,
+                  hintStyle: TextStyle(
+                    color: isDark ? Colors.grey[400] : Colors.grey[600],
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.r),
+                    borderSide: BorderSide(
+                      color: isDark
+                          ? const Color(0xFF384046)
+                          : Colors.grey.shade400,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                    borderSide: BorderSide(
+                      color: isDark
+                          ? const Color(0xFF384046)
+                          : Colors.grey.shade400,
+                    ),
                   ),
                   filled: true,
-                  fillColor: Colors.grey[50],
+                  fillColor: isDark ? const Color(0xFF25282B) : Colors.grey[50],
                 ),
               ),
               SizedBox(height: 20.h),
@@ -373,6 +410,7 @@ class WasyyahPage extends GetView<WasyyahController> {
   }
 
   void _showCreateWasiyyahBottomSheet(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final TextEditingController titleController = TextEditingController();
     final TextEditingController contentController = TextEditingController();
     final RxString titleRx = "".obs;
@@ -381,16 +419,13 @@ class WasyyahPage extends GetView<WasyyahController> {
     int countWords(String text) {
       final trimmed = text.trim();
       if (trimmed.isEmpty) return 0;
-      return trimmed
-          .split(RegExp(r'\s+'))
-          .where((w) => w.isNotEmpty)
-          .length;
+      return trimmed.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
     }
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
+      backgroundColor: isDark ? const Color(0xFF1E1E1E) : Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),
@@ -416,7 +451,8 @@ class WasyyahPage extends GetView<WasyyahController> {
                       fontWeight: FontWeight.w700,
                     ),
                     IconButton(
-                      icon: const Icon(Icons.close),
+                      icon: Icon(Icons.close,
+                          color: isDark ? Colors.white : Colors.black),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ],
@@ -430,14 +466,32 @@ class WasyyahPage extends GetView<WasyyahController> {
                 SizedBox(height: 8.h),
                 TextField(
                   controller: titleController,
+                  style: TextStyle(color: isDark ? Colors.white : Colors.black),
                   onChanged: (val) => titleRx.value = val,
                   decoration: InputDecoration(
                     hintText: "Enter title",
+                    hintStyle: TextStyle(
+                      color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? const Color(0xFF384046)
+                            : Colors.grey.shade400,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? const Color(0xFF384046)
+                            : Colors.grey.shade400,
+                      ),
                     ),
                     filled: true,
-                    fillColor: Colors.grey[50],
+                    fillColor:
+                        isDark ? const Color(0xFF25282B) : Colors.grey[50],
                   ),
                 ),
                 SizedBox(height: 16.h),
@@ -450,15 +504,33 @@ class WasyyahPage extends GetView<WasyyahController> {
                 TextField(
                   controller: contentController,
                   maxLines: 6,
+                  style: TextStyle(color: isDark ? Colors.white : Colors.black),
                   onChanged: (val) => contentRx.value = val,
                   decoration: InputDecoration(
                     hintText:
                         AppLocalizations.of(context)!.enter_the_content_here,
+                    hintStyle: TextStyle(
+                      color: isDark ? Colors.grey[400] : Colors.grey[600],
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? const Color(0xFF384046)
+                            : Colors.grey.shade400,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? const Color(0xFF384046)
+                            : Colors.grey.shade400,
+                      ),
                     ),
                     filled: true,
-                    fillColor: Colors.grey[50],
+                    fillColor:
+                        isDark ? const Color(0xFF25282B) : Colors.grey[50],
                   ),
                 ),
                 SizedBox(height: 8.h),
@@ -470,8 +542,11 @@ class WasyyahPage extends GetView<WasyyahController> {
                       "$words words ${words < 10 ? '(min 10 required)' : '✓'}",
                       style: TextStyle(
                         fontSize: 12.sp,
-                        color:
-                            words >= 10 ? Colors.green : Colors.grey.shade600,
+                        color: words >= 10
+                            ? (isDark ? const Color(0xFF4ADE80) : Colors.green)
+                            : (isDark
+                                ? Colors.grey.shade400
+                                : Colors.grey.shade600),
                         fontWeight:
                             words >= 10 ? FontWeight.w600 : FontWeight.normal,
                       ),
@@ -521,10 +596,13 @@ class WasyyahPage extends GetView<WasyyahController> {
   }
 
   Future<void> _showPreviewOptions(BuildContext context) async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final choice = await showDialog<_PreviewChoice>(
       context: context,
       builder: (context) {
         return SimpleDialog(
+          backgroundColor: isDark ? const Color(0xFF1E1E1E) : Colors.white,
           title: Text(AppLocalizations.of(context)!.open_pdf),
           children: [
             SimpleDialogOption(

@@ -1,14 +1,14 @@
-import 'package:al_wasyeah/app/core/utils/toast_message.dart';
-import 'package:al_wasyeah/app/view/nominee/controller/nominee_controller.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/app/view/witnessess/model/get_witness_response_model.dart';
-import 'package:al_wasyeah/app/core/utils/api_constants.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
+import 'package:al_wasiyyath/app/view/nominee/controller/nominee_controller.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasiyyath/app/view/witnessess/model/get_witness_response_model.dart';
+import 'package:al_wasiyyath/app/core/utils/api_constants.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
 
 class NomineeDetailsPage extends StatefulWidget {
   const NomineeDetailsPage({super.key});
@@ -25,7 +25,10 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.nominee_profile_details,
       ),
@@ -44,17 +47,24 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                 Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        AppColors.primaryColor,
-                        AppColors.primaryColor.withValues(alpha: 0.8)
-                      ],
+                      colors: isDark
+                          ? [
+                              AppColors.primaryColor.withValues(alpha: 0.8),
+                              const Color(0xFF1B3D2F),
+                            ]
+                          : [
+                              AppColors.primaryColor,
+                              AppColors.primaryColor.withValues(alpha: 0.8)
+                            ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(20.r),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primaryColor.withValues(alpha: 0.3),
+                        color: isDark
+                            ? Colors.black.withValues(alpha: 0.3)
+                            : AppColors.primaryColor.withValues(alpha: 0.3),
                         blurRadius: 15,
                         offset: const Offset(0, 8),
                       ),
@@ -128,16 +138,21 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
                     borderRadius: BorderRadius.circular(20.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
+                        color:
+                            Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
                         blurRadius: 15,
                         offset: const Offset(0, 5),
                       ),
                     ],
-                    border: Border.all(color: Colors.grey.shade100),
+                    border: Border.all(
+                      color: isDark
+                          ? const Color(0xFF2C3E35)
+                          : Colors.grey.shade100,
+                    ),
                   ),
                   padding: EdgeInsets.all(20.w),
                   child: Column(
@@ -148,8 +163,8 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                           Container(
                             padding: EdgeInsets.all(8.w),
                             decoration: BoxDecoration(
-                              color:
-                                  AppColors.primaryColor.withValues(alpha: 0.1),
+                              color: AppColors.primaryColor
+                                  .withValues(alpha: isDark ? 0.2 : 0.1),
                               borderRadius: BorderRadius.circular(10.r),
                             ),
                             child: Icon(Icons.person_outline,
@@ -161,13 +176,13 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                             style: TextStyle(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black87,
+                              color: isDark ? Colors.white : Colors.black87,
                             ),
                           ),
                         ],
                       ),
                       SizedBox(height: 16.h),
-                      const Divider(),
+                      Divider(color: isDark ? const Color(0xFF2C3E35) : null),
                       SizedBox(height: 16.h),
                       _buildDetailRow(context, Icons.phone_android,
                           AppLocalizations.of(context)!.mobile, nominee.mobile),
@@ -246,8 +261,8 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
                                     AppLocalizations.of(context)!.add_nominee,
                                 color: AppColors.primaryColor,
                                 titlecolor: AppColors.whiteColor,
-                                loading: controller
-                                    .addNomineeStatus.value.isLoading,
+                                loading:
+                                    controller.addNomineeStatus.value.isLoading,
                                 onpress: nominee.email == null
                                     ? null
                                     : () {
@@ -269,18 +284,21 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
 
   Widget _buildDetailRow(
       BuildContext context, IconData icon, String label, String? value) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: Row(
         children: [
-          Icon(icon, color: Colors.grey.shade400, size: 20.sp),
+          Icon(icon,
+              color: isDark ? const Color(0xff94A3B8) : Colors.grey.shade400,
+              size: 20.sp),
           SizedBox(width: 12.w),
           Expanded(
             flex: 2,
             child: Text(
               label,
               style: TextStyle(
-                color: Colors.grey.shade600,
+                color: isDark ? const Color(0xff94A3B8) : Colors.grey.shade600,
                 fontSize: 14.sp,
               ),
             ),
@@ -290,7 +308,7 @@ class _NomineeDetailsPageState extends State<NomineeDetailsPage> {
             child: Text(
               value ?? AppLocalizations.of(context)!.n_a,
               style: TextStyle(
-                color: Colors.black87,
+                color: isDark ? Colors.white : Colors.black87,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
               ),

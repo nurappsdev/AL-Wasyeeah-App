@@ -1,15 +1,14 @@
-
-import 'package:al_wasyeah/app/view/access_control/controller/access_control_controller.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/app/core/utils/extensions.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/view/access_control/model/witness_nominee_context_data_model.dart';
-import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
-import 'package:al_wasyeah/app/view/property_distribution_calculation/model/property_destribution_result_model.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/services/pdf/pdf_service.dart';
-import 'package:al_wasyeah/app/view/wasiyyah/model/wasyyah_model.dart';
-import 'package:al_wasyeah/app/core/widgets/app_error_widget.dart';
+import 'package:al_wasiyyath/app/view/access_control/controller/access_control_controller.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasiyyath/app/core/utils/extensions.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/view/access_control/model/witness_nominee_context_data_model.dart';
+import 'package:al_wasiyyath/app/view/profile/controller/profile_controller.dart';
+import 'package:al_wasiyyath/app/view/property_distribution_calculation/model/property_destribution_result_model.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/services/pdf/pdf_service.dart';
+import 'package:al_wasiyyath/app/view/wasiyyah/model/wasyyah_model.dart';
+import 'package:al_wasiyyath/app/core/widgets/app_error_widget.dart';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,8 @@ class AccessControlPanelPage extends StatefulWidget {
 }
 
 class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
-  final AccessControlController accessControlController = Get.find<AccessControlController>();
+  final AccessControlController accessControlController =
+      Get.find<AccessControlController>();
 
   String? _wasyyahPdfPath;
   int _pdfTotalPages = 0;
@@ -45,7 +45,10 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.access_control_panel,
       ),
@@ -53,7 +56,7 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
         final status = accessControlController.contextsPanelDataStatus.value;
 
         if (status.isLoading) {
-          return _buildSkeletonLoading(context);
+          return _buildSkeletonLoading(context, isDark);
         }
 
         if (status.isError) {
@@ -70,7 +73,12 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
 
         if (status.isEmpty) {
           return Center(
-            child: Text(AppLocalizations.of(context)!.no_data),
+            child: Text(
+              AppLocalizations.of(context)!.no_data,
+              style: TextStyle(
+                color: isDark ? Colors.white70 : Colors.black54,
+              ),
+            ),
           );
         }
 
@@ -81,13 +89,17 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
           child: Column(
             children: [
               SizedBox(height: 20.h),
-              if (data.zakat != null) _buildZakatCard(data.zakat!, context),
-              if (data.propertyResult != null && data.propertyResult!.isNotEmpty) ...[
-                _buildPieChartSection(data.propertyResult!),
-                _buildResultCards(data.propertyResult!),
+              if (data.zakat != null)
+                _buildZakatCard(data.zakat!, context, isDark),
+              if (data.propertyResult != null &&
+                  data.propertyResult!.isNotEmpty) ...[
+                _buildPieChartSection(data.propertyResult!, isDark),
+                _buildResultCards(data.propertyResult!, isDark),
               ],
-              if (data.wasiyaaContent != null && data.wasiyaaContent!.isNotEmpty && data.wasiyaaContent!.any((e) => e.visible == "Y")) ...[
-                _buildWasiyyahPdfPreview(data.wasiyaaContent!),
+              if (data.wasiyaaContent != null &&
+                  data.wasiyaaContent!.isNotEmpty &&
+                  data.wasiyaaContent!.any((e) => e.visible == "Y")) ...[
+                _buildWasiyyahPdfPreview(data.wasiyaaContent!, isDark),
               ],
               SizedBox(height: 40.h),
             ],
@@ -110,10 +122,16 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
     Colors.cyan,
   ];
 
-  Widget _buildZakatCard(Zakat zakat, BuildContext context) {
+  Widget _buildZakatCard(Zakat zakat, BuildContext context, bool isDark) {
     return Card(
       elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        side: isDark
+            ? const BorderSide(color: Color(0xFF2C3E35))
+            : BorderSide.none,
+      ),
       child: Padding(
         padding: EdgeInsets.all(16.h),
         child: Column(
@@ -121,25 +139,42 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
           children: [
             Row(
               children: [
-                Icon(Icons.account_balance_wallet, color: AppColors.primaryColor),
+                Icon(Icons.account_balance_wallet,
+                    color: AppColors.primaryColor),
                 SizedBox(width: 8.w),
                 Text(
                   AppLocalizations.of(context)!.zakat_information,
-                  style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : Colors.black,
+                  ),
                 ),
               ],
             ),
-            const Divider(),
-            _resultRow(AppLocalizations.of(context)!.total_asset, "${zakat.totalAsset?.toLocal()} ${zakat.currencyCode ?? ''}"),
-            _resultRow(AppLocalizations.of(context)!.zakat_amount, "${zakat.zakatAmount?.toLocal()} ${zakat.currencyCode ?? ''}"),
-            if (zakat.lastCalculate != null) _resultRow(AppLocalizations.of(context)!.last_calculated, DateFormat('dd MMM yyyy', Get.locale.toString()).format(zakat.lastCalculate!)),
+            Divider(color: isDark ? const Color(0xFF2C3E35) : null),
+            _resultRow(
+                AppLocalizations.of(context)!.total_asset,
+                "${zakat.totalAsset?.toLocal()} ${zakat.currencyCode ?? ''}",
+                isDark),
+            _resultRow(
+                AppLocalizations.of(context)!.zakat_amount,
+                "${zakat.zakatAmount?.toLocal()} ${zakat.currencyCode ?? ''}",
+                isDark),
+            if (zakat.lastCalculate != null)
+              _resultRow(
+                  AppLocalizations.of(context)!.last_calculated,
+                  DateFormat('dd MMM yyyy', Get.locale.toString())
+                      .format(zakat.lastCalculate!),
+                  isDark),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildPieChartSection(List<PropertydistributionResultModel> propertyResult) {
+  Widget _buildPieChartSection(
+      List<PropertydistributionResultModel> propertyResult, bool isDark) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 20.h),
       child: Column(
@@ -191,7 +226,11 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                   SizedBox(width: 4.w),
                   Text(
                     _getRelativeName(data.relativeName, context),
-                    style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
                   ),
                 ],
               );
@@ -202,7 +241,8 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
     );
   }
 
-  Widget _buildResultCards(List<PropertydistributionResultModel> propertyResult) {
+  Widget _buildResultCards(
+      List<PropertydistributionResultModel> propertyResult, bool isDark) {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -213,7 +253,13 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
         return Card(
           elevation: 4,
           margin: EdgeInsets.only(bottom: 16.h),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+          color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+            side: isDark
+                ? const BorderSide(color: Color(0xFF2C3E35))
+                : BorderSide.none,
+          ),
           child: Padding(
             padding: EdgeInsets.all(16.h),
             child: Column(
@@ -229,16 +275,37 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                     SizedBox(width: 8.w),
                     Text(
                       _getRelativeName(data.relativeName, context),
-                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? Colors.white : Colors.black,
+                      ),
                     ),
                   ],
                 ),
-                const Divider(),
-                _resultRow(AppLocalizations.of(context)!.share_portion, "${((data.portionPart ?? 0) * 100).toLocal()}%"),
-                if (data.landPart != null && data.landPart! > 0) _resultRow(AppLocalizations.of(context)!.land_portion, "${data.landPart?.toLocal()} ${AppLocalizations.of(context)!.decimal}"),
-                if (data.goldPart != null && data.goldPart! > 0) _resultRow(AppLocalizations.of(context)!.gold_portion, "${data.goldPart?.toLocal()} ${AppLocalizations.of(context)!.gram_vori}"),
-                if (data.silverPart != null && data.silverPart! > 0) _resultRow(AppLocalizations.of(context)!.silver_portion, "${data.silverPart?.toLocal()} ${AppLocalizations.of(context)!.gram_vori}"),
-                if (data.currencyPart != null && data.currencyPart! > 0) _resultRow(AppLocalizations.of(context)!.total_money, "${data.currencyPart?.toLocal()} ${AppLocalizations.of(context)!.taka}"),
+                Divider(color: isDark ? const Color(0xFF2C3E35) : null),
+                _resultRow(AppLocalizations.of(context)!.share_portion,
+                    "${((data.portionPart ?? 0) * 100).toLocal()}%", isDark),
+                if (data.landPart != null && data.landPart! > 0)
+                  _resultRow(
+                      AppLocalizations.of(context)!.land_portion,
+                      "${data.landPart?.toLocal()} ${AppLocalizations.of(context)!.decimal}",
+                      isDark),
+                if (data.goldPart != null && data.goldPart! > 0)
+                  _resultRow(
+                      AppLocalizations.of(context)!.gold_portion,
+                      "${data.goldPart?.toLocal()} ${AppLocalizations.of(context)!.gram_vori}",
+                      isDark),
+                if (data.silverPart != null && data.silverPart! > 0)
+                  _resultRow(
+                      AppLocalizations.of(context)!.silver_portion,
+                      "${data.silverPart?.toLocal()} ${AppLocalizations.of(context)!.gram_vori}",
+                      isDark),
+                if (data.currencyPart != null && data.currencyPart! > 0)
+                  _resultRow(
+                      AppLocalizations.of(context)!.total_money,
+                      "${data.currencyPart?.toLocal()} ${AppLocalizations.of(context)!.taka}",
+                      isDark),
               ],
             ),
           ),
@@ -247,14 +314,27 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
     );
   }
 
-  Widget _resultRow(String label, String value) {
+  Widget _resultRow(String label, String value, bool isDark) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(fontSize: 14.sp, color: Colors.grey[700])),
-          Text(value, style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: isDark ? const Color(0xff94A3B8) : Colors.grey[700],
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w600,
+              color: isDark ? Colors.white : Colors.black,
+            ),
+          ),
         ],
       ),
     );
@@ -273,7 +353,8 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
       final number = int.tryParse(numberStr ?? '');
 
       if (number != null) {
-        final formattedNumber = NumberFormat.decimalPattern(locale).format(number);
+        final formattedNumber =
+            NumberFormat.decimalPattern(locale).format(number);
         return name.replaceFirst(
           match.group(0)!,
           '($formattedNumber)',
@@ -293,9 +374,11 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
       "email": user.value.userProfile?.email ?? "N/A",
       "phone": user.value.userProfile?.mobile ?? "N/A",
       "date_of_birthday": user.value.userProfile?.dob ?? "N/A",
-      "profession": personalData.value.selectedProfession.value?.profession ?? "N/A",
+      "profession":
+          personalData.value.selectedProfession.value?.profession ?? "N/A",
       "gender": personalData.value.selectedGender.value?.gender ?? "N/A",
-      "maritialStatus": personalData.value.selectedMarried.value?.maritalType ?? "N/A",
+      "maritialStatus":
+          personalData.value.selectedMarried.value?.maritalType ?? "N/A",
       "permanent_address": user.value.userProfile?.permanentAddress ?? "N/A",
       "present_address": user.value.userProfile?.presentAddress ?? "N/A",
       "country": personalData.value.selectedCountry.value?.country ?? "N/A",
@@ -332,7 +415,8 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
     }
   }
 
-  Widget _buildWasiyyahPdfPreview(List<WasyyahContentModel> content) {
+  Widget _buildWasiyyahPdfPreview(
+      List<WasyyahContentModel> content, bool isDark) {
     if (_wasyyahPdfPath == null && !_isGeneratingPdf) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
@@ -344,7 +428,13 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
     return Card(
       elevation: 4,
       margin: EdgeInsets.symmetric(vertical: 12.h),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        side: isDark
+            ? const BorderSide(color: Color(0xFF2C3E35))
+            : BorderSide.none,
+      ),
       child: Padding(
         padding: EdgeInsets.all(12.w),
         child: Column(
@@ -352,7 +442,11 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
           children: [
             Text(
               AppLocalizations.of(context)!.wasiyyah_preview,
-              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+                color: isDark ? Colors.white : Colors.black,
+              ),
             ),
             SizedBox(height: 12.h),
             SizedBox(
@@ -380,7 +474,8 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                         },
                         onPageError: (page, error) {
                           setState(() {
-                            _pdfError = "${AppLocalizations.of(context)!.page} $page: $error";
+                            _pdfError =
+                                "${AppLocalizations.of(context)!.page} $page: $error";
                           });
                         },
                         onPageChanged: (page, total) {
@@ -392,18 +487,39 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                     Expanded(
                       child: Skeletonizer(
                         enabled: true,
+                        effect: ShimmerEffect(
+                          baseColor: isDark
+                              ? Colors.grey.shade800
+                              : Colors.grey.shade300,
+                          highlightColor: isDark
+                              ? Colors.grey.shade700
+                              : Colors.grey.shade100,
+                        ),
+                        containersColor: isDark
+                            ? Colors.grey.shade800
+                            : Colors.grey.shade200,
                         child: Container(
                           width: double.infinity,
                           height: double.infinity,
                           margin: EdgeInsets.all(8.w),
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
+                            color: isDark
+                                ? const Color(0xFF25282B)
+                                : Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(8.r),
                           ),
                         ),
                       ),
                     ),
-                  if (_pdfError != null) Center(child: Text(_pdfError!)),
+                  if (_pdfError != null)
+                    Center(
+                      child: Text(
+                        _pdfError!,
+                        style: TextStyle(
+                          color: isDark ? Colors.white70 : Colors.black87,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -414,6 +530,9 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                   child: Text(
                     "${AppLocalizations.of(context)!.page} ${(_pdfCurrentPage + 1).toLocal()} of ${_pdfTotalPages.toLocal()}",
                     textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: isDark ? const Color(0xff94A3B8) : Colors.black87,
+                    ),
                   ),
                 ),
               ),
@@ -423,9 +542,14 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
     );
   }
 
-  Widget _buildSkeletonLoading(BuildContext context) {
+  Widget _buildSkeletonLoading(BuildContext context, bool isDark) {
     return Skeletonizer(
       enabled: true,
+      effect: ShimmerEffect(
+        baseColor: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+        highlightColor: isDark ? Colors.grey.shade700 : Colors.grey.shade100,
+      ),
+      containersColor: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
       child: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -434,7 +558,13 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
             SizedBox(height: 20.h),
             Card(
               elevation: 4,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+              color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+                side: isDark
+                    ? const BorderSide(color: Color(0xFF2C3E35))
+                    : BorderSide.none,
+              ),
               child: Padding(
                 padding: EdgeInsets.all(16.h),
                 child: Column(
@@ -442,18 +572,23 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.account_balance_wallet, color: AppColors.primaryColor),
+                        Icon(Icons.account_balance_wallet,
+                            color: AppColors.primaryColor),
                         SizedBox(width: 8.w),
                         Text(
                           "Zakat Information Summary",
-                          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                            color: isDark ? Colors.white : Colors.black,
+                          ),
                         ),
                       ],
                     ),
-                    const Divider(),
-                    _resultRow("Total Asset", "100000 USD"),
-                    _resultRow("Zakat Amount", "2500 USD"),
-                    _resultRow("Last Calculated", "01 Jan 2026"),
+                    Divider(color: isDark ? const Color(0xFF2C3E35) : null),
+                    _resultRow("Total Asset", "100000 USD", isDark),
+                    _resultRow("Zakat Amount", "2500 USD", isDark),
+                    _resultRow("Last Calculated", "01 Jan 2026", isDark),
                   ],
                 ),
               ),
@@ -462,7 +597,13 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
             Card(
               elevation: 4,
               margin: EdgeInsets.only(bottom: 16.h),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+              color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+                side: isDark
+                    ? const BorderSide(color: Color(0xFF2C3E35))
+                    : BorderSide.none,
+              ),
               child: Padding(
                 padding: EdgeInsets.all(16.h),
                 child: Column(
@@ -472,12 +613,19 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
                       children: [
                         Container(width: 4.w, height: 24.h, color: Colors.blue),
                         SizedBox(width: 8.w),
-                        Text("Property Relative Shareholder", style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                        Text(
+                          "Property Relative Shareholder",
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                            color: isDark ? Colors.white : Colors.black,
+                          ),
+                        ),
                       ],
                     ),
-                    const Divider(),
-                    _resultRow("Portion Part", "25%"),
-                    _resultRow("Total Share", "50000 USD"),
+                    Divider(color: isDark ? const Color(0xFF2C3E35) : null),
+                    _resultRow("Portion Part", "25%", isDark),
+                    _resultRow("Total Share", "50000 USD", isDark),
                   ],
                 ),
               ),
@@ -486,19 +634,34 @@ class _AccessControlPanelPageState extends State<AccessControlPanelPage> {
             Card(
               elevation: 4,
               margin: EdgeInsets.symmetric(vertical: 12.h),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+              color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+                side: isDark
+                    ? const BorderSide(color: Color(0xFF2C3E35))
+                    : BorderSide.none,
+              ),
               child: Padding(
                 padding: EdgeInsets.all(12.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Wasiyyah Preview", style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                    Text(
+                      "Wasiyyah Preview",
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? Colors.white : Colors.black,
+                      ),
+                    ),
                     SizedBox(height: 12.h),
                     Container(
                       height: 240.h,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
+                        color: isDark
+                            ? const Color(0xFF25282B)
+                            : Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(8.r),
                       ),
                     ),

@@ -82,6 +82,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -139,6 +140,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize =>
-      Size.fromHeight((toolbarHeight ?? kToolbarHeight) + (bottom?.preferredSize.height ?? 0.0));
+  Size get preferredSize => Size.fromHeight((toolbarHeight ?? kToolbarHeight) +
+      (bottom?.preferredSize.height ?? 0.0));
 }

@@ -1,5 +1,5 @@
-import 'package:al_wasyeah/app/core/themes/dark_theme.dart';
-import 'package:al_wasyeah/app/core/themes/light_theme.dart';
+import 'package:al_wasiyyath/app/core/themes/dark_theme.dart';
+import 'package:al_wasiyyath/app/core/themes/light_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,4 +32,3 @@ class ThemeController extends GetxController {
     Get.changeTheme(isDarkMode.value ? dark : light);
   }
 }
-

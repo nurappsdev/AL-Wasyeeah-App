@@ -1,100 +1,124 @@
-import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
-import 'package:al_wasyeah/app/core/services/picker/file_picker_service.dart';
-import 'package:al_wasyeah/app/view/profile/model/parent_form.dart';
-import 'package:al_wasyeah/app/view/profile/model/profession_list_model.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_dropdown.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text_field.dart';
-import 'package:al_wasyeah/app/core/widgets/file_choose_and_download_button.dart';
+import 'package:al_wasiyyath/app/view/profile/controller/profile_controller.dart';
+import 'package:al_wasiyyath/app/core/services/picker/file_picker_service.dart';
+import 'package:al_wasiyyath/app/view/profile/model/parent_form.dart';
+import 'package:al_wasiyyath/app/view/profile/model/profession_list_model.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_dropdown.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text_field.dart';
+import 'package:al_wasiyyath/app/core/widgets/file_choose_and_download_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ProfileSettingStepThreeWidget extends StatelessWidget {
   ProfileSettingStepThreeWidget({super.key});
   final ProfileController controller = Get.find<ProfileController>();
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     ParentForm form = controller.parentForm.value;
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 14.h),
-      child: SingleChildScrollView(
-        child: Form(
-          key: controller.step3formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /// ========== Father ==========
-              _parentSection(
-                title: AppLocalizations.of(context)!.father_information,
-                nameController: form.fatherName,
-                nidController: form.fatherPassOrNID,
-                selectedProfession: form.selectedFatherProfession,
-                isAlive: form.isFatherAlive,
-                fileUrl: controller.profileModel.value.parentInfo?.fatherNidUrl,
-                pickedFile: form.selectedFatherFile,
-                onPickFile: () async {
-                  var result = await FilePickerUtil.pickSingleFile();
-                  if (result != null) form.selectedFatherFile.value = result;
-                },
-                downloadType: 'fatherNidOrPassport',
-                filePrefix: 'FatherNidOrPassport',
-              ),
 
-              SizedBox(height: 24.h),
+    return Obx(() {
+      final isLoading = controller.status.value.isLoading;
 
-              /// ========== Mother ==========
-              _parentSection(
-                title: AppLocalizations.of(context)!.mother_information,
-                nameController: form.motherName,
-                nidController: form.motherPassOrNID,
-                selectedProfession: form.selectedMotherProfession,
-                isAlive: form.isMotherAlive,
-                fileUrl: controller.profileModel.value.parentInfo?.motherNidUrl,
-                pickedFile: form.selectedMotherFile,
-                onPickFile: () async {
-                  var result = await FilePickerUtil.pickSingleFile();
-                  if (result != null) form.selectedMotherFile.value = result;
-                },
-                downloadType: 'motherNidOrPassport',
-                filePrefix: 'MotherNidOrPassport',
-              ),
-
-              SizedBox(height: 20.h),
-              Row(
-                spacing: 16.w,
+      return Skeletonizer(
+        enabled: isLoading,
+        effect: ShimmerEffect(
+          baseColor: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+          highlightColor: isDark ? Colors.grey.shade700 : Colors.grey.shade100,
+        ),
+        containersColor: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 14.h),
+          child: SingleChildScrollView(
+            child: Form(
+              key: controller.step3formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: CustomButton(
-                      title: AppLocalizations.of(context)!.previous,
-                      onpress: () {
-                        controller.onStepTapped(controller.currentStep.value - 1);
-                      },
-                    ),
+                  /// ========== Father ==========
+                  _parentSection(
+                    title: AppLocalizations.of(context)!.father_information,
+                    nameController: form.fatherName,
+                    nidController: form.fatherPassOrNID,
+                    selectedProfession: form.selectedFatherProfession,
+                    isAlive: form.isFatherAlive,
+                    fileUrl:
+                        controller.profileModel.value.parentInfo?.fatherNidUrl,
+                    pickedFile: form.selectedFatherFile,
+                    onPickFile: () async {
+                      var result = await FilePickerUtil.pickSingleFile();
+                      if (result != null)
+                        form.selectedFatherFile.value = result;
+                    },
+                    downloadType: 'fatherNidOrPassport',
+                    filePrefix: 'FatherNidOrPassport',
+                    isDark: isDark,
                   ),
-                  Expanded(
-                    child: CustomButton(
-                      title: AppLocalizations.of(context)!.next,
-                      onpress: () {
-                        if (controller.step3formKey.currentState!.validate()) {
-                          controller.onStepTapped(controller.currentStep.value + 1);
-                        }
-                      },
-                    ),
+
+                  SizedBox(height: 24.h),
+
+                  /// ========== Mother ==========
+                  _parentSection(
+                    title: AppLocalizations.of(context)!.mother_information,
+                    nameController: form.motherName,
+                    nidController: form.motherPassOrNID,
+                    selectedProfession: form.selectedMotherProfession,
+                    isAlive: form.isMotherAlive,
+                    fileUrl:
+                        controller.profileModel.value.parentInfo?.motherNidUrl,
+                    pickedFile: form.selectedMotherFile,
+                    onPickFile: () async {
+                      var result = await FilePickerUtil.pickSingleFile();
+                      if (result != null)
+                        form.selectedMotherFile.value = result;
+                    },
+                    downloadType: 'motherNidOrPassport',
+                    filePrefix: 'MotherNidOrPassport',
+                    isDark: isDark,
                   ),
+
+                  SizedBox(height: 20.h),
+                  Row(
+                    spacing: 16.w,
+                    children: [
+                      Expanded(
+                        child: CustomButton(
+                          title: AppLocalizations.of(context)!.previous,
+                          onpress: () {
+                            controller
+                                .onStepTapped(controller.currentStep.value - 1);
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: CustomButton(
+                          title: AppLocalizations.of(context)!.next,
+                          onpress: () {
+                            if (controller.step3formKey.currentState!
+                                .validate()) {
+                              controller.onStepTapped(
+                                  controller.currentStep.value + 1);
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20.h),
                 ],
               ),
-              SizedBox(height: 20.h),
-            ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   /// ================= Helpers =================
@@ -132,6 +156,7 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     required VoidCallback onPickFile,
     required String downloadType,
     required String filePrefix,
+    required bool isDark,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,15 +164,19 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
         _sectionTitle(title),
         _textField(AppLocalizations.of(Get.context!)!.name, nameController),
         _professionDropdown(selectedProfession),
-        _textField(AppLocalizations.of(Get.context!)!.nid_passport_no, nidController),
+        _textField(
+            AppLocalizations.of(Get.context!)!.nid_passport_no, nidController),
         CustomText(
           text: AppLocalizations.of(Get.context!)!.nid_passport_documents,
           fontsize: 16.sp,
         ),
         SizedBox(height: 4.h),
-        if (fileUrl != null) _buildFileRow(fileUrl, pickedFile, onPickFile, downloadType, filePrefix),
+        if (fileUrl != null)
+          _buildFileRow(
+              fileUrl, pickedFile, onPickFile, downloadType, filePrefix),
         CustomText(
-          text: AppLocalizations.of(Get.context!)!.only_pdf_jpeg_png_file_are_allowed,
+          text: AppLocalizations.of(Get.context!)!
+              .only_pdf_jpeg_png_file_are_allowed,
           color: AppColors.redColor,
           fontsize: 12.sp,
         ),
@@ -165,13 +194,17 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               fillColor: isAlive.value ? Colors.green : Colors.red,
               selectedColor: Colors.white,
+              color: isDark ? Colors.white70 : Colors.black87,
+              borderColor:
+                  isDark ? const Color(0xFF2C3E35) : Colors.grey.shade300,
+              selectedBorderColor: isAlive.value ? Colors.green : Colors.red,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Text(AppLocalizations.of(Get.context!)!.alive),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Text(AppLocalizations.of(Get.context!)!.dead),
                 ),
               ],
@@ -196,7 +229,9 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
         CustomTextFormField(
           controller: controller,
           hint: label,
-          validator: (value) => value!.isEmpty ? "$label ${AppLocalizations.of(Get.context!)!.is_required}" : null,
+          validator: (value) => value!.isEmpty
+              ? "$label ${AppLocalizations.of(Get.context!)!.is_required}"
+              : null,
         ),
         SizedBox(height: 16.h),
       ],
@@ -207,7 +242,9 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: AppLocalizations.of(Get.context!)!.profession, fontsize: 16.sp),
+        CustomText(
+            text: AppLocalizations.of(Get.context!)!.profession,
+            fontsize: 16.sp),
         SizedBox(height: 4.h),
         Obx(() => CustomDropdown<ProfessionModel>(
               hint: AppLocalizations.of(Get.context!)!.profession,
@@ -230,7 +267,8 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
   ) {
     return Obx(() => FileChooseAndDownloadButton(
           pickedFile: pickedFile,
-          isDownloading: (controller.isDownloadingMap[downloadType] ?? false).obs,
+          isDownloading:
+              (controller.isDownloadingMap[downloadType] ?? false).obs,
           progress: (controller.downloadProgressMap[downloadType] ?? 0.0).obs,
           onPickFile: onPickFile,
           onDownload: () async {
@@ -241,7 +279,8 @@ class ProfileSettingStepThreeWidget extends StatelessWidget {
             );
             if (isComplete) {
               Fluttertoast.showToast(
-                msg: AppLocalizations.of(Get.context!)!.file_downloaded_successfully,
+                msg: AppLocalizations.of(Get.context!)!
+                    .file_downloaded_successfully,
                 toastLength: Toast.LENGTH_SHORT,
                 gravity: ToastGravity.TOP,
                 timeInSecForIosWeb: 2,

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/utils/app_constant.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -146,8 +146,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         hintText: widget.hintText,
         hintStyle: TextStyle(
-          color: widget.hintextColor ??
-              (isDark ? Colors.white54 : Colors.black54),
+          color:
+              widget.hintextColor ?? (isDark ? Colors.white54 : Colors.black54),
           fontSize: widget.hintextSize ?? 14.h,
           fontWeight: FontWeight.w400,
           fontFamily: "ComicNeue-Light",
@@ -273,8 +273,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     _hasValue = widget.controller?.text.isNotEmpty ?? false;
-    final Color enabledColor =
-        _hasValue ? Colors.green : (isDark ? Colors.grey[700]! : Colors.grey[300]!);
+    final Color enabledColor = _hasValue
+        ? Colors.green
+        : (isDark ? Colors.grey[700]! : Colors.grey[300]!);
 
     return TextFormField(
       controller: widget.controller,
@@ -300,8 +301,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         hintText: widget.hint,
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
-        labelStyle: TextStyle(color: isDark ? Colors.grey[400] : Colors.grey[500]),
-        hintStyle: TextStyle(color: isDark ? Colors.grey[400] : Colors.grey[500]),
+        labelStyle:
+            TextStyle(color: isDark ? Colors.grey[400] : Colors.grey[500]),
+        hintStyle:
+            TextStyle(color: isDark ? Colors.grey[400] : Colors.grey[500]),
         enabledBorder: _border(enabledColor),
         focusedBorder: _border(AppColors.primaryColor),
         errorBorder: _border(Colors.red),

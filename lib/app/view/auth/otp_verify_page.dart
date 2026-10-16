@@ -1,17 +1,17 @@
 import 'dart:developer';
 
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/app/core/utils/app_icons.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_pin_text_field.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/app/view/auth/controller/auth_controller.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasiyyath/app/core/utils/app_icons.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_pin_text_field.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
+import 'package:al_wasiyyath/app/view/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
 
 class OtpVerifyPage extends StatefulWidget {
   OtpVerifyPage({super.key});
@@ -51,7 +51,9 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                 SizedBox(
                   height: 16.h,
                 ),
-                Center(child: SvgPicture.asset(AppIcons.otpIcon, height: 270.h, width: double.infinity)),
+                Center(
+                    child: SvgPicture.asset(AppIcons.otpIcon,
+                        height: 270.h, width: double.infinity)),
                 SizedBox(
                   height: 16.h,
                 ),
@@ -67,7 +69,8 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                 ),
                 Center(
                     child: CustomText(
-                  text: AppLocalizations.of(context)!.an_5_digit_code_sent_to_your,
+                  text: AppLocalizations.of(context)!
+                      .an_5_digit_code_sent_to_your,
                   fontsize: 16.sp,
                   maxline: 2,
                   textAlign: TextAlign.center,
@@ -88,7 +91,10 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> {
                   title: AppLocalizations.of(context)!.submit,
                   onpress: () {
                     //log("OTP VALUE: ${authController.otpController.text}");
-                    authController.verifyOtp(otp: authController.otpController.text, email: email, mobile: mobile);
+                    authController.verifyOtp(
+                        otp: authController.otpController.text,
+                        email: email,
+                        mobile: mobile);
                   },
                 ),
                 SizedBox(

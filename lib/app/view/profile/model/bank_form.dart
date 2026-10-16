@@ -1,5 +1,5 @@
-import 'package:al_wasyeah/app/view/profile/model/bank_list_model.dart';
-import 'package:al_wasyeah/app/view/profile/model/branch_model.dart';
+import 'package:al_wasiyyath/app/view/profile/model/bank_list_model.dart';
+import 'package:al_wasiyyath/app/view/profile/model/branch_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

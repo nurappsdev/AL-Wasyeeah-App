@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/core/route/route_names.dart';
-import 'package:al_wasyeah/app/core/utils/app_constant.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/route/route_names.dart';
+import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:http/http.dart' as http;

@@ -1,29 +1,31 @@
-import 'package:al_wasyeah/app/view/notification/controller/notification_controller.dart';
-import 'package:al_wasyeah/app/view/home/controller/home_controller.dart';
-import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
-import 'package:al_wasyeah/app/core/route/route_names.dart';
-import 'package:al_wasyeah/app/core/utils/api_constants.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/utils/app_icons.dart';
-import 'package:al_wasyeah/app/core/utils/app_image.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
+import 'package:al_wasiyyath/app/view/notification/controller/notification_controller.dart';
+import 'package:al_wasiyyath/app/view/home/controller/home_controller.dart';
+import 'package:al_wasiyyath/app/view/profile/controller/profile_controller.dart';
+import 'package:al_wasiyyath/app/core/route/route_names.dart';
+import 'package:al_wasiyyath/app/core/utils/api_constants.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/utils/app_icons.dart';
+import 'package:al_wasiyyath/app/core/utils/app_image.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
 
 class HomePage extends GetView<HomeController> {
   HomePage({super.key});
 
-  Widget _notificationIconOnly() {
+  Widget _notificationIconOnly(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.only(right: 12),
       child: IconButton(
-        icon: const Icon(
+        icon: Icon(
           Icons.notifications_outlined,
           size: 26,
+          color: isDark ? Colors.white70 : Colors.black87,
         ),
         onPressed: () {
           Get.toNamed(
@@ -39,6 +41,7 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final notificationController = Get.find<NotificationController>();
     final profileController = Get.find<ProfileController>();
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       appBar: PreferredSize(
@@ -60,10 +63,13 @@ class HomePage extends GetView<HomeController> {
               return Skeletonizer(
                 enabled: isProfileLoading,
                 effect: ShimmerEffect(
-                  baseColor: Colors.grey.shade300,
-                  highlightColor: Colors.grey.shade100,
+                  baseColor:
+                      isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+                  highlightColor:
+                      isDark ? Colors.grey.shade700 : Colors.grey.shade100,
                 ),
-                containersColor: Colors.grey.shade200,
+                containersColor:
+                    isDark ? Colors.grey.shade800 : Colors.grey.shade200,
                 child: Row(
                   children: [
                     user?.profilePictureUrl != null
@@ -71,12 +77,19 @@ class HomePage extends GetView<HomeController> {
                             radius: 18,
                             backgroundImage: NetworkImage(
                                 "${ApiConstants.imageUrl + "${user?.profilePictureUrl}"}"),
-                            backgroundColor: Colors.grey[200],
+                            backgroundColor: isDark
+                                ? const Color(0xFF2C3E35)
+                                : Colors.grey[200],
                           )
                         : CircleAvatar(
                             radius: 18,
-                            child: const Icon(Icons.person),
-                            backgroundColor: Colors.grey[200],
+                            child: Icon(
+                              Icons.person,
+                              color: isDark ? Colors.white70 : Colors.grey[600],
+                            ),
+                            backgroundColor: isDark
+                                ? const Color(0xFF2C3E35)
+                                : Colors.grey[200],
                           ),
                     SizedBox(width: 8.w),
                     Expanded(
@@ -91,13 +104,21 @@ class HomePage extends GetView<HomeController> {
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.bold,
+                              color: isDark
+                                  ? Colors.white
+                                  : const Color(0xff1A1A1A),
                             ),
                           ),
                           Text(
                             AppLocalizations.of(context)!.welcome_back,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 12.sp),
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: isDark
+                                  ? const Color(0xff94A3B8)
+                                  : const Color(0xff6B7280),
+                            ),
                           ),
                         ],
                       ),
@@ -123,9 +144,13 @@ class HomePage extends GetView<HomeController> {
                         icon: Icon(
                           Icons.notifications,
                           size: 26,
-                          color: unreadCount > 0
-                              ? Colors.black
-                              : Colors.grey.shade700,
+                          color: isDark
+                              ? (unreadCount > 0
+                                  ? Colors.white
+                                  : Colors.grey.shade400)
+                              : (unreadCount > 0
+                                  ? Colors.black
+                                  : Colors.grey.shade700),
                         ),
                         splashRadius: 22,
                         onPressed: () {
@@ -153,7 +178,9 @@ class HomePage extends GetView<HomeController> {
                               color: Colors.redAccent,
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
-                                color: Colors.white,
+                                color: isDark
+                                    ? const Color(0xFF1E1E1E)
+                                    : Colors.white,
                                 width: 2,
                               ),
                               boxShadow: [
@@ -188,8 +215,10 @@ class HomePage extends GetView<HomeController> {
               onLoading: Skeletonizer(
                 enabled: true,
                 effect: ShimmerEffect(
-                  baseColor: Colors.grey.shade300,
-                  highlightColor: Colors.grey.shade100,
+                  baseColor:
+                      isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+                  highlightColor:
+                      isDark ? Colors.grey.shade700 : Colors.grey.shade100,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(right: 12),
@@ -197,7 +226,11 @@ class HomePage extends GetView<HomeController> {
                     clipBehavior: Clip.none,
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.notifications, size: 26),
+                        icon: Icon(
+                          Icons.notifications,
+                          size: 26,
+                          color: isDark ? Colors.white70 : Colors.black87,
+                        ),
                         onPressed: () {},
                       ),
                       Positioned(
@@ -214,7 +247,9 @@ class HomePage extends GetView<HomeController> {
                             color: Colors.redAccent,
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: Colors.white,
+                              color: isDark
+                                  ? const Color(0xFF1E1E1E)
+                                  : Colors.white,
                               width: 2,
                             ),
                           ),
@@ -234,8 +269,8 @@ class HomePage extends GetView<HomeController> {
                   ),
                 ),
               ),
-              onEmpty: _notificationIconOnly(),
-              onError: (_) => _notificationIconOnly(),
+              onEmpty: _notificationIconOnly(context),
+              onError: (_) => _notificationIconOnly(context),
             ),
             SizedBox(width: 8.h), // Space between the image and text
           ],
@@ -253,7 +288,7 @@ class HomePage extends GetView<HomeController> {
                   height: 20.h,
                 ),
 
-                ///=======================Explore your \n Wasyyah==========================
+                ///=======================Explore your \n Wasiyyah==========================
 
                 InkWell(
                   onTap: () {
@@ -265,8 +300,12 @@ class HomePage extends GetView<HomeController> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      border: Border.all(color: AppColors.primaryColor),
+                      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+                      border: Border.all(
+                        color: isDark
+                            ? const Color(0xFF2C3E35)
+                            : AppColors.primaryColor,
+                      ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -275,12 +314,18 @@ class HomePage extends GetView<HomeController> {
                           AppIcons.exploreWasyea,
                           width: 80.w,
                           height: 80.h,
+                          colorFilter: isDark
+                              ? const ColorFilter.mode(
+                                  Color(0xFF4ADE80), BlendMode.srcIn)
+                              : null,
                         ),
                         CustomText(
                           text: AppLocalizations.of(context)!
                               .explore_your_wasiyyah,
                           fontsize: 18.sp,
-                          color: AppColors.primaryColor,
+                          color: isDark
+                              ? const Color(0xFF4ADE80)
+                              : AppColors.primaryColor,
                         )
                       ],
                     ),
@@ -303,8 +348,13 @@ class HomePage extends GetView<HomeController> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            border: Border.all(color: AppColors.primaryColor),
+                            color:
+                                isDark ? const Color(0xFF1E1E1E) : Colors.white,
+                            border: Border.all(
+                              color: isDark
+                                  ? const Color(0xFF2C3E35)
+                                  : AppColors.primaryColor,
+                            ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -313,11 +363,17 @@ class HomePage extends GetView<HomeController> {
                                 AppIcons.witness,
                                 width: 50.w,
                                 height: 50.h,
+                                colorFilter: isDark
+                                    ? const ColorFilter.mode(
+                                        Colors.white, BlendMode.srcIn)
+                                    : null,
                               ),
                               CustomText(
                                 text: AppLocalizations.of(context)!.witness,
                                 fontsize: 18.sp,
-                                color: AppColors.textColor4E4E4E,
+                                color: isDark
+                                    ? Colors.white
+                                    : AppColors.textColor4E4E4E,
                               )
                             ],
                           ),
@@ -340,8 +396,13 @@ class HomePage extends GetView<HomeController> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            border: Border.all(color: AppColors.primaryColor),
+                            color:
+                                isDark ? const Color(0xFF1E1E1E) : Colors.white,
+                            border: Border.all(
+                              color: isDark
+                                  ? const Color(0xFF2C3E35)
+                                  : AppColors.primaryColor,
+                            ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -350,11 +411,17 @@ class HomePage extends GetView<HomeController> {
                                 AppIcons.nominee,
                                 width: 40.w,
                                 height: 40.h,
+                                colorFilter: isDark
+                                    ? const ColorFilter.mode(
+                                        Colors.white, BlendMode.srcIn)
+                                    : null,
                               ),
                               CustomText(
                                 text: AppLocalizations.of(context)!.nominee,
                                 fontsize: 18.sp,
-                                color: AppColors.textColor4E4E4E,
+                                color: isDark
+                                    ? Colors.white
+                                    : AppColors.textColor4E4E4E,
                               )
                             ],
                           ),
@@ -373,10 +440,15 @@ class HomePage extends GetView<HomeController> {
                     width: 1.sw,
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.8),
+                      color: isDark
+                          ? const Color(0xFF1E1E1E).withValues(alpha: 0.9)
+                          : Colors.white.withValues(alpha: 0.8),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                          color: AppColors.primaryColor.withValues(alpha: 0.3)),
+                        color: isDark
+                            ? const Color(0xFF2C3E35)
+                            : AppColors.primaryColor.withValues(alpha: 0.3),
+                      ),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -388,21 +460,23 @@ class HomePage extends GetView<HomeController> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 12.w, vertical: 6.h),
                           decoration: BoxDecoration(
-                            color:
-                                AppColors.primaryColor.withValues(alpha: 0.1),
+                            color: isDark
+                                ? AppColors.primaryColor.withValues(alpha: 0.2)
+                                : AppColors.primaryColor.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                                color: AppColors.primaryColor
-                                    .withValues(alpha: 0.2)),
+                              color: AppColors.primaryColor
+                                  .withValues(alpha: isDark ? 0.35 : 0.2),
+                            ),
                           ),
                           child: Obx(
                             () => CustomText(
                               text: controller.currentTime.value,
                               fontsize: 24.sp,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor,
-                              // maxLines: 1,
-                              // overflow: TextOverflow.ellipsis,
+                              color: isDark
+                                  ? const Color(0xFF4ADE80)
+                                  : AppColors.primaryColor,
                             ),
                           ),
                         ),
@@ -410,7 +484,7 @@ class HomePage extends GetView<HomeController> {
                         CustomText(
                           text: AppLocalizations.of(context)!.current_time,
                           fontsize: 12.sp,
-                          color: Colors.grey,
+                          color: isDark ? const Color(0xff94A3B8) : Colors.grey,
                         ),
 
                         // Sunrise & Sunset Column
@@ -418,10 +492,16 @@ class HomePage extends GetView<HomeController> {
                           () => Skeletonizer(
                             enabled: controller.salatTimeStatus.value.isLoading,
                             effect: ShimmerEffect(
-                              baseColor: Colors.grey.shade300,
-                              highlightColor: Colors.grey.shade100,
+                              baseColor: isDark
+                                  ? Colors.grey.shade800
+                                  : Colors.grey.shade300,
+                              highlightColor: isDark
+                                  ? Colors.grey.shade700
+                                  : Colors.grey.shade100,
                             ),
-                            containersColor: Colors.grey.shade200,
+                            containersColor: isDark
+                                ? Colors.grey.shade800
+                                : Colors.grey.shade200,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -443,8 +523,7 @@ class HomePage extends GetView<HomeController> {
                                                     "06:00"),
                                             fontsize: 18.sp,
                                             fontWeight: FontWeight.bold,
-                                            // maxLines: 1,
-                                            // overflow: TextOverflow.ellipsis,
+                                            color: isDark ? Colors.white : null,
                                           ),
                                         ),
                                       ],
@@ -453,7 +532,9 @@ class HomePage extends GetView<HomeController> {
                                       text: AppLocalizations.of(context)!
                                           .sunrise_time,
                                       fontsize: 12.sp,
-                                      color: Colors.grey,
+                                      color: isDark
+                                          ? const Color(0xff94A3B8)
+                                          : Colors.grey,
                                     ),
                                   ],
                                 ),
@@ -465,7 +546,9 @@ class HomePage extends GetView<HomeController> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Icon(Icons.nightlight,
-                                            color: Colors.blueGrey,
+                                            color: isDark
+                                                ? const Color(0xFF93C5FD)
+                                                : Colors.blueGrey,
                                             size: 20.sp),
                                         SizedBox(width: 4.w),
                                         Flexible(
@@ -476,8 +559,7 @@ class HomePage extends GetView<HomeController> {
                                                     "18:00"),
                                             fontsize: 18.sp,
                                             fontWeight: FontWeight.bold,
-                                            // maxLines: 1,
-                                            // overflow: TextOverflow.ellipsis,
+                                            color: isDark ? Colors.white : null,
                                           ),
                                         ),
                                       ],
@@ -486,7 +568,9 @@ class HomePage extends GetView<HomeController> {
                                       text: AppLocalizations.of(context)!
                                           .sunset_time,
                                       fontsize: 12.sp,
-                                      color: Colors.grey,
+                                      color: isDark
+                                          ? const Color(0xff94A3B8)
+                                          : Colors.grey,
                                     ),
                                   ],
                                 ),
@@ -501,11 +585,15 @@ class HomePage extends GetView<HomeController> {
                 // Prayer times
                 Align(
                   alignment: Alignment.topLeft,
-                  child: Text(AppLocalizations.of(context)!.prayer_times,
-                      style: TextStyle(
-                          fontSize: 24.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green[700])),
+                  child: Text(
+                    AppLocalizations.of(context)!.prayer_times,
+                    style: TextStyle(
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.bold,
+                      color:
+                          isDark ? const Color(0xFF4ADE80) : Colors.green[700],
+                    ),
+                  ),
                 ),
                 SizedBox(height: 20.h),
 
@@ -522,11 +610,15 @@ class HomePage extends GetView<HomeController> {
                     child: Skeletonizer(
                       enabled: isLoading,
                       effect: ShimmerEffect(
-                        baseColor: Colors.grey.shade200,
-                        highlightColor: Colors.grey.shade50,
+                        baseColor: isDark
+                            ? Colors.grey.shade800
+                            : Colors.grey.shade200,
+                        highlightColor:
+                            isDark ? Colors.grey.shade700 : Colors.grey.shade50,
                         duration: const Duration(milliseconds: 1500),
                       ),
-                      containersColor: Colors.grey.shade100,
+                      containersColor:
+                          isDark ? Colors.grey.shade800 : Colors.grey.shade100,
                       child: ListView.builder(
                         controller: controller.scrollController,
                         shrinkWrap: true,
@@ -542,15 +634,21 @@ class HomePage extends GetView<HomeController> {
                               width: 0.6.sw,
                               margin: EdgeInsets.symmetric(horizontal: 16.w),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: isDark
+                                    ? const Color(0xFF1E1E1E)
+                                    : Colors.white,
                                 borderRadius: BorderRadius.circular(16.r),
                                 border: Border.all(
-                                  color: Colors.grey.shade200,
+                                  color: isDark
+                                      ? const Color(0xFF2C3E35)
+                                      : Colors.grey.shade200,
                                   width: 1.2,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.03),
+                                    color: isDark
+                                        ? Colors.black.withValues(alpha: 0.3)
+                                        : Colors.black.withValues(alpha: 0.03),
                                     blurRadius: 10,
                                     offset: const Offset(0, 4),
                                   ),
@@ -566,7 +664,9 @@ class HomePage extends GetView<HomeController> {
                                       width: 110.w,
                                       height: 16.h,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey.shade300,
+                                        color: isDark
+                                            ? Colors.grey.shade700
+                                            : Colors.grey.shade300,
                                         borderRadius:
                                             BorderRadius.circular(8.r),
                                       ),
@@ -577,7 +677,9 @@ class HomePage extends GetView<HomeController> {
                                       width: 80.w,
                                       height: 18.h,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey.shade300,
+                                        color: isDark
+                                            ? Colors.grey.shade700
+                                            : Colors.grey.shade300,
                                         borderRadius:
                                             BorderRadius.circular(6.r),
                                       ),
@@ -595,7 +697,9 @@ class HomePage extends GetView<HomeController> {
                                             width: 75.w,
                                             height: 20.h,
                                             decoration: BoxDecoration(
-                                              color: Colors.grey.shade300,
+                                              color: isDark
+                                                  ? Colors.grey.shade700
+                                                  : Colors.grey.shade300,
                                               borderRadius:
                                                   BorderRadius.circular(6.r),
                                             ),
@@ -605,7 +709,9 @@ class HomePage extends GetView<HomeController> {
                                             width: 60.w,
                                             height: 18.h,
                                             decoration: BoxDecoration(
-                                              color: Colors.grey.shade300,
+                                              color: isDark
+                                                  ? Colors.grey.shade700
+                                                  : Colors.grey.shade300,
                                               borderRadius:
                                                   BorderRadius.circular(6.r),
                                             ),
@@ -615,7 +721,9 @@ class HomePage extends GetView<HomeController> {
                                             height: 26.h,
                                             width: 48.w,
                                             decoration: BoxDecoration(
-                                              color: Colors.grey.shade300,
+                                              color: isDark
+                                                  ? Colors.grey.shade700
+                                                  : Colors.grey.shade300,
                                               borderRadius:
                                                   BorderRadius.circular(14.r),
                                             ),
@@ -635,14 +743,6 @@ class HomePage extends GetView<HomeController> {
                           final isCurrent =
                               name == controller.currentPrayer.value;
 
-                          // Determine gradient based on status
-                          // Current: Green, Previous: Grey, Upcoming: Amber
-                          // We need to know if it's already passed but not "current".
-                          // Actually, if we follow the 3 states:
-                          // 1. name == currentPrayer -> Green
-                          // 2. index of name < index of currentPrayer -> Grey (already passed)
-                          // 3. index of name > index of currentPrayer -> Amber (next or future)
-
                           final prayerNames =
                               controller.prayerTimes.keys.toList();
                           final currentIndex = prayerNames
@@ -653,82 +753,138 @@ class HomePage extends GetView<HomeController> {
                           LinearGradient borderGradient;
                           double borderWidth = 1.0;
                           if (isCurrent) {
-                            // Current Prayer → Modern Light Green with more white layers
-                            gradient = const LinearGradient(
-                              colors: [
-                                Color(0xFFFFFFFF), // pure white
-                                Color(0xFFFAFAFA), // ultra light
-                                Color(0xFFF1F8F2), // very light green-white
-                                Color(0xFFDFF5DD), // soft green tint
-                                Color(0xFFC8E6C9), // light green
-                                Color(0xFFA5D6A7), // soft green
-                                Color(0xFF81C784), // main green accent
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            );
+                            gradient = isDark
+                                ? const LinearGradient(
+                                    colors: [
+                                      Color(0xFF1E382B),
+                                      Color(0xFF172D22),
+                                      Color(0xFF102118),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  )
+                                : const LinearGradient(
+                                    colors: [
+                                      Color(0xFFFFFFFF),
+                                      Color(0xFFFAFAFA),
+                                      Color(0xFFF1F8F2),
+                                      Color(0xFFDFF5DD),
+                                      Color(0xFFC8E6C9),
+                                      Color(0xFFA5D6A7),
+                                      Color(0xFF81C784),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  );
 
-                            borderGradient = const LinearGradient(
-                              colors: [
-                                Color(0xFF81C784), // main green accent
-                                Color(0xFFA5D6A7), // soft green
-                                Color(0xFFC8E6C9), // light green
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            );
+                            borderGradient = isDark
+                                ? const LinearGradient(
+                                    colors: [
+                                      Color(0xFF4ADE80),
+                                      Color(0xFF22C55E),
+                                      Color(0xFF16A34A),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  )
+                                : const LinearGradient(
+                                    colors: [
+                                      Color(0xFF81C784),
+                                      Color(0xFFA5D6A7),
+                                      Color(0xFFC8E6C9),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  );
                           } else if (pIndex < currentIndex &&
                               currentIndex != -1) {
-                            // Previous Prayer → Soft Cool Grey with more white layers
-                            gradient = const LinearGradient(
-                              colors: [
-                                Color(0xFFFFFFFF), // pure white
-                                Color(0xFFFAFAFA), // ultra light
-                                Color(0xFFF5F5F5), // very light grey
-                                Color(0xFFEDEDED), // soft light grey
-                                Color(0xFFE0E0E0), // light grey
-                                Color(0xFFBDBDBD), // grey accent
-                                Color(
-                                    0xFF9E9E9E), // slightly darker grey for depth
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            );
+                            gradient = isDark
+                                ? const LinearGradient(
+                                    colors: [
+                                      Color(0xFF262626),
+                                      Color(0xFF1E1E1E),
+                                      Color(0xFF171717),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  )
+                                : const LinearGradient(
+                                    colors: [
+                                      Color(0xFFFFFFFF),
+                                      Color(0xFFFAFAFA),
+                                      Color(0xFFF5F5F5),
+                                      Color(0xFFEDEDED),
+                                      Color(0xFFE0E0E0),
+                                      Color(0xFFBDBDBD),
+                                      Color(0xFF9E9E9E),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  );
 
-                            borderGradient = const LinearGradient(
-                              colors: [
-                                Color(0xFF9E9E9E), // slightly darker grey
-                                Color(0xFFBDBDBD), // grey accent
-                                Color(0xFFE0E0E0), // light grey
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            );
+                            borderGradient = isDark
+                                ? const LinearGradient(
+                                    colors: [
+                                      Color(0xFF525252),
+                                      Color(0xFF404040),
+                                      Color(0xFF262626),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  )
+                                : const LinearGradient(
+                                    colors: [
+                                      Color(0xFF9E9E9E),
+                                      Color(0xFFBDBDBD),
+                                      Color(0xFFE0E0E0),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  );
                           } else {
-                            // Upcoming Prayer → Modern Light Orange with more white layers
-                            gradient = const LinearGradient(
-                              colors: [
-                                Color(0xFFFFFFFF), // pure white
-                                Color(0xFFFFFBF0), // ultra light cream
-                                Color(0xFFFFF8E1), // very light yellow-orange
-                                Color(0xFFFFF3C4), // soft pale orange
-                                Color(0xFFFFECB3), // light orange
-                                Color(0xFFFFD54F), // orange accent
-                                Color(0xFFFFB300), // richer orange accent
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            );
+                            gradient = isDark
+                                ? const LinearGradient(
+                                    colors: [
+                                      Color(0xFF332514),
+                                      Color(0xFF281D0E),
+                                      Color(0xFF1F160A),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  )
+                                : const LinearGradient(
+                                    colors: [
+                                      Color(0xFFFFFFFF),
+                                      Color(0xFFFFFBF0),
+                                      Color(0xFFFFF8E1),
+                                      Color(0xFFFFF3C4),
+                                      Color(0xFFFFECB3),
+                                      Color(0xFFFFD54F),
+                                      Color(0xFFFFB300),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  );
 
-                            borderGradient = const LinearGradient(
-                              colors: [
-                                Color(0xFFFFB300), // rich orange
-                                Color(0xFFFFD54F), // orange accent
-                                Color(0xFFFFECB3), // light orange
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            );
+                            borderGradient = isDark
+                                ? const LinearGradient(
+                                    colors: [
+                                      Color(0xFFFBBF24),
+                                      Color(0xFFF59E0B),
+                                      Color(0xFFD97706),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  )
+                                : const LinearGradient(
+                                    colors: [
+                                      Color(0xFFFFB300),
+                                      Color(0xFFFFD54F),
+                                      Color(0xFFFFECB3),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  );
                           }
 
                           return Container(
@@ -739,25 +895,22 @@ class HomePage extends GetView<HomeController> {
                                 // 1. Gradient Border Layer
                                 Container(
                                   decoration: BoxDecoration(
-                                    gradient:
-                                        borderGradient, // darker/more visible
+                                    gradient: borderGradient,
                                     borderRadius: BorderRadius.circular(16.0),
                                   ),
                                 ),
 
                                 // 2. Inner Card with Padding for Border Effect
                                 Container(
-                                  margin: EdgeInsets.all(
-                                      borderWidth), // creates border space
+                                  margin: EdgeInsets.all(borderWidth),
                                   decoration: BoxDecoration(
-                                    gradient:
-                                        gradient, // keep the light modern gradient
+                                    gradient: gradient,
                                     borderRadius: BorderRadius.circular(
                                         16.0 - borderWidth),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black
-                                            .withValues(alpha: 0.05),
+                                        color: Colors.black.withValues(
+                                            alpha: isDark ? 0.3 : 0.05),
                                         blurRadius: 4,
                                         offset: const Offset(2, 2),
                                       ),
@@ -774,10 +927,15 @@ class HomePage extends GetView<HomeController> {
                                             bottomLeft: Radius.circular(16),
                                           ),
                                           child: Image.asset(
-                                            AppImages.mosjidIcon,
+                                            isDark
+                                                ? AppImages.mosjidDarkIcon
+                                                : AppImages.mosjidIcon,
                                             height: 150.h,
                                             width: 150.w,
                                             fit: BoxFit.contain,
+                                            // color: isDark
+                                            //     ? Colors.white.withValues(alpha: 0.12)
+                                            //     : null,
                                           ),
                                         ),
                                       ),
@@ -806,7 +964,12 @@ class HomePage extends GetView<HomeController> {
                                               style: TextStyle(
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.black,
+                                                color: isDark
+                                                    ? (isCurrent
+                                                        ? const Color(
+                                                            0xFF4ADE80)
+                                                        : Colors.white)
+                                                    : Colors.black,
                                               ),
                                             ),
                                             if (isCurrent)
@@ -817,7 +980,10 @@ class HomePage extends GetView<HomeController> {
                                                   style: TextStyle(
                                                     fontSize: 18.sp,
                                                     fontWeight: FontWeight.bold,
-                                                    color: Colors.black,
+                                                    color: isDark
+                                                        ? const Color(
+                                                            0xFF4ADE80)
+                                                        : Colors.black,
                                                     letterSpacing: 1.5,
                                                   ),
                                                 ),
@@ -855,7 +1021,9 @@ class HomePage extends GetView<HomeController> {
                                                       fontSize: 22.sp,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: Colors.black,
+                                                      color: isDark
+                                                          ? Colors.white
+                                                          : Colors.black,
                                                     ),
                                                   ),
                                                   Text(
@@ -864,7 +1032,9 @@ class HomePage extends GetView<HomeController> {
                                                       fontSize: 20.sp,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: Colors.black,
+                                                      color: isDark
+                                                          ? Colors.white
+                                                          : Colors.black,
                                                     ),
                                                   ),
                                                   SizedBox(height: 4.h),
@@ -874,11 +1044,23 @@ class HomePage extends GetView<HomeController> {
                                                     child: FittedBox(
                                                       fit: BoxFit.fill,
                                                       child: Switch(
-                                                        value: isCurrent
-                                                            ? true
-                                                            : false,
+                                                        value: isCurrent,
                                                         activeThumbColor: Colors
                                                             .greenAccent[400],
+                                                        activeTrackColor: isDark
+                                                            ? Colors
+                                                                .green.shade900
+                                                            : null,
+                                                        inactiveThumbColor:
+                                                            isDark
+                                                                ? Colors.grey
+                                                                    .shade400
+                                                                : null,
+                                                        inactiveTrackColor:
+                                                            isDark
+                                                                ? Colors.grey
+                                                                    .shade800
+                                                                : null,
                                                         onChanged: (val) {},
                                                       ),
                                                     ),
@@ -916,7 +1098,19 @@ class HomePage extends GetView<HomeController> {
                       Container(
                         height: 220.h,
                         decoration: BoxDecoration(
-                          image: DecorationImage(
+                          borderRadius: BorderRadius.circular(16.r),
+                          border: isDark
+                              ? Border.all(color: const Color(0xFF2C3E35))
+                              : null,
+                          boxShadow: [
+                            if (isDark)
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.3),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                          ],
+                          image: const DecorationImage(
                             image: AssetImage(AppImages.zakatImg),
                             fit: BoxFit.fitWidth,
                           ),
@@ -930,7 +1124,7 @@ class HomePage extends GetView<HomeController> {
                           child: Icon(
                             Icons.calculate,
                             size: 50.sp,
-                            color: Color(0xFF2F5ADF),
+                            color: const Color(0xFF2F5ADF),
                           ),
                         ),
                       ),
@@ -944,6 +1138,7 @@ class HomePage extends GetView<HomeController> {
                             style: TextStyle(
                               fontSize: 16.sp,
                               color: Colors.black,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
@@ -966,7 +1161,19 @@ class HomePage extends GetView<HomeController> {
                       Container(
                         height: 200.h,
                         decoration: BoxDecoration(
-                          image: DecorationImage(
+                          borderRadius: BorderRadius.circular(16.r),
+                          border: isDark
+                              ? Border.all(color: const Color(0xFF2C3E35))
+                              : null,
+                          boxShadow: [
+                            if (isDark)
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.3),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                          ],
+                          image: const DecorationImage(
                             image: AssetImage(
                                 AppImages.distribureYourPropertyProperlyImage),
                             fit: BoxFit.fill,
@@ -984,6 +1191,7 @@ class HomePage extends GetView<HomeController> {
                             style: TextStyle(
                               fontSize: 16.sp,
                               color: Colors.black,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/utils/app_image.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/utils/app_image.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AboutUsPage extends StatelessWidget {
@@ -129,13 +129,15 @@ class AboutUsPage extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         final item = team[index];
+        final isDark = Theme.of(context).brightness == Brightness.dark;
 
         return Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: AppColors.whiteColor,
-            border: Border.all(color: Colors.grey.shade200),
+            color: isDark ? const Color(0xff0F172A) : AppColors.whiteColor,
+            border: Border.all(
+                color: isDark ? const Color(0xff1F2937) : Colors.grey.shade200),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

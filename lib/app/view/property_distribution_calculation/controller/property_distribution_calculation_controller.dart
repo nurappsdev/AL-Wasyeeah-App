@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/core/utils/toast_message.dart';
-import 'package:al_wasyeah/app/view/property_distribution_calculation/model/property_destribution_result_model.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
+import 'package:al_wasiyyath/app/view/property_distribution_calculation/model/property_destribution_result_model.dart';
 import 'package:flutter/material.dart';
-import 'package:al_wasyeah/app/core/services/api/api_service.dart';
-import 'package:al_wasyeah/app/core/utils/api_constants.dart';
+import 'package:al_wasiyyath/app/core/services/api/api_service.dart';
+import 'package:al_wasiyyath/app/core/utils/api_constants.dart';
 import 'package:get/get.dart';
-import 'package:al_wasyeah/app/view/property_distribution_calculation/model/relavant_list_model.dart';
-import 'package:al_wasyeah/app/core/services/download/file_download_service.dart';
+import 'package:al_wasiyyath/app/view/property_distribution_calculation/model/relavant_list_model.dart';
+import 'package:al_wasiyyath/app/core/services/download/file_download_service.dart';
 import 'package:intl/intl.dart';
 
 class PropertyDistributionCalculationController extends GetxController

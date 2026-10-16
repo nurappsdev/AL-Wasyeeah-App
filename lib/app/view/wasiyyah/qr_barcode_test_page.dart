@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:al_wasyeah/app/core/services/qr_barcode/qr_barcode_service.dart';
-import 'package:al_wasyeah/app/core/utils/toast_message.dart';
+import 'package:al_wasiyyath/app/core/services/qr_barcode/qr_barcode_service.dart';
+import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -86,7 +86,8 @@ class _QrBarcodeTestPageState extends State<QrBarcodeTestPage> {
     });
 
     if (result == null) {
-      ToastMessage.errorMessageShowToster("No QR or Barcode found in this image.");
+      ToastMessage.errorMessageShowToster(
+          "No QR or Barcode found in this image.");
     } else {
       ToastMessage.successMessageShowToster("Scan successful!");
     }
@@ -124,12 +125,17 @@ class _QrBarcodeTestPageState extends State<QrBarcodeTestPage> {
         actions: [
           IconButton(
             icon: Icon(_showLiveScanner ? Icons.image : Icons.camera_alt),
-            onPressed: () => setState(() => _showLiveScanner = !_showLiveScanner),
-            tooltip: _showLiveScanner ? "Switch to Image Pick" : "Switch to Live Camera",
+            onPressed: () =>
+                setState(() => _showLiveScanner = !_showLiveScanner),
+            tooltip: _showLiveScanner
+                ? "Switch to Image Pick"
+                : "Switch to Live Camera",
           ),
         ],
       ),
-      body: _showLiveScanner ? _buildLiveScanner() : _buildImagePickerView(hasPassedImages),
+      body: _showLiveScanner
+          ? _buildLiveScanner()
+          : _buildImagePickerView(hasPassedImages),
     );
   }
 
@@ -158,7 +164,10 @@ class _QrBarcodeTestPageState extends State<QrBarcodeTestPage> {
           child: Center(
             child: Text(
               "Point at a QR or Barcode",
-              style: TextStyle(color: Colors.white, backgroundColor: Colors.black54, fontSize: 16),
+              style: TextStyle(
+                  color: Colors.white,
+                  backgroundColor: Colors.black54,
+                  fontSize: 16),
             ),
           ),
         ),
@@ -188,7 +197,8 @@ class _QrBarcodeTestPageState extends State<QrBarcodeTestPage> {
                   Expanded(
                     child: Column(
                       children: [
-                        const Text("QR Code", style: TextStyle(fontWeight: FontWeight.w600)),
+                        const Text("QR Code",
+                            style: TextStyle(fontWeight: FontWeight.w600)),
                         const SizedBox(height: 8),
                         Container(
                           height: 180,
@@ -198,7 +208,8 @@ class _QrBarcodeTestPageState extends State<QrBarcodeTestPage> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(11),
-                            child: Image.file(_qrImageFile!, fit: BoxFit.contain),
+                            child:
+                                Image.file(_qrImageFile!, fit: BoxFit.contain),
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -221,7 +232,8 @@ class _QrBarcodeTestPageState extends State<QrBarcodeTestPage> {
                   Expanded(
                     child: Column(
                       children: [
-                        const Text("Barcode", style: TextStyle(fontWeight: FontWeight.w600)),
+                        const Text("Barcode",
+                            style: TextStyle(fontWeight: FontWeight.w600)),
                         const SizedBox(height: 8),
                         Container(
                           height: 180,
@@ -234,12 +246,14 @@ class _QrBarcodeTestPageState extends State<QrBarcodeTestPage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.barcode_reader, size: 48, color: Colors.grey),
+                                Icon(Icons.barcode_reader,
+                                    size: 48, color: Colors.grey),
                                 SizedBox(height: 8),
                                 Text(
                                   "Barcode (SVG)\nUse Live Camera to scan",
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 12),
                                 ),
                               ],
                             ),
@@ -293,9 +307,13 @@ class _QrBarcodeTestPageState extends State<QrBarcodeTestPage> {
           ),
           const SizedBox(height: 12),
           ElevatedButton.icon(
-            onPressed: _selectedImage != null && !_isScanning ? _scanImage : null,
+            onPressed:
+                _selectedImage != null && !_isScanning ? _scanImage : null,
             icon: _isScanning
-                ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2))
                 : const Icon(Icons.qr_code_scanner),
             label: Text(_isScanning ? "Scanning..." : "Decode Selected Image"),
             style: ElevatedButton.styleFrom(

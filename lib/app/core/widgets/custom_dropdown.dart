@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -154,8 +154,9 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final Color enabledColor =
-        _hasValue ? Colors.green : (isDark ? Colors.grey[700]! : Colors.grey[300]!);
+    final Color enabledColor = _hasValue
+        ? Colors.green
+        : (isDark ? Colors.grey[700]! : Colors.grey[300]!);
 
     return CompositedTransformTarget(
       link: _layerLink,
@@ -189,7 +190,8 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                     ),
                     enabledBorder: _border(borderColor),
                     focusedBorder: _border(const Color(0xff058240)),
-                    disabledBorder: _border(isDark ? Colors.grey[800]! : Colors.grey[200]!),
+                    disabledBorder:
+                        _border(isDark ? Colors.grey[800]! : Colors.grey[200]!),
                     errorBorder: _border(Colors.red),
                     focusedErrorBorder: _border(Colors.red),
                     labelStyle: TextStyle(
@@ -211,8 +213,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 12.sp,
-                      fontWeight:
-                          _hasValue ? FontWeight.bold : FontWeight.w400,
+                      fontWeight: _hasValue ? FontWeight.bold : FontWeight.w400,
                       color: _hasValue
                           ? (isDark ? Colors.white : Colors.black)
                           : (isDark ? Colors.grey[400] : Colors.grey[500]),
@@ -267,7 +268,8 @@ class _DropdownOverlayContent<T> extends StatefulWidget {
       _DropdownOverlayContentState<T>();
 }
 
-class _DropdownOverlayContentState<T> extends State<_DropdownOverlayContent<T>> {
+class _DropdownOverlayContentState<T>
+    extends State<_DropdownOverlayContent<T>> {
   late final TextEditingController _searchController;
   late List<T> _filteredItems;
 
@@ -368,7 +370,8 @@ class _DropdownOverlayContentState<T> extends State<_DropdownOverlayContent<T>> 
                     ? Padding(
                         padding: EdgeInsets.symmetric(vertical: 16.h),
                         child: Text(
-                          AppLocalizations.of(context)?.something_went_wrong != null
+                          AppLocalizations.of(context)?.something_went_wrong !=
+                                  null
                               ? "No data found"
                               : "No data found",
                           style: TextStyle(

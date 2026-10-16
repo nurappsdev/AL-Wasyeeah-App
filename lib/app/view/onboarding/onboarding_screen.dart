@@ -1,16 +1,16 @@
-import 'package:al_wasyeah/app/core/route/route_names.dart';
-import 'package:al_wasyeah/app/core/services/shared_pref/prefs_service.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/utils/app_constant.dart';
-import 'package:al_wasyeah/app/core/utils/app_image.dart';
-import 'package:al_wasyeah/app/app.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
+import 'package:al_wasiyyath/app/core/route/route_names.dart';
+import 'package:al_wasiyyath/app/core/services/shared_pref/prefs_service.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
+import 'package:al_wasiyyath/app/core/utils/app_image.dart';
+import 'package:al_wasiyyath/app/app.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -57,7 +57,8 @@ class OnboardingScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -70,7 +71,9 @@ class OnboardingScreen extends StatelessWidget {
                           child: Text(
                             'Eng',
                             style: TextStyle(
-                              color: isEnglish ? AppColors.primaryColor : Colors.black,
+                              color: isEnglish
+                                  ? AppColors.primaryColor
+                                  : Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -78,7 +81,11 @@ class OnboardingScreen extends StatelessWidget {
                         Switch(
                           value: !isEnglish,
                           onChanged: (value) {
-                            WasyeeahApp.setLocale(context, value ? const Locale('bn') : const Locale('en'));
+                            WasyeeahApp.setLocale(
+                                context,
+                                value
+                                    ? const Locale('bn')
+                                    : const Locale('en'));
                           },
                           activeThumbColor: AppColors.primaryColor,
                           inactiveThumbColor: AppColors.primaryColor,
@@ -92,7 +99,9 @@ class OnboardingScreen extends StatelessWidget {
                           child: Text(
                             'বাং',
                             style: TextStyle(
-                              color: isEnglish ? Colors.black : AppColors.primaryColor,
+                              color: isEnglish
+                                  ? Colors.black
+                                  : AppColors.primaryColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -109,8 +118,9 @@ class OnboardingScreen extends StatelessWidget {
                 padding: EdgeInsets.all(8.r),
                 child: CustomButton(
                   title: AppLocalizations.of(context)!.get_start,
-                  onpress: () async{
-                    await PrefsHelper.setBool(AppConstants.isOnboardingSelected, true);
+                  onpress: () async {
+                    await PrefsHelper.setBool(
+                        AppConstants.isOnboardingSelected, true);
                     Get.offNamed(RouteName.loginPage, preventDuplicates: false);
                   },
                 ),

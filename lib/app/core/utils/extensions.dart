@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/app/core/themes/controller/theme_controller.dart';
+import 'package:al_wasiyyath/app/core/themes/controller/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -33,4 +33,3 @@ extension ThemeContextExtension on BuildContext {
   Color get scaffoldBackgroundColor => Theme.of(this).scaffoldBackgroundColor;
   TextTheme get textTheme => Theme.of(this).textTheme;
 }
-

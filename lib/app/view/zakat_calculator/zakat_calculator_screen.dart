@@ -1,17 +1,17 @@
-import 'package:al_wasyeah/app/core/utils/toast_message.dart';
-import 'package:al_wasyeah/app/view/zakat_calculator/controller/zakat_calculator_controller.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/app/view/zakat_calculator/model/get_nisab_response_model.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text_field.dart';
+import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
+import 'package:al_wasiyyath/app/view/zakat_calculator/controller/zakat_calculator_controller.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasiyyath/app/view/zakat_calculator/model/get_nisab_response_model.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
 
 class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
   ZakatCalculatorScreen({super.key});
@@ -19,6 +19,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.calculate_your_zakat_easily,
       ),
@@ -31,8 +32,15 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
   }
 
   Widget _buildContent(BuildContext context, {required bool isLoading}) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Skeletonizer(
       enabled: isLoading,
+      effect: ShimmerEffect(
+        baseColor: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+        highlightColor: isDark ? Colors.grey.shade700 : Colors.grey.shade100,
+      ),
+      containersColor: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
       child: Container(
         width: double.infinity,
         height: Get.height,
@@ -45,7 +53,9 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                 children: [
                   Obx(() {
                     if (controller.isNisabLoading.value) {
-                      return const CircularProgressIndicator();
+                      return CircularProgressIndicator(
+                        color: AppColors.primaryColor,
+                      );
                     }
 
                     return Column(
@@ -59,14 +69,41 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                         const SizedBox(height: 8),
                         DropdownButtonFormField<GetNisabRatesResponseModel>(
                           isExpanded: true,
+                          dropdownColor:
+                              isDark ? const Color(0xFF1E1E1E) : Colors.white,
+                          iconEnabledColor:
+                              isDark ? Colors.white70 : Colors.black54,
                           initialValue: controller.selectedCurrency.value,
                           decoration: InputDecoration(
+                            filled: true,
+                            fillColor:
+                                isDark ? const Color(0xFF25282B) : Colors.white,
                             labelText: AppLocalizations.of(context)!.currency,
-                            labelStyle: TextStyle(fontWeight: FontWeight.w900),
+                            labelStyle: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              color: isDark
+                                  ? const Color(0xff94A3B8)
+                                  : Colors.black54,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16.r),
+                              borderSide: BorderSide(
+                                color: isDark
+                                    ? const Color(0xFF2C3E35)
+                                    : AppColors.primaryColor,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16.r),
+                              borderSide: BorderSide(
+                                color: AppColors.primaryColor,
+                                width: 1.5,
+                              ),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16.r),
                             ),
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 16),
                           ),
                           items: controller.nisabRates.map((model) {
@@ -121,8 +158,14 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                           height: 100.h,
                           width: double.infinity,
                           decoration: BoxDecoration(
+                            color:
+                                isDark ? const Color(0xFF1E1E1E) : Colors.white,
                             borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(color: AppColors.primaryColor),
+                            border: Border.all(
+                              color: isDark
+                                  ? const Color(0xFF2C3E35)
+                                  : AppColors.primaryColor,
+                            ),
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -166,8 +209,14 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                           height: 450.h,
                           width: double.infinity,
                           decoration: BoxDecoration(
+                            color:
+                                isDark ? const Color(0xFF1E1E1E) : Colors.white,
                             borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(color: AppColors.primaryColor),
+                            border: Border.all(
+                              color: isDark
+                                  ? const Color(0xFF2C3E35)
+                                  : AppColors.primaryColor,
+                            ),
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16.w),

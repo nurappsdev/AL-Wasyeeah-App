@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:al_wasyeah/app/core/utils/toast_message.dart';
-import 'package:al_wasyeah/app/view/wasiyyah/model/wasyyah_model.dart';
-import 'package:al_wasyeah/app/view/witnessess/model/get_witness_response_model.dart';
-import 'package:al_wasyeah/app/core/services/api/api_service.dart';
-import 'package:al_wasyeah/app/core/utils/api_constants.dart';
+import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
+import 'package:al_wasiyyath/app/view/wasiyyah/model/wasyyah_model.dart';
+import 'package:al_wasiyyath/app/view/witnessess/model/get_witness_response_model.dart';
+import 'package:al_wasiyyath/app/core/services/api/api_service.dart';
+import 'package:al_wasiyyath/app/core/utils/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/view/witnessess/add_outside_witnesses_widget.dart';
-import 'package:al_wasyeah/app/view/witnessess/add_witnesses_widget.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/view/witnessess/add_outside_witnesses_widget.dart';
+import 'package:al_wasiyyath/app/view/witnessess/add_witnesses_widget.dart';
 
 class WitnessController extends GetxController
     with GetSingleTickerProviderStateMixin {

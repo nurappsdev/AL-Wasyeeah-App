@@ -1,19 +1,19 @@
-import 'package:al_wasyeah/app/view/auth/controller/auth_controller.dart';
-import 'package:al_wasyeah/app/core/route/route_names.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/utils/app_constant.dart';
-import 'package:al_wasyeah/app/core/utils/app_icons.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text_field.dart';
+import 'package:al_wasiyyath/app/view/auth/controller/auth_controller.dart';
+import 'package:al_wasiyyath/app/core/route/route_names.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
+import 'package:al_wasiyyath/app/core/utils/app_icons.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/view/auth/widgets/terms_and_conditions_dialog.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/view/auth/widgets/terms_and_conditions_dialog.dart';
 
 class RegistrationPage extends StatefulWidget {
   RegistrationPage({super.key});
@@ -78,7 +78,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   SizedBox(
                     height: 40.h,
                   ),
-                  Center(child: SvgPicture.asset(AppIcons.logo, height: 100.h, width: 140.w)),
+                  Center(
+                      child: SvgPicture.asset(AppIcons.logo,
+                          height: 100.h, width: 140.w)),
                   SizedBox(
                     height: 30.h,
                   ),
@@ -108,7 +110,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!.please_enter_your_first_name;
+                          return AppLocalizations.of(context)!
+                              .please_enter_your_first_name;
                         }
                         return null;
                       },
@@ -135,7 +138,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!.please_enter_your_last_name;
+                          return AppLocalizations.of(context)!
+                              .please_enter_your_last_name;
                         }
                         return null;
                       },
@@ -163,7 +167,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!.please_enter_your_mobile_number;
+                          return AppLocalizations.of(context)!
+                              .please_enter_your_mobile_number;
                         }
                         return null;
                       },
@@ -195,8 +200,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       // ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!.please_enter_your_email;
-                        } else if (!AppConstants.emailValidate.hasMatch(value)) {
+                          return AppLocalizations.of(context)!
+                              .please_enter_your_email;
+                        } else if (!AppConstants.emailValidate
+                            .hasMatch(value)) {
                           return AppLocalizations.of(context)!.invalid_email;
                         }
                         return null;
@@ -230,7 +237,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
                         if (selectedDate != null) {
                           birthDate = selectedDate;
-                          dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(birthDate!);
+                          dateOfBirthController.text =
+                              DateFormat('yyyy-MM-dd').format(birthDate!);
                         }
                         print(dateOfBirthController.text);
                       },
@@ -240,7 +248,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!.please_write_date_of_birth;
+                          return AppLocalizations.of(context)!
+                              .please_write_date_of_birth;
                         }
                         return null;
                       },
@@ -257,16 +266,24 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   Obx(
                     () => DropdownButtonFormField<String>(
                       decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryPrimaryColor), borderRadius: BorderRadius.circular(14.r)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: AppColors.secondaryPrimaryColor),
+                            borderRadius: BorderRadius.circular(14.r)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: AppColors.secondaryPrimaryColor,
                             ),
                             borderRadius: BorderRadius.circular(14.r)),
-                        border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.primaryColor), borderRadius: BorderRadius.circular(16.r)),
+                        border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppColors.primaryColor),
+                            borderRadius: BorderRadius.circular(16.r)),
                       ),
                       isExpanded: true,
-                      hint: CustomText(text: AppLocalizations.of(context)!.select_your_question),
+                      hint: CustomText(
+                          text: AppLocalizations.of(context)!
+                              .select_your_question),
                       initialValue: _selectedQuestionId,
                       items: authController.securityQuestionResponseModel
                           .map((model) => DropdownMenuItem<String>(
@@ -302,7 +319,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       borderColor: AppColors.secondaryPrimaryColor,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!.please_enter_your_answer;
+                          return AppLocalizations.of(context)!
+                              .please_enter_your_answer;
                         }
                         return null;
                       },
@@ -325,11 +343,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       RichText(
                         text: TextSpan(
                           text: AppLocalizations.of(context)!.i_agree_with,
-                          style: TextStyle(color: Colors.black, fontSize: 12.sp),
+                          style:
+                              TextStyle(color: Colors.black, fontSize: 12.sp),
                           children: [
                             TextSpan(
-                              text: AppLocalizations.of(context)!.terms_and_conditions,
-                              style: TextStyle(color: AppColors.primaryColor, decoration: TextDecoration.underline, fontSize: 12.sp),
+                              text: AppLocalizations.of(context)!
+                                  .terms_and_conditions,
+                              style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 12.sp),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   TermsAndConditionsDialog.show(
@@ -341,12 +364,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 },
                             ),
                             TextSpan(
-                              text: " " + AppLocalizations.of(context)!.and + " ",
+                              text:
+                                  " " + AppLocalizations.of(context)!.and + " ",
                               style: TextStyle(color: Colors.black),
                             ),
                             TextSpan(
-                              text: AppLocalizations.of(context)!.privacy_policy,
-                              style: TextStyle(color: AppColors.primaryColor, decoration: TextDecoration.underline, fontSize: 12.sp),
+                              text:
+                                  AppLocalizations.of(context)!.privacy_policy,
+                              style: TextStyle(
+                                  color: AppColors.primaryColor,
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 12.sp),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   //  Get.toNamed(AppRoutes.aboutScreen,preventDuplicates: false);
@@ -397,12 +425,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             //  Get.toNamed(AppRoutes.otpVirifyScreen,preventDuplicates: false);
                           },
                           child: CustomText(
-                            text: AppLocalizations.of(context)!.already_have_an_account,
+                            text: AppLocalizations.of(context)!
+                                .already_have_an_account,
                             fontsize: 18.sp,
                           )),
                       InkWell(
                           onTap: () {
-                            Get.toNamed(RouteName.loginPage, preventDuplicates: false);
+                            Get.toNamed(RouteName.loginPage,
+                                preventDuplicates: false);
                           },
                           child: CustomText(
                             text: AppLocalizations.of(context)!.sign_in,

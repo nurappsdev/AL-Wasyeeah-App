@@ -1,5 +1,5 @@
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -90,50 +90,45 @@ class TermsAndConditionsDialog extends StatelessWidget {
                       _buildBulletPoint(loc.terms_general_bullet_4),
                       _buildBulletPoint(loc.terms_general_bullet_5),
                       _buildBulletPoint(loc.terms_general_bullet_6),
-
                       SizedBox(height: 14.h),
                       _buildSectionHeader(loc.terms_eligibility_title),
                       _buildParagraph(loc.terms_eligibility_desc),
-
                       SizedBox(height: 14.h),
                       _buildSectionHeader(loc.terms_account_registration_title),
                       _buildParagraph(loc.terms_account_registration_desc),
-                      _buildBulletPoint(loc.terms_account_registration_bullet_1),
-                      _buildBulletPoint(loc.terms_account_registration_bullet_2),
-                      _buildBulletPoint(loc.terms_account_registration_bullet_3),
-                      _buildBulletPoint(loc.terms_account_registration_bullet_4),
-
+                      _buildBulletPoint(
+                          loc.terms_account_registration_bullet_1),
+                      _buildBulletPoint(
+                          loc.terms_account_registration_bullet_2),
+                      _buildBulletPoint(
+                          loc.terms_account_registration_bullet_3),
+                      _buildBulletPoint(
+                          loc.terms_account_registration_bullet_4),
                       SizedBox(height: 14.h),
                       _buildSectionHeader(loc.terms_platform_use_title),
                       _buildParagraph(loc.terms_platform_use_desc),
                       _buildBulletPoint(loc.terms_platform_use_bullet_1),
                       _buildBulletPoint(loc.terms_platform_use_bullet_2),
                       _buildBulletPoint(loc.terms_platform_use_bullet_3),
-
                       SizedBox(height: 14.h),
                       _buildSectionHeader(loc.terms_zakat_calculation_title),
                       _buildParagraph(loc.terms_zakat_calculation_desc),
-
                       SizedBox(height: 14.h),
                       _buildSectionHeader(loc.terms_payments_donations_title),
                       _buildParagraph(loc.terms_payments_donations_desc),
-
                       SizedBox(height: 14.h),
-                      _buildSectionHeader(loc.terms_intellectual_property_title),
+                      _buildSectionHeader(
+                          loc.terms_intellectual_property_title),
                       _buildParagraph(loc.terms_intellectual_property_desc),
-
                       SizedBox(height: 14.h),
                       _buildSectionHeader(loc.terms_limitation_liability_title),
                       _buildParagraph(loc.terms_limitation_liability_desc),
-
                       SizedBox(height: 14.h),
                       _buildSectionHeader(loc.terms_termination_title),
                       _buildParagraph(loc.terms_termination_desc),
-
                       SizedBox(height: 14.h),
                       _buildSectionHeader(loc.terms_governing_law_title),
                       _buildParagraph(loc.terms_governing_law_desc),
-
                       SizedBox(height: 14.h),
                       _buildSectionHeader(loc.terms_modifications_title),
                       _buildParagraph(loc.terms_modifications_desc),

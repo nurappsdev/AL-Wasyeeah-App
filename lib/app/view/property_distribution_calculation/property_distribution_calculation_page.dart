@@ -1,12 +1,12 @@
-import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/app/core/utils/extensions.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasiyyath/app/core/utils/extensions.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:al_wasyeah/app/view/property_distribution_calculation/controller/property_distribution_calculation_controller.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/view/property_distribution_calculation/controller/property_distribution_calculation_controller.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -56,7 +56,10 @@ class PropertyDistributionCalculationPage
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.property_distribution_calculation,
       ),
@@ -73,7 +76,7 @@ class PropertyDistributionCalculationPage
                       return Obx(() {
                         return Column(
                           children: [
-                            _buildRelativeTile(relativeId),
+                            _buildRelativeTile(relativeId, isDark),
                             if ((relativeId ==
                                         PropertyDistributionCalculationController
                                             .deceasedSonId ||
@@ -81,15 +84,17 @@ class PropertyDistributionCalculationPage
                                         PropertyDistributionCalculationController
                                             .deceasedDaughterId) &&
                                 controller.isChecked[relativeId] == true)
-                              ..._buildDynamicTiles(relativeId),
-                            const Divider(),
+                              ..._buildDynamicTiles(relativeId, isDark),
+                            Divider(
+                              color: isDark ? const Color(0xFF2C3E35) : null,
+                            ),
                           ],
                         );
                       });
                     }).toList(),
                     _sectionTitle(AppLocalizations.of(context)!
                         .property_distribution_calculation),
-                    _buildPropertySection(),
+                    _buildPropertySection(isDark),
                     Obx(() {
                       if (controller.propertyDistributionResult.isEmpty) {
                         return const SizedBox.shrink();
@@ -191,8 +196,8 @@ class PropertyDistributionCalculationPage
                                 }),
                               ],
                             ),
-                          _buildPieChartSection(),
-                          _buildResultCards(),
+                          _buildPieChartSection(isDark),
+                          _buildResultCards(isDark),
                         ],
                       );
                     }),
@@ -201,6 +206,14 @@ class PropertyDistributionCalculationPage
               },
               onLoading: Skeletonizer(
                 enabled: true,
+                effect: ShimmerEffect(
+                  baseColor:
+                      isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+                  highlightColor:
+                      isDark ? Colors.grey.shade700 : Colors.grey.shade100,
+                ),
+                containersColor:
+                    isDark ? Colors.grey.shade800 : Colors.grey.shade200,
                 child: ListView(
                   children: [
                     _sectionTitle("Relative List"),
@@ -212,10 +225,17 @@ class PropertyDistributionCalculationPage
                           CheckboxListTile(
                             value: false,
                             onChanged: null,
-                            title: Text("Relative ${index + 1}"),
+                            title: Text(
+                              "Relative ${index + 1}",
+                              style: TextStyle(
+                                color: isDark ? Colors.white : Colors.black,
+                              ),
+                            ),
                             controlAffinity: ListTileControlAffinity.leading,
                           ),
-                          const Divider(),
+                          Divider(
+                            color: isDark ? const Color(0xFF2C3E35) : null,
+                          ),
                         ],
                       );
                     }),
@@ -231,23 +251,27 @@ class PropertyDistributionCalculationPage
                             label: "Land in Decimal",
                             controller: TextEditingController(text: "100"),
                             hint: "",
+                            isDark: isDark,
                           ),
                           _buildPropertyFieldWithUnit(
                             label: "Gold Amount",
                             controller: TextEditingController(text: "50"),
                             hint: "",
                             unitValue: "gram".obs,
+                            isDark: isDark,
                           ),
                           _buildPropertyFieldWithUnit(
                             label: "Silver Amount",
                             controller: TextEditingController(text: "30"),
                             hint: "",
                             unitValue: "gram".obs,
+                            isDark: isDark,
                           ),
                           _buildPropertyField(
                             label: "Total Money",
                             controller: TextEditingController(text: "100000"),
                             hint: "",
+                            isDark: isDark,
                           ),
                         ],
                       ),
@@ -300,8 +324,13 @@ class PropertyDistributionCalculationPage
                         return Card(
                           elevation: 4,
                           margin: EdgeInsets.only(bottom: 16.h),
+                          color:
+                              isDark ? const Color(0xFF1E1E1E) : Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.r),
+                            side: isDark
+                                ? const BorderSide(color: Color(0xFF2C3E35))
+                                : BorderSide.none,
                           ),
                           child: Padding(
                             padding: EdgeInsets.all(16.h),
@@ -322,21 +351,27 @@ class PropertyDistributionCalculationPage
                                       style: TextStyle(
                                         fontSize: 18.sp,
                                         fontWeight: FontWeight.bold,
+                                        color: isDark
+                                            ? Colors.white
+                                            : Colors.black,
                                       ),
                                     ),
                                   ],
                                 ),
-                                const Divider(),
+                                Divider(
+                                  color:
+                                      isDark ? const Color(0xFF2C3E35) : null,
+                                ),
                                 _resultRow("Share Portion",
-                                    "${(data["portionPart"] * 100)}%"),
+                                    "${(data["portionPart"] * 100)}%", isDark),
                                 _resultRow("Land Portion",
-                                    "${data["landPart"]} decimal"),
-                                _resultRow(
-                                    "Gold Portion", "${data["goldPart"]} gram"),
+                                    "${data["landPart"]} decimal", isDark),
+                                _resultRow("Gold Portion",
+                                    "${data["goldPart"]} gram", isDark),
                                 _resultRow("Silver Portion",
-                                    "${data["silverPart"]} gram"),
+                                    "${data["silverPart"]} gram", isDark),
                                 _resultRow("Total Money",
-                                    "${data["currencyPart"]} taka"),
+                                    "${data["currencyPart"]} taka", isDark),
                               ],
                             ),
                           ),
@@ -403,7 +438,7 @@ class PropertyDistributionCalculationPage
     Colors.cyan,
   ];
 
-  Widget _buildPieChartSection() {
+  Widget _buildPieChartSection(bool isDark) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
       child: Column(
@@ -460,8 +495,11 @@ class PropertyDistributionCalculationPage
                   SizedBox(width: 4.w),
                   Text(
                     _getRelativeName(data.relativeName),
-                    style:
-                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
                   ),
                 ],
               );
@@ -500,7 +538,7 @@ class PropertyDistributionCalculationPage
     return name;
   }
 
-  Widget _buildResultCards() {
+  Widget _buildResultCards(bool isDark) {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -511,8 +549,13 @@ class PropertyDistributionCalculationPage
         return Card(
           elevation: 4,
           margin: EdgeInsets.only(bottom: 16.h),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+          color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+            side: isDark
+                ? const BorderSide(color: Color(0xFF2C3E35))
+                : BorderSide.none,
+          ),
           child: Padding(
             padding: EdgeInsets.all(16.h),
             child: Column(
@@ -529,25 +572,38 @@ class PropertyDistributionCalculationPage
                     Text(
                       _getRelativeName(data.relativeName),
                       style: TextStyle(
-                          fontSize: 18.sp, fontWeight: FontWeight.bold),
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? Colors.white : Colors.black,
+                      ),
                     ),
                   ],
                 ),
-                const Divider(),
+                Divider(
+                  color: isDark ? const Color(0xFF2C3E35) : null,
+                ),
                 _resultRow(AppLocalizations.of(Get.context!)!.share_portion,
-                    "${((data.portionPart ?? 0) * 100).toLocal()}%"),
+                    "${((data.portionPart ?? 0) * 100).toLocal()}%", isDark),
                 if (data.landPart != null && data.landPart! > 0)
-                  _resultRow(AppLocalizations.of(Get.context!)!.land_portion,
-                      "${data.landPart.toLocal()} ${AppLocalizations.of(Get.context!)!.decimal}"),
+                  _resultRow(
+                      AppLocalizations.of(Get.context!)!.land_portion,
+                      "${data.landPart.toLocal()} ${AppLocalizations.of(Get.context!)!.decimal}",
+                      isDark),
                 if (data.goldPart != null && data.goldPart! > 0)
-                  _resultRow(AppLocalizations.of(Get.context!)!.gold_portion,
-                      "${data.goldPart.toLocal()} ${AppLocalizations.of(Get.context!)!.gram_vori}"),
+                  _resultRow(
+                      AppLocalizations.of(Get.context!)!.gold_portion,
+                      "${data.goldPart.toLocal()} ${AppLocalizations.of(Get.context!)!.gram_vori}",
+                      isDark),
                 if (data.silverPart != null && data.silverPart! > 0)
-                  _resultRow(AppLocalizations.of(Get.context!)!.silver_portion,
-                      "${data.silverPart.toLocal()} ${AppLocalizations.of(Get.context!)!.gram_vori}"),
+                  _resultRow(
+                      AppLocalizations.of(Get.context!)!.silver_portion,
+                      "${data.silverPart.toLocal()} ${AppLocalizations.of(Get.context!)!.gram_vori}",
+                      isDark),
                 if (data.currencyPart != null && data.currencyPart! > 0)
-                  _resultRow(AppLocalizations.of(Get.context!)!.total_money,
-                      "${data.currencyPart.toLocal()} ${AppLocalizations.of(Get.context!)!.taka}"),
+                  _resultRow(
+                      AppLocalizations.of(Get.context!)!.total_money,
+                      "${data.currencyPart.toLocal()} ${AppLocalizations.of(Get.context!)!.taka}",
+                      isDark),
               ],
             ),
           ),
@@ -556,22 +612,29 @@ class PropertyDistributionCalculationPage
     );
   }
 
-  Widget _resultRow(String label, String value) {
+  Widget _resultRow(String label, String value, bool isDark) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label,
-              style: TextStyle(fontSize: 14.sp, color: Colors.grey[700])),
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: isDark ? const Color(0xff94A3B8) : Colors.grey[700],
+              )),
           Text(value,
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                color: isDark ? Colors.white : Colors.black,
+              )),
         ],
       ),
     );
   }
 
-  Widget _buildPropertySection() {
+  Widget _buildPropertySection(bool isDark) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -579,30 +642,38 @@ class PropertyDistributionCalculationPage
         children: [
           Text(
             AppLocalizations.of(Get.context!)!.property_calculation_section,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : Colors.black,
+            ),
           ),
           const SizedBox(height: 16),
           _buildPropertyField(
             label: AppLocalizations.of(Get.context!)!.land_in_decimal,
             controller: controller.landController,
             hint: AppLocalizations.of(Get.context!)!.enter_land_amount,
+            isDark: isDark,
           ),
           _buildPropertyFieldWithUnit(
             label: AppLocalizations.of(Get.context!)!.gold_amount,
             controller: controller.goldController,
             hint: AppLocalizations.of(Get.context!)!.enter_gold_amount,
             unitValue: controller.goldUnit,
+            isDark: isDark,
           ),
           _buildPropertyFieldWithUnit(
             label: AppLocalizations.of(Get.context!)!.silver_amount,
             controller: controller.silverController,
             hint: AppLocalizations.of(Get.context!)!.enter_silver_amount,
             unitValue: controller.silverUnit,
+            isDark: isDark,
           ),
           _buildPropertyField(
             label: AppLocalizations.of(Get.context!)!.total_money_in_taka,
             controller: controller.moneyController,
             hint: AppLocalizations.of(Get.context!)!.enter_money_amount,
+            isDark: isDark,
           ),
         ],
       ),
@@ -614,6 +685,7 @@ class PropertyDistributionCalculationPage
     required TextEditingController controller,
     required String hint,
     required RxString unitValue,
+    required bool isDark,
   }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
@@ -622,7 +694,11 @@ class PropertyDistributionCalculationPage
         children: [
           Text(
             label,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: isDark ? Colors.white : Colors.black,
+            ),
           ),
           const SizedBox(height: 8),
           Row(
@@ -632,8 +708,31 @@ class PropertyDistributionCalculationPage
                 child: TextField(
                   controller: controller,
                   keyboardType: TextInputType.number,
+                  style: TextStyle(
+                    color: isDark ? Colors.white : Colors.black,
+                  ),
                   decoration: InputDecoration(
+                    filled: true,
+                    fillColor: isDark ? const Color(0xFF25282B) : Colors.white,
                     hintText: hint,
+                    hintStyle: TextStyle(
+                      color: isDark ? const Color(0xff94A3B8) : Colors.grey,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? const Color(0xFF2C3E35)
+                            : Colors.grey.shade400,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: AppColors.primaryColor,
+                        width: 1.5,
+                      ),
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -648,11 +747,18 @@ class PropertyDistributionCalculationPage
                 child: Obx(() => Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
+                        color: isDark ? const Color(0xFF25282B) : Colors.white,
+                        border: Border.all(
+                          color: isDark ? const Color(0xFF2C3E35) : Colors.grey,
+                        ),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
+                          dropdownColor:
+                              isDark ? const Color(0xFF1E1E1E) : Colors.white,
+                          iconEnabledColor:
+                              isDark ? Colors.white70 : Colors.black54,
                           value: unitValue.value,
                           isExpanded: true,
                           items: [
@@ -667,7 +773,12 @@ class PropertyDistributionCalculationPage
                           ].map((Map<String, String> item) {
                             return DropdownMenuItem<String>(
                               value: item['value'],
-                              child: Text(item['label']!),
+                              child: Text(
+                                item['label']!,
+                                style: TextStyle(
+                                  color: isDark ? Colors.white : Colors.black,
+                                ),
+                              ),
                             );
                           }).toList(),
                           onChanged: (newValue) {
@@ -690,6 +801,7 @@ class PropertyDistributionCalculationPage
     required String label,
     required TextEditingController controller,
     required String hint,
+    required bool isDark,
   }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
@@ -698,14 +810,40 @@ class PropertyDistributionCalculationPage
         children: [
           Text(
             label,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: isDark ? Colors.white : Colors.black,
+            ),
           ),
           const SizedBox(height: 8),
           TextField(
             controller: controller,
             keyboardType: TextInputType.number,
+            style: TextStyle(
+              color: isDark ? Colors.white : Colors.black,
+            ),
             decoration: InputDecoration(
+              filled: true,
+              fillColor: isDark ? const Color(0xFF25282B) : Colors.white,
               hintText: hint,
+              hintStyle: TextStyle(
+                color: isDark ? const Color(0xff94A3B8) : Colors.grey,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(
+                  color:
+                      isDark ? const Color(0xFF2C3E35) : Colors.grey.shade400,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide(
+                  color: AppColors.primaryColor,
+                  width: 1.5,
+                ),
+              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -718,17 +856,22 @@ class PropertyDistributionCalculationPage
     );
   }
 
-  Widget _buildRelativeTile(String relativeId) {
+  Widget _buildRelativeTile(String relativeId, bool isDark) {
     return Column(
       children: [
         CheckboxListTile(
           activeColor: AppColors.primaryColor,
+          checkColor: Colors.white,
           title: Text(
             controller.allRelatives
                     .firstWhere((element) => element.encrypted == relativeId)
                     .relative ??
                 AppLocalizations.of(Get.context!)!.n_a,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              color: isDark ? Colors.white : Colors.black,
+            ),
           ),
           value: controller.isChecked[relativeId] ?? false,
           onChanged: (val) => controller.toggleCheck(relativeId, val),
@@ -751,7 +894,8 @@ class PropertyDistributionCalculationPage
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text("${AppLocalizations.of(Get.context!)!.count}: ",
-                    style: TextStyle(color: Colors.grey)),
+                    style: TextStyle(
+                        color: isDark ? const Color(0xff94A3B8) : Colors.grey)),
                 IconButton(
                   icon: Icon(Icons.remove_circle_outline,
                       color: AppColors.redColor),
@@ -762,8 +906,10 @@ class PropertyDistributionCalculationPage
                   child: Center(
                     child: Text(
                       controller.counts[relativeId].toString(),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: isDark ? Colors.white : Colors.black),
                     ),
                   ),
                 ),
@@ -779,7 +925,7 @@ class PropertyDistributionCalculationPage
     );
   }
 
-  List<Widget> _buildDynamicTiles(String relativeId) {
+  List<Widget> _buildDynamicTiles(String relativeId, bool isDark) {
     int count = controller.counts[relativeId] ?? 0;
     List<Widget> tiles = [];
     String base =
@@ -802,13 +948,15 @@ class PropertyDistributionCalculationPage
       String daughterLabel =
           "${AppLocalizations.of(Get.context!)!.deceased} $ordinal ${controller.allRelatives.firstWhere((element) => element.encrypted == base).relative} ${AppLocalizations.of(Get.context!)!.s_suffix} ${AppLocalizations.of(Get.context!)!.daughter}";
 
-      tiles.add(_buildDynamicTile(sonKey, sonLabel, padding: 40));
-      tiles.add(_buildDynamicTile(daughterKey, daughterLabel, padding: 40));
+      tiles.add(_buildDynamicTile(sonKey, sonLabel, isDark, padding: 40));
+      tiles.add(
+          _buildDynamicTile(daughterKey, daughterLabel, isDark, padding: 40));
     }
     return tiles;
   }
 
-  Widget _buildDynamicTile(String key, String label, {double padding = 0}) {
+  Widget _buildDynamicTile(String key, String label, bool isDark,
+      {double padding = 0}) {
     return Obx(() {
       return Padding(
         padding: EdgeInsets.only(left: padding),
@@ -816,10 +964,14 @@ class PropertyDistributionCalculationPage
           children: [
             CheckboxListTile(
               activeColor: AppColors.primaryColor,
+              checkColor: Colors.white,
               title: Text(
                 label,
-                style:
-                    const TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+                style: TextStyle(
+                  fontSize: 14,
+                  fontStyle: FontStyle.italic,
+                  color: isDark ? Colors.white70 : Colors.black87,
+                ),
               ),
               value: controller.dynamicIsChecked[key] ?? false,
               onChanged: (val) => controller.toggleDynamicCheck(key, val),

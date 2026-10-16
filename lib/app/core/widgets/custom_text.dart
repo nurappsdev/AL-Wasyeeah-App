@@ -1,4 +1,4 @@
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -38,7 +38,8 @@ class CustomText extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final defaultColor = isDark ? Colors.white : AppColors.textColor4E4E4E;
     return Padding(
-      padding: EdgeInsets.only(left: left, right: right, top: top, bottom: bottom),
+      padding:
+          EdgeInsets.only(left: left, right: right, top: top, bottom: bottom),
       child: Text(
         textAlign: textAlign,
         text,

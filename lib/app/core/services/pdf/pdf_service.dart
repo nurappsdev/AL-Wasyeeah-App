@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:al_wasyeah/app/core/services/qr_barcode/qr_barcode_service.dart';
-import 'package:al_wasyeah/app/view/wasiyyah/model/wasyyah_model.dart';
-import 'package:al_wasyeah/app/core/utils/app_image.dart';
+import 'package:al_wasiyyath/app/core/services/qr_barcode/qr_barcode_service.dart';
+import 'package:al_wasiyyath/app/view/wasiyyah/model/wasyyah_model.dart';
+import 'package:al_wasiyyath/app/core/utils/app_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_html_to_pdf/flutter_native_html_to_pdf.dart';
 import 'package:path_provider/path_provider.dart';

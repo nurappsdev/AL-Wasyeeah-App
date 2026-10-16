@@ -1,6 +1,6 @@
-import 'package:al_wasyeah/app/core/services/picker/file_picker_service.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/services/picker/file_picker_service.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -22,6 +22,7 @@ class FileChooseAndDownloadButton extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -30,11 +31,16 @@ class FileChooseAndDownloadButton extends StatelessWidget {
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.primaryColor,
+                backgroundColor:
+                    isDark ? const Color(0xFF25282B) : Colors.white,
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.r),
                 ),
-                side: BorderSide(color: AppColors.primaryColor),
+                side: BorderSide(
+                  color:
+                      isDark ? const Color(0xFF2C3E35) : AppColors.primaryColor,
+                ),
               ),
               onPressed: onPickFile,
               child: Obx(
@@ -77,14 +83,17 @@ class FileChooseAndDownloadButton extends StatelessWidget {
                               ? pickedFile.value!.fileName
                               : (fileUrl != null
                                   ? AppLocalizations.of(context)!.already_exists
-                                  : AppLocalizations.of(context)!.no_file_chosen),
+                                  : AppLocalizations.of(context)!
+                                      .no_file_chosen),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 13.sp,
                             color: pickedFile.value == null && fileUrl == null
-                                ? Colors.grey
-                                : AppColors.hitTextColor000000,
+                                ? (isDark ? Colors.grey[400] : Colors.grey)
+                                : (isDark
+                                    ? Colors.white
+                                    : AppColors.hitTextColor000000),
                           ),
                         ),
                       ),

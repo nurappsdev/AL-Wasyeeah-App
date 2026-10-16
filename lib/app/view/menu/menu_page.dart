@@ -1,26 +1,26 @@
-import 'package:al_wasyeah/app/core/themes/controller/theme_controller.dart';
-import 'package:al_wasyeah/app/view/auth/controller/auth_controller.dart';
-import 'package:al_wasyeah/app/view/home/controller/home_controller.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
-import 'package:al_wasyeah/app/core/route/route_names.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/utils/app_constant.dart';
-import 'package:al_wasyeah/app/core/utils/app_icons.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
+import 'package:al_wasiyyath/app/core/themes/controller/theme_controller.dart';
+import 'package:al_wasiyyath/app/view/auth/controller/auth_controller.dart';
+import 'package:al_wasiyyath/app/view/home/controller/home_controller.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasiyyath/app/view/profile/controller/profile_controller.dart';
+import 'package:al_wasiyyath/app/core/route/route_names.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
+import 'package:al_wasiyyath/app/core/utils/app_icons.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../core/services/shared_pref/prefs_service.dart';
 
-import 'package:al_wasyeah/app/app.dart';
+import 'package:al_wasiyyath/app/app.dart';
 import '../notification/controller/notification_controller.dart';
 import '../../core/utils/api_constants.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text_field.dart';
-import 'package:al_wasyeah/app/core/utils/toast_message.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text_field.dart';
+import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
 
 class MenuPage extends StatelessWidget {
   const MenuPage({super.key});
@@ -158,8 +158,8 @@ class MenuPage extends StatelessWidget {
                                 ),
                                 SizedBox(width: 16.w),
                                 CustomText(
-                                  text:
-                                      AppLocalizations.of(context)!.change_password,
+                                  text: AppLocalizations.of(context)!
+                                      .change_password,
                                   fontsize: 16.sp,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.textColor4E4E4E,
@@ -191,7 +191,7 @@ class MenuPage extends StatelessWidget {
                         return AlertDialog(
                           backgroundColor:
                               Theme.of(context).dialogTheme.backgroundColor ??
-                              Theme.of(context).colorScheme.surface,
+                                  Theme.of(context).colorScheme.surface,
                           title: CustomText(
                             text: AppLocalizations.of(context)!
                                 .sure_you_want_to_delete_account,
@@ -200,8 +200,8 @@ class MenuPage extends StatelessWidget {
                             color: AppColors.textColor4E4E4E,
                           ),
                           content: CustomText(
-                            text:
-                                AppLocalizations.of(context)!.delete_account_desc,
+                            text: AppLocalizations.of(context)!
+                                .delete_account_desc,
                             fontsize: 16.sp,
                             fontWeight: FontWeight.w600,
                             color: AppColors.textColor4E4E4E,
@@ -424,16 +424,16 @@ class MenuPage extends StatelessWidget {
                                 text: "En",
                                 fontsize: 14.sp,
                                 fontWeight: FontWeight.w600,
-                                color:
-                                    Localizations.localeOf(context).languageCode ==
-                                            'en'
-                                        ? AppColors.primaryColor
-                                        : Colors.grey,
+                                color: Localizations.localeOf(context)
+                                            .languageCode ==
+                                        'en'
+                                    ? AppColors.primaryColor
+                                    : Colors.grey,
                               ),
                               Switch(
-                                value:
-                                    Localizations.localeOf(context).languageCode ==
-                                        'bn',
+                                value: Localizations.localeOf(context)
+                                        .languageCode ==
+                                    'bn',
                                 onChanged: (value) {
                                   Locale newLocale = value
                                       ? const Locale('bn')
@@ -446,11 +446,11 @@ class MenuPage extends StatelessWidget {
                                 text: "Bn",
                                 fontsize: 14.sp,
                                 fontWeight: FontWeight.w600,
-                                color:
-                                    Localizations.localeOf(context).languageCode ==
-                                            'bn'
-                                        ? AppColors.primaryColor
-                                        : Colors.grey,
+                                color: Localizations.localeOf(context)
+                                            .languageCode ==
+                                        'bn'
+                                    ? AppColors.primaryColor
+                                    : Colors.grey,
                               ),
                             ],
                           ),
@@ -596,7 +596,8 @@ class MenuPage extends StatelessWidget {
                                 ),
                                 SizedBox(width: 16.w),
                                 CustomText(
-                                  text: AppLocalizations.of(context)!.contact_us,
+                                  text:
+                                      AppLocalizations.of(context)!.contact_us,
                                   fontsize: 16.sp,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.textColor4E4E4E,

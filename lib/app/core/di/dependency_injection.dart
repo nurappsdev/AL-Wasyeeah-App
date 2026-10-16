@@ -1,15 +1,15 @@
-import 'package:al_wasyeah/app/view/access_control/controller/access_control_controller.dart';
-import 'package:al_wasyeah/app/view/auth/controller/auth_controller.dart';
-import 'package:al_wasyeah/app/view/contact_us/controller/contact_us_controller.dart';
-import 'package:al_wasyeah/app/view/nominee/controller/nominee_controller.dart';
-import 'package:al_wasyeah/app/view/notification/controller/notification_controller.dart';
-import 'package:al_wasyeah/app/view/home/controller/home_controller.dart';
-import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
-import 'package:al_wasyeah/app/view/property_distribution_calculation/controller/property_distribution_calculation_controller.dart';
-import 'package:al_wasyeah/app/view/splash/controller/splash_controller.dart';
-import 'package:al_wasyeah/app/view/wasiyyah/controller/wasyyah_controller.dart';
-import 'package:al_wasyeah/app/view/witnessess/controller/witness_controller.dart';
-import 'package:al_wasyeah/app/view/zakat_calculator/controller/zakat_calculator_controller.dart';
+import 'package:al_wasiyyath/app/view/access_control/controller/access_control_controller.dart';
+import 'package:al_wasiyyath/app/view/auth/controller/auth_controller.dart';
+import 'package:al_wasiyyath/app/view/contact_us/controller/contact_us_controller.dart';
+import 'package:al_wasiyyath/app/view/nominee/controller/nominee_controller.dart';
+import 'package:al_wasiyyath/app/view/notification/controller/notification_controller.dart';
+import 'package:al_wasiyyath/app/view/home/controller/home_controller.dart';
+import 'package:al_wasiyyath/app/view/profile/controller/profile_controller.dart';
+import 'package:al_wasiyyath/app/view/property_distribution_calculation/controller/property_distribution_calculation_controller.dart';
+import 'package:al_wasiyyath/app/view/splash/controller/splash_controller.dart';
+import 'package:al_wasiyyath/app/view/wasiyyah/controller/wasyyah_controller.dart';
+import 'package:al_wasiyyath/app/view/witnessess/controller/witness_controller.dart';
+import 'package:al_wasiyyath/app/view/zakat_calculator/controller/zakat_calculator_controller.dart';
 import 'package:get/get.dart';
 
 class SplashBinding extends Bindings {
@@ -24,7 +24,8 @@ class HomeBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
     Get.lazyPut<ProfileController>(() => ProfileController(), fenix: true);
-    Get.lazyPut<NotificationController>(() => NotificationController(), fenix: true);
+    Get.lazyPut<NotificationController>(() => NotificationController(),
+        fenix: true);
     Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
   }
 }

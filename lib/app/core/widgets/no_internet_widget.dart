@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -10,7 +10,8 @@ class NoInternetWidget extends StatefulWidget {
   _NoInternetWidgetState createState() => _NoInternetWidgetState();
 }
 
-class _NoInternetWidgetState extends State<NoInternetWidget> with SingleTickerProviderStateMixin {
+class _NoInternetWidgetState extends State<NoInternetWidget>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override

@@ -1,10 +1,10 @@
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/core/route/route_names.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/utils/app_constant.dart';
-import 'package:al_wasyeah/app/core/utils/app_icons.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/app/view/home/controller/home_controller.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/route/route_names.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
+import 'package:al_wasiyyath/app/core/utils/app_icons.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasiyyath/app/view/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -119,8 +119,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      // backgroundColor: const Color(0xffF8FAF9),
+      backgroundColor: Colors.transparent,
       appBar: CustomAppBar(
         title: localizations.change_password,
       ),
@@ -138,7 +140,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   SizedBox(height: 8.h),
 
                   // Header Hero Icon and Texts
-                  _buildHeroHeader(localizations),
+                  _buildHeroHeader(localizations, isDark),
 
                   SizedBox(height: 24.h),
 
@@ -147,20 +149,24 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     width: double.infinity,
                     padding: EdgeInsets.all(20.r),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
                       borderRadius: BorderRadius.circular(20.r),
                       border: Border.all(
-                        color: const Color(0xffE8ECEF),
+                        color: isDark
+                            ? const Color(0xFF2C3E35)
+                            : const Color(0xffE8ECEF),
                         width: 1,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.04),
+                          color: Colors.black
+                              .withValues(alpha: isDark ? 0.3 : 0.04),
                           blurRadius: 18,
                           offset: const Offset(0, 6),
                         ),
                         BoxShadow(
-                          color: AppColors.primaryColor.withValues(alpha: 0.03),
+                          color: AppColors.primaryColor
+                              .withValues(alpha: isDark ? 0.05 : 0.03),
                           blurRadius: 24,
                           offset: const Offset(0, 10),
                         ),
@@ -173,12 +179,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         _buildFieldLabel(
                           title: localizations.current_password,
                           icon: Icons.lock_clock_outlined,
+                          isDark: isDark,
                         ),
                         SizedBox(height: 8.h),
                         _buildPasswordField(
                           controller: _oldPassController,
                           hintText: localizations.password,
                           isObscure: _obscureCurrent,
+                          isDark: isDark,
                           onToggleObscure: () {
                             setState(() => _obscureCurrent = !_obscureCurrent);
                           },
@@ -222,19 +230,26 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         ),
 
                         SizedBox(height: 16.h),
-                        const Divider(color: Color(0xffF1F5F9), thickness: 1),
+                        Divider(
+                          color: isDark
+                              ? const Color(0xFF2C3E35)
+                              : const Color(0xffF1F5F9),
+                          thickness: 1,
+                        ),
                         SizedBox(height: 16.h),
 
                         // --- New Password ---
                         _buildFieldLabel(
                           title: localizations.new_password,
                           icon: Icons.lock_outline_rounded,
+                          isDark: isDark,
                         ),
                         SizedBox(height: 8.h),
                         _buildPasswordField(
                           controller: _newPassController,
                           hintText: localizations.new_password,
                           isObscure: _obscureNew,
+                          isDark: isDark,
                           onToggleObscure: () {
                             setState(() => _obscureNew = !_obscureNew);
                           },
@@ -256,9 +271,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         // Password Strength Bar & Checklist
                         if (_newPasswordText.isNotEmpty) ...[
                           SizedBox(height: 12.h),
-                          _buildStrengthIndicator(),
+                          _buildStrengthIndicator(isDark),
                           SizedBox(height: 12.h),
-                          _buildRequirementsChecklist(),
+                          _buildRequirementsChecklist(isDark),
                         ],
 
                         SizedBox(height: 20.h),
@@ -267,12 +282,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         _buildFieldLabel(
                           title: localizations.re_enter_new_password,
                           icon: Icons.verified_user_outlined,
+                          isDark: isDark,
                         ),
                         SizedBox(height: 8.h),
                         _buildPasswordField(
                           controller: _confirmPassController,
                           hintText: localizations.re_enter_new_password,
                           isObscure: _obscureConfirm,
+                          isDark: isDark,
                           onToggleObscure: () {
                             setState(() => _obscureConfirm = !_obscureConfirm);
                           },
@@ -289,7 +306,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         // Confirm Password Live Match Badge
                         if (_confirmPasswordText.isNotEmpty) ...[
                           SizedBox(height: 10.h),
-                          _buildMatchBadge(localizations),
+                          _buildMatchBadge(localizations, isDark),
                         ],
                       ],
                     ),
@@ -298,7 +315,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   SizedBox(height: 20.h),
 
                   // Security Tip Card
-                  _buildSecurityTipsCard(),
+                  _buildSecurityTipsCard(isDark),
 
                   SizedBox(height: 28.h),
 
@@ -321,7 +338,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   }
 
   // --- Hero Header Widget ---
-  Widget _buildHeroHeader(AppLocalizations localizations) {
+  Widget _buildHeroHeader(AppLocalizations localizations, bool isDark) {
     return Column(
       children: [
         // Layered Icon Badge
@@ -330,9 +347,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           height: 74.r,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: const Color(0xffE9F5EF),
+            color: isDark ? const Color(0xFF1E1E1E) : const Color(0xffE9F5EF),
             border: Border.all(
-              color: AppColors.secondaryPrimaryColor.withValues(alpha: 0.5),
+              color: isDark
+                  ? const Color(0xFF2C3E35)
+                  : AppColors.secondaryPrimaryColor.withValues(alpha: 0.5),
               width: 1.5,
             ),
             boxShadow: [
@@ -378,7 +397,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           style: TextStyle(
             fontSize: 20.sp,
             fontWeight: FontWeight.w700,
-            color: const Color(0xff1C2A24),
+            color: isDark ? Colors.white : const Color(0xff1C2A24),
             letterSpacing: -0.3,
           ),
           textAlign: TextAlign.center,
@@ -390,7 +409,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             localizations.please_enter_your_old_and_new_passwords_to_continue,
             style: TextStyle(
               fontSize: 13.sp,
-              color: const Color(0xff60776C),
+              color: isDark ? const Color(0xff94A3B8) : const Color(0xff60776C),
               fontWeight: FontWeight.w400,
               height: 1.35,
             ),
@@ -405,6 +424,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   Widget _buildFieldLabel({
     required String title,
     required IconData icon,
+    required bool isDark,
   }) {
     return Row(
       children: [
@@ -419,7 +439,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           style: TextStyle(
             fontSize: 13.5.sp,
             fontWeight: FontWeight.w600,
-            color: const Color(0xff1F2937),
+            color: isDark ? Colors.white : const Color(0xff1F2937),
           ),
         ),
         SizedBox(width: 4.w),
@@ -440,6 +460,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     required TextEditingController controller,
     required String hintText,
     required bool isObscure,
+    required bool isDark,
     required VoidCallback onToggleObscure,
     required String? Function(String?) validator,
   }) {
@@ -450,26 +471,28 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       style: TextStyle(
         fontSize: 14.sp,
         fontWeight: FontWeight.w500,
-        color: const Color(0xff1E293B),
+        color: isDark ? Colors.white : const Color(0xff1E293B),
       ),
       validator: validator,
       decoration: InputDecoration(
         isDense: true,
         hintText: hintText,
         hintStyle: TextStyle(
-          color: const Color(0xff94A3B8),
+          color: isDark ? const Color(0xff64748B) : const Color(0xff94A3B8),
           fontSize: 13.5.sp,
           fontWeight: FontWeight.w400,
         ),
         filled: true,
-        fillColor: const Color(0xffFAFCFA),
+        fillColor: isDark ? const Color(0xFF25282B) : const Color(0xffFAFCFA),
         contentPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 13.h),
         prefixIcon: Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.w),
           child: Container(
             padding: EdgeInsets.all(6.r),
             decoration: BoxDecoration(
-              color: AppColors.primaryColor.withValues(alpha: 0.08),
+              color: isDark
+                  ? AppColors.primaryColor.withValues(alpha: 0.2)
+                  : AppColors.primaryColor.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(8.r),
             ),
             child: SvgPicture.asset(
@@ -493,15 +516,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             isObscure
                 ? Icons.visibility_off_outlined
                 : Icons.visibility_outlined,
-            color: const Color(0xff94A3B8),
+            color: isDark ? Colors.white70 : const Color(0xff94A3B8),
             size: 20.sp,
           ),
           onPressed: onToggleObscure,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14.r),
-          borderSide: const BorderSide(
-            color: Color(0xffE2E8F0),
+          borderSide: BorderSide(
+            color: isDark ? const Color(0xFF2C3E35) : const Color(0xffE2E8F0),
             width: 1.2,
           ),
         ),
@@ -536,16 +559,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   }
 
   // --- Password Strength Indicator ---
-  Widget _buildStrengthIndicator() {
+  Widget _buildStrengthIndicator(bool isDark) {
     final color = _getStrengthColor();
     final label = _getStrengthLabel(context);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: const Color(0xffF8FAFC),
+        color: isDark ? const Color(0xFF25282B) : const Color(0xffF8FAFC),
         borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(color: const Color(0xffEDF2F7)),
+        border: Border.all(
+          color: isDark ? const Color(0xFF2C3E35) : const Color(0xffEDF2F7),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -558,7 +583,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 style: TextStyle(
                   fontSize: 11.5.sp,
                   fontWeight: FontWeight.w500,
-                  color: const Color(0xff64748B),
+                  color: isDark
+                      ? const Color(0xff94A3B8)
+                      : const Color(0xff64748B),
                 ),
               ),
               Text(
@@ -581,7 +608,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   margin: EdgeInsets.symmetric(horizontal: 2.w),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(3.r),
-                    color: isFilled ? color : const Color(0xffE2E8F0),
+                    color: isFilled
+                        ? color
+                        : (isDark
+                            ? Colors.grey.shade800
+                            : const Color(0xffE2E8F0)),
                   ),
                 ),
               );
@@ -593,27 +624,30 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   }
 
   // --- Password Requirements Checklist ---
-  Widget _buildRequirementsChecklist() {
+  Widget _buildRequirementsChecklist(bool isDark) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: const Color(0xffF8FAF9),
+        color: isDark ? const Color(0xFF25282B) : const Color(0xffF8FAF9),
         borderRadius: BorderRadius.circular(10.r),
+        border: Border.all(
+          color: isDark ? const Color(0xFF2C3E35) : Colors.transparent,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildCheckItem('At least 8 characters', _hasMinLength),
+          _buildCheckItem('At least 8 characters', _hasMinLength, isDark),
           SizedBox(height: 4.h),
-          _buildCheckItem('Contains letters (a-z, A-Z)', _hasLetter),
+          _buildCheckItem('Contains letters (a-z, A-Z)', _hasLetter, isDark),
           SizedBox(height: 4.h),
-          _buildCheckItem('Contains numbers (0-9)', _hasDigit),
+          _buildCheckItem('Contains numbers (0-9)', _hasDigit, isDark),
         ],
       ),
     );
   }
 
-  Widget _buildCheckItem(String label, bool isMet) {
+  Widget _buildCheckItem(String label, bool isMet, bool isDark) {
     return Row(
       children: [
         AnimatedContainer(
@@ -622,7 +656,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           height: 16.r,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isMet ? AppColors.primaryColor : const Color(0xffE2E8F0),
+            color: isMet
+                ? AppColors.primaryColor
+                : (isDark ? Colors.grey.shade800 : const Color(0xffE2E8F0)),
           ),
           child: Center(
             child: Icon(
@@ -638,7 +674,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           style: TextStyle(
             fontSize: 11.5.sp,
             fontWeight: isMet ? FontWeight.w600 : FontWeight.w400,
-            color: isMet ? const Color(0xff1E293B) : const Color(0xff94A3B8),
+            color: isMet
+                ? (isDark ? Colors.white : const Color(0xff1E293B))
+                : (isDark ? const Color(0xff64748B) : const Color(0xff94A3B8)),
           ),
         ),
       ],
@@ -646,18 +684,22 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   }
 
   // --- Confirm Password Match Badge ---
-  Widget _buildMatchBadge(AppLocalizations localizations) {
+  Widget _buildMatchBadge(AppLocalizations localizations, bool isDark) {
     final bool isMatch = _confirmPasswordText == _newPasswordText;
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
       decoration: BoxDecoration(
-        color: isMatch ? const Color(0xffE8F5EE) : const Color(0xffFEF2F2),
+        color: isMatch
+            ? (isDark ? const Color(0xFF132D20) : const Color(0xffE8F5EE))
+            : (isDark ? const Color(0xFF381515) : const Color(0xffFEF2F2)),
         borderRadius: BorderRadius.circular(8.r),
         border: Border.all(
           color: isMatch
-              ? AppColors.secondaryPrimaryColor
-              : const Color(0xffFECACA),
+              ? (isDark
+                  ? const Color(0xFF1B5E38)
+                  : AppColors.secondaryPrimaryColor)
+              : (isDark ? const Color(0xFF7F1D1D) : const Color(0xffFECACA)),
           width: 1,
         ),
       ),
@@ -684,14 +726,16 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   }
 
   // --- Security Tips Card ---
-  Widget _buildSecurityTipsCard() {
+  Widget _buildSecurityTipsCard(bool isDark) {
     return Container(
       padding: EdgeInsets.all(14.r),
       decoration: BoxDecoration(
-        color: const Color(0xffF0F7F3),
+        color: isDark ? const Color(0xFF1B2822) : const Color(0xffF0F7F3),
         borderRadius: BorderRadius.circular(14.r),
         border: Border.all(
-          color: AppColors.secondaryPrimaryColor.withValues(alpha: 0.4),
+          color: isDark
+              ? const Color(0xFF2C3E35)
+              : AppColors.secondaryPrimaryColor.withValues(alpha: 0.4),
         ),
       ),
       child: Row(
@@ -700,7 +744,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           Container(
             padding: EdgeInsets.all(6.r),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: isDark ? const Color(0xFF253930) : Colors.white,
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
@@ -725,7 +769,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   style: TextStyle(
                     fontSize: 12.5.sp,
                     fontWeight: FontWeight.w600,
-                    color: const Color(0xff1C2A24),
+                    color: isDark ? Colors.white : const Color(0xff1C2A24),
                   ),
                 ),
                 SizedBox(height: 2.h),
@@ -733,7 +777,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   'Choose a unique password that you do not use for any other service to keep your account safe.',
                   style: TextStyle(
                     fontSize: 11.5.sp,
-                    color: const Color(0xff556B60),
+                    color: isDark
+                        ? const Color(0xff94A3B8)
+                        : const Color(0xff556B60),
                     height: 1.35,
                   ),
                 ),

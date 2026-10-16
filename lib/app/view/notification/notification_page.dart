@@ -1,9 +1,9 @@
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/app/view/notification/controller/notification_controller.dart';
-import 'package:al_wasyeah/app/view/notification/model/inapp_notification_model.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
+import 'package:al_wasiyyath/app/view/notification/controller/notification_controller.dart';
+import 'package:al_wasiyyath/app/view/notification/model/inapp_notification_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -19,8 +19,10 @@ class NotificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xffF9FAFB),
+      backgroundColor: isDark ? Colors.transparent : const Color(0xffF9FAFB),
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.notifications,
       ),
@@ -55,6 +57,7 @@ class NotificationPage extends StatelessWidget {
 
   /// ================= SKELETON LOADING =================
   Widget _buildSkeletonLoading(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final dummyNotifications = [
       InAppNotificationModel(
         message:
@@ -91,6 +94,11 @@ class NotificationPage extends StatelessWidget {
 
     return Skeletonizer(
       enabled: true,
+      effect: ShimmerEffect(
+        baseColor: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+        highlightColor: isDark ? Colors.grey.shade700 : Colors.grey.shade100,
+      ),
+      containersColor: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
       child: ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -113,6 +121,7 @@ class NotificationPage extends StatelessWidget {
     required InAppNotificationModel item,
     required bool isSkeleton,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isUnread = item.status?.toUpperCase() == "UNREAD";
     final isWitnessRequest =
         item.message != null && item.message!.toLowerCase().contains("witness");
@@ -123,19 +132,19 @@ class NotificationPage extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
           color: isUnread
-              ? AppColors.primaryColor.withValues(alpha: 0.28)
-              : const Color(0xffE5E7EB),
+              ? AppColors.primaryColor.withValues(alpha: isDark ? 0.45 : 0.28)
+              : (isDark ? const Color(0xFF2C3E35) : const Color(0xffE5E7EB)),
           width: isUnread ? 1.2 : 1.0,
         ),
         boxShadow: [
           BoxShadow(
             color: isUnread
-                ? AppColors.primaryColor.withValues(alpha: 0.05)
-                : Colors.black.withValues(alpha: 0.03),
+                ? AppColors.primaryColor.withValues(alpha: isDark ? 0.15 : 0.05)
+                : Colors.black.withValues(alpha: isDark ? 0.25 : 0.03),
             blurRadius: 10,
             offset: const Offset(0, 3),
           ),
@@ -162,18 +171,23 @@ class NotificationPage extends StatelessWidget {
                   width: 42.w,
                   decoration: BoxDecoration(
                     gradient: isUnread && !isWitnessRequest
-                        ? LinearGradient(
+                        ? const LinearGradient(
                             colors: [
-                              AppColors.primaryColor,
-                              const Color(0xff0A9B4E),
+                              Color(0xff058240),
+                              Color(0xff0A9B4E),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           )
                         : null,
                     color: isWitnessRequest
-                        ? AppColors.primaryColor.withValues(alpha: 0.12)
-                        : (isUnread ? null : const Color(0xffF3F4F6)),
+                        ? AppColors.primaryColor
+                            .withValues(alpha: isDark ? 0.25 : 0.12)
+                        : (isUnread
+                            ? null
+                            : (isDark
+                                ? const Color(0xFF2C3E35)
+                                : const Color(0xffF3F4F6))),
                     borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Icon(
@@ -183,8 +197,14 @@ class NotificationPage extends StatelessWidget {
                             ? Icons.notifications_active_rounded
                             : Icons.notifications_none_rounded),
                     color: isWitnessRequest
-                        ? AppColors.primaryColor
-                        : (isUnread ? Colors.white : const Color(0xff6B7280)),
+                        ? (isDark
+                            ? const Color(0xFF4ADE80)
+                            : AppColors.primaryColor)
+                        : (isUnread
+                            ? Colors.white
+                            : (isDark
+                                ? Colors.grey.shade400
+                                : const Color(0xff6B7280))),
                     size: 20.sp,
                   ),
                 ),
@@ -207,7 +227,7 @@ class NotificationPage extends StatelessWidget {
                               ),
                               decoration: BoxDecoration(
                                 color: AppColors.primaryColor
-                                    .withValues(alpha: 0.1),
+                                    .withValues(alpha: isDark ? 0.22 : 0.1),
                                 borderRadius: BorderRadius.circular(6.r),
                               ),
                               child: Text(
@@ -215,7 +235,9 @@ class NotificationPage extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 10.5.sp,
                                   fontWeight: FontWeight.w600,
-                                  color: AppColors.primaryColor,
+                                  color: isDark
+                                      ? const Color(0xFF4ADE80)
+                                      : AppColors.primaryColor,
                                 ),
                               ),
                             )
@@ -227,7 +249,7 @@ class NotificationPage extends StatelessWidget {
                               ),
                               decoration: BoxDecoration(
                                 color: AppColors.primaryColor
-                                    .withValues(alpha: 0.12),
+                                    .withValues(alpha: isDark ? 0.25 : 0.12),
                                 borderRadius: BorderRadius.circular(6.r),
                               ),
                               child: Row(
@@ -237,17 +259,23 @@ class NotificationPage extends StatelessWidget {
                                     width: 5.w,
                                     height: 5.w,
                                     decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
+                                      color: isDark
+                                          ? const Color(0xFF4ADE80)
+                                          : AppColors.primaryColor,
                                       shape: BoxShape.circle,
                                     ),
                                   ),
                                   SizedBox(width: 4.w),
                                   Text(
-                                    AppLocalizations.of(context)!.new_text.toUpperCase(),
+                                    AppLocalizations.of(context)!
+                                        .new_text
+                                        .toUpperCase(),
                                     style: TextStyle(
                                       fontSize: 9.5.sp,
                                       fontWeight: FontWeight.bold,
-                                      color: AppColors.primaryColor,
+                                      color: isDark
+                                          ? const Color(0xFF4ADE80)
+                                          : AppColors.primaryColor,
                                       letterSpacing: 0.5,
                                     ),
                                   ),
@@ -262,7 +290,9 @@ class NotificationPage extends StatelessWidget {
                                 Icon(
                                   Icons.access_time_rounded,
                                   size: 11.sp,
-                                  color: const Color(0xff9CA3AF),
+                                  color: isDark
+                                      ? const Color(0xff94A3B8)
+                                      : const Color(0xff9CA3AF),
                                 ),
                                 SizedBox(width: 4.w),
                                 Text(
@@ -271,7 +301,9 @@ class NotificationPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 11.sp,
                                     fontWeight: FontWeight.w500,
-                                    color: const Color(0xff9CA3AF),
+                                    color: isDark
+                                        ? const Color(0xff94A3B8)
+                                        : const Color(0xff9CA3AF),
                                     letterSpacing: 0.2,
                                   ),
                                 ),
@@ -289,7 +321,9 @@ class NotificationPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 13.sp,
                             height: 1.45,
-                            color: const Color(0xff1F2937),
+                            color: isDark
+                                ? const Color(0xffE2E8F0)
+                                : const Color(0xff1F2937),
                           ),
                           maxLines: 3,
                         )
@@ -299,7 +333,9 @@ class NotificationPage extends StatelessWidget {
                           item.message ?? '',
                           textStyle: TextStyle(
                             fontSize: 13.sp,
-                            color: const Color(0xff1F2937),
+                            color: isDark
+                                ? const Color(0xffE2E8F0)
+                                : const Color(0xff1F2937),
                             height: 1.45,
                           ),
                         )
@@ -308,8 +344,12 @@ class NotificationPage extends StatelessWidget {
                           text: item.message ?? "",
                           fontsize: 13.sp,
                           color: isUnread
-                              ? const Color(0xff111827)
-                              : AppColors.textColor4E4E4E,
+                              ? (isDark
+                                  ? Colors.white
+                                  : const Color(0xff111827))
+                              : (isDark
+                                  ? const Color(0xffCBD5E1)
+                                  : AppColors.textColor4E4E4E),
                           textAlign: TextAlign.left,
                           maxline: 4,
                           textOverflow: TextOverflow.ellipsis,
@@ -369,24 +409,35 @@ class NotificationPage extends StatelessWidget {
                                   icon: Icon(
                                     Icons.cancel_outlined,
                                     size: 15.sp,
-                                    color: Colors.red.shade600,
+                                    color: isDark
+                                        ? Colors.red.shade300
+                                        : Colors.red.shade600,
                                   ),
                                   label: Text(
                                     AppLocalizations.of(context)!.decline,
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w600,
-                                      color: Colors.red.shade700,
+                                      color: isDark
+                                          ? Colors.red.shade300
+                                          : Colors.red.shade700,
                                     ),
                                   ),
                                   style: OutlinedButton.styleFrom(
                                     side: BorderSide(
-                                      color: Colors.red.shade200,
+                                      color: isDark
+                                          ? Colors.red.shade800
+                                          : Colors.red.shade200,
                                       width: 1.2,
                                     ),
-                                    backgroundColor: Colors.red.shade50
-                                        .withValues(alpha: 0.5),
-                                    foregroundColor: Colors.red.shade700,
+                                    backgroundColor: isDark
+                                        ? Colors.red.shade900
+                                            .withValues(alpha: 0.3)
+                                        : Colors.red.shade50
+                                            .withValues(alpha: 0.5),
+                                    foregroundColor: isDark
+                                        ? Colors.red.shade300
+                                        : Colors.red.shade700,
                                     elevation: 0,
                                     padding: EdgeInsets.symmetric(
                                       horizontal: 10.w,
@@ -415,6 +466,7 @@ class NotificationPage extends StatelessWidget {
 
   /// ================= EMPTY STATE =================
   Widget _buildEmptyState(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Center(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -425,13 +477,15 @@ class NotificationPage extends StatelessWidget {
               height: 76.w,
               width: 76.w,
               decoration: BoxDecoration(
-                color: AppColors.primaryColor.withValues(alpha: 0.08),
+                color: AppColors.primaryColor
+                    .withValues(alpha: isDark ? 0.2 : 0.08),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.notifications_none_rounded,
                 size: 38.sp,
-                color: AppColors.primaryColor,
+                color:
+                    isDark ? const Color(0xFF4ADE80) : AppColors.primaryColor,
               ),
             ),
             SizedBox(height: 16.h),
@@ -440,7 +494,8 @@ class NotificationPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.w600,
-                color: const Color(0xff374151),
+                color:
+                    isDark ? const Color(0xffE2E8F0) : const Color(0xff374151),
               ),
             ),
           ],
@@ -451,6 +506,7 @@ class NotificationPage extends StatelessWidget {
 
   /// ================= ERROR STATE =================
   Widget _buildErrorState(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Center(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -461,13 +517,13 @@ class NotificationPage extends StatelessWidget {
               height: 76.w,
               width: 76.w,
               decoration: BoxDecoration(
-                color: Colors.red.withValues(alpha: 0.08),
+                color: Colors.red.withValues(alpha: isDark ? 0.2 : 0.08),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.error_outline_rounded,
                 size: 38.sp,
-                color: Colors.red.shade400,
+                color: isDark ? Colors.red.shade300 : Colors.red.shade400,
               ),
             ),
             SizedBox(height: 16.h),
@@ -476,7 +532,8 @@ class NotificationPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w500,
-                color: const Color(0xff374151),
+                color:
+                    isDark ? const Color(0xffE2E8F0) : const Color(0xff374151),
               ),
             ),
             SizedBox(height: 16.h),
@@ -485,12 +542,14 @@ class NotificationPage extends StatelessWidget {
               icon: Icon(
                 Icons.refresh_rounded,
                 size: 18.sp,
-                color: AppColors.primaryColor,
+                color:
+                    isDark ? const Color(0xFF4ADE80) : AppColors.primaryColor,
               ),
               label: Text(
                 "Retry",
                 style: TextStyle(
-                  color: AppColors.primaryColor,
+                  color:
+                      isDark ? const Color(0xFF4ADE80) : AppColors.primaryColor,
                   fontWeight: FontWeight.w600,
                 ),
               ),

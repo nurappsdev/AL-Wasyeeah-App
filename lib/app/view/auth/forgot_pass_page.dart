@@ -1,17 +1,17 @@
-import 'package:al_wasyeah/app/view/auth/controller/auth_controller.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasyeah/app/core/utils/app_colors.dart';
-import 'package:al_wasyeah/app/core/utils/app_constant.dart';
-import 'package:al_wasyeah/app/core/utils/app_icons.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_button_common.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text.dart';
-import 'package:al_wasyeah/app/core/widgets/custom_text_field.dart';
+import 'package:al_wasiyyath/app/view/auth/controller/auth_controller.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
+import 'package:al_wasiyyath/app/core/utils/app_icons.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:al_wasyeah/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   ForgotPasswordPage({super.key});
@@ -51,7 +51,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(child: SvgPicture.asset(AppIcons.logo, height: 100.h, width: 140.w)),
+                  Center(
+                      child: SvgPicture.asset(AppIcons.logo,
+                          height: 100.h, width: 140.w)),
                   SizedBox(
                     height: 30.h,
                   ),
@@ -67,7 +69,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   ),
                   Center(
                       child: CustomText(
-                    text: AppLocalizations.of(context)!.don_t_worry_it_happens_please_enter_the_address_associate_with_your_account,
+                    text: AppLocalizations.of(context)!
+                        .don_t_worry_it_happens_please_enter_the_address_associate_with_your_account,
                     maxline: 2,
                     fontsize: 14.sp,
                     textAlign: TextAlign.center,
@@ -86,7 +89,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     borderColor: AppColors.secondaryPrimaryColor,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.please_enter_your_mobile_number;
+                        return AppLocalizations.of(context)!
+                            .please_enter_your_mobile_number;
                       }
                       return null;
                     },
@@ -113,7 +117,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     // ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.please_enter_your_email;
+                        return AppLocalizations.of(context)!
+                            .please_enter_your_email;
                       } else if (!AppConstants.emailValidate.hasMatch(value)) {
                         return AppLocalizations.of(context)!.invalid_email;
                       }
@@ -147,7 +152,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
                       if (selectedDate != null) {
                         birthDate = selectedDate;
-                        dateOfBirthController.text = DateFormat('yyyy-MM-dd', Get.locale!.languageCode).format(birthDate!);
+                        dateOfBirthController.text =
+                            DateFormat('yyyy-MM-dd', Get.locale!.languageCode)
+                                .format(birthDate!);
                       }
                       print(dateOfBirthController.text);
                     },
@@ -174,16 +181,24 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   Obx(
                     () => DropdownButtonFormField<String>(
                       decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.secondaryPrimaryColor), borderRadius: BorderRadius.circular(14.r)),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: AppColors.secondaryPrimaryColor),
+                            borderRadius: BorderRadius.circular(14.r)),
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: AppColors.secondaryPrimaryColor,
                             ),
                             borderRadius: BorderRadius.circular(14.r)),
-                        border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.primaryColor), borderRadius: BorderRadius.circular(16.r)),
+                        border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppColors.primaryColor),
+                            borderRadius: BorderRadius.circular(16.r)),
                       ),
                       isExpanded: true,
-                      hint: CustomText(text: AppLocalizations.of(context)!.select_your_question),
+                      hint: CustomText(
+                          text: AppLocalizations.of(context)!
+                              .select_your_question),
                       initialValue: _selectedQuestionId,
                       items: authController.securityQuestionResponseModel
                           .map((model) => DropdownMenuItem<String>(
@@ -215,7 +230,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     borderColor: AppColors.secondaryPrimaryColor,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.please_enter_your_answer;
+                        return AppLocalizations.of(context)!
+                            .please_enter_your_answer;
                       }
                       return null;
                     },
@@ -234,7 +250,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         onpress: () {
                           if (_logRegKey.currentState!.validate()) {
                             authController.sendOtp(
-                                mobile: mobileController.text, email: emailController.text, dob: dateOfBirthController.text, securityAnswer: securityController.text, securityCode: _selectedQuestionId.toString());
+                                mobile: mobileController.text,
+                                email: emailController.text,
+                                dob: dateOfBirthController.text,
+                                securityAnswer: securityController.text,
+                                securityCode: _selectedQuestionId.toString());
                           }
                         },
                       ),
