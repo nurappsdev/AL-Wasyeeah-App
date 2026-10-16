@@ -111,18 +111,32 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
+                        color: isDark
+                            ? const Color(0xFF25282B)
+                            : Theme.of(context).cardColor,
                         shape: BoxShape.circle,
+                        border: Border.all(
+                          color: isDark
+                              ? const Color(0xFF384046)
+                              : Colors.black.withValues(alpha: 0.08),
+                          width: 1,
+                        ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.5),
+                            color: Colors.black
+                                .withValues(alpha: isDark ? 0.3 : 0.08),
                             blurRadius: 4,
                             offset: const Offset(0, 2),
                           ),
                         ],
                       ),
                       child: IconButton(
-                        icon: const Icon(Icons.arrow_back_ios_new, size: 18),
+                        padding: EdgeInsets.zero,
+                        icon: Icon(
+                          Icons.arrow_back_ios_new,
+                          size: 18,
+                          color: isDark ? Colors.white : Colors.black87,
+                        ),
                         onPressed: () {
                           if (Navigator.of(context).canPop()) {
                             Navigator.of(context).pop();
