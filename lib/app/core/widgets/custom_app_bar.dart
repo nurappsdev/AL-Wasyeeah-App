@@ -68,6 +68,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final Widget? leading;
   final PreferredSizeWidget? bottom;
+  final double? toolbarHeight;
 
   const CustomAppBar({
     super.key,
@@ -76,6 +77,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.leading,
     this.bottom,
+    this.toolbarHeight,
   });
 
   @override
@@ -94,9 +96,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       child: AppBar(
         elevation: 0, // important
+        toolbarHeight: toolbarHeight,
         title: Text(
           title,
+          maxLines: 2,
           overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
         ),
         bottom: bottom,
         leading: leading ??
@@ -135,5 +140,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize =>
-      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 0.0));
+      Size.fromHeight((toolbarHeight ?? kToolbarHeight) + (bottom?.preferredSize.height ?? 0.0));
 }

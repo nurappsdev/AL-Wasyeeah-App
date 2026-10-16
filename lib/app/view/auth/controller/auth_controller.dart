@@ -40,6 +40,7 @@ class AuthController extends GetxController {
 
   ///==================Save Sign Up===========================
   RxBool signUpLoading = false.obs;
+  RxBool isDeletingAccount = false.obs;
 
   Future<void> signUpHandle({
     required String firstName,
@@ -239,17 +240,18 @@ class AuthController extends GetxController {
 
   Future<void> deleteAccount(String currentPassword) async {
     try {
-      var response = await ApiService.postData(
-        ApiConstants.deleteAccount + "?currentPassword=$currentPassword",
-        {},
-      );
+      isDeletingAccount(true);
+      var response = await ApiService.getData(
+          ApiConstants.deleteAccount + "?currentPassword=$currentPassword");
       if (response.statusCode == 200) {
         await PrefsHelper.removeAll();
         ToastMessage.successMessageShowToster(
             AppLocalizations.of(Get.context!)!.delete_success);
+        isDeletingAccount(false);
         Get.offAllNamed(RouteName.loginPage);
       }
     } catch (e, s) {
+      isDeletingAccount(false);
       log("Error: $e\nStacktrace: $s");
     }
   }

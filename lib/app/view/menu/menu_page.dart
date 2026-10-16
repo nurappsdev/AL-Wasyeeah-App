@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:al_wasyeah/app/core/themes/controller/theme_controller.dart';
 import 'package:al_wasyeah/app/core/utils/extensions.dart';
+import 'package:al_wasyeah/app/view/auth/controller/auth_controller.dart';
 import 'package:al_wasyeah/app/view/home/controller/home_controller.dart';
 import 'package:al_wasyeah/app/core/widgets/custom_app_bar.dart';
 import 'package:al_wasyeah/app/view/profile/controller/profile_controller.dart';
@@ -30,6 +31,7 @@ class MenuPage extends StatelessWidget {
     final homeController = Get.find<HomeController>();
     final profileController = Get.find<ProfileController>();
     final themeController = Get.find<ThemeController>();
+    final authController = Get.find<AuthController>();
     return Scaffold(
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.user_profile,
