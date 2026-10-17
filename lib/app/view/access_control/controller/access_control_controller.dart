@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
-import 'package:al_wasiyyath/app/view/access_control/model/access_control_user_model.dart';
-import 'package:al_wasiyyath/app/view/access_control/model/context_model.dart';
-import 'package:al_wasiyyath/app/view/access_control/model/user_context_model.dart';
-import 'package:al_wasiyyath/app/view/access_control/model/witness_nominee_context_data_model.dart';
-import 'package:al_wasiyyath/app/core/utils/api_constants.dart';
-import 'package:al_wasiyyath/app/core/services/api/api_service.dart';
+import 'package:wasiyyat/app/core/utils/toast_message.dart';
+import 'package:wasiyyat/app/view/access_control/model/access_control_user_model.dart';
+import 'package:wasiyyat/app/view/access_control/model/context_model.dart';
+import 'package:wasiyyat/app/view/access_control/model/user_context_model.dart';
+import 'package:wasiyyat/app/view/access_control/model/witness_nominee_context_data_model.dart';
+import 'package:wasiyyat/app/core/utils/api_constants.dart';
+import 'package:wasiyyat/app/core/services/api/api_service.dart';
 import 'package:get/get.dart';
 
 class AccessControlController extends GetxController {

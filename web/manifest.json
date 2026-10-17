@@ -1,6 +1,6 @@
 {
-    "name": "al_wasiyyath",
-    "short_name": "al_wasiyyath",
+    "name": "wasiyyat",
+    "short_name": "wasiyyat",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

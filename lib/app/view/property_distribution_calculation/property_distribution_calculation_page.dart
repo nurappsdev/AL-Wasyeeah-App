@@ -1,12 +1,12 @@
-import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasiyyath/app/core/utils/extensions.dart';
-import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/widgets/custom_app_bar.dart';
+import 'package:wasiyyat/app/core/utils/extensions.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:al_wasiyyath/app/view/property_distribution_calculation/controller/property_distribution_calculation_controller.dart';
-import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:wasiyyat/app/view/property_distribution_calculation/controller/property_distribution_calculation_controller.dart';
+import 'package:wasiyyat/app/core/utils/app_colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';

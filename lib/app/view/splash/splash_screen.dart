@@ -1,5 +1,5 @@
-import 'package:al_wasiyyath/app/view/splash/controller/splash_controller.dart';
-import 'package:al_wasiyyath/app/core/utils/app_image.dart';
+import 'package:wasiyyat/app/view/splash/controller/splash_controller.dart';
+import 'package:wasiyyat/app/core/utils/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

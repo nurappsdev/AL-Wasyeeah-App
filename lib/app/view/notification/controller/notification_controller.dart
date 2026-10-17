@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:al_wasiyyath/app/view/notification/model/inapp_notification_model.dart';
-import 'package:al_wasiyyath/app/core/services/api/api_service.dart';
-import 'package:al_wasiyyath/app/core/utils/api_constants.dart';
+import 'package:wasiyyat/app/view/notification/model/inapp_notification_model.dart';
+import 'package:wasiyyat/app/core/services/api/api_service.dart';
+import 'package:wasiyyat/app/core/utils/api_constants.dart';
 import 'package:get/get.dart';
 
 class NotificationController extends GetxController

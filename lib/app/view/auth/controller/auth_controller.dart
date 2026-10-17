@@ -1,15 +1,15 @@
 import 'dart:developer';
 
-import 'package:al_wasiyyath/app/core/route/route_names.dart';
-import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
-import 'package:al_wasiyyath/app/view/auth/model/security_question_response_model.dart';
-import 'package:al_wasiyyath/app/core/services/api/api_service.dart';
-import 'package:al_wasiyyath/app/core/utils/api_constants.dart';
-import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
+import 'package:wasiyyat/app/core/route/route_names.dart';
+import 'package:wasiyyat/app/core/utils/toast_message.dart';
+import 'package:wasiyyat/app/view/auth/model/security_question_response_model.dart';
+import 'package:wasiyyat/app/core/services/api/api_service.dart';
+import 'package:wasiyyat/app/core/utils/api_constants.dart';
+import 'package:wasiyyat/app/core/utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/services/shared_pref/prefs_service.dart';
-import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
 
 class AuthController extends GetxController {
   @override
