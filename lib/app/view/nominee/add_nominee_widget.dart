@@ -1,0 +1,284 @@
+import 'package:al_wasiyyath/app/view/nominee/controller/nominee_controller.dart';
+import 'package:al_wasiyyath/app/core/route/route_names.dart';
+import 'package:al_wasiyyath/app/core/utils/api_constants.dart';
+import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
+import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
+import 'package:al_wasiyyath/app/core/widgets/app_error_widget.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
+import 'package:al_wasiyyath/app/core/widgets/custom_text_field.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+
+class AddNomineeWidget extends GetView<NomineeController> {
+  AddNomineeWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.r),
+          topRight: Radius.circular(20.r),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Center handle for bottom sheet
+          Container(
+            width: 40.w,
+            height: 4.h,
+            margin: EdgeInsets.only(bottom: 20.h),
+            decoration: BoxDecoration(
+              color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CustomText(
+                text: AppLocalizations.of(context)!.add_nominee,
+                fontsize: 18.sp,
+                fontWeight: FontWeight.bold,
+              ),
+              IconButton(
+                onPressed: () => Get.back(),
+                icon: Icon(Icons.close,
+                    color: isDark ? Colors.white : Colors.black),
+              ),
+            ],
+          ),
+          SizedBox(height: 10.h),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ///=============Search Field====================
+              Obx(
+                () => Padding(
+                  padding: EdgeInsets.only(bottom: 16.h),
+                  child: CustomTextField(
+                    controller: controller.searchNomineeController,
+                    hintText: AppLocalizations.of(context)!.search,
+                    borderColor: AppColors.secondaryPrimaryColor,
+                    onChange: (value) {
+                      controller.searchText.value = value;
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppLocalizations.of(context)!
+                            .please_enter_your_email;
+                      }
+                      if (!AppConstants.emailValidate.hasMatch(value)) {
+                        return AppLocalizations.of(context)!.invalid_email;
+                      }
+                      return null;
+                    },
+                    suffixIcon: AppConstants.emailValidate
+                            .hasMatch(controller.searchText.value)
+                        ? Padding(
+                            padding: EdgeInsets.all(8.h),
+                            child: Obx(
+                              () => ElevatedButton(
+                                onPressed: controller
+                                        .searchNomineeStatus.value.isLoading
+                                    ? null
+                                    : controller.searchNominee,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primaryColor,
+                                  foregroundColor: Colors.white,
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 12.w),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                  ),
+                                  visualDensity: VisualDensity.compact,
+                                ),
+                                child: controller
+                                        .searchNomineeStatus.value.isLoading
+                                    ? SizedBox(
+                                        width: 16.h,
+                                        height: 16.h,
+                                        child: const CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.white),
+                                        ),
+                                      )
+                                    : Text(
+                                        AppLocalizations.of(context)!.search,
+                                        style: TextStyle(fontSize: 12.sp),
+                                      ),
+                              ),
+                            ),
+                          )
+                        : null,
+                  ),
+                ),
+              ),
+
+              Obx(() {
+                if (controller.searchNomineeStatus.value.isLoading) {
+                  return Skeletonizer(
+                    enabled: true,
+                    effect: ShimmerEffect(
+                      baseColor:
+                          isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+                      highlightColor:
+                          isDark ? Colors.grey.shade700 : Colors.grey.shade100,
+                    ),
+                    containersColor:
+                        isDark ? Colors.grey.shade800 : Colors.grey.shade200,
+                    child: Card(
+                      color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                        side: isDark
+                            ? const BorderSide(color: Color(0xFF2C3E35))
+                            : BorderSide.none,
+                      ),
+                      elevation: 3.0,
+                      margin: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 30,
+                          backgroundColor:
+                              isDark ? Colors.grey.shade800 : Colors.grey[200],
+                          child: Icon(Icons.person,
+                              color: Colors.white, size: 40.sp),
+                        ),
+                        title: Text(
+                          "Nominee Name Placeholder",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: isDark ? Colors.white : Colors.black,
+                          ),
+                        ),
+                        subtitle: Row(
+                          children: [
+                            Icon(Icons.visibility,
+                                size: 16.0,
+                                color: isDark
+                                    ? const Color(0xff94A3B8)
+                                    : Colors.grey),
+                            const SizedBox(width: 4.0),
+                            Text(
+                              AppLocalizations.of(context)!.view_details,
+                              style: TextStyle(
+                                  color: isDark
+                                      ? const Color(0xff94A3B8)
+                                      : Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                } else if (controller.searchNomineeStatus.value.isEmpty) {
+                  return Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.no_data,
+                      style: TextStyle(
+                        color: isDark ? Colors.white70 : Colors.black54,
+                      ),
+                    ),
+                  );
+                } else if (controller.searchNomineeStatus.value.isSuccess) {
+                  return Card(
+                    color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      side: isDark
+                          ? const BorderSide(color: Color(0xFF2C3E35))
+                          : BorderSide.none,
+                    ),
+                    elevation: 3.0,
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                          radius: 30,
+                          backgroundColor:
+                              isDark ? Colors.grey.shade800 : Colors.grey[200],
+                          child:
+                              controller.searchedNominee.value?.imageUrl != null
+                                  ? ClipRRect(
+                                      borderRadius: BorderRadius.circular(35.r),
+                                      child: Image.network(
+                                        ApiConstants.imageUrl +
+                                            controller.searchedNominee.value!
+                                                .imageUrl,
+                                        fit: BoxFit.fill,
+                                        width: 70.w,
+                                        height: 70.h,
+                                      ),
+                                    )
+                                  : Icon(Icons.person,
+                                      color: Colors.white, size: 40.sp)),
+                      title: Text(
+                        controller.searchedNominee.value?.name ??
+                            AppLocalizations.of(context)!.n_a,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: isDark ? Colors.white : Colors.black,
+                        ),
+                      ),
+                      subtitle: Row(
+                        children: [
+                          Icon(Icons.visibility,
+                              size: 16.0,
+                              color: isDark
+                                  ? const Color(0xff94A3B8)
+                                  : Colors.grey),
+                          const SizedBox(width: 4.0),
+                          Text(
+                            AppLocalizations.of(context)!.view_details,
+                            style: TextStyle(
+                              color: isDark
+                                  ? const Color(0xff94A3B8)
+                                  : Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      onTap: () => Get.toNamed(RouteName.nomineeDetailsPage,
+                          preventDuplicates: false,
+                          arguments: {
+                            'nominee': controller.searchedNominee.value,
+                            'canRemove': false,
+                          }),
+                    ),
+                  );
+                } else {
+                  return AppErrorWidget(
+                    message: controller.searchNomineeStatus.value.errorMessage
+                            ?.toString() ??
+                        "Failed to search nominee",
+                    onRetry: controller.searchNominee,
+                  );
+                }
+              }),
+              SizedBox(height: 20.h),
+              CustomButton(
+                title: AppLocalizations.of(context)!.add_outside_nominee,
+                titlecolor: AppColors.whiteColor,
+                onpress: () {
+                  controller.showAddOutsideNomineeBottomSheet();
+                },
+              ),
+              SizedBox(height: 10.h),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

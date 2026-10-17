@@ -1,0 +1,185 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
+import 'package:al_wasiyyath/app/view/profile/controller/profile_controller.dart';
+import 'package:al_wasiyyath/app/view/wasiyyah/model/wasyyah_model.dart';
+import 'package:al_wasiyyath/app/core/services/api/api_service.dart';
+import 'package:al_wasiyyath/app/core/utils/api_constants.dart';
+import 'package:al_wasiyyath/app/core/services/pdf/pdf_service.dart';
+import 'package:get/get.dart';
+
+class WasyyahController extends GetxController {
+  final RxList<WasyyahContentModel> wasyyahList = <WasyyahContentModel>[].obs;
+  final RxBool isLoading = false.obs;
+  final RxBool isSaveLoading = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    getWasyyahData();
+  }
+
+  Future<void> getWasyyahData() async {
+    isLoading(true);
+    try {
+      final response = await ApiService.getData(ApiConstants.wasyyahYouDataYou);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final List<dynamic> jsonData = response.body;
+        wasyyahList.value =
+            jsonData.map((item) => WasyyahContentModel.fromJson(item)).toList();
+        // Sort items by orderSeq locally
+        wasyyahList
+            .sort((a, b) => (a.orderSeq ?? 0).compareTo(b.orderSeq ?? 0));
+      } else {
+        ToastMessage.errorMessageShowToster(
+            AppLocalizations.of(Get.context!)!.failed_to_load_wasiyyah_data);
+      }
+    } catch (e) {
+      ToastMessage.errorMessageShowToster(e.toString());
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<bool> saveWasiyyah(WasyyahContentModel model) async {
+    isSaveLoading(true);
+    try {
+      final response = await ApiService.postData(
+        ApiConstants.saveWasiyyah,
+        body: model.toJson(),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        getWasyyahData(); // Refresh list to get updated data if needed
+        return true;
+      } else {
+        ToastMessage.errorMessageShowToster(
+            AppLocalizations.of(Get.context!)!.failed_to_save_wasiyyah);
+        return false;
+      }
+    } catch (e) {
+      ToastMessage.errorMessageShowToster(e.toString());
+      return false;
+    } finally {
+      isSaveLoading(false);
+    }
+  }
+
+  Future<bool> createWasiyyah({
+    required String title,
+    required String content,
+  }) async {
+    isSaveLoading(true);
+    try {
+      final payload = {
+        "title": title,
+        "content": content,
+        "visible": "Y",
+        "orderSeq": wasyyahList.length + 1,
+      };
+      final response = await ApiService.postData(
+        ApiConstants.saveWasiyyah,
+        body: payload,
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        await getWasyyahData();
+        return true;
+      } else {
+        ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)?.failed_to_save_wasiyyah ??
+              "Failed to save wasiyyah",
+        );
+        return false;
+      }
+    } catch (e) {
+      ToastMessage.errorMessageShowToster(e.toString());
+      return false;
+    } finally {
+      isSaveLoading(false);
+    }
+  }
+
+  Future<void> toggleVisibility(WasyyahContentModel item) async {
+    // Optimistic UI update
+    final originalVisibility = item.visible;
+    item.visible = (item.visible == "Y" ? "N" : "Y");
+    wasyyahList.refresh();
+
+    final success = await saveWasiyyah(item);
+    if (!success) {
+      // Revert if API failed
+      item.visible = originalVisibility;
+      wasyyahList.refresh();
+    }
+  }
+
+  Future<void> updateWasiyyah() async {
+    // Map current local list to the required payload format
+    final payload = wasyyahList.asMap().entries.map((entry) {
+      return {
+        "requestKey": entry.value.requestKey,
+        "order": entry.key + 1,
+      };
+    }).toList();
+
+    try {
+      final response = await ApiService.postData(
+        ApiConstants.changeOrder,
+        body: payload,
+      );
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        ToastMessage.errorMessageShowToster(
+            AppLocalizations.of(Get.context!)!.failed_to_update_wasiyyah);
+      }
+    } catch (e) {
+      ToastMessage.errorMessageShowToster(e.toString());
+    }
+  }
+
+  void onReorder(int oldIndex, int newIndex) {
+    if (newIndex > oldIndex) newIndex -= 1;
+    final item = wasyyahList.removeAt(oldIndex);
+    wasyyahList.insert(newIndex, item);
+    wasyyahList.refresh();
+
+    // Sync with backend
+    updateWasiyyah();
+  }
+
+  Future<File?> generatePdfFile() async {
+    isLoading(true);
+    try {
+      final profileController = Get.find<ProfileController>();
+      final personalData = profileController.personalForm;
+      final user = profileController.profileModel;
+      final qrData = {
+        "n":
+            "${personalData.value.firstName.text} ${personalData.value.lastName.text}",
+        "e": user.value.userProfile?.email ?? "N/A",
+        "p": user.value.userProfile?.mobile ?? "N/A",
+        "dob": user.value.userProfile?.dob ?? "N/A",
+        "prof":
+            personalData.value.selectedProfession.value?.profession ?? "N/A",
+        "gn": personalData.value.selectedGender.value?.gender ?? "N/A",
+        "ms": personalData.value.selectedMarried.value?.maritalType ?? "N/A",
+        "p_addr": user.value.userProfile?.permanentAddress ?? "N/A",
+        "pr_addr": user.value.userProfile?.presentAddress ?? "N/A",
+        "cnt": personalData.value.selectedCountry.value?.country ?? "N/A",
+        "nid": personalData.value.nid.text,
+        "tin": personalData.value.tin.text,
+      };
+
+      final file = await PdfService.generateWasyyahPdf(wasyyahList, qrData);
+
+      return file;
+    } catch (e, s) {
+      log("PDF ISSUE", error: e, stackTrace: s);
+      ToastMessage.errorMessageShowToster(
+          AppLocalizations.of(Get.context!)!.failed_to_generate_pdf);
+      return null;
+    } finally {
+      isLoading(false);
+    }
+  }
+}

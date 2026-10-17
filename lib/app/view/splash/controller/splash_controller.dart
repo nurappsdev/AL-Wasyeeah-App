@@ -1,0 +1,28 @@
+import 'package:al_wasiyyath/app/core/route/route_names.dart';
+import 'package:al_wasiyyath/app/core/services/shared_pref/prefs_service.dart';
+import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
+import 'package:get/get.dart';
+
+class SplashController extends GetxController {
+  @override
+  void onInit() {
+    super.onInit();
+    _checkLogin();
+  }
+
+  Future<void> _checkLogin() async {
+    await Future.delayed(
+        const Duration(milliseconds: 500)); // smooth transition
+
+    final token = await PrefsHelper.getString(AppConstants.bearerToken);
+    final isOnboardingSelected =
+        await PrefsHelper.getBool(AppConstants.isOnboardingSelected);
+    if (token.isNotEmpty) {
+      Get.offAllNamed(RouteName.homePage);
+    } else {
+      isOnboardingSelected
+          ? Get.offAllNamed(RouteName.loginPage)
+          : Get.offAllNamed(RouteName.onboardingPage);
+    }
+  }
+}
