@@ -1,6 +1,6 @@
-import 'package:al_wasiyyath/app/core/route/route_names.dart';
-import 'package:al_wasiyyath/app/core/services/shared_pref/prefs_service.dart';
-import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
+import 'package:wasiyyat/app/core/route/route_names.dart';
+import 'package:wasiyyat/app/core/services/shared_pref/prefs_service.dart';
+import 'package:wasiyyat/app/core/utils/app_constant.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController {

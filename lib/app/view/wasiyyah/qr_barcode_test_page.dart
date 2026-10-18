@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:al_wasiyyath/app/core/services/qr_barcode/qr_barcode_service.dart';
-import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
+import 'package:wasiyyat/app/core/services/qr_barcode/qr_barcode_service.dart';
+import 'package:wasiyyat/app/core/utils/toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';

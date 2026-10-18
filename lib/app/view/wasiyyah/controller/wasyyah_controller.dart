@@ -1,13 +1,13 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
-import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
-import 'package:al_wasiyyath/app/view/profile/controller/profile_controller.dart';
-import 'package:al_wasiyyath/app/view/wasiyyah/model/wasyyah_model.dart';
-import 'package:al_wasiyyath/app/core/services/api/api_service.dart';
-import 'package:al_wasiyyath/app/core/utils/api_constants.dart';
-import 'package:al_wasiyyath/app/core/services/pdf/pdf_service.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/utils/toast_message.dart';
+import 'package:wasiyyat/app/view/profile/controller/profile_controller.dart';
+import 'package:wasiyyat/app/view/wasiyyah/model/wasyyah_model.dart';
+import 'package:wasiyyat/app/core/services/api/api_service.dart';
+import 'package:wasiyyat/app/core/utils/api_constants.dart';
+import 'package:wasiyyat/app/core/services/pdf/pdf_service.dart';
 import 'package:get/get.dart';
 
 class WasyyahController extends GetxController {

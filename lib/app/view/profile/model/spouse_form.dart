@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:al_wasiyyath/app/view/profile/model/profession_list_model.dart';
-import 'package:al_wasiyyath/app/view/profile/model/country_list_model.dart';
-import 'package:al_wasiyyath/app/core/services/picker/file_picker_service.dart';
+import 'package:wasiyyat/app/view/profile/model/profession_list_model.dart';
+import 'package:wasiyyat/app/view/profile/model/country_list_model.dart';
+import 'package:wasiyyat/app/core/services/picker/file_picker_service.dart';
 
 class SpouseForm {
   final RxBool isAlive = true.obs;

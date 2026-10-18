@@ -1,10 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
+import 'package:wasiyyat/app/core/widgets/custom_app_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
-import 'package:al_wasiyyath/app/core/utils/extensions.dart';
-import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/utils/extensions.dart';
+import 'package:wasiyyat/app/core/utils/toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

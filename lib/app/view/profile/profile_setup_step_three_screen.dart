@@ -1,19 +1,19 @@
-import 'package:al_wasiyyath/app/view/profile/controller/profile_controller.dart';
-import 'package:al_wasiyyath/app/core/services/picker/file_picker_service.dart';
-import 'package:al_wasiyyath/app/view/profile/model/parent_form.dart';
-import 'package:al_wasiyyath/app/view/profile/model/profession_list_model.dart';
-import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_dropdown.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_text_field.dart';
-import 'package:al_wasiyyath/app/core/widgets/file_choose_and_download_button.dart';
+import 'package:wasiyyat/app/view/profile/controller/profile_controller.dart';
+import 'package:wasiyyat/app/core/services/picker/file_picker_service.dart';
+import 'package:wasiyyat/app/view/profile/model/parent_form.dart';
+import 'package:wasiyyat/app/view/profile/model/profession_list_model.dart';
+import 'package:wasiyyat/app/core/utils/app_colors.dart';
+import 'package:wasiyyat/app/core/widgets/custom_button_common.dart';
+import 'package:wasiyyat/app/core/widgets/custom_dropdown.dart';
+import 'package:wasiyyat/app/core/widgets/custom_text.dart';
+import 'package:wasiyyat/app/core/widgets/custom_text_field.dart';
+import 'package:wasiyyat/app/core/widgets/file_choose_and_download_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
-import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProfileSettingStepThreeWidget extends StatelessWidget {

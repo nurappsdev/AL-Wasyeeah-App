@@ -1,12 +1,12 @@
-import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
-import 'package:al_wasiyyath/app/view/profile/controller/profile_controller.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
-import 'package:al_wasiyyath/app/view/profile/profile_setup_step_five_screen.dart';
-import 'package:al_wasiyyath/app/view/profile/profile_setup_step_four_screen.dart';
-import 'package:al_wasiyyath/app/view/profile/profile_setup_step_one_screen.dart';
-import 'package:al_wasiyyath/app/view/profile/profile_setup_step_three_screen.dart';
-import 'package:al_wasiyyath/app/view/profile/profile_setup_step_two_screen.dart';
+import 'package:wasiyyat/app/core/utils/app_colors.dart';
+import 'package:wasiyyat/app/view/profile/controller/profile_controller.dart';
+import 'package:wasiyyat/app/core/widgets/custom_app_bar.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/view/profile/profile_setup_step_five_screen.dart';
+import 'package:wasiyyat/app/view/profile/profile_setup_step_four_screen.dart';
+import 'package:wasiyyat/app/view/profile/profile_setup_step_one_screen.dart';
+import 'package:wasiyyat/app/view/profile/profile_setup_step_three_screen.dart';
+import 'package:wasiyyat/app/view/profile/profile_setup_step_two_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -1,4 +1,4 @@
-# al_wasiyyath
+# wasiyyat
 
 A new Flutter project.
 
