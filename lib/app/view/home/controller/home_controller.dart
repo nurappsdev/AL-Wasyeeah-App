@@ -46,16 +46,28 @@ class HomeController extends GetxController {
       if (!scrollController.hasClients) return;
 
       final prayerList = prayerTimes.keys.toList();
-      final index = prayerList.indexOf(currentPrayer.value);
+      var targetPrayer = currentPrayer.value;
+      if (targetPrayer.isEmpty) {
+        targetPrayer = upcomingPrayer.value;
+      }
+      var index = prayerList.indexOf(targetPrayer);
 
-      if (index == -1) return;
+      if (index == -1) index = 0;
 
-      final double itemWidth = (0.6.sw) + (32.w); // card + margin
-      final double offset = index * itemWidth;
+      final double cardWidth = 0.6.sw;
+      final double cardMargin = 16.w;
+      final double itemWidth = cardWidth + (cardMargin * 2);
+
+      // Center the target card horizontally in the viewport
+      final double centerOffset =
+          (index * itemWidth + cardMargin + (cardWidth / 2)) - (1.0.sw / 2);
+
+      final double maxScroll = scrollController.position.maxScrollExtent;
+      final double targetOffset = centerOffset.clamp(0.0, maxScroll);
 
       scrollController.animateTo(
-        offset,
-        duration: const Duration(milliseconds: 600),
+        targetOffset,
+        duration: const Duration(milliseconds: 700),
         curve: Curves.easeOutCubic,
       );
     });

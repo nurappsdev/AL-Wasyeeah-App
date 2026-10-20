@@ -953,14 +953,9 @@ class HomePage extends GetView<HomeController> {
                                                   ? AppLocalizations.of(
                                                           context)!
                                                       .current_prayer
-                                                  : (pIndex < currentIndex &&
-                                                          currentIndex != -1)
-                                                      ? AppLocalizations.of(
-                                                              context)!
-                                                          .previous_prayer
-                                                      : AppLocalizations.of(
-                                                              context)!
-                                                          .upcoming_prayer,
+                                                  : AppLocalizations.of(
+                                                          context)!
+                                                      .prayer_time,
                                               style: TextStyle(
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.bold,
@@ -1037,34 +1032,36 @@ class HomePage extends GetView<HomeController> {
                                                           : Colors.black,
                                                     ),
                                                   ),
-                                                  SizedBox(height: 4.h),
-                                                  SizedBox(
-                                                    height: 30.h,
-                                                    width: 50.w,
-                                                    child: FittedBox(
-                                                      fit: BoxFit.fill,
-                                                      child: Switch(
-                                                        value: isCurrent,
-                                                        activeThumbColor: Colors
-                                                            .greenAccent[400],
-                                                        activeTrackColor: isDark
-                                                            ? Colors
-                                                                .green.shade900
-                                                            : null,
-                                                        inactiveThumbColor:
-                                                            isDark
-                                                                ? Colors.grey
-                                                                    .shade400
-                                                                : null,
-                                                        inactiveTrackColor:
-                                                            isDark
-                                                                ? Colors.grey
-                                                                    .shade800
-                                                                : null,
-                                                        onChanged: (val) {},
+                                                  if (isCurrent) ...[
+                                                    SizedBox(height: 4.h),
+                                                    SizedBox(
+                                                      height: 30.h,
+                                                      width: 50.w,
+                                                      child: FittedBox(
+                                                        fit: BoxFit.fill,
+                                                        child: Switch(
+                                                          value: true,
+                                                          activeThumbColor: Colors
+                                                              .greenAccent[400],
+                                                          activeTrackColor: isDark
+                                                              ? Colors
+                                                                  .green.shade900
+                                                              : null,
+                                                          inactiveThumbColor:
+                                                              isDark
+                                                                  ? Colors.grey
+                                                                      .shade400
+                                                                  : null,
+                                                          inactiveTrackColor:
+                                                              isDark
+                                                                  ? Colors.grey
+                                                                      .shade800
+                                                                  : null,
+                                                          onChanged: (val) {},
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
+                                                  ],
                                                 ],
                                               ),
                                             ),
