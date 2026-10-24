@@ -3,8 +3,8 @@
 //     final witnessNomineeContextDataModel = witnessNomineeContextDataModelFromJson(jsonString);
 
 import 'dart:convert';
-import 'package:al_wasiyyath/app/view/property_distribution_calculation/model/property_destribution_result_model.dart';
-import 'package:al_wasiyyath/app/view/wasiyyah/model/wasyyah_model.dart';
+import 'package:wasiyyat/app/view/property_distribution_calculation/model/property_destribution_result_model.dart';
+import 'package:wasiyyat/app/view/wasiyyah/model/wasyyah_model.dart';
 
 WitnessNomineeContextDataModel witnessNomineeContextDataModelFromJson(
         String str) =>

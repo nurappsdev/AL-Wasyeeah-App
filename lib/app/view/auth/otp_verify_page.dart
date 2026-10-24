@@ -1,17 +1,17 @@
 import 'dart:developer';
 
-import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasiyyath/app/core/utils/app_icons.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_pin_text_field.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
-import 'package:al_wasiyyath/app/view/auth/controller/auth_controller.dart';
+import 'package:wasiyyat/app/core/utils/app_colors.dart';
+import 'package:wasiyyat/app/core/widgets/custom_app_bar.dart';
+import 'package:wasiyyat/app/core/utils/app_icons.dart';
+import 'package:wasiyyat/app/core/widgets/custom_button_common.dart';
+import 'package:wasiyyat/app/core/widgets/custom_pin_text_field.dart';
+import 'package:wasiyyat/app/core/widgets/custom_text.dart';
+import 'package:wasiyyat/app/view/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
 
 class OtpVerifyPage extends StatefulWidget {
   OtpVerifyPage({super.key});

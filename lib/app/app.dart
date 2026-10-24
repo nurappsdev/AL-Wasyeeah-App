@@ -1,11 +1,11 @@
-import 'package:al_wasiyyath/app/core/route/route_names.dart';
-import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
-import 'package:al_wasiyyath/app/core/route/router.dart';
-import 'package:al_wasiyyath/app/core/themes/dark_theme.dart';
-import 'package:al_wasiyyath/app/core/utils/api_constants.dart';
-import 'package:al_wasiyyath/app/core/themes/light_theme.dart';
-import 'package:al_wasiyyath/app/core/themes/controller/theme_controller.dart';
-import 'package:al_wasiyyath/app/core/widgets/app_wrapper.dart';
+import 'package:wasiyyat/app/core/route/route_names.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/route/router.dart';
+import 'package:wasiyyat/app/core/themes/dark_theme.dart';
+import 'package:wasiyyat/app/core/utils/api_constants.dart';
+import 'package:wasiyyat/app/core/themes/light_theme.dart';
+import 'package:wasiyyat/app/core/themes/controller/theme_controller.dart';
+import 'package:wasiyyat/app/core/widgets/app_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,7 +58,7 @@ class _WasyeeahAppState extends State<WasyeeahApp> {
       splitScreenMode: true,
       builder: (_, child) {
         return GetMaterialApp(
-          title: "App Name",
+          title: "Wasiyyat",
           debugShowCheckedModeBanner: false,
           navigatorKey: Get.key,
           theme: light,

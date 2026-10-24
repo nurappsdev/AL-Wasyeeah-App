@@ -1,10 +1,10 @@
-import 'package:al_wasiyyath/app/view/access_control/controller/access_control_controller.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasiyyath/app/view/access_control/model/access_control_user_model.dart';
-import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
-import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_dropdown.dart';
-import 'package:al_wasiyyath/app/core/widgets/app_error_widget.dart';
+import 'package:wasiyyat/app/view/access_control/controller/access_control_controller.dart';
+import 'package:wasiyyat/app/core/widgets/custom_app_bar.dart';
+import 'package:wasiyyat/app/view/access_control/model/access_control_user_model.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/utils/app_colors.dart';
+import 'package:wasiyyat/app/core/widgets/custom_dropdown.dart';
+import 'package:wasiyyat/app/core/widgets/app_error_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

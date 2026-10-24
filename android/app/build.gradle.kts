@@ -4,7 +4,7 @@ import java.io.FileInputStream
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    id("org.jetbrains.kotlin.android")
     id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -16,10 +16,10 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.app.al_wasiyyath"
+    namespace = "com.wasiyyat.app"
 
     compileSdk = 37
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -33,7 +33,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.app.al_wasiyyath"
+        applicationId = "com.wasiyyat.app"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -53,6 +53,16 @@ android {
 
     buildTypes {
         release {
+            // ১. R8 Minification এবং Resource Shrinking সক্রিয় করা
+            isMinifyEnabled = true
+            isShrinkResources = true
+
+            // ২. ProGuard ফাইল যুক্ত করা
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
             val releaseSigning = signingConfigs.getByName("release")
             signingConfig = if (releaseSigning.storeFile?.exists() == true) {
                 releaseSigning

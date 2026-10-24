@@ -1,17 +1,17 @@
-import 'package:al_wasiyyath/app/view/auth/controller/auth_controller.dart';
-import 'package:al_wasiyyath/app/core/route/route_names.dart';
-import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
-import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
-import 'package:al_wasiyyath/app/core/utils/app_icons.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_text_field.dart';
+import 'package:wasiyyat/app/view/auth/controller/auth_controller.dart';
+import 'package:wasiyyat/app/core/route/route_names.dart';
+import 'package:wasiyyat/app/core/utils/app_colors.dart';
+import 'package:wasiyyat/app/core/utils/app_constant.dart';
+import 'package:wasiyyat/app/core/utils/app_icons.dart';
+import 'package:wasiyyat/app/core/widgets/custom_button_common.dart';
+import 'package:wasiyyat/app/core/widgets/custom_text.dart';
+import 'package:wasiyyat/app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});

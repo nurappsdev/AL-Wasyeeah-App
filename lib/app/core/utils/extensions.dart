@@ -1,4 +1,4 @@
-import 'package:al_wasiyyath/app/core/themes/controller/theme_controller.dart';
+import 'package:wasiyyat/app/core/themes/controller/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

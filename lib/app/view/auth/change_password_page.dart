@@ -1,10 +1,10 @@
-import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
-import 'package:al_wasiyyath/app/core/route/route_names.dart';
-import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
-import 'package:al_wasiyyath/app/core/utils/app_constant.dart';
-import 'package:al_wasiyyath/app/core/utils/app_icons.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasiyyath/app/view/home/controller/home_controller.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/route/route_names.dart';
+import 'package:wasiyyat/app/core/utils/app_colors.dart';
+import 'package:wasiyyat/app/core/utils/app_constant.dart';
+import 'package:wasiyyat/app/core/utils/app_icons.dart';
+import 'package:wasiyyat/app/core/widgets/custom_app_bar.dart';
+import 'package:wasiyyat/app/view/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';

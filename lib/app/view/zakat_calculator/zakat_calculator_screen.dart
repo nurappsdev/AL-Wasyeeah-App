@@ -1,17 +1,17 @@
-import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
-import 'package:al_wasiyyath/app/view/zakat_calculator/controller/zakat_calculator_controller.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_app_bar.dart';
-import 'package:al_wasiyyath/app/view/zakat_calculator/model/get_nisab_response_model.dart';
-import 'package:al_wasiyyath/app/core/utils/app_colors.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_button_common.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_text.dart';
-import 'package:al_wasiyyath/app/core/widgets/custom_text_field.dart';
+import 'package:wasiyyat/app/core/utils/toast_message.dart';
+import 'package:wasiyyat/app/view/zakat_calculator/controller/zakat_calculator_controller.dart';
+import 'package:wasiyyat/app/core/widgets/custom_app_bar.dart';
+import 'package:wasiyyat/app/view/zakat_calculator/model/get_nisab_response_model.dart';
+import 'package:wasiyyat/app/core/utils/app_colors.dart';
+import 'package:wasiyyat/app/core/widgets/custom_button_common.dart';
+import 'package:wasiyyat/app/core/widgets/custom_text.dart';
+import 'package:wasiyyat/app/core/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:al_wasiyyath/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
 
 class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
   ZakatCalculatorScreen({super.key});

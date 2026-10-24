@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:al_wasiyyath/app/core/utils/toast_message.dart';
-import 'package:al_wasiyyath/app/view/menu/model/user_menus_model.dart';
-import 'package:al_wasiyyath/app/view/home/model/prayer_model.dart';
-import 'package:al_wasiyyath/app/view/home/model/salat_time_response_model.dart';
-import 'package:al_wasiyyath/app/core/services/api/api_service.dart';
-import 'package:al_wasiyyath/app/core/utils/api_constants.dart';
+import 'package:wasiyyat/app/core/utils/toast_message.dart';
+import 'package:wasiyyat/app/view/menu/model/user_menus_model.dart';
+import 'package:wasiyyat/app/view/home/model/prayer_model.dart';
+import 'package:wasiyyat/app/view/home/model/salat_time_response_model.dart';
+import 'package:wasiyyat/app/core/services/api/api_service.dart';
+import 'package:wasiyyat/app/core/utils/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
@@ -40,24 +40,48 @@ class HomeController extends GetxController {
   }
 
   void scrollToCurrentPrayer() {
+    scrollToCurrentPrayerFromStart();
+  }
+
+  void scrollToCurrentPrayerFromStart() {
     if (prayerTimes.isEmpty) return;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!scrollController.hasClients) return;
 
-      final prayerList = prayerTimes.keys.toList();
-      final index = prayerList.indexOf(currentPrayer.value);
+      // 1. Jump to start (first card)
+      scrollController.jumpTo(0.0);
 
-      if (index == -1) return;
+      // 2. Animate smoothly to the upcoming/current prayer card
+      Future.delayed(const Duration(milliseconds: 150), () {
+        if (!scrollController.hasClients) return;
 
-      final double itemWidth = (0.6.sw) + (32.w); // card + margin
-      final double offset = index * itemWidth;
+        final prayerList = prayerTimes.keys.toList();
+        var targetPrayer = currentPrayer.value;
+        if (targetPrayer.isEmpty) {
+          targetPrayer = upcomingPrayer.value;
+        }
+        var index = prayerList.indexOf(targetPrayer);
 
-      scrollController.animateTo(
-        offset,
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.easeOutCubic,
-      );
+        if (index == -1) index = 0;
+
+        final double cardWidth = 0.6.sw;
+        final double cardMargin = 16.w;
+        final double itemWidth = cardWidth + (cardMargin * 2);
+
+        // Center the target card horizontally in the viewport
+        final double centerOffset =
+            (index * itemWidth + cardMargin + (cardWidth / 2)) - (1.0.sw / 2);
+
+        final double maxScroll = scrollController.position.maxScrollExtent;
+        final double targetOffset = centerOffset.clamp(0.0, maxScroll);
+
+        scrollController.animateTo(
+          targetOffset,
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.easeOutCubic,
+        );
+      });
     });
   }
 
