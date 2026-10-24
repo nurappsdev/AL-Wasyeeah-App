@@ -40,36 +40,48 @@ class HomeController extends GetxController {
   }
 
   void scrollToCurrentPrayer() {
+    scrollToCurrentPrayerFromStart();
+  }
+
+  void scrollToCurrentPrayerFromStart() {
     if (prayerTimes.isEmpty) return;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!scrollController.hasClients) return;
 
-      final prayerList = prayerTimes.keys.toList();
-      var targetPrayer = currentPrayer.value;
-      if (targetPrayer.isEmpty) {
-        targetPrayer = upcomingPrayer.value;
-      }
-      var index = prayerList.indexOf(targetPrayer);
+      // 1. Jump to start (first card)
+      scrollController.jumpTo(0.0);
 
-      if (index == -1) index = 0;
+      // 2. Animate smoothly to the upcoming/current prayer card
+      Future.delayed(const Duration(milliseconds: 150), () {
+        if (!scrollController.hasClients) return;
 
-      final double cardWidth = 0.6.sw;
-      final double cardMargin = 16.w;
-      final double itemWidth = cardWidth + (cardMargin * 2);
+        final prayerList = prayerTimes.keys.toList();
+        var targetPrayer = currentPrayer.value;
+        if (targetPrayer.isEmpty) {
+          targetPrayer = upcomingPrayer.value;
+        }
+        var index = prayerList.indexOf(targetPrayer);
 
-      // Center the target card horizontally in the viewport
-      final double centerOffset =
-          (index * itemWidth + cardMargin + (cardWidth / 2)) - (1.0.sw / 2);
+        if (index == -1) index = 0;
 
-      final double maxScroll = scrollController.position.maxScrollExtent;
-      final double targetOffset = centerOffset.clamp(0.0, maxScroll);
+        final double cardWidth = 0.6.sw;
+        final double cardMargin = 16.w;
+        final double itemWidth = cardWidth + (cardMargin * 2);
 
-      scrollController.animateTo(
-        targetOffset,
-        duration: const Duration(milliseconds: 700),
-        curve: Curves.easeOutCubic,
-      );
+        // Center the target card horizontally in the viewport
+        final double centerOffset =
+            (index * itemWidth + cardMargin + (cardWidth / 2)) - (1.0.sw / 2);
+
+        final double maxScroll = scrollController.position.maxScrollExtent;
+        final double targetOffset = centerOffset.clamp(0.0, maxScroll);
+
+        scrollController.animateTo(
+          targetOffset,
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.easeOutCubic,
+        );
+      });
     });
   }
 

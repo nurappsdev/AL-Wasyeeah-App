@@ -39,6 +39,10 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.scrollToCurrentPrayerFromStart();
+    });
+
     final notificationController = Get.find<NotificationController>();
     final profileController = Get.find<ProfileController>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -276,13 +280,22 @@ class HomePage extends GetView<HomeController> {
           ],
         ),
       ),
-      body: Container(
-        height: Get.height,
-        width: double.infinity,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Column(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Future.wait([
+            controller.getsalatTimeHandle(),
+            controller.getMenus(),
+            profileController.getProfile(),
+          ]);
+        },
+        child: Container(
+          height: Get.height,
+          width: double.infinity,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Column(
               children: [
                 SizedBox(
                   height: 20.h,
@@ -742,12 +755,8 @@ class HomePage extends GetView<HomeController> {
                           final time = controller.prayerTimes[name]!;
                           final isCurrent =
                               name == controller.currentPrayer.value;
-
-                          final prayerNames =
-                              controller.prayerTimes.keys.toList();
-                          final currentIndex = prayerNames
-                              .indexOf(controller.currentPrayer.value);
-                          final pIndex = prayerNames.indexOf(name);
+                          final isUpcoming =
+                              name == controller.upcomingPrayer.value;
 
                           LinearGradient gradient;
                           LinearGradient borderGradient;
@@ -796,52 +805,7 @@ class HomePage extends GetView<HomeController> {
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
                                   );
-                          } else if (pIndex < currentIndex &&
-                              currentIndex != -1) {
-                            gradient = isDark
-                                ? const LinearGradient(
-                                    colors: [
-                                      Color(0xFF262626),
-                                      Color(0xFF1E1E1E),
-                                      Color(0xFF171717),
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  )
-                                : const LinearGradient(
-                                    colors: [
-                                      Color(0xFFFFFFFF),
-                                      Color(0xFFFAFAFA),
-                                      Color(0xFFF5F5F5),
-                                      Color(0xFFEDEDED),
-                                      Color(0xFFE0E0E0),
-                                      Color(0xFFBDBDBD),
-                                      Color(0xFF9E9E9E),
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  );
-
-                            borderGradient = isDark
-                                ? const LinearGradient(
-                                    colors: [
-                                      Color(0xFF525252),
-                                      Color(0xFF404040),
-                                      Color(0xFF262626),
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  )
-                                : const LinearGradient(
-                                    colors: [
-                                      Color(0xFF9E9E9E),
-                                      Color(0xFFBDBDBD),
-                                      Color(0xFFE0E0E0),
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  );
-                          } else {
+                          } else if (isUpcoming) {
                             gradient = isDark
                                 ? const LinearGradient(
                                     colors: [
@@ -881,6 +845,43 @@ class HomePage extends GetView<HomeController> {
                                       Color(0xFFFFB300),
                                       Color(0xFFFFD54F),
                                       Color(0xFFFFECB3),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  );
+                          } else {
+                            // Light, soft, dimmed background for all other cards
+                            gradient = isDark
+                                ? const LinearGradient(
+                                    colors: [
+                                      Color(0xFF1A1A1A),
+                                      Color(0xFF141414),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  )
+                                : const LinearGradient(
+                                    colors: [
+                                      Color(0xFFF8F9FA),
+                                      Color(0xFFF1F5F9),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  );
+
+                            borderGradient = isDark
+                                ? const LinearGradient(
+                                    colors: [
+                                      Color(0xFF2E2E2E),
+                                      Color(0xFF222222),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  )
+                                : const LinearGradient(
+                                    colors: [
+                                      Color(0xFFE2E8F0),
+                                      Color(0xFFCBD5E1),
                                     ],
                                     begin: Alignment.topLeft,
                                     end: Alignment.bottomRight,
@@ -953,9 +954,13 @@ class HomePage extends GetView<HomeController> {
                                                   ? AppLocalizations.of(
                                                           context)!
                                                       .current_prayer
-                                                  : AppLocalizations.of(
-                                                          context)!
-                                                      .prayer_time,
+                                                  : isUpcoming
+                                                      ? AppLocalizations.of(
+                                                              context)!
+                                                          .upcoming_prayer
+                                                      : AppLocalizations.of(
+                                                              context)!
+                                                          .prayer_time,
                                               style: TextStyle(
                                                 fontSize: 14.sp,
                                                 fontWeight: FontWeight.bold,
@@ -963,8 +968,17 @@ class HomePage extends GetView<HomeController> {
                                                     ? (isCurrent
                                                         ? const Color(
                                                             0xFF4ADE80)
-                                                        : Colors.white)
-                                                    : Colors.black,
+                                                        : isUpcoming
+                                                            ? const Color(
+                                                                0xFFFBBF24)
+                                                            : Colors.white70)
+                                                    : (isCurrent
+                                                        ? const Color(
+                                                            0xFF15803D)
+                                                        : isUpcoming
+                                                            ? const Color(
+                                                                0xFFB45309)
+                                                            : Colors.black87),
                                               ),
                                             ),
                                             if (isCurrent)
@@ -1205,6 +1219,7 @@ class HomePage extends GetView<HomeController> {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

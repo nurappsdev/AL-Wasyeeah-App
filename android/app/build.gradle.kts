@@ -53,8 +53,16 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
-            isShrinkResources = false
+            // ১. R8 Minification এবং Resource Shrinking সক্রিয় করা
+            isMinifyEnabled = true
+            isShrinkResources = true
+
+            // ২. ProGuard ফাইল যুক্ত করা
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
             val releaseSigning = signingConfigs.getByName("release")
             signingConfig = if (releaseSigning.storeFile?.exists() == true) {
                 releaseSigning
