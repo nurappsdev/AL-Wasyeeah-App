@@ -13,6 +13,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/widgets/exit_dialog.dart';
 
 class HomePage extends GetView<HomeController> {
   HomePage({super.key});
@@ -47,7 +48,13 @@ class HomePage extends GetView<HomeController> {
     final profileController = Get.find<ProfileController>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, dynamic result) async {
+        if (didPop) return;
+        await showExitConfirmationDialog(context);
+      },
+      child: Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.h),
         child: AppBar(
@@ -1220,6 +1227,7 @@ class HomePage extends GetView<HomeController> {
         ),
       ),
     ),
-  );
+  ),
+);
 }
 }

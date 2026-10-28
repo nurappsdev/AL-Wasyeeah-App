@@ -12,6 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/widgets/exit_dialog.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -54,7 +55,13 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     authController.loadSavedCredentials();
 
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, dynamic result) async {
+        if (didPop) return;
+        await showExitConfirmationDialog(context);
+      },
+      child: Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SingleChildScrollView(
@@ -266,8 +273,9 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
 
 class GridItem {
