@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/view/auth/controller/auth_controller.dart';
 import 'package:wasiyyat/app/core/route/route_names.dart';
 import 'package:wasiyyat/app/core/utils/app_colors.dart';
 import 'package:wasiyyat/app/core/utils/app_constant.dart';
@@ -11,42 +6,54 @@ import 'package:wasiyyat/app/core/utils/app_icons.dart';
 import 'package:wasiyyat/app/core/widgets/custom_button_common.dart';
 import 'package:wasiyyat/app/core/widgets/custom_text.dart';
 import 'package:wasiyyat/app/core/widgets/custom_text_field.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
 import 'package:wasiyyat/app/core/widgets/exit_dialog.dart';
-import 'package:wasiyyat/app/view/auth/controller/auth_controller.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-
   final AuthController authController = Get.put(AuthController());
-  final GlobalKey<FormState> _logKey = GlobalKey<FormState>();
 
+  final GlobalKey<FormState> _logKey = GlobalKey<FormState>();
+  final List<GridItem> items = [
+    // GridItem(
+    //   icon: AppIcons.profileIcon,
+    //   text: AppLocalizations.of(context)!.nominee_log_in,
+    //   onTap: null,
+    // ),
+    GridItem(
+      icon: AppIcons.propertyIcons,
+      text: AppLocalizations.of(Get.context!)!.property_distribution,
+      onTap: () => Get.toNamed(RouteName.propertyDistributionPage,
+          arguments: {"public": true}, preventDuplicates: false),
+    ),
+    GridItem(
+      icon: AppIcons.zakatIcons,
+      text: AppLocalizations.of(Get.context!)!.zakat_calculation,
+      onTap: () {
+        Get.toNamed(RouteName.zakatCalculatorPage, preventDuplicates: false);
+      },
+    ),
+    GridItem(
+      icon: AppIcons.contactIcons,
+      text: AppLocalizations.of(Get.context!)!.contact_us,
+      onTap: () => Get.toNamed(RouteName.contactPage, preventDuplicates: false),
+    ),
+    // GridItem(
+    //   icon: AppIcons.helpsIcons,
+    //   text: AppLocalizations.of(Get.context!)!.helps,
+    //   onTap: () {
+    //     //  Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
+    //   },
+    // ),
+  ];
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalizations.of(context)!;
-
-    final List<GridItem> items = [
-      GridItem(
-        icon: AppIcons.propertyIcons,
-        text: localization.property_distribution,
-        onTap: () => Get.toNamed(
-          RouteName.propertyDistributionPage,
-          arguments: {"public": true},
-          preventDuplicates: false,
-        ),
-      ),
-      GridItem(
-        icon: AppIcons.zakatIcons,
-        text: localization.zakat_calculation,
-        onTap: () {
-          Get.toNamed(RouteName.zakatCalculatorPage, preventDuplicates: false);
-        },
-      ),
-      GridItem(
-        icon: AppIcons.contactIcons,
-        text: localization.contact_us,
-        onTap: () => Get.toNamed(RouteName.contactPage, preventDuplicates: false),
-      ),
-    ];
+    authController.loadSavedCredentials();
 
     return PopScope(
       canPop: false,
@@ -55,212 +62,220 @@ class LoginPage extends StatelessWidget {
         await showExitConfirmationDialog(context);
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-            child: Form(
-              key: _logKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 20.h),
-
-                  // Logo
-                  Center(
-                    child: SvgPicture.asset(
-                      AppIcons.logo,
-                      height: 140.h,
-                      width: 180.w,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            child: IntrinsicHeight(
+              child: Form(
+                key: _logKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 80.h,
                     ),
-                  ),
-
-                  SizedBox(height: 24.h),
-
-                  // Quick Action Menu Icons
-                  SizedBox(
-                    height: 90.h,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: items.length,
-                      separatorBuilder: (context, index) => SizedBox(width: 16.w),
-                      itemBuilder: (context, index) {
-                        final item = items[index];
-                        return GestureDetector(
-                          onTap: item.onTap,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                item.icon,
-                                height: 50.h,
-                                width: 50.w,
-                              ),
-                              SizedBox(height: 4.h),
-                              CustomText(text: item.text),
-                            ],
-                          ),
-                        );
-                      },
+                    Center(
+                        child: SvgPicture.asset(AppIcons.logo,
+                            height: 160.h, width: 200.w)),
+                    SizedBox(
+                      height: 24.h,
                     ),
-                  ),
 
-                  SizedBox(height: 20.h),
-
-                  // Username / Email Field
-                  CustomText(
-                    text: localization.user_name,
-                    color: AppColors.hitTextColor000000,
-                    fontsize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  SizedBox(height: 8.h),
-                  CustomTextField(
-                    controller: authController.userNameController,
-                    hintText: localization.user_name,
-                    borderColor: AppColors.secondaryPrimaryColor,
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(left: 16.w, right: 12.w),
-                      child: SvgPicture.asset(
-                        AppIcons.email,
-                        colorFilter: ColorFilter.mode(
-                          AppColors.primaryColor,
-                          BlendMode.srcIn,
+                    ///================3 Icon ==== Nominee === Finance === Application=================
+                    SizedBox(
+                      width: double.infinity,
+                      height: 120.h, // Increased height to accommodate content
+                      child: GridView.builder(
+                        scrollDirection:
+                            Axis.horizontal, // Enables horizontal scrolling
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1, // Only one row
+                          mainAxisSpacing:
+                              4, // Spacing between items horizontally
+                          childAspectRatio:
+                              1 / 1.1, // Aspect ratio for each item
                         ),
-                        height: 20.h,
-                        width: 20.w,
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return localization.please_enter_your_email;
-                      }
-                      return null;
-                    },
-                  ),
-
-                  SizedBox(height: 16.h),
-
-                  // Password Field
-                  CustomText(
-                    text: localization.password,
-                    color: AppColors.hitTextColor000000,
-                    fontsize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  SizedBox(height: 8.h),
-                  CustomTextField(
-                    controller: authController.passwordController,
-                    isPassword: true,
-                    hintText: localization.please_enter_your_password,
-                    borderColor: AppColors.secondaryPrimaryColor,
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(left: 16.w, right: 12.w),
-                      child: SvgPicture.asset(
-                        AppIcons.passIcon,
-                        colorFilter: ColorFilter.mode(
-                          AppColors.primaryColor,
-                          BlendMode.srcIn,
-                        ),
-                        height: 22.h,
-                        width: 22.w,
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return localization.please_enter_your_password;
-                      } else if (value.length < 8 ||
-                          !AppConstants.validatePassword(value)) {
-                        return localization
-                            .password_8_characters_min_letters_digits_required;
-                      }
-                      return null;
-                    },
-                  ),
-
-                  SizedBox(height: 12.h),
-
-                  // Forgot Password Link
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: InkWell(
-                      onTap: () {
-                        Get.toNamed(
-                          RouteName.forgotPasswordPage,
-                          parameters: {
-                            'email': authController.userNameController.text
-                          },
-                        );
-                      },
-                      child: CustomText(
-                        text: localization.forget_password,
-                        fontsize: 15.sp,
-                        color: AppColors.primaryColor,
-                        textAlign: TextAlign.right,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 24.h),
-
-                  // Sign In Button
-                  Obx(
-                    () => CustomButton(
-                      loading: authController.signInLoading.value,
-                      title: localization.sign_in,
-                      onpress: () {
-                        if (_logKey.currentState!.validate()) {
-                          TextInput.finishAutofillContext();
-                          authController.signInHandle(
-                            userName: authController.userNameController.text.trim(),
-                            password: authController.passwordController.text,
-                          );
-                        }
-                      },
-                    ),
-                  ),
-
-                  SizedBox(height: 20.h),
-
-                  // Register Now Link
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomText(
-                        text: localization.don_t_have_an_account,
-                        fontsize: 16.sp,
-                      ),
-                      SizedBox(width: 4.w),
-                      InkWell(
-                        onTap: () {
-                          Get.toNamed(
-                            RouteName.registrationPage,
-                            preventDuplicates: false,
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          final item = items[index];
+                          return GestureDetector(
+                            onTap: item.onTap,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(item.icon,
+                                    height: 60.h, width: 60.w),
+                                SizedBox(height: 4.h),
+                                CustomText(text: item.text),
+                              ],
+                            ),
                           );
                         },
-                        child: CustomText(
-                          text: localization.register_now,
-                          fontsize: 16.sp,
-                          color: AppColors.primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
                       ),
-                    ],
-                  ),
+                    ),
 
-                  SizedBox(height: 20.h),
-                ],
+                    ///=============Email====================
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomText(
+                      text: AppLocalizations.of(context)!.user_name,
+                      color: AppColors.hitTextColor000000,
+                      fontsize: 20.sp,
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16.h),
+                      child: CustomTextField(
+                        controller: authController.userNameController,
+                        hintText: AppLocalizations.of(context)!.user_name,
+                        borderColor: AppColors.secondaryPrimaryColor,
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                          child: SvgPicture.asset(AppIcons.email,
+                              colorFilter: ColorFilter.mode(
+                                  AppColors.primaryColor, BlendMode.srcIn),
+                              height: 20.h,
+                              width: 20.w),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppLocalizations.of(context)!
+                                .please_enter_your_email;
+                          }
+                          if (!!AppConstants.emailValidate.hasMatch(value)) {
+                            return AppLocalizations.of(context)!.invalid_email;
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+
+                    ///=============Password====================
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomText(
+                      text: AppLocalizations.of(context)!.password,
+                      color: AppColors.hitTextColor000000,
+                      fontsize: 20.sp,
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16.h),
+                      child: CustomTextField(
+                        controller: authController.passwordController,
+                        isPassword: true,
+                        hintText: AppLocalizations.of(context)!
+                            .please_enter_your_password,
+                        borderColor: AppColors.secondaryPrimaryColor,
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                          child: SvgPicture.asset(AppIcons.passIcon,
+                              colorFilter: ColorFilter.mode(
+                                  AppColors.primaryColor, BlendMode.srcIn),
+                              height: 24.h,
+                              width: 24.w),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppLocalizations.of(context)!
+                                .please_enter_your_password;
+                          } else if (value.length < 8 ||
+                              !AppConstants.validatePassword(value)) {
+                            return AppLocalizations.of(context)!
+                                .password_8_characters_min_letters_digits_required;
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+
+                    ///=============Forgot====================
+                    InkWell(
+                        onTap: () {
+                          Get.toNamed(RouteName.forgotPasswordPage,
+                              parameters: {'email': authController.userNameController.text});
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 190.w),
+                          child: CustomText(
+                            text: AppLocalizations.of(context)!.forget_password,
+                            fontsize: 16.sp,
+                            color: AppColors.primaryColor,
+                            textAlign: TextAlign.right,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        )),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+
+                    ///=============Sign In Button====================
+                    Obx(
+                      () => CustomButton(
+                        loading: authController.signInLoading.value == true,
+                        title: AppLocalizations.of(context)!.sign_in,
+                        onpress: () {
+                          if (_logKey.currentState!.validate()) {
+                            TextInput.finishAutofillContext();
+                            authController.signInHandle(
+                                userName: authController.userNameController.text,
+                                password: authController.passwordController.text);
+
+                            //  Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
+                          }
+                        },
+                      ),
+                    ),
+
+                    ///=============SignUp====================
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              //  Get.toNamed(AppRoutes.otpVirifyScreen,preventDuplicates: false);
+                            },
+                            child: CustomText(
+                              text: AppLocalizations.of(context)!
+                                  .don_t_have_an_account,
+                              fontsize: 20.sp,
+                            )),
+                        InkWell(
+                            onTap: () {
+                              Get.toNamed(RouteName.registrationPage,
+                                  preventDuplicates: false);
+                            },
+                            child: CustomText(
+                              text: AppLocalizations.of(context)!.register_now,
+                              fontsize: 20.sp,
+                              color: AppColors.primaryColor,
+                            )),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
 
 class GridItem {

@@ -2,13 +2,13 @@ import 'package:wasiyyat/app/core/services/picker/file_picker_service.dart';
 import 'package:wasiyyat/app/view/profile/model/wealth_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:wasiyyat/app/view/profile/model/document_type_form.dart';
 
 class WealthForm {
+  int? wealthId;
+  int? userId;
+
   final Rxn<WealthModel> wealth = Rxn<WealthModel>();
-  // Replaced text controller with dropdown selection
-  // final TextEditingController documentType = TextEditingController();
   final Rxn<DocumentTypeForm> selectedDocumentType = Rxn<DocumentTypeForm>();
   final RxList<DocumentTypeForm> documentTypeList = <DocumentTypeForm>[].obs;
 
@@ -19,8 +19,9 @@ class WealthForm {
   final Rxn<PickedFileResult> documentFile = Rxn<PickedFileResult>();
   String? documentUrl;
 
+  WealthForm({this.wealthId, this.userId});
+
   void dispose() {
-    // documentType.dispose();
     landArea.dispose();
     location.dispose();
     note.dispose();

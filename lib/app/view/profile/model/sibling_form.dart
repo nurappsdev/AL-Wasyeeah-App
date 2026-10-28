@@ -6,6 +6,11 @@ import 'package:wasiyyat/app/view/profile/model/gender_list_model.dart';
 import 'package:wasiyyat/app/core/services/picker/file_picker_service.dart';
 
 class SiblingForm {
+  int? siblingId;
+  int? userId;
+  dynamic whatsAppNumber;
+  dynamic socialMediaLink;
+
   final TextEditingController name = TextEditingController();
   final TextEditingController nid = TextEditingController();
   final TextEditingController mobile = TextEditingController();
@@ -29,6 +34,8 @@ class SiblingForm {
 
   // Existing URLs (for download)
   String? nidUrl;
+
+  SiblingForm({this.siblingId, this.userId, this.whatsAppNumber, this.socialMediaLink});
 
   void dispose() {
     name.dispose();

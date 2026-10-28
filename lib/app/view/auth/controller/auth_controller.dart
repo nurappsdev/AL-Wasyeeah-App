@@ -25,10 +25,10 @@ class AuthController extends GetxController {
     final savedUserName = await PrefsHelper.getString(AppConstants.email);
     final savedPassword = await PrefsHelper.getString(AppConstants.password);
 
-    if (savedUserName.isNotEmpty && userNameController.text.isEmpty) {
+    if (savedUserName.isNotEmpty) {
       userNameController.text = savedUserName;
     }
-    if (savedPassword.isNotEmpty && passwordController.text.isEmpty) {
+    if (savedPassword.isNotEmpty) {
       passwordController.text = savedPassword;
     }
   }
