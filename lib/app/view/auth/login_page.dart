@@ -12,13 +12,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/widgets/exit_dialog.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  final TextEditingController emailController =
-      TextEditingController(/*text: "WASY100001"*/);
-  final TextEditingController passController =
-      TextEditingController(/*text: "Asdf.1234"*/);
   final AuthController authController = Get.put(AuthController());
 
   final GlobalKey<FormState> _logKey = GlobalKey<FormState>();
@@ -56,7 +53,15 @@ class LoginPage extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    authController.loadSavedCredentials();
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, dynamic result) async {
+        if (didPop) return;
+        await showExitConfirmationDialog(context);
+      },
+      child: Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SingleChildScrollView(
@@ -129,7 +134,7 @@ class LoginPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
-                        controller: emailController,
+                        controller: authController.userNameController,
                         hintText: AppLocalizations.of(context)!.user_name,
                         borderColor: AppColors.secondaryPrimaryColor,
                         prefixIcon: Padding(
@@ -168,7 +173,7 @@ class LoginPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
-                        controller: passController,
+                        controller: authController.passwordController,
                         isPassword: true,
                         hintText: AppLocalizations.of(context)!
                             .please_enter_your_password,
@@ -199,7 +204,7 @@ class LoginPage extends StatelessWidget {
                     InkWell(
                         onTap: () {
                           Get.toNamed(RouteName.forgotPasswordPage,
-                              parameters: {'email': emailController.text});
+                              parameters: {'email': authController.userNameController.text});
                         },
                         child: Padding(
                           padding: EdgeInsets.only(left: 190.w),
@@ -224,8 +229,8 @@ class LoginPage extends StatelessWidget {
                           if (_logKey.currentState!.validate()) {
                             TextInput.finishAutofillContext();
                             authController.signInHandle(
-                                userName: emailController.text,
-                                password: passController.text);
+                                userName: authController.userNameController.text,
+                                password: authController.passwordController.text);
 
                             //  Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
                           }
@@ -268,8 +273,9 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
 
 class GridItem {

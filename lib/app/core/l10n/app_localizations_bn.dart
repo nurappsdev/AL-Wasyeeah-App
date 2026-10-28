@@ -1757,4 +1757,16 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get enter_your_password => 'আপনার পাসওয়ার্ড লিখুন';
+
+  @override
+  String get exit_app_title => 'অ্যাপ থেকে বের হন';
+
+  @override
+  String get exit_app_message => 'আপনি কি অ্যাপ থেকে বের হতে চান?';
+
+  @override
+  String get yes => 'হ্যাঁ';
+
+  @override
+  String get no => 'না';
 }
