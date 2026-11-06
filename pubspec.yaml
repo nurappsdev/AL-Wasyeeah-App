@@ -3,7 +3,7 @@ description: "A new Flutter project."
 
 publish_to: "none"
 
-version: 1.0.0+1
+version: 1.0.2+6
 
 environment:
   sdk: ^3.5.3
@@ -33,6 +33,7 @@ dependencies:
   fluttertoast: ^10.0.0
   dropdown_search: ^8.1.0
   file_picker: ^13.1.0
+  file_saver: ^0.7.0
   pretty_qr_code: ^3.5.0
   barcode_widget: ^2.0.4
   skeletonizer: ^3.0.0

@@ -1745,4 +1745,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enter_your_password => 'Enter your password';
+
+  @override
+  String get exit_app_title => 'Exit App';
+
+  @override
+  String get exit_app_message => 'Do you want to exit the app?';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
 }

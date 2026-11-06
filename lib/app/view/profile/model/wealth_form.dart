@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 import 'package:wasiyyat/app/view/profile/model/document_type_form.dart';
 
 class WealthForm {
+  int? wealthId;
+  int? userId;
+
   final Rxn<WealthModel> wealth = Rxn<WealthModel>();
   // Replaced text controller with dropdown selection
   // final TextEditingController documentType = TextEditingController();
@@ -18,7 +21,7 @@ class WealthForm {
 
   final Rxn<PickedFileResult> documentFile = Rxn<PickedFileResult>();
   String? documentUrl;
-
+  WealthForm({this.wealthId, this.userId});
   void dispose() {
     // documentType.dispose();
     landArea.dispose();

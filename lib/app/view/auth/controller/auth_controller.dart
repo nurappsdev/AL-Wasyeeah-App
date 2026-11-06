@@ -12,9 +12,25 @@ import '../../../core/services/shared_pref/prefs_service.dart';
 import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
 
 class AuthController extends GetxController {
+  final TextEditingController userNameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();
+    loadSavedCredentials();
+  }
+
+  Future<void> loadSavedCredentials() async {
+    final savedUserName = await PrefsHelper.getString(AppConstants.email);
+    final savedPassword = await PrefsHelper.getString(AppConstants.password);
+
+    if (savedUserName.isNotEmpty) {
+      userNameController.text = savedUserName;
+    }
+    if (savedPassword.isNotEmpty) {
+      passwordController.text = savedPassword;
+    }
   }
 
   ///==================get Question===========================
@@ -136,6 +152,12 @@ class AuthController extends GetxController {
             AppConstants.bearerToken,
             token.toString(),
           );
+
+          await PrefsHelper.setString(
+            AppConstants.email,
+            userName,
+          );
+
           await PrefsHelper.setString(
             AppConstants.password,
             password,
@@ -245,7 +267,7 @@ class AuthController extends GetxController {
   Future<void> deleteAccount(String currentPassword) async {
     try {
       isDeletingAccount(true);
-      var response = await ApiService.postData(
+      var response = await ApiService.getData(
           ApiConstants.deleteAccount + "?currentPassword=$currentPassword");
       if (response.statusCode == 200) {
         await PrefsHelper.removeAll();

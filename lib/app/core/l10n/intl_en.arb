@@ -576,5 +576,9 @@
   "terms_modifications_title": "Modifications to Terms",
   "terms_modifications_desc": "We may revise these terms and conditions at any time without prior notice. By continuing to use Wasiyah.com after any changes are made, you agree to be bound by the revised terms. It is your responsibility to review these terms periodically.",
   "incorrect_password": "Incorrect password",
-  "enter_your_password": "Enter your password"
+  "enter_your_password": "Enter your password",
+  "exit_app_title": "Exit App",
+  "exit_app_message": "Do you want to exit the app?",
+  "yes": "Yes",
+  "no": "No"
 }

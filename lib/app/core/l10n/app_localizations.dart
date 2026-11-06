@@ -3435,6 +3435,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter your password'**
   String get enter_your_password;
+
+  /// No description provided for @exit_app_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit App'**
+  String get exit_app_title;
+
+  /// No description provided for @exit_app_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to exit the app?'**
+  String get exit_app_message;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
 }
 
 class _AppLocalizationsDelegate

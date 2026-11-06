@@ -5,6 +5,8 @@ import 'package:wasiyyat/app/view/profile/model/country_list_model.dart';
 import 'package:wasiyyat/app/core/services/picker/file_picker_service.dart';
 
 class SpouseForm {
+  int? spouseId;
+  int? userId;
   final RxBool isAlive = true.obs;
   final TextEditingController name = TextEditingController();
   final TextEditingController nid = TextEditingController();
@@ -25,6 +27,8 @@ class SpouseForm {
   // URLs from API
   String? nidUrl;
   String? passportUrl;
+
+  SpouseForm({this.spouseId, this.userId});
 
   void dispose() {
     name.dispose();

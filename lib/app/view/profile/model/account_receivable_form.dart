@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AccountReceivableForm {
+  int? recId;
+  int? userId;
   final TextEditingController amount = TextEditingController();
   final TextEditingController personName = TextEditingController();
   final TextEditingController personMobile = TextEditingController();

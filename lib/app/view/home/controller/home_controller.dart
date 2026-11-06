@@ -40,24 +40,43 @@ class HomeController extends GetxController {
   }
 
   void scrollToCurrentPrayer() {
+    scrollToCurrentPrayerFromStart();
+  }
+
+  void scrollToCurrentPrayerFromStart() {
     if (prayerTimes.isEmpty) return;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!scrollController.hasClients) return;
 
-      final prayerList = prayerTimes.keys.toList();
-      final index = prayerList.indexOf(currentPrayer.value);
+      scrollController.jumpTo(0.0);
+// 2. Animate smoothly to the upcoming/current prayer card
+      Future.delayed(const Duration(milliseconds: 150), () {
+        if (!scrollController.hasClients) return;
 
-      if (index == -1) return;
+        final prayerList = prayerTimes.keys.toList();
+        var targetPrayer = currentPrayer.value;
+        if (targetPrayer.isEmpty) {
+          targetPrayer = upcomingPrayer.value;
+        }
+        var index = prayerList.indexOf(targetPrayer);
+        if (index == -1) index = 0;
+        final double cardWidth = 0.6.sw;
+        final double cardMargin = 16.w;
+        final double itemWidth = cardWidth + (cardMargin * 2);
 
-      final double itemWidth = (0.6.sw) + (32.w); // card + margin
-      final double offset = index * itemWidth;
+        final double centerOffset =
+            (index * itemWidth + cardMargin + (cardWidth / 2)) - (1.0.sw / 2);
 
-      scrollController.animateTo(
-        offset,
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.easeOutCubic,
-      );
+        final double maxScroll = scrollController.position.maxScrollExtent;
+        final double targetOffset = centerOffset.clamp(0.0, maxScroll);
+
+        scrollController.animateTo(
+          targetOffset,
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.easeOutCubic,
+        );
+      });
     });
   }
 

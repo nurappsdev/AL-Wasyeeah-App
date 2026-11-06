@@ -729,10 +729,10 @@ class MenuPage extends StatelessWidget {
                                 await PrefsHelper.remove(
                                     AppConstants.firstname);
                                 await PrefsHelper.remove(AppConstants.lastname);
-                                // await PrefsHelper.remove(AppConstants.userName);
+
                                 await PrefsHelper.remove(AppConstants.phone);
                                 await PrefsHelper.remove(AppConstants.image);
-                                await PrefsHelper.remove(AppConstants.email);
+
                                 await PrefsHelper.remove(
                                     AppConstants.businessID);
                                 await PrefsHelper.remove(AppConstants.type);

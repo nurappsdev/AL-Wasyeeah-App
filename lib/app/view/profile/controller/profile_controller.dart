@@ -388,7 +388,10 @@ class ProfileController extends GetxController {
     log("Spouse Info: ${spouses?.length}");
     if (spouses != null && spouses.isNotEmpty) {
       for (final spouse in spouses) {
-        final form = SpouseForm();
+        final form = SpouseForm(
+          spouseId: spouse.spouseId,
+          userId: spouse.userId,
+        );
 
         /// Text fields
         form.name.text = spouse.spouseName ?? '';
@@ -429,7 +432,10 @@ class ProfileController extends GetxController {
     final children = profileModel.value.childInfo;
     if (children != null && children.isNotEmpty) {
       for (final child in children) {
-        final form = ChildForm();
+        final form = ChildForm(
+          childId: child.childId,
+          userId: child.userId,
+        );
 
         /// Text fields
         form.name.text = child.childName ?? '';
@@ -504,7 +510,12 @@ class ProfileController extends GetxController {
 
     if (siblings != null && siblings.isNotEmpty) {
       for (final sibling in siblings) {
-        final form = SiblingForm();
+        final form = SiblingForm(
+          siblingId: sibling.siblingId,
+          userId: sibling.userId,
+          whatsAppNumber: sibling.whatsAppNumber,
+          socialMediaLink: sibling.socialMediaLink,
+        );
 
         /// Text fields
         form.name.text = sibling.siblingName ?? '';
@@ -567,7 +578,10 @@ class ProfileController extends GetxController {
     if (banks != null && banks.isNotEmpty) {
       final Map<String, List<BranchModel>> cachedBranches = {};
       for (final bank in banks) {
-        final form = BankForm();
+        final form = BankForm(
+          userBankInfoId: bank.userBankInfoId,
+          userId: bank.userId,
+        );
         form.bank.value =
             bankList.firstWhereOrNull((e) => e.bankId == bank.bankId);
 
@@ -625,7 +639,10 @@ class ProfileController extends GetxController {
     if (wealths != null && wealths.isNotEmpty) {
       final Map<String, List<DocumentTypeForm>> cachedDocTypes = {};
       for (final wealth in wealths) {
-        final form = WealthForm();
+        final form = WealthForm(
+          wealthId: wealth.wealthId,
+          userId: wealth.userId,
+        );
         form.wealth.value =
             wealthList.firstWhereOrNull((e) => e.wealthId == wealth.wealthId);
 
@@ -687,7 +704,10 @@ class ProfileController extends GetxController {
 
     if (receivables != null && receivables.isNotEmpty) {
       for (final rec in receivables) {
-        final form = AccountReceivableForm();
+        final form = AccountReceivableForm(
+          recId: rec.recId,
+          userId: rec.userId,
+        );
         form.amount.text = rec.receivableAmount?.toString() ?? '';
         form.personName.text = rec.receivablePerson ?? '';
         form.personMobile.text = rec.receivablePersonMobile ?? '';
@@ -714,7 +734,10 @@ class ProfileController extends GetxController {
 
     if (payables != null && payables.isNotEmpty) {
       for (final pay in payables) {
-        final form = AccountPayableForm();
+        final form = AccountPayableForm(
+          payId: pay.payId,
+          userId: pay.userId,
+        );
         form.amount.text = pay.payableAmount?.toString() ?? '';
         form.personName.text = pay.payablePerson ?? '';
         form.personMobile.text = pay.payablePersonMobile ?? '';
@@ -753,34 +776,39 @@ class ProfileController extends GetxController {
       final address = addressForm.value;
       final parent = parentForm.value;
 
+      final existingUser = profileModel.value.userProfile;
+      final existingParent = profileModel.value.parentInfo;
+      final currentUserId =
+          existingParent?.userId ?? existingUser?.userProfileId;
+
       // 1. Map UserProfile
       final userProfile = UserProfile(
-        userProfileId: profileModel.value.userProfile?.userProfileId,
-        firstName: personal.firstName.text,
-        lastName: personal.lastName.text,
-        maritalStatusId: personal.selectedMarried.value?.maritalId,
-        professionId: personal.selectedProfession.value?.professionId,
-        countryCode: personal.selectedCountry.value?.countryId,
-        district: personal.district.text,
-        gender: personal.selectedGender.value?.genderId.toString(),
-        nid: int.tryParse(personal.nid.text),
-        tin: personal.tin.text,
+        userProfileId: existingUser?.userProfileId,
+        firstName: personal.firstName.text.isNotEmpty
+            ? personal.firstName.text
+            : existingUser?.firstName,
+        lastName: personal.lastName.text.isNotEmpty
+            ? personal.lastName.text
+            : existingUser?.lastName,
+        email: existingUser?.email,
+        dob: existingUser?.dob,
+        nid: int.tryParse(personal.nid.text) ?? existingUser?.nid,
+        nidPaperUrl: existingUser?.nidPaperUrl,
+        passportNo: existingUser?.passportNo,
+        passportPaperUrl: existingUser?.passportPaperUrl,
+        passportExpDate: existingUser?.passportExpDate,
+        maritalStatusId: personal.selectedMarried.value?.maritalId ??
+            existingUser?.maritalStatusId,
+        professionId: personal.selectedProfession.value?.professionId ??
+            existingUser?.professionId,
+        countryCode: personal.selectedCountry.value?.countryId ??
+            existingUser?.countryCode,
         multipleCitizenCode:
-            personal.selectedMultiCitizenCountry.value?.countryId,
-        multipleCitizenPassportNo: personal.multiCitizenPassport.text,
-        presentAddress:
-            "${address.presentZipCode.text},${address.presentVillage.text},${address.presentRoad.text}",
-        permanentAddress: address.isPresentAddressAsPermanentAddress.value
-            ? "${address.presentZipCode.text},${address.presentVillage.text},${address.presentRoad.text}"
-            : "${address.permanentZipCode.text},${address.permanentVillage.text},${address.permanentRoad.text}",
-        overseasCountryCode: address.selectedOverseasCountry.value?.countryId,
-        overseasVillage: address.overseasVillage.text,
-        nidFile: await _fileToBase64(personal.selectedNidFile.value?.file),
-        tinFile: await _fileToBase64(personal.selectedTinFile.value?.file),
-        profileFile: await _fileToBase64(
-            personal.selectedProfilePictureFile.value?.file),
-        passportFile:
-            await _fileToBase64(personal.selectedMultiCitizenFile.value?.file),
+            personal.selectedMultiCitizenCountry.value?.countryId ??
+                existingUser?.multipleCitizenCode,
+        multipleCitizenPassportNo: personal.multiCitizenPassport.text.isNotEmpty
+            ? personal.multiCitizenPassport.text
+            : existingUser?.multipleCitizenPassportNo,
       );
 
       // 2. Map ParentInfo

@@ -1,4 +1,9 @@
-import 'package:wasiyyat/app/view/auth/controller/auth_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
 import 'package:wasiyyat/app/core/route/route_names.dart';
 import 'package:wasiyyat/app/core/utils/app_colors.dart';
 import 'package:wasiyyat/app/core/utils/app_constant.dart';
@@ -6,60 +11,56 @@ import 'package:wasiyyat/app/core/utils/app_icons.dart';
 import 'package:wasiyyat/app/core/widgets/custom_button_common.dart';
 import 'package:wasiyyat/app/core/widgets/custom_text.dart';
 import 'package:wasiyyat/app/core/widgets/custom_text_field.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
+import 'package:wasiyyat/app/core/widgets/exit_dialog.dart';
+import 'package:wasiyyat/app/view/auth/controller/auth_controller.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  final TextEditingController emailController =
-      TextEditingController(/*text: "WASY100001"*/);
-  final TextEditingController passController =
-      TextEditingController(/*text: "Asdf.1234"*/);
+
   final AuthController authController = Get.put(AuthController());
 
   final GlobalKey<FormState> _logKey = GlobalKey<FormState>();
-  final List<GridItem> items = [
-    // GridItem(
-    //   icon: AppIcons.profileIcon,
-    //   text: AppLocalizations.of(context)!.nominee_log_in,
-    //   onTap: null,
-    // ),
-    GridItem(
-      icon: AppIcons.propertyIcons,
-      text: AppLocalizations.of(Get.context!)!.property_distribution,
-      onTap: () => Get.toNamed(RouteName.propertyDistributionPage,
-          arguments: {"public": true}, preventDuplicates: false),
-    ),
-    GridItem(
-      icon: AppIcons.zakatIcons,
-      text: AppLocalizations.of(Get.context!)!.zakat_calculation,
-      onTap: () {
-        Get.toNamed(RouteName.zakatCalculatorPage, preventDuplicates: false);
-      },
-    ),
-    GridItem(
-      icon: AppIcons.contactIcons,
-      text: AppLocalizations.of(Get.context!)!.contact_us,
-      onTap: () => Get.toNamed(RouteName.contactPage, preventDuplicates: false),
-    ),
-    // GridItem(
-    //   icon: AppIcons.helpsIcons,
-    //   text: AppLocalizations.of(Get.context!)!.helps,
-    //   onTap: () {
-    //     //  Get.toNamed(AppRoutes.zakatCalculatorScreen, preventDuplicates: false);
-    //   },
-    // ),
-  ];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: SingleChildScrollView(
+    final localization = AppLocalizations.of(context)!;
+
+    final List<GridItem> items = [
+      GridItem(
+        icon: AppIcons.propertyIcons,
+        text: localization.property_distribution,
+        onTap: () => Get.toNamed(
+          RouteName.propertyDistributionPage,
+          arguments: {"public": true},
+          preventDuplicates: false,
+        ),
+      ),
+      GridItem(
+        icon: AppIcons.zakatIcons,
+        text: localization.zakat_calculation,
+        onTap: () {
+          Get.toNamed(RouteName.zakatCalculatorPage, preventDuplicates: false);
+        },
+      ),
+      GridItem(
+        icon: AppIcons.contactIcons,
+        text: localization.contact_us,
+        onTap: () =>
+            Get.toNamed(RouteName.contactPage, preventDuplicates: false),
+      ),
+    ];
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, dynamic result) async {
+        if (didPop) return;
+        await showExitConfirmationDialog(context);
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
           child: ConstrainedBox(
             constraints: BoxConstraints(
               minHeight: MediaQuery.of(context).size.height,
@@ -129,7 +130,7 @@ class LoginPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
-                        controller: emailController,
+                        controller: authController.userNameController,
                         hintText: AppLocalizations.of(context)!.user_name,
                         borderColor: AppColors.secondaryPrimaryColor,
                         prefixIcon: Padding(
@@ -168,7 +169,7 @@ class LoginPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: CustomTextField(
-                        controller: passController,
+                        controller: authController.passwordController,
                         isPassword: true,
                         hintText: AppLocalizations.of(context)!
                             .please_enter_your_password,
@@ -199,7 +200,9 @@ class LoginPage extends StatelessWidget {
                     InkWell(
                         onTap: () {
                           Get.toNamed(RouteName.forgotPasswordPage,
-                              parameters: {'email': emailController.text});
+                              parameters: {
+                                'email': authController.userNameController.text
+                              });
                         },
                         child: Padding(
                           padding: EdgeInsets.only(left: 190.w),
@@ -224,8 +227,10 @@ class LoginPage extends StatelessWidget {
                           if (_logKey.currentState!.validate()) {
                             TextInput.finishAutofillContext();
                             authController.signInHandle(
-                                userName: emailController.text,
-                                password: passController.text);
+                                userName:
+                                    authController.userNameController.text,
+                                password:
+                                    authController.passwordController.text);
 
                             //  Get.toNamed(AppRoutes.homeScreen,preventDuplicates: false);
                           }
