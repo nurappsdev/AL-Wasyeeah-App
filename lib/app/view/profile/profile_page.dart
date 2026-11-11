@@ -7,7 +7,6 @@ import 'package:wasiyyat/app/view/profile/profile_setup_step_four_screen.dart';
 import 'package:wasiyyat/app/view/profile/profile_setup_step_one_screen.dart';
 import 'package:wasiyyat/app/view/profile/profile_setup_step_three_screen.dart';
 import 'package:wasiyyat/app/view/profile/profile_setup_step_two_screen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -71,68 +70,135 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   // Step Indicator
                   Padding(
-                    padding: const EdgeInsets.only(
-                      left: 26.0,
-                      top: 20,
-                      bottom: 20,
-                    ),
-                    child: Row(
-                      children: List.generate(5, (index) {
-                        bool isCompleted = index < controller.currentStep.value;
-                        bool isActive = index == controller.currentStep.value;
+                      padding: const EdgeInsets.only(
+                        left: 26.0,
+                        top: 20,
+                        bottom: 20,
+                      ),
+                      child: Row(
+                        children: List.generate(5, (index) {
+                          final currentStep = controller.currentStep.value;
 
-                        return Expanded(
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () => controller.onStepTapped(index),
-                                child: Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                    color: isCompleted || isActive
-                                        ? AppColors.primaryColor
-                                        : (isDark
-                                            ? Colors.grey.shade800
-                                            : Colors.grey.shade300),
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: isDark
-                                          ? Colors.white24
-                                          : Colors.black26,
+                          final bool isCompleted = index < currentStep;
+                          final bool isActive = index == currentStep;
+
+                          final formKeys = [
+                            controller.step1formKey,
+                            controller.step2formKey,
+                            controller.step3formKey,
+                            controller.step4formKey,
+                            controller.step5formKey,
+                          ];
+
+                          return Expanded(
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    // Already in this step
+                                    if (index == currentStep) return;
+
+                                    // BACK NAVIGATION: No validation required
+                                    if (index < currentStep) {
+                                      controller.onStepTapped(index);
+                                      return;
+                                    }
+
+                                    // NEXT NAVIGATION: Only allow the immediate next step
+                                    if (index == currentStep + 1) {
+                                      final isValid = formKeys[currentStep]
+                                              .currentState
+                                              ?.validate() ??
+                                          false;
+
+                                      if (isValid) {
+                                        controller.onStepTapped(index);
+                                      }
+                                    }
+                                  },
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: isCompleted || isActive
+                                          ? AppColors.primaryColor
+                                          : (isDark
+                                              ? Colors.grey.shade800
+                                              : Colors.grey.shade300),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: isDark
+                                            ? Colors.white24
+                                            : Colors.black26,
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                      size: 20,
                                     ),
                                   ),
-                                  child: const Icon(
-                                    Icons.check,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
                                 ),
-                              ),
-                              if (index < 4)
-                                Expanded(
-                                  child: Container(
-                                    height: 2,
-                                    color: isCompleted
-                                        ? AppColors.primaryColor
-                                        : (isDark
-                                            ? Colors.grey.shade800
-                                            : Colors.grey.shade300),
+                                if (index < 4)
+                                  Expanded(
+                                    child: Container(
+                                      height: 2,
+                                      color: isCompleted
+                                          ? AppColors.primaryColor
+                                          : (isDark
+                                              ? Colors.grey.shade800
+                                              : Colors.grey.shade300),
+                                    ),
                                   ),
-                                ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
+                              ],
+                            ),
+                          );
+                        }),
+                      )),
 
                   // PageView for the screens
                   Expanded(
                     child: PageView(
                       controller: controller.pageController,
+                      physics: const NeverScrollableScrollPhysics(),
                       onPageChanged: (index) {
-                        controller.currentStep.value = index;
+                        final currentStep = controller.currentStep.value;
+
+                        final formKeys = [
+                          controller.step1formKey,
+                          controller.step2formKey,
+                          controller.step3formKey,
+                          controller.step4formKey,
+                          controller.step5formKey,
+                        ];
+
+                        // Same page
+                        if (index == currentStep) return;
+
+                        // BACK NAVIGATION: No validation
+                        if (index < currentStep) {
+                          controller.onStepTapped(index);
+                          return;
+                        }
+
+                        // NEXT NAVIGATION: Only allow the immediate next page
+                        if (index == currentStep + 1) {
+                          final isValid =
+                              formKeys[currentStep].currentState?.validate() ??
+                                  false;
+
+                          if (isValid) {
+                            controller.onStepTapped(index);
+                          } else {
+                            // Validation failed: Return to current page
+                            controller.pageController.jumpToPage(currentStep);
+                          }
+
+                          return;
+                        }
+
+                        // Prevent skipping steps
+                        controller.pageController.jumpToPage(currentStep);
                       },
                       children: [
                         ProfileSettingStepOneWidget(),

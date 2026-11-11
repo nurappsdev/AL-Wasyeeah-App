@@ -66,25 +66,27 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
     );
   }
 
-  void _toggleDropdown() {
+  void _toggleDropdown(FormFieldState<T> state) {
     if (!widget.enabled) return;
+
     if (_isOpen) {
       _closeDropdown();
     } else {
-      _openDropdown();
+      _openDropdown(state);
     }
   }
 
-  void _openDropdown() {
+  void _openDropdown(FormFieldState<T> state) {
     FocusScope.of(context).unfocus();
+
     final overlay = Overlay.of(context);
     final renderBox = context.findRenderObject() as RenderBox?;
+
     if (renderBox == null) return;
 
-    final size = renderBox.size;
-
-    _overlayEntry = _createOverlayEntry(size);
+    _overlayEntry = _createOverlayEntry(renderBox.size, state);
     overlay.insert(_overlayEntry!);
+
     setState(() {
       _isOpen = true;
     });
@@ -100,7 +102,10 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
     }
   }
 
-  OverlayEntry _createOverlayEntry(Size targetSize) {
+  OverlayEntry _createOverlayEntry(
+    Size targetSize,
+    FormFieldState<T> state,
+  ) {
     return OverlayEntry(
       builder: (context) {
         return Stack(
@@ -131,8 +136,11 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                 borderRadius: widget.borderRadius,
                 maxMenuHeight: widget.maxMenuHeight,
                 onSelected: (item) {
+                  state.didChange(item); // Important: Update FormField value
+
+                  widget.onChanged?.call(item); // Update GetX observable
+
                   _closeDropdown();
-                  widget.onChanged?.call(item);
                 },
               ),
             ),
@@ -174,7 +182,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
             mainAxisSize: MainAxisSize.min,
             children: [
               InkWell(
-                onTap: widget.enabled ? _toggleDropdown : null,
+                onTap: widget.enabled ? () => _toggleDropdown(state) : null,
                 borderRadius: BorderRadius.circular(widget.borderRadius.r),
                 child: InputDecorator(
                   isEmpty: !_hasValue,

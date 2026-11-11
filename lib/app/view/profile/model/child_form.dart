@@ -6,8 +6,8 @@ import 'package:wasiyyat/app/view/profile/model/gender_list_model.dart';
 import 'package:wasiyyat/app/core/services/picker/file_picker_service.dart';
 
 class ChildForm {
-  int? childId;
-  int? userId;
+  // int? childId;
+  // int? userId;
 
   final TextEditingController name = TextEditingController();
   final TextEditingController nid = TextEditingController();
@@ -33,7 +33,7 @@ class ChildForm {
   // Existing URLs (for download)
   String? nidUrl;
 
-  ChildForm({this.childId, this.userId});
+  //ChildForm({this.childId, this.userId});
 
   void dispose() {
     name.dispose();

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:wasiyyat/app/view/profile/controller/profile_controller.dart';
 import 'package:wasiyyat/app/core/services/picker/file_picker_service.dart';
 import 'package:wasiyyat/app/view/profile/model/country_list_model.dart';
@@ -149,7 +151,10 @@ class _ProfileSettingStepOneWidgetState
                           items: controller.maritalList,
                           value: form.selectedMarried.value,
                           itemToString: (item) => item.maritalType ?? "",
-                          onChanged: (val) => form.selectedMarried.value = val,
+                          onChanged: (val) {
+                            form.selectedMarried.value = val;
+                            log("Selected Married ${form.selectedMarried.value} ");
+                          },
                           validator: (value) => value == null
                               ? AppLocalizations.of(context)!
                                   .marital_status_is_required

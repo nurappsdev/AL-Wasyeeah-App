@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BankForm {
-  int? userBankInfoId;
-  int? userId;
+  // int? userBankInfoId;
+  // int? userId;
 
   final Rxn<BankModel> bank = Rxn<BankModel>();
   final Rxn<BranchModel> branch = Rxn<BranchModel>();
@@ -14,7 +14,7 @@ class BankForm {
   final TextEditingController accountName = TextEditingController();
   final TextEditingController accountBalance = TextEditingController();
 
-  BankForm({this.userBankInfoId, this.userId});
+  //BankForm({this.userBankInfoId, this.userId});
 
   void dispose() {
     accountName.dispose();
