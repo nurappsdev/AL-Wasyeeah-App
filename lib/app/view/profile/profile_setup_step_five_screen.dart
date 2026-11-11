@@ -129,45 +129,46 @@ class _BankWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Column(
-      children: [
-        if (controller.bankListForm.isEmpty)
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () => controller.addBank(),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 12.h),
-                backgroundColor:
-                    isDark ? const Color(0xFF1E1E1E) : Colors.white,
-                foregroundColor: AppColors.primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.r),
-                  side: BorderSide(
-                    color: isDark
-                        ? const Color(0xFF2C3E35)
-                        : AppColors.primaryColor.withValues(alpha: 0.3),
+    return Obx(() {
+      return Column(
+        children: [
+          if (controller.bankListForm.isEmpty)
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => controller.addBank(),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                  backgroundColor:
+                      isDark ? const Color(0xFF1E1E1E) : Colors.white,
+                  foregroundColor: AppColors.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.r),
+                    side: BorderSide(
+                      color: isDark
+                          ? const Color(0xFF2C3E35)
+                          : AppColors.primaryColor.withValues(alpha: 0.3),
+                    ),
                   ),
                 ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.add),
-                  SizedBox(width: 8.w),
-                  Text(AppLocalizations.of(context)!.add_bank)
-                ],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.add),
+                    SizedBox(width: 8.w),
+                    Text(AppLocalizations.of(context)!.add_bank)
+                  ],
+                ),
               ),
             ),
-          ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: controller.bankListForm.length,
-          itemBuilder: (context, index) {
-            final form = controller.bankListForm[index];
-            return Obx(() {
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: controller.bankListForm.length,
+            itemBuilder: (context, index) {
+              final form = controller.bankListForm[index];
               return Container(
+                key: ObjectKey(form),
                 margin: EdgeInsets.only(bottom: 24.h),
                 padding: EdgeInsets.all(16.h),
                 decoration: BoxDecoration(
@@ -188,18 +189,17 @@ class _BankWidget extends StatelessWidget {
                         CustomText(
                             text: AppLocalizations.of(context)!.bank,
                             fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
-                    CustomDropdown<BankModel>(
-                      hint: AppLocalizations.of(context)!.select_bank,
-                      items: controller.bankList,
-                      value: form.bank.value,
-                      itemToString: (e) => e.bankEn ?? "",
-                      onChanged: (v) => controller.onBankChanged(form, v),
+                    Obx(
+                      () => CustomDropdown<BankModel>(
+                        hint: AppLocalizations.of(context)!.select_bank,
+                        items: controller.bankList.toList(),
+                        value: form.bank.value,
+                        itemToString: (e) => e.bankEn ?? "",
+                        onChanged: (v) => controller.onBankChanged(form, v),
+                      ),
                     ),
                     SizedBox(height: 16.h),
                     Row(
@@ -207,19 +207,19 @@ class _BankWidget extends StatelessWidget {
                         CustomText(
                             text: AppLocalizations.of(context)!.branch,
                             fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
-                    CustomDropdown<BranchModel>(
-                      key: ValueKey("branch_${form.bank.value?.bankId}_$index"),
-                      hint: AppLocalizations.of(context)!.select_branch,
-                      items: form.branchList,
-                      value: form.branch.value,
-                      itemToString: (e) => e.branchNameEn ?? "",
-                      onChanged: (v) => form.branch.value = v,
+                    Obx(
+                      () => CustomDropdown<BranchModel>(
+                        key: ValueKey(
+                            "branch_${form.bank.value?.bankId}_${form.branch.value?.branchId}"),
+                        hint: AppLocalizations.of(context)!.select_branch,
+                        items: form.branchList.toList(),
+                        value: form.branch.value,
+                        itemToString: (e) => e.branchNameEn ?? "",
+                        onChanged: (v) => form.branch.value = v,
+                      ),
                     ),
                     SizedBox(height: 16.h),
                     Row(
@@ -242,9 +242,16 @@ class _BankWidget extends StatelessWidget {
                           : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(
-                        text: AppLocalizations.of(context)!.account_balance,
-                        fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(
+                            text: AppLocalizations.of(context)!.account_balance,
+                            fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.accountBalance,
@@ -280,46 +287,49 @@ class _BankWidget extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                            child: ElevatedButton(
-                          onPressed: () => controller.addBank(),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                isDark ? const Color(0xFF1E1E1E) : Colors.white,
-                            foregroundColor: AppColors.primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.r),
-                              side: BorderSide(
-                                color: isDark
-                                    ? const Color(0xFF2C3E35)
-                                    : AppColors.primaryColor
-                                        .withValues(alpha: 0.3),
+                          child: ElevatedButton(
+                            onPressed: () => controller.addBank(),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: isDark
+                                  ? const Color(0xFF1E1E1E)
+                                  : Colors.white,
+                              foregroundColor: AppColors.primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.r),
+                                side: BorderSide(
+                                  color: isDark
+                                      ? const Color(0xFF2C3E35)
+                                      : AppColors.primaryColor
+                                          .withValues(alpha: 0.3),
+                                ),
                               ),
                             ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.add),
-                              SizedBox(width: 8.w),
-                              Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.add),
+                                SizedBox(width: 8.w),
+                                Expanded(
                                   child: Text(
-                                      AppLocalizations.of(context)!
-                                          .add_more_bank,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis))
-                            ],
+                                    AppLocalizations.of(context)!.add_more_bank,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ))
+                        ),
                       ],
                     ),
                   ],
                 ),
               );
-            });
-          },
-        ),
-      ],
-    );
+            },
+          ),
+        ],
+      );
+    });
   }
 }
 
@@ -331,45 +341,46 @@ class _WealthWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Column(
-      children: [
-        if (controller.wealthListForm.isEmpty)
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () => controller.addWealth(),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 12.h),
-                backgroundColor:
-                    isDark ? const Color(0xFF1E1E1E) : Colors.white,
-                foregroundColor: AppColors.primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.r),
-                  side: BorderSide(
-                    color: isDark
-                        ? const Color(0xFF2C3E35)
-                        : AppColors.primaryColor.withValues(alpha: 0.3),
+    return Obx(() {
+      return Column(
+        children: [
+          if (controller.wealthListForm.isEmpty)
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => controller.addWealth(),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                  backgroundColor:
+                      isDark ? const Color(0xFF1E1E1E) : Colors.white,
+                  foregroundColor: AppColors.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.r),
+                    side: BorderSide(
+                      color: isDark
+                          ? const Color(0xFF2C3E35)
+                          : AppColors.primaryColor.withValues(alpha: 0.3),
+                    ),
                   ),
                 ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.add),
-                  SizedBox(width: 8.w),
-                  Text(AppLocalizations.of(context)!.add_wealth)
-                ],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.add),
+                    SizedBox(width: 8.w),
+                    Text(AppLocalizations.of(context)!.add_wealth)
+                  ],
+                ),
               ),
             ),
-          ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: controller.wealthListForm.length,
-          itemBuilder: (context, index) {
-            final form = controller.wealthListForm[index];
-            return Obx(() {
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: controller.wealthListForm.length,
+            itemBuilder: (context, index) {
+              final form = controller.wealthListForm[index];
               return Container(
+                key: ObjectKey(form),
                 margin: EdgeInsets.only(bottom: 24.h),
                 padding: EdgeInsets.all(16.h),
                 decoration: BoxDecoration(
@@ -390,18 +401,17 @@ class _WealthWidget extends StatelessWidget {
                         CustomText(
                             text: AppLocalizations.of(context)!.wealth,
                             fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
-                    CustomDropdown<WealthModel>(
-                      hint: AppLocalizations.of(context)!.select_wealth,
-                      items: controller.wealthList,
-                      value: form.wealth.value,
-                      itemToString: (e) => e.wealth ?? "",
-                      onChanged: (v) => controller.onWealthChanged(form, v),
+                    Obx(
+                      () => CustomDropdown<WealthModel>(
+                        hint: AppLocalizations.of(context)!.select_wealth,
+                        items: controller.wealthList.toList(),
+                        value: form.wealth.value,
+                        itemToString: (e) => e.wealth ?? "",
+                        onChanged: (v) => controller.onWealthChanged(form, v),
+                      ),
                     ),
                     SizedBox(height: 16.h),
                     Row(
@@ -409,26 +419,33 @@ class _WealthWidget extends StatelessWidget {
                         CustomText(
                             text: AppLocalizations.of(context)!.document_type,
                             fontsize: 16.sp),
+                      ],
+                    ),
+                    SizedBox(height: 4.h),
+                    Obx(
+                      () => CustomDropdown<DocumentTypeForm>(
+                        key: ValueKey(
+                            "doc_${form.wealth.value?.wealthId}_${form.selectedDocumentType.value?.documentTypeId}"),
+                        hint:
+                            AppLocalizations.of(context)!.select_document_type,
+                        items: form.documentTypeList.toList(),
+                        value: form.selectedDocumentType.value,
+                        itemToString: (e) => e.documentType ?? "",
+                        onChanged: (v) => form.selectedDocumentType.value = v,
+                      ),
+                    ),
+                    SizedBox(height: 16.h),
+                    Row(
+                      children: [
+                        CustomText(
+                            text: AppLocalizations.of(context)!
+                                .land_area_in_shotangsho,
+                            fontsize: 16.sp),
                         Text(' *',
                             style:
                                 TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
-                    SizedBox(height: 4.h),
-                    CustomDropdown<DocumentTypeForm>(
-                      key:
-                          ValueKey("doc_${form.wealth.value?.wealthId}_$index"),
-                      hint: AppLocalizations.of(context)!.select_document_type,
-                      items: form.documentTypeList,
-                      value: form.selectedDocumentType.value,
-                      itemToString: (e) => e.documentType ?? "",
-                      onChanged: (v) => form.selectedDocumentType.value = v,
-                    ),
-                    SizedBox(height: 16.h),
-                    CustomText(
-                        text: AppLocalizations.of(context)!
-                            .land_area_in_shotangsho,
-                        fontsize: 16.sp),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.landArea,
@@ -439,9 +456,16 @@ class _WealthWidget extends StatelessWidget {
                           : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(
-                        text: AppLocalizations.of(context)!.location,
-                        fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(
+                            text: AppLocalizations.of(context)!.location,
+                            fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.location,
@@ -527,46 +551,50 @@ class _WealthWidget extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                            child: ElevatedButton(
-                          onPressed: () => controller.addWealth(),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                isDark ? const Color(0xFF1E1E1E) : Colors.white,
-                            foregroundColor: AppColors.primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.r),
-                              side: BorderSide(
-                                color: isDark
-                                    ? const Color(0xFF2C3E35)
-                                    : AppColors.primaryColor
-                                        .withValues(alpha: 0.3),
+                          child: ElevatedButton(
+                            onPressed: () => controller.addWealth(),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: isDark
+                                  ? const Color(0xFF1E1E1E)
+                                  : Colors.white,
+                              foregroundColor: AppColors.primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.r),
+                                side: BorderSide(
+                                  color: isDark
+                                      ? const Color(0xFF2C3E35)
+                                      : AppColors.primaryColor
+                                          .withValues(alpha: 0.3),
+                                ),
                               ),
                             ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.add),
-                              SizedBox(width: 8.w),
-                              Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.add),
+                                SizedBox(width: 8.w),
+                                Expanded(
                                   child: Text(
-                                      AppLocalizations.of(context)!
-                                          .add_more_wealth,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis))
-                            ],
+                                    AppLocalizations.of(context)!
+                                        .add_more_wealth,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ))
+                        ),
                       ],
                     ),
                   ],
                 ),
               );
-            });
-          },
-        ),
-      ],
-    );
+            },
+          ),
+        ],
+      );
+    });
   }
 }
 
@@ -617,6 +645,7 @@ class _ReceivableWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               final form = controller.receivableListForm[index];
               return Container(
+                key: ObjectKey(form),
                 margin: EdgeInsets.only(bottom: 24.h),
                 padding: EdgeInsets.all(16.h),
                 decoration: BoxDecoration(
@@ -632,9 +661,17 @@ class _ReceivableWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(
-                        text: AppLocalizations.of(context)!.receivable_amount,
-                        fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(
+                            text:
+                                AppLocalizations.of(context)!.receivable_amount,
+                            fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.amount,
@@ -645,9 +682,17 @@ class _ReceivableWidget extends StatelessWidget {
                           : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(
-                        text: AppLocalizations.of(context)!.receivable_person,
-                        fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(
+                            text:
+                                AppLocalizations.of(context)!.receivable_person,
+                            fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.personName,
@@ -658,10 +703,17 @@ class _ReceivableWidget extends StatelessWidget {
                           : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(
-                        text: AppLocalizations.of(context)!
-                            .receivable_person_mobile,
-                        fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(
+                            text: AppLocalizations.of(context)!
+                                .receivable_person_mobile,
+                            fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.personMobile,
@@ -786,6 +838,7 @@ class _PayableWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               final form = controller.payableListForm[index];
               return Container(
+                key: ObjectKey(form),
                 margin: EdgeInsets.only(bottom: 24.h),
                 padding: EdgeInsets.all(16.h),
                 decoration: BoxDecoration(
@@ -801,9 +854,16 @@ class _PayableWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(
-                        text: AppLocalizations.of(context)!.payable_amount,
-                        fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(
+                            text: AppLocalizations.of(context)!.payable_amount,
+                            fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.amount,
@@ -814,9 +874,16 @@ class _PayableWidget extends StatelessWidget {
                           : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(
-                        text: AppLocalizations.of(context)!.payable_person,
-                        fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(
+                            text: AppLocalizations.of(context)!.payable_person,
+                            fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.personName,
@@ -827,10 +894,17 @@ class _PayableWidget extends StatelessWidget {
                           : null,
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(
-                        text:
-                            AppLocalizations.of(context)!.payable_person_mobile,
-                        fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(
+                            text: AppLocalizations.of(context)!
+                                .payable_person_mobile,
+                            fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.personMobile,

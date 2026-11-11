@@ -151,6 +151,16 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
   }
 
   @override
+  void didUpdateWidget(covariant CustomDropdown<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.value != widget.value) {
+      if (mounted) {
+        setState(() {});
+      }
+    }
+  }
+
+  @override
   void dispose() {
     if (_isOpen) {
       _overlayEntry?.remove();
@@ -286,6 +296,17 @@ class _DropdownOverlayContentState<T>
     super.initState();
     _searchController = TextEditingController();
     _filteredItems = widget.items;
+  }
+
+  @override
+  void didUpdateWidget(covariant _DropdownOverlayContent<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.items != widget.items) {
+      _filteredItems = widget.items;
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 
   @override
