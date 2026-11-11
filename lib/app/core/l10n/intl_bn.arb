@@ -174,6 +174,7 @@
   "notifications": "বিজ্ঞপ্তি",
   "name": "নাম",
   "security_question": "নিরাপত্তা প্রশ্ন",
+  "forget_security_question":"নিরাপত্তা প্রশ্ন ভুলে গেছেন?",
   "answer": "উত্তর",
   "get_start": "শুরু করুন",
   "access_control_panel": "অ্যাক্সেস কন্ট্রোল প্যানেল",

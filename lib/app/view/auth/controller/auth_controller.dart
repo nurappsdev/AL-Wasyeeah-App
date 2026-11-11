@@ -264,6 +264,43 @@ class AuthController extends GetxController {
     }
   }
 
+  ///==================Forget Security Question===========================
+  RxBool forgetSecurityLoading = false.obs;
+
+  Future<void> forgetSecurityQuestion({
+    required String mobile,
+    required String dob,
+  }) async {
+    forgetSecurityLoading(true);
+
+    var body = {
+      "email": null,
+      "mobile": mobile,
+      "dob": dob,
+      "securityAnswer": null,
+      "securityCode": null,
+    };
+
+    var response = await ApiService.postData(
+      ApiConstants.forgetSecurityQuestion,
+      body: body,
+    );
+
+    log("forgetSecurityQuestion response: ${response.body}");
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      ToastMessage.successMessageShowToster(response.body ??
+          AppLocalizations.of(Get.context!)!.verification_otp_send_success);
+      Get.back(); // close the bottom sheet
+      Get.back();
+      forgetSecurityLoading(false);
+    } else {
+      forgetSecurityLoading(false);
+      ToastMessage.errorMessageShowToster(
+          response.body ?? AppLocalizations.of(Get.context!)!.unable_data);
+    }
+  }
+
   Future<void> deleteAccount(String currentPassword) async {
     try {
       isDeletingAccount(true);

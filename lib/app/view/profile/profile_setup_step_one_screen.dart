@@ -145,21 +145,23 @@ class _ProfileSettingStepOneWidgetState
                       ],
                     ),
                     SizedBox(height: 4.h),
-                    Obx(() => CustomDropdown<MaritalModel>(
-                          hint: AppLocalizations.of(context)!
-                              .select_marital_status,
-                          items: controller.maritalList,
-                          value: form.selectedMarried.value,
-                          itemToString: (item) => item.maritalType ?? "",
-                          onChanged: (val) {
-                            form.selectedMarried.value = val;
-                            log("Selected Married ${form.selectedMarried.value} ");
-                          },
-                          validator: (value) => value == null
-                              ? AppLocalizations.of(context)!
-                                  .marital_status_is_required
-                              : null,
-                        )),
+                    Obx(
+                      () => CustomDropdown<MaritalModel>(
+                        hint:
+                            AppLocalizations.of(context)!.select_marital_status,
+                        items: controller.maritalList,
+                        value: form.selectedMarried.value,
+                        itemToString: (item) => item.maritalType ?? "",
+                        onChanged: (val) {
+                          form.selectedMarried.value = val;
+                          log("Selected Married ${form.selectedMarried.value} ");
+                        },
+                        validator: (value) => value == null
+                            ? AppLocalizations.of(context)!
+                                .marital_status_is_required
+                            : null,
+                      ),
+                    ),
 
                     SizedBox(height: 16.h),
                     // ================= Profession =================
@@ -183,9 +185,9 @@ class _ProfileSettingStepOneWidgetState
                         CustomText(
                             text: AppLocalizations.of(context)!.place_of_birth,
                             fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                        // Text(' *',
+                        //     style:
+                        //         TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
@@ -199,9 +201,16 @@ class _ProfileSettingStepOneWidgetState
 
                     SizedBox(height: 16.h),
                     // ================= District/State =================
-                    CustomText(
-                        text: AppLocalizations.of(context)!.district_state,
-                        fontsize: 16.sp),
+                    Row(
+                      children: [
+                        CustomText(
+                            text: AppLocalizations.of(context)!.district_state,
+                            fontsize: 16.sp),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.district,
@@ -219,9 +228,9 @@ class _ProfileSettingStepOneWidgetState
                         CustomText(
                             text: AppLocalizations.of(context)!.gender,
                             fontsize: 16.sp),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                        // Text(' *',
+                        //     style:
+                        //         TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
@@ -284,9 +293,16 @@ class _ProfileSettingStepOneWidgetState
                     SizedBox(height: 16.h),
 
                     // ================= TIN =================
-                    CustomText(
-                        text: AppLocalizations.of(context)!
-                            .tin_tax_identification_number),
+                    Row(
+                      children: [
+                        CustomText(
+                            text: AppLocalizations.of(context)!
+                                .tin_tax_identification_number),
+                        Text(' *',
+                            style:
+                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                      ],
+                    ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(
                       controller: form.tin,

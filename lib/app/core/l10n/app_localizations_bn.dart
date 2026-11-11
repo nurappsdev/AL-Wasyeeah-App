@@ -541,6 +541,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get security_question => 'নিরাপত্তা প্রশ্ন';
 
   @override
+  String get forget_security_question => 'নিরাপত্তা প্রশ্ন ভুলে গেছেন?';
+
+  @override
   String get answer => 'উত্তর';
 
   @override

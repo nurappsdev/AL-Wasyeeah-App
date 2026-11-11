@@ -15,6 +15,7 @@ class ApiConstants {
   static const String signInEndPoint = "/user/login";
   // send otp
   static const String sendOtpEndPoint = "/user/forget-password";
+  static const forgetSecurityQuestion = "/user/forgetSecurityQuestion";
   // check otp
   static const String checkOtpEndPoint = "$sendOtpEndPoint/checkOtp";
   // witness

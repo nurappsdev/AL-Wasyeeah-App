@@ -61,202 +61,204 @@ class LoginPage extends StatelessWidget {
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-            child: Form(
-              key: _logKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 20.h),
+            child: AutofillGroup(
+              child: Form(
+                key: _logKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20.h),
 
-                  // Logo
-                  Center(
-                    child: SvgPicture.asset(
-                      AppIcons.logo,
-                      height: 140.h,
-                      width: 180.w,
-                    ),
-                  ),
-
-                  SizedBox(height: 24.h),
-
-                  // Quick Action Menu Icons
-                  SizedBox(
-                    height: 90.h,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: items.length,
-                      separatorBuilder: (context, index) =>
-                          SizedBox(width: 16.w),
-                      itemBuilder: (context, index) {
-                        final item = items[index];
-                        return GestureDetector(
-                          onTap: item.onTap,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                item.icon,
-                                height: 50.h,
-                                width: 50.w,
-                              ),
-                              SizedBox(height: 4.h),
-                              CustomText(text: item.text),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-
-                  SizedBox(height: 20.h),
-
-                  // Username / Email Field
-                  CustomText(
-                    text: localization.user_name,
-                    color: AppColors.hitTextColor000000,
-                    fontsize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  SizedBox(height: 8.h),
-                  CustomTextField(
-                    controller: authController.userNameController,
-                    hintText: localization.user_name,
-                    borderColor: AppColors.secondaryPrimaryColor,
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                    // Logo
+                    Center(
                       child: SvgPicture.asset(
-                        AppIcons.email,
-                        colorFilter: ColorFilter.mode(
-                          AppColors.primaryColor,
-                          BlendMode.srcIn,
-                        ),
-                        height: 20.h,
-                        width: 20.w,
+                        AppIcons.logo,
+                        height: 140.h,
+                        width: 180.w,
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return localization.please_enter_your_email;
-                      }
-                      return null;
-                    },
-                  ),
 
-                  SizedBox(height: 16.h),
+                    SizedBox(height: 24.h),
 
-                  // Password Field
-                  CustomText(
-                    text: localization.password,
-                    color: AppColors.hitTextColor000000,
-                    fontsize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  SizedBox(height: 8.h),
-                  CustomTextField(
-                    controller: authController.passwordController,
-                    isPassword: true,
-                    hintText: localization.please_enter_your_password,
-                    borderColor: AppColors.secondaryPrimaryColor,
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(left: 16.w, right: 12.w),
-                      child: SvgPicture.asset(
-                        AppIcons.passIcon,
-                        colorFilter: ColorFilter.mode(
-                          AppColors.primaryColor,
-                          BlendMode.srcIn,
-                        ),
-                        height: 22.h,
-                        width: 22.w,
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return localization.please_enter_your_password;
-                      } else if (value.length < 8 ||
-                          !AppConstants.validatePassword(value)) {
-                        return localization
-                            .password_8_characters_min_letters_digits_required;
-                      }
-                      return null;
-                    },
-                  ),
-
-                  SizedBox(height: 12.h),
-
-                  // Forgot Password Link
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: InkWell(
-                      onTap: () {
-                        Get.toNamed(
-                          RouteName.forgotPasswordPage,
-                          parameters: {
-                            'email': authController.userNameController.text
-                          },
-                        );
-                      },
-                      child: CustomText(
-                        text: localization.forget_password,
-                        fontsize: 15.sp,
-                        color: AppColors.primaryColor,
-                        textAlign: TextAlign.right,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: 24.h),
-
-                  // Sign In Button
-                  Obx(
-                    () => CustomButton(
-                      loading: authController.signInLoading.value,
-                      title: localization.sign_in,
-                      onpress: () {
-                        if (_logKey.currentState!.validate()) {
-                          TextInput.finishAutofillContext();
-                          authController.signInHandle(
-                            userName:
-                                authController.userNameController.text.trim(),
-                            password: authController.passwordController.text,
+                    // Quick Action Menu Icons
+                    SizedBox(
+                      height: 90.h,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: items.length,
+                        separatorBuilder: (context, index) =>
+                            SizedBox(width: 16.w),
+                        itemBuilder: (context, index) {
+                          final item = items[index];
+                          return GestureDetector(
+                            onTap: item.onTap,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  item.icon,
+                                  height: 50.h,
+                                  width: 50.w,
+                                ),
+                                SizedBox(height: 4.h),
+                                CustomText(text: item.text),
+                              ],
+                            ),
                           );
+                        },
+                      ),
+                    ),
+
+                    SizedBox(height: 20.h),
+
+                    // Username / Email Field
+                    CustomText(
+                      text: localization.user_name,
+                      color: AppColors.hitTextColor000000,
+                      fontsize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    SizedBox(height: 8.h),
+                    CustomTextField(
+                      controller: authController.userNameController,
+                      hintText: localization.user_name,
+                      borderColor: AppColors.secondaryPrimaryColor,
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                        child: SvgPicture.asset(
+                          AppIcons.email,
+                          colorFilter: ColorFilter.mode(
+                            AppColors.primaryColor,
+                            BlendMode.srcIn,
+                          ),
+                          height: 20.h,
+                          width: 20.w,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return localization.please_enter_your_email;
                         }
+                        return null;
                       },
                     ),
-                  ),
 
-                  SizedBox(height: 20.h),
+                    SizedBox(height: 16.h),
 
-                  // Register Now Link
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomText(
-                        text: localization.don_t_have_an_account,
-                        fontsize: 16.sp,
+                    // Password Field
+                    CustomText(
+                      text: localization.password,
+                      color: AppColors.hitTextColor000000,
+                      fontsize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    SizedBox(height: 8.h),
+                    CustomTextField(
+                      controller: authController.passwordController,
+                      isPassword: true,
+                      hintText: localization.please_enter_your_password,
+                      borderColor: AppColors.secondaryPrimaryColor,
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                        child: SvgPicture.asset(
+                          AppIcons.passIcon,
+                          colorFilter: ColorFilter.mode(
+                            AppColors.primaryColor,
+                            BlendMode.srcIn,
+                          ),
+                          height: 22.h,
+                          width: 22.w,
+                        ),
                       ),
-                      SizedBox(width: 4.w),
-                      InkWell(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return localization.please_enter_your_password;
+                        } else if (value.length < 8 ||
+                            !AppConstants.validatePassword(value)) {
+                          return localization
+                              .password_8_characters_min_letters_digits_required;
+                        }
+                        return null;
+                      },
+                    ),
+
+                    SizedBox(height: 12.h),
+
+                    // Forgot Password Link
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: InkWell(
                         onTap: () {
                           Get.toNamed(
-                            RouteName.registrationPage,
-                            preventDuplicates: false,
+                            RouteName.forgotPasswordPage,
+                            parameters: {
+                              'email': authController.userNameController.text
+                            },
                           );
                         },
                         child: CustomText(
-                          text: localization.register_now,
-                          fontsize: 16.sp,
+                          text: localization.forget_password,
+                          fontsize: 15.sp,
                           color: AppColors.primaryColor,
-                          fontWeight: FontWeight.bold,
+                          textAlign: TextAlign.right,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
 
-                  SizedBox(height: 20.h),
-                ],
+                    SizedBox(height: 24.h),
+
+                    // Sign In Button
+                    Obx(
+                      () => CustomButton(
+                        loading: authController.signInLoading.value,
+                        title: localization.sign_in,
+                        onpress: () {
+                          if (_logKey.currentState!.validate()) {
+                            TextInput.finishAutofillContext();
+                            authController.signInHandle(
+                              userName:
+                                  authController.userNameController.text.trim(),
+                              password: authController.passwordController.text,
+                            );
+                          }
+                        },
+                      ),
+                    ),
+
+                    SizedBox(height: 20.h),
+
+                    // Register Now Link
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomText(
+                          text: localization.don_t_have_an_account,
+                          fontsize: 16.sp,
+                        ),
+                        SizedBox(width: 4.w),
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed(
+                              RouteName.registrationPage,
+                              preventDuplicates: false,
+                            );
+                          },
+                          child: CustomText(
+                            text: localization.register_now,
+                            fontsize: 16.sp,
+                            color: AppColors.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 20.h),
+                  ],
+                ),
               ),
             ),
           ),

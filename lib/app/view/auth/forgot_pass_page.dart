@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:wasiyyat/app/view/auth/controller/auth_controller.dart';
 import 'package:wasiyyat/app/core/widgets/custom_app_bar.dart';
 import 'package:wasiyyat/app/core/utils/app_colors.dart';
@@ -213,6 +214,20 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ),
                   ),
 
+                  RichText(
+                    textAlign: TextAlign.right,
+                    text: TextSpan(
+                      text: AppLocalizations.of(context)!
+                          .forget_security_question,
+                      style: TextStyle(
+                        color: AppColors.primaryColor,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          _showForgetSecurityBottomSheet(context);
+                        },
+                    ),
+                  ),
                   SizedBox(
                     height: 16.h,
                   ),
@@ -236,6 +251,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       return null;
                     },
                   ),
+
                   SizedBox(
                     height: 16.h,
                   ),
@@ -270,6 +286,138 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showForgetSecurityBottomSheet(BuildContext context) {
+    final GlobalKey<FormState> bottomSheetFormKey = GlobalKey<FormState>();
+    final TextEditingController bsMobileController = TextEditingController();
+    final TextEditingController bsDobController = TextEditingController();
+    DateTime? bsBirthDate;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+          ),
+          child: Form(
+            key: bottomSheetFormKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40.w,
+                    height: 4.h,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[400],
+                      borderRadius: BorderRadius.circular(2.r),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                Center(
+                  child: CustomText(
+                    text: AppLocalizations.of(context)!
+                        .forget_security_question,
+                    fontsize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 16.h),
+
+                /// Mobile
+                CustomText(
+                  text: AppLocalizations.of(context)!.mobile,
+                  color: AppColors.hitTextColor000000,
+                ),
+                CustomTextField(
+                  controller: bsMobileController,
+                  hintText: AppLocalizations.of(context)!.mobile,
+                  borderColor: AppColors.secondaryPrimaryColor,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppLocalizations.of(context)!
+                          .please_enter_your_mobile_number;
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16.h),
+
+                /// Date of Birth
+                CustomText(
+                  text: AppLocalizations.of(context)!.date_of_birth,
+                  color: AppColors.hitTextColor000000,
+                ),
+                CustomTextField(
+                  controller: bsDobController,
+                  readOnly: true,
+                  hintText: AppLocalizations.of(context)!.date_of_birth,
+                  hintextColor: Colors.black54,
+                  borderColor: AppColors.secondaryPrimaryColor,
+                  onTap: () async {
+                    DateTime? selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1930),
+                      lastDate: DateTime.now(),
+                    );
+                    if (selectedDate != null) {
+                      bsBirthDate = selectedDate;
+                      bsDobController.text =
+                          DateFormat('yyyy-MM-dd').format(bsBirthDate!);
+                    }
+                  },
+                  suffixIcon: Icon(
+                    Icons.calendar_month,
+                    color: AppColors.primaryColor,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppLocalizations.of(context)!
+                          .please_write_date_of_birth;
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 20.h),
+
+                /// Submit Button
+                Obx(
+                  () => Align(
+                    alignment: Alignment.bottomCenter,
+                    child: CustomButton(
+                      loading:
+                          authController.forgetSecurityLoading.value == true,
+                      title: AppLocalizations.of(context)!.submit,
+                      onpress: () {
+                        if (bottomSheetFormKey.currentState!.validate()) {
+                          authController.forgetSecurityQuestion(
+                            mobile: bsMobileController.text,
+                            dob: bsDobController.text,
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.h),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

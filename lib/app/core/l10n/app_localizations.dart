@@ -1149,6 +1149,12 @@ abstract class AppLocalizations {
   /// **'Security Question'**
   String get security_question;
 
+  /// No description provided for @forget_security_question.
+  ///
+  /// In en, this message translates to:
+  /// **'Forget security question?'**
+  String get forget_security_question;
+
   /// No description provided for @answer.
   ///
   /// In en, this message translates to:

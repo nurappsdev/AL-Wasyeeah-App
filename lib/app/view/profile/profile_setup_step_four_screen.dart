@@ -10,7 +10,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import '../../core/widgets/file_choose_and_download_button.dart';
 import 'package:wasiyyat/app/view/profile/model/profession_list_model.dart';
 import 'package:wasiyyat/app/view/profile/model/country_list_model.dart';
@@ -213,18 +212,20 @@ class SiblingWidget extends StatelessWidget {
                           CustomText(
                               text: AppLocalizations.of(context)!.gender,
                               fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          // Text(' *',
+                          //     style: TextStyle(
+                          //         color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
-                      CustomDropdown<GenderModel>(
-                        hint: AppLocalizations.of(context)!.gender,
-                        items: controller.genderList,
-                        value: form.gender.value,
-                        itemToString: (e) => e.gender ?? "",
-                        onChanged: (v) => form.gender.value = v,
+                      Obx(
+                        () => CustomDropdown<GenderModel>(
+                          hint: AppLocalizations.of(context)!.gender,
+                          items: controller.genderList,
+                          value: form.gender.value,
+                          itemToString: (e) => e.gender ?? "",
+                          onChanged: (v) => form.gender.value = v,
+                        ),
                       ),
                       SizedBox(height: 16.h),
                       // Profession
@@ -233,12 +234,14 @@ class SiblingWidget extends StatelessWidget {
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
-                      CustomDropdown<ProfessionModel>(
-                        hint: AppLocalizations.of(context)!.profession,
-                        items: controller.professionList,
-                        value: form.profession.value,
-                        itemToString: (e) => e.profession ?? "",
-                        onChanged: (v) => form.profession.value = v,
+                      Obx(
+                        () => CustomDropdown<ProfessionModel>(
+                          hint: AppLocalizations.of(context)!.profession,
+                          items: controller.professionList,
+                          value: form.profession.value,
+                          itemToString: (e) => e.profession ?? "",
+                          onChanged: (v) => form.profession.value = v,
+                        ),
                       ),
                       SizedBox(height: 16.h),
                       // Nationality
@@ -247,12 +250,14 @@ class SiblingWidget extends StatelessWidget {
                         fontsize: 16.sp,
                       ),
                       SizedBox(height: 4.h),
-                      CustomDropdown<CountryModel>(
-                        hint: AppLocalizations.of(context)!.nationality,
-                        items: controller.countryList,
-                        value: form.nationality.value,
-                        itemToString: (e) => e.country ?? "",
-                        onChanged: (v) => form.nationality.value = v,
+                      Obx(
+                        () => CustomDropdown<CountryModel>(
+                          hint: AppLocalizations.of(context)!.nationality,
+                          items: controller.countryList,
+                          value: form.nationality.value,
+                          itemToString: (e) => e.country ?? "",
+                          onChanged: (v) => form.nationality.value = v,
+                        ),
                       ),
                       SizedBox(height: 16.h),
                       // Date of Birth
@@ -262,9 +267,9 @@ class SiblingWidget extends StatelessWidget {
                               text: AppLocalizations.of(context)!
                                   .sibling_date_of_birth,
                               fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          // Text(' *',
+                          //     style: TextStyle(
+                          //         color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -326,9 +331,16 @@ class SiblingWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       // NID/Passport No
-                      CustomText(
-                        text: AppLocalizations.of(context)!.nid_passport_no,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(
+                            text: AppLocalizations.of(context)!.nid_passport_no,
+                            fontsize: 16.sp,
+                          ),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
@@ -383,9 +395,16 @@ class SiblingWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       // Mobile
-                      CustomText(
-                        text: AppLocalizations.of(context)!.mobile,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(
+                            text: AppLocalizations.of(context)!.mobile,
+                            fontsize: 16.sp,
+                          ),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
@@ -401,9 +420,16 @@ class SiblingWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       // Email
-                      CustomText(
-                        text: AppLocalizations.of(context)!.email,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(
+                            text: AppLocalizations.of(context)!.email,
+                            fontsize: 16.sp,
+                          ),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
@@ -630,9 +656,9 @@ class _ChildWidget extends StatelessWidget {
                           CustomText(
                               text: AppLocalizations.of(context)!.gender,
                               fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          // Text(' *',
+                          //     style: TextStyle(
+                          //         color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -650,18 +676,20 @@ class _ChildWidget extends StatelessWidget {
                           CustomText(
                               text: AppLocalizations.of(context)!.profession,
                               fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          // Text(' *',
+                          //     style: TextStyle(
+                          //         color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
-                      CustomDropdown<ProfessionModel>(
-                        hint: AppLocalizations.of(context)!.profession,
-                        items: controller.professionList,
-                        value: form.profession.value,
-                        itemToString: (e) => e.profession ?? "",
-                        onChanged: (v) => form.profession.value = v,
+                      Obx(
+                        () => CustomDropdown<ProfessionModel>(
+                          hint: AppLocalizations.of(context)!.profession,
+                          items: controller.professionList,
+                          value: form.profession.value,
+                          itemToString: (e) => e.profession ?? "",
+                          onChanged: (v) => form.profession.value = v,
+                        ),
                       ),
                       SizedBox(height: 16.h),
                       // Nationality
@@ -670,18 +698,20 @@ class _ChildWidget extends StatelessWidget {
                           CustomText(
                               text: AppLocalizations.of(context)!.nationality,
                               fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          // Text(' *',
+                          //     style: TextStyle(
+                          //         color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
-                      CustomDropdown<CountryModel>(
-                        hint: AppLocalizations.of(context)!.nationality,
-                        items: controller.countryList,
-                        value: form.nationality.value,
-                        itemToString: (e) => e.country ?? "",
-                        onChanged: (v) => form.nationality.value = v,
+                      Obx(
+                        () => CustomDropdown<CountryModel>(
+                          hint: AppLocalizations.of(context)!.nationality,
+                          items: controller.countryList,
+                          value: form.nationality.value,
+                          itemToString: (e) => e.country ?? "",
+                          onChanged: (v) => form.nationality.value = v,
+                        ),
                       ),
                       SizedBox(height: 16.h),
                       // Date of Birth
@@ -691,9 +721,9 @@ class _ChildWidget extends StatelessWidget {
                               text: AppLocalizations.of(context)!
                                   .child_date_of_birth,
                               fontsize: 16.sp),
-                          Text(' *',
-                              style: TextStyle(
-                                  color: Colors.red, fontSize: 16.sp)),
+                          // Text(' *',
+                          //     style: TextStyle(
+                          //         color: Colors.red, fontSize: 16.sp)),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -779,6 +809,12 @@ class _ChildWidget extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 16.h),
+                      CustomText(
+                        text: AppLocalizations.of(context)!
+                            .nid_passport_documents,
+                        fontsize: 16.sp,
+                      ),
+                      SizedBox(height: 4.h),
                       Obx(
                         () => FileChooseAndDownloadButton(
                           pickedFile: form.selectedNidFile,
@@ -819,9 +855,16 @@ class _ChildWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       // Mobile
-                      CustomText(
-                        text: AppLocalizations.of(context)!.mobile,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(
+                            text: AppLocalizations.of(context)!.mobile,
+                            fontsize: 16.sp,
+                          ),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
@@ -837,9 +880,16 @@ class _ChildWidget extends StatelessWidget {
                       ),
                       SizedBox(height: 16.h),
                       // Email
-                      CustomText(
-                        text: AppLocalizations.of(context)!.email,
-                        fontsize: 16.sp,
+                      Row(
+                        children: [
+                          CustomText(
+                            text: AppLocalizations.of(context)!.email,
+                            fontsize: 16.sp,
+                          ),
+                          Text(' *',
+                              style: TextStyle(
+                                  color: Colors.red, fontSize: 16.sp)),
+                        ],
                       ),
                       SizedBox(height: 4.h),
                       CustomTextFormField(
@@ -1071,13 +1121,22 @@ class _SpouseWidget extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 4.h),
-                    CustomDropdown<ProfessionModel>(
-                      hint: AppLocalizations.of(context)!.profession,
-                      items: controller.professionList,
-                      value: form.profession.value,
-                      itemToString: (e) => e.profession ?? "",
-                      onChanged: (v) => form.profession.value = v,
+
+                    Obx(
+                      () => CustomDropdown<ProfessionModel>(
+                        hint: AppLocalizations.of(context)!.profession,
+                        items: controller.professionList,
+                        value: form.profession.value,
+                        itemToString: (e) => e.profession ?? "",
+                        onChanged: (val) {
+                          form.profession.value = val;
+                        },
+                        validator: (value) => value == null
+                            ? AppLocalizations.of(context)!.profession
+                            : null,
+                      ),
                     ),
+
                     SizedBox(height: 16.h),
                     Row(
                       children: [
@@ -1086,18 +1145,20 @@ class _SpouseWidget extends StatelessWidget {
                               AppLocalizations.of(context)!.spouse_nationality,
                           fontsize: 16.sp,
                         ),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                        // Text(' *',
+                        //     style:
+                        //         TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
-                    CustomDropdown<CountryModel>(
-                      hint: AppLocalizations.of(context)!.nationality,
-                      items: controller.countryList,
-                      value: form.nationality.value,
-                      itemToString: (e) => e.country ?? "",
-                      onChanged: (v) => form.nationality.value = v,
+                    Obx(
+                      () => CustomDropdown<CountryModel>(
+                        hint: AppLocalizations.of(context)!.nationality,
+                        items: controller.countryList,
+                        value: form.nationality.value,
+                        itemToString: (e) => e.country ?? "",
+                        onChanged: (v) => form.nationality.value = v,
+                      ),
                     ),
                     SizedBox(height: 16.h),
                     Row(
@@ -1107,9 +1168,9 @@ class _SpouseWidget extends StatelessWidget {
                               .spouse_date_of_birth,
                           fontsize: 16.sp,
                         ),
-                        Text(' *',
-                            style:
-                                TextStyle(color: Colors.red, fontSize: 16.sp)),
+                        // Text(' *',
+                        //     style:
+                        //         TextStyle(color: Colors.red, fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 4.h),
@@ -1264,11 +1325,19 @@ class _SpouseWidget extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 16.h),
-                    CustomText(
-                      text: AppLocalizations.of(context)!.spouse +
-                          " " +
-                          AppLocalizations.of(context)!.email,
-                      fontsize: 16.sp,
+                    Row(
+                      children: [
+                        CustomText(
+                          text: AppLocalizations.of(context)!.spouse +
+                              " " +
+                              AppLocalizations.of(context)!.email,
+                          fontsize: 16.sp,
+                        ),
+                        Text(
+                          " *",
+                          style: TextStyle(color: Colors.red, fontSize: 16.sp),
+                        )
+                      ],
                     ),
                     SizedBox(height: 4.h),
                     CustomTextFormField(

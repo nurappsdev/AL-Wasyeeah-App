@@ -544,6 +544,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get security_question => 'Security Question';
 
   @override
+  String get forget_security_question => 'Forget security question?';
+
+  @override
   String get answer => 'Answer';
 
   @override
