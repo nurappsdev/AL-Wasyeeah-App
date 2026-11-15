@@ -28,4 +28,16 @@ class BranchModel {
         "branchNameEn": branchNameEn,
         "branchNameBn": branchNameBn,
       };
+
+  BranchModel copyWith({
+    String? branchId,
+    String? branchNameEn,
+    String? branchNameBn,
+  }) {
+    return BranchModel(
+      branchId: branchId ?? this.branchId,
+      branchNameEn: branchNameEn ?? this.branchNameEn,
+      branchNameBn: branchNameBn ?? this.branchNameBn,
+    );
+  }
 }

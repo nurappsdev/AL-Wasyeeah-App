@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wasiyyat/app/view/profile/model/profile_model.dart';
 
 class AccountPayableForm {
+  PayableInfo? original;
   // int? payId;
   // int? userId;
 
@@ -14,5 +16,14 @@ class AccountPayableForm {
     amount.dispose();
     personName.dispose();
     personMobile.dispose();
+  }
+
+  AccountPayableForm copy() {
+    final newForm = AccountPayableForm();
+    newForm.original = original;
+    newForm.amount.text = amount.text;
+    newForm.personName.text = personName.text;
+    newForm.personMobile.text = personMobile.text;
+    return newForm;
   }
 }

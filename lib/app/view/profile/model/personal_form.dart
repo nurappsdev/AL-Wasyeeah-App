@@ -71,4 +71,30 @@ class PersonalForm {
     tin.dispose();
     multiCitizenPassport.dispose();
   }
+
+  PersonalForm copy() {
+    final newForm = PersonalForm();
+    newForm.firstName.text = firstName.text;
+    newForm.lastName.text = lastName.text;
+    newForm.district.text = district.text;
+    newForm.nid.text = nid.text;
+    newForm.tin.text = tin.text;
+    newForm.multiCitizenPassport.text = multiCitizenPassport.text;
+    newForm.selectedMarried.value = selectedMarried.value;
+    newForm.selectedProfession.value = selectedProfession.value;
+    newForm.selectedCountry.value = selectedCountry.value;
+    newForm.selectedMultiCitizenCountry.value =
+        selectedMultiCitizenCountry.value;
+    newForm.selectedGender.value = selectedGender.value;
+    newForm.selectedNidFile.value = selectedNidFile.value;
+    newForm.selectedTinFile.value = selectedTinFile.value;
+    newForm.selectedMultiCitizenFile.value = selectedMultiCitizenFile.value;
+    newForm.selectedProfilePictureFile.value =
+        selectedProfilePictureFile.value;
+    newForm.nidUrl = nidUrl;
+    newForm.tinUrl = tinUrl;
+    newForm.multiCitizenUrl = multiCitizenUrl;
+    newForm.profilePictureUrl = profilePictureUrl;
+    return newForm;
+  }
 }

@@ -41,15 +41,39 @@ class _ProfilePageState extends State<ProfilePage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PopScope(
-      onPopInvokedWithResult: (didPop, result) {
-        if (didPop) {
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+
+        final shouldExit =
+            await showProfileFormFillUpExitConfirmationDialog(context);
+
+        if (!context.mounted) return;
+
+        if (shouldExit == true) {
           controller.resetUiValues();
+
+          Navigator.of(context).pop();
         }
       },
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
           title: AppLocalizations.of(context)!.profile_settings,
+          onBackPressed: () async {
+            final shouldExit =
+                await showProfileFormFillUpExitConfirmationDialog(context);
+
+            if (shouldExit == true && context.mounted) {
+              controller.resetUiValues();
+
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              } else {
+                Get.back();
+              }
+            }
+          },
         ),
         body: Obx(() {
           final isLoading = controller.status.value.isLoading;
@@ -215,6 +239,45 @@ class _ProfilePageState extends State<ProfilePage> {
           );
         }),
       ),
+    );
+  }
+
+  Future<bool?> showProfileFormFillUpExitConfirmationDialog(
+    BuildContext context,
+  ) {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          title: Text(
+            AppLocalizations.of(context)!.exit_profile_form_title,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: Text(
+            AppLocalizations.of(context)!.exit_profile_form_subtitle,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(dialogContext, false);
+              },
+              child: Text(AppLocalizations.of(context)!.stay),
+            ),
+            FilledButton(
+              onPressed: () {
+                Navigator.pop(dialogContext, true);
+              },
+              child: Text(AppLocalizations.of(context)!.exit),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:mime/mime.dart';
 import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
-import 'package:wasiyyat/app/core/route/route_names.dart';
+import 'package:wasiyyat/app/core/services/picker/file_picker_service.dart';
 import 'package:wasiyyat/app/view/profile/model/document_type_form.dart';
 import 'package:wasiyyat/app/view/profile/model/sibling_form.dart';
 import 'package:wasiyyat/app/view/profile/model/branch_model.dart';
@@ -18,8 +19,6 @@ import 'package:wasiyyat/app/view/profile/model/profession_list_model.dart';
 import 'package:wasiyyat/app/view/profile/model/profile_model.dart';
 import 'package:wasiyyat/app/view/profile/model/wealth_list_model.dart';
 import 'package:get/get.dart';
-
-import 'dart:io';
 import 'package:wasiyyat/app/view/profile/model/account_payable_form.dart';
 import 'package:wasiyyat/app/view/profile/model/account_receivable_form.dart';
 import 'package:wasiyyat/app/view/profile/model/bank_form.dart';
@@ -325,7 +324,6 @@ class ProfileController extends GetxController {
     personalForm.value.tinUrl = user.tinPaperUrl;
     personalForm.value.multiCitizenUrl = user.passportPaperUrl;
     personalForm.value.profilePictureUrl = user.profilePictureUrl;
-    log("Value saved: ${personalForm.value.profilePictureUrl}");
   }
 
   void _mapAddressInfo() {
@@ -389,6 +387,7 @@ class ProfileController extends GetxController {
     if (spouses != null && spouses.isNotEmpty) {
       for (final spouse in spouses) {
         final form = SpouseForm();
+        form.original = spouse;
 
         /// Text fields
         form.name.text = spouse.spouseName ?? '';
@@ -430,6 +429,7 @@ class ProfileController extends GetxController {
     if (children != null && children.isNotEmpty) {
       for (final child in children) {
         final form = ChildForm();
+        form.original = child;
 
         /// Text fields
         form.name.text = child.childName ?? '';
@@ -505,6 +505,7 @@ class ProfileController extends GetxController {
     if (siblings != null && siblings.isNotEmpty) {
       for (final sibling in siblings) {
         final form = SiblingForm();
+        form.original = sibling;
 
         /// Text fields
         form.name.text = sibling.siblingName ?? '';
@@ -568,6 +569,7 @@ class ProfileController extends GetxController {
       final Map<String, List<BranchModel>> cachedBranches = {};
       for (final bank in banks) {
         final form = BankForm();
+        form.original = bank;
         form.bank.value =
             bankList.firstWhereOrNull((e) => e.bankId == bank.bankId);
 
@@ -626,6 +628,7 @@ class ProfileController extends GetxController {
       final Map<String, List<DocumentTypeForm>> cachedDocTypes = {};
       for (final wealth in wealths) {
         final form = WealthForm();
+        form.original = wealth;
         form.wealth.value =
             wealthList.firstWhereOrNull((e) => e.wealthId == wealth.wealthId);
 
@@ -688,6 +691,7 @@ class ProfileController extends GetxController {
     if (receivables != null && receivables.isNotEmpty) {
       for (final rec in receivables) {
         final form = AccountReceivableForm();
+        form.original = rec;
         form.amount.text = rec.receivableAmount?.toString() ?? '';
         form.personName.text = rec.receivablePerson ?? '';
         form.personMobile.text = rec.receivablePersonMobile ?? '';
@@ -715,6 +719,7 @@ class ProfileController extends GetxController {
     if (payables != null && payables.isNotEmpty) {
       for (final pay in payables) {
         final form = AccountPayableForm();
+        form.original = pay;
         form.amount.text = pay.payableAmount?.toString() ?? '';
         form.personName.text = pay.payablePerson ?? '';
         form.personMobile.text = pay.payablePersonMobile ?? '';
@@ -734,13 +739,41 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<String?> _fileToBase64(File? file) async {
-    if (file == null) return null;
+  // Future<String?> _fileToBase64(File? file) async {
+  //   if (file == null) return null;
+  //   try {
+  //     List<int> fileBytes = await file.readAsBytes();
+  //     log("Base64Encode: " + base64Encode(fileBytes));
+  //     return base64Encode(fileBytes);
+  //   } catch (e) {
+  //     log("Error converting file to base64: $e");
+  //     return null;
+  //   }
+  // }
+
+  Future<String?> _fileToBase64(PickedFileResult? pickedFile) async {
+    if (pickedFile == null) return null;
+
     try {
-      List<int> fileBytes = await file.readAsBytes();
-      return base64Encode(fileBytes);
+      final fileBytes = await pickedFile.file.readAsBytes();
+
+      // Detect MIME type
+      final mimeType =
+          lookupMimeType(pickedFile.fileName) ?? 'application/octet-stream';
+
+      // Convert to Base64
+      final base64String = base64Encode(fileBytes);
+
+      // Create Data URI
+      final dataUri = 'data:$mimeType;base64,$base64String';
+
+      log('File Name: ${pickedFile.fileName}');
+      log('MIME Type: $mimeType');
+      log('Base64 Length: ${base64String.length}');
+
+      return dataUri;
     } catch (e) {
-      log("Error converting file to base64: $e");
+      log('Error converting file to base64: $e');
       return null;
     }
   }
@@ -753,38 +786,41 @@ class ProfileController extends GetxController {
       final address = addressForm.value;
       final parent = parentForm.value;
 
-      // 1. Map UserProfile
-      final userProfile = UserProfile(
-          userProfileId: profileModel.value.userProfile?.userProfileId,
-          firstName: personal.firstName.text,
-          lastName: personal.lastName.text,
-          maritalStatusId: personal.selectedMarried.value?.maritalId,
-          professionId: personal.selectedProfession.value?.professionId,
-          countryCode: personal.selectedCountry.value?.countryId,
-          district: personal.district.text,
-          gender: personal.selectedGender.value?.genderId.toString(),
-          nid: int.tryParse(personal.nid.text),
-          tin: personal.tin.text,
-          multipleCitizenCode:
-              personal.selectedMultiCitizenCountry.value?.countryId,
-          multipleCitizenPassportNo: personal.multiCitizenPassport.text,
-          presentAddress:
-              "${address.presentZipCode.text},${address.presentVillage.text},${address.presentRoad.text}",
-          permanentAddress: address.isPresentAddressAsPermanentAddress.value
-              ? "${address.presentZipCode.text},${address.presentVillage.text},${address.presentRoad.text}"
-              : "${address.permanentZipCode.text},${address.permanentVillage.text},${address.permanentRoad.text}",
-          overseasCountryCode: address.selectedOverseasCountry.value?.countryId,
-          overseasVillage: address.overseasVillage.text,
-          nidFile: await _fileToBase64(personal.selectedNidFile.value?.file),
-          tinFile: await _fileToBase64(personal.selectedTinFile.value?.file),
-          profileFile: await _fileToBase64(
-              personal.selectedProfilePictureFile.value?.file),
-          passportFile: await _fileToBase64(
-              personal.selectedMultiCitizenFile.value?.file));
+      // 1. Map UserProfile using copyWith to preserve server/unmodified fields
+      final existingUser = profileModel.value.userProfile ?? UserProfile();
+      final userProfile = existingUser.copyWith(
+        userProfileId: existingUser.userProfileId,
+        firstName: personal.firstName.text,
+        lastName: personal.lastName.text,
+        maritalStatusId: personal.selectedMarried.value?.maritalId,
+        professionId: personal.selectedProfession.value?.professionId,
+        countryCode: personal.selectedCountry.value?.countryId,
+        district: personal.district.text,
+        gender: personal.selectedGender.value?.genderId.toString(),
+        nid: int.tryParse(personal.nid.text),
+        tin: personal.tin.text,
+        multipleCitizenCode:
+            personal.selectedMultiCitizenCountry.value?.countryId,
+        multipleCitizenPassportNo: personal.multiCitizenPassport.text,
+        presentAddress:
+            "${address.presentZipCode.text},${address.presentVillage.text},${address.presentRoad.text}",
+        permanentAddress: address.isPresentAddressAsPermanentAddress.value
+            ? "${address.presentZipCode.text},${address.presentVillage.text},${address.presentRoad.text}"
+            : "${address.permanentZipCode.text},${address.permanentVillage.text},${address.permanentRoad.text}",
+        overseasCountryCode: address.selectedOverseasCountry.value?.countryId,
+        overseasVillage: address.overseasVillage.text,
+        nidFile: await _fileToBase64(personal.selectedNidFile.value),
+        tinFile: await _fileToBase64(personal.selectedTinFile.value),
+        profileFile:
+            await _fileToBase64(personal.selectedProfilePictureFile.value),
+        passportFile:
+            await _fileToBase64(personal.selectedMultiCitizenFile.value),
+      );
 
-      // 2. Map ParentInfo
-      final parentInfo = ParentInfo(
-        parentId: profileModel.value.parentInfo?.parentId,
+      // 2. Map ParentInfo using copyWith
+      final existingParent = profileModel.value.parentInfo ?? ParentInfo();
+      final parentInfo = existingParent.copyWith(
+        parentId: existingParent.parentId,
         fatherName: parent.fatherName.text,
         fatherProfessionId: parent.selectedFatherProfession.value?.professionId,
         fatherNationalityId: parent.selectedFatherCountry.value?.countryId,
@@ -795,17 +831,16 @@ class ProfileController extends GetxController {
         motherNationalityId: parent.selectedMotherCountry.value?.countryId,
         motherNid: parent.motherPassOrNID.text,
         motherExisting: parent.isMotherAlive.value,
-        fatherNidFile:
-            await _fileToBase64(parent.selectedFatherFile.value?.file),
-        motherNidFile:
-            await _fileToBase64(parent.selectedMotherFile.value?.file),
+        fatherNidFile: await _fileToBase64(parent.selectedFatherFile.value),
+        motherNidFile: await _fileToBase64(parent.selectedMotherFile.value),
       );
 
       // 3. Map SpouseInfo
       List<SpouseInfo> spouses = [];
       for (var form in spouseList) {
         if (form.name.text.isEmpty) continue;
-        spouses.add(SpouseInfo(
+        final existing = form.original ?? SpouseInfo();
+        spouses.add(existing.copyWith(
           spouseName: form.name.text,
           professionId: form.profession.value?.professionId,
           nationalityId: form.nationality.value?.countryId,
@@ -814,9 +849,9 @@ class ProfileController extends GetxController {
           mobile: form.mobile.text,
           email: form.email.text,
           existing: form.isAlive.value,
-          spouseNidFile: await _fileToBase64(form.selectedNidFile.value?.file),
+          spouseNidFile: await _fileToBase64(form.selectedNidFile.value),
           spousePassportFile:
-              await _fileToBase64(form.selectedPassportFile.value?.file),
+              await _fileToBase64(form.selectedPassportFile.value),
         ));
       }
 
@@ -824,7 +859,8 @@ class ProfileController extends GetxController {
       List<ChildInfo> children = [];
       for (var form in childrenList) {
         if (form.name.text.isEmpty) continue;
-        children.add(ChildInfo(
+        final existing = form.original ?? ChildInfo();
+        children.add(existing.copyWith(
           childName: form.name.text,
           professionId: form.profession.value?.professionId,
           nationalityId: form.nationality.value?.countryId,
@@ -834,7 +870,7 @@ class ProfileController extends GetxController {
           mobile: form.mobile.text,
           email: form.email.text,
           existing: form.isAlive.value,
-          nidFile: await _fileToBase64(form.selectedNidFile.value?.file),
+          nidFile: await _fileToBase64(form.selectedNidFile.value),
         ));
       }
 
@@ -842,7 +878,8 @@ class ProfileController extends GetxController {
       List<SiblingInfo> siblings = [];
       for (var form in siblingList) {
         if (form.name.text.isEmpty) continue;
-        siblings.add(SiblingInfo(
+        final existing = form.original ?? SiblingInfo();
+        siblings.add(existing.copyWith(
           siblingName: form.name.text,
           professionId: form.profession.value?.professionId,
           nationalityId: form.nationality.value?.countryId,
@@ -852,7 +889,7 @@ class ProfileController extends GetxController {
           mobile: form.mobile.text,
           email: form.email.text,
           existing: form.isAlive.value,
-          nidFile: await _fileToBase64(form.selectedNidFile.value?.file),
+          nidFile: await _fileToBase64(form.selectedNidFile.value),
         ));
       }
 
@@ -860,7 +897,8 @@ class ProfileController extends GetxController {
       List<BankInfo> banks = [];
       for (var form in bankListForm) {
         if (form.bank.value == null) continue;
-        banks.add(BankInfo(
+        final existing = form.original ?? BankInfo();
+        banks.add(existing.copyWith(
           bankId: form.bank.value?.bankId.toString(),
           branchId: form.branch.value?.branchId.toString(),
           bankAccNo: form.accountName.text,
@@ -872,13 +910,14 @@ class ProfileController extends GetxController {
       List<WealthInfo> wealths = [];
       for (var form in wealthListForm) {
         if (form.wealth.value == null) continue;
-        wealths.add(WealthInfo(
+        final existing = form.original ?? WealthInfo();
+        wealths.add(existing.copyWith(
           wealthId: form.wealth.value?.wealthId,
           documentTypeId: form.selectedDocumentType.value?.documentTypeId,
           amount: form.landArea.text,
           location: form.location.text,
           note: form.note.text,
-          documentFile: await _fileToBase64(form.documentFile.value?.file),
+          documentFile: await _fileToBase64(form.documentFile.value),
         ));
       }
 
@@ -886,7 +925,8 @@ class ProfileController extends GetxController {
       List<ReceivableInfo> receivables = [];
       for (var form in receivableListForm) {
         if (form.amount.text.isEmpty) continue;
-        receivables.add(ReceivableInfo(
+        final existing = form.original ?? ReceivableInfo();
+        receivables.add(existing.copyWith(
           receivableAmount: double.tryParse(form.amount.text),
           receivablePerson: form.personName.text,
           receivablePersonMobile: form.personMobile.text,
@@ -897,14 +937,15 @@ class ProfileController extends GetxController {
       List<PayableInfo> payables = [];
       for (var form in payableListForm) {
         if (form.amount.text.isEmpty) continue;
-        payables.add(PayableInfo(
+        final existing = form.original ?? PayableInfo();
+        payables.add(existing.copyWith(
           payableAmount: double.tryParse(form.amount.text),
           payablePerson: form.personName.text,
           payablePersonMobile: form.personMobile.text,
         ));
       }
 
-      final submitData = ProfileModel(
+      final submitData = profileModel.value.copyWith(
         userProfile: userProfile,
         parentInfo: parentInfo,
         spouseInfo: spouses,
@@ -916,6 +957,7 @@ class ProfileController extends GetxController {
         payableInfo: payables,
       );
 
+      log("Api request body: ${jsonEncode(submitData.toJson())}");
       var response = await ApiService.postData(
         ApiConstants.profileUpdate,
         body: submitData.toJson(),
@@ -937,6 +979,19 @@ class ProfileController extends GetxController {
           msg: AppLocalizations.of(Get.context!)!.something_went_wrong);
     } finally {
       status(RxStatus.success());
+    }
+  }
+
+  void logLargeData(dynamic data) {
+    const int chunkSize = 800;
+
+    final String text = const JsonEncoder.withIndent('  ').convert(data);
+
+    for (int i = 0; i < text.length; i += chunkSize) {
+      final int end =
+          (i + chunkSize < text.length) ? i + chunkSize : text.length;
+
+      debugPrint(text.substring(i, end));
     }
   }
 

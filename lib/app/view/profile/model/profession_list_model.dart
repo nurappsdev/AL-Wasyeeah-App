@@ -26,4 +26,14 @@ class ProfessionModel {
         "profession": profession,
         "professionId": professionId,
       };
+
+  ProfessionModel copyWith({
+    String? profession,
+    int? professionId,
+  }) {
+    return ProfessionModel(
+      profession: profession ?? this.profession,
+      professionId: professionId ?? this.professionId,
+    );
+  }
 }

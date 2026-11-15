@@ -34,4 +34,16 @@ class DocumentTypeForm {
         "documentType": documentType,
         "documentTypeId": documentTypeId,
       };
+
+  DocumentTypeForm copyWith({
+    String? amountLabel,
+    String? documentType,
+    int? documentTypeId,
+  }) {
+    return DocumentTypeForm(
+      amountLabel: amountLabel ?? this.amountLabel,
+      documentType: documentType ?? this.documentType,
+      documentTypeId: documentTypeId ?? this.documentTypeId,
+    );
+  }
 }

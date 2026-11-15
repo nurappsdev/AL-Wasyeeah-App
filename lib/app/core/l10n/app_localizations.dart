@@ -3465,6 +3465,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No'**
   String get no;
+
+  /// No description provided for @exit_profile_form_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit Profile Form?'**
+  String get exit_profile_form_title;
+
+  /// No description provided for @exit_profile_form_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to exit? Your unsaved changes may be lost.'**
+  String get exit_profile_form_subtitle;
+
+  /// No description provided for @exit.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get exit;
+
+  /// No description provided for @stay.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay'**
+  String get stay;
 }
 
 class _AppLocalizationsDelegate

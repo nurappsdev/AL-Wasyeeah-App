@@ -41,4 +41,19 @@ class AddressForm {
     permanentRoad.dispose();
     overseasVillage.dispose();
   }
+
+  AddressForm copy() {
+    final newForm = AddressForm();
+    newForm.presentZipCode.text = presentZipCode.text;
+    newForm.presentVillage.text = presentVillage.text;
+    newForm.presentRoad.text = presentRoad.text;
+    newForm.permanentZipCode.text = permanentZipCode.text;
+    newForm.permanentVillage.text = permanentVillage.text;
+    newForm.permanentRoad.text = permanentRoad.text;
+    newForm.overseasVillage.text = overseasVillage.text;
+    newForm.selectedOverseasCountry.value = selectedOverseasCountry.value;
+    newForm.isPresentAddressAsPermanentAddress.value =
+        isPresentAddressAsPermanentAddress.value;
+    return newForm;
+  }
 }

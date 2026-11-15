@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:wasiyyat/app/view/profile/controller/profile_controller.dart';
 import 'package:wasiyyat/app/view/profile/model/branch_model.dart';
 import 'package:wasiyyat/app/core/utils/app_colors.dart';

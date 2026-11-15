@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
 import 'package:wasiyyat/app/core/route/route_names.dart';
 import 'package:wasiyyat/app/core/utils/app_constant.dart';
@@ -133,7 +134,7 @@ class ApiService extends GetxService {
     dynamic body,
     Map<String, String>? headers,
   }) async {
-    log('====> API Request: [POST] ${ApiConstants.baseUrl + uri}\n$headers\n$body');
+    log('====> API Request: [POST] ${ApiConstants.baseUrl + uri}\n$headers\n${jsonEncode(body)}');
     try {
       final response = await _client
           .post(

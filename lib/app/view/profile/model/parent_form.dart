@@ -53,4 +53,23 @@ class ParentForm {
     motherName.dispose();
     motherPassOrNID.dispose();
   }
+
+  ParentForm copy() {
+    final newForm = ParentForm();
+    newForm.fatherName.text = fatherName.text;
+    newForm.fatherPassOrNID.text = fatherPassOrNID.text;
+    newForm.selectedFatherProfession.value = selectedFatherProfession.value;
+    newForm.selectedFatherCountry.value = selectedFatherCountry.value;
+    newForm.isFatherAlive.value = isFatherAlive.value;
+    newForm.motherName.text = motherName.text;
+    newForm.motherPassOrNID.text = motherPassOrNID.text;
+    newForm.selectedMotherProfession.value = selectedMotherProfession.value;
+    newForm.selectedMotherCountry.value = selectedMotherCountry.value;
+    newForm.isMotherAlive.value = isMotherAlive.value;
+    newForm.selectedFatherFile.value = selectedFatherFile.value;
+    newForm.selectedMotherFile.value = selectedMotherFile.value;
+    newForm.fatherNidUrl = fatherNidUrl;
+    newForm.motherNidUrl = motherNidUrl;
+    return newForm;
+  }
 }

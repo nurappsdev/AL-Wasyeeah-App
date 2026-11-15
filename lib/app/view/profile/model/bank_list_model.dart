@@ -32,4 +32,16 @@ class BankModel {
         "bankEn": bankEn,
         "bankId": bankId,
       };
+
+  BankModel copyWith({
+    String? bankBn,
+    String? bankEn,
+    String? bankId,
+  }) {
+    return BankModel(
+      bankBn: bankBn ?? this.bankBn,
+      bankEn: bankEn ?? this.bankEn,
+      bankId: bankId ?? this.bankId,
+    );
+  }
 }

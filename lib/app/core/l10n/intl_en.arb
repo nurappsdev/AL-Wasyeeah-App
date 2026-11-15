@@ -581,5 +581,9 @@
   "exit_app_title": "Exit App",
   "exit_app_message": "Do you want to exit the app?",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "exit_profile_form_title":"Exit Profile Form?",
+  "exit_profile_form_subtitle":"Are you sure you want to exit? Your unsaved changes may be lost.",
+  "exit": "Exit",
+  "stay": "Stay"
 }

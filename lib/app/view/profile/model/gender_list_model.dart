@@ -28,4 +28,14 @@ class GenderModel {
         "genderId": genderId,
         "gender": gender,
       };
+
+  GenderModel copyWith({
+    int? genderId,
+    String? gender,
+  }) {
+    return GenderModel(
+      genderId: genderId ?? this.genderId,
+      gender: gender ?? this.gender,
+    );
+  }
 }

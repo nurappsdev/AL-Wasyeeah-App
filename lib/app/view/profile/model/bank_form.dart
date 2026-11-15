@@ -2,8 +2,10 @@ import 'package:wasiyyat/app/view/profile/model/bank_list_model.dart';
 import 'package:wasiyyat/app/view/profile/model/branch_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wasiyyat/app/view/profile/model/profile_model.dart';
 
 class BankForm {
+  BankInfo? original;
   // int? userBankInfoId;
   // int? userId;
 
@@ -19,5 +21,16 @@ class BankForm {
   void dispose() {
     accountName.dispose();
     accountBalance.dispose();
+  }
+
+  BankForm copy() {
+    final newForm = BankForm();
+    newForm.bank.value = bank.value;
+    newForm.branch.value = branch.value;
+    newForm.branchList.assignAll(branchList);
+    newForm.accountName.text = accountName.text;
+    newForm.accountBalance.text = accountBalance.text;
+    newForm.original = original;
+    return newForm;
   }
 }

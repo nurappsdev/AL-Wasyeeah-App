@@ -25,4 +25,14 @@ class MaritalModel {
         "maritalType": maritalType,
         "maritalId": maritalId,
       };
+
+  MaritalModel copyWith({
+    String? maritalType,
+    int? maritalId,
+  }) {
+    return MaritalModel(
+      maritalType: maritalType ?? this.maritalType,
+      maritalId: maritalId ?? this.maritalId,
+    );
+  }
 }

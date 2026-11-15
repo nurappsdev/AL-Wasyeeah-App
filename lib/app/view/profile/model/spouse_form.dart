@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:wasiyyat/app/view/profile/model/profession_list_model.dart';
 import 'package:wasiyyat/app/view/profile/model/country_list_model.dart';
 import 'package:wasiyyat/app/core/services/picker/file_picker_service.dart';
+import 'package:wasiyyat/app/view/profile/model/profile_model.dart';
 
 class SpouseForm {
+  SpouseInfo? original;
   final RxBool isAlive = true.obs;
   final TextEditingController name = TextEditingController();
   final TextEditingController nid = TextEditingController();
@@ -32,5 +34,24 @@ class SpouseForm {
     passport.dispose();
     mobile.dispose();
     email.dispose();
+  }
+
+  SpouseForm copy() {
+    final newForm = SpouseForm();
+    newForm.isAlive.value = isAlive.value;
+    newForm.name.text = name.text;
+    newForm.nid.text = nid.text;
+    newForm.passport.text = passport.text;
+    newForm.mobile.text = mobile.text;
+    newForm.email.text = email.text;
+    newForm.profession.value = profession.value;
+    newForm.nationality.value = nationality.value;
+    newForm.selectedDob.value = selectedDob.value;
+    newForm.selectedNidFile.value = selectedNidFile.value;
+    newForm.selectedPassportFile.value = selectedPassportFile.value;
+    newForm.nidUrl = nidUrl;
+    newForm.passportUrl = passportUrl;
+    newForm.original = original;
+    return newForm;
   }
 }

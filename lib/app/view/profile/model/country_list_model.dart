@@ -33,4 +33,16 @@ class CountryModel {
         "country": country,
         "countryId": countryId,
       };
+
+  CountryModel copyWith({
+    String? countryCode,
+    String? country,
+    int? countryId,
+  }) {
+    return CountryModel(
+      countryCode: countryCode ?? this.countryCode,
+      country: country ?? this.country,
+      countryId: countryId ?? this.countryId,
+    );
+  }
 }

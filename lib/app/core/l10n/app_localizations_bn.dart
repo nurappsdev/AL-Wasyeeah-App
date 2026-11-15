@@ -1772,4 +1772,17 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get no => 'না';
+
+  @override
+  String get exit_profile_form_title => 'প্রোফাইল ফর্ম থেকে বের হবেন?';
+
+  @override
+  String get exit_profile_form_subtitle =>
+      'আপনি কি নিশ্চিত যে বের হতে চান? আপনার সংরক্ষণ না করা পরিবর্তনগুলো হারিয়ে যেতে পারে।';
+
+  @override
+  String get exit => 'বের হন';
+
+  @override
+  String get stay => 'থাকুন';
 }

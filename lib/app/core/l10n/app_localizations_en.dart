@@ -1760,4 +1760,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get no => 'No';
+
+  @override
+  String get exit_profile_form_title => 'Exit Profile Form?';
+
+  @override
+  String get exit_profile_form_subtitle =>
+      'Are you sure you want to exit? Your unsaved changes may be lost.';
+
+  @override
+  String get exit => 'Exit';
+
+  @override
+  String get stay => 'Stay';
 }

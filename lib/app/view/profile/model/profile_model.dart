@@ -102,6 +102,34 @@ class ProfileModel {
             ? []
             : List<dynamic>.from(payableInfo!.map((x) => x.toJson())),
       };
+
+  ProfileModel copyWith({
+    UserProfile? userProfile,
+    dynamic socialMediaLink,
+    ParentInfo? parentInfo,
+    List<SpouseInfo>? spouseInfo,
+    List<ChildInfo>? childInfo,
+    List<SiblingInfo>? siblingInfo,
+    List<BankInfo>? bankInfo,
+    List<WealthInfo>? wealthInfo,
+    dynamic shareMarketInfo,
+    List<ReceivableInfo>? receivableInfo,
+    List<PayableInfo>? payableInfo,
+  }) {
+    return ProfileModel(
+      userProfile: userProfile ?? this.userProfile,
+      socialMediaLink: socialMediaLink ?? this.socialMediaLink,
+      parentInfo: parentInfo ?? this.parentInfo,
+      spouseInfo: spouseInfo ?? this.spouseInfo,
+      childInfo: childInfo ?? this.childInfo,
+      siblingInfo: siblingInfo ?? this.siblingInfo,
+      bankInfo: bankInfo ?? this.bankInfo,
+      wealthInfo: wealthInfo ?? this.wealthInfo,
+      shareMarketInfo: shareMarketInfo ?? this.shareMarketInfo,
+      receivableInfo: receivableInfo ?? this.receivableInfo,
+      payableInfo: payableInfo ?? this.payableInfo,
+    );
+  }
 }
 
 class BankInfo {
@@ -138,6 +166,24 @@ class BankInfo {
         "bankAccNo": bankAccNo,
         "accBalance": accBalance,
       };
+
+  BankInfo copyWith({
+    int? userBankInfoId,
+    int? userId,
+    String? bankId,
+    String? branchId,
+    String? bankAccNo,
+    double? accBalance,
+  }) {
+    return BankInfo(
+      userBankInfoId: userBankInfoId ?? this.userBankInfoId,
+      userId: userId ?? this.userId,
+      bankId: bankId ?? this.bankId,
+      branchId: branchId ?? this.branchId,
+      bankAccNo: bankAccNo ?? this.bankAccNo,
+      accBalance: accBalance ?? this.accBalance,
+    );
+  }
 }
 
 class ChildInfo {
@@ -203,6 +249,38 @@ class ChildInfo {
         "userId": userId,
         "nidFile": nidFile,
       };
+
+  ChildInfo copyWith({
+    int? childId,
+    String? childName,
+    int? genderId,
+    int? professionId,
+    int? nationalityId,
+    DateTime? dob,
+    String? nid,
+    String? nidPaperUrl,
+    String? mobile,
+    String? email,
+    bool? existing,
+    int? userId,
+    dynamic nidFile,
+  }) {
+    return ChildInfo(
+      childId: childId ?? this.childId,
+      childName: childName ?? this.childName,
+      genderId: genderId ?? this.genderId,
+      professionId: professionId ?? this.professionId,
+      nationalityId: nationalityId ?? this.nationalityId,
+      dob: dob ?? this.dob,
+      nid: nid ?? this.nid,
+      nidPaperUrl: nidPaperUrl ?? this.nidPaperUrl,
+      mobile: mobile ?? this.mobile,
+      email: email ?? this.email,
+      existing: existing ?? this.existing,
+      userId: userId ?? this.userId,
+      nidFile: nidFile ?? this.nidFile,
+    );
+  }
 }
 
 class ParentInfo {
@@ -287,6 +365,48 @@ class ParentInfo {
         "fatherNIDFile": fatherNidFile,
         "motherNIDFile": motherNidFile,
       };
+
+  ParentInfo copyWith({
+    int? parentId,
+    int? userId,
+    String? fatherName,
+    int? fatherProfessionId,
+    int? fatherNationalityId,
+    String? fatherNid,
+    String? fatherNidUrl,
+    dynamic fatherWhatsAppNumber,
+    bool? fatherExisting,
+    String? motherName,
+    int? motherProfessionId,
+    int? motherNationalityId,
+    String? motherNid,
+    String? motherNidUrl,
+    dynamic motherWhatsAppNumber,
+    bool? motherExisting,
+    dynamic fatherNidFile,
+    dynamic motherNidFile,
+  }) {
+    return ParentInfo(
+      parentId: parentId ?? this.parentId,
+      userId: userId ?? this.userId,
+      fatherName: fatherName ?? this.fatherName,
+      fatherProfessionId: fatherProfessionId ?? this.fatherProfessionId,
+      fatherNationalityId: fatherNationalityId ?? this.fatherNationalityId,
+      fatherNid: fatherNid ?? this.fatherNid,
+      fatherNidUrl: fatherNidUrl ?? this.fatherNidUrl,
+      fatherWhatsAppNumber: fatherWhatsAppNumber ?? this.fatherWhatsAppNumber,
+      fatherExisting: fatherExisting ?? this.fatherExisting,
+      motherName: motherName ?? this.motherName,
+      motherProfessionId: motherProfessionId ?? this.motherProfessionId,
+      motherNationalityId: motherNationalityId ?? this.motherNationalityId,
+      motherNid: motherNid ?? this.motherNid,
+      motherNidUrl: motherNidUrl ?? this.motherNidUrl,
+      motherWhatsAppNumber: motherWhatsAppNumber ?? this.motherWhatsAppNumber,
+      motherExisting: motherExisting ?? this.motherExisting,
+      fatherNidFile: fatherNidFile ?? this.fatherNidFile,
+      motherNidFile: motherNidFile ?? this.motherNidFile,
+    );
+  }
 }
 
 class PayableInfo {
@@ -319,6 +439,22 @@ class PayableInfo {
         "payablePerson": payablePerson,
         "payablePersonMobile": payablePersonMobile,
       };
+
+  PayableInfo copyWith({
+    int? payId,
+    int? userId,
+    double? payableAmount,
+    String? payablePerson,
+    String? payablePersonMobile,
+  }) {
+    return PayableInfo(
+      payId: payId ?? this.payId,
+      userId: userId ?? this.userId,
+      payableAmount: payableAmount ?? this.payableAmount,
+      payablePerson: payablePerson ?? this.payablePerson,
+      payablePersonMobile: payablePersonMobile ?? this.payablePersonMobile,
+    );
+  }
 }
 
 class ReceivableInfo {
@@ -351,6 +487,22 @@ class ReceivableInfo {
         "receivablePerson": receivablePerson,
         "receivablePersonMobile": receivablePersonMobile,
       };
+
+  ReceivableInfo copyWith({
+    int? recId,
+    int? userId,
+    double? receivableAmount,
+    String? receivablePerson,
+    String? receivablePersonMobile,
+  }) {
+    return ReceivableInfo(
+      recId: recId ?? this.recId,
+      userId: userId ?? this.userId,
+      receivableAmount: receivableAmount ?? this.receivableAmount,
+      receivablePerson: receivablePerson ?? this.receivablePerson,
+      receivablePersonMobile: receivablePersonMobile ?? this.receivablePersonMobile,
+    );
+  }
 }
 
 class SiblingInfo {
@@ -424,6 +576,42 @@ class SiblingInfo {
         "userId": userId,
         "nidFile": nidFile,
       };
+
+  SiblingInfo copyWith({
+    int? siblingId,
+    String? siblingName,
+    int? genderId,
+    int? professionId,
+    int? nationalityId,
+    String? nid,
+    DateTime? dob,
+    bool? existing,
+    String? nidPaperUrl,
+    dynamic whatsAppNumber,
+    String? email,
+    String? mobile,
+    dynamic socialMediaLink,
+    int? userId,
+    dynamic nidFile,
+  }) {
+    return SiblingInfo(
+      siblingId: siblingId ?? this.siblingId,
+      siblingName: siblingName ?? this.siblingName,
+      genderId: genderId ?? this.genderId,
+      professionId: professionId ?? this.professionId,
+      nationalityId: nationalityId ?? this.nationalityId,
+      nid: nid ?? this.nid,
+      dob: dob ?? this.dob,
+      existing: existing ?? this.existing,
+      nidPaperUrl: nidPaperUrl ?? this.nidPaperUrl,
+      whatsAppNumber: whatsAppNumber ?? this.whatsAppNumber,
+      email: email ?? this.email,
+      mobile: mobile ?? this.mobile,
+      socialMediaLink: socialMediaLink ?? this.socialMediaLink,
+      userId: userId ?? this.userId,
+      nidFile: nidFile ?? this.nidFile,
+    );
+  }
 }
 
 class SpouseInfo {
@@ -492,6 +680,40 @@ class SpouseInfo {
         "spouseNIDFile": spouseNidFile,
         "spousePassportFile": spousePassportFile,
       };
+
+  SpouseInfo copyWith({
+    int? spouseId,
+    String? spouseName,
+    int? professionId,
+    int? nationalityId,
+    String? nid,
+    String? nidPaperUrl,
+    dynamic passport,
+    dynamic passportPaperUrl,
+    String? mobile,
+    String? email,
+    bool? existing,
+    int? userId,
+    dynamic spouseNidFile,
+    dynamic spousePassportFile,
+  }) {
+    return SpouseInfo(
+      spouseId: spouseId ?? this.spouseId,
+      spouseName: spouseName ?? this.spouseName,
+      professionId: professionId ?? this.professionId,
+      nationalityId: nationalityId ?? this.nationalityId,
+      nid: nid ?? this.nid,
+      nidPaperUrl: nidPaperUrl ?? this.nidPaperUrl,
+      passport: passport ?? this.passport,
+      passportPaperUrl: passportPaperUrl ?? this.passportPaperUrl,
+      mobile: mobile ?? this.mobile,
+      email: email ?? this.email,
+      existing: existing ?? this.existing,
+      userId: userId ?? this.userId,
+      spouseNidFile: spouseNidFile ?? this.spouseNidFile,
+      spousePassportFile: spousePassportFile ?? this.spousePassportFile,
+    );
+  }
 }
 
 class UserProfile {
@@ -653,6 +875,87 @@ class UserProfile {
         "tinFile": tinFile,
         "profileFile": profileFile,
       };
+
+  UserProfile copyWith({
+    int? userProfileId,
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? dob,
+    int? nid,
+    String? nidPaperUrl,
+    dynamic passportNo,
+    String? passportPaperUrl,
+    dynamic passportExpDate,
+    int? maritalStatusId,
+    int? professionId,
+    int? countryCode,
+    int? multipleCitizenCode,
+    String? multipleCitizenPassportNo,
+    String? tin,
+    String? tinPaperUrl,
+    String? nationality,
+    String? mobile,
+    String? gender,
+    dynamic religion,
+    String? district,
+    String? presentAddress,
+    String? permanentAddress,
+    String? profilePictureUrl,
+    int? overseasCountryCode,
+    String? overseasVillage,
+    String? signInSource,
+    String? isActive,
+    int? userTypeId,
+    dynamic insertBy,
+    dynamic insertAt,
+    int? updateBy,
+    dynamic nidFile,
+    dynamic passportFile,
+    dynamic tinFile,
+    dynamic profileFile,
+  }) {
+    return UserProfile(
+      userProfileId: userProfileId ?? this.userProfileId,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      email: email ?? this.email,
+      dob: dob ?? this.dob,
+      nid: nid ?? this.nid,
+      nidPaperUrl: nidPaperUrl ?? this.nidPaperUrl,
+      passportNo: passportNo ?? this.passportNo,
+      passportPaperUrl: passportPaperUrl ?? this.passportPaperUrl,
+      passportExpDate: passportExpDate ?? this.passportExpDate,
+      maritalStatusId: maritalStatusId ?? this.maritalStatusId,
+      professionId: professionId ?? this.professionId,
+      countryCode: countryCode ?? this.countryCode,
+      multipleCitizenCode: multipleCitizenCode ?? this.multipleCitizenCode,
+      multipleCitizenPassportNo:
+          multipleCitizenPassportNo ?? this.multipleCitizenPassportNo,
+      tin: tin ?? this.tin,
+      tinPaperUrl: tinPaperUrl ?? this.tinPaperUrl,
+      nationality: nationality ?? this.nationality,
+      mobile: mobile ?? this.mobile,
+      gender: gender ?? this.gender,
+      religion: religion ?? this.religion,
+      district: district ?? this.district,
+      presentAddress: presentAddress ?? this.presentAddress,
+      permanentAddress: permanentAddress ?? this.permanentAddress,
+      profilePictureUrl: profilePictureUrl ?? this.profilePictureUrl,
+      overseasCountryCode: overseasCountryCode ?? this.overseasCountryCode,
+      overseasVillage: overseasVillage ?? this.overseasVillage,
+      signInSource: signInSource ?? this.signInSource,
+      isActive: isActive ?? this.isActive,
+      userTypeId: userTypeId ?? this.userTypeId,
+      insertBy: insertBy ?? this.insertBy,
+      insertAt: insertAt ?? this.insertAt,
+      updateBy: updateBy ?? this.updateBy,
+      nidFile: nidFile ?? this.nidFile,
+      passportFile: passportFile ?? this.passportFile,
+      tinFile: tinFile ?? this.tinFile,
+      profileFile: profileFile ?? this.profileFile,
+    );
+  }
 }
 
 class WealthInfo {
@@ -697,4 +1000,26 @@ class WealthInfo {
         "note": note,
         "documentFile": documentFile,
       };
+
+  WealthInfo copyWith({
+    int? userId,
+    int? wealthId,
+    int? documentTypeId,
+    String? documentPaperUrl,
+    String? amount,
+    String? location,
+    String? note,
+    dynamic documentFile,
+  }) {
+    return WealthInfo(
+      userId: userId ?? this.userId,
+      wealthId: wealthId ?? this.wealthId,
+      documentTypeId: documentTypeId ?? this.documentTypeId,
+      documentPaperUrl: documentPaperUrl ?? this.documentPaperUrl,
+      amount: amount ?? this.amount,
+      location: location ?? this.location,
+      note: note ?? this.note,
+      documentFile: documentFile ?? this.documentFile,
+    );
+  }
 }

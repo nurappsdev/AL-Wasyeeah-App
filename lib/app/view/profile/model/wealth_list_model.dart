@@ -28,4 +28,14 @@ class WealthModel {
         "wealthId": wealthId,
         "wealth": wealth,
       };
+
+  WealthModel copyWith({
+    int? wealthId,
+    String? wealth,
+  }) {
+    return WealthModel(
+      wealthId: wealthId ?? this.wealthId,
+      wealth: wealth ?? this.wealth,
+    );
+  }
 }

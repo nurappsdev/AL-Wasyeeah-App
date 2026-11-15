@@ -4,8 +4,10 @@ import 'package:wasiyyat/app/view/profile/model/profession_list_model.dart';
 import 'package:wasiyyat/app/view/profile/model/country_list_model.dart';
 import 'package:wasiyyat/app/view/profile/model/gender_list_model.dart';
 import 'package:wasiyyat/app/core/services/picker/file_picker_service.dart';
+import 'package:wasiyyat/app/view/profile/model/profile_model.dart';
 
 class ChildForm {
+  ChildInfo? original;
   // int? childId;
   // int? userId;
 
@@ -40,5 +42,22 @@ class ChildForm {
     nid.dispose();
     mobile.dispose();
     email.dispose();
+  }
+
+  ChildForm copy() {
+    final newForm = ChildForm();
+    newForm.name.text = name.text;
+    newForm.nid.text = nid.text;
+    newForm.mobile.text = mobile.text;
+    newForm.email.text = email.text;
+    newForm.profession.value = profession.value;
+    newForm.nationality.value = nationality.value;
+    newForm.gender.value = gender.value;
+    newForm.isAlive.value = isAlive.value;
+    newForm.selectedDob.value = selectedDob.value;
+    newForm.selectedNidFile.value = selectedNidFile.value;
+    newForm.nidUrl = nidUrl;
+    newForm.original = original;
+    return newForm;
   }
 }

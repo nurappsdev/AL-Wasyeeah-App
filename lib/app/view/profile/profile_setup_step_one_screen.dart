@@ -378,7 +378,7 @@ class _ProfileSettingStepOneWidgetState
                     onpress: () {
                       if (controller.step1formKey.currentState!.validate()) {
                         controller
-                            .onStepTapped(controller.currentStep.value + 1);
+                            .onStepTapped(controller.currentStep.value + 4);
                       }
                     },
                   ),
