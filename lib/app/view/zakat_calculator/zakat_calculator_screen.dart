@@ -181,7 +181,7 @@ class ZakatCalculatorScreen extends GetView<ZakatCalculatorController> {
                                 Padding(
                                   padding: EdgeInsets.all(4.r),
                                   child: CustomTextField(
-                                    readOnly: isDisabled,
+                                    readOnly: true /*isDisabled*/,
                                     controller:
                                         controller.cashAndBankController,
                                     hintText: AppLocalizations.of(context)!
