@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
   <!-- Internet -->
 <uses-permission android:name="android.permission.INTERNET" />
 
@@ -8,6 +9,11 @@
 <!-- Location -->
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+<!-- Remove foreground service location permission and service merged from geolocator -->
+<uses-permission
+    android:name="android.permission.FOREGROUND_SERVICE_LOCATION"
+    tools:node="remove" />
 
 <!-- Camera -->
 <uses-permission android:name="android.permission.CAMERA" />
@@ -21,6 +27,9 @@
         android:label="Wasiyyat"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <service
+            android:name="com.baseflow.geolocator.GeolocatorLocationService"
+            tools:node="remove" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
