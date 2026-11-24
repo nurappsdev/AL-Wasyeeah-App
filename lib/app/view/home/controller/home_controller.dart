@@ -55,9 +55,11 @@ class HomeController extends GetxController {
         if (!scrollController.hasClients) return;
 
         final prayerList = prayerTimes.keys.toList();
-        var targetPrayer = currentPrayer.value;
+        // Prioritize scrolling to the upcoming prayer (the most actionable),
+        // then fall back to current prayer.
+        var targetPrayer = upcomingPrayer.value;
         if (targetPrayer.isEmpty) {
-          targetPrayer = upcomingPrayer.value;
+          targetPrayer = currentPrayer.value;
         }
         var index = prayerList.indexOf(targetPrayer);
         if (index == -1) index = 0;
@@ -326,6 +328,10 @@ class HomeController extends GetxController {
     previousPrayer.value = previous?.name ?? "";
     upcomingPrayer.value = upcoming?.name ?? "";
 
+    // Reorder prayerTimes so the upcoming prayer appears first (leftmost),
+    // followed by prayers in chronological order, with past prayers at the end.
+    _reorderPrayerTimes(upcoming?.name, current?.name);
+
     if (upcoming != null) {
       DateTime nextTime = upcoming.startTime;
       if (upcoming.name == 'Fajr' && now.isAfter(ishaStartTime)) {
@@ -345,6 +351,30 @@ class HomeController extends GetxController {
     } else {
       remainingTimeStr.value = "--:--:--";
     }
+  }
+
+  /// Reorders [prayerTimes] so the upcoming prayer is first (leftmost card),
+  /// followed by subsequent prayers in chronological order. Past prayers wrap
+  /// to the end. This ensures the user always sees the most relevant prayer
+  /// (upcoming) before the current one in the horizontal list.
+  void _reorderPrayerTimes(String? upcomingName, String? currentName) {
+    if (prayerTimes.isEmpty) return;
+    final keys = prayerTimes.keys.toList();
+
+    // Determine the starting prayer: prefer upcoming, fall back to current
+    final startName = upcomingName ?? currentName;
+    if (startName == null || startName.isEmpty) return;
+
+    final startIndex = keys.indexOf(startName);
+    if (startIndex <= 0) return; // already first or not found
+
+    // Rotate the list so startName is first
+    final reordered = <String, String>{};
+    for (int i = 0; i < keys.length; i++) {
+      final key = keys[(startIndex + i) % keys.length];
+      reordered[key] = prayerTimes[key]!;
+    }
+    prayerTimes.value = reordered;
   }
 
   String formatTime(String time24) {
