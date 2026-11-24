@@ -3145,7 +3145,7 @@ abstract class AppLocalizations {
   /// No description provided for @create_wasyyah.
   ///
   /// In en, this message translates to:
-  /// **'Create Wasyyah'**
+  /// **'Create Wasiyyah'**
   String get create_wasyyah;
 
   /// No description provided for @new_text.

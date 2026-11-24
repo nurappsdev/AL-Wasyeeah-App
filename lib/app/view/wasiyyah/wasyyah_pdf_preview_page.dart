@@ -10,6 +10,7 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:wasiyyat/app/core/services/download/file_download_service.dart';
 
 class WasyyahPdfPreviewPage extends StatefulWidget {
   const WasyyahPdfPreviewPage({super.key});
@@ -38,27 +39,23 @@ class _WasyyahPdfPreviewPageState extends State<WasyyahPdfPreviewPage> {
 
   Future<void> _downloadPdf() async {
     if (_filePath == null) return;
-    await requestStoragePermission();
 
     try {
-      final source = File(_filePath!);
-      if (!await source.exists()) {
-        ToastMessage.errorMessageShowToster(
-            AppLocalizations.of(context)!.no_content_available);
-        return;
-      }
+      await FileDownloadUtil.saveLocalFile(
+        _filePath!,
+        'Wasiyyah_legal.pdf',
+      );
 
-      final targetDir = Directory("/storage/emulated/0/Download/AlWasyeeah");
+      if (!mounted) return;
 
-      await targetDir.create(recursive: true);
-      final targetPath =
-          "${targetDir.path}${Platform.pathSeparator}Wasiyyah_legal.pdf";
-      await source.copy(targetPath);
       ToastMessage.successMessageShowToster(
         AppLocalizations.of(context)!.file_downloaded_successfully,
       );
     } catch (e, s) {
-      log("Error is $e", error: e, stackTrace: s);
+      log("Error downloading PDF", error: e, stackTrace: s);
+
+      if (!mounted) return;
+
       ToastMessage.errorMessageShowToster(e.toString());
     }
   }

@@ -152,6 +152,7 @@ class AuthController extends GetxController {
             AppConstants.bearerToken,
             token.toString(),
           );
+          ApiService.setToken(token.toString());
 
           await PrefsHelper.setString(
             AppConstants.email,
@@ -308,6 +309,7 @@ class AuthController extends GetxController {
           ApiConstants.deleteAccount + "?currentPassword=$currentPassword");
       if (response.statusCode == 200) {
         await PrefsHelper.removeAll();
+        ApiService.clearToken();
         ToastMessage.successMessageShowToster(
             AppLocalizations.of(Get.context!)!.delete_success);
         isDeletingAccount(false);

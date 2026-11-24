@@ -66,7 +66,7 @@ class _WasyeeahAppState extends State<WasyeeahApp> {
           themeMode: widget.initialDarkMode ? ThemeMode.dark : ThemeMode.light,
           getPages: AppRouter.routes,
           initialRoute: RouteName.splashPage,
-          defaultTransition: Transition.topLevel,
+          defaultTransition: Transition.native,
           transitionDuration: const Duration(milliseconds: 500),
           locale: _locale,
           builder: (context, child) {

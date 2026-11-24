@@ -19,17 +19,36 @@ class ApiService extends GetxService {
   static const int timeoutInSeconds = 30;
   static String _bearerToken = '';
 
+  static void setToken(String token) {
+    _bearerToken = token;
+  }
+
+  static void clearToken() {
+    _bearerToken = '';
+  }
+
   // ========================== COMMON RESPONSE BUILDER ==========================
   static void _handleUnauthorized() async {
     if (_isLoggingOut) return;
 
     _isLoggingOut = true;
+    _bearerToken = '';
 
     // Clear session
     await PrefsHelper.remove(AppConstants.bearerToken);
 
+    await PrefsHelper.remove(AppConstants.userId);
+    await PrefsHelper.remove(AppConstants.firstname);
+    await PrefsHelper.remove(AppConstants.lastname);
+
+    await PrefsHelper.remove(AppConstants.phone);
+    await PrefsHelper.remove(AppConstants.image);
+
+    await PrefsHelper.remove(AppConstants.businessID);
+    await PrefsHelper.remove(AppConstants.type);
+
     // Navigate to login (delay avoids context issues)
-    Future.microtask(() {
+    Future.microtask(() async {
       Get.offAllNamed(RouteName.loginPage);
       _isLoggingOut = false;
     });
@@ -67,10 +86,21 @@ class ApiService extends GetxService {
     // 3. Use a fallback when the API provides no useful message.
     final statusText = message ?? 'Something went wrong. Please try again.';
 
+    String? requestToken;
+    final reqHeaders = response.request?.headers;
+    if (reqHeaders != null) {
+      for (final entry in reqHeaders.entries) {
+        if (entry.key.toLowerCase() == 'authorization') {
+          requestToken = entry.value;
+          break;
+        }
+      }
+    }
+
     log(
       '====> API Response: [${response.statusCode}] '
       '${ApiConstants.baseUrl + uri}\n'
-      'Token: $_bearerToken\n'
+      '${requestToken != null ? 'Token: $requestToken\n' : ''}'
       'Body:\n${jsonEncode(body)}',
     );
 
@@ -94,10 +124,13 @@ class ApiService extends GetxService {
 
   static Future<Map<String, String>> _defaultHeaders() async {
     _bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-    return {
+    final headers = <String, String>{
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $_bearerToken',
     };
+    if (_bearerToken.isNotEmpty) {
+      headers['Authorization'] = 'Bearer $_bearerToken';
+    }
+    return headers;
   }
 
   // ========================== GET ==========================
@@ -106,10 +139,11 @@ class ApiService extends GetxService {
     Map<String, String>? headers,
   }) async {
     try {
+      final resolvedHeaders = headers ?? await _defaultHeaders();
       final response = await _client
           .get(
             Uri.parse(ApiConstants.baseUrl + uri),
-            headers: headers ?? await _defaultHeaders(),
+            headers: resolvedHeaders,
           )
           .timeout(const Duration(seconds: timeoutInSeconds));
       return _buildResponse(response, uri);
@@ -134,12 +168,13 @@ class ApiService extends GetxService {
     dynamic body,
     Map<String, String>? headers,
   }) async {
-    log('====> API Request: [POST] ${ApiConstants.baseUrl + uri}\n$headers\n${jsonEncode(body)}');
     try {
+      final resolvedHeaders = headers ?? await _defaultHeaders();
+      log('====> API Request: [POST] ${ApiConstants.baseUrl + uri}\n$resolvedHeaders\n${jsonEncode(body)}');
       final response = await _client
           .post(
             Uri.parse(ApiConstants.baseUrl + uri),
-            headers: headers ?? await _defaultHeaders(),
+            headers: resolvedHeaders,
             body: jsonEncode(body),
           )
           .timeout(const Duration(seconds: timeoutInSeconds));

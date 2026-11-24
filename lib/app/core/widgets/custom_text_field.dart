@@ -23,6 +23,7 @@ class CustomTextField extends StatefulWidget {
   final double? hintextSize;
   final Widget? suffixIcon;
   final FormFieldValidator? validator;
+
   final bool isPassword;
   final bool? isEmail;
   final bool? readOnly;

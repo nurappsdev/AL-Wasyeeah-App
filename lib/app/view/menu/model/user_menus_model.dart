@@ -50,12 +50,12 @@ class UserMenus {
 class SubMenu {
   final String submenuId;
   final String submenuName;
-  final String contexts;
+  final String? contexts;
 
   SubMenu({
     required this.submenuId,
     required this.submenuName,
-    required this.contexts,
+    this.contexts,
   });
 
   factory SubMenu.fromJson(Map<String, dynamic> json) => SubMenu(

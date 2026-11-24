@@ -181,7 +181,7 @@ class ProfileController extends GetxController {
   Future<List<BranchModel>> getBranchList(String bankId) async {
     try {
       var response = await ApiService.getData(
-        ApiConstants.branchList + "?bankId=$bankId",
+        ApiConstants.branchList + "&bankId=$bankId",
       );
       return branchListModelFromJson(jsonEncode(response.body));
     } catch (e) {

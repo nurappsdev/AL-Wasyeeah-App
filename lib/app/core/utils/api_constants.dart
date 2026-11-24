@@ -4,7 +4,7 @@ class ApiConstants {
   static const String baseUrl = "https://api.wasiyyat.com/api/v1";
   static const String imageUrl = "$baseUrl/raw/";
   static const String fileDownloadUrl = "$baseUrl/raw-media-info/";
-  static String securityQuestion =
+  static String get securityQuestion =>
       "/user/securityQuestionList?lang=$currentLang";
 
   // sign up
@@ -39,7 +39,6 @@ class ApiConstants {
       "/user/remove-nominee?requestKey=$requestKey";
   static String searchNominee(String email) =>
       "/user/search-witness-nominee?email=$email&isWitness=false";
-
   static const String accessControl = "/getUsersByRole?isWitness=";
   static const String accessFeature = "/getContexts";
   static const String accessSelect = "/getUserContexts";
@@ -57,37 +56,30 @@ class ApiConstants {
   static const String addFeatureNomineeWitnessPoint =
       "/assignContext?isWitness=";
   static const String getUserEndPoint = "/auth/session";
-  static String updateProfileEndPoint(String id) => "/users/$id";
-  static String setPasswordEndPoint(String id) => "/users/$id";
-  static const String resetPassEndPoint = "/user/reset-password";
-  static const String userMoreInformationEndPoint = "/user/information";
-  static const String allMyPmojiEndPoint = "/sticker/my-sticker";
-  static const String passCartIdiEndPoint = "/cart/add-to-cart";
-  static const String getCartEndPoint = "/cart/my-cart";
-  static const String changePassEndPoint = "/user/change-password";
-  static String maritalList = "/lookup/maritalList";
-  static String professionList = "/lookup/professionList?lang=$currentLang";
-  static String countryList = "/lookup/countryList";
-  static String genderList = "/lookup/gender";
-  static String bankList = "/lookup/bankList";
-  static String branchList = "/lookup/branchList";
-  static String wealthList = "/lookup/wealthList?lang=$currentLang";
-  static String getProfile = "/user/getProfileData";
-  static String deleteAccount = "/user/delete-user";
+  static String get maritalList => "/lookup/maritalList?lang=$currentLang";
+  static String get professionList => "/lookup/professionList?lang=$currentLang";
+  static String get countryList => "/lookup/countryList?lang=$currentLang";
+  static String get genderList => "/lookup/gender?lang=$currentLang";
+  static String get bankList => "/lookup/bankList?lang=$currentLang";
+  static String get branchList => "/lookup/branchList?lang=$currentLang";
+  static String get wealthList => "/lookup/wealthList?lang=$currentLang";
+  static String get getProfile => "/user/getProfileData?lang=$currentLang";
+  static String get deleteAccount => "/user/delete-user?lang=$currentLang";
   static String documentTypeList(String wealthId) =>
       "/lookup/documentTypeList?lang=$currentLang&wealthId=$wealthId";
-  static String inappnotificationList = '/get-notification';
-  static String profileUpdate = "/lookup/saveProfileData";
-  static String relevantList = "/relevantList?lang=$currentLang";
-  static String propertyDistributionCalculationResult =
+  static String get inappnotificationList => '/get-notification?lang=$currentLang';
+  static String get profileUpdate => "/lookup/saveProfileData?lang=$currentLang";
+  static String get relevantList => "/relevantList?lang=$currentLang";
+  static String get propertyDistributionCalculationResult =>
       "/propertyDistributeResult?lang=$currentLang";
-  static String getPropertyDistributionCalculationResult =
-      "/getPropertyDistributeResult";
-  static String getCertificateInfo = "/user/getCertificateInfo";
-  static String savePropertyDistributionCalculationResult =
-      "/savePropertyDistributeResult";
+  static String get getPropertyDistributionCalculationResult =>
+      "/getPropertyDistributeResult?lang=$currentLang";
+  static String get getCertificateInfo =>
+      "/user/getCertificateInfo?lang=$currentLang";
+  static String get savePropertyDistributionCalculationResult =>
+      "/savePropertyDistributeResult?lang=$currentLang";
   static String inappNOtificationAcceptRejectRequest = "/accept-reject-request";
-  static const String getMenus = "/user/menu/getMenus";
+  static String get getMenus => "/user/menu/getMenus?lang=$currentLang";
   // contact us
-  static const String contactUsEndPoint = "/contactUsEmailSend";
+  static String get contactUsEndPoint => "/contactUsEmailSend?lang=$currentLang";
 }

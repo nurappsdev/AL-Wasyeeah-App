@@ -18,6 +18,7 @@ import '../../core/services/shared_pref/prefs_service.dart';
 import 'package:wasiyyat/app/app.dart';
 import '../notification/controller/notification_controller.dart';
 import '../../core/utils/api_constants.dart';
+import '../../core/services/api/api_service.dart';
 import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
 import 'package:wasiyyat/app/core/widgets/custom_text_field.dart';
 import 'package:wasiyyat/app/core/utils/toast_message.dart';
@@ -725,6 +726,7 @@ class MenuPage extends StatelessWidget {
                                 //   profileController.promoCode.value = "";
                                 await PrefsHelper.remove(
                                     AppConstants.bearerToken);
+                                ApiService.clearToken();
                                 await PrefsHelper.remove(AppConstants.userId);
                                 await PrefsHelper.remove(
                                     AppConstants.firstname);

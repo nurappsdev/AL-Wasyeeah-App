@@ -1574,7 +1574,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get already_exists => 'Already exists';
 
   @override
-  String get create_wasyyah => 'Create Wasyyah';
+  String get create_wasyyah => 'Create Wasiyyah';
 
   @override
   String get new_text => 'New';
