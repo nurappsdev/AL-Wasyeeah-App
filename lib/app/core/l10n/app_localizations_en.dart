@@ -1832,4 +1832,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get test_prayer => 'Test Prayer';
+
+  @override
+  String get wasiyyah_update_reminder_title => 'Do you update your wassiyah?';
+
+  @override
+  String get wasiyyah_update_reminder_subtitle =>
+      'If you sure that you are already updated then click on \'Yes\', if you won\'t then click on \'No\'';
+
+  @override
+  String get yes_action => 'Yes';
+
+  @override
+  String get no_action => 'No';
 }

@@ -8,6 +8,7 @@ import 'package:wasiyyat/app/core/utils/api_constants.dart';
 import 'package:wasiyyat/app/core/utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wasiyyat/app/core/services/notification/wasiyyah_reminder_service.dart';
 import '../../../core/services/shared_pref/prefs_service.dart';
 import 'package:wasiyyat/app/core/l10n/app_localizations.dart';
 
@@ -168,6 +169,9 @@ class AuthController extends GetxController {
             response.body?["message"] ??
                 AppLocalizations.of(Get.context!)!.welcome_back,
           );
+
+          // Fetch & process Wasiyyah reminder notification after login
+          WasiyyahReminderService.fetchAndProcessReminder();
 
           Get.offAllNamed(RouteName.homePage);
         }

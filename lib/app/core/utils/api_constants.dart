@@ -65,6 +65,8 @@ class ApiConstants {
   static String get wealthList => "/lookup/wealthList?lang=$currentLang";
   static String get getProfile => "/user/getProfileData?lang=$currentLang";
   static String get deleteAccount => "/user/delete-user?lang=$currentLang";
+  static String get getReminderNotification =>
+      "/lookup/getReminderNotification?lang=$currentLang";
   static String documentTypeList(String wealthId) =>
       "/lookup/documentTypeList?lang=$currentLang&wealthId=$wealthId";
   static String get inappnotificationList => '/get-notification?lang=$currentLang';

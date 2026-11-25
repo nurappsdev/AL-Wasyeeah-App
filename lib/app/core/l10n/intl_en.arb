@@ -604,5 +604,9 @@
   "prayer_alarm_settings": "Prayer Alarm Settings",
   "prayer_alarms": "Prayer Alarms",
   "minutes": "Minutes",
-  "test_prayer": "Test Prayer"
+  "test_prayer": "Test Prayer",
+  "wasiyyah_update_reminder_title": "Do you update your wassiyah?",
+  "wasiyyah_update_reminder_subtitle": "If you sure that you are already updated then click on 'Yes', if you won't then click on 'No'",
+  "yes_action": "Yes",
+  "no_action": "No"
 }

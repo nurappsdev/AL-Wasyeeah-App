@@ -46,6 +46,8 @@ dependencies:
   permission_handler: ^13.0.2
   mobile_scanner: ^7.4.2
   alarm: ^5.15.0
+  flutter_local_notifications: ^23.0.4
+  timezone: ^0.11.2
 
 dev_dependencies:
   flutter_test:

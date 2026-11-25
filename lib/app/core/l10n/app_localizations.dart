@@ -3603,6 +3603,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Test Prayer'**
   String get test_prayer;
+
+  /// No description provided for @wasiyyah_update_reminder_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you update your wassiyah?'**
+  String get wasiyyah_update_reminder_title;
+
+  /// No description provided for @wasiyyah_update_reminder_subtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'If you sure that you are already updated then click on \'Yes\', if you won\'t then click on \'No\''**
+  String get wasiyyah_update_reminder_subtitle;
+
+  /// No description provided for @yes_action.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes_action;
+
+  /// No description provided for @no_action.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no_action;
 }
 
 class _AppLocalizationsDelegate

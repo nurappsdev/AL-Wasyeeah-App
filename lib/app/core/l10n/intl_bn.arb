@@ -621,5 +621,9 @@
   "prayer_alarm_settings": "নামাজের অ্যালার্ম সেটিংস",
   "prayer_alarms": "নামাজের অ্যালার্ম",
   "minutes": "মিনিট",
-  "test_prayer": "টেস্ট নামাজ"
+  "test_prayer": "টেস্ট নামাজ",
+  "wasiyyah_update_reminder_title": "আপনি কি আপনার ওসিয়ত হালনাগাদ করেছেন?",
+  "wasiyyah_update_reminder_subtitle": "আপনি যদি নিশ্চিত হন যে আপনি ইতিমধ্যেই হালনাগাদ করেছেন তবে 'হ্যাঁ' তে ক্লিক করুন, যদি না করে থাকেন তবে 'না' তে ক্লিক করুন।",
+  "yes_action": "হ্যাঁ",
+  "no_action": "না"
 }

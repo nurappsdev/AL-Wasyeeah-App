@@ -1844,4 +1844,18 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get test_prayer => 'টেস্ট নামাজ';
+
+  @override
+  String get wasiyyah_update_reminder_title =>
+      'আপনি কি আপনার ওসিয়ত হালনাগাদ করেছেন?';
+
+  @override
+  String get wasiyyah_update_reminder_subtitle =>
+      'আপনি যদি নিশ্চিত হন যে আপনি ইতিমধ্যেই হালনাগাদ করেছেন তবে \'হ্যাঁ\' তে ক্লিক করুন, যদি না করে থাকেন তবে \'না\' তে ক্লিক করুন।';
+
+  @override
+  String get yes_action => 'হ্যাঁ';
+
+  @override
+  String get no_action => 'না';
 }
