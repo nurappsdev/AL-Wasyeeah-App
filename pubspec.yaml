@@ -45,6 +45,7 @@ dependencies:
   qr_flutter: ^4.1.0
   permission_handler: ^13.0.2
   mobile_scanner: ^7.4.2
+  alarm: ^5.15.0
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/fonts/
+    - assets/audio/
 
   fonts:
     - family: NotoSansBengali

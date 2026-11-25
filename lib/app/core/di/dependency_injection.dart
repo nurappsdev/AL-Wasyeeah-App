@@ -10,6 +10,8 @@ import 'package:wasiyyat/app/view/splash/controller/splash_controller.dart';
 import 'package:wasiyyat/app/view/wasiyyah/controller/wasyyah_controller.dart';
 import 'package:wasiyyat/app/view/witnessess/controller/witness_controller.dart';
 import 'package:wasiyyat/app/view/zakat_calculator/controller/zakat_calculator_controller.dart';
+import 'package:wasiyyat/app/view/notification/controller/alarm_controller.dart';
+import 'package:wasiyyat/app/view/notification/controller/notification_settings_controller.dart';
 import 'package:get/get.dart';
 
 class SplashBinding extends Bindings {
@@ -27,6 +29,10 @@ class HomeBinding extends Bindings {
     Get.lazyPut<NotificationController>(() => NotificationController(),
         fenix: true);
     Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
+    Get.lazyPut<AlarmController>(() => AlarmController(), fenix: true);
+    Get.lazyPut<NotificationSettingsController>(
+        () => NotificationSettingsController(),
+        fenix: true);
   }
 }
 

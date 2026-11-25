@@ -1,5 +1,6 @@
 import 'package:wasiyyat/app/core/widgets/exit_dialog.dart';
 import 'package:wasiyyat/app/view/notification/controller/notification_controller.dart';
+import 'package:wasiyyat/app/view/notification/controller/alarm_controller.dart';
 import 'package:wasiyyat/app/view/home/controller/home_controller.dart';
 import 'package:wasiyyat/app/view/profile/controller/profile_controller.dart';
 import 'package:wasiyyat/app/core/route/route_names.dart';
@@ -46,6 +47,9 @@ class HomePage extends GetView<HomeController> {
 
     final notificationController = Get.find<NotificationController>();
     final profileController = Get.find<ProfileController>();
+    final alarmController = Get.isRegistered<AlarmController>()
+        ? Get.find<AlarmController>()
+        : Get.put(AlarmController());
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PopScope(
@@ -1089,42 +1093,68 @@ class HomePage extends GetView<HomeController> {
                                                               : Colors.black,
                                                         ),
                                                       ),
-                                                      if (isCurrent) ...[
-                                                        SizedBox(height: 4.h),
-                                                        SizedBox(
+                                                      SizedBox(height: 4.h),
+                                                      Obx(() {
+                                                        final isAlarmEnabled =
+                                                            alarmController
+                                                                    .prayerAlarms[
+                                                                name] ??
+                                                                false;
+                                                        return SizedBox(
                                                           height: 30.h,
                                                           width: 50.w,
                                                           child: FittedBox(
                                                             fit: BoxFit.fill,
                                                             child: Switch(
-                                                              value: true,
+                                                              value: isAlarmEnabled,
                                                               activeThumbColor:
-                                                                  Colors.greenAccent[
-                                                                      400],
-                                                              activeTrackColor:
                                                                   isDark
-                                                                      ? Colors
-                                                                          .green
-                                                                          .shade900
-                                                                      : null,
-                                                              inactiveThumbColor:
-                                                                  isDark
-                                                                      ? Colors
-                                                                          .grey
-                                                                          .shade400
-                                                                      : null,
-                                                              inactiveTrackColor:
-                                                                  isDark
-                                                                      ? Colors
-                                                                          .grey
-                                                                          .shade800
-                                                                      : null,
-                                                              onChanged:
-                                                                  (val) {},
+                                                                      ? const Color(
+                                                                          0xFF4ADE80)
+                                                                      : AppColors
+                                                                          .primaryColor,
+                                                              onChanged: (val) {
+                                                                DateTime prayerDate =
+                                                                    DateTime.now();
+                                                                if (time.isNotEmpty) {
+                                                                  try {
+                                                                    final parts =
+                                                                        time.split(
+                                                                            ':');
+                                                                    prayerDate =
+                                                                        DateTime(
+                                                                      prayerDate
+                                                                          .year,
+                                                                      prayerDate
+                                                                          .month,
+                                                                      prayerDate
+                                                                          .day,
+                                                                      int.parse(
+                                                                          parts[0]),
+                                                                      int.parse(
+                                                                          parts[1]),
+                                                                    );
+                                                                  } catch (_) {}
+                                                                }
+                                                                alarmController
+                                                                    .togglePrayerAlarm(
+                                                                  name,
+                                                                  prayerDate,
+                                                                  val,
+                                                                  titleText:
+                                                                      '$name Alarm',
+                                                                  bodyText:
+                                                                      'Time for $name prayer',
+                                                                  stopButtonText:
+                                                                      AppLocalizations.of(
+                                                                              context)!
+                                                                          .stop,
+                                                                );
+                                                              },
                                                             ),
                                                           ),
-                                                        ),
-                                                      ],
+                                                        );
+                                                      }),
                                                     ],
                                                   ),
                                                 ),

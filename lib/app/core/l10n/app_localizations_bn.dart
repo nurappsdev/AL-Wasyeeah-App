@@ -1785,4 +1785,63 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get stay => 'থাকুন';
+
+  @override
+  String get notification_settings => 'বিজ্ঞপ্তি সেটিংস';
+
+  @override
+  String get alarm_settings => 'অ্যালার্ম সেটিংস';
+
+  @override
+  String get general_notifications => 'সাধারণ বিজ্ঞপ্তি';
+
+  @override
+  String get general_notifications_desc =>
+      'খবর, আপডেট এবং অ্যাপ নোটিফিকেশন পান';
+
+  @override
+  String get vibrate => 'কম্পন (Vibrate)';
+
+  @override
+  String get loop_audio => 'শব্দ পুনরাবৃত্তি (Loop Audio)';
+
+  @override
+  String get full_screen_intent => 'ফুল স্ক্রীন অ্যালার্ম নোটিফিকেশন';
+
+  @override
+  String get full_screen_intent_desc =>
+      'অ্যালার্ম বাজার সময় লক স্ক্রিনের উপরে ফুল স্ক্রিনে অ্যালার্ম প্রদর্শনের অনুমতি দিন';
+
+  @override
+  String get ringtone => 'রিংটোন';
+
+  @override
+  String get default_azan => 'অ্যাপের ডিফল্ট আযান';
+
+  @override
+  String get device_ringtone => 'ডিভাইসের রিংটোন';
+
+  @override
+  String get snooze => 'স্নুজ (Snooze)';
+
+  @override
+  String get snooze_duration => 'স্নুজের সময়কাল';
+
+  @override
+  String get enable_snooze => 'স্নুজ সক্রিয় করুন';
+
+  @override
+  String get stop => 'বন্ধ করুন';
+
+  @override
+  String get prayer_alarm_settings => 'নামাজের অ্যালার্ম সেটিংস';
+
+  @override
+  String get prayer_alarms => 'নামাজের অ্যালার্ম';
+
+  @override
+  String get minutes => 'মিনিট';
+
+  @override
+  String get test_prayer => 'টেস্ট নামাজ';
 }

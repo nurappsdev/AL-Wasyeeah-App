@@ -18,6 +18,17 @@
 <!-- Camera -->
 <uses-permission android:name="android.permission.CAMERA" />
 
+<!-- Alarm & Notifications -->
+<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+<uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+<uses-permission android:name="android.permission.VIBRATE" />
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+
 <!-- Legacy Android storage support -->
 <uses-permission
     android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -30,6 +41,10 @@
         <service
             android:name="com.baseflow.geolocator.GeolocatorLocationService"
             tools:node="remove" />
+        <service
+            android:name="dev.gaspard.alarm.services.NotificationOnKillService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

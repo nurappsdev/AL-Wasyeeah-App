@@ -26,6 +26,8 @@ class RouteName {
   static const String accessCntrolPanelPage = "/access_control_panel_page";
   // Notification
   static const String notificationPage = "/notification_page";
+  static const String notificationSettingsPage = "/notification_settings_page";
+  static const String alarmSettingsPage = "/alarm_settings_page";
   // Menu
   static const String menuPage = "/menu_page";
   // Profile

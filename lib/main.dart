@@ -1,3 +1,4 @@
+import 'package:alarm/alarm.dart';
 import 'package:wasiyyat/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'app/core/utils/api_constants.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await Alarm.init();
 
   final prefs = await SharedPreferences.getInstance();
   final String savedLang = prefs.getString('languageCode') ?? 'en';

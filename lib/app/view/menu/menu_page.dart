@@ -331,6 +331,104 @@ class MenuPage extends StatelessWidget {
                     height: 20.h,
                   ),
 
+                  ///=====================Notification Settings====================================
+                  GestureDetector(
+                    onTap: () => Get.toNamed(RouteName.notificationSettingsPage,
+                        preventDuplicates: false),
+                    child: Container(
+                      width: 360.w,
+                      height: 60.h,
+                      margin: EdgeInsets.only(left: 2.w),
+                      decoration: _menuCardDecoration(isDark),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.notifications_outlined,
+                                  color: AppColors.primaryColor,
+                                  size: 24.sp,
+                                ),
+                                SizedBox(width: 16.w),
+                                CustomText(
+                                  text: AppLocalizations.of(context)!
+                                      .notification_settings,
+                                  fontsize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.textColor4E4E4E,
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            child: SvgPicture.asset(
+                              AppIcons.chevronIcon,
+                              colorFilter: ColorFilter.mode(
+                                  AppColors.primaryColor, BlendMode.srcIn),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 20.h,
+                  ),
+
+                  ///=====================Alarm Settings====================================
+                  GestureDetector(
+                    onTap: () => Get.toNamed(RouteName.alarmSettingsPage,
+                        preventDuplicates: false),
+                    child: Container(
+                      width: 360.w,
+                      height: 60.h,
+                      margin: EdgeInsets.only(left: 2.w),
+                      decoration: _menuCardDecoration(isDark),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.alarm,
+                                  color: AppColors.primaryColor,
+                                  size: 24.sp,
+                                ),
+                                SizedBox(width: 16.w),
+                                CustomText(
+                                  text: AppLocalizations.of(context)!
+                                      .alarm_settings,
+                                  fontsize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.textColor4E4E4E,
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            child: SvgPicture.asset(
+                              AppIcons.chevronIcon,
+                              colorFilter: ColorFilter.mode(
+                                  AppColors.primaryColor, BlendMode.srcIn),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 20.h,
+                  ),
+
                   ///=====================User Menus====================================
                   ...homeController.userMenus
                       .where((menu) => menu.activeYn == "Y")

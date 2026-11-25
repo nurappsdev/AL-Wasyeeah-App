@@ -20,6 +20,8 @@ import 'package:wasiyyat/app/view/menu/menu_page.dart';
 import 'package:wasiyyat/app/view/witnessess/witnesses_details_page.dart';
 import 'package:wasiyyat/app/view/witnessess/witness_page.dart';
 import 'package:wasiyyat/app/view/notification/notification_page.dart';
+import 'package:wasiyyat/app/view/notification/notification_settings_page.dart';
+import 'package:wasiyyat/app/view/notification/alarm_settings_page.dart';
 import 'package:wasiyyat/app/view/onboarding/onboarding_screen.dart';
 import 'package:wasiyyat/app/view/wasiyyah/wasyyah_page.dart';
 import 'package:wasiyyat/app/view/wasiyyah/wasyyah_pdf_preview_page.dart';
@@ -50,6 +52,12 @@ class AppRouter {
         ),
         GetPage(
             name: RouteName.notificationPage, page: () => NotificationPage()),
+        GetPage(
+            name: RouteName.notificationSettingsPage,
+            page: () => const NotificationSettingsPage()),
+        GetPage(
+            name: RouteName.alarmSettingsPage,
+            page: () => const AlarmSettingsPage()),
         GetPage(
             name: RouteName.wasyyahPage,
             page: () => WasyyahPage(),

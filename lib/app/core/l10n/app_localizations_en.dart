@@ -1773,4 +1773,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stay => 'Stay';
+
+  @override
+  String get notification_settings => 'Notification Settings';
+
+  @override
+  String get alarm_settings => 'Alarm Settings';
+
+  @override
+  String get general_notifications => 'General Notifications';
+
+  @override
+  String get general_notifications_desc =>
+      'Receive news, updates, and app alerts';
+
+  @override
+  String get vibrate => 'Vibrate';
+
+  @override
+  String get loop_audio => 'Loop Audio';
+
+  @override
+  String get full_screen_intent => 'Full Screen Alarm Notification';
+
+  @override
+  String get full_screen_intent_desc =>
+      'Allow alarm display on full screen over lock screen when alarm rings';
+
+  @override
+  String get ringtone => 'Ringtone';
+
+  @override
+  String get default_azan => 'App Default Azan';
+
+  @override
+  String get device_ringtone => 'Device Ringtone';
+
+  @override
+  String get snooze => 'Snooze';
+
+  @override
+  String get snooze_duration => 'Snooze Duration';
+
+  @override
+  String get enable_snooze => 'Enable Snooze';
+
+  @override
+  String get stop => 'Stop';
+
+  @override
+  String get prayer_alarm_settings => 'Prayer Alarm Settings';
+
+  @override
+  String get prayer_alarms => 'Prayer Alarms';
+
+  @override
+  String get minutes => 'Minutes';
+
+  @override
+  String get test_prayer => 'Test Prayer';
 }

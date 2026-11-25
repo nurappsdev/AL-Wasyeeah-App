@@ -3489,6 +3489,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stay'**
   String get stay;
+
+  /// No description provided for @notification_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Settings'**
+  String get notification_settings;
+
+  /// No description provided for @alarm_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Alarm Settings'**
+  String get alarm_settings;
+
+  /// No description provided for @general_notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'General Notifications'**
+  String get general_notifications;
+
+  /// No description provided for @general_notifications_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive news, updates, and app alerts'**
+  String get general_notifications_desc;
+
+  /// No description provided for @vibrate.
+  ///
+  /// In en, this message translates to:
+  /// **'Vibrate'**
+  String get vibrate;
+
+  /// No description provided for @loop_audio.
+  ///
+  /// In en, this message translates to:
+  /// **'Loop Audio'**
+  String get loop_audio;
+
+  /// No description provided for @full_screen_intent.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Screen Alarm Notification'**
+  String get full_screen_intent;
+
+  /// No description provided for @full_screen_intent_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow alarm display on full screen over lock screen when alarm rings'**
+  String get full_screen_intent_desc;
+
+  /// No description provided for @ringtone.
+  ///
+  /// In en, this message translates to:
+  /// **'Ringtone'**
+  String get ringtone;
+
+  /// No description provided for @default_azan.
+  ///
+  /// In en, this message translates to:
+  /// **'App Default Azan'**
+  String get default_azan;
+
+  /// No description provided for @device_ringtone.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Ringtone'**
+  String get device_ringtone;
+
+  /// No description provided for @snooze.
+  ///
+  /// In en, this message translates to:
+  /// **'Snooze'**
+  String get snooze;
+
+  /// No description provided for @snooze_duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Snooze Duration'**
+  String get snooze_duration;
+
+  /// No description provided for @enable_snooze.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Snooze'**
+  String get enable_snooze;
+
+  /// No description provided for @stop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get stop;
+
+  /// No description provided for @prayer_alarm_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer Alarm Settings'**
+  String get prayer_alarm_settings;
+
+  /// No description provided for @prayer_alarms.
+  ///
+  /// In en, this message translates to:
+  /// **'Prayer Alarms'**
+  String get prayer_alarms;
+
+  /// No description provided for @minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Minutes'**
+  String get minutes;
+
+  /// No description provided for @test_prayer.
+  ///
+  /// In en, this message translates to:
+  /// **'Test Prayer'**
+  String get test_prayer;
 }
 
 class _AppLocalizationsDelegate
